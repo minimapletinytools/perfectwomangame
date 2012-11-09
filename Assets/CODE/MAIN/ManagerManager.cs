@@ -21,28 +21,16 @@ public class ManagerManager : MonoBehaviour{
 	VoidDelegate mUpdateDelegates = null;
 	VoidDelegate mFixedUpdateDelegates = null;
 
-    public SceneManager mSceneManager;
-    public PrefabReferences mPrefabReferences;
     public EventManager mEventManager;
-    public ThreeViewManager mThreeViewManager;
-    public TwoViewManager mTwoViewManager;
-    public FlatViewManager mFlatViewManager;
     public InputManager mInputManager;
-    public ForeignManager mForeignManager;
     
 
 	void Start () {
         if (sManager == null)
             Manager = this;
 
-        mSceneManager = new SceneManager(this);
-        mPrefabReferences = GetComponent<PrefabReferences>();
         mEventManager = new EventManager(this);
-        mThreeViewManager = new ThreeViewManager(this);
-        mTwoViewManager = new TwoViewManager(this);
-        mFlatViewManager = new FlatViewManager(this);
         mInputManager = new InputManager(this);
-        mForeignManager = new ForeignManager(this);
         
 
 		if(mStartDelegates != null) 

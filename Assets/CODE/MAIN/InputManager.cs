@@ -122,11 +122,6 @@ public class InputManager : FakeMonoBehaviour
             if (Input.GetMouseButton(i))
                 mMouse.mPositions.add_absolute(MouseProfile.to_relative(Input.mousePosition), Time.time);
 
-            if(!handle_mouse(mManager.mFlatViewManager.mMouseHandler))
-                if (!handle_mouse(mManager.mThreeViewManager.mManipulationMouseHandler))
-                    handle_mouse(mManager.mThreeViewManager.mCameraMouseHandler);
         }
-
-        handle_pinch(mManager.mThreeViewManager.mCameraMouseHandler);
     }
 }
