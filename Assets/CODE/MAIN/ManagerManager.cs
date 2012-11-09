@@ -23,7 +23,7 @@ public class ManagerManager : MonoBehaviour{
 
     public EventManager mEventManager;
     public InputManager mInputManager;
-    
+    public ZigManager mZigManager;
 
 	void Start () {
         if (sManager == null)
@@ -31,6 +31,7 @@ public class ManagerManager : MonoBehaviour{
 
         mEventManager = new EventManager(this);
         mInputManager = new InputManager(this);
+		mZigManager = new ZigManager(this);
         
 
 		if(mStartDelegates != null) 
