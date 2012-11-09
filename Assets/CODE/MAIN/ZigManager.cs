@@ -21,7 +21,8 @@ public class ZigManager : FakeMonoBehaviour {
 	
 	// Update is called once per frame
 	public override void Update () {
-	
+		//TODO take points project on plane and draw on screen
+		
 	}
 	
 	
