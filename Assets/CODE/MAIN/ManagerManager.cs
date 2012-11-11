@@ -24,14 +24,20 @@ public class ManagerManager : MonoBehaviour{
     public EventManager mEventManager;
     public InputManager mInputManager;
     public ZigManager mZigManager;
+    public BodyManager mBodyManager;
 
-	void Start () {
+    public PrefabReferenceBehaviour mReferences;
+
+	void Awake () {
+        mReferences = GetComponent<PrefabReferenceBehaviour>();
+
         if (sManager == null)
             Manager = this;
 
         mEventManager = new EventManager(this);
         mInputManager = new InputManager(this);
 		mZigManager = new ZigManager(this);
+        mBodyManager = new BodyManager(this);
         
 
 		if(mStartDelegates != null) 
