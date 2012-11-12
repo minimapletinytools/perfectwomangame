@@ -28,10 +28,10 @@ public class BodyManager : FakeMonoBehaviour {
     {
         foreach(KeyValuePair<ZigJointId,GameObject> e in mParts)
         {
-            if (mManager.mZigManager.mJoints.ContainsKey(e.Key))
+            if (mManager.mZigManager.Joints.ContainsKey(e.Key))
             {
                 Debug.Log("Rotating");
-                mParts[e.Key].transform.rotation = mManager.mZigManager.mJoints[e.Key].Rotation;
+                mParts[e.Key].transform.rotation = mManager.mZigManager.Joints[e.Key].Rotation;
             }
         }
 	}

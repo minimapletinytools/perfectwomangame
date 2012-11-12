@@ -1,0 +1,32 @@
+:::backend::
+::input dictionary::
+-stores input, position and rotation of all joints
+-has accessors for reading relative rotations between two joints
+
+	-based on position and not rotation
+-
+
+::2d projection manager::
+-use relative accessors to determine orientation for body parts
+	-determine front facing plane
+	-project positions into plane, find angle in plane, map to angles as appropriate. 
+	-add smoothing to angles
+
+::grading manager:: 
+-checking
+	-do least squares on rotations in 2d
+-getting 
+	-record position, flatten via projection, save
+	-virtual mannequin of 2d points, move in unity, write and save angles
+::visual::
+-drawing the person
+	-use torso as center point
+-joint positions
+	-design rule for determining joint points based on texture size
+		-make a decision, tell lea
+	-write code to procedurally generate mesh for the person using create primitive and resizing
+		-double child all body parts to get centers properly
+		-create hierarchy of parts
+-person in X Y plane with Y facing up and X facing right and Z facing forward
+
+	

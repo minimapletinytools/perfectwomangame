@@ -36,7 +36,7 @@ public class GradingManager : FakeMonoBehaviour {
     public void record_pose()
     {
         Pose p = new Pose();
-        p.mPose = new Dictionary<ZigJointId, ZigInputJoint>(mManager.mZigManager.mJoints);
+        p.mPose = new Dictionary<ZigJointId, ZigInputJoint>(mManager.mZigManager.Joints);
         mPoses.Add(p);
     }
     public void grade_pose(Pose aPose)

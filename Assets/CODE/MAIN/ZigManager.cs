@@ -6,9 +6,10 @@ public class ZigManager : FakeMonoBehaviour {
 	Zig mZig = null;
 	ZigEngageSingleUser mZigEngageSingleUser = null;
     ZigUpdateUserBehaviour mUpdateUserBehaviour = null;
-    public Dictionary<ZigJointId, ZigInputJoint> mJoints = new Dictionary<ZigJointId, ZigInputJoint>();
+    public Dictionary<ZigJointId, ZigInputJoint> Joints{get; private set;}
     public ZigManager(ManagerManager aManager) : base(aManager)
 	{
+		Joints = new Dictionary<ZigJointId, ZigInputJoint>();
 	}
 
 	// Use this for initialization
@@ -55,7 +56,7 @@ public class ZigManager : FakeMonoBehaviour {
         {
             foreach (ZigInputJoint joint in user.Skeleton)
             {
-                mJoints[joint.Id] = joint;
+                Joints[joint.Id] = joint;
                 if(joint.GoodPosition && joint.GoodRotation)
                 {
                     set_relative_position(joint,user.Position);
