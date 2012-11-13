@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections;
 
-public class ZigUpdateUserBehaviour : MonoBehaviour {
+public class ZigCallbackBehaviour : MonoBehaviour {
 
 	public delegate void UpdateUserDelegate(ZigTrackedUser aUser);
     public UpdateUserDelegate mUpdateUserDelegate;

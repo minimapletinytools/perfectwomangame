@@ -9,14 +9,14 @@
 ::2d projection manager::
 -use relative accessors to determine orientation for body parts
 	-determine front facing plane
-	-project positions into plane, find angle in plane, map to angles as appropriate. 
-	-add smoothing to angles
+	DONE-project positions into plane, find angle in plane, map to angles as appropriate. 
+	CLOSE ENOUGH-add smoothing to angles
 
 ::grading manager:: 
--checking
+DONE-checking
 	-do least squares on rotations in 2d
 -getting 
-	-record position, flatten via projection, save
+	DONE-record position, flatten via projection, save
 	-virtual mannequin of 2d points, move in unity, write and save angles
 ::visual::
 -drawing the person
