@@ -20,8 +20,8 @@ public class ProjectionManager : FakeMonoBehaviour {
         mImportant[new GradingManager.WeightedZigJointPair(ZigJointId.LeftKnee, ZigJointId.LeftAnkle, 1)] = new Smoothing();
         mImportant[new GradingManager.WeightedZigJointPair(ZigJointId.Neck, ZigJointId.Head, 1)] = new Smoothing();
         mImportant[new GradingManager.WeightedZigJointPair(ZigJointId.Torso, ZigJointId.Neck, 1)] = new Smoothing();
-		mImportant[new GradingManager.WeightedZigJointPair(ZigJointId.Waist, ZigJointId.Torso, 1)] = new Smoothing();
-        mImportant[new GradingManager.WeightedZigJointPair(ZigJointId.None, ZigJointId.Waist, 1)] = new Smoothing();
+		mImportant[new GradingManager.WeightedZigJointPair(ZigJointId.Torso, ZigJointId.Waist, 1)] = new Smoothing();
+        mImportant[new GradingManager.WeightedZigJointPair(ZigJointId.None, ZigJointId.Torso, 1)] = new Smoothing();
 	}
 	
 	public Vector3 mNormal = Vector3.forward;
@@ -50,10 +50,22 @@ public class ProjectionManager : FakeMonoBehaviour {
 	
 	
 	public override void Update () {
-		foreach(KeyValuePair<GradingManager.WeightedZigJointPair,Smoothing> e in mImportant)
-		{
-			e.Value.target = get_relative(mManager.mZigManager.Joints[e.Key.A],mManager.mZigManager.Joints[e.Key.B]);
-			e.Value.current = e.Value.current*0.8f + e.Value.target*0.2f;//TODO smooth properly using Time.deltaTime
-		}
+        if (mManager.mZigManager.has_user())
+        {
+            foreach (KeyValuePair<GradingManager.WeightedZigJointPair, Smoothing> e in mImportant)
+            {
+                if (e.Key.A != ZigJointId.None)
+                {
+                    try
+                    {
+                        e.Value.target = get_relative(mManager.mZigManager.Joints[e.Key.A], mManager.mZigManager.Joints[e.Key.B]);
+                        e.Value.current = e.Value.current * 0.8f + e.Value.target * 0.2f;//TODO smooth properly using Time.deltaTime
+                    }
+                    catch
+                    {
+                    }
+                }
+            }
+        }
 	}
 }

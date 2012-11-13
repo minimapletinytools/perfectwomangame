@@ -17,6 +17,7 @@ public class BodyManager : FakeMonoBehaviour {
 		GameObject kid = GameObject.CreatePrimitive(PrimitiveType.Plane);
 		kid.transform.localScale = new Vector3(convert_units(aTex.width)/10.0f,1,convert_units(aTex.height)/10.0f);
 		kid.transform.rotation = Quaternion.AngleAxis(90,Vector3.forward)*Quaternion.AngleAxis(90,Vector3.right)*Quaternion.AngleAxis(90,Vector3.up)*kid.transform.rotation;
+        //TODO kid.transform.position = get_connection_point
 		kid.transform.parent = parent.transform;
 		mParts[aId] = parent;
 		return parent;
@@ -34,7 +35,7 @@ public class BodyManager : FakeMonoBehaviour {
 		}
 		if(B == ZigJointId.Torso)
 		{
-			if(A == ZigJointId.Head)
+			if(A == ZigJointId.Neck)
 				return new Vector3(0,convert_units(aBTex.height/2.0*0.8),0);
 			else if(A == ZigJointId.LeftShoulder)
 				return new Vector3(convert_units(-aBTex.width/2.0*0.8),convert_units(aBTex.height/2.0*0.8),0);
@@ -89,9 +90,17 @@ public class BodyManager : FakeMonoBehaviour {
 
     public override void Update()
     {
+        
 		foreach(KeyValuePair<GradingManager.WeightedZigJointPair,ProjectionManager.Smoothing> e in mManager.mProjectionManager.mImportant)
 		{
-			mParts[e.Key.B].transform.localRotation = Quaternion.AngleAxis(e.Value.current,Vector3.forward);
+            if (e.Key.A == ZigJointId.None)
+            {
+                //TODO
+            }
+            else
+            {
+                mParts[e.Key.A].transform.localRotation = Quaternion.AngleAxis(e.Value.current, Vector3.forward);
+            }
 		}
 	}
 	
@@ -99,7 +108,7 @@ public class BodyManager : FakeMonoBehaviour {
 	{
 		GameObject torso = create_object(ZigJointId.Torso,aChar.torso);
 		GameObject waist = create_object(ZigJointId.Waist,aChar.waist);
-		GameObject head = create_object(ZigJointId.Head,aChar.head);
+		GameObject head = create_object(ZigJointId.Neck,aChar.head);
 		GameObject leftUpperArm = create_object(ZigJointId.LeftShoulder,aChar.leftUpperArm);
 		GameObject rightUpperArm = create_object(ZigJointId.RightShoulder,aChar.rightUpperArm);
 		GameObject leftLowerArm = create_object(ZigJointId.LeftElbow,aChar.leftLowerArm);
@@ -109,9 +118,10 @@ public class BodyManager : FakeMonoBehaviour {
 		GameObject leftLowerLeg = create_object(ZigJointId.LeftKnee,aChar.leftLowerLeg);
 		GameObject rightLowerLeg = create_object(ZigJointId.RightKnee,aChar.rightLowerLeg);
 		
+        //TODO connect waist somewhere??
 		torso.transform.position = get_connection_point(ZigJointId.Torso,ZigJointId.Waist,aChar.waist);
-		torso.transform.parent = waist.transform;
-		head.transform.position = get_connection_point(ZigJointId.Head,ZigJointId.Torso,aChar.torso);
+		torso.transform.parent = waist.transform;//TODO DELEE we don't need this anymore
+		head.transform.position = get_connection_point(ZigJointId.Neck,ZigJointId.Torso,aChar.torso);
 		head.transform.parent = torso.transform;
 		leftUpperArm.transform.position = get_connection_point(ZigJointId.LeftShoulder,ZigJointId.Torso,aChar.torso);
 		leftUpperArm.transform.parent = torso.transform;

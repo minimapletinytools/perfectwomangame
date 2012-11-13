@@ -38,8 +38,8 @@ public class GradingManager : FakeMonoBehaviour {
         mImportant.Add(new WeightedZigJointPair(ZigJointId.LeftKnee, ZigJointId.LeftAnkle, 1));
         mImportant.Add(new WeightedZigJointPair(ZigJointId.Neck, ZigJointId.Head, 1));
         mImportant.Add(new WeightedZigJointPair(ZigJointId.Torso, ZigJointId.Neck, 1));
-        mImportant.Add(new WeightedZigJointPair(ZigJointId.Waist, ZigJointId.Torso, 1));
-		mImportant.Add(new WeightedZigJointPair(ZigJointId.None, ZigJointId.Waist, 1));
+        mImportant.Add(new WeightedZigJointPair(ZigJointId.Torso, ZigJointId.Waist, 1));
+		mImportant.Add(new WeightedZigJointPair(ZigJointId.None, ZigJointId.Torso, 1));
         
         Pose p = new Pose();
 	}
