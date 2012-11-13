@@ -17,8 +17,6 @@ public class BodyManager : FakeMonoBehaviour {
 		GameObject kid = GameObject.CreatePrimitive(PrimitiveType.Plane);
 		kid.transform.localScale = new Vector3(convert_units(aTex.width)/10.0f,1,convert_units(aTex.height)/10.0f);
 		kid.transform.rotation = Quaternion.AngleAxis(90,Vector3.forward)*Quaternion.AngleAxis(90,Vector3.right)*Quaternion.AngleAxis(90,Vector3.up)*kid.transform.rotation;
-		//TODO S R T kid
-		
 		kid.transform.parent = parent.transform;
 		mParts[aId] = parent;
 		return parent;
@@ -91,6 +89,10 @@ public class BodyManager : FakeMonoBehaviour {
 
     public override void Update()
     {
+		foreach(KeyValuePair<GradingManager.WeightedZigJointPair,ProjectionManager.Smoothing> e in mManager.mProjectionManager.mImportant)
+		{
+			mParts[e.Key.B].transform.localRotation = Quaternion.AngleAxis(e.Value.current,Vector3.forward);
+		}
 	}
 	
 	public void create_body(CharacterTextureBehaviour aChar)

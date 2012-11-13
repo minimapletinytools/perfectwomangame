@@ -12,7 +12,7 @@ public class ProjectionManager : FakeMonoBehaviour {
 		public float current = 0;
 		public float start = 0;
 	}
-	Dictionary<GradingManager.WeightedZigJointPair,Smoothing> mImportant = new Dictionary<GradingManager.WeightedZigJointPair, Smoothing>(new GradingManager.WeightedZigJointPairComparer());
+	public Dictionary<GradingManager.WeightedZigJointPair,Smoothing> mImportant = new Dictionary<GradingManager.WeightedZigJointPair, Smoothing>(new GradingManager.WeightedZigJointPairComparer());
 	public override void Start () {
         mImportant[new GradingManager.WeightedZigJointPair(ZigJointId.LeftShoulder, ZigJointId.LeftElbow,1)] = new Smoothing();
         mImportant[new GradingManager.WeightedZigJointPair(ZigJointId.LeftElbow, ZigJointId.LeftHand, 1)] = new Smoothing();
