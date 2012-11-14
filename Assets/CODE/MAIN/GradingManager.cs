@@ -26,7 +26,7 @@ public class GradingManager : FakeMonoBehaviour {
     public class Pose
     {
         public Dictionary<ZigJointId, ZigInputJoint> mPose = new Dictionary<ZigJointId, ZigInputJoint>();
-
+        
     }
 
     List<WeightedZigJointPair> mImportant = new List<WeightedZigJointPair>();
@@ -36,6 +36,10 @@ public class GradingManager : FakeMonoBehaviour {
         mImportant.Add(new WeightedZigJointPair(ZigJointId.LeftElbow, ZigJointId.LeftHand, 1));
         mImportant.Add(new WeightedZigJointPair(ZigJointId.LeftHip, ZigJointId.LeftKnee, 1));
         mImportant.Add(new WeightedZigJointPair(ZigJointId.LeftKnee, ZigJointId.LeftAnkle, 1));
+        mImportant.Add(new WeightedZigJointPair(ZigJointId.RightShoulder, ZigJointId.RightElbow, 1));
+        mImportant.Add(new WeightedZigJointPair(ZigJointId.RightElbow, ZigJointId.RightHand, 1));
+        mImportant.Add(new WeightedZigJointPair(ZigJointId.RightHip, ZigJointId.RightKnee, 1));
+        mImportant.Add(new WeightedZigJointPair(ZigJointId.RightKnee, ZigJointId.RightAnkle, 1));
         mImportant.Add(new WeightedZigJointPair(ZigJointId.Neck, ZigJointId.Head, 1));
         mImportant.Add(new WeightedZigJointPair(ZigJointId.Torso, ZigJointId.Neck, 1));
         mImportant.Add(new WeightedZigJointPair(ZigJointId.Torso, ZigJointId.Waist, 1));
@@ -43,7 +47,24 @@ public class GradingManager : FakeMonoBehaviour {
         
         Pose p = new Pose();
 	}
-
+    public string print_pose()
+    {
+        record_pose();
+        return print_pose(mPoses[0]);
+    }
+    public string print_pose(Pose aPose)
+    {
+        string s = "";
+        foreach (WeightedZigJointPair e in mImportant)
+        {
+            if (e.A != ZigJointId.None)
+            {
+                float actual = mManager.mProjectionManager.get_relative(mManager.mZigManager.Joints[e.A], mManager.mZigManager.Joints[e.B]);
+                s += e.A.ToString() + " " + e.B.ToString() + " " + actual.ToString() + "\n";
+            }
+        }
+        return s;
+    }
     public void record_pose()
     {
         Pose p = new Pose();

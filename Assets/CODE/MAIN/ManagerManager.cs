@@ -26,6 +26,7 @@ public class ManagerManager : MonoBehaviour{
     public ZigManager mZigManager;
 	public ProjectionManager mProjectionManager;
     public BodyManager mBodyManager;
+    public GradingManager mGradingManager;
 	
 
     public PrefabReferenceBehaviour mReferences;
@@ -41,7 +42,7 @@ public class ManagerManager : MonoBehaviour{
 		mZigManager = new ZigManager(this);
 		mProjectionManager = new ProjectionManager(this);
         mBodyManager = new BodyManager(this);
-        
+        mGradingManager = new GradingManager(this);
 
 		if(mStartDelegates != null) 
 			mStartDelegates();

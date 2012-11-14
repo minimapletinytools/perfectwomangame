@@ -18,6 +18,10 @@ public class ProjectionManager : FakeMonoBehaviour {
         mImportant[new GradingManager.WeightedZigJointPair(ZigJointId.LeftElbow, ZigJointId.LeftHand, 1)] = new Smoothing();
         mImportant[new GradingManager.WeightedZigJointPair(ZigJointId.LeftHip, ZigJointId.LeftKnee, 1)] = new Smoothing();
         mImportant[new GradingManager.WeightedZigJointPair(ZigJointId.LeftKnee, ZigJointId.LeftAnkle, 1)] = new Smoothing();
+        mImportant[new GradingManager.WeightedZigJointPair(ZigJointId.RightShoulder, ZigJointId.RightElbow, 1)] = new Smoothing();
+        mImportant[new GradingManager.WeightedZigJointPair(ZigJointId.RightElbow, ZigJointId.RightHand, 1)] = new Smoothing();
+        mImportant[new GradingManager.WeightedZigJointPair(ZigJointId.RightHip, ZigJointId.RightKnee, 1)] = new Smoothing();
+        mImportant[new GradingManager.WeightedZigJointPair(ZigJointId.RightKnee, ZigJointId.RightAnkle, 1)] = new Smoothing();
         mImportant[new GradingManager.WeightedZigJointPair(ZigJointId.Neck, ZigJointId.Head, 1)] = new Smoothing();
         mImportant[new GradingManager.WeightedZigJointPair(ZigJointId.Torso, ZigJointId.Neck, 1)] = new Smoothing();
 		mImportant[new GradingManager.WeightedZigJointPair(ZigJointId.Torso, ZigJointId.Waist, 1)] = new Smoothing();

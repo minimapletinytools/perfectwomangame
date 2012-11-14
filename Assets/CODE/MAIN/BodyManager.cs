@@ -15,10 +15,23 @@ public class BodyManager : FakeMonoBehaviour {
 	{
 		GameObject parent = new GameObject("genParent"+aId.ToString());
 		GameObject kid = GameObject.CreatePrimitive(PrimitiveType.Plane);
-		kid.transform.localScale = new Vector3(convert_units(aTex.width)/10.0f,1,convert_units(aTex.height)/10.0f);
-		kid.transform.rotation = Quaternion.AngleAxis(90,Vector3.forward)*Quaternion.AngleAxis(90,Vector3.right)*Quaternion.AngleAxis(90,Vector3.up)*kid.transform.rotation;
-        //TODO kid.transform.position = get_connection_point
+        kid.transform.rotation =  Quaternion.AngleAxis(90, Vector3.right) * kid.transform.rotation;
+        kid.transform.localScale = new Vector3(convert_units(aTex.width) / 10.0f, 1, convert_units(aTex.height) / 10.0f);
+        if (aId == ZigJointId.Neck || aId == ZigJointId.Torso)
+            kid.transform.position = new Vector3(0, convert_units(aTex.height / 2.0f * 0.8f), 0);
+        if (aId == ZigJointId.LeftShoulder || aId == ZigJointId.RightShoulder || aId == ZigJointId.LeftHip || aId == ZigJointId.RightHip || 
+            aId == ZigJointId.LeftElbow || aId == ZigJointId.RightElbow || aId == ZigJointId.LeftKnee || aId == ZigJointId.RightKnee || aId == ZigJointId.Waist)
+            kid.transform.position = new Vector3(0, convert_units(-aTex.height / 2.0f * 0.8f), 0);
+
+        /*GameObject tempParent = new GameObject("genTempParent");
+        kid.transform.parent = tempParent.transform;
+        if (aId == ZigJointId.LeftShoulder || aId == ZigJointId.RightShoulder || aId == ZigJointId.LeftHip || aId == ZigJointId.RightHip || aId == ZigJointId.Neck || aId == ZigJointId.Waist)
+            tempParent.transform.rotation = Quaternion.AngleAxis(-90, Vector3.forward) * tempParent.transform.rotation;
 		kid.transform.parent = parent.transform;
+        GameObject.Destroy(tempParent);*/
+
+        kid.transform.parent = parent.transform;
+
 		mParts[aId] = parent;
 		return parent;
 	}
@@ -120,7 +133,7 @@ public class BodyManager : FakeMonoBehaviour {
 		
         //TODO connect waist somewhere??
 		torso.transform.position = get_connection_point(ZigJointId.Torso,ZigJointId.Waist,aChar.waist);
-		torso.transform.parent = waist.transform;//TODO DELEE we don't need this anymore
+		//torso.transform.parent = waist.transform;//TODO DELEE we don't need this anymore
 		head.transform.position = get_connection_point(ZigJointId.Neck,ZigJointId.Torso,aChar.torso);
 		head.transform.parent = torso.transform;
 		leftUpperArm.transform.position = get_connection_point(ZigJointId.LeftShoulder,ZigJointId.Torso,aChar.torso);
@@ -133,9 +146,9 @@ public class BodyManager : FakeMonoBehaviour {
 		rightLowerArm.transform.parent = rightUpperArm.transform;
 		
 		leftUpperLeg.transform.position = get_connection_point(ZigJointId.LeftHip,ZigJointId.Waist,aChar.torso);
-		leftUpperLeg.transform.parent = torso.transform;
+		leftUpperLeg.transform.parent = waist.transform;
 		rightUpperLeg.transform.position = get_connection_point(ZigJointId.RightHip,ZigJointId.Waist,aChar.torso);
-		rightUpperLeg.transform.parent = torso.transform;
+		rightUpperLeg.transform.parent = waist.transform;
 		leftLowerLeg.transform.position = get_connection_point(ZigJointId.LeftElbow,ZigJointId.LeftHip,aChar.leftUpperLeg);
 		leftLowerLeg.transform.parent = leftUpperLeg.transform;
 		rightLowerLeg.transform.position = get_connection_point(ZigJointId.RightElbow,ZigJointId.RightHip,aChar.rightUpperLeg);
