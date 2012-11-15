@@ -7,6 +7,14 @@ public class BodyManager : FakeMonoBehaviour {
 
     Dictionary<ZigJointId, GameObject> mParts = new Dictionary<ZigJointId, GameObject>();
 	
+	
+	public Vector3 get_offset_of_plane(Transform aGo)
+	{
+		Transform plane = aGo.FindChild("Plane");
+		if(plane != null)
+			return plane.position - aGo.transform.position;
+		throw new UnityException("no plane child exsits");
+	}
 	public float convert_units(double pixelWidth)
 	{
 		return (float)pixelWidth/100.0f; //100 pixels = 1 unit
@@ -36,7 +44,8 @@ public class BodyManager : FakeMonoBehaviour {
 		if(B == ZigJointId.Waist)
 		{
 			if(A == ZigJointId.Torso)
-				return new Vector3(0,convert_units(aBTex.height/2.0*0.8),0);
+				return Vector3.zero;
+				//return new Vector3(0,convert_units(aBTex.height/2.0*0.8),0);
 			else if(A == ZigJointId.LeftHip)
 				return new Vector3(convert_units(aBTex.width/2.0*0.8),convert_units(-aBTex.height/2.0*0.8),0);
 			else if(A == ZigJointId.RightHip)
@@ -59,7 +68,8 @@ public class BodyManager : FakeMonoBehaviour {
 		}
 		else if(A != ZigJointId.None)
 		{
-			return new Vector3(0,-convert_units(aBTex.height/2.0 - aBTex.width*0.1),0);
+			//Debug.Log (A.ToString() + " " + B.ToString());
+			return new Vector3(0,convert_units(-aBTex.height/2.0f*0.8f),0);
 		}
 		else
 		{
@@ -101,7 +111,7 @@ public class BodyManager : FakeMonoBehaviour {
 
     public override void Update()
     {
-        
+        /*
 		foreach(KeyValuePair<GradingManager.WeightedZigJointPair,ProjectionManager.Smoothing> e in mManager.mProjectionManager.mImportant)
 		{
             if (e.Key.A == ZigJointId.None)
@@ -112,7 +122,7 @@ public class BodyManager : FakeMonoBehaviour {
             {
                 mParts[e.Key.A].transform.localRotation = Quaternion.AngleAxis(e.Value.current, Vector3.forward);
             }
-		}
+		}*/
 	}
 	
 	public void create_body(CharacterTextureBehaviour aChar)
@@ -129,51 +139,81 @@ public class BodyManager : FakeMonoBehaviour {
 		GameObject leftLowerLeg = create_object(ZigJointId.LeftKnee,aChar.leftLowerLeg);
 		GameObject rightLowerLeg = create_object(ZigJointId.RightKnee,aChar.rightLowerLeg);
 		
+		Dictionary<ZigJointId, GameObject> jointObject = new Dictionary<ZigJointId, GameObject>();
+		Dictionary<ZigJointId, Texture2D> jointTexture = new Dictionary<ZigJointId, Texture2D>();
+		jointObject[ZigJointId.Torso] = torso;
+		jointObject[ZigJointId.Waist] = waist;
+		jointObject[ZigJointId.Neck] = head;
+		jointObject[ZigJointId.LeftShoulder] = leftUpperArm;
+		jointObject[ZigJointId.RightShoulder] = rightUpperArm;
+		jointObject[ZigJointId.LeftElbow] = leftLowerArm;
+		jointObject[ZigJointId.RightElbow] = rightLowerArm;
+		jointObject[ZigJointId.LeftHip] = leftUpperLeg;
+		jointObject[ZigJointId.RightHip] = rightUpperLeg;
+		jointObject[ZigJointId.LeftKnee] = leftLowerLeg;
+		jointObject[ZigJointId.RightKnee] = rightLowerLeg;
 		
+		jointTexture[ZigJointId.Torso] = aChar.torso;
+		jointTexture[ZigJointId.Waist] = aChar.waist;
+		jointTexture[ZigJointId.Neck] = aChar.head;
+		jointTexture[ZigJointId.LeftShoulder] = aChar.leftUpperArm;
+		jointTexture[ZigJointId.RightShoulder] = aChar.rightUpperArm;
+		jointTexture[ZigJointId.LeftElbow] = aChar.leftLowerArm;
+		jointTexture[ZigJointId.RightElbow] = aChar.rightLowerArm;
+		jointTexture[ZigJointId.LeftHip] = aChar.leftUpperLeg;
+		jointTexture[ZigJointId.RightHip] = aChar.rightUpperLeg;
+		jointTexture[ZigJointId.LeftKnee] = aChar.leftLowerLeg;
+		jointTexture[ZigJointId.RightKnee] = aChar.rightLowerLeg;
+		
+		List<KeyValuePair<ZigJointId,ZigJointId>> relations = new List<KeyValuePair<ZigJointId, ZigJointId>>();
+		
+		
+		relations.Add(new KeyValuePair<ZigJointId,ZigJointId>(ZigJointId.LeftShoulder,ZigJointId.Torso));
+		relations.Add(new KeyValuePair<ZigJointId,ZigJointId>(ZigJointId.RightShoulder,ZigJointId.Torso));
+		relations.Add(new KeyValuePair<ZigJointId,ZigJointId>(ZigJointId.LeftElbow,ZigJointId.LeftShoulder));
+		relations.Add(new KeyValuePair<ZigJointId,ZigJointId>(ZigJointId.RightElbow,ZigJointId.RightShoulder));
+		
+		relations.Add(new KeyValuePair<ZigJointId,ZigJointId>(ZigJointId.LeftHip,ZigJointId.Waist));
+		relations.Add(new KeyValuePair<ZigJointId,ZigJointId>(ZigJointId.RightHip,ZigJointId.Waist));
+		relations.Add(new KeyValuePair<ZigJointId,ZigJointId>(ZigJointId.LeftKnee,ZigJointId.LeftHip));
+		relations.Add(new KeyValuePair<ZigJointId,ZigJointId>(ZigJointId.RightKnee,ZigJointId.RightHip));
+		
+		relations.Add(new KeyValuePair<ZigJointId,ZigJointId>(ZigJointId.Neck,ZigJointId.Torso));
+		
+		//these two are special
 		torso.transform.position = get_connection_point(ZigJointId.Torso,ZigJointId.Waist,aChar.waist);
 		waist.transform.position = get_connection_point(ZigJointId.Waist,ZigJointId.Torso,aChar.torso);
 		
-		head.transform.parent = torso.transform;
-		head.transform.position = head.transform.parent.position + get_connection_point(ZigJointId.Neck,ZigJointId.Torso,aChar.torso);
+		foreach(KeyValuePair<ZigJointId,ZigJointId> e in relations)
+		{
+			jointObject[e.Key].transform.parent = jointObject[e.Value].transform;
+			jointObject[e.Key].transform.position = 
+				jointObject[e.Value].transform.position
+				+ get_offset_of_plane(jointObject[e.Value].transform)
+				+ get_connection_point(e.Key,e.Value,jointTexture[e.Value]);
+		}
 		
-		leftUpperArm.transform.parent = torso.transform;
-		leftUpperArm.transform.localPosition = leftUpperArm.transform.parent.global_scale().component_inverse().component_multiply(get_connection_point(ZigJointId.LeftShoulder,ZigJointId.Torso,aChar.torso));
-		//leftUpperArm.transform.position = leftUpperArm.transform.parent.position + get_connection_point(ZigJointId.LeftShoulder,ZigJointId.Torso,aChar.torso);
-		
-		rightUpperArm.transform.parent = torso.transform;
-		rightUpperArm.transform.position = rightUpperArm.transform.parent.position + get_connection_point(ZigJointId.RightShoulder,ZigJointId.Torso,aChar.torso);
-		
-		leftLowerArm.transform.parent = leftUpperArm.transform;
-		//leftLowerArm.transform.localPosition = leftLowerArm.transform.parent.global_scale().component_inverse().component_multiply(get_connection_point(ZigJointId.LeftElbow,ZigJointId.LeftShoulder,aChar.leftUpperArm));
-		leftLowerArm.transform.position = leftLowerArm.transform.parent.position + get_connection_point(ZigJointId.LeftElbow,ZigJointId.LeftShoulder,aChar.leftUpperArm);
-		
-		rightLowerArm.transform.parent = rightUpperArm.transform;
-		rightLowerArm.transform.position = rightLowerArm.transform.parent.position + get_connection_point(ZigJointId.RightElbow,ZigJointId.RightShoulder,aChar.rightUpperArm);
-		
-		leftUpperLeg.transform.parent = waist.transform;
-		leftUpperLeg.transform.position = leftUpperLeg.transform.parent.position + get_connection_point(ZigJointId.LeftHip,ZigJointId.Waist,aChar.torso);
-		
-		rightUpperLeg.transform.parent = waist.transform;
-		rightUpperLeg.transform.position = rightUpperLeg.transform.parent.position + get_connection_point(ZigJointId.RightHip,ZigJointId.Waist,aChar.torso);
-		
-		leftLowerLeg.transform.parent = leftUpperLeg.transform;
-		leftLowerLeg.transform.position = leftLowerLeg.transform.parent.position + get_connection_point(ZigJointId.LeftElbow,ZigJointId.LeftHip,aChar.leftUpperLeg);
-		
-		rightLowerLeg.transform.parent = rightUpperLeg.transform;
-		rightLowerLeg.transform.position = rightLowerLeg.transform.parent.position + get_connection_point(ZigJointId.RightElbow,ZigJointId.RightHip,aChar.rightUpperLeg);
-		
-		
-		List<GameObject> rotateMe;
+		List<GameObject> rotateMe = new List<GameObject>();
 		rotateMe.Add(leftUpperArm);
 		rotateMe.Add(rightUpperArm);
-		//rotateMe.Add(leftUpperArm);
-		//rotateMe.Add(leftUpperArm);
-        GameObject tempParent = new GameObject("genTempParent");
-        kid.transform.parent = tempParent.transform;
-        if (aId == ZigJointId.LeftShoulder || aId == ZigJointId.RightShoulder || aId == ZigJointId.LeftHip || aId == ZigJointId.RightHip || aId == ZigJointId.Neck || aId == ZigJointId.Waist)
-            tempParent.transform.rotation = Quaternion.AngleAxis(-90, Vector3.forward) * tempParent.transform.rotation;
-		kid.transform.parent = parent.transform;
-        GameObject.Destroy(tempParent);
-		
+		rotateMe.Add(leftUpperLeg);
+		rotateMe.Add(rightUpperLeg);
+		rotateMe.Add(head);
+		//rotateMe.Add(waist);
+		foreach(GameObject e in rotateMe)
+		{
+			GameObject tempParent = new GameObject("genTempParent");
+			tempParent.transform.position = e.transform.position;
+			List<Transform> children = new List<Transform>();
+			for(int i = 0; i < e.transform.GetChildCount(); i++)
+				if(e.transform.GetChild(i).parent == e.transform)
+					children.Add(e.transform.GetChild(i));
+			foreach(Transform f in children)
+				f.parent = tempParent.transform;
+			tempParent.transform.rotation = Quaternion.AngleAxis(-90, Vector3.forward) * tempParent.transform.rotation;
+			foreach(Transform f in children)
+				f.parent = e.transform;
+			GameObject.Destroy(tempParent);
+		}
 	}
 }
