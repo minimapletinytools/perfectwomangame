@@ -1,3 +1,7 @@
+::TODO::
+-scan images for connection points instead of using relative positions
+-put in lea's characetr
+
 :::backend::
 ::input dictionary::
 DONE-stores input, position and rotation of all joints
