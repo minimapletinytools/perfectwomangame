@@ -26,6 +26,8 @@ public class BodyManager : FakeMonoBehaviour {
 		sphere.transform.localScale = Vector3.one * 0.2f;
 		sphere.transform.parent = parent.transform;
 		GameObject kid = GameObject.CreatePrimitive(PrimitiveType.Plane);
+		kid.renderer.material = new Material(mManager.mReferences.mDefaultCharacterShader);
+		kid.renderer.material.mainTexture = aTex;
         kid.transform.rotation =  Quaternion.AngleAxis(90, Vector3.right) * kid.transform.rotation;
         kid.transform.localScale = new Vector3(convert_units(aTex.width) / 10.0f, 1, convert_units(aTex.height) / 10.0f);
         if (aId == ZigJointId.Neck || aId == ZigJointId.Torso)
