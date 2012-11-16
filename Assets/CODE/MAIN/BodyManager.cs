@@ -113,7 +113,7 @@ public class BodyManager : FakeMonoBehaviour {
 
     public override void Update()
     {
-        /*
+        
 		foreach(KeyValuePair<GradingManager.WeightedZigJointPair,ProjectionManager.Smoothing> e in mManager.mProjectionManager.mImportant)
 		{
             if (e.Key.A == ZigJointId.None)
@@ -124,7 +124,7 @@ public class BodyManager : FakeMonoBehaviour {
             {
                 mParts[e.Key.A].transform.localRotation = Quaternion.AngleAxis(e.Value.current, Vector3.forward);
             }
-		}*/
+		}
 	}
 	
 	public void create_body(CharacterTextureBehaviour aChar)
@@ -194,27 +194,34 @@ public class BodyManager : FakeMonoBehaviour {
 				+ get_offset_of_plane(jointObject[e.Value].transform)
 				+ get_connection_point(e.Key,e.Value,jointTexture[e.Value]);
 		}
-		
-		List<GameObject> rotateMe = new List<GameObject>();
-		rotateMe.Add(leftUpperArm);
-		rotateMe.Add(rightUpperArm);
-		rotateMe.Add(leftUpperLeg);
-		rotateMe.Add(rightUpperLeg);
-		rotateMe.Add(head);
+
+        List<KeyValuePair<GameObject, float>> rotateMe = new List<KeyValuePair<GameObject, float>>();
+		//rotateMe.Add(new KeyValuePair<GameObject, float>(leftUpperArm,-90));
+		//rotateMe.Add(new KeyValuePair<GameObject, float>(rightUpperArm,-90));
+        
+		rotateMe.Add(new KeyValuePair<GameObject, float>(leftUpperLeg,-90));
+		rotateMe.Add(new KeyValuePair<GameObject, float>(rightUpperLeg,-90));
+        rotateMe.Add(new KeyValuePair<GameObject, float>(torso,-90));
+        rotateMe.Add(new KeyValuePair<GameObject, float>(head, -90));
+
+        rotateMe.Add(new KeyValuePair<GameObject, float>(leftLowerLeg,180));
+        rotateMe.Add(new KeyValuePair<GameObject, float>(rightLowerLeg,180));
+        rotateMe.Add(new KeyValuePair<GameObject, float>(leftLowerArm,180));
+        rotateMe.Add(new KeyValuePair<GameObject, float>(rightLowerArm,180));
 		//rotateMe.Add(waist);
-		foreach(GameObject e in rotateMe)
+        foreach (KeyValuePair<GameObject, float> e in rotateMe)
 		{
 			GameObject tempParent = new GameObject("genTempParent");
-			tempParent.transform.position = e.transform.position;
+			tempParent.transform.position = e.Key.transform.position;
 			List<Transform> children = new List<Transform>();
-			for(int i = 0; i < e.transform.GetChildCount(); i++)
-				if(e.transform.GetChild(i).parent == e.transform)
-					children.Add(e.transform.GetChild(i));
+			for(int i = 0; i < e.Key.transform.GetChildCount(); i++)
+				if(e.Key.transform.GetChild(i).parent == e.Key.transform)
+					children.Add(e.Key.transform.GetChild(i));
 			foreach(Transform f in children)
 				f.parent = tempParent.transform;
-			tempParent.transform.rotation = Quaternion.AngleAxis(-90, Vector3.forward) * tempParent.transform.rotation;
+			tempParent.transform.rotation = Quaternion.AngleAxis(e.Value, Vector3.forward) * tempParent.transform.rotation;
 			foreach(Transform f in children)
-				f.parent = e.transform;
+				f.parent = e.Key.transform;
 			GameObject.Destroy(tempParent);
 		}
 	}
