@@ -122,7 +122,7 @@ public class BodyManager : FakeMonoBehaviour {
             }
             else
             {
-                mParts[e.Key.A].transform.localRotation = Quaternion.AngleAxis(e.Value.current, Vector3.forward);
+                mParts[e.Key.A].transform.rotation = Quaternion.AngleAxis(e.Value.current, Vector3.forward);
             }
 		}
 	}
@@ -196,18 +196,18 @@ public class BodyManager : FakeMonoBehaviour {
 		}
 
         List<KeyValuePair<GameObject, float>> rotateMe = new List<KeyValuePair<GameObject, float>>();
-		//rotateMe.Add(new KeyValuePair<GameObject, float>(leftUpperArm,-90));
-		//rotateMe.Add(new KeyValuePair<GameObject, float>(rightUpperArm,-90));
+		rotateMe.Add(new KeyValuePair<GameObject, float>(leftUpperArm,90));
+		rotateMe.Add(new KeyValuePair<GameObject, float>(rightUpperArm,90));
         
-		rotateMe.Add(new KeyValuePair<GameObject, float>(leftUpperLeg,-90));
-		rotateMe.Add(new KeyValuePair<GameObject, float>(rightUpperLeg,-90));
-        rotateMe.Add(new KeyValuePair<GameObject, float>(torso,-90));
-        rotateMe.Add(new KeyValuePair<GameObject, float>(head, -90));
+		rotateMe.Add(new KeyValuePair<GameObject, float>(leftUpperLeg,90));
+		rotateMe.Add(new KeyValuePair<GameObject, float>(rightUpperLeg,90));
+        rotateMe.Add(new KeyValuePair<GameObject, float>(torso,90));
+        rotateMe.Add(new KeyValuePair<GameObject, float>(head,90));
 
-        rotateMe.Add(new KeyValuePair<GameObject, float>(leftLowerLeg,180));
-        rotateMe.Add(new KeyValuePair<GameObject, float>(rightLowerLeg,180));
-        rotateMe.Add(new KeyValuePair<GameObject, float>(leftLowerArm,180));
-        rotateMe.Add(new KeyValuePair<GameObject, float>(rightLowerArm,180));
+        rotateMe.Add(new KeyValuePair<GameObject, float>(leftLowerLeg,90));
+        rotateMe.Add(new KeyValuePair<GameObject, float>(rightLowerLeg,90));
+        rotateMe.Add(new KeyValuePair<GameObject, float>(leftLowerArm,90));
+        rotateMe.Add(new KeyValuePair<GameObject, float>(rightLowerArm,90));
 		//rotateMe.Add(waist);
         foreach (KeyValuePair<GameObject, float> e in rotateMe)
 		{

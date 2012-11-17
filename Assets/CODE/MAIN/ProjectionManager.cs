@@ -47,8 +47,10 @@ public class ProjectionManager : FakeMonoBehaviour {
 		Vector3 v = B.Position - A.Position;
 		Vector3 projected = Vector3.Exclude(mNormal,v);
 		float r = Vector3.Angle(right,v);
-		if(Vector3.Dot(Vector3.Cross(v,projected),mNormal) < 0)
-			r += Mathf.PI;
+        if (Vector3.Dot(Vector3.Cross(right, projected), mNormal) < 0)
+        {
+            r *= -1;
+        }
 		return r;
 	}
 	
