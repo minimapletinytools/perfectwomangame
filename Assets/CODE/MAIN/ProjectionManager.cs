@@ -51,7 +51,7 @@ public class ProjectionManager : FakeMonoBehaviour {
         {
             r *= -1;
         }
-		return r;
+		return -r;
 	}
 	
 	
