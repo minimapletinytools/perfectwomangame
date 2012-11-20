@@ -14,6 +14,18 @@ public class CharacterTextureBehaviour : MonoBehaviour {
 	public Texture2D leftLowerLeg;
 	public Texture2D rightUpperLeg;
 	public Texture2D rightLowerLeg;
+
+    public Texture2D atHead;
+    public Texture2D atTorso;
+    public Texture2D atWaist;
+    public Texture2D atLeftUpperArm;
+    public Texture2D atLeftLowerArm;
+    public Texture2D atRightUpperArm;
+    public Texture2D atRightLowerArm;
+    public Texture2D atLeftUpperLeg;
+    public Texture2D atLeftLowerLeg;
+    public Texture2D atRightUpperLeg;
+    public Texture2D atRightLowerLeg;
 	
 	public void reflect_limbs()
 	{
