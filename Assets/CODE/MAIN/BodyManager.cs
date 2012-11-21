@@ -24,12 +24,21 @@ public class BodyManager : FakeMonoBehaviour {
     {
         return c1.r == c2.r && c1.g == c2.g && c1.b == c2.b;
     }
-
+    public bool is_close_color(Color32 c1, Color32 c2)
+    {
+        return Mathf.Max(Mathf.Abs(c1.r - c2.r), Mathf.Max(Mathf.Abs(c1.g - c2.g), Mathf.Abs(c1.b - c2.b))) < 40;
+    }
+    public bool is_stupid_color(Color32 c1, Color32 c2)
+    {
+        return ((c1.r != 255 && c2.r != 255) || (c1.r == 255 && c2.r == 255)) &&
+            ((c1.g != 255 && c2.g != 255) || (c1.g == 255 && c2.g == 255)) &&
+            ((c1.b != 255 && c2.b != 255) || (c1.b == 255 && c2.b == 255));
+    }
     public Vector3 index_to_position(int i, Texture2D aTex)
     {
         int x = i % aTex.width - aTex.width/2;
         int y = i / aTex.height - aTex.height/2;
-        return new Vector3(convert_units(x * aTex.width), convert_units(y * aTex.height));
+        return new Vector3(-convert_units(x), -convert_units(y));
     }
 
     public Vector3 find_first_color(Color32 c, Texture2D aTex)
@@ -38,11 +47,14 @@ public class BodyManager : FakeMonoBehaviour {
         Color32[] colors = aTex.GetPixels32();
         for (int i = 0; i < colors.Length; i++)
         {
-            if (is_same_color(colors[i], c))
+            if (is_stupid_color(colors[i], c))
+            {
+            
                 return index_to_position(i, aTex);
+            }
         }
-        return Vector3.zero;
-        //throw new UnityException("color " + c.ToString() + " not found");
+        //return Vector3.zero;
+        throw new UnityException("color " + c.ToString() + " not found");
     }
 
     public Vector3 get_attachment_point(int aId, Texture2D aTex)
@@ -102,11 +114,11 @@ public class BodyManager : FakeMonoBehaviour {
         if(B == ZigJointId.Waist)
         {
             if(A == ZigJointId.Torso)
-                return get_attachment_point(1,aBTex);
+                return get_attachment_point(0,aBTex);
             else if(A == ZigJointId.LeftHip)
-                return get_attachment_point(2,aBTex);
+                return get_attachment_point(1,aBTex);
             else if(A == ZigJointId.RightHip)
-                return get_attachment_point(3,aBTex);
+                return get_attachment_point(2,aBTex);
         }
         else if(B == ZigJointId.Torso)
         {
@@ -223,7 +235,8 @@ public class BodyManager : FakeMonoBehaviour {
         GameObject rightUpperLeg = create_object(ZigJointId.RightHip, aChar.rightUpperLeg, aChar.atRightUpperLeg);
         GameObject leftLowerLeg = create_object(ZigJointId.LeftKnee, aChar.leftLowerLeg, aChar.atLeftLowerLeg);
         GameObject rightLowerLeg = create_object(ZigJointId.RightKnee, aChar.rightLowerLeg, aChar.atRightLowerLeg);
-		
+
+        Debug.Log("width " + aChar.atTorso.width + " " + aChar.atTorso.height);
 		Dictionary<ZigJointId, GameObject> jointObject = new Dictionary<ZigJointId, GameObject>();
 		Dictionary<ZigJointId, Texture2D> jointTexture = new Dictionary<ZigJointId, Texture2D>();
 		jointObject[ZigJointId.Torso] = torso;
