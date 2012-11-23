@@ -38,7 +38,7 @@ public class BodyManager : FakeMonoBehaviour {
     {
         int x = i % aTex.width - aTex.width/2;
         int y = i / aTex.height - aTex.height/2;
-        return new Vector3(-convert_units(x), -convert_units(y));
+        return new Vector3(convert_units(x), -convert_units(y));
     }
 
     public Vector3 find_first_color(Color32 c, Texture2D aTex)
