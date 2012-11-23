@@ -36,9 +36,11 @@ public class BodyManager : FakeMonoBehaviour {
     }
     public Vector3 index_to_position(int i, Texture2D aTex)
     {
+        
         int x = i % aTex.width - aTex.width/2;
-        int y = i / aTex.height - aTex.height/2;
-        return new Vector3(convert_units(x), -convert_units(y));
+        int y = i / aTex.width - aTex.height/2;
+
+        return new Vector3(-convert_units(x), convert_units(y));
     }
 
     public Vector3 find_first_color(Color32 c, Texture2D aTex)
@@ -46,8 +48,8 @@ public class BodyManager : FakeMonoBehaviour {
         
         Color32[] colors = aTex.GetPixels32();
         for (int i = 0; i < colors.Length; i++)
-        {
-            if (is_stupid_color(colors[i], c))
+        { 
+            if (is_same_color(colors[i], c))
             {
             
                 return index_to_position(i, aTex);
@@ -90,8 +92,9 @@ public class BodyManager : FakeMonoBehaviour {
 		kid.renderer.material = new Material(mManager.mReferences.mDefaultCharacterShader);
 		kid.renderer.material.mainTexture = aTex;
         kid.transform.rotation =  Quaternion.AngleAxis(90, Vector3.right) * kid.transform.rotation;
+        
         kid.transform.localScale = new Vector3(convert_units(aTex.width) / 10.0f, 1, convert_units(aTex.height) / 10.0f);
-        kid.transform.position = get_attachment_point(0, aAttachTex);
+        kid.transform.position = -get_attachment_point(0, aAttachTex);
         /*
         if (aId == ZigJointId.Neck || aId == ZigJointId.Torso)
             kid.transform.position = new Vector3(0, convert_units(aTex.height / 2.0f * 0.8f), 0);
@@ -123,11 +126,11 @@ public class BodyManager : FakeMonoBehaviour {
         else if(B == ZigJointId.Torso)
         {
             if(A == ZigJointId.Neck)
-                return get_attachment_point(1,aBTex);
-            else if(A == ZigJointId.LeftShoulder)
-                return get_attachment_point(2,aBTex);
-            else if(A == ZigJointId.RightShoulder)
                 return get_attachment_point(3,aBTex);
+            else if(A == ZigJointId.LeftShoulder)
+                return get_attachment_point(1,aBTex);
+            else if(A == ZigJointId.RightShoulder)
+                return get_attachment_point(2,aBTex);
         }
         else
         {
@@ -236,7 +239,6 @@ public class BodyManager : FakeMonoBehaviour {
         GameObject leftLowerLeg = create_object(ZigJointId.LeftKnee, aChar.leftLowerLeg, aChar.atLeftLowerLeg);
         GameObject rightLowerLeg = create_object(ZigJointId.RightKnee, aChar.rightLowerLeg, aChar.atRightLowerLeg);
 
-        Debug.Log("width " + aChar.atTorso.width + " " + aChar.atTorso.height);
 		Dictionary<ZigJointId, GameObject> jointObject = new Dictionary<ZigJointId, GameObject>();
 		Dictionary<ZigJointId, Texture2D> jointTexture = new Dictionary<ZigJointId, Texture2D>();
 		jointObject[ZigJointId.Torso] = torso;
@@ -277,33 +279,30 @@ public class BodyManager : FakeMonoBehaviour {
         jointTexture[ZigJointId.LeftKnee] = aChar.atLeftLowerLeg;
         jointTexture[ZigJointId.RightKnee] = aChar.atRightLowerLeg;
 
+
+        //these two are special
+        torso.transform.position = waist.transform.position;
+
 		List<KeyValuePair<ZigJointId,ZigJointId>> relations = new List<KeyValuePair<ZigJointId, ZigJointId>>();
-		
-		
 		relations.Add(new KeyValuePair<ZigJointId,ZigJointId>(ZigJointId.LeftShoulder,ZigJointId.Torso));
 		relations.Add(new KeyValuePair<ZigJointId,ZigJointId>(ZigJointId.RightShoulder,ZigJointId.Torso));
 		relations.Add(new KeyValuePair<ZigJointId,ZigJointId>(ZigJointId.LeftElbow,ZigJointId.LeftShoulder));
 		relations.Add(new KeyValuePair<ZigJointId,ZigJointId>(ZigJointId.RightElbow,ZigJointId.RightShoulder));
-		
 		relations.Add(new KeyValuePair<ZigJointId,ZigJointId>(ZigJointId.LeftHip,ZigJointId.Waist));
 		relations.Add(new KeyValuePair<ZigJointId,ZigJointId>(ZigJointId.RightHip,ZigJointId.Waist));
 		relations.Add(new KeyValuePair<ZigJointId,ZigJointId>(ZigJointId.LeftKnee,ZigJointId.LeftHip));
 		relations.Add(new KeyValuePair<ZigJointId,ZigJointId>(ZigJointId.RightKnee,ZigJointId.RightHip));
-		
 		relations.Add(new KeyValuePair<ZigJointId,ZigJointId>(ZigJointId.Neck,ZigJointId.Torso));
-		
-		//these two are special
-		torso.transform.position = get_connection_point(ZigJointId.Torso,ZigJointId.Waist,aChar.waist);
-		waist.transform.position = get_connection_point(ZigJointId.Waist,ZigJointId.Torso,aChar.torso);
 		
 		foreach(KeyValuePair<ZigJointId,ZigJointId> e in relations)
 		{
 			jointObject[e.Key].transform.parent = jointObject[e.Value].transform;
-			jointObject[e.Key].transform.position = 
-				jointObject[e.Value].transform.position
-				+ get_offset_of_plane(jointObject[e.Value].transform)
-				//+ get_connection_point(e.Key,e.Value,jointTexture[e.Value]);
+            jointObject[e.Key].transform.position =
+                jointObject[e.Value].transform.position
+                + get_offset_of_plane(jointObject[e.Value].transform)
                 + get_connection_point_image(e.Key, e.Value, jointTexture[e.Value]);
+				//+ get_connection_point(e.Key,e.Value,jointTexture[e.Value]);
+                
 		}
 
         List<KeyValuePair<GameObject, float>> rotateMe = new List<KeyValuePair<GameObject, float>>();
@@ -319,7 +318,7 @@ public class BodyManager : FakeMonoBehaviour {
         rotateMe.Add(new KeyValuePair<GameObject, float>(rightLowerLeg,-90));
         rotateMe.Add(new KeyValuePair<GameObject, float>(leftLowerArm,-90));
         rotateMe.Add(new KeyValuePair<GameObject, float>(rightLowerArm,-90));
-		//rotateMe.Add(waist);
+		
         foreach (KeyValuePair<GameObject, float> e in rotateMe)
 		{
 			GameObject tempParent = new GameObject("genTempParent");
