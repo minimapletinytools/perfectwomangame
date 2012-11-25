@@ -5,6 +5,36 @@ using System.Collections.Generic;
 public class BodyManager : FakeMonoBehaviour {
 	public BodyManager(ManagerManager aManager) : base(aManager) {}
 
+    public void set_character(CharacterTextureBehaviour aChar)
+    {
+        //TODO
+    }
+
+    public void set_transparent(GradingManager.Pose aPose)
+    {
+        //TODO
+        mMode = 1;
+        mTargetPose = aPose;
+        foreach (GameObject e in mParts.Values)
+        {
+            foreach(Renderer f in e.GetComponentsInChildren<Renderer>())
+            {
+                Color c = f.material.color;
+                c.a = 0.5f;
+                f.material.color = c;
+            }
+        }
+    }
+
+    public void destroy_character()
+    {
+        mMode = -1;
+        foreach (GameObject e in mParts.Values)
+            GameObject.Destroy(e);
+    }
+
+    int mMode = -1; // 0 - from kinect, 1 - from pose, 2 - record pose, -1 none
+    public GradingManager.Pose mTargetPose = null;
     Dictionary<ZigJointId, GameObject> mParts = new Dictionary<ZigJointId, GameObject>();
 	
 	public Vector3 get_offset_of_plane(Transform aGo)
@@ -211,7 +241,7 @@ public class BodyManager : FakeMonoBehaviour {
 
     public override void Update()
     {
-        
+        //TODO modes 
 		foreach(KeyValuePair<GradingManager.WeightedZigJointPair,ProjectionManager.Smoothing> e in mManager.mProjectionManager.mImportant)
 		{
             if (e.Key.A == ZigJointId.None)

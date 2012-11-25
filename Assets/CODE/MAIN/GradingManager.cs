@@ -23,10 +23,11 @@ public class GradingManager : FakeMonoBehaviour {
 			return ((int)pair.A)*100+((int)pair.B);
 	    }
 	}
+
+    [System.Serializable]
     public class Pose
     {
         public Dictionary<ZigJointId, ZigInputJoint> mPose = new Dictionary<ZigJointId, ZigInputJoint>();
-        
     }
 
     List<WeightedZigJointPair> mImportant = new List<WeightedZigJointPair>();
@@ -47,6 +48,22 @@ public class GradingManager : FakeMonoBehaviour {
         
         Pose p = new Pose();
 	}
+
+    public Pose read_pose(TextAsset aText)
+    {
+        Pose p = new Pose();
+        System.IO.MemoryStream stream = new System.IO.MemoryStream(aText.bytes);
+        System.Runtime.Serialization.IFormatter formatter = new System.Runtime.Serialization.Formatters.Binary.BinaryFormatter();
+        p = (Pose)formatter.Deserialize(stream);
+        return p;
+    }
+    public void write_pose_to_file(Pose p, string aFile)
+    {
+        System.IO.Stream stream = System.IO.File.Open(aFile, System.IO.FileMode.Create);
+        System.Runtime.Serialization.Formatters.Binary.BinaryFormatter bFormatter = new System.Runtime.Serialization.Formatters.Binary.BinaryFormatter();
+        bFormatter.Serialize(stream, p);
+        stream.Close();
+    }
     public string print_pose()
     {
         record_pose();

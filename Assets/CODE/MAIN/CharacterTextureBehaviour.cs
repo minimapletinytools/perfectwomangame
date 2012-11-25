@@ -26,9 +26,6 @@ public class CharacterTextureBehaviour : MonoBehaviour {
     public Texture2D atLeftLowerLeg;
     public Texture2D atRightUpperLeg;
     public Texture2D atRightLowerLeg;
-	
-	public void reflect_limbs()
-	{
-		//TODO
-	}
+
+    public TextAsset properPose;
 }
