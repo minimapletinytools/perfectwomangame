@@ -43,6 +43,8 @@ public class ProjectionManager : FakeMonoBehaviour {
 	{
 		if(A.Id == ZigJointId.None)
 			return 0; //TODO
+        return get_relative(A.Position, B.Position);
+        /*TODO DELETE
 		Vector3 right = Vector3.Cross(mUp,mNormal);
 		Vector3 v = B.Position - A.Position;
 		Vector3 projected = Vector3.Exclude(mNormal,v);
@@ -51,9 +53,22 @@ public class ProjectionManager : FakeMonoBehaviour {
         {
             r *= -1;
         }
-		return -r;
+		return -r;*/
 	}
-	
+
+
+    public float get_relative(Vector3 A, Vector3 B)
+    {
+        Vector3 right = Vector3.Cross(mUp, mNormal);
+        Vector3 v = B - A;
+        Vector3 projected = Vector3.Exclude(mNormal, v);
+        float r = Vector3.Angle(right, v);
+        if (Vector3.Dot(Vector3.Cross(right, projected), mNormal) < 0)
+        {
+            r *= -1;
+        }
+        return -r;
+    }
 	
 	public override void Update () {
         if (mManager.mZigManager.has_user())

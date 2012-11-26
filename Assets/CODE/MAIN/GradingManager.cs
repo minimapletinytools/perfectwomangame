@@ -82,11 +82,11 @@ public class GradingManager : FakeMonoBehaviour {
         }
         return s;
     }
-    public void record_pose()
+    public Pose record_pose()
     {
         Pose p = new Pose();
         p.mPose = new Dictionary<ZigJointId, ZigInputJoint>(mManager.mZigManager.Joints);
-        mPoses.Add(p);
+        return p; 
     }
     public float grade_pose(Pose aPose)
     {

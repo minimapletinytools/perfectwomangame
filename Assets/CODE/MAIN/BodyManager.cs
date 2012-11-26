@@ -241,18 +241,45 @@ public class BodyManager : FakeMonoBehaviour {
 
     public override void Update()
     {
-        //TODO modes 
-		foreach(KeyValuePair<GradingManager.WeightedZigJointPair,ProjectionManager.Smoothing> e in mManager.mProjectionManager.mImportant)
-		{
-            if (e.Key.A == ZigJointId.None)
+
+        if (mMode == 0)
+        {
+            foreach (KeyValuePair<GradingManager.WeightedZigJointPair, ProjectionManager.Smoothing> e in mManager.mProjectionManager.mImportant)
             {
-                //TODO
+                if (e.Key.A == ZigJointId.None)
+                {
+                    //TODO
+                }
+                else
+                {
+                    mParts[e.Key.A].transform.rotation = Quaternion.AngleAxis(e.Value.current, Vector3.forward);
+                }
             }
-            else
+        }
+        else if (mMode == 1)
+        {
+            foreach (KeyValuePair<GradingManager.WeightedZigJointPair, ProjectionManager.Smoothing> e in mManager.mProjectionManager.mImportant)
             {
-                mParts[e.Key.A].transform.rotation = Quaternion.AngleAxis(e.Value.current, Vector3.forward);
+                if (e.Key.A != ZigJointId.None)
+                {
+                    mParts[e.Key.A].transform.rotation = Quaternion.AngleAxis(mManager.mProjectionManager.get_relative(mTargetPose.mPose[e.Key.A], mTargetPose.mPose[e.Key.B]),Vector3.forward);
+                }
             }
-		}
+        }
+        else if (mMode == 2)
+        {
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                GradingManager.Pose p = new GradingManager.Pose();
+                foreach(KeyValuePair<ZigJointId,GameObject> e in mParts)
+                {
+                    ZigInputJoint joint = new ZigInputJoint(e.Key);
+                    joint.GoodPosition = true;
+                    joint.Position = e.Value.transform.position;
+                    p.mPose[e.Key] = joint;
+                }
+            }
+        }
 	}
 	
 	public void create_body(CharacterTextureBehaviour aChar)
