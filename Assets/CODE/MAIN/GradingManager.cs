@@ -24,10 +24,41 @@ public class GradingManager : FakeMonoBehaviour {
 	    }
 	}
 
+
     [System.Serializable]
+    public class SerializableZigInputJoint
+    {
+        public Vector3 Position;
+        public Quaternion Rotation;
+        public ZigJointId mId;
+        public SerializableZigInputJoint(ZigJointId id){mId = id;}
+        public SerializableZigInputJoint() { }
+    }
+
+
     public class Pose
     {
         public Dictionary<ZigJointId, ZigInputJoint> mPose = new Dictionary<ZigJointId, ZigInputJoint>();
+        public List<KeyValuePair<ZigJointId, GradingManager.SerializableZigInputJoint>> serializableList = new List<KeyValuePair<ZigJointId, GradingManager.SerializableZigInputJoint>>();
+
+        public void construct_pose_from_serialized()
+        {
+            foreach (KeyValuePair<ZigJointId, GradingManager.SerializableZigInputJoint> e in serializableList)
+            {
+                mPose[e.Key] = new ZigInputJoint(e.Value.mId,e.Value.Position,e.Value.Rotation,false);   
+            }
+        }
+
+        public void construct_serialized_from_pose()
+        {
+            foreach(KeyValuePair<ZigJointId, ZigInputJoint> e in mPose)
+            {
+                GradingManager.SerializableZigInputJoint joint = new GradingManager.SerializableZigInputJoint(e.Value.Id);
+                joint.Position = e.Value.Position;
+                joint.Rotation = e.Value.Rotation;
+                serializableList.Add(new KeyValuePair<ZigJointId, SerializableZigInputJoint>(e.Key, joint));
+            }
+        }
     }
 
     List<WeightedZigJointPair> mImportant = new List<WeightedZigJointPair>();
@@ -53,19 +84,25 @@ public class GradingManager : FakeMonoBehaviour {
     {
         Pose p = new Pose();
         System.IO.MemoryStream stream = new System.IO.MemoryStream(aText.bytes);
-        System.Runtime.Serialization.IFormatter formatter = new System.Runtime.Serialization.Formatters.Binary.BinaryFormatter();
-        p = (Pose)formatter.Deserialize(stream);
+        //System.Runtime.Serialization.IFormatter formatter = new System.Runtime.Serialization.Formatters.Binary.BinaryFormatter();
+        System.Xml.Serialization.XmlSerializer xs = new System.Xml.Serialization.XmlSerializer(typeof(List<KeyValuePair<ZigJointId, GradingManager.SerializableZigInputJoint>>));
+        p.serializableList = (List<KeyValuePair<ZigJointId, GradingManager.SerializableZigInputJoint>>)xs.Deserialize(stream);
+        p.construct_pose_from_serialized();
         return p;
     }
     public void write_pose_to_file(Pose p, string aFile)
     {
         System.IO.Stream stream = System.IO.File.Open(aFile, System.IO.FileMode.Create);
-        System.Runtime.Serialization.Formatters.Binary.BinaryFormatter bFormatter = new System.Runtime.Serialization.Formatters.Binary.BinaryFormatter();
-        bFormatter.Serialize(stream, p);
+        //System.Runtime.Serialization.Formatters.Binary.BinaryFormatter bFormatter = new System.Runtime.Serialization.Formatters.Binary.BinaryFormatter();
+        System.Xml.Serialization.XmlSerializer xs = new System.Xml.Serialization.XmlSerializer(typeof(List<KeyValuePair<ZigJointId, GradingManager.SerializableZigInputJoint>>));
+        p.construct_serialized_from_pose();
+        //bFormatter.Serialize(stream, p.serializablePose);
+        xs.Serialize(stream, p.serializableList);
         stream.Close();
+        Debug.Log("write file " + aFile);
     }
     public string print_pose()
-    {
+    {   
         record_pose();
         return print_pose(mPoses[0]);
     }

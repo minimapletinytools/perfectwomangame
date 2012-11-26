@@ -33,7 +33,7 @@ public class BodyManager : FakeMonoBehaviour {
             GameObject.Destroy(e);
     }
 
-    int mMode = -1; // 0 - from kinect, 1 - from pose, 2 - record pose, -1 none
+    int mMode = 2; // 0 - from kinect, 1 - from pose, 2 - record pose, -1 none
     public GradingManager.Pose mTargetPose = null;
     Dictionary<ZigJointId, GameObject> mParts = new Dictionary<ZigJointId, GameObject>();
 	
@@ -241,7 +241,6 @@ public class BodyManager : FakeMonoBehaviour {
 
     public override void Update()
     {
-
         if (mMode == 0)
         {
             foreach (KeyValuePair<GradingManager.WeightedZigJointPair, ProjectionManager.Smoothing> e in mManager.mProjectionManager.mImportant)
@@ -267,7 +266,7 @@ public class BodyManager : FakeMonoBehaviour {
             }
         }
         else if (mMode == 2)
-        {
+        { 
             if (Input.GetKeyDown(KeyCode.Space))
             {
                 GradingManager.Pose p = new GradingManager.Pose();
@@ -278,6 +277,7 @@ public class BodyManager : FakeMonoBehaviour {
                     joint.Position = e.Value.transform.position;
                     p.mPose[e.Key] = joint;
                 }
+                mManager.mGradingManager.write_pose_to_file(p,"princess.txt");
             }
         }
 	}

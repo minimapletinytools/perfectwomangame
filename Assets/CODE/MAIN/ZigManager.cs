@@ -32,7 +32,7 @@ public class ZigManager : FakeMonoBehaviour {
 	{
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            Debug.Log(mManager.mGradingManager.print_pose());
+            //Debug.Log(mManager.mGradingManager.print_pose());
         }
 	}
 	
