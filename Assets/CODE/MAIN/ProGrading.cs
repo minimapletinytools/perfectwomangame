@@ -40,17 +40,18 @@ public class ProGrading {
             throw new UnityException("can't find ZigJointId " + id + " in Pose");
         }
     }
-    public static float grade_pose(Pose A, Pose B) //weight is taken from Pose B
+    public static float grade_pose(Pose A, Pose B) //weight is taken from Pose B, B is traget
     {
         float weightsum = 0;
         float gradesum = 0;
         foreach (PoseElement e in A.mElements)
         {
+            Debug.Log(e.joint);
             PoseElement bPose = B.find_element(e.joint);
             float target = bPose.angle;
             float actual = e.angle;
             float diff = target - actual;
-            if (diff > Mathf.PI) diff -= Mathf.PI;
+            if (diff > 180) diff -= 360;
             gradesum += diff * diff * bPose.weight;
             weightsum += bPose.weight;
         }
@@ -62,7 +63,6 @@ public class ProGrading {
         foreach (KeyValuePair<ZigJointId, ZigJointId> e in sPairs)
         {
             PoseElement pe = new PoseElement();
-            Debug.Log(e.Key +" " + e.Value);
             ZigInputJoint A = manager.mZigManager.Joints[e.Key];
             ZigInputJoint B = manager.mZigManager.Joints[e.Value];
             pe.angle = manager.mProjectionManager.get_relative(A, B);

@@ -27,6 +27,8 @@ public class ManagerManager : MonoBehaviour{
     public InputManager mInputManager;
     public ZigManager mZigManager;
 	public ProjectionManager mProjectionManager;
+    public InterfaceManager mInterfaceManager;
+    public GameManager mGameManager;
     public BodyManager mBodyManager;
     public BodyManager mTransparentBodyManager;
 	
@@ -43,7 +45,9 @@ public class ManagerManager : MonoBehaviour{
         mInputManager = new InputManager(this);
 		mZigManager = new ZigManager(this);
 		mProjectionManager = new ProjectionManager(this);
+        mInterfaceManager = new InterfaceManager(this);
         mBodyManager = new BodyManager(this);
+        mGameManager = new GameManager(this);
 
         mTransparentBodyManager = new BodyManager(this);
         

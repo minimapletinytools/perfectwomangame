@@ -92,7 +92,6 @@ public class ProjectionManager : FakeMonoBehaviour {
                 }
             }
             mWaist.target = get_waist(mManager.mZigManager.Joints[ZigJointId.Waist], mManager.mZigManager.Joints[ZigJointId.LeftHip], mManager.mZigManager.Joints[ZigJointId.RightHip]);
-            Debug.Log(mWaist.target);
             mWaist.current = mWaist.current * mSmoothing + mWaist.target * (1 - mSmoothing);
         }
 	}

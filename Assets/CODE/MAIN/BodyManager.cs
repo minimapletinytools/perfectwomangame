@@ -246,6 +246,10 @@ public class BodyManager : FakeMonoBehaviour {
     {
         if (mMode == 0)
         {
+            //grade
+            if(mManager.mZigManager.has_user())
+                mManager.mInterfaceManager.mGrade = ProGrading.grade_pose(ProGrading.snap_pose(mManager), mManager.mTransparentBodyManager.mTargetPose);
+
             foreach (KeyValuePair<GradingManager.WeightedZigJointPair, ProjectionManager.Smoothing> e in mManager.mProjectionManager.mImportant)
             {
                 mParts[e.Key.A].transform.rotation = Quaternion.AngleAxis(e.Value.current, Vector3.forward);
@@ -253,13 +257,8 @@ public class BodyManager : FakeMonoBehaviour {
             mParts[ZigJointId.Waist].transform.rotation = Quaternion.AngleAxis(mManager.mProjectionManager.mWaist.current,Vector3.forward);
             if (Input.GetKeyDown(KeyCode.Space))
             {
-                try
-                {
+                if(mManager.mZigManager.has_user())
                     ProGrading.write_pose_to_file(ProGrading.snap_pose(mManager), "char_kinect.txt");
-                }
-                catch
-                {
-                }
             }
         }
         else if (mMode == 1)
