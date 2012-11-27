@@ -33,7 +33,7 @@ public class BodyManager : FakeMonoBehaviour {
             GameObject.Destroy(e);
     }
 
-    int mMode = 2; // 0 - from kinect, 1 - from pose, 2 - record pose, -1 none
+    int mMode = 1; // 0 - from kinect, 1 - from pose, 2 - record pose, -1 none
     public GradingManager.Pose mTargetPose = null;
     Dictionary<ZigJointId, GameObject> mParts = new Dictionary<ZigJointId, GameObject>();
 	
@@ -257,11 +257,19 @@ public class BodyManager : FakeMonoBehaviour {
         }
         else if (mMode == 1)
         {
-            foreach (KeyValuePair<GradingManager.WeightedZigJointPair, ProjectionManager.Smoothing> e in mManager.mProjectionManager.mImportant)
+            if (Input.GetKeyDown(KeyCode.Return))
             {
-                if (e.Key.A != ZigJointId.None)
+                GradingManager.Pose p = mManager.mGradingManager.read_pose(mManager.mReferences.mDemoChar.GetComponent<CharacterTextureBehaviour>().properPose);
+                mTargetPose = p;
+            }
+            if (mTargetPose != null)
+            {
+                foreach (KeyValuePair<GradingManager.WeightedZigJointPair, ProjectionManager.Smoothing> e in mManager.mProjectionManager.mImportant)
                 {
-                    mParts[e.Key.A].transform.rotation = Quaternion.AngleAxis(mManager.mProjectionManager.get_relative(mTargetPose.mPose[e.Key.A], mTargetPose.mPose[e.Key.B]),Vector3.forward);
+                    if (e.Key.A != ZigJointId.None)
+                    {
+                        mParts[e.Key.A].transform.rotation = Quaternion.AngleAxis(mManager.mProjectionManager.get_relative(mTargetPose.mPose[e.Key.A], mTargetPose.mPose[e.Key.B]), Vector3.forward);
+                    }
                 }
             }
         }
@@ -277,7 +285,29 @@ public class BodyManager : FakeMonoBehaviour {
                     joint.Position = e.Value.transform.position;
                     p.mPose[e.Key] = joint;
                 }
-                mManager.mGradingManager.write_pose_to_file(p,"princess.txt");
+                List<KeyValuePair<ZigJointId, ZigJointId>> toConstruct = new List<KeyValuePair<ZigJointId, ZigJointId>>();
+                toConstruct.Add(new KeyValuePair < ZigJointId, ZigJointId > (ZigJointId.Neck, ZigJointId.Head));
+                toConstruct.Add(new KeyValuePair<ZigJointId, ZigJointId>(ZigJointId.LeftElbow, ZigJointId.LeftHand));
+                toConstruct.Add(new KeyValuePair<ZigJointId, ZigJointId>(ZigJointId.RightElbow, ZigJointId.RightHand));
+                toConstruct.Add(new KeyValuePair<ZigJointId, ZigJointId>(ZigJointId.LeftKnee, ZigJointId.LeftAnkle));
+                toConstruct.Add(new KeyValuePair<ZigJointId, ZigJointId>(ZigJointId.RightKnee, ZigJointId.RightAnkle));
+                foreach (KeyValuePair<ZigJointId, ZigJointId> e in toConstruct)
+                {
+                    ZigInputJoint joint = new ZigInputJoint(e.Key);
+                    joint.GoodPosition = true;
+                    Vector3 dir = new Vector3(Mathf.Cos(mParts[e.Key].transform.rotation.eulerAngles.z),Mathf.Sin(mParts[e.Key].transform.rotation.eulerAngles.z),0);
+                    joint.Position = mParts[e.Key].transform.position + dir;
+                    p.mPose[e.Value] = joint;
+                }
+                mManager.mGradingManager.write_pose_to_file(p, "princess.txt");
+            }
+
+            if (Input.GetKeyDown(KeyCode.Return))
+            {
+                GradingManager.Pose p = mManager.mGradingManager.read_pose(mManager.mReferences.mDemoChar.GetComponent<CharacterTextureBehaviour>().properPose);
+                mTargetPose = p;
+                //Debug.Log("pose is " + mManager.mGradingManager.grade_pose(p));
+                mManager.mGradingManager.print_pose(p);
             }
         }
 	}

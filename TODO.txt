@@ -1,6 +1,11 @@
 ::TODO::
--scan images for connection points instead of using relative positions
--put in lea's characetr
+-switch entire projection system nonsense to record angles yada yada yada
+-maybe switch grading to use angles too because that's what it's suppose to be
+
+
+::TODO::
+DONE-scan images for connection points instead of using relative positions
+DONE-put in lea's characetr
 
 :::backend::
 ::input dictionary::

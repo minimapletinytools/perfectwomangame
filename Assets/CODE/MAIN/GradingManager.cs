@@ -113,7 +113,11 @@ public class GradingManager : FakeMonoBehaviour {
         {
             if (e.A != ZigJointId.None)
             {
-                float actual = mManager.mProjectionManager.get_relative(mManager.mZigManager.Joints[e.A], mManager.mZigManager.Joints[e.B]);
+                Debug.Log(e.A.ToString() + e.B.ToString());
+                //this prints the position from kinect
+                //float actual = mManager.mProjectionManager.get_relative(mManager.mZigManager.Joints[e.A], mManager.mZigManager.Joints[e.B]);
+
+                float actual = mManager.mProjectionManager.get_relative(aPose.mPose[e.A], aPose.mPose[e.B]);
                 s += e.A.ToString() + " " + e.B.ToString() + " " + actual.ToString() + "\n";
             }
         }
