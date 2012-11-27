@@ -33,7 +33,7 @@ public class BodyManager : FakeMonoBehaviour {
             GameObject.Destroy(e);
     }
 
-    int mMode = 1; // 0 - from kinect, 1 - from pose, 2 - record pose, -1 none
+    int mMode = 0; // 0 - from kinect, 1 - from pose, 2 - record pose, -1 none
     public ProGrading.Pose mTargetPose = null;
     Dictionary<ZigJointId, GameObject> mParts = new Dictionary<ZigJointId, GameObject>();
 	
@@ -245,30 +245,17 @@ public class BodyManager : FakeMonoBehaviour {
         {
             foreach (KeyValuePair<GradingManager.WeightedZigJointPair, ProjectionManager.Smoothing> e in mManager.mProjectionManager.mImportant)
             {
-                if (e.Key.A == ZigJointId.None)
-                {
-                    //TODO
-                }
-                else
-                {
-                    mParts[e.Key.A].transform.rotation = Quaternion.AngleAxis(e.Value.current, Vector3.forward);
-                }
+                mParts[e.Key.A].transform.rotation = Quaternion.AngleAxis(e.Value.current, Vector3.forward);
             }
+            mParts[ZigJointId.Waist].transform.rotation = Quaternion.AngleAxis(mManager.mProjectionManager.mWaist.current,Vector3.forward);
         }
         else if (mMode == 1)
         {
-            if (Input.GetKeyDown(KeyCode.Return))
-            {
-                //GradingManager.Pose p = mManager.mGradingManager.read_pose(mManager.mReferences.mDemoChar.GetComponent<CharacterTextureBehaviour>().properPose);
-                ProGrading.Pose p = ProGrading.read_pose(mManager.mReferences.mDemoChar.GetComponent<CharacterTextureBehaviour>().properPose);
-                mTargetPose = p;
-            }
             if (mTargetPose != null)
             {
                 foreach (ProGrading.PoseElement e in mTargetPose.mElements)
                 {
                     mParts[e.joint].transform.rotation = Quaternion.AngleAxis(e.angle, Vector3.forward);
-                    Debug.Log(mParts[e.joint].transform.rotation.eulerAngles.z + " " + e.angle);
                 }
                 /*
                 foreach (KeyValuePair<GradingManager.WeightedZigJointPair, ProjectionManager.Smoothing> e in mManager.mProjectionManager.mImportant)
@@ -420,7 +407,8 @@ public class BodyManager : FakeMonoBehaviour {
         
 		rotateMe.Add(new KeyValuePair<GameObject, float>(leftUpperLeg,-90));
 		rotateMe.Add(new KeyValuePair<GameObject, float>(rightUpperLeg,-90));
-        rotateMe.Add(new KeyValuePair<GameObject, float>(torso,-90));
+        rotateMe.Add(new KeyValuePair<GameObject, float>(torso,90));
+        rotateMe.Add(new KeyValuePair<GameObject, float>(waist, -90));
         rotateMe.Add(new KeyValuePair<GameObject, float>(head,90));
 
         rotateMe.Add(new KeyValuePair<GameObject, float>(leftLowerLeg,-90));

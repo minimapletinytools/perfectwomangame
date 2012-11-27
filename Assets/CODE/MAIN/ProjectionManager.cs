@@ -10,7 +10,6 @@ public class ProjectionManager : FakeMonoBehaviour {
 	{
 		public float target = 0;
 		public float current = 0;
-		public float start = 0;
 	}
 	public Dictionary<GradingManager.WeightedZigJointPair,Smoothing> mImportant = new Dictionary<GradingManager.WeightedZigJointPair, Smoothing>(new GradingManager.WeightedZigJointPairComparer());
 	public override void Start () {
@@ -25,11 +24,12 @@ public class ProjectionManager : FakeMonoBehaviour {
         mImportant[new GradingManager.WeightedZigJointPair(ZigJointId.Neck, ZigJointId.Head, 1)] = new Smoothing();
         mImportant[new GradingManager.WeightedZigJointPair(ZigJointId.Torso, ZigJointId.Neck, 1)] = new Smoothing();
 		//mImportant[new GradingManager.WeightedZigJointPair(ZigJointId.Torso, ZigJointId.Waist, 1)] = new Smoothing();
-        mImportant[new GradingManager.WeightedZigJointPair(ZigJointId.None, ZigJointId.Torso, 1)] = new Smoothing();
+        //mImportant[new GradingManager.WeightedZigJointPair(ZigJointId.None, ZigJointId.Torso, 1)] = new Smoothing();
 	}
-	
+    public Smoothing mWaist = new Smoothing();
 	public Vector3 mNormal = Vector3.forward;
 	public Vector3 mUp = Vector3.up;
+    public float mSmoothing = 0.8f;
 	
 	public void compute_normal()
 	{
@@ -56,6 +56,10 @@ public class ProjectionManager : FakeMonoBehaviour {
 		return -r;*/
 	}
 
+    public float get_waist(ZigInputJoint waist, ZigInputJoint L, ZigInputJoint R)
+    {
+        return get_relative(waist.Position, L.Position * 0.5f + R.Position * 0.5f);
+    }
 
     public float get_relative(Vector3 A, Vector3 B)
     {
@@ -80,13 +84,16 @@ public class ProjectionManager : FakeMonoBehaviour {
                     try
                     {
                         e.Value.target = get_relative(mManager.mZigManager.Joints[e.Key.A], mManager.mZigManager.Joints[e.Key.B]);
-                        e.Value.current = e.Value.current * 0.8f + e.Value.target * 0.2f;//TODO smooth properly using Time.deltaTime
+                        e.Value.current = e.Value.current * mSmoothing + e.Value.target * (1-mSmoothing);//TODO smooth properly using Time.deltaTime
                     }
                     catch
                     {
                     }
                 }
             }
+            mWaist.target = get_waist(mManager.mZigManager.Joints[ZigJointId.Waist], mManager.mZigManager.Joints[ZigJointId.LeftHip], mManager.mZigManager.Joints[ZigJointId.RightHip]);
+            Debug.Log(mWaist.target);
+            mWaist.current = mWaist.current * mSmoothing + mWaist.target * (1 - mSmoothing);
         }
 	}
 }

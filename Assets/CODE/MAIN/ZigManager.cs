@@ -18,7 +18,7 @@ public class ZigManager : FakeMonoBehaviour {
 	// Use this for initialization
 	public override void Start () {
         mZigObject = mManager.gameObject;
-        //mZigObject.AddComponent<kinectSpecific>();
+        mZigObject.AddComponent<kinectSpecific>();
 		mZig = mZigObject.GetComponent<Zig>();
 		mZigEngageSingleUser = mZigObject.GetComponent<ZigEngageSingleUser>();
         mZigCallbackBehaviour = mZigObject.AddComponent<ZigCallbackBehaviour>();

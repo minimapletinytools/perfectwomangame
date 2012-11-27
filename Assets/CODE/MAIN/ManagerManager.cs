@@ -26,7 +26,7 @@ public class ManagerManager : MonoBehaviour{
     public ZigManager mZigManager;
 	public ProjectionManager mProjectionManager;
     public BodyManager mBodyManager;
-    public GradingManager mGradingManager;
+    public BodyManager mTransparentBodyManager;
 	
 
     public PrefabReferenceBehaviour mReferences;
@@ -42,10 +42,15 @@ public class ManagerManager : MonoBehaviour{
 		mZigManager = new ZigManager(this);
 		mProjectionManager = new ProjectionManager(this);
         mBodyManager = new BodyManager(this);
-        mGradingManager = new GradingManager(this);
+
+        //mTransparentBodyManager = new BodyManager(this);
+        
 
 		if(mStartDelegates != null) 
 			mStartDelegates();
+
+        //ProGrading.Pose p = ProGrading.read_pose(mReferences.mDemoChar.GetComponent<CharacterTextureBehaviour>().properPose);
+        //mTransparentBodyManager.set_transparent(p);
 	}
 	
 	public void register_FakeMonoBehaviour(FakeMonoBehaviour aScript)
