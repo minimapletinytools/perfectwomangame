@@ -56,12 +56,13 @@ public class ProGrading {
         }
         return Mathf.Sqrt(gradesum) / weightsum;
     }
-    public static Pose snap_pose(ManagerManager manager)
+    public static Pose snap_pose(ManagerManager manager) //make suree there is a skeleton to snap
     {
         Pose p = new Pose();
         foreach (KeyValuePair<ZigJointId, ZigJointId> e in sPairs)
         {
             PoseElement pe = new PoseElement();
+            Debug.Log(e.Key +" " + e.Value);
             ZigInputJoint A = manager.mZigManager.Joints[e.Key];
             ZigInputJoint B = manager.mZigManager.Joints[e.Value];
             pe.angle = manager.mProjectionManager.get_relative(A, B);

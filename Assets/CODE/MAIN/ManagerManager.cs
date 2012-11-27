@@ -11,6 +11,8 @@ public class ManagerManager : MonoBehaviour{
         private set { sManager = value; }
     }
 
+    //debug nonsense
+    public bool mRecordMode = false;
     //constants
     public static int MANIPULATOR_LAYER = 8;
 	
@@ -43,14 +45,14 @@ public class ManagerManager : MonoBehaviour{
 		mProjectionManager = new ProjectionManager(this);
         mBodyManager = new BodyManager(this);
 
-        //mTransparentBodyManager = new BodyManager(this);
+        mTransparentBodyManager = new BodyManager(this);
         
 
 		if(mStartDelegates != null) 
 			mStartDelegates();
 
-        //ProGrading.Pose p = ProGrading.read_pose(mReferences.mDemoChar.GetComponent<CharacterTextureBehaviour>().properPose);
-        //mTransparentBodyManager.set_transparent(p);
+        ProGrading.Pose p = ProGrading.read_pose(mReferences.mDemoChar.GetComponent<CharacterTextureBehaviour>().properPose);
+        mTransparentBodyManager.set_transparent(p);
 	}
 	
 	public void register_FakeMonoBehaviour(FakeMonoBehaviour aScript)

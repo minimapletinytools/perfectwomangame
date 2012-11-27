@@ -19,9 +19,12 @@ public class BodyManager : FakeMonoBehaviour {
         {
             foreach(Renderer f in e.GetComponentsInChildren<Renderer>())
             {
-                Color c = f.material.color;
-                c.a = 0.5f;
-                f.material.color = c;
+                if (f.gameObject.name == "Plane")
+                {
+                    Color c = f.material.GetColor("_TintColor");
+                    c.a = 0.1f;
+                    f.material.SetColor("_TintColor", c);
+                }
             }
         }
     }
@@ -33,7 +36,7 @@ public class BodyManager : FakeMonoBehaviour {
             GameObject.Destroy(e);
     }
 
-    int mMode = 0; // 0 - from kinect, 1 - from pose, 2 - record pose, -1 none
+    int mMode = 0; // 0 - from kinect, 1 - from pose, -1 none
     public ProGrading.Pose mTargetPose = null;
     Dictionary<ZigJointId, GameObject> mParts = new Dictionary<ZigJointId, GameObject>();
 	
@@ -248,10 +251,20 @@ public class BodyManager : FakeMonoBehaviour {
                 mParts[e.Key.A].transform.rotation = Quaternion.AngleAxis(e.Value.current, Vector3.forward);
             }
             mParts[ZigJointId.Waist].transform.rotation = Quaternion.AngleAxis(mManager.mProjectionManager.mWaist.current,Vector3.forward);
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                try
+                {
+                    ProGrading.write_pose_to_file(ProGrading.snap_pose(mManager), "char_kinect.txt");
+                }
+                catch
+                {
+                }
+            }
         }
         else if (mMode == 1)
         {
-            if (mTargetPose != null)
+            if (mTargetPose != null && mManager.mRecordMode == false)
             {
                 foreach (ProGrading.PoseElement e in mTargetPose.mElements)
                 {
@@ -267,11 +280,7 @@ public class BodyManager : FakeMonoBehaviour {
                         Debug.Log(mParts[e.Key.A].transform.rotation.eulerAngles.z + " " + angle);
                     }
                 }*/
-            }  
-        }
-        else if (mMode == 2)
-        {
-
+            }
             if (Input.GetKeyDown(KeyCode.Space))
             {
                 ProGrading.Pose p = new ProGrading.Pose();
@@ -282,8 +291,13 @@ public class BodyManager : FakeMonoBehaviour {
                     pe.angle = e.Value.transform.rotation.eulerAngles.z;
                     p.mElements.Add(pe);
                 }
-                ProGrading.write_pose_to_file(p, "princess.txt");
+                ProGrading.write_pose_to_file(p, "char_manual.txt");
             }
+        }
+        else if (mMode == 2)
+        {
+
+            
             /*
             if (Input.GetKeyDown(KeyCode.Space))
             {
@@ -311,13 +325,6 @@ public class BodyManager : FakeMonoBehaviour {
                 }
                 mManager.mGradingManager.write_pose_to_file(p, "princess.txt");
             }*/
-
-            if (Input.GetKeyDown(KeyCode.Return))
-            {
-                //GradingManager.Pose p = mManager.mGradingManager.read_pose(mManager.mReferences.mDemoChar.GetComponent<CharacterTextureBehaviour>().properPose);
-                ProGrading.Pose p = ProGrading.read_pose(mManager.mReferences.mDemoChar.GetComponent<CharacterTextureBehaviour>().properPose);
-                mTargetPose = p;
-            }
         }
 	}
 	

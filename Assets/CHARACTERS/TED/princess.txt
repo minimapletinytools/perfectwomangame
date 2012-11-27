@@ -3,67 +3,67 @@
   <mElements>
     <PoseElement>
       <joint>Torso</joint>
-      <angle>97.11232</angle>
+      <angle>274.390076</angle>
       <weight>1</weight>
       <important>true</important>
     </PoseElement>
     <PoseElement>
       <joint>Waist</joint>
-      <angle>0</angle>
+      <angle>91.4688339</angle>
       <weight>1</weight>
       <important>true</important>
     </PoseElement>
     <PoseElement>
       <joint>Neck</joint>
-      <angle>270.296967</angle>
+      <angle>267.320374</angle>
       <weight>1</weight>
       <important>true</important>
     </PoseElement>
     <PoseElement>
       <joint>LeftShoulder</joint>
-      <angle>164.1327</angle>
+      <angle>199.113846</angle>
       <weight>1</weight>
       <important>true</important>
     </PoseElement>
     <PoseElement>
       <joint>RightShoulder</joint>
-      <angle>7.1123085</angle>
+      <angle>358.860016</angle>
       <weight>1</weight>
       <important>true</important>
     </PoseElement>
     <PoseElement>
       <joint>LeftElbow</joint>
-      <angle>74.1327057</angle>
+      <angle>209.038345</angle>
       <weight>1</weight>
       <important>true</important>
     </PoseElement>
     <PoseElement>
       <joint>RightElbow</joint>
-      <angle>277.1123</angle>
+      <angle>268.86</angle>
       <weight>1</weight>
       <important>true</important>
     </PoseElement>
     <PoseElement>
       <joint>LeftHip</joint>
-      <angle>172.351517</angle>
+      <angle>131.353485</angle>
       <weight>1</weight>
       <important>true</important>
     </PoseElement>
     <PoseElement>
       <joint>RightHip</joint>
-      <angle>68.80406</angle>
+      <angle>55.781414</angle>
       <weight>1</weight>
       <important>true</important>
     </PoseElement>
     <PoseElement>
       <joint>LeftKnee</joint>
-      <angle>82.35153</angle>
+      <angle>155.669968</angle>
       <weight>1</weight>
       <important>true</important>
     </PoseElement>
     <PoseElement>
       <joint>RightKnee</joint>
-      <angle>57.8535538</angle>
+      <angle>44.8309135</angle>
       <weight>1</weight>
       <important>true</important>
     </PoseElement>
