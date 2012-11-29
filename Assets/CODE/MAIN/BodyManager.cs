@@ -7,7 +7,7 @@ public class BodyManager : FakeMonoBehaviour {
 
     public void set_character(CharacterTextureBehaviour aChar)
     {
-        //TODO
+        create_body(aChar);
     }
 
     public void set_transparent(ProGrading.Pose aPose)
@@ -31,9 +31,17 @@ public class BodyManager : FakeMonoBehaviour {
 
     public void destroy_character()
     {
-        mMode = -1;
+        mTargetPose = null;
+        //mMode = -1;
         foreach (GameObject e in mParts.Values)
             GameObject.Destroy(e);
+        mParts.Clear();
+    }
+
+    public void character_changed_listener(CharacterTextureBehaviour aCharacter)
+    {
+        destroy_character();
+        set_character(aCharacter);
     }
 
     int mMode = 0; // 0 - from kinect, 1 - from pose, -1 none
@@ -128,13 +136,6 @@ public class BodyManager : FakeMonoBehaviour {
         
         kid.transform.localScale = new Vector3(convert_units(aTex.width) / 10.0f, 1, convert_units(aTex.height) / 10.0f);
         kid.transform.position = -get_attachment_point(0, aAttachTex);
-        /*
-        if (aId == ZigJointId.Neck || aId == ZigJointId.Torso)
-            kid.transform.position = new Vector3(0, convert_units(aTex.height / 2.0f * 0.8f), 0);
-        if (aId == ZigJointId.LeftShoulder || aId == ZigJointId.RightShoulder || aId == ZigJointId.LeftHip || aId == ZigJointId.RightHip || 
-            aId == ZigJointId.LeftElbow || aId == ZigJointId.RightElbow || aId == ZigJointId.LeftKnee || aId == ZigJointId.RightKnee || aId == ZigJointId.Waist)
-            kid.transform.position = new Vector3(0, convert_units(-aTex.height / 2.0f * 0.8f), 0);
-        */
         kid.transform.parent = parent.transform;
 
 		mParts[aId] = parent;
@@ -172,74 +173,10 @@ public class BodyManager : FakeMonoBehaviour {
         throw new UnityException("uh oh, can't find attachment point zigjointid map");
     }
 
-	public Vector3 get_connection_point(ZigJointId A, ZigJointId B, Texture2D aBTex) //returns connection point of A to B
-	{
-		if(B == ZigJointId.Waist)
-		{
-			if(A == ZigJointId.Torso)
-				return Vector3.zero;
-				//return new Vector3(0,convert_units(aBTex.height/2.0*0.8),0);
-			else if(A == ZigJointId.LeftHip)
-				return new Vector3(convert_units(aBTex.width/2.0*0.8),convert_units(-aBTex.height/2.0*0.8),0);
-			else if(A == ZigJointId.RightHip)
-				return new Vector3(convert_units(-aBTex.width/2.0*0.8),convert_units(-aBTex.height/2.0*0.8),0);
-		}
-		if(B == ZigJointId.Torso)
-		{
-			if(A == ZigJointId.Waist)
-				return Vector3.zero;
-			else if(A == ZigJointId.Neck)
-				return new Vector3(0,convert_units(aBTex.height/2.0*0.8),0);
-			else if(A == ZigJointId.LeftShoulder)
-				return new Vector3(convert_units(aBTex.width/2.0*0.8),convert_units(aBTex.height/2.0*0.8),0);
-			else if(A == ZigJointId.RightShoulder)
-				return new Vector3(convert_units(-aBTex.width/2.0*0.8),convert_units(aBTex.height/2.0*0.8),0);
-		}
-		else if(A == ZigJointId.Torso)
-		{
-			return new Vector3(0,0,0); //TODO
-		}
-		else if(A != ZigJointId.None)
-		{
-			//Debug.Log (A.ToString() + " " + B.ToString());
-			return new Vector3(0,convert_units(-aBTex.height/2.0f*0.8f),0);
-		}
-		else
-		{
-			return Vector3.zero; //TODO this should be where the character is maybe?
-		}
-		
-		return Vector3.zero;
-		/*
-		else if(A == ZigJointId.LeftShoulder)
-		{	
-		}
-		else if(A == ZigJointId.RightShoulder)
-		{
-		}
-		else if(A == ZigJointId.LeftElbow)
-		{
-		}
-		else if(A == ZigJointId.RightElbow)
-		{
-		}
-		else if(A == ZigJointId.LeftHip)
-		{
-		}
-		else if(A == ZigJointId.RightHip)
-		{
-		}
-		else if(A == ZigJointId.LeftKnee)
-		{
-		}
-		else if(A == ZigJointId.RightKnee)
-		{
-		}*/
-	}
-	public override void Start () {
+	public override void Start () 
+    {
         
-		GameObject demoChar = (GameObject)GameObject.Instantiate(mManager.mReferences.mDemoChar);
-		create_body(demoChar.GetComponent<CharacterTextureBehaviour>());
+        mManager.mEventManager.character_changed_event += character_changed_listener;
 	}
 
     public override void Update()
@@ -269,16 +206,6 @@ public class BodyManager : FakeMonoBehaviour {
                 {
                     mParts[e.joint].transform.rotation = Quaternion.AngleAxis(e.angle, Vector3.forward);
                 }
-                /*
-                foreach (KeyValuePair<GradingManager.WeightedZigJointPair, ProjectionManager.Smoothing> e in mManager.mProjectionManager.mImportant)
-                {
-                    if (e.Key.A != ZigJointId.None)
-                    {
-                        float angle = mManager.mProjectionManager.get_relative(mTargetPose.mPose[e.Key.A], mTargetPose.mPose[e.Key.B]);
-                        mParts[e.Key.A].transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
-                        Debug.Log(mParts[e.Key.A].transform.rotation.eulerAngles.z + " " + angle);
-                    }
-                }*/
             }
             if (Input.GetKeyDown(KeyCode.Space))
             {
@@ -292,38 +219,6 @@ public class BodyManager : FakeMonoBehaviour {
                 }
                 ProGrading.write_pose_to_file(p, "char_manual.txt");
             }
-        }
-        else if (mMode == 2)
-        {
-
-            
-            /*
-            if (Input.GetKeyDown(KeyCode.Space))
-            {
-                GradingManager.Pose p = new GradingManager.Pose();
-                foreach(KeyValuePair<ZigJointId,GameObject> e in mParts)
-                {
-                    ZigInputJoint joint = new ZigInputJoint(e.Key);
-                    joint.GoodPosition = true;
-                    joint.Position = e.Value.transform.position;
-                    p.mPose[e.Key] = joint;
-                }
-                List<KeyValuePair<ZigJointId, ZigJointId>> toConstruct = new List<KeyValuePair<ZigJointId, ZigJointId>>();
-                toConstruct.Add(new KeyValuePair < ZigJointId, ZigJointId > (ZigJointId.Neck, ZigJointId.Head));
-                toConstruct.Add(new KeyValuePair<ZigJointId, ZigJointId>(ZigJointId.LeftElbow, ZigJointId.LeftHand));
-                toConstruct.Add(new KeyValuePair<ZigJointId, ZigJointId>(ZigJointId.RightElbow, ZigJointId.RightHand));
-                toConstruct.Add(new KeyValuePair<ZigJointId, ZigJointId>(ZigJointId.LeftKnee, ZigJointId.LeftAnkle));
-                toConstruct.Add(new KeyValuePair<ZigJointId, ZigJointId>(ZigJointId.RightKnee, ZigJointId.RightAnkle));
-                foreach (KeyValuePair<ZigJointId, ZigJointId> e in toConstruct)
-                {
-                     ZigInputJoint joint = new ZigInputJoint(e.Key);
-                    joint.GoodPosition = true;
-                    Vector3 dir = new Vector3(Mathf.Cos(mParts[e.Key].transform.rotation.eulerAngles.z),Mathf.Sin(mParts[e.Key].transform.rotation.eulerAngles.z),0);
-                    joint.Position = mParts[e.Key].transform.position + dir;
-                    p.mPose[e.Value] = joint;
-                }
-                mManager.mGradingManager.write_pose_to_file(p, "princess.txt");
-            }*/
         }
 	}
 	
@@ -355,19 +250,6 @@ public class BodyManager : FakeMonoBehaviour {
 		jointObject[ZigJointId.LeftKnee] = leftLowerLeg;
 		jointObject[ZigJointId.RightKnee] = rightLowerLeg;
 		
-        /*
-		jointTexture[ZigJointId.Torso] = aChar.torso;
-		jointTexture[ZigJointId.Waist] = aChar.waist;
-		jointTexture[ZigJointId.Neck] = aChar.head;
-		jointTexture[ZigJointId.LeftShoulder] = aChar.leftUpperArm;
-		jointTexture[ZigJointId.RightShoulder] = aChar.rightUpperArm;
-		jointTexture[ZigJointId.LeftElbow] = aChar.leftLowerArm;
-		jointTexture[ZigJointId.RightElbow] = aChar.rightLowerArm;
-		jointTexture[ZigJointId.LeftHip] = aChar.leftUpperLeg;
-		jointTexture[ZigJointId.RightHip] = aChar.rightUpperLeg;
-		jointTexture[ZigJointId.LeftKnee] = aChar.leftLowerLeg;
-		jointTexture[ZigJointId.RightKnee] = aChar.rightLowerLeg;
-		*/
 
         jointTexture[ZigJointId.Torso] = aChar.atTorso;
         jointTexture[ZigJointId.Waist] = aChar.atWaist;
@@ -403,7 +285,6 @@ public class BodyManager : FakeMonoBehaviour {
                 jointObject[e.Value].transform.position
                 + get_offset_of_plane(jointObject[e.Value].transform)
                 + get_connection_point_image(e.Key, e.Value, jointTexture[e.Value]);
-				//+ get_connection_point(e.Key,e.Value,jointTexture[e.Value]);
                 
 		}
 
