@@ -28,4 +28,7 @@ public class CharacterTextureBehaviour : MonoBehaviour {
     public Texture2D atRightLowerLeg;
 
     public TextAsset properPose;
+
+    public Texture2D background1;
+    public AudioClip backgroundMusic;
 }

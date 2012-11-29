@@ -3,7 +3,7 @@ using System.Collections;
 
 public class GameManager : FakeMonoBehaviour
 {
-    Camera mCamera;
+    public Camera mCamera;
     public GameManager(ManagerManager aManager) : base(aManager) { }
     public override void Start()
     {

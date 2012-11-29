@@ -1,7 +1,7 @@
 ::TODO::
--switch entire projection system nonsense to record angles yada yada yada
--maybe switch grading to use angles too because that's what it's suppose to be
-
+DONE-switch entire projection system nonsense to record angles yada yada yada
+DONE-maybe switch grading to use angles too because that's what it's suppose to be
+-do z-depth on ordering that lea gave you
 
 ::TODO::
 DONE-scan images for connection points instead of using relative positions

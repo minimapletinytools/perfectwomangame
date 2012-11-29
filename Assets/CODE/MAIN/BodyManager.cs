@@ -118,9 +118,9 @@ public class BodyManager : FakeMonoBehaviour {
 	public GameObject create_object(ZigJointId aId, Texture2D aTex, Texture2D aAttachTex)
 	{
 		GameObject parent = new GameObject("genParent"+aId.ToString());
-		GameObject sphere = GameObject.CreatePrimitive(PrimitiveType.Sphere);
-		sphere.transform.localScale = Vector3.one * 0.2f;
-		sphere.transform.parent = parent.transform;
+		//GameObject sphere = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+		//sphere.transform.localScale = Vector3.one * 0.2f;
+		//sphere.transform.parent = parent.transform;
 		GameObject kid = GameObject.CreatePrimitive(PrimitiveType.Plane);
 		kid.renderer.material = new Material(mManager.mReferences.mDefaultCharacterShader);
 		kid.renderer.material.mainTexture = aTex;

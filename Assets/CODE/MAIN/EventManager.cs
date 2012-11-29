@@ -6,9 +6,11 @@ public class EventManager : FakeMonoBehaviour {
 	public EventManager(ManagerManager aManager) : base(aManager) {}
 	
 	public delegate void VoidDelegate();
+    public delegate void CharacterDelegate(CharacterTextureBehaviour);
 	LinkedList<KeyValuePair<QuTimer,VoidDelegate> > mTimedEvents = new LinkedList<KeyValuePair<QuTimer, VoidDelegate> >();
 
     //other events here
+    public CharacterDelegate character_changed_event;
 
 	public override void Update()
 	{
