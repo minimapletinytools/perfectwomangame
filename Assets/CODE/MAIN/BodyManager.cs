@@ -5,6 +5,11 @@ using System.Collections.Generic;
 public class BodyManager : FakeMonoBehaviour {
 	public BodyManager(ManagerManager aManager) : base(aManager) {}
 
+    public void move_center(Vector3 diff)
+    {
+        mParts[ZigJointId.Torso].transform.position += diff;
+        mParts[ZigJointId.Waist].transform.position += diff;
+    }
     public void set_character(CharacterTextureBehaviour aChar)
     {
         create_body(aChar);
@@ -173,6 +178,34 @@ public class BodyManager : FakeMonoBehaviour {
         throw new UnityException("uh oh, can't find attachment point zigjointid map");
     }
 
+    public Vector3 get_Z_offset(ZigJointId id)
+    {
+        switch (id)
+        {
+            case ZigJointId.RightElbow:
+                return new Vector3(0, 0, -0.0f);
+            case ZigJointId.LeftElbow:
+                return new Vector3(0, 0, -0.1f);
+            case ZigJointId.RightShoulder:
+                return new Vector3(0, 0, -0.2f);
+            case ZigJointId.LeftShoulder:
+                return new Vector3(0, 0, -0.3f);
+            case ZigJointId.Torso:
+                return new Vector3(0, 0, -0.4f);
+            case ZigJointId.Waist:
+                return new Vector3(0, 0, -0.5f);
+            case ZigJointId.LeftHip:
+                return new Vector3(0, 0, -0.6f);
+            case ZigJointId.RightHip:
+                return new Vector3(0, 0, -0.7f);
+            case ZigJointId.RightKnee:
+                return new Vector3(0, 0, -0.8f);
+            case ZigJointId.LeftKnee:
+                return new Vector3(0, 0, -0.9f);
+        }
+        return Vector3.zero;
+    }
+
 	public override void Start () 
     {
         
@@ -236,6 +269,9 @@ public class BodyManager : FakeMonoBehaviour {
         GameObject leftLowerLeg = create_object(ZigJointId.LeftKnee, aChar.leftLowerLeg, aChar.atLeftLowerLeg);
         GameObject rightLowerLeg = create_object(ZigJointId.RightKnee, aChar.rightLowerLeg, aChar.atRightLowerLeg);
 
+        //order things
+
+
 		Dictionary<ZigJointId, GameObject> jointObject = new Dictionary<ZigJointId, GameObject>();
 		Dictionary<ZigJointId, Texture2D> jointTexture = new Dictionary<ZigJointId, Texture2D>();
 		jointObject[ZigJointId.Torso] = torso;
@@ -284,7 +320,8 @@ public class BodyManager : FakeMonoBehaviour {
             jointObject[e.Key].transform.position =
                 jointObject[e.Value].transform.position
                 + get_offset_of_plane(jointObject[e.Value].transform)
-                + get_connection_point_image(e.Key, e.Value, jointTexture[e.Value]);
+                + get_connection_point_image(e.Key, e.Value, jointTexture[e.Value])
+                + get_Z_offset(e.Key);
                 
 		}
 
