@@ -24,7 +24,7 @@ public class BackgroundManager  : FakeMonoBehaviour
     public void character_changed_listener(CharacterTextureBehaviour aCharacter)
     {
         mBackground1.transform.localScale = new Vector3(aCharacter.background1.width / 10.0f, 1, aCharacter.background1.height / 10.0f);
-        mBackground1.transform.localScale *= 1 / 100f;//Screen.width / (float)aCharacter.background1.width;
+        mBackground1.transform.localScale *= 3 / 100f;//Screen.width / (float)aCharacter.background1.width;
         mBackground1.renderer.material.mainTexture = aCharacter.background1;
     }
 }
