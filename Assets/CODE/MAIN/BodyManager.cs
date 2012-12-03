@@ -5,10 +5,14 @@ using System.Collections.Generic;
 public class BodyManager : FakeMonoBehaviour {
 	public BodyManager(ManagerManager aManager) : base(aManager) {}
 
-    public void move_center(Vector3 diff)
+    public void move_center(Vector3 pos)
     {
-        mParts[ZigJointId.Torso].transform.position += diff;
-        mParts[ZigJointId.Waist].transform.position += diff;
+        if (mStartingTorso.sqrMagnitude == Mathf.Infinity)
+            mStartingTorso = mParts[ZigJointId.Torso].transform.position;
+        if (mStartingWaist.sqrMagnitude == Mathf.Infinity)
+            mStartingWaist = mParts[ZigJointId.Waist].transform.position;
+        mParts[ZigJointId.Torso].transform.position = mStartingTorso + pos;
+        mParts[ZigJointId.Waist].transform.position = mStartingWaist + pos;
     }
     public void set_character(CharacterTextureBehaviour aChar)
     {
@@ -51,6 +55,8 @@ public class BodyManager : FakeMonoBehaviour {
 
     int mMode = 0; // 0 - from kinect, 1 - from pose, -1 none
     public ProGrading.Pose mTargetPose = null;
+    public Vector3 mStartingTorso = new Vector3(Mathf.Infinity,Mathf.Infinity,Mathf.Infinity);
+    public Vector3 mStartingWaist = new Vector3(Mathf.Infinity, Mathf.Infinity, Mathf.Infinity);
     Dictionary<ZigJointId, GameObject> mParts = new Dictionary<ZigJointId, GameObject>();
 	
 	public Vector3 get_offset_of_plane(Transform aGo)
@@ -61,7 +67,7 @@ public class BodyManager : FakeMonoBehaviour {
 		throw new UnityException("no plane child exsits");
 	}
 
-	public float convert_units(double pixelWidth)
+	public static float convert_units(double pixelWidth)
 	{
 		return (float)pixelWidth/100.0f; //100 pixels = 1 unit
 	}
