@@ -1,7 +1,17 @@
+::TODO2.0::
+DONE-music
+DONE-actually fix depth issue
+-make some sort of right sided manager nonsense business
+	-grading manager 
+DONE-pose from kniect needs to read torso angle
+DONE-why is waist not working
+
+
 ::TODO::
+DONE-center background
 DONE-switch entire projection system nonsense to record angles yada yada yada
 DONE-maybe switch grading to use angles too because that's what it's suppose to be
--do z-depth on ordering that lea gave you
+DONE-do z-depth on ordering that lea gave you
 
 ::TODO::
 DONE-scan images for connection points instead of using relative positions

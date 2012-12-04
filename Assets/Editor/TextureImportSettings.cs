@@ -45,6 +45,7 @@ public class ChangeTextureImportSettingsUnity3 : ScriptableObject
             textureImporter.filterMode = FilterMode.Point;
             textureImporter.textureFormat = TextureImporterFormat.RGBA32;
             textureImporter.normalmap = false;
+            textureImporter.maxTextureSize = 4096;
             TextureImporterSettings st = new TextureImporterSettings();
             textureImporter.ReadTextureSettings(st);
             st.wrapMode = TextureWrapMode.Clamp;
