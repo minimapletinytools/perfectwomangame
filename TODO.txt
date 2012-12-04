@@ -1,8 +1,14 @@
 ::TODO2.0::
+
+-make some sort of right sided manager nonsense business
+-grading manager
+	-needs to actually do stuff now lol
+-particles
+DONE-fix the roll around bug 
+-snapping
+DONE-move transparent body behind not transparent
 DONE-music
 DONE-actually fix depth issue
--make some sort of right sided manager nonsense business
-	-grading manager 
 DONE-pose from kniect needs to read torso angle
 DONE-why is waist not working
 

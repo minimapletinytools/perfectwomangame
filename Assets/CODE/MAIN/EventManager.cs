@@ -11,6 +11,7 @@ public class EventManager : FakeMonoBehaviour {
 
     //other events here
     public CharacterDelegate character_changed_event;
+    public CharacterDelegate character_setup_event;
 
 	public override void Update()
 	{

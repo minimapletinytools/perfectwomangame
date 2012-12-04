@@ -21,7 +21,6 @@ public class BodyManager : FakeMonoBehaviour {
 
     public void set_transparent(ProGrading.Pose aPose)
     {
-        //TODO
         mMode = 1;
         mTargetPose = aPose;
         foreach (GameObject e in mParts.Values)
@@ -36,6 +35,7 @@ public class BodyManager : FakeMonoBehaviour {
                 }
             }
         }
+        move_center(mParts[ZigJointId.Torso].transform.position - mStartingTorso + new Vector3(0,0,-1));
     }
 
     public void destroy_character()
@@ -55,12 +55,18 @@ public class BodyManager : FakeMonoBehaviour {
         move_center(new Vector3(BodyManager.convert_units(aCharacter.background1.width) / 4.0f, 0, 0));
     }
 
+    public static ZigJointId[] mRenderedJoints = { ZigJointId.Neck, ZigJointId.Torso, ZigJointId.Waist, ZigJointId.LeftShoulder, ZigJointId.LeftElbow, ZigJointId.RightShoulder, ZigJointId.RightElbow, ZigJointId.LeftHip, ZigJointId.LeftKnee, ZigJointId.RightHip, ZigJointId.RightShoulder };
     int mMode = 0; // 0 - from kinect, 1 - from pose, -1 none
     public ProGrading.Pose mTargetPose = null;
     public Vector3 mStartingTorso = new Vector3(Mathf.Infinity,Mathf.Infinity,Mathf.Infinity);
     public Vector3 mStartingWaist = new Vector3(Mathf.Infinity, Mathf.Infinity, Mathf.Infinity);
     Dictionary<ZigJointId, GameObject> mParts = new Dictionary<ZigJointId, GameObject>();
-	
+
+
+    public Vector3 get_part_position(ZigJointId part)
+    {
+        return mParts[part].transform.position;
+    }
 	public Vector3 get_offset_of_plane(Transform aGo)
 	{
 		Transform plane = aGo.FindChild("Plane");
@@ -228,11 +234,13 @@ public class BodyManager : FakeMonoBehaviour {
             if(mManager.mZigManager.has_user())
                 mManager.mInterfaceManager.mGrade = ProGrading.grade_pose(ProGrading.snap_pose(mManager), mManager.mTransparentBodyManager.mTargetPose);
 
-            foreach (KeyValuePair<GradingManager.WeightedZigJointPair, ProjectionManager.Smoothing> e in mManager.mProjectionManager.mImportant)
+            foreach (KeyValuePair<ZigJointId, ProjectionManager.Stupid> e in mManager.mProjectionManager.mImportant)
             {
-                mParts[e.Key.A].transform.rotation = Quaternion.AngleAxis(e.Value.current, Vector3.forward);
+                mParts[e.Key].transform.rotation = Quaternion.AngleAxis(e.Value.smoothing.current, Vector3.forward);
             }
             mParts[ZigJointId.Waist].transform.rotation = Quaternion.AngleAxis(mManager.mProjectionManager.mWaist.current,Vector3.forward);
+
+
             if (Input.GetKeyDown(KeyCode.Space))
             {
                 if(mManager.mZigManager.has_user())
@@ -262,7 +270,33 @@ public class BodyManager : FakeMonoBehaviour {
             }
         }
 	}
-	
+
+    public static ZigJointId get_parent(ZigJointId joint)
+    {
+        switch (joint)
+        {
+            case ZigJointId.LeftKnee:
+                return ZigJointId.LeftHip;
+            case ZigJointId.RightKnee:
+                return ZigJointId.RightHip;
+            case ZigJointId.LeftHip:
+                return ZigJointId.Waist;
+            case ZigJointId.RightHip:
+                return ZigJointId.Waist;
+            case ZigJointId.LeftElbow:
+                return ZigJointId.LeftShoulder;
+            case ZigJointId.RightElbow:
+                return ZigJointId.RightShoulder;
+            case ZigJointId.LeftShoulder:
+                return ZigJointId.Torso;
+            case ZigJointId.RightShoulder:
+                return ZigJointId.Torso;
+            case ZigJointId.Neck:
+                return ZigJointId.Torso;
+            default:
+                return ZigJointId.None;
+        }
+    }
 	public void create_body(CharacterTextureBehaviour aChar)
 	{
 		GameObject torso = create_object(ZigJointId.Torso,aChar.torso,aChar.atTorso);

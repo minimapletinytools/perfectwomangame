@@ -7,9 +7,14 @@ public class GameManager : FakeMonoBehaviour
     public AudioSource mSource;
     public int CurrentLevel
     { get; private set; }
+    public int TotalScore
+    { get; private set; }
+    public int TimeRemaining
+    { get; private set; }
     public GameManager(ManagerManager aManager) : base(aManager) 
     {
         CurrentLevel = 0;
+        TotalScore = 0;
     }
     public override void Start()
     {

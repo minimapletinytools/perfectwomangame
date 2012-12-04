@@ -46,7 +46,7 @@ public class ProGrading {
         float gradesum = 0;
         foreach (PoseElement e in A.mElements)
         {
-            Debug.Log(e.joint);
+            //Debug.Log(e.joint);
             PoseElement bPose = B.find_element(e.joint);
             float target = bPose.angle;
             float actual = e.angle;
@@ -63,14 +63,15 @@ public class ProGrading {
         foreach (KeyValuePair<ZigJointId, ZigJointId> e in sPairs)
         {
             PoseElement pe = new PoseElement();
-            ZigInputJoint A = manager.mZigManager.Joints[e.Key];
-            ZigInputJoint B = manager.mZigManager.Joints[e.Value];
-            pe.angle = manager.mProjectionManager.get_relative(A, B);
+            //ZigInputJoint A = manager.mZigManager.Joints[e.Key];
+            //ZigInputJoint B = manager.mZigManager.Joints[e.Value];
+            //pe.angle = manager.mProjectionManager.get_relative(A, B);
+            pe.angle = manager.mProjectionManager.get_smoothed_relative(e.Key, e.Value);
             pe.joint = e.Key;
             p.mElements.Add(pe);
         }
         PoseElement waist = new PoseElement();
-        waist.angle = manager.mProjectionManager.get_waist(manager.mZigManager.Joints[ZigJointId.Waist], manager.mZigManager.Joints[ZigJointId.LeftKnee], manager.mZigManager.Joints[ZigJointId.RightKnee]);
+        waist.angle = manager.mProjectionManager.mWaist.current;
         //waist.angle = manager.mProjectionManager.get_waist(manager.mZigManager.Joints[ZigJointId.Waist], manager.mZigManager.Joints[ZigJointId.LeftHip], manager.mZigManager.Joints[ZigJointId.RightHip]);
         waist.joint = ZigJointId.Waist;
         p.mElements.Add(waist);

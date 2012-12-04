@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 public class GradingManager : FakeMonoBehaviour {
     
+    //TODO delet e half the stuff here plz
 	public GradingManager(ManagerManager aManager) : base(aManager) {}
 
     public class WeightedZigJointPair
@@ -16,11 +17,11 @@ public class GradingManager : FakeMonoBehaviour {
 	{
 		public bool Equals(WeightedZigJointPair x, WeightedZigJointPair y)
 	    {
-	        return x.A == y.A && x.B == y.B;
+	        return x.A == y.A;// && x.B == y.B;
 	    }
 		public int GetHashCode(WeightedZigJointPair pair)
 	    {
-			return ((int)pair.A)*100+((int)pair.B);
+            return ((int)pair.A) * 100;// +(int)pair.B;
 	    }
 	}
 

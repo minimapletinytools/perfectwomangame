@@ -33,6 +33,7 @@ public class ManagerManager : MonoBehaviour{
     public BodyManager mTransparentBodyManager;
     public BackgroundManager mBackgroundManager;
     public MenuManager mMenuManager;
+    public ParticleManager mParticleManager;
 	
 
     public PrefabReferenceBehaviour mReferences;
@@ -53,6 +54,7 @@ public class ManagerManager : MonoBehaviour{
         mTransparentBodyManager = new BodyManager(this);
         mBackgroundManager = new BackgroundManager(this);
         mMenuManager = new MenuManager(this);
+        mParticleManager = new ParticleManager(this);
 
 		if(mStartDelegates != null) 
 			mStartDelegates();
@@ -60,6 +62,7 @@ public class ManagerManager : MonoBehaviour{
         //hack to load the first character
         GameObject demoChar = (GameObject)GameObject.Instantiate(mReferences.mDemoChar);
         mEventManager.character_changed_event(demoChar.GetComponent<CharacterTextureBehaviour>());
+        mEventManager.character_setup_event(demoChar.GetComponent<CharacterTextureBehaviour>());
 
         ProGrading.Pose p = ProGrading.read_pose(mReferences.mDemoChar.GetComponent<CharacterTextureBehaviour>().properPose);
         mTransparentBodyManager.set_transparent(p);
