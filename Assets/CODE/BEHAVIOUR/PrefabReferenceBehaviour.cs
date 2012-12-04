@@ -5,4 +5,5 @@ public class PrefabReferenceBehaviour : MonoBehaviour {
     
 	public GameObject mDemoChar;
 	public Shader mDefaultCharacterShader;
+    public GameObject[] mCharacters;
 }

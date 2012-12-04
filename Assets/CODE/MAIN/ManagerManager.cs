@@ -32,6 +32,7 @@ public class ManagerManager : MonoBehaviour{
     public BodyManager mBodyManager;
     public BodyManager mTransparentBodyManager;
     public BackgroundManager mBackgroundManager;
+    public MenuManager mMenuManager;
 	
 
     public PrefabReferenceBehaviour mReferences;
@@ -51,7 +52,8 @@ public class ManagerManager : MonoBehaviour{
         mGameManager = new GameManager(this);
         mTransparentBodyManager = new BodyManager(this);
         mBackgroundManager = new BackgroundManager(this);
-        
+        mMenuManager = new MenuManager(this);
+
 		if(mStartDelegates != null) 
 			mStartDelegates();
 

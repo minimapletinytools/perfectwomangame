@@ -31,7 +31,7 @@ public class BodyManager : FakeMonoBehaviour {
                 if (f.gameObject.name == "Plane")
                 {
                     Color c = f.material.GetColor("_TintColor");
-                    c.a = 0.1f;
+                    c.a = 0.2f;
                     f.material.SetColor("_TintColor", c);
                 }
             }
@@ -51,6 +51,8 @@ public class BodyManager : FakeMonoBehaviour {
     {
         destroy_character();
         set_character(aCharacter);
+        //reposition the characeter
+        move_center(new Vector3(BodyManager.convert_units(aCharacter.background1.width) / 4.0f, 0, 0));
     }
 
     int mMode = 0; // 0 - from kinect, 1 - from pose, -1 none
@@ -108,7 +110,7 @@ public class BodyManager : FakeMonoBehaviour {
             }
         }
         //return Vector3.zero;
-        throw new UnityException("color " + c.ToString() + " not found");
+        throw new UnityException("color " + c.ToString() + " not found in texture " + aTex.name );
     }
 
     public Vector3 get_attachment_point(int aId, Texture2D aTex)
@@ -308,6 +310,8 @@ public class BodyManager : FakeMonoBehaviour {
 
         //these two are special
         torso.transform.position = waist.transform.position;
+        torso.transform.position += get_Z_offset(ZigJointId.Torso);
+        waist.transform.position += get_Z_offset(ZigJointId.Waist);
 
 		List<KeyValuePair<ZigJointId,ZigJointId>> relations = new List<KeyValuePair<ZigJointId, ZigJointId>>();
 		relations.Add(new KeyValuePair<ZigJointId,ZigJointId>(ZigJointId.LeftShoulder,ZigJointId.Torso));
@@ -327,7 +331,8 @@ public class BodyManager : FakeMonoBehaviour {
                 jointObject[e.Value].transform.position
                 + get_offset_of_plane(jointObject[e.Value].transform)
                 + get_connection_point_image(e.Key, e.Value, jointTexture[e.Value])
-                + get_Z_offset(e.Key);
+                + get_Z_offset(e.Key)
+                - get_Z_offset(e.Value);
                 
 		}
 

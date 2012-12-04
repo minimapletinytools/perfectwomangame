@@ -69,6 +69,11 @@ public class ProGrading {
             pe.joint = e.Key;
             p.mElements.Add(pe);
         }
+        PoseElement waist = new PoseElement();
+        waist.angle = manager.mProjectionManager.get_waist(manager.mZigManager.Joints[ZigJointId.Waist], manager.mZigManager.Joints[ZigJointId.LeftKnee], manager.mZigManager.Joints[ZigJointId.RightKnee]);
+        //waist.angle = manager.mProjectionManager.get_waist(manager.mZigManager.Joints[ZigJointId.Waist], manager.mZigManager.Joints[ZigJointId.LeftHip], manager.mZigManager.Joints[ZigJointId.RightHip]);
+        waist.joint = ZigJointId.Waist;
+        p.mElements.Add(waist);
         return p;
     }
     public static Pose read_pose(TextAsset aText)

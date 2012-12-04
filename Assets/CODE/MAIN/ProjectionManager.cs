@@ -29,7 +29,7 @@ public class ProjectionManager : FakeMonoBehaviour {
     public Smoothing mWaist = new Smoothing();
 	public Vector3 mNormal = Vector3.forward;
 	public Vector3 mUp = Vector3.up;
-    public float mSmoothing = 0.8f;
+    public float mSmoothing = 0.6f;
 	
 	public void compute_normal()
 	{
@@ -91,8 +91,17 @@ public class ProjectionManager : FakeMonoBehaviour {
                     }
                 }
             }
-            mWaist.target = get_waist(mManager.mZigManager.Joints[ZigJointId.Waist], mManager.mZigManager.Joints[ZigJointId.LeftHip], mManager.mZigManager.Joints[ZigJointId.RightHip]);
-            mWaist.current = mWaist.current * mSmoothing + mWaist.target * (1 - mSmoothing);
+            try
+            {
+                //mWaist.target = get_waist(mManager.mZigManager.Joints[ZigJointId.Waist], mManager.mZigManager.Joints[ZigJointId.LeftHip], mManager.mZigManager.Joints[ZigJointId.RightHip]);
+                mWaist.target = get_waist(mManager.mZigManager.Joints[ZigJointId.Waist], mManager.mZigManager.Joints[ZigJointId.LeftKnee], mManager.mZigManager.Joints[ZigJointId.RightKnee]);
+                //go left or right
+                //if(
+                mWaist.current = mWaist.current * mSmoothing + mWaist.target * (1 - mSmoothing);
+            }
+            catch
+            {
+            }
         }
 	}
 }

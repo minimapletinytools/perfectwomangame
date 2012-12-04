@@ -37,9 +37,5 @@ public class BackgroundManager  : FakeMonoBehaviour
             mCamera.orthographicSize = BodyManager.convert_units(aCharacter.background1.width / camRatio) / 2.0f;
         else
             mCamera.orthographicSize = BodyManager.convert_units(aCharacter.background1.height) / 2.0f;
-
-        //reposition the characeter
-        mManager.mBodyManager.move_center(new Vector3(BodyManager.convert_units(aCharacter.background1.width) / 4.0f, 0, 0));
-        mManager.mTransparentBodyManager.move_center(new Vector3(BodyManager.convert_units(aCharacter.background1.width) / 4.0f, 0, 0));
     }
 }
