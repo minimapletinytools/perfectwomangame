@@ -22,7 +22,10 @@
 	-target area
 	-set_movement_parameters
 	
--
+-MenuManager
+	-initial position of elements
+	-animation of elements
+	
 	
 
 ::TODO2.0::
