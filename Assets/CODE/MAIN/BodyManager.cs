@@ -231,8 +231,8 @@ public class BodyManager : FakeMonoBehaviour {
         if (mMode == 0)
         {
             //grade
-            if(mManager.mZigManager.has_user())
-                mManager.mInterfaceManager.mGrade = ProGrading.grade_pose(ProGrading.snap_pose(mManager), mManager.mTransparentBodyManager.mTargetPose);
+            //if(mManager.mZigManager.has_user())
+            //    mManager.mInterfaceManager.mGrade = ProGrading.grade_pose(ProGrading.snap_pose(mManager), mManager.mTransparentBodyManager.mTargetPose);
 
             foreach (KeyValuePair<ZigJointId, ProjectionManager.Stupid> e in mManager.mProjectionManager.mImportant)
             {

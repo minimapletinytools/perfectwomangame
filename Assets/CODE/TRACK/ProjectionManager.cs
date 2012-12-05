@@ -98,7 +98,7 @@ public class ProjectionManager : FakeMonoBehaviour {
     public Smoothing mWaist = new Smoothing();
 	public Vector3 mNormal = Vector3.forward;
 	public Vector3 mUp = Vector3.up;
-    public float mSmoothing = 0.6f;
+    public float mSmoothing = 0.998f;
 	
 	public void compute_normal()
 	{

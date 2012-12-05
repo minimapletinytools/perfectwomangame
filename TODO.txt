@@ -1,11 +1,42 @@
-::TODO2.0::
+::RIGHT MANAGER NOTES::
+-meters
+	-color(s), length, percentage, effects <- (blink, change color, flash)
+-flashing choose next thingy
+-score manager
 
+-TimedEventUtility
+	-these are per class instance
+	
+-FlatElementSubManager
+	-creates camera for all flat elements etc
+	
+-everything parents from FlatElementBase
+	-gameobject parent
+	-spatial position original orientation
+	-flash/shake/jiggle/fade(start delay, time (-1 is contiunous)
+	-set_flash/shake/jiggle/fade_parameters
+	-ordering and positioning functionality
+	
+-transfer particle effect manager
+	-source area
+	-target area
+	-set_movement_parameters
+	
+-
+	
+
+::TODO2.0::
+-test in mac browser as well as stupid kinect
+-make sure scaling is nearest neighbor (shader??)
+-other ways to indicate correct pose of puppet
+	-say, start level with puppet in right pose
 -make some sort of right sided manager nonsense business
 -grading manager
+	-fix it
 	-needs to actually do stuff now lol
 -particles
-DONE-fix the roll around bug 
 -snapping
+DONE-fix the roll around bug 
 DONE-move transparent body behind not transparent
 DONE-music
 DONE-actually fix depth issue
