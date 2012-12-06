@@ -17,19 +17,19 @@ public class CameraManager : FakeMonoBehaviour {
         MainBodyCamera.cullingMask = 1 << 1;
         MainBodyCamera.depth = 3;
         MainBodyCamera.clearFlags = CameraClearFlags.Depth;
-        MainBodyCameraBloomEffect = MainBodyCamera.gameObject.AddComponent<BloomAndLensFlares>();
+        //MainBodyCameraBloomEffect = MainBodyCamera.gameObject.AddComponent<BloomAndLensFlares>();
         //MainBodyCameraBloomEffect.addBrightStuffOneOneShader = Blo
         mManager.mBodyManager.set_layer(1);
 
 
-        TransparentBodyCamera = (new GameObject("genMainCamera")).AddComponent<Camera>();
+        TransparentBodyCamera = (new GameObject("genTransparentCamera")).AddComponent<Camera>();
         TransparentBodyCamera.cullingMask = 1 << 2;
         TransparentBodyCamera.depth = 2;
         TransparentBodyCamera.clearFlags = CameraClearFlags.Depth;
         TransparentBodyCameraEdgeEffect = TransparentBodyCamera.gameObject.AddComponent<EdgeDetectEffect>();
         mManager.mTransparentBodyManager.set_layer(2);
 
-        BackgroundCamera = (new GameObject("genMainCamera")).AddComponent<Camera>();
+        BackgroundCamera = (new GameObject("genBackgroundCamera")).AddComponent<Camera>();
         BackgroundCamera.cullingMask = 1 << 3;
         BackgroundCamera.depth = 1;
         BackgroundCamera.clearFlags = CameraClearFlags.Depth;

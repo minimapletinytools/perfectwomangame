@@ -8,8 +8,8 @@ public class ProjectionManager : FakeMonoBehaviour {
 	
 	public class Smoothing
 	{
-        public float snapInTolerance = 10.0f;
-        public float snapOutTolerance = 20.0f;
+        public float snapInTolerance = 2.0f;
+        public float snapOutTolerance = 4.0f;
 
         public bool snapped = false;
 		public float target = 0;

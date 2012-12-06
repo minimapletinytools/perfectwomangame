@@ -2,7 +2,9 @@ using UnityEngine;
 using System.Collections;
 
 public class CharacterTextureBehaviour : MonoBehaviour {
-	
+
+    public Vector3 adjust;
+
 	public Texture2D head;
     public Texture2D atHead;
     public Texture2D leftLowerArm;

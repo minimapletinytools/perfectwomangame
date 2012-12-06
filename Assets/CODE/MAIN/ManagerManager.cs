@@ -28,19 +28,19 @@ public class ManagerManager : MonoBehaviour{
     public ZigManager mZigManager;
 	public ProjectionManager mProjectionManager;
     public InterfaceManager mInterfaceManager;
-    public GameManager mGameManager;
     public BodyManager mBodyManager;
     public BodyManager mTransparentBodyManager;
     public BackgroundManager mBackgroundManager;
     public CameraManager mCameraManager;
-    public MenuManager mMenuManager;
     public ParticleManager mParticleManager;
-	
+    public GameManager mGameManager;
 
     public PrefabReferenceBehaviour mReferences;
+    public MenuReferenceBehaviour mMenuReferences;
 
 	void Awake () {
         mReferences = GetComponent<PrefabReferenceBehaviour>();
+        mMenuReferences = GetComponent<MenuReferenceBehaviour>();
 
         if (sManager == null)
             Manager = this;
@@ -51,12 +51,12 @@ public class ManagerManager : MonoBehaviour{
 		mProjectionManager = new ProjectionManager(this);
         mInterfaceManager = new InterfaceManager(this);
         mBodyManager = new BodyManager(this);
-        mGameManager = new GameManager(this);
         mTransparentBodyManager = new BodyManager(this);
         mBackgroundManager = new BackgroundManager(this);
         mCameraManager = new CameraManager(this);
-        mMenuManager = new MenuManager(this);
         mParticleManager = new ParticleManager(this);
+
+        mGameManager = new GameManager(this);
 
 		if(mStartDelegates != null) 
 			mStartDelegates();

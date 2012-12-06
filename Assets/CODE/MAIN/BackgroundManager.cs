@@ -37,12 +37,24 @@ public class BackgroundManager  : FakeMonoBehaviour
         //resize the camera
         foreach (Camera c in mManager.mCameraManager.AllCameras)
         {
-            float texRatio = aCharacter.background1.width / (float)aCharacter.background1.height;
+            /*float texRatio = aCharacter.background1.width / (float)aCharacter.background1.height;
             float camRatio = c.aspect;
             if (camRatio > texRatio) //match width
                 c.orthographicSize = BodyManager.convert_units(aCharacter.background1.width / camRatio) / 2.0f;
             else
-                c.orthographicSize = BodyManager.convert_units(aCharacter.background1.height) / 2.0f;
+                c.orthographicSize = BodyManager.convert_units(aCharacter.background1.height) / 2.0f;*/
+            resize_camera_against_texture(c, aCharacter.background1);
         }
+    }
+
+    public static void resize_camera_against_texture(Camera aCam, Texture aTex, float aDistance = 1)
+    {
+        //TODO what if camera is not orthographic
+        float texRatio = aTex.width / (float)aTex.height;
+        float camRatio = aCam.aspect;
+        if (camRatio > texRatio) //match width
+            aCam.orthographicSize = BodyManager.convert_units(aTex.width / camRatio) / 2.0f;
+        else
+            aCam.orthographicSize = BodyManager.convert_units(aTex.height) / 2.0f;
     }
 }

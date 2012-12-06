@@ -64,7 +64,7 @@ public class BodyManager : FakeMonoBehaviour {
         destroy_character();
         set_character(aCharacter);
         set_layer(mLayer);
-        move_center(new Vector3(BodyManager.convert_units(aCharacter.background1.width) / 4.0f, 0, 0));
+        move_center(new Vector3(BodyManager.convert_units(aCharacter.background1.width) / 4.0f, 0, 0) + BodyManager.convert_units(aCharacter.adjust));
     }
 
     public static ZigJointId[] mRenderedJoints = { ZigJointId.Neck, ZigJointId.Torso, ZigJointId.Waist, ZigJointId.LeftShoulder, ZigJointId.LeftElbow, ZigJointId.RightShoulder, ZigJointId.RightElbow, ZigJointId.LeftHip, ZigJointId.LeftKnee, ZigJointId.RightHip, ZigJointId.RightShoulder };
@@ -88,9 +88,13 @@ public class BodyManager : FakeMonoBehaviour {
 		throw new UnityException("no plane child exsits");
 	}
 
+    public static Vector3 convert_units(Vector3 pixel)
+    {
+        return pixel / 1.0f;
+    }
 	public static float convert_units(double pixelWidth)
 	{
-		return (float)pixelWidth/100.0f; //100 pixels = 1 unit
+		return (float)pixelWidth/1.0f; //100 pixels = 1 unit
 	}
 
     public bool is_same_color(Color32 c1, Color32 c2)
@@ -131,6 +135,12 @@ public class BodyManager : FakeMonoBehaviour {
         //return Vector3.zero;
         throw new UnityException("color " + c.ToString() + " not found in texture " + aTex.name );
     }
+
+    public void fix_target_pose()
+    {
+        //TODO this is actually kind of hard lol mTargetPose.find_element(ZigJointId.Waist).angle = mManager.mProjectionManager.
+    }
+
 
     public Vector3 get_attachment_point(int aId, Texture2D aTex)
     {

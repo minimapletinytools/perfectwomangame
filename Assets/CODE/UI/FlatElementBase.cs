@@ -82,6 +82,11 @@ public class FlatElementBase {
         private set;
     }
 
+    public virtual float Depth
+    {
+        get; set;
+    }
+
     public FlatElementBase()
     {
         BoundingBox = new Rect(0, 0, 0, 0);
@@ -110,9 +115,16 @@ public class FlatElementBase {
     }
     protected virtual void set_color(Color aColor)
     {
-        if (PrimaryGameObject != null && PrimaryGameObject.renderer != null && PrimaryGameObject.renderer.material != null)
+        if (PrimaryGameObject != null)
         {
-            PrimaryGameObject.renderer.material.color = aColor;
+            Renderer rend = PrimaryGameObject.GetComponentInChildren<Renderer>();
+            if (rend != null)
+            {
+                try { rend.material.SetColor("_TintColor", aColor); }
+                catch { }
+                try { rend.material.color = aColor; }
+                catch { }
+            }
         }
     }
 
@@ -121,7 +133,7 @@ public class FlatElementBase {
     public virtual void update(float aDeltaTime)
     {
         mCurrentPosition = (1 - SoftInterpolation) * mCurrentPosition + SoftInterpolation * mTargetPosition;
-        set_position(mCurrentPosition + mLocalPosition);
+        set_position(mCurrentPosition + mLocalPosition + new Vector3(0,0,Depth));
         mCurrentRotation = Quaternion.Slerp(mCurrentRotation, mTargetRotation, SoftInterpolation);
         set_rotation(mLocalRotation*mCurrentRotation);
         mCurrentColor = (1 - SoftInterpolation) * mCurrentColor + SoftInterpolation * mTargetColor;

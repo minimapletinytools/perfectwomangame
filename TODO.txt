@@ -1,3 +1,6 @@
+::TODO::
+-fix relative positioning with flat camera
+
 ::RIGHT MANAGER NOTES::
 -meters
 	-color(s), length, percentage, effects <- (blink, change color, flash)
