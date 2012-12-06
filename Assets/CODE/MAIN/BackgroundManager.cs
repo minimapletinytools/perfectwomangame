@@ -11,9 +11,7 @@ public class BackgroundManager  : FakeMonoBehaviour
         mManager.mEventManager.character_changed_event += character_changed_listener;
 
         //make sure camera is setup!
-        mBackground1 = GameObject.CreatePrimitive(PrimitiveType.Plane);
-        mBackground1.renderer.material = new Material(mManager.mReferences.mDefaultCharacterShader);
-        mBackground1.transform.rotation = Quaternion.AngleAxis(90, Vector3.right) * mBackground1.transform.rotation;
+        mBackground1 = (new ImageGameObjectUtility(null)).PlaneObject;
         mBackground1.transform.position = mBackground1.transform.position + new Vector3(0, 0, -2);
 	}
 	
