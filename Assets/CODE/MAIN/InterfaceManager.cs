@@ -45,7 +45,8 @@ public class InterfaceManager : FakeMonoBehaviour {
     {
         foreach (FlatElementBase e in mElement)
         {
-            e.update(Time.deltaTime);
+            e.update_parameters(Time.deltaTime);
+            e.set();
         }
     }
     public void setup_elements()
@@ -53,19 +54,19 @@ public class InterfaceManager : FakeMonoBehaviour {
         MenuReferenceBehaviour refs = mManager.mMenuReferences;
         //setup flat elements
         mPinkBackground = new FlatElementImage(refs.pinkBackground, 0);
-        mPinkBackground.SoftPosition = mFlatCamera.get_point(-1f, 0);
+        mPinkBackground.SoftPosition = mFlatCamera.get_point(-0.5f, 0);
 
-        mBlueBar = new FlatElementImage(refs.blueBar, 0.001f);
-        mBlueBar.SoftPosition = mFlatCamera.get_point(-1f, 0);
+        mBlueBar = new FlatElementImage(refs.blueBar, 1);
+        mBlueBar.SoftPosition = mFlatCamera.get_point(-0.5f, 0);
         
 
-        mMeterBackground = new FlatElementImage(refs.meterBackground, 0.001f);
-        mMeterBackground.SoftPosition = mFlatCamera.get_point(-1f, 1);
+        mMeterBackground = new FlatElementImage(refs.meterBackground, 1);
+        mMeterBackground.SoftPosition = mFlatCamera.get_point(-0.5f, 1) + new Vector3(0,-refs.meterBackground.height/2f,0);
 
-        mTimeMeter = new MeterObject(refs.timeMeterFront, refs.timeMeterBack, Color.black,0.002f);
-        mTimeMeter.SoftPosition = mFlatCamera.get_point(-1f, 1.1f);
-        mPerfectMeter = new MeterObject(refs.perfectMeterFront, refs.perfectMeterBack, Color.black,0.002f);
-        mPerfectMeter.SoftPosition = mFlatCamera.get_point(-1f, 0.9f);
+        mTimeMeter = new MeterObject(refs.timeMeterFront, refs.timeMeterBack, Color.green,2);
+        mTimeMeter.SoftPosition = mMeterBackground.SoftPosition + new Vector3(0, 60, 0);
+        mPerfectMeter = new MeterObject(refs.perfectMeterFront, refs.perfectMeterBack, Color.yellow,2);
+        mPerfectMeter.SoftPosition = mMeterBackground.SoftPosition + new Vector3(0, -60, 0);
 
 
         mElement.Add(mPinkBackground);

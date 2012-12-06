@@ -1,5 +1,5 @@
 ::TODO::
--fix relative positioning with flat camera
+DONE-fix relative positioning with flat camera
 
 ::RIGHT MANAGER NOTES::
 -meters
@@ -38,7 +38,7 @@
 	-say, start level with puppet in right pose
 -make some sort of right sided manager nonsense business
 -grading manager
-	-fix it
+	DONE-fix it
 	-needs to actually do stuff now lol
 -particles
 -snapping

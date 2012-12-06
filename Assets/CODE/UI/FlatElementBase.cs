@@ -31,7 +31,7 @@ public class FlatElementBase {
         protected set;
     }
 
-    public float SoftInterpolation{get;set;}
+    public virtual float SoftInterpolation{get;set;}
     //public TimedEventHandler Events { get; set; }
 
     Vector3 mCurrentPosition;
@@ -82,9 +82,16 @@ public class FlatElementBase {
         private set;
     }
 
-    public virtual float Depth
+    protected int mDepth = 0;
+    public virtual int Depth
     {
-        get; set;
+        get { return mDepth; }
+        set
+        {
+            mDepth = value;
+            foreach (Renderer e in PrimaryGameObject.GetComponentsInChildren<Renderer>())
+                e.material.renderQueue = mDepth;
+        }
     }
 
     public FlatElementBase()
@@ -99,21 +106,21 @@ public class FlatElementBase {
 
 
 
-    protected virtual void set_position(Vector3 aPos)
+    public virtual void set_position(Vector3 aPos)
     {
         if (PrimaryGameObject != null)
         {
             PrimaryGameObject.transform.position = aPos;
         }
     }
-    protected virtual void set_rotation(Quaternion aRot)
+    public virtual void set_rotation(Quaternion aRot)
     {
         if (PrimaryGameObject != null)
         {
             PrimaryGameObject.transform.rotation = aRot;
         }
     }
-    protected virtual void set_color(Color aColor)
+    public virtual void set_color(Color aColor)
     {
         if (PrimaryGameObject != null)
         {
@@ -128,18 +135,18 @@ public class FlatElementBase {
         }
     }
 
-
-
-    public virtual void update(float aDeltaTime)
+    public virtual void update_parameters(float aDeltaTime)
     {
         mCurrentPosition = (1 - SoftInterpolation) * mCurrentPosition + SoftInterpolation * mTargetPosition;
-        set_position(mCurrentPosition + mLocalPosition + new Vector3(0,0,Depth));
         mCurrentRotation = Quaternion.Slerp(mCurrentRotation, mTargetRotation, SoftInterpolation);
-        set_rotation(mLocalRotation*mCurrentRotation);
         mCurrentColor = (1 - SoftInterpolation) * mCurrentColor + SoftInterpolation * mTargetColor;
-        set_color(mCurrentColor);
+    }
 
-        //TODO
+    public virtual void set()
+    {
+        set_position(mCurrentPosition + mLocalPosition);// + new Vector3(0,0,Depth));
+        set_rotation(mLocalRotation*mCurrentRotation);
+        set_color(mCurrentColor);
     }
 
 }

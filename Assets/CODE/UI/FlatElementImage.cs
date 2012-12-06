@@ -3,12 +3,13 @@ using System.Collections;
 
 public class FlatElementImage : FlatElementBase
 {
-
-    public FlatElementImage(Texture2D aTex, float aDepth)
+    public ImageGameObjectUtility mImage;
+    public FlatElementImage(Texture2D aTex, int aDepth)
     {
-        Depth = aDepth;
         SoftColor = new Color(0.5f,0.5f,0.5f,0.5f);
-        PrimaryGameObject = ImageGameObjectUtility.create(aTex);
+        mImage = new ImageGameObjectUtility(aTex);
+        PrimaryGameObject = mImage.ParentObject;
+        Depth = aDepth;
     }
 
 }

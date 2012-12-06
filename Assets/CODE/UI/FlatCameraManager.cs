@@ -24,7 +24,7 @@ public class FlatCameraManager{
         get
         {
             if (IsOrthographic)
-                return Camera.orthographicSize * Camera.aspect;
+                return Camera.orthographicSize * Camera.aspect * 2;
             else
                 return Distance * Mathf.Tan(Camera.fov / 2.0f);
         }
