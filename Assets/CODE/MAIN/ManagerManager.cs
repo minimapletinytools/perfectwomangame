@@ -32,6 +32,7 @@ public class ManagerManager : MonoBehaviour{
     public BodyManager mBodyManager;
     public BodyManager mTransparentBodyManager;
     public BackgroundManager mBackgroundManager;
+    public CameraManager mCameraManager;
     public MenuManager mMenuManager;
     public ParticleManager mParticleManager;
 	
@@ -53,6 +54,7 @@ public class ManagerManager : MonoBehaviour{
         mGameManager = new GameManager(this);
         mTransparentBodyManager = new BodyManager(this);
         mBackgroundManager = new BackgroundManager(this);
+        mCameraManager = new CameraManager(this);
         mMenuManager = new MenuManager(this);
         mParticleManager = new ParticleManager(this);
 

@@ -8,9 +8,8 @@ public class ProjectionManager : FakeMonoBehaviour {
 	
 	public class Smoothing
 	{
-        public float snapInTolerance = 5.0f;
-        public float snapOutTolerance = 10.0f;
-
+        public float snapInTolerance = 10.0f;
+        public float snapOutTolerance = 20.0f;
 
         public bool snapped = false;
 		public float target = 0;
@@ -36,8 +35,10 @@ public class ProjectionManager : FakeMonoBehaviour {
                     r = true;
                 }
             }
-            if(!snapped)
+            if (!snapped)
                 target = value;
+            else target = snapValue;
+
             set_current(interp);
             return r;
         }
@@ -98,7 +99,7 @@ public class ProjectionManager : FakeMonoBehaviour {
     public Smoothing mWaist = new Smoothing();
 	public Vector3 mNormal = Vector3.forward;
 	public Vector3 mUp = Vector3.up;
-    public float mSmoothing = 0.998f;
+    public float mSmoothing = 0.95f;
 	
 	public void compute_normal()
 	{
@@ -156,12 +157,12 @@ public class ProjectionManager : FakeMonoBehaviour {
                     {
                         
                         
-                        /*if (parentJoint == ZigJointId.None || (parentJoint == ZigJointId.Waist && mWaist.snapped == true) || mImportant[parentJoint].smoothing.snapped == true)
+                        if (parentJoint == ZigJointId.None || (parentJoint == ZigJointId.Waist) || mImportant[parentJoint].smoothing.snapped == true)
                         {
                             if(e.Value.smoothing.snap_change(get_relative(mManager.mZigManager.Joints[e.Key], mManager.mZigManager.Joints[e.Value.otherEnd]), mManager.mTransparentBodyManager.mTargetPose.find_element(e.Key).angle, mSmoothing))
-                                Debug.Log("SNAP " + e.Key);
+                                ;// Debug.Log("SNAP " + e.Key);
                         }
-                        else*/
+                        else
                         {
                             e.Value.smoothing.change(get_relative(mManager.mZigManager.Joints[e.Key], mManager.mZigManager.Joints[e.Value.otherEnd]), mSmoothing);
                             
@@ -169,17 +170,14 @@ public class ProjectionManager : FakeMonoBehaviour {
                     }
                     catch
                     {
-                        Debug.Log(parentJoint);
+                        //TODO wyh does this fail on first run?
                     }
                 }
             }
             try
             {
-                if (mWaist.snap_change(
-                    get_waist(mManager.mZigManager.Joints[ZigJointId.Waist], mManager.mZigManager.Joints[ZigJointId.LeftKnee], mManager.mZigManager.Joints[ZigJointId.RightKnee]),
-                    mManager.mTransparentBodyManager.mTargetPose.find_element(ZigJointId.Waist).angle,
-                    mSmoothing))
-                    Debug.Log("SNAP " + ZigJointId.Waist);
+                //mWaist.snap_change(get_waist(mManager.mZigManager.Joints[ZigJointId.Waist], mManager.mZigManager.Joints[ZigJointId.LeftKnee], mManager.mZigManager.Joints[ZigJointId.RightKnee]), mManager.mTransparentBodyManager.mTargetPose.find_element(ZigJointId.Waist).angle, mSmoothing);
+                mWaist.change(get_waist(mManager.mZigManager.Joints[ZigJointId.Waist], mManager.mZigManager.Joints[ZigJointId.LeftKnee], mManager.mZigManager.Joints[ZigJointId.RightKnee]), mSmoothing);
                 //mWaist.target = get_waist(mManager.mZigManager.Joints[ZigJointId.Waist], mManager.mZigManager.Joints[ZigJointId.LeftHip], mManager.mZigManager.Joints[ZigJointId.RightHip]);
             }
             catch

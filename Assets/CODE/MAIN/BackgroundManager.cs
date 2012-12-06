@@ -4,14 +4,13 @@ using System.Collections;
 public class BackgroundManager  : FakeMonoBehaviour
 {
     GameObject mBackground1;
-    Camera mCamera;
+    int mlayer = 0;
     public BackgroundManager(ManagerManager aManager) : base(aManager) { }
 
 	public override void Start () {
         mManager.mEventManager.character_changed_event += character_changed_listener;
 
         //make sure camera is setup!
-        mCamera = mManager.mGameManager.mCamera;
         mBackground1 = GameObject.CreatePrimitive(PrimitiveType.Plane);
         mBackground1.renderer.material = new Material(mManager.mReferences.mDefaultCharacterShader);
         mBackground1.transform.rotation = Quaternion.AngleAxis(90, Vector3.right) * mBackground1.transform.rotation;
@@ -22,6 +21,11 @@ public class BackgroundManager  : FakeMonoBehaviour
     {
 	}
 
+    public void set_layer(int aLayer)
+    {
+        mlayer = aLayer;
+        mBackground1.layer = aLayer;
+    }
     public void character_changed_listener(CharacterTextureBehaviour aCharacter)
     {
         //resize the background and set the texture
@@ -31,11 +35,14 @@ public class BackgroundManager  : FakeMonoBehaviour
         mBackground1.renderer.material.mainTexture = aCharacter.background1;
         
         //resize the camera
-        float texRatio = aCharacter.background1.width/(float)aCharacter.background1.height;
-        float camRatio = mCamera.aspect;
-        if (camRatio > texRatio) //match width
-            mCamera.orthographicSize = BodyManager.convert_units(aCharacter.background1.width / camRatio) / 2.0f;
-        else
-            mCamera.orthographicSize = BodyManager.convert_units(aCharacter.background1.height) / 2.0f;
+        foreach (Camera c in mManager.mCameraManager.AllCameras)
+        {
+            float texRatio = aCharacter.background1.width / (float)aCharacter.background1.height;
+            float camRatio = c.aspect;
+            if (camRatio > texRatio) //match width
+                c.orthographicSize = BodyManager.convert_units(aCharacter.background1.width / camRatio) / 2.0f;
+            else
+                c.orthographicSize = BodyManager.convert_units(aCharacter.background1.height) / 2.0f;
+        }
     }
 }

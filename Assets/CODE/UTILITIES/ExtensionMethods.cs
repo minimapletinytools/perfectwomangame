@@ -16,4 +16,11 @@ public static class ExtensionMethods  {
 			return aTrans.localScale;
 		return aTrans.localScale.component_multiply(global_scale(aTrans.parent));
 	}
+
+
+    //Quaternion stuff
+    public static float flat_rotation(this Quaternion aQuat)
+    {
+        return aQuat.eulerAngles.z;
+    }
 }

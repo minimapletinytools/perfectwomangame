@@ -8,4 +8,6 @@ public class PrefabReferenceBehaviour : MonoBehaviour {
     public Texture2D mDefaultParticleTexture;
     public GameObject[] mCharacters;
     
+
+    //ScreenEffectShader nonsense here
 }

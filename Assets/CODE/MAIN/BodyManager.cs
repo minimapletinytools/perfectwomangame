@@ -4,7 +4,6 @@ using System.Collections.Generic;
 
 public class BodyManager : FakeMonoBehaviour {
 	public BodyManager(ManagerManager aManager) : base(aManager) {}
-
     public void move_center(Vector3 pos)
     {
         if (mStartingTorso.sqrMagnitude == Mathf.Infinity)
@@ -14,6 +13,7 @@ public class BodyManager : FakeMonoBehaviour {
         mParts[ZigJointId.Torso].transform.position = mStartingTorso + pos;
         mParts[ZigJointId.Waist].transform.position = mStartingWaist + pos;
     }
+
     public void set_character(CharacterTextureBehaviour aChar)
     {
         create_body(aChar);
@@ -38,6 +38,18 @@ public class BodyManager : FakeMonoBehaviour {
         move_center(mParts[ZigJointId.Torso].transform.position - mStartingTorso + new Vector3(0,0,-1));
     }
 
+    public void set_layer(int layer)
+    {
+        mLayer = layer;
+        foreach (GameObject e in mParts.Values)
+        {
+            foreach (Renderer f in e.GetComponentsInChildren<Renderer>())
+            {
+                f.gameObject.layer = layer;
+            }
+        }
+    }
+
     public void destroy_character()
     {
         mTargetPose = null;
@@ -51,7 +63,7 @@ public class BodyManager : FakeMonoBehaviour {
     {
         destroy_character();
         set_character(aCharacter);
-        //reposition the characeter
+        set_layer(mLayer);
         move_center(new Vector3(BodyManager.convert_units(aCharacter.background1.width) / 4.0f, 0, 0));
     }
 
@@ -60,6 +72,7 @@ public class BodyManager : FakeMonoBehaviour {
     public ProGrading.Pose mTargetPose = null;
     public Vector3 mStartingTorso = new Vector3(Mathf.Infinity,Mathf.Infinity,Mathf.Infinity);
     public Vector3 mStartingWaist = new Vector3(Mathf.Infinity, Mathf.Infinity, Mathf.Infinity);
+    public int mLayer = 0;
     Dictionary<ZigJointId, GameObject> mParts = new Dictionary<ZigJointId, GameObject>();
 
 
@@ -231,8 +244,8 @@ public class BodyManager : FakeMonoBehaviour {
         if (mMode == 0)
         {
             //grade
-            //if(mManager.mZigManager.has_user())
-            //    mManager.mInterfaceManager.mGrade = ProGrading.grade_pose(ProGrading.snap_pose(mManager), mManager.mTransparentBodyManager.mTargetPose);
+            if(mManager.mZigManager.has_user())
+                mManager.mInterfaceManager.mGrade = ProGrading.grade_pose(ProGrading.snap_pose(mManager), mManager.mTransparentBodyManager.mTargetPose);
 
             foreach (KeyValuePair<ZigJointId, ProjectionManager.Stupid> e in mManager.mProjectionManager.mImportant)
             {
