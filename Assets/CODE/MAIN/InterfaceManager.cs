@@ -57,7 +57,7 @@ public class InterfaceManager : FakeMonoBehaviour {
 
         mBlueBar = new FlatElementImage(refs.blueBar, 0.001f);
         mBlueBar.SoftPosition = mFlatCamera.get_point(-1f, 0);
-        mBlueBar.SoftColor = new Color(0, 1, 0,1);
+        
 
         mMeterBackground = new FlatElementImage(refs.meterBackground, 0.001f);
         mMeterBackground.SoftPosition = mFlatCamera.get_point(-1f, 1);
