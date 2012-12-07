@@ -1,5 +1,6 @@
 ::TODO::
 DONE-fix relative positioning with flat camera
+-seperate out body manager poo poo
 
 ::RIGHT MANAGER NOTES::
 DONE-meters

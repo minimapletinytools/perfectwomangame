@@ -45,7 +45,11 @@ public class FlatElementBase {
     public Vector3 HardPosition
     {
         get { return mCurrentPosition; }
-        set { mCurrentPosition = mTargetPosition = value; }
+        set 
+        { 
+            mCurrentPosition = value; 
+            mTargetPosition = value; 
+        }
     }
 
     Quaternion mCurrentRotation;
@@ -101,7 +105,7 @@ public class FlatElementBase {
     public FlatElementBase()
     {
         BoundingBox = new Rect(0, 0, 0, 0);
-        SoftInterpolation = 0.5f;
+        SoftInterpolation = 0.3f;
         //Events = new TimedEventHandler();
     }
 

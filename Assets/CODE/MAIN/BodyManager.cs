@@ -37,6 +37,11 @@ public class BodyManager : FakeMonoBehaviour {
         }
         move_center(mParts[ZigJointId.Torso].transform.position - mStartingTorso + new Vector3(0,0,-1));
     }
+    public void set_target_pose(ProGrading.Pose aPose)
+    {
+        mMode = 1;
+        mTargetPose = aPose;
+    }
 
     public void set_layer(int layer)
     {
@@ -73,7 +78,7 @@ public class BodyManager : FakeMonoBehaviour {
     public Vector3 mStartingTorso = new Vector3(Mathf.Infinity,Mathf.Infinity,Mathf.Infinity);
     public Vector3 mStartingWaist = new Vector3(Mathf.Infinity, Mathf.Infinity, Mathf.Infinity);
     public int mLayer = 0;
-    Dictionary<ZigJointId, GameObject> mParts = new Dictionary<ZigJointId, GameObject>();
+    public Dictionary<ZigJointId, GameObject> mParts = new Dictionary<ZigJointId, GameObject>();
 
 
     public Vector3 get_part_position(ZigJointId part)

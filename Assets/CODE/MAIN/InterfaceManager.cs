@@ -26,8 +26,9 @@ public class InterfaceManager : FakeMonoBehaviour {
 
     MeterObject mTimeMeter;
     MeterObject mPerfectMeter;
+    FlatElementImage mScoreBackground;
+    FlatElementText mScoreText;
 
-    
 
 
     
@@ -49,24 +50,45 @@ public class InterfaceManager : FakeMonoBehaviour {
             e.set();
         }
     }
+
+    public Vector3 random_position()
+    {
+        //UGG piece of junk...
+        return (new Vector3(Random.Range(-1f, 1f), Random.Range(-1f, 1f), 0)).normalized * Random.Range(2000,20000);
+    }
     public void setup_elements()
     {
         MenuReferenceBehaviour refs = mManager.mMenuReferences;
         //setup flat elements
         mPinkBackground = new FlatElementImage(refs.pinkBackground, 0);
+        mPinkBackground.HardPosition = random_position();
         mPinkBackground.SoftPosition = mFlatCamera.get_point(-0.5f, 0);
 
         mBlueBar = new FlatElementImage(refs.blueBar, 1);
+        mBlueBar.HardPosition = random_position();
         mBlueBar.SoftPosition = mFlatCamera.get_point(-0.5f, 0);
         
 
         mMeterBackground = new FlatElementImage(refs.meterBackground, 1);
+        mMeterBackground.HardPosition = random_position();
         mMeterBackground.SoftPosition = mFlatCamera.get_point(-0.5f, 1) + new Vector3(0,-refs.meterBackground.height/2f,0);
 
         mTimeMeter = new MeterObject(refs.timeMeterFront, refs.timeMeterBack, Color.green,2);
-        mTimeMeter.SoftPosition = mMeterBackground.SoftPosition + new Vector3(0, 60, 0);
+        mTimeMeter.HardPosition = random_position();
+        mTimeMeter.SoftPosition = mMeterBackground.SoftPosition + new Vector3(100, 60, 0);
+
         mPerfectMeter = new MeterObject(refs.perfectMeterFront, refs.perfectMeterBack, Color.yellow,2);
-        mPerfectMeter.SoftPosition = mMeterBackground.SoftPosition + new Vector3(0, -60, 0);
+        mPerfectMeter.HardPosition = random_position();
+        mPerfectMeter.SoftPosition = mMeterBackground.SoftPosition + new Vector3(100, -60, 0);
+
+        mScoreBackground = new FlatElementImage(refs.scoreBackground, 2);
+        mScoreBackground.HardPosition = random_position();
+        mScoreBackground.SoftPosition = mMeterBackground.SoftPosition + new Vector3(-400,0,0);
+
+        mScoreText = new FlatElementText(refs.menuFont, 50, "999", 3);
+        mScoreText.HardPosition = random_position();
+        mScoreText.SoftPosition = mScoreBackground.SoftPosition;
+
 
 
         mElement.Add(mPinkBackground);
@@ -74,6 +96,13 @@ public class InterfaceManager : FakeMonoBehaviour {
         mElement.Add(mMeterBackground);
         mElement.Add(mTimeMeter);
         mElement.Add(mPerfectMeter);
+        mElement.Add(mScoreBackground);
+        mElement.Add(mScoreText);
+
+        /*MiniManObject man = new MiniManObject();
+        man.SoftPosition = mFlatCamera.get_point(0, 0);
+        mElement.Add(man);*/
+
         mIsSetup = true;
     }
 

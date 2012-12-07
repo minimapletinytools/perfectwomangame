@@ -3,6 +3,9 @@ using System.Collections;
 
 public class MenuReferenceBehaviour : MonoBehaviour {
 
+    public GameObject miniMan;
+    public TextAsset cheapPose;
+
     public Font menuFont;
 
     public Texture2D pinkBackground;

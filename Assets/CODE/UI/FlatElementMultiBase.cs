@@ -30,28 +30,28 @@ public class FlatElementMultiBase : FlatElementBase
             foreach (FlatElementBase e in mElements)
             {
                 e.SoftInterpolation = value*i;
-                i *= 0.8f;
+                i *= 0.2f;
             }
         }
 
 
     }
-    /* TODO 
     public override void update_parameters(float aDeltaTime)
     {
 
         foreach (FlatElementBase e in mElements)
         {
-            //e.HardPosition = HardPosition;
-            e.SoftPosition = SoftPosition;
-            //e.HardFlatRotation = HardFlatRotation;
-            e.SoftFlatRotation = SoftFlatRotation;
-            //e.HardColor = HardColor;
-            e.SoftColor = SoftColor;
+            //e.HardPosition = base.HardPosition;
+            e.SoftPosition = base.SoftPosition;
+            //e.HardFlatRotation = base.HardFlatRotation;
+            e.SoftFlatRotation = base.SoftFlatRotation;
+            //e.HardColor = base.HardColor;
+            e.SoftColor = base.SoftColor;
+
             e.update_parameters(aDeltaTime);
         }
     }
-    */
+    
     public override void set_position(Vector3 aPos)
     {
         foreach (FlatElementBase e in mElements)
