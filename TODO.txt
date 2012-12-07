@@ -1,6 +1,7 @@
 ::TODO::
 DONE-fix relative positioning with flat camera
 -seperate out body manager poo poo
+-redo multielementbase
 
 ::RIGHT MANAGER NOTES::
 DONE-meters
