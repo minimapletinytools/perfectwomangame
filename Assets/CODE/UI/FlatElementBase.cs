@@ -94,6 +94,10 @@ public class FlatElementBase {
         }
     }
 
+    public virtual void destroy()
+    {
+    }
+
     public FlatElementBase()
     {
         BoundingBox = new Rect(0, 0, 0, 0);

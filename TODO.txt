@@ -2,7 +2,7 @@
 DONE-fix relative positioning with flat camera
 
 ::RIGHT MANAGER NOTES::
--meters
+DONE-meters
 	-color(s), length, percentage, effects <- (blink, change color, flash)
 -flashing choose next thingy
 -score manager
