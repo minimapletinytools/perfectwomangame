@@ -49,7 +49,7 @@ public class InterfaceManager : FakeMonoBehaviour {
     {
         float heightSpace = 250;
         float heightOffset = -125;
-        float middleOffset = 30;
+        float middleOffset = 40;
         int tier = (i - 1) / 4;
         Vector3 r;
         if (i == 0)
@@ -139,7 +139,7 @@ public class InterfaceManager : FakeMonoBehaviour {
             mBottomChoices[i].SoftPosition = mBlueBar.SoftPosition + choice_offset(-1, i);
         }
         mBigBadBox = new FlatElementImage(refs.bigBadBox, 4);
-        mBigBadBox.HardPosition = mBlueBar.SoftPosition + choice_offset(0, 0) + new Vector3(45, 0, 0);
+        mBigBadBox.HardPosition = mBlueBar.SoftPosition + choice_offset(0, 0) + new Vector3(48, 0, 0);
 
 
         for (int i = 0; i < 29; i++)
