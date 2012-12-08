@@ -37,12 +37,12 @@ public class FlatElementBase {
     Vector3 mCurrentPosition;
     Vector3 mTargetPosition;
     public Vector3 mLocalPosition = Vector3.zero;
-    public Vector3 SoftPosition
+    public virtual Vector3 SoftPosition
     {
         get{ return mTargetPosition; }
         set{ mTargetPosition = value; }
     }
-    public Vector3 HardPosition
+    public virtual Vector3 HardPosition
     {
         get { return mCurrentPosition; }
         set 
@@ -55,12 +55,12 @@ public class FlatElementBase {
     Quaternion mCurrentRotation;
     Quaternion mTargetRotation;
     public Quaternion mLocalRotation = Quaternion.identity;
-    public float SoftFlatRotation
+    public virtual float SoftFlatRotation
     {
         get { return mTargetRotation.flat_rotation(); }
         set { mTargetRotation = Quaternion.AngleAxis(value, Vector3.forward); }
     }
-    public float HardFlatRotation
+    public virtual float HardFlatRotation
     {
         get { return mCurrentRotation.flat_rotation(); }
         set { mCurrentRotation = mTargetRotation = Quaternion.AngleAxis(value, Vector3.forward); }
@@ -69,12 +69,12 @@ public class FlatElementBase {
     Color mCurrentColor;
     Color mTargetColor;
     public Color mLocalColor = new Color(0,0,0,0);
-    public Color SoftColor
+    public virtual Color SoftColor
     {
         get { return mTargetColor; }
         set { mTargetColor = value; }
     }
-    public Color HardColor
+    public virtual Color HardColor
     {
         get { return mCurrentColor; }
         set { mCurrentColor = mTargetColor = value; }

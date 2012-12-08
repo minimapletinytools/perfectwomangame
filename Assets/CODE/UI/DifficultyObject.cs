@@ -10,22 +10,26 @@ public class DifficultyObject : FlatElementMultiBase
     public DifficultyObject(Texture2D aTex, int aDepth)
     {
         for (int i = 0; i < 4; i++)
+        {
             mImageElements[i] = new FlatElementImage(aTex, aDepth);
-        mElements.AddRange(mImageElements);
+            mElements.Add(new FlatElementMultiBase.ElementOffset(mImageElements[i], new Vector3(0, i * 40, 0)));
+        }
+
         Difficulty = 0;
     }
 
-    public override void set_position(Vector3 aPos)
+    public override void set()
     {
+        
         for (int i = 0; i < 4; i++)
         {
             if (i <= Difficulty)
             {
-                mImageElements[i].set_position(aPos + new Vector3(0, i * 40, 0));
+                mImageElements[i].set();
             }
             else
             {
-                mImageElements[i].set_position(Random.insideUnitCircle.normalized * 3000);
+                mImageElements[i].HardPosition = (Random.insideUnitCircle.normalized * 3000);
             }
         }
     }

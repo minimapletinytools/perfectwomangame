@@ -21,7 +21,6 @@ public class CameraManager : FakeMonoBehaviour {
         //MainBodyCameraBloomEffect.addBrightStuffOneOneShader = Blo
         mManager.mBodyManager.set_layer(1);
 
-
         TransparentBodyCamera = (new GameObject("genTransparentCamera")).AddComponent<Camera>();
         TransparentBodyCamera.cullingMask = 1 << 2;
         TransparentBodyCamera.depth = 2;

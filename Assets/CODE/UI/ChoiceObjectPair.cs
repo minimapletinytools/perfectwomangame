@@ -10,20 +10,32 @@ public class ChoiceObjectPair : FlatElementMultiBase {
         mSquare = new FlatElementImage(aLeftTex, aDepth);
         mDifficultyStars = new DifficultyObject(ManagerManager.Manager.mMenuReferences.perfectnessStar, aDepth);
         mDifficultyBalls = new DifficultyObject(ManagerManager.Manager.mMenuReferences.difficultyDot, aDepth);
-        mElements.Add(mSquare);
-        mElements.Add(mDifficultyStars);
-        mElements.Add(mDifficultyBalls);
+        mElements.Add(new FlatElementMultiBase.ElementOffset(mSquare, new Vector3(50, 0, 0)));
+        mElements.Add(new FlatElementMultiBase.ElementOffset(mDifficultyStars,new Vector3(-50,0,0)));
+        mElements.Add(new FlatElementMultiBase.ElementOffset(mDifficultyBalls,new Vector3(-50,0,0)));
     }
 
-    public override void set_position(Vector3 aPos)
+    public override Color SoftColor
     {
-        mSquare.set_position(aPos + new Vector3(50, 0, 0));
-        mDifficultyStars.set_position(aPos + new Vector3(-50, 0, 0));
-        mDifficultyBalls.set_position(aPos + new Vector3(-50, 0, 0));
+        get
+        {
+            return mDifficultyBalls.SoftColor;
+        }
+        set
+        {
+            mDifficultyBalls.SoftColor = value;
+        }
     }
 
-    public override void set_color(Color aColor)
+    public override Color HardColor
     {
-        mDifficultyBalls.set_color(aColor);
+        get
+        {
+            return mDifficultyBalls.HardColor;
+        }
+        set
+        {
+            mDifficultyBalls.HardColor = value;
+        }
     }
 }
