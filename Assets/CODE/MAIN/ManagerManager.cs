@@ -62,7 +62,7 @@ public class ManagerManager : MonoBehaviour{
 			mStartDelegates();
 
         //hack to load the first character
-        /*
+        
         GameObject demoChar = (GameObject)GameObject.Instantiate(mReferences.mDemoChar);
         mEventManager.character_changed_event(demoChar.GetComponent<CharacterTextureBehaviour>());
         mEventManager.character_setup_event(demoChar.GetComponent<CharacterTextureBehaviour>());
@@ -70,7 +70,7 @@ public class ManagerManager : MonoBehaviour{
         ProGrading.Pose p = ProGrading.read_pose(mReferences.mDemoChar.GetComponent<CharacterTextureBehaviour>().properPose);
         mTransparentBodyManager.set_target_pose(p);
         mTransparentBodyManager.mFlat.SoftColor = new Color(0.5f, 0.5f, 0.5f, 0.2f);
-         */
+         
 	}
 	
 	public void register_FakeMonoBehaviour(FakeMonoBehaviour aScript)

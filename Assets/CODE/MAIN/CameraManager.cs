@@ -10,9 +10,13 @@ public class CameraManager : FakeMonoBehaviour {
     public EdgeDetectEffect TransparentBodyCameraEdgeEffect { get; private set; }
     public Camera BackgroundCamera { get; private set; } //layer 3
 
+    GameObject ImageEffects { get; set; }
+
     public Camera[] AllCameras{ get{ return new Camera[]{MainBodyCamera,TransparentBodyCamera,BackgroundCamera};} }
 	public override void Start () 
     {
+        ImageEffects = (GameObject)GameObject.Instantiate(mManager.mReferences.mImageEffectsPrefabs);
+
         MainBodyCamera = (new GameObject("genMainCamera")).AddComponent<Camera>();
         MainBodyCamera.cullingMask = 1 << 1;
         MainBodyCamera.depth = 3;
