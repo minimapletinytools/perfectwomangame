@@ -38,9 +38,14 @@ public class InterfaceManager : FakeMonoBehaviour {
     ChoiceObjectPair[] mTopChoices = new ChoiceObjectPair[4];
     ChoiceObjectPair[] mBottomChoices = new ChoiceObjectPair[4];
     FlatElementImage mBigBadBox;
-    public Vector3 choice_offset(int y, int x) //-1 is bottom, 0 is middel 1 is top
+    FlatElementImage mQuestion;
+
+    public Vector3 choice_offset(int y, int x, bool blue = false) //-1 is bottom, 0 is middel 1 is top
     {
-        return new Vector3(x*(-250) + 375 - 50, y*125, 0);
+        if (!blue)
+            return new Vector3(x * (-250) + 375 - 50, y * 125, 0);
+        else
+            return choice_offset(y, x, false) + new Vector3(0, -50, 0);
     }
 
     //generic elements 
@@ -83,8 +88,7 @@ public class InterfaceManager : FakeMonoBehaviour {
         foreach (FlatElementBase e in mElement)
         {
             //e.mLocalColor = (new Color(Random.Range(0f, 1f), Random.Range(0f, 1f), Random.Range(0f, 1f)))*0.1f;
-            e.update_parameters(Time.deltaTime);
-            e.set();            
+            e.update(Time.deltaTime);            
         }
     }
 
@@ -129,17 +133,21 @@ public class InterfaceManager : FakeMonoBehaviour {
         mMultiplier = new FlatElementImage(null, 4);
         mMultiplier.SoftPosition = mScoreBackground.SoftPosition + new Vector3(-250, -50, 0);
 
+
+
         for (int i = 0; i < 4; i++)
         {
             mTopChoices[i] = new ChoiceObjectPair(refs.emptyBox, 3);
             mTopChoices[i].HardPosition = random_position();
-            mTopChoices[i].SoftPosition = mBlueBar.SoftPosition + choice_offset(1, i);
+            mTopChoices[i].SoftPosition = mBlueBar.SoftPosition + choice_offset(1, i,true);
             mBottomChoices[i] = new ChoiceObjectPair(refs.emptyBox, mMiniMan, ProGrading.read_pose(refs.cheapPose), 3);
             mBottomChoices[i].HardPosition = random_position();
-            mBottomChoices[i].SoftPosition = mBlueBar.SoftPosition + choice_offset(-1, i);
+            mBottomChoices[i].SoftPosition = mBlueBar.SoftPosition + choice_offset(-1, i,true);
         }
         mBigBadBox = new FlatElementImage(refs.bigBadBox, 4);
-        mBigBadBox.HardPosition = mBlueBar.SoftPosition + choice_offset(0, 0) + new Vector3(48, 0, 0);
+        mBigBadBox.HardPosition = mBlueBar.SoftPosition + choice_offset(0, 0,true) + new Vector3(48, 0, 0);
+        mQuestion = new FlatElementImage(refs.questions[0], 4);
+        mQuestion.SoftPosition = mBlueBar.SoftPosition + new Vector3(0, 140, 0);
 
 
         for (int i = 0; i < 29; i++)
@@ -167,6 +175,7 @@ public class InterfaceManager : FakeMonoBehaviour {
         for (int i = 0; i < 29; i++)
             mElement.Add(mChoices[i]);
         mElement.Add(mBigBadBox);
+        mElement.Add(mQuestion);
 
 
         mIsSetup = true;

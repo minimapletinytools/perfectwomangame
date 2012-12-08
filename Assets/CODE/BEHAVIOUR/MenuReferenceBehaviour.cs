@@ -20,6 +20,8 @@ public class MenuReferenceBehaviour : MonoBehaviour {
     public Texture2D perfectMeterFront;
     public Texture2D perfectMeterBack;
 
+    public Texture2D[] questions;
+
     public Texture2D[] multipliers;
 
     public Texture2D perfectnessStar;

@@ -4,7 +4,7 @@ using System.Collections.Generic;
 public class FlatElementBase {
 
     
-    class TimedEventHandler
+    public class TimedEventHandler
     {
         LinkedList<KeyValuePair<QuTimer, FlatElementAnimations.ElementAnimationDelegate>> mTimedEvents = new LinkedList<KeyValuePair<QuTimer, FlatElementAnimations.ElementAnimationDelegate>>();
         public void update(float aDeltaTime, FlatElementBase aElement)
@@ -52,7 +52,7 @@ public class FlatElementBase {
     }
 
     public virtual float SoftInterpolation{get;set;}
-    //public TimedEventHandler Events { get; set; }
+    public TimedEventHandler Events { get; private set; }
 
     Vector3 mCurrentPosition;
     Vector3 mTargetPosition;
@@ -126,7 +126,7 @@ public class FlatElementBase {
     {
         BoundingBox = new Rect(0, 0, 0, 0);
         SoftInterpolation = 0.3f;
-        //Events = new TimedEventHandler();
+        Events = new TimedEventHandler();
     }
 
 
@@ -171,6 +171,12 @@ public class FlatElementBase {
         }
     }
 
+    public void update(float aDeltaTime)
+    {
+        Events.update(aDeltaTime, this);
+        update_parameters(aDeltaTime);
+        set();
+    }
     public virtual void update_parameters(float aDeltaTime)
     {
         mCurrentPosition = (1 - SoftInterpolation) * mCurrentPosition + SoftInterpolation * mTargetPosition;
