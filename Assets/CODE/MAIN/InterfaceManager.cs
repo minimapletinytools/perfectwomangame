@@ -30,6 +30,12 @@ public class InterfaceManager : FakeMonoBehaviour {
     FlatElementText mScoreText;
 
 
+    //blue bar elements
+
+
+    //generic elements lol
+
+
 
     
     public override void Start()

@@ -16,12 +16,13 @@ public class ChoiceObjectPair : FlatElementMultiBase {
         mElements.Add(new FlatElementMultiBase.ElementOffset(mDifficultyBalls,new Vector3(-50,0,0)));
     }
 
-    public ChoiceObjectPair(Texture2D aLeftTex, CharacterTextureBehaviour aChar, int aDepth)
+    public ChoiceObjectPair(Texture2D aLeftTex, CharacterTextureBehaviour aChar, ProGrading.Pose aPose, int aDepth)
     {
         mSquare = new FlatElementImage(aLeftTex, aDepth);
         mDifficultyStars = new DifficultyObject(ManagerManager.Manager.mMenuReferences.perfectnessStar, aDepth);
         mDifficultyBalls = new DifficultyObject(ManagerManager.Manager.mMenuReferences.difficultyDot, aDepth);
-        mBody = new FlatBodyObject(aChar);
+        mBody = new FlatBodyObject(aChar,aDepth+1);
+        mBody.set_target_pose(aPose);
         mElements.Add(new FlatElementMultiBase.ElementOffset(mSquare, new Vector3(50, 0, 0)));
         mElements.Add(new FlatElementMultiBase.ElementOffset(mDifficultyStars, new Vector3(-50, 0, 0)));
         mElements.Add(new FlatElementMultiBase.ElementOffset(mDifficultyBalls, new Vector3(-50, 0, 0)));

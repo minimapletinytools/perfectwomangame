@@ -40,7 +40,7 @@ public class BodyManager : FakeMonoBehaviour {
     public void character_changed_listener(CharacterTextureBehaviour aCharacter)
     {
         destroy_character();
-        mFlat = new FlatBodyObject(aCharacter);
+        mFlat = new FlatBodyObject(aCharacter,1);
         set_layer(mLayer);
         mFlat.HardPosition = Random.insideUnitCircle.normalized * 300000;
         mFlat.SoftPosition = Vector3.zero;
