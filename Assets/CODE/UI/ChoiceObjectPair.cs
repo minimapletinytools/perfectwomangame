@@ -6,14 +6,17 @@ public class ChoiceObjectPair : FlatElementMultiBase {
     DifficultyObject mDifficultyStars;
     DifficultyObject mDifficultyBalls;
     FlatBodyObject mBody;
+
+    float mSide = 45;
+    float mRightBot = -80;
     public ChoiceObjectPair(Texture2D aLeftTex, int aDepth)
     {
         mSquare = new FlatElementImage(aLeftTex, aDepth);
         mDifficultyStars = new DifficultyObject(ManagerManager.Manager.mMenuReferences.perfectnessStar, aDepth);
         mDifficultyBalls = new DifficultyObject(ManagerManager.Manager.mMenuReferences.difficultyDot, aDepth);
-        mElements.Add(new FlatElementMultiBase.ElementOffset(mSquare, new Vector3(50, 0, 0)));
-        mElements.Add(new FlatElementMultiBase.ElementOffset(mDifficultyStars,new Vector3(-50,-50,0)));
-        mElements.Add(new FlatElementMultiBase.ElementOffset(mDifficultyBalls,new Vector3(-50,-50,0)));
+        mElements.Add(new FlatElementMultiBase.ElementOffset(mSquare, new Vector3(mSide, 0, 0)));
+        mElements.Add(new FlatElementMultiBase.ElementOffset(mDifficultyStars, new Vector3(-mSide, mRightBot, 0)));
+        mElements.Add(new FlatElementMultiBase.ElementOffset(mDifficultyBalls, new Vector3(-mSide, mRightBot, 0)));
 
         mDifficultyBalls.Enabled = false;
     }
@@ -25,10 +28,10 @@ public class ChoiceObjectPair : FlatElementMultiBase {
         mDifficultyBalls = new DifficultyObject(ManagerManager.Manager.mMenuReferences.difficultyDot, aDepth);
         mBody = new FlatBodyObject(aChar,aDepth+1);
         mBody.set_target_pose(aPose);
-        mElements.Add(new FlatElementMultiBase.ElementOffset(mSquare, new Vector3(50, 0, 0)));
-        mElements.Add(new FlatElementMultiBase.ElementOffset(mDifficultyStars, new Vector3(-50, 0, 0)));
-        mElements.Add(new FlatElementMultiBase.ElementOffset(mDifficultyBalls, new Vector3(-50, 0, 0)));
-        mElements.Add(new FlatElementMultiBase.ElementOffset(mBody, new Vector3(50, 0, 0)));
+        mElements.Add(new FlatElementMultiBase.ElementOffset(mSquare, new Vector3(mSide, 0, 0)));
+        mElements.Add(new FlatElementMultiBase.ElementOffset(mDifficultyStars, new Vector3(-mSide, mRightBot, 0)));
+        mElements.Add(new FlatElementMultiBase.ElementOffset(mDifficultyBalls, new Vector3(-mSide, mRightBot, 0)));
+        mElements.Add(new FlatElementMultiBase.ElementOffset(mBody, new Vector3(mSide + 15, -5, 0)));
     }
 
     public override Color SoftColor
