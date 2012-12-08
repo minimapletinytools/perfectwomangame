@@ -1,7 +1,7 @@
 ::TODO::
 DONE-fix relative positioning with flat camera
 -seperate out body manager poo poo
-
+-fix depth and sun shaft for character, can you do it????
 ::RIGHT MANAGER NOTES::
 DONE-meters
 	-color(s), length, percentage, effects <- (blink, change color, flash)
