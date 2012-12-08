@@ -31,18 +31,38 @@ public class FlatElementBase {
         protected set;
     }
 
+    bool mEnabled = true;
+    public virtual bool Enabled
+    {
+        get
+        {
+            return mEnabled;
+        }
+        set
+        {
+            if (mEnabled != value)
+            {
+                mEnabled = value;
+                foreach (Renderer e in PrimaryGameObject.GetComponentsInChildren<Renderer>())
+                    e.enabled = value;
+            }
+            
+        }
+
+    }
+
     public virtual float SoftInterpolation{get;set;}
     //public TimedEventHandler Events { get; set; }
 
     Vector3 mCurrentPosition;
     Vector3 mTargetPosition;
     public Vector3 mLocalPosition = Vector3.zero;
-    public Vector3 SoftPosition
+    public virtual Vector3 SoftPosition
     {
         get{ return mTargetPosition; }
         set{ mTargetPosition = value; }
     }
-    public Vector3 HardPosition
+    public virtual Vector3 HardPosition
     {
         get { return mCurrentPosition; }
         set 
@@ -55,12 +75,12 @@ public class FlatElementBase {
     Quaternion mCurrentRotation;
     Quaternion mTargetRotation;
     public Quaternion mLocalRotation = Quaternion.identity;
-    public float SoftFlatRotation
+    public virtual float SoftFlatRotation
     {
         get { return mTargetRotation.flat_rotation(); }
         set { mTargetRotation = Quaternion.AngleAxis(value, Vector3.forward); }
     }
-    public float HardFlatRotation
+    public virtual float HardFlatRotation
     {
         get { return mCurrentRotation.flat_rotation(); }
         set { mCurrentRotation = mTargetRotation = Quaternion.AngleAxis(value, Vector3.forward); }
@@ -69,12 +89,12 @@ public class FlatElementBase {
     Color mCurrentColor;
     Color mTargetColor;
     public Color mLocalColor = new Color(0,0,0,0);
-    public Color SoftColor
+    public virtual Color SoftColor
     {
         get { return mTargetColor; }
         set { mTargetColor = value; }
     }
-    public Color HardColor
+    public virtual Color HardColor
     {
         get { return mCurrentColor; }
         set { mCurrentColor = mTargetColor = value; }
@@ -132,6 +152,14 @@ public class FlatElementBase {
     {
         if (PrimaryGameObject != null)
         {
+            foreach (Renderer e in PrimaryGameObject.GetComponentsInChildren<Renderer>())
+            {
+                try { e.material.SetColor("_TintColor", aColor); }
+                catch { }
+                try { e.material.color = aColor; }
+                catch { }
+            }
+            /*
             Renderer rend = PrimaryGameObject.GetComponentInChildren<Renderer>();
             if (rend != null)
             {
@@ -139,7 +167,7 @@ public class FlatElementBase {
                 catch { }
                 try { rend.material.color = aColor; }
                 catch { }
-            }
+            }*/
         }
     }
 
@@ -154,7 +182,7 @@ public class FlatElementBase {
     {
         set_position(mCurrentPosition + mLocalPosition);// + new Vector3(0,0,Depth));
         set_rotation(mLocalRotation*mCurrentRotation);
-        set_color(mCurrentColor);
+        set_color(mCurrentColor + mLocalColor);
     }
 
 }

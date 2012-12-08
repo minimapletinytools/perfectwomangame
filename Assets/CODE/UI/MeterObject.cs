@@ -8,6 +8,8 @@ public class MeterObject : FlatElementMultiBase {
     FlatElementImage mFront;
     FlatElementImage mFill;
 
+    FlatElementMultiBase.ElementOffset mFillOffset;
+
     float mPercentage;
     public float Percentage 
     {
@@ -30,27 +32,24 @@ public class MeterObject : FlatElementMultiBase {
         mBack = new FlatElementImage(aBack, aDepth);
         mFront = new FlatElementImage(aFront, aDepth);
         mFill = new FlatElementImage(null, aDepth);
+        mFillOffset = new FlatElementMultiBase.ElementOffset(mFill, new Vector3(0, 0, 0));
 
-        mElements.Add(mBack);
-        mElements.Add(mFill);
-        mElements.Add(mFront);
+        mElements.Add(new FlatElementMultiBase.ElementOffset(mBack,new Vector3(0,0,0)));
+        mElements.Add(mFillOffset);
+        mElements.Add(new FlatElementMultiBase.ElementOffset(mFront, new Vector3(0, 0, 0)));
+
+        SoftInterpolation = SoftInterpolation;
 
         Percentage = 0.5f;
 
         Depth = aDepth;
     }
 
-
-    public override void set_position(Vector3 aPos)
+    public override void update_parameters(float aDeltaTime)
     {
-        mFront.set_position(aPos);
-        mBack.set_position(aPos);
-        //TODO fix me
-        mFill.set_position(aPos + new Vector3((757 / 2f - 245) - Percentage * 512f, 0, 0));
+        mFillOffset.Element.SoftPosition = SoftPosition + new Vector3((757 / 2f - 245) - Percentage * 512f, 0, 0);
+        base.update_parameters(aDeltaTime);
     }
 
-    public override void set_color(Color aColor)
-    {
-        mFill.set_color(aColor);
-    }
+
 }

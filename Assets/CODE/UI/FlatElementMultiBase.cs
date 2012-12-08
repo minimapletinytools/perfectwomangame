@@ -3,8 +3,27 @@ using System.Collections.Generic;
 
 public class FlatElementMultiBase : FlatElementBase
 {
-    protected List<FlatElementBase> mElements = new List<FlatElementBase>();
 
+    public class ElementOffset
+    {
+        public FlatElementBase Element{get; private set;}
+        public Vector3 Position { get; set; }
+        public Quaternion Rotation { get; set; }
+        public ElementOffset(FlatElementBase element, Vector3 offset)
+        {
+            Element = element;
+            Position = offset;
+            Rotation = Quaternion.identity;
+        }
+    }
+    protected List<ElementOffset> mElements = new List<ElementOffset>();
+
+    public override void destroy()
+    {
+        foreach (ElementOffset e in mElements)
+            e.Element.destroy();
+        mElements.Clear();
+    }
     public override int Depth
     {
         get { return mDepth; }
@@ -12,8 +31,8 @@ public class FlatElementMultiBase : FlatElementBase
         {
             mDepth = value;
             int i = 0;
-            foreach (FlatElementBase e in mElements)
-                e.Depth = value + i++;
+            foreach (ElementOffset e in mElements)
+                e.Element.Depth = value + i++;
         }
     }
 
@@ -27,46 +46,85 @@ public class FlatElementMultiBase : FlatElementBase
         {
             base.SoftInterpolation = value;
             float i = 1;
-            foreach (FlatElementBase e in mElements)
+            foreach (ElementOffset e in mElements)
             {
-                e.SoftInterpolation = value*i;
-                i *= 0.2f;
+                e.Element.SoftInterpolation = value*i;
+                i *= 0.8f;
             }
         }
-
-
     }
-    public override void update_parameters(float aDeltaTime)
+
+    public override Vector3 SoftPosition
     {
-
-        foreach (FlatElementBase e in mElements)
-        {
-            //e.HardPosition = base.HardPosition;
-            e.SoftPosition = base.SoftPosition;
-            //e.HardFlatRotation = base.HardFlatRotation;
-            e.SoftFlatRotation = base.SoftFlatRotation;
-            //e.HardColor = base.HardColor;
-            e.SoftColor = base.SoftColor;
-
-            e.update_parameters(aDeltaTime);
+        get { return base.SoftPosition; }
+        set 
+        { 
+            base.SoftPosition = value;
+            foreach (ElementOffset e in mElements)
+                e.Element.SoftPosition = value + e.Position;
         }
     }
-    
-    public override void set_position(Vector3 aPos)
+    public override Vector3 HardPosition
     {
-        foreach (FlatElementBase e in mElements)
-            e.set_position(aPos);
+        get { return base.HardPosition; }
+        set
+        {
+            base.HardPosition = value;
+            foreach (ElementOffset e in mElements)
+                e.Element.HardPosition = value + e.Position;
+        }
     }
-    public override void set_rotation(Quaternion aRot)
+    public override float SoftFlatRotation
     {
-        foreach (FlatElementBase e in mElements)
-            e.set_rotation(aRot);
+        get { return base.SoftFlatRotation; }
+        set { 
+            base.SoftFlatRotation = value;
+            foreach (ElementOffset e in mElements)
+                e.Element.SoftFlatRotation = e.Rotation.flat_rotation()*value;
+        }
     }
-    public override void set_color(Color aColor)
+    public override float HardFlatRotation
     {
-        foreach (FlatElementBase e in mElements)
-            e.set_color(aColor);
+        get { return base.HardFlatRotation; }
+        set { 
+            base.HardFlatRotation = value;
+            foreach (ElementOffset e in mElements)
+                e.Element.HardFlatRotation = e.Rotation.flat_rotation() * value;
+        }
+    }
+
+    public override Color SoftColor
+    {
+        get { return base.SoftColor; }
+        set { 
+            base.SoftColor = value;
+            foreach (ElementOffset e in mElements)
+                e.Element.SoftColor = value;
+        }
+    }
+    public override Color HardColor
+    {
+        get { return HardColor; }
+        set { 
+            base.HardColor = value;
+            foreach (ElementOffset e in mElements)
+                e.Element.HardColor = value;
+        }
     }
 
 
+
+
+
+    public override void update_parameters(float aDeltaTime)
+    {
+        foreach (ElementOffset e in mElements)
+            e.Element.update_parameters(aDeltaTime);
+    }
+
+    public override void set()
+    {
+        foreach (ElementOffset e in mElements)
+            e.Element.set();
+    }
 }

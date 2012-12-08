@@ -26,4 +26,8 @@ public class MenuReferenceBehaviour : MonoBehaviour {
     public Texture2D difficultyDot;
 
     public Texture2D[] choiceParticles;
+
+    public Texture2D emptyBox;
+    public Texture2D bigBadBox;
+    public Texture2D[] boxes; //29
 }

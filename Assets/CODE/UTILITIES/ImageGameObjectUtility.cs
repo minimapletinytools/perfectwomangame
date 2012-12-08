@@ -31,6 +31,15 @@ public class ImageGameObjectUtility
         PlaneObject = GameObject.CreatePrimitive(PrimitiveType.Plane);
         PlaneMaterial = new Material(ManagerManager.Manager.mReferences.mDefaultCharacterShader);
         PlaneObject.renderer.material = PlaneMaterial;
+        set_new_texture(aTex);
+        PixelDimension = BaseDimension;
+
+        PlaneObject.transform.rotation = Quaternion.AngleAxis(90, Vector3.right) * PlaneObject.transform.rotation;
+        PlaneObject.transform.parent = ParentObject.transform;
+    }
+
+    public void set_new_texture(Texture2D aTex)
+    {
 
         if (aTex != null)
         {
@@ -40,11 +49,7 @@ public class ImageGameObjectUtility
         {
             BaseDimension = new Vector2(1, 1);
         }
-        PixelDimension = BaseDimension;
-
-        PlaneObject.transform.rotation = Quaternion.AngleAxis(90, Vector3.right) * PlaneObject.transform.rotation;
         PlaneObject.renderer.material.mainTexture = aTex;
-        PlaneObject.transform.parent = ParentObject.transform;
     }
 
     public void destroy()

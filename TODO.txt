@@ -1,7 +1,10 @@
 ::TODO::
 DONE-fix relative positioning with flat camera
 -seperate out body manager poo poo
--redo multielementbase
+-fix depth and sun shaft for character, can you do it????
+-be able to move character
+-figure out whats wrong with grading
+
 
 ::RIGHT MANAGER NOTES::
 DONE-meters

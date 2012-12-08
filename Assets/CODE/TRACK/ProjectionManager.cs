@@ -99,7 +99,7 @@ public class ProjectionManager : FakeMonoBehaviour {
     public Smoothing mWaist = new Smoothing();
 	public Vector3 mNormal = Vector3.forward;
 	public Vector3 mUp = Vector3.up;
-    public float mSmoothing = 0.95f;
+    public float mSmoothing = 0.5f;
 	
 	public void compute_normal()
 	{
@@ -155,11 +155,9 @@ public class ProjectionManager : FakeMonoBehaviour {
                     ZigJointId parentJoint = BodyManager.get_parent(e.Key);
                     try
                     {
-                        
-                        
                         if (parentJoint == ZigJointId.None || (parentJoint == ZigJointId.Waist) || mImportant[parentJoint].smoothing.snapped == true)
                         {
-                            if(e.Value.smoothing.snap_change(get_relative(mManager.mZigManager.Joints[e.Key], mManager.mZigManager.Joints[e.Value.otherEnd]), mManager.mTransparentBodyManager.mTargetPose.find_element(e.Key).angle, mSmoothing))
+                            if(e.Value.smoothing.snap_change(get_relative(mManager.mZigManager.Joints[e.Key], mManager.mZigManager.Joints[e.Value.otherEnd]), mManager.mTransparentBodyManager.mFlat.mTargetPose.find_element(e.Key).angle, mSmoothing))
                                 ;// Debug.Log("SNAP " + e.Key);
                         }
                         else
