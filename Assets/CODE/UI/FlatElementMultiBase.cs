@@ -18,6 +18,12 @@ public class FlatElementMultiBase : FlatElementBase
     }
     protected List<ElementOffset> mElements = new List<ElementOffset>();
 
+    public override void destroy()
+    {
+        foreach (ElementOffset e in mElements)
+            e.Element.destroy();
+        mElements.Clear();
+    }
     public override int Depth
     {
         get { return mDepth; }

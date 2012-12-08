@@ -132,6 +132,14 @@ public class FlatElementBase {
     {
         if (PrimaryGameObject != null)
         {
+            foreach (Renderer e in PrimaryGameObject.GetComponentsInChildren<Renderer>())
+            {
+                try { e.material.SetColor("_TintColor", aColor); }
+                catch { }
+                try { e.material.color = aColor; }
+                catch { }
+            }
+            /*
             Renderer rend = PrimaryGameObject.GetComponentInChildren<Renderer>();
             if (rend != null)
             {
@@ -139,7 +147,7 @@ public class FlatElementBase {
                 catch { }
                 try { rend.material.color = aColor; }
                 catch { }
-            }
+            }*/
         }
     }
 
