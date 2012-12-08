@@ -31,6 +31,26 @@ public class FlatElementBase {
         protected set;
     }
 
+    bool mEnabled = true;
+    public virtual bool Enabled
+    {
+        get
+        {
+            return mEnabled;
+        }
+        set
+        {
+            if (mEnabled != value)
+            {
+                mEnabled = value;
+                foreach (Renderer e in PrimaryGameObject.GetComponentsInChildren<Renderer>())
+                    e.enabled = value;
+            }
+            
+        }
+
+    }
+
     public virtual float SoftInterpolation{get;set;}
     //public TimedEventHandler Events { get; set; }
 

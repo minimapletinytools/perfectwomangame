@@ -12,8 +12,10 @@ public class ChoiceObjectPair : FlatElementMultiBase {
         mDifficultyStars = new DifficultyObject(ManagerManager.Manager.mMenuReferences.perfectnessStar, aDepth);
         mDifficultyBalls = new DifficultyObject(ManagerManager.Manager.mMenuReferences.difficultyDot, aDepth);
         mElements.Add(new FlatElementMultiBase.ElementOffset(mSquare, new Vector3(50, 0, 0)));
-        mElements.Add(new FlatElementMultiBase.ElementOffset(mDifficultyStars,new Vector3(-50,0,0)));
-        mElements.Add(new FlatElementMultiBase.ElementOffset(mDifficultyBalls,new Vector3(-50,0,0)));
+        mElements.Add(new FlatElementMultiBase.ElementOffset(mDifficultyStars,new Vector3(-50,-50,0)));
+        mElements.Add(new FlatElementMultiBase.ElementOffset(mDifficultyBalls,new Vector3(-50,-50,0)));
+
+        mDifficultyBalls.Enabled = false;
     }
 
     public ChoiceObjectPair(Texture2D aLeftTex, CharacterTextureBehaviour aChar, ProGrading.Pose aPose, int aDepth)
@@ -51,5 +53,11 @@ public class ChoiceObjectPair : FlatElementMultiBase {
         {
             mDifficultyBalls.HardColor = value;
         }
+    }
+
+    public override void update_parameters(float aDeltaTime)
+    {
+        //mBody.
+        base.update_parameters(aDeltaTime);
     }
 }

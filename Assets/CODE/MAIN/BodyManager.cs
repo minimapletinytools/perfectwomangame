@@ -90,13 +90,6 @@ public class BodyManager : FakeMonoBehaviour {
             }
             else if (mMode == 1)
             {
-                if (mFlat.mTargetPose != null && mManager.mRecordMode == false)
-                {
-                    foreach (ProGrading.PoseElement e in mFlat.mTargetPose.mElements)
-                    {
-                        mFlat.mParts[e.joint].transform.rotation = Quaternion.AngleAxis(e.angle, Vector3.forward);
-                    }
-                }
                 if (Input.GetKeyDown(KeyCode.Space))
                 {
                     ProGrading.Pose p = new ProGrading.Pose();

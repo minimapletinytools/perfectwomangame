@@ -6,7 +6,7 @@ public class PrefabReferenceBehaviour : MonoBehaviour {
 	public GameObject mDemoChar;
 	public Shader mDefaultCharacterShader;
     public Texture2D mDefaultParticleTexture;
-    public GameObject[] mCharacters;
+    public GameObject[] mCharacters; //29, 0 is fetus, row major (or was it collumn?)
     
 
     //ScreenEffectShader nonsense here

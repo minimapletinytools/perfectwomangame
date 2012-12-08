@@ -16,6 +16,7 @@ public class InterfaceManager : FakeMonoBehaviour {
 
 
     FlatCameraManager mFlatCamera;
+    CharacterTextureBehaviour mMiniMan;
 
     //elements
     HashSet<FlatElementBase> mElement = new HashSet<FlatElementBase>();
@@ -31,9 +32,16 @@ public class InterfaceManager : FakeMonoBehaviour {
 
 
     //blue bar elements
-
+    ChoiceObjectPair[] mTopChoices = new ChoiceObjectPair[4];
+    ChoiceObjectPair[] mBottomChoices = new ChoiceObjectPair[4];
+    FlatElementImage mBigBadBox;
+    public Vector3 choice_offset(int y, int x) //-1 is bottom, 0 is middel 1 is top
+    {
+        return new Vector3(x*(-200) + 300, y*150, 0);
+    }
 
     //generic elements lol
+
 
 
 
@@ -45,7 +53,7 @@ public class InterfaceManager : FakeMonoBehaviour {
         mBehaviour = mManager.gameObject.AddComponent<InterfaceBehaviour>();
         mBehaviour.mManager = this;
         mFlatCamera = new FlatCameraManager(new Vector3(10000, 0, 0), 10);
-
+        mMiniMan = ((GameObject)GameObject.Instantiate(ManagerManager.Manager.mMenuReferences.miniMan)).GetComponent<CharacterTextureBehaviour>();
 
     }
     public override void Update()
@@ -70,7 +78,7 @@ public class InterfaceManager : FakeMonoBehaviour {
         mPinkBackground.HardPosition = random_position();
         mPinkBackground.SoftPosition = mFlatCamera.get_point(-0.5f, 0);
 
-        mBlueBar = new FlatElementImage(refs.blueBar, 1);
+        mBlueBar = new FlatElementImage(refs.blueBar, 2);
         mBlueBar.HardPosition = random_position();
         mBlueBar.SoftPosition = mFlatCamera.get_point(-0.5f, 0);
         
@@ -95,6 +103,18 @@ public class InterfaceManager : FakeMonoBehaviour {
         mScoreText.HardPosition = random_position();
         mScoreText.SoftPosition = mScoreBackground.SoftPosition;
 
+        for (int i = 0; i < 4; i++)
+        {
+            mTopChoices[i] = new ChoiceObjectPair(refs.emptyBox, 3);
+            mTopChoices[i].HardPosition = random_position();
+            mTopChoices[i].SoftPosition = mBlueBar.SoftPosition + choice_offset(1, i);
+            mBottomChoices[i] = new ChoiceObjectPair(refs.emptyBox, mMiniMan, ProGrading.read_pose(refs.cheapPose), 3);
+            mBottomChoices[i].HardPosition = random_position();
+            mBottomChoices[i].SoftPosition = mBlueBar.SoftPosition + choice_offset(-1, i);
+        }
+        mBigBadBox = new FlatElementImage(refs.bigBadBox, 4);
+        mBigBadBox.HardPosition = mBlueBar.SoftPosition + choice_offset(0, 0) + new Vector3(50, 0, 0);
+
 
 
         mElement.Add(mPinkBackground);
@@ -104,10 +124,13 @@ public class InterfaceManager : FakeMonoBehaviour {
         mElement.Add(mPerfectMeter);
         mElement.Add(mScoreBackground);
         mElement.Add(mScoreText);
+        for (int i = 0; i < 4; i++)
+        {
+            mElement.Add(mTopChoices[i]);
+            mElement.Add(mBottomChoices[i]);
+        }
+        mElement.Add(mBigBadBox);
 
-        /*MiniManObject man = new MiniManObject();
-        man.SoftPosition = mFlatCamera.get_point(0, 0);
-        mElement.Add(man);*/
 
         mIsSetup = true;
     }
