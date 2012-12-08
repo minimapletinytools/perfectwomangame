@@ -106,16 +106,6 @@ public class BodyManager : FakeMonoBehaviour {
     {
         return c1.r == c2.r && c1.g == c2.g && c1.b == c2.b;
     }
-    public bool is_close_color(Color32 c1, Color32 c2)
-    {
-        return Mathf.Max(Mathf.Abs(c1.r - c2.r), Mathf.Max(Mathf.Abs(c1.g - c2.g), Mathf.Abs(c1.b - c2.b))) < 40;
-    }
-    public bool is_stupid_color(Color32 c1, Color32 c2)
-    {
-        return ((c1.r != 255 && c2.r != 255) || (c1.r == 255 && c2.r == 255)) &&
-            ((c1.g != 255 && c2.g != 255) || (c1.g == 255 && c2.g == 255)) &&
-            ((c1.b != 255 && c2.b != 255) || (c1.b == 255 && c2.b == 255));
-    }
     public Vector3 index_to_position(int i, Texture2D aTex)
     {
         
@@ -325,6 +315,7 @@ public class BodyManager : FakeMonoBehaviour {
                 return ZigJointId.None;
         }
     }
+
 	public void create_body(CharacterTextureBehaviour aChar)
 	{
 		GameObject torso = create_object(ZigJointId.Torso,aChar.torso,aChar.atTorso);
