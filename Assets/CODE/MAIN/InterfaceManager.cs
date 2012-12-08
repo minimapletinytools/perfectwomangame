@@ -25,10 +25,13 @@ public class InterfaceManager : FakeMonoBehaviour {
     FlatElementImage mBlueBar;
     FlatElementImage mMeterBackground;
 
+    //meter elements
     MeterObject mTimeMeter;
     MeterObject mPerfectMeter;
     FlatElementImage mScoreBackground;
     FlatElementText mScoreText;
+    FlatElementImage mMultiplier;
+
 
 
     //blue bar elements
@@ -44,20 +47,22 @@ public class InterfaceManager : FakeMonoBehaviour {
     ChoiceObjectPair[] mChoices = new ChoiceObjectPair[29];
     public Vector3 generic_offset(int i, int level)
     {
-        float heightSpace = 300;
-        float heightOffset = -150;
+        float heightSpace = 250;
+        float heightOffset = -125;
+        float middleOffset = 30;
         int tier = (i - 1) / 4;
         Vector3 r;
         if (i == 0)
         {
-            r = mPinkBackground.SoftPosition + new Vector3(0, 0, 0) + new Vector3(0, level * heightSpace + heightOffset, 0);
+            r = mBlueBar.SoftPosition + new Vector3(0, 0, 0) + new Vector3(0, level * heightSpace + heightOffset, 0);
             tier = -1;
         }
         else
-            r = mPinkBackground.SoftPosition + choice_offset(0, (i - 1) % 4) + new Vector3(0, -tier * heightSpace, 0) + new Vector3(0, level * heightSpace + heightOffset, 0);
+            r = mBlueBar.SoftPosition + choice_offset(0, (i - 1) % 4) + new Vector3(0, -tier * heightSpace, 0) + new Vector3(0, level * heightSpace + heightOffset, 0);
 
         if (tier + 1 - level < 0)
-            r += new Vector3(0, heightSpace, 0);
+            r += new Vector3(0, heightSpace + middleOffset, 0);
+        else r += new Vector3(0, -middleOffset, 0);
         return r;
     }
 
@@ -67,19 +72,19 @@ public class InterfaceManager : FakeMonoBehaviour {
     public override void Start()
     {
         mManager.mEventManager.character_changed_event += character_changed_listener;
-
         mBehaviour = mManager.gameObject.AddComponent<InterfaceBehaviour>();
         mBehaviour.mManager = this;
         mFlatCamera = new FlatCameraManager(new Vector3(10000, 0, 0), 10);
         mMiniMan = ((GameObject)GameObject.Instantiate(ManagerManager.Manager.mMenuReferences.miniMan)).GetComponent<CharacterTextureBehaviour>();
-
+        
     }
     public override void Update()
     {
         foreach (FlatElementBase e in mElement)
         {
+            //e.mLocalColor = (new Color(Random.Range(0f, 1f), Random.Range(0f, 1f), Random.Range(0f, 1f)))*0.1f;
             e.update_parameters(Time.deltaTime);
-            e.set();
+            e.set();            
         }
     }
 
@@ -98,7 +103,7 @@ public class InterfaceManager : FakeMonoBehaviour {
 
         mBlueBar = new FlatElementImage(refs.blueBar, 2);
         mBlueBar.HardPosition = random_position();
-        mBlueBar.SoftPosition = mFlatCamera.get_point(-0.5f, 0);
+        mBlueBar.SoftPosition = mFlatCamera.get_point(-0.5f, 0) + new Vector3(0,-150,0);
         
 
         mMeterBackground = new FlatElementImage(refs.meterBackground, 1);
@@ -120,6 +125,9 @@ public class InterfaceManager : FakeMonoBehaviour {
         mScoreText = new FlatElementText(refs.menuFont, 50, "999", 3);
         mScoreText.HardPosition = random_position();
         mScoreText.SoftPosition = mScoreBackground.SoftPosition;
+
+        mMultiplier = new FlatElementImage(null, 4);
+        mMultiplier.SoftPosition = mScoreBackground.SoftPosition + new Vector3(-250, -50, 0);
 
         for (int i = 0; i < 4; i++)
         {
@@ -150,6 +158,7 @@ public class InterfaceManager : FakeMonoBehaviour {
         mElement.Add(mPerfectMeter);
         mElement.Add(mScoreBackground);
         mElement.Add(mScoreText);
+        mElement.Add(mMultiplier);
         for (int i = 0; i < 4; i++)
         {
             mElement.Add(mTopChoices[i]);

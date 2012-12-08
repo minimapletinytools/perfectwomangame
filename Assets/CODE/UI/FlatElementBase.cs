@@ -182,7 +182,7 @@ public class FlatElementBase {
     {
         set_position(mCurrentPosition + mLocalPosition);// + new Vector3(0,0,Depth));
         set_rotation(mLocalRotation*mCurrentRotation);
-        set_color(mCurrentColor);
+        set_color(mCurrentColor + mLocalColor);
     }
 
 }
