@@ -62,8 +62,11 @@ public class GameManager : FakeMonoBehaviour
     public override void Update()
     {
         User = (mManager.mZigManager.has_user());
-        if (User && Time.timeSinceLevelLoad > mMinStartTime)
+        if (!Started && User && Time.timeSinceLevelLoad > mMinStartTime)
         {
+            GameObject demoChar = (GameObject)GameObject.Instantiate(mManager.mReferences.mDemoChar);
+            mManager.mEventManager.character_changed_event(demoChar.GetComponent<CharacterTextureBehaviour>());
+            mManager.mEventManager.character_setup_event(demoChar.GetComponent<CharacterTextureBehaviour>());
 
             Started = true;
         }
@@ -73,5 +76,17 @@ public class GameManager : FakeMonoBehaviour
         mSource.clip = aCharacter.backgroundMusic;
         mSource.loop = true;
         mSource.Play();
+
+        //set transparent target pose
+        if (aCharacter.properPose != null)
+        {
+            mManager.mTransparentBodyManager.set_target_pose(ProGrading.read_pose(aCharacter.properPose));
+            mManager.mTransparentBodyManager.mFlat.SoftColor = new Color(0.5f, 0.5f, 0.5f, 0.2f);
+        }
+        else
+        {
+            mManager.mTransparentBodyManager.mFlat.SoftColor = new Color(0.5f, 0.5f, 0.5f, 0.0f);
+        }
+
     }
 }
