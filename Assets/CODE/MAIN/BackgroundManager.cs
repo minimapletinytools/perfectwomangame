@@ -26,12 +26,16 @@ public class BackgroundManager  : FakeMonoBehaviour
     }
     public void character_changed_listener(CharacterTextureBehaviour aCharacter)
     {
+        set_background(aCharacter);
+    }
+    public void set_background(CharacterTextureBehaviour aCharacter)
+    {
         //resize the background and set the texture
         mBackground1.transform.localScale = new Vector3(
-            BodyManager.convert_units(aCharacter.background1.width) / 10.0f, 1, 
+            BodyManager.convert_units(aCharacter.background1.width) / 10.0f, 1,
             BodyManager.convert_units(aCharacter.background1.height) / 10.0f);
         mBackground1.renderer.material.mainTexture = aCharacter.background1;
-        
+
         //resize the camera
         foreach (Camera c in mManager.mCameraManager.AllCameras)
         {
@@ -44,7 +48,6 @@ public class BackgroundManager  : FakeMonoBehaviour
             resize_camera_against_texture(c, aCharacter.background1);
         }
     }
-
     public static void resize_camera_against_texture(Camera aCam, Texture aTex, float aDistance = 1)
     {
         //TODO what if camera is not orthographic

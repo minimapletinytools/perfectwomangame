@@ -25,14 +25,20 @@ public class GameManager : FakeMonoBehaviour
         }
     }
 
+    public const float LEVEL_TIME_TOTAL = 30;
 
     public Camera mCamera;
     public AudioSource mSource;
     public int CurrentLevel
     { get; private set; }
+    public int CurrentIndex
+    { get; private set; }
     public int TotalScore
     { get; private set; }
-    public int TimeRemaining
+    public float TimeRemaining
+    { get; private set; }
+
+    public ProGrading.Pose CurrentPose
     { get; private set; }
 
     float mMinStartTime = 0;
@@ -47,8 +53,10 @@ public class GameManager : FakeMonoBehaviour
 
     public GameManager(ManagerManager aManager) : base(aManager) 
     {
+        CurrentPose = null;
         CurrentLevel = 0;
         TotalScore = 0;
+        TimeRemaining = 3;
         for (int i = 0; i < 29; i++)
             mDifficulties[i] = 0;
     }
@@ -56,20 +64,59 @@ public class GameManager : FakeMonoBehaviour
     {
         mManager.gameObject.AddComponent<AudioListener>();
         mSource = mManager.gameObject.AddComponent<AudioSource>();
-
         mManager.mEventManager.character_changed_event += character_changed_listener;
+
+        GameObject dummyChar = (GameObject)GameObject.Instantiate(mManager.mReferences.mCharacters[0]);
+        mManager.mBackgroundManager.set_background(dummyChar.GetComponent<CharacterTextureBehaviour>());
+        GameObject.Destroy(dummyChar);
     }
     public override void Update()
     {
         User = (mManager.mZigManager.has_user());
+
+        //TODO indicate to player to start the game
+        if (!Started && !User)
+        {
+        }
+        else if (User)
+        {
+        }
+
         if (!Started && User && Time.timeSinceLevelLoad > mMinStartTime)
         {
-            GameObject demoChar = (GameObject)GameObject.Instantiate(mManager.mReferences.mDemoChar);
-            mManager.mEventManager.character_changed_event(demoChar.GetComponent<CharacterTextureBehaviour>());
-            mManager.mEventManager.character_setup_event(demoChar.GetComponent<CharacterTextureBehaviour>());
-
+            start_character(0);
+            //maybe less time for fetus???
             Started = true;
         }
+
+        if (Started)
+        {
+            TimeRemaining -= Time.deltaTime;
+
+
+            if (User)
+            {
+                CurrentPose = ProGrading.snap_pose(mManager);
+                Debug.Log("waist angle " + mManager.mZigManager.Joints[ZigJointId.Waist].Rotation.flat_rotation());
+            }
+            if (CurrentPose != null && CurrentIndex != 0 && mManager.mTransparentBodyManager.mFlat.mTargetPose != null)
+            {
+                mManager.mInterfaceManager.mGrade = ProGrading.grade_pose(CurrentPose, mManager.mTransparentBodyManager.mFlat.mTargetPose);
+            }
+        }
+    }
+
+    void start_character(int index)
+    {
+        GameObject demoChar = (GameObject)GameObject.Instantiate(mManager.mReferences.mCharacters[index]);
+        mManager.mEventManager.character_changed_event(demoChar.GetComponent<CharacterTextureBehaviour>());
+        mManager.mEventManager.character_setup_event(demoChar.GetComponent<CharacterTextureBehaviour>());
+        GameObject.Destroy(demoChar);
+
+        TimeRemaining = LEVEL_TIME_TOTAL;
+        //TODO create event to make the obnoxious CHOOSE_NEXT thingy
+
+
     }
     public void character_changed_listener(CharacterTextureBehaviour aCharacter)
     {

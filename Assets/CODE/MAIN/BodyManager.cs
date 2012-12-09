@@ -47,7 +47,8 @@ public class BodyManager : FakeMonoBehaviour {
         mFlat.HardPosition = Random.insideUnitCircle.normalized * 300000;
         mFlat.SoftPosition = Vector3.zero;
         mOffset = (new Vector3(BodyManager.convert_units(aCharacter.background1.width) / 4.0f, 0, 0) + BodyManager.convert_units(aCharacter.adjust));
-        mFlat.SoftPosition = mFlat.SoftPosition + mOffset; 
+        mFlat.SoftPosition = mFlat.SoftPosition + mOffset;
+        mFlat.update(0);
     }
 
 
@@ -115,9 +116,6 @@ public class BodyManager : FakeMonoBehaviour {
                     position.z = 0;
                     mFlat.SoftPosition = position/1.5f + mOffset;
                 }
-                //TODO move this to grading manager fool
-                if (mManager.mZigManager.has_user())
-                    mManager.mInterfaceManager.mGrade = ProGrading.grade_pose(ProGrading.snap_pose(mManager), mManager.mTransparentBodyManager.mFlat.mTargetPose);
 
                 foreach (KeyValuePair<ZigJointId, ProjectionManager.Stupid> e in mManager.mProjectionManager.mImportant)
                 {
