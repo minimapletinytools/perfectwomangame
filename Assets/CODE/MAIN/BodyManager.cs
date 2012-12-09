@@ -59,6 +59,23 @@ public class BodyManager : FakeMonoBehaviour {
 		return (float)pixelWidth/1.0f; //100 pixels = 1 unit
 	}
 
+    public void fix_target_pose()
+    {
+        Update();
+        ProGrading.PoseElement element = mFlat.mTargetPose.find_element(ZigJointId.Waist);
+        ProGrading.PoseElement Lelement = mFlat.mTargetPose.find_element(ZigJointId.LeftKnee);
+        element.angle = mManager.mProjectionManager.get_waist(mFlat.mParts[ZigJointId.Waist].transform.position, mFlat.mParts[ZigJointId.LeftKnee].transform.position, mFlat.mParts[ZigJointId.RightKnee].transform.position);
+        float measured = mManager.mProjectionManager.get_waist(mFlat.mParts[ZigJointId.Waist].transform.position, mFlat.mParts[ZigJointId.LeftKnee].transform.position, mFlat.mParts[ZigJointId.RightKnee].transform.position);
+        int maxIter = 100;
+        while(maxIter > 0 && Mathf.Abs(measured-element.angle) > 0.1f)
+        {
+            Lelement.angle -= (measured-element.angle)*1.5f;
+            measured = mManager.mProjectionManager.get_waist(mFlat.mParts[ZigJointId.Waist].transform.position, mFlat.mParts[ZigJointId.LeftKnee].transform.position, mFlat.mParts[ZigJointId.RightKnee].transform.position);
+            maxIter--;
+        }
+        Debug.Log("fixed with iterations " + maxIter);
+    }
+
 	public override void Start () 
     {
         

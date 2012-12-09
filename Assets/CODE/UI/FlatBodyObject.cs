@@ -172,10 +172,7 @@ public class FlatBodyObject : FlatElementBase
 
 
 
-    public void fix_target_pose()
-    {
-        //TODO this is actually kind of hard lol mTargetPose.find_element(ZigJointId.Waist).angle = mManager.mProjectionManager.
-    }
+    
 
 
 

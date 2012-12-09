@@ -131,6 +131,11 @@ public class ProjectionManager : FakeMonoBehaviour {
         return get_relative(waist.Position, L.Position * 0.5f + R.Position * 0.5f);
     }
 
+    public float get_waist(Vector3 waist, Vector3 L, Vector3 R)
+    {
+        return get_relative(waist, L * 0.5f + R * 0.5f);
+    }
+
 
     public float get_relative(Vector3 A, Vector3 B)
     {
