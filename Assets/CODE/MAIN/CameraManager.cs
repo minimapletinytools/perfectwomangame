@@ -12,7 +12,7 @@ public class CameraManager : FakeMonoBehaviour {
 
     GameObject ImageEffects { get; set; }
 
-    public Camera[] AllCameras{ get{ return new Camera[]{MainBodyCamera,TransparentBodyCamera,BackgroundCamera};} }
+    public Camera[] AllCameras { get { return new Camera[] { MainBodyCamera,TransparentBodyCamera,BackgroundCamera};} }
 	public override void Start () 
     {
         ImageEffects = (GameObject)GameObject.Instantiate(mManager.mReferences.mImageEffectsPrefabs);
@@ -25,6 +25,7 @@ public class CameraManager : FakeMonoBehaviour {
         //MainBodyCameraBloomEffect.addBrightStuffOneOneShader = Blo
         mManager.mBodyManager.set_layer(1);
 
+        
         TransparentBodyCamera = (new GameObject("genTransparentCamera")).AddComponent<Camera>();
         TransparentBodyCamera.cullingMask = 1 << 2;
         TransparentBodyCamera.depth = 2;
@@ -37,7 +38,7 @@ public class CameraManager : FakeMonoBehaviour {
         BackgroundCamera.depth = 1;
         BackgroundCamera.clearFlags = CameraClearFlags.Depth;
         mManager.mBackgroundManager.set_layer(3);
-
+        
         //TODO need to do render textures for this to work properly...
 
         foreach (Camera c in AllCameras)

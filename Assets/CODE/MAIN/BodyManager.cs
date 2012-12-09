@@ -7,6 +7,7 @@ public class BodyManager : FakeMonoBehaviour {
     public FlatBodyObject mFlat;
     int mMode = 0; // 0 - from kinect, 1 - from pose, -1 none
     int mLayer = 0;
+    Vector3 mOffset;
     public void set_target_pose(ProGrading.Pose aPose)
     {
         mMode = 1;
@@ -40,11 +41,12 @@ public class BodyManager : FakeMonoBehaviour {
     public void character_changed_listener(CharacterTextureBehaviour aCharacter)
     {
         destroy_character();
-        mFlat = new FlatBodyObject(aCharacter,1);
+        mFlat = new FlatBodyObject(aCharacter,-1);
         set_layer(mLayer);
         mFlat.HardPosition = Random.insideUnitCircle.normalized * 300000;
         mFlat.SoftPosition = Vector3.zero;
-        mFlat.SoftPosition = mFlat.SoftPosition + (new Vector3(BodyManager.convert_units(aCharacter.background1.width) / 4.0f, 0, 0) + BodyManager.convert_units(aCharacter.adjust));
+        mOffset = (new Vector3(BodyManager.convert_units(aCharacter.background1.width) / 4.0f, 0, 0) + BodyManager.convert_units(aCharacter.adjust));
+        mFlat.SoftPosition = mFlat.SoftPosition + mOffset; 
     }
 
 
@@ -71,6 +73,12 @@ public class BodyManager : FakeMonoBehaviour {
             mFlat.set();
             if (mMode == 0)
             {
+                if (mManager.mGameManager.Started)
+                {
+                    Vector3 position = mManager.mZigManager.Joints[ZigJointId.Waist].Position;
+                    position.z = 0;
+                    mFlat.SoftPosition = position/1.5f + mOffset;
+                }
                 //TODO move this to grading manager fool
                 if (mManager.mZigManager.has_user())
                     mManager.mInterfaceManager.mGrade = ProGrading.grade_pose(ProGrading.snap_pose(mManager), mManager.mTransparentBodyManager.mFlat.mTargetPose);

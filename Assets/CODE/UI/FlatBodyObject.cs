@@ -7,8 +7,10 @@ public class FlatBodyObject : FlatElementBase
     public static ZigJointId[] mRenderedJoints = { ZigJointId.Neck, ZigJointId.Torso, ZigJointId.Waist, ZigJointId.LeftShoulder, ZigJointId.LeftElbow, ZigJointId.RightShoulder, ZigJointId.RightElbow, ZigJointId.LeftHip, ZigJointId.LeftKnee, ZigJointId.RightHip, ZigJointId.RightShoulder };
     public ProGrading.Pose mTargetPose = null;
     public Dictionary<ZigJointId, GameObject> mParts = new Dictionary<ZigJointId, GameObject>();
+    public bool UseDepth { get; set; }
 
-    public FlatBodyObject(CharacterTextureBehaviour aChar, int aDepth)
+
+    public FlatBodyObject(CharacterTextureBehaviour aChar, int aDepth = -1)
     {
         create_body(aChar);
         PrimaryGameObject = new GameObject("genBodyParent");
@@ -17,7 +19,9 @@ public class FlatBodyObject : FlatElementBase
         SoftColor = new Color(0.5f, 0.5f, 0.5f, 0.5f);
         SoftInterpolation = 0.08f;
 
-        Depth = aDepth;
+        UseDepth = (aDepth != -1);
+        if(UseDepth)
+            Depth = aDepth;
     }
 
     public void set_target_pose(ProGrading.Pose aPose)

@@ -41,12 +41,16 @@ public class GameManager : FakeMonoBehaviour
     public bool User
     { get; private set; }
 
+    float[] mDifficulties = new float[29];
+
     public TimedEventHandler mEvents = new TimedEventHandler();
 
     public GameManager(ManagerManager aManager) : base(aManager) 
     {
         CurrentLevel = 0;
         TotalScore = 0;
+        for (int i = 0; i < 29; i++)
+            mDifficulties[i] = 0;
     }
     public override void Start()
     {
