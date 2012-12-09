@@ -147,7 +147,7 @@ public class InterfaceManager : FakeMonoBehaviour {
         mBigBadBox = new FlatElementImage(refs.bigBadBox, 4);
         mBigBadBox.HardPosition = mBlueBar.SoftPosition + choice_offset(0, 0,true) + new Vector3(48, 0, 0);
         mQuestion = new FlatElementImage(refs.questions[0], 4);
-        mQuestion.SoftPosition = mBlueBar.SoftPosition + new Vector3(0, 140, 0);
+        mQuestion.SoftPosition = mBlueBar.SoftPosition + new Vector3(0, 200, 0);
 
 
         for (int i = 0; i < 29; i++)
