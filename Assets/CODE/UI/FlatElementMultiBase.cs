@@ -8,11 +8,13 @@ public class FlatElementMultiBase : FlatElementBase
     {
         public FlatElementBase Element{get; private set;}
         public Vector3 Position { get; set; }
+        public Vector3 Scale { get; set; }
         public Quaternion Rotation { get; set; }
         public ElementOffset(FlatElementBase element, Vector3 offset)
         {
             Element = element;
             Position = offset;
+            Scale = Vector3.one;
             Rotation = Quaternion.identity;
         }
     }
@@ -72,6 +74,26 @@ public class FlatElementMultiBase : FlatElementBase
             base.HardPosition = value;
             foreach (ElementOffset e in mElements)
                 e.Element.HardPosition = value + e.Position;
+        }
+    }
+    public override Vector3 SoftScale
+    {
+        get { return base.SoftScale; }
+        set 
+        {
+            base.SoftScale = value;
+            foreach (ElementOffset e in mElements)
+                e.Element.SoftScale = value.component_multiply(e.Scale);
+        }
+    }
+    public override Vector3 HardScale
+    {
+        get { return base.HardScale; }
+        set
+        {
+            base.HardScale = value;
+            foreach (ElementOffset e in mElements)
+                e.Element.HardScale = value.component_multiply(e.Scale);
         }
     }
     public override float SoftFlatRotation

@@ -54,6 +54,15 @@ public class GameManager : FakeMonoBehaviour
     public int[] PastChoices
     { get; private set; }
 
+    int[] mPerfectness = new int[29]{ 0, 
+            0, 1, 2, 3, 
+            3, 2, 1, 0, 
+            0, 1, 2, 3, 
+            3, 2, 1, 0,
+            0, 1, 2, 3, 
+            3, 2, 1, 0, 
+            2, 1, 3, 0 };
+
     ProGrading.Pose[] mChoicePoses = new ProGrading.Pose[4]{null,null,null,null};
 
     public TimedEventHandler mEvents = new TimedEventHandler();
@@ -92,6 +101,10 @@ public class GameManager : FakeMonoBehaviour
     public int get_difficulty(int index)
     {
         return (int)Mathf.Clamp(mDifficulties[index],0,3);
+    }
+    public int get_perfectness(int index)
+    {
+        return mPerfectness[index];
     }
 
 
@@ -205,6 +218,7 @@ public class GameManager : FakeMonoBehaviour
             //figure out next poses
             NextContendingChoice = get_default_choice(CurrentLevel);
             mChoicePoses = get_poses(CurrentLevel);
+            mManager.mInterfaceManager.set_choice_difficulties();
             mManager.mInterfaceManager.set_bottom_poses(mChoicePoses);
         }
     }

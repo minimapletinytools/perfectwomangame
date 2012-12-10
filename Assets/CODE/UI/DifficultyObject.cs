@@ -30,7 +30,7 @@ public class DifficultyObject : FlatElementMultiBase
         Difficulty = 0;
     }
 
-    public override void set()
+    public override void  update_parameters(float aDeltaTime)
     {
         
         for (int i = 0; i < 4; i++)
@@ -38,7 +38,6 @@ public class DifficultyObject : FlatElementMultiBase
             if (i <= Difficulty)
             {
                 base.SoftPosition = base.SoftPosition;
-                mImageElements[i].set();
             }
             else
             {
@@ -46,6 +45,7 @@ public class DifficultyObject : FlatElementMultiBase
                 mImageElements[i].HardPosition = (Random.insideUnitCircle.normalized * 3000);
             }
         }
+        base.update_parameters(aDeltaTime);
     }
 
 }

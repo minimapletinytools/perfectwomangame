@@ -25,10 +25,18 @@ public class FlatElementBase {
         }
     }
 
+    GameObject mPrimaryGameObject;
     public GameObject PrimaryGameObject
     {
-        get;
-        protected set;
+        get
+        {
+            return mPrimaryGameObject;
+        }
+        protected set
+        {
+            mPrimaryGameObject = value;
+            mBaseScale = mPrimaryGameObject.transform.localScale;
+        }
     }
 
     bool mEnabled = true;
@@ -54,6 +62,7 @@ public class FlatElementBase {
     public virtual float SoftInterpolation{get;set;}
     public TimedEventHandler Events { get; private set; }
 
+
     Vector3 mCurrentPosition;
     Vector3 mTargetPosition;
     public Vector3 mLocalPosition = Vector3.zero;
@@ -70,6 +79,21 @@ public class FlatElementBase {
             mCurrentPosition = value; 
             mTargetPosition = value; 
         }
+    }
+
+    Vector3 mBaseScale;
+    Vector3 mCurrentScale;
+    Vector3 mTargetScale;
+    public Vector3 mLocalScale = Vector3.one;
+    public virtual Vector3 SoftScale
+    {
+        get { return mTargetScale; }
+        set { mTargetScale = value; }
+    }
+    public virtual Vector3 HardScale
+    {
+        get { return mCurrentScale; }
+        set { mCurrentScale = mTargetScale = value; }
     }
 
     Quaternion mCurrentRotation;
@@ -126,11 +150,9 @@ public class FlatElementBase {
     {
         BoundingBox = new Rect(0, 0, 0, 0);
         SoftInterpolation = 0.3f;
+        HardScale = Vector3.one;
         Events = new TimedEventHandler();
     }
-
-
-
 
 
 
@@ -139,6 +161,13 @@ public class FlatElementBase {
         if (PrimaryGameObject != null)
         {
             PrimaryGameObject.transform.position = aPos;
+        }
+    }
+    public virtual void set_scale(Vector3 aScale)
+    {
+        if (PrimaryGameObject != null)
+        {
+            PrimaryGameObject.transform.localScale = aScale;
         }
     }
     public virtual void set_rotation(Quaternion aRot)
@@ -170,6 +199,7 @@ public class FlatElementBase {
             }*/
         }
     }
+    
 
     public void update(float aDeltaTime)
     {
@@ -181,12 +211,14 @@ public class FlatElementBase {
     {
         mCurrentPosition = (1 - SoftInterpolation) * mCurrentPosition + SoftInterpolation * mTargetPosition;
         mCurrentRotation = Quaternion.Slerp(mCurrentRotation, mTargetRotation, SoftInterpolation);
+        mCurrentScale = (1 - SoftInterpolation) * mCurrentScale + SoftInterpolation * mTargetScale;
         mCurrentColor = (1 - SoftInterpolation) * mCurrentColor + SoftInterpolation * mTargetColor;
     }
 
     public virtual void set()
     {
         set_position(mCurrentPosition + mLocalPosition);// + new Vector3(0,0,Depth));
+        set_scale(mBaseScale.component_multiply(mCurrentScale).component_multiply(mLocalScale));
         set_rotation(mLocalRotation*mCurrentRotation);
         set_color(mCurrentColor + mLocalColor);
     }

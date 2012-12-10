@@ -97,6 +97,7 @@ public class InterfaceManager : FakeMonoBehaviour {
         //UGG piece of junk...
         return (new Vector3(Random.Range(-1f, 1f), Random.Range(-1f, 1f), 0)).normalized * Random.Range(2000,20000);
     }
+
     public void setup_elements()
     {
         MenuReferenceBehaviour refs = mManager.mMenuReferences;
@@ -133,8 +134,6 @@ public class InterfaceManager : FakeMonoBehaviour {
         mMultiplier = new FlatElementImage(null, 4);
         mMultiplier.SoftPosition = mScoreBackground.SoftPosition + new Vector3(-250, -50, 0);
 
-
-
         for (int i = 0; i < 4; i++)
         {
             mTopChoices[i] = new ChoiceObjectPair(refs.emptyBox, 3);
@@ -144,6 +143,7 @@ public class InterfaceManager : FakeMonoBehaviour {
             //mBottomChoices[i].HardPosition = random_position();
             mBottomChoices[i].HardPosition = mBlueBar.SoftPosition + choice_offset(-1, i,true);
         }
+
         mBigBadBox = new FlatElementImage(refs.bigBadBox, 4);
         set_choice(0);
         mBigBadBox.HardPosition = mBigBadBox.SoftPosition;
@@ -191,16 +191,22 @@ public class InterfaceManager : FakeMonoBehaviour {
             mBigBadBox.SoftPosition = mBlueBar.SoftPosition + choice_offset(0, index, true) + new Vector3(48, 0, 0);
     }
 
-    public void set_choices()
+    public void set_choice_difficulties()
     {
         for (int i = 0; i < 29; i++)
         {
+            int subIndex = (i - 1) % 4;
             int level = mManager.mGameManager.get_level_from_choice_index(i);
             mChoices[i].SoftPosition = generic_offset(i, mManager.mGameManager.CurrentLevel);
             mChoices[i].set_difficulty(mManager.mGameManager.get_difficulty(i));
-            if (level < mManager.mGameManager.CurrentLevel && i > 0 && mManager.mGameManager.PastChoices[level] != (i - 1) % 4)
+            if (level < mManager.mGameManager.CurrentLevel && i > 0 && mManager.mGameManager.PastChoices[level] != subIndex)
             {
                 mChoices[i].Enabled = false;
+            }
+            if (level == mManager.mGameManager.CurrentLevel+1)
+            {
+                mBottomChoices[subIndex].set_difficulty(mManager.mGameManager.get_difficulty(i));
+                mTopChoices[subIndex].set_perfectness(mManager.mGameManager.get_perfectness(i));
             }
         }
     }
@@ -210,7 +216,9 @@ public class InterfaceManager : FakeMonoBehaviour {
         for (int i = 0; i < 4; i++)
         {
             if (aPoses[i] == null)
+            {
                 mBottomChoices[i].fade_pose(false);
+            }
             else
             {
                 mBottomChoices[i].fade_pose(true);

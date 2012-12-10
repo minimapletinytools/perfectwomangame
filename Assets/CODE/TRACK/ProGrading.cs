@@ -41,6 +41,7 @@ public class ProGrading {
             throw new UnityException("can't find ZigJointId " + id + " in Pose");
         }
     }
+
     public static float grade_pose(Pose A, Pose B) //weight is taken from Pose B, B is traget
     {
         float weightsum = 0;
