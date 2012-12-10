@@ -30,6 +30,7 @@ public class DifficultyObject : FlatElementMultiBase
         Difficulty = 0;
     }
 
+    
     public override void  update_parameters(float aDeltaTime)
     {
         
@@ -47,5 +48,5 @@ public class DifficultyObject : FlatElementMultiBase
         }
         base.update_parameters(aDeltaTime);
     }
-
+    
 }

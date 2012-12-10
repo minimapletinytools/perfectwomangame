@@ -35,6 +35,7 @@ public class FlatElementBase {
         protected set
         {
             mPrimaryGameObject = value;
+            //mBaseScale = Vector3.one; //maybe you should this with global scale instead...
             mBaseScale = mPrimaryGameObject.transform.localScale;
         }
     }
