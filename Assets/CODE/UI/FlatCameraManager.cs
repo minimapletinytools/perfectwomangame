@@ -4,6 +4,9 @@ using System.Collections;
 public class FlatCameraManager{
     
     public Camera Camera{ get; private set; }
+    public CameraInterpolator Interpolator
+    { get; private set; }
+
     public Vector3 Center
     {
         get;
@@ -33,12 +36,20 @@ public class FlatCameraManager{
     {
         get { return Width / Camera.aspect; }
     }
+
+    
     public FlatCameraManager(Vector3 aCenter, float aDistance)
     {
         Center = aCenter;
         Distance = aDistance;
         create_camera();
         IsOrthographic = true;
+        Interpolator = new CameraInterpolator(this.Camera);
+    }
+
+    public void update(float aDeltaTime)
+    {
+        Interpolator.update(aDeltaTime);
     }
 
     //for setting camera
@@ -53,6 +64,19 @@ public class FlatCameraManager{
         Camera.clearFlags = CameraClearFlags.Depth;
     }
 
+    public void focus_camera_on_element(FlatElementBase aElement)
+    {
+        Rect focus = aElement.BoundingBox;
+
+             //TODO what if camera is not orthographic
+        float texRatio = focus.width / (float)focus.height;
+        float camRatio = this.Camera.aspect;
+        if (camRatio > texRatio) //match width
+            Interpolator.TargetOrthographicHeight = BodyManager.convert_units(focus.width / camRatio) / 2.0f;
+        else
+            Interpolator.TargetOrthographicHeight = BodyManager.convert_units(focus.height) / 2.0f;
+        Interpolator.TargetSpatialPosition = new SpatialPosition(aElement.HardPosition, Quaternion.identity);
+    }
 
     //other stuff
     //returns world point from coordinates relative to center of screen where screen is (-1,1)x(-1,1)

@@ -37,7 +37,7 @@ public class CameraManager : FakeMonoBehaviour {
         BackgroundCamera.cullingMask = 1 << 3;
         BackgroundCamera.depth = 1;
         BackgroundCamera.clearFlags = CameraClearFlags.Depth;
-        mManager.mBackgroundManager.set_layer(3);
+        mManager.mBackgroundManager.set_background_layer(3);
         
         //TODO need to do render textures for this to work properly...
 

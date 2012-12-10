@@ -190,11 +190,11 @@ public class FlatBodyObject : FlatElementBase
             return plane.position - aGo.transform.position;
         throw new UnityException("no plane child exsits");
     }
-    bool is_same_color(Color32 c1, Color32 c2)
+    static bool is_same_color(Color32 c1, Color32 c2)
     {
         return c1.r == c2.r && c1.g == c2.g && c1.b == c2.b;
     }
-    Vector3 index_to_position(int i, Texture2D aTex)
+    static Vector3 index_to_position(int i, Texture2D aTex)
     {
 
         int x = i % aTex.width - aTex.width / 2;
@@ -202,7 +202,7 @@ public class FlatBodyObject : FlatElementBase
 
         return new Vector3(-BodyManager.convert_units(x), BodyManager.convert_units(y));
     }
-    Vector3 find_first_color(Color32 c, Texture2D aTex)
+    static Vector3 find_first_color(Color32 c, Texture2D aTex)
     {
 
         Color32[] colors = aTex.GetPixels32();

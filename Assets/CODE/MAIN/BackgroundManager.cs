@@ -3,50 +3,69 @@ using System.Collections;
 
 public class BackgroundManager  : FakeMonoBehaviour
 {
-    GameObject mBackground1;
-    int mlayer = 0;
+    int mBackgroundLayer = 0;
+    int mForegroundLayer = 0;
+
+    FlatElementImage mBackground;
+
+    FlatElementMultiImage mBackgroundElements;
+
+    FlatElementMultiImage mForegroundElements;
+    
     public BackgroundManager(ManagerManager aManager) : base(aManager) { }
 
 	public override void Start () {
         mManager.mEventManager.character_changed_event += character_changed_listener;
 
-        //make sure camera is setup!
-        mBackground1 = (new ImageGameObjectUtility(null)).PlaneObject;
-        mBackground1.transform.position = mBackground1.transform.position + new Vector3(0, 0, -2);
+        mBackground = new FlatElementImage(null, 0);
+        mBackground.HardPosition = Vector3.zero;
+
+        mBackgroundElements = new FlatElementMultiImage(1);
+        mForegroundElements = new FlatElementMultiImage(100);
 	}
 	
     public override void Update()
     {
+        mBackground.update(Time.deltaTime);
+        mBackgroundElements.update(Time.deltaTime);
+        mForegroundElements.update(Time.deltaTime);
 	}
 
-    public void set_layer(int aLayer)
+    public void set_background_layer(int aLayer)
     {
-        mlayer = aLayer;
-        mBackground1.layer = aLayer;
+        mBackgroundLayer = aLayer;
+
+        foreach (Renderer f in mBackground.PrimaryGameObject.GetComponentsInChildren<Renderer>())
+            f.gameObject.layer = mBackgroundLayer;
+
+
+        foreach( FlatElementMultiBase.ElementOffset e in mBackgroundElements.mElements)
+            foreach(Renderer f in e.Element.PrimaryGameObject.GetComponentsInChildren<Renderer>())
+                f.gameObject.layer = mBackgroundLayer;
     }
+
+    public void set_foreground_layer(int aLayer)
+    {
+        mForegroundLayer = aLayer;
+        foreach (FlatElementMultiBase.ElementOffset e in mForegroundElements.mElements)
+            foreach (Renderer f in e.Element.PrimaryGameObject.GetComponentsInChildren<Renderer>())
+                f.gameObject.layer = mForegroundLayer;
+    }
+
     public void character_changed_listener(CharacterTextureBehaviour aCharacter)
     {
         set_background(aCharacter);
     }
     public void set_background(CharacterTextureBehaviour aCharacter)
     {
-        //resize the background and set the texture
-        mBackground1.transform.localScale = new Vector3(
-            BodyManager.convert_units(aCharacter.background1.width) / 10.0f, 1,
-            BodyManager.convert_units(aCharacter.background1.height) / 10.0f);
-        mBackground1.renderer.material.mainTexture = aCharacter.background1;
+
+        mBackground.mImage.set_new_texture(aCharacter.background1);
+
+        //TODO background and forgeground elements
 
         //resize the camera
         foreach (Camera c in mManager.mCameraManager.AllCameras)
-        {
-            /*float texRatio = aCharacter.background1.width / (float)aCharacter.background1.height;
-            float camRatio = c.aspect;
-            if (camRatio > texRatio) //match width
-                c.orthographicSize = BodyManager.convert_units(aCharacter.background1.width / camRatio) / 2.0f;
-            else
-                c.orthographicSize = BodyManager.convert_units(aCharacter.background1.height) / 2.0f;*/
             resize_camera_against_texture(c, aCharacter.background1);
-        }
     }
     public static void resize_camera_against_texture(Camera aCam, Texture aTex, float aDistance = 1)
     {

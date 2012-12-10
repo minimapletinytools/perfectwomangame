@@ -30,6 +30,8 @@ public class DifficultyObject : FlatElementMultiBase
         Difficulty = 0;
     }
 
+
+    
     
     public override void  update_parameters(float aDeltaTime)
     {
@@ -47,6 +49,24 @@ public class DifficultyObject : FlatElementMultiBase
             }
         }
         base.update_parameters(aDeltaTime);
+    }
+
+    public override void set()
+    {
+
+        for (int i = 0; i < 4; i++)
+        {
+            if (i <= Difficulty)
+            {
+                base.SoftPosition = base.SoftPosition;
+                mImageElements[i].set();
+            }
+            else
+            {
+                //TODO probably should not call every frame poo poo....
+                mImageElements[i].HardPosition = (Random.insideUnitCircle.normalized * 3000);
+            }
+        }
     }
     
 }

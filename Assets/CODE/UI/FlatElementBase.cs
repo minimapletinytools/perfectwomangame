@@ -25,6 +25,7 @@ public class FlatElementBase {
         }
     }
 
+    
     GameObject mPrimaryGameObject;
     public GameObject PrimaryGameObject
     {
@@ -39,6 +40,7 @@ public class FlatElementBase {
             mBaseScale = mPrimaryGameObject.transform.localScale;
         }
     }
+
 
     bool mEnabled = true;
     public virtual bool Enabled
@@ -127,8 +129,7 @@ public class FlatElementBase {
 
     public virtual Rect BoundingBox
     {
-        get;
-        private set;
+        get { return new Rect(0, 0, 0, 0); }
     }
 
     protected int mDepth = 0;
@@ -149,7 +150,6 @@ public class FlatElementBase {
 
     public FlatElementBase()
     {
-        BoundingBox = new Rect(0, 0, 0, 0);
         SoftInterpolation = 0.3f;
         HardScale = Vector3.one;
         Events = new TimedEventHandler();
@@ -168,7 +168,8 @@ public class FlatElementBase {
     {
         if (PrimaryGameObject != null)
         {
-            PrimaryGameObject.transform.localScale = aScale;
+            if(PrimaryGameObject.transform.localScale != aScale)
+                PrimaryGameObject.transform.localScale = aScale;
         }
     }
     public virtual void set_rotation(Quaternion aRot)

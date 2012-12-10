@@ -6,7 +6,8 @@ public class SpatialPosition : MonoBehaviour {
 	public SpatialPosition(){}
 	public SpatialPosition(Vector3 ap, Quaternion ar){p = ap; r = ar;}
 	public SpatialPosition(Vector3 ap, Vector3 aForward){p = ap; r.SetFromToRotation(Vector3.forward,aForward);}
-	static SpatialPosition interpolate_linear(SpatialPosition A, SpatialPosition B, float t)
+    public SpatialPosition(Transform at) { p = at.position; r = at.rotation; }
+	public static SpatialPosition interpolate_linear(SpatialPosition A, SpatialPosition B, float t)
 	{
 		SpatialPosition r = new SpatialPosition();
 		r.p = A.p*(1-t) + B.p*t;

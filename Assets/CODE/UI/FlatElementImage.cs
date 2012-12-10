@@ -12,4 +12,17 @@ public class FlatElementImage : FlatElementBase
         Depth = aDepth;
     }
 
+    public override void destroy()
+    {
+        mImage.destroy();
+    }
+    public override Rect BoundingBox
+    {
+        get
+        {
+            Vector2 center = new Vector2(PrimaryGameObject.transform.position.x,PrimaryGameObject.transform.position.y);
+            Vector2 extents = mImage.PixelDimension;
+            return new Rect(center.x - extents.x / 2.0f, center.y - extents.y / 2.0f, extents.x, extents.y);
+        }
+    }
 }

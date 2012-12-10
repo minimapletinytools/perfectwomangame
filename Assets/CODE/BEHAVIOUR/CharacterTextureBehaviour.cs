@@ -31,7 +31,9 @@ public class CharacterTextureBehaviour : MonoBehaviour {
     public TextAsset[] properPoses;
 
     public Texture2D background1;
-    public Texture2D foreground1;
+    public Texture2D elementPositoner;
+    public Texture2D[] backgroundElements;
+    public Texture2D[] foregroundElements;
 
     public AudioClip backgroundMusic;
 }

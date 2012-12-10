@@ -50,6 +50,7 @@ public class ImageGameObjectUtility
             BaseDimension = new Vector2(1, 1);
         }
         PlaneObject.renderer.material.mainTexture = aTex;
+        PixelDimension = BaseDimension;
     }
 
     public void destroy()

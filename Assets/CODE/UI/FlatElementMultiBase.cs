@@ -18,7 +18,7 @@ public class FlatElementMultiBase : FlatElementBase
             Rotation = Quaternion.identity;
         }
     }
-    protected List<ElementOffset> mElements = new List<ElementOffset>();
+    public List<ElementOffset> mElements = new List<ElementOffset>();
 
     public override void destroy()
     {
