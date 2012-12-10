@@ -112,7 +112,9 @@ public class BodyManager : FakeMonoBehaviour {
             {
                 if (mManager.mGameManager.Started)
                 {
-                    Vector3 position = mManager.mZigManager.Joints[ZigJointId.Waist].Position;
+                    Vector3 position = Vector3.zero;
+                    if(mManager.mZigManager.Joints.ContainsKey(ZigJointId.Waist))
+                        position = mManager.mZigManager.Joints[ZigJointId.Waist].Position;
                     position.z = 0;
                     mFlat.SoftPosition = position/1.5f + mOffset;
                 }

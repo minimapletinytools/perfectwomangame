@@ -128,7 +128,8 @@ public class ProjectionManager : FakeMonoBehaviour {
 
     public float get_waist(ZigInputJoint waist, ZigInputJoint L, ZigInputJoint R)
     {
-        return get_relative(waist.Position, L.Position * 0.5f + R.Position * 0.5f);
+        return -waist.Rotation.flat_rotation() + 90;
+        //return get_relative(waist.Position, L.Position * 0.5f + R.Position * 0.5f);
     }
 
     public float get_waist(Vector3 waist, Vector3 L, Vector3 R)

@@ -97,8 +97,9 @@ public class GameManager : FakeMonoBehaviour
             if (User)
             {
                 CurrentPose = ProGrading.snap_pose(mManager);
-                Debug.Log("waist angle " + mManager.mZigManager.Joints[ZigJointId.Waist].Rotation.flat_rotation());
+                //Debug.Log("waist angle " + mManager.mZigManager.Joints[ZigJointId.Waist].Rotation.flat_rotation());
             }
+
             if (CurrentPose != null && CurrentIndex != 0 && mManager.mTransparentBodyManager.mFlat.mTargetPose != null)
             {
                 mManager.mInterfaceManager.mGrade = ProGrading.grade_pose(CurrentPose, mManager.mTransparentBodyManager.mFlat.mTargetPose);
