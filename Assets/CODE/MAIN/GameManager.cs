@@ -40,6 +40,8 @@ public class GameManager : FakeMonoBehaviour
 
     public ProGrading.Pose CurrentPose
     { get; private set; }
+    public int NextContendingChoice
+    { get; private set; }
 
     float mMinStartTime = 0;
     public bool Started
@@ -51,7 +53,27 @@ public class GameManager : FakeMonoBehaviour
 
     public TimedEventHandler mEvents = new TimedEventHandler();
 
-    public GameManager(ManagerManager aManager) : base(aManager) 
+    public int get_choice_index(int index, int level)
+    {
+        return index + level * 4 + 1;
+    }
+    public int get_default_choice(int level)
+    {
+        int r = 0;
+        float minDifficulty = Mathf.Infinity;
+        for (int i = 0; i < 4; i++)
+        {
+            if (minDifficulty > mDifficulties[i])
+            {
+                minDifficulty = mDifficulties[i];
+                r = i;
+            }
+        }
+        return r;
+    }
+
+    public GameManager(ManagerManager aManager)
+        : base(aManager) 
     {
         CurrentPose = null;
         CurrentLevel = 0;
@@ -103,6 +125,7 @@ public class GameManager : FakeMonoBehaviour
             if (CurrentPose != null && CurrentIndex != 0 && mManager.mTransparentBodyManager.mFlat.mTargetPose != null)
             {
                 mManager.mInterfaceManager.mGrade = ProGrading.grade_pose(CurrentPose, mManager.mTransparentBodyManager.mFlat.mTargetPose);
+
             }
         }
     }
@@ -114,10 +137,12 @@ public class GameManager : FakeMonoBehaviour
         mManager.mEventManager.character_setup_event(demoChar.GetComponent<CharacterTextureBehaviour>());
         GameObject.Destroy(demoChar);
 
+        
+
         TimeRemaining = LEVEL_TIME_TOTAL;
         //TODO create event to make the obnoxious CHOOSE_NEXT thingy
 
-
+        NextContendingChoice = get_default_choice(CurrentLevel);
     }
     public void character_changed_listener(CharacterTextureBehaviour aCharacter)
     {
