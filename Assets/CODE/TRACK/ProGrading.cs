@@ -28,6 +28,7 @@ public class ProGrading {
         public bool important = true; //this means we care about angle
         //other info if we want it...
     }
+
     [System.Serializable]
     public class Pose
     {
@@ -44,6 +45,7 @@ public class ProGrading {
     {
         float weightsum = 0;
         float gradesum = 0;
+        string output = "";
         foreach (PoseElement e in A.mElements)
         {
             //Debug.Log(e.joint);
@@ -51,10 +53,15 @@ public class ProGrading {
             float target = bPose.angle;
             float actual = e.angle;
             float diff = target - actual;
-            if (diff > 180) diff -= 360;
+            while (diff > 180) diff -= 360;
+            while(diff < -180) diff += 360;
             gradesum += diff * diff * bPose.weight;
             weightsum += bPose.weight;
+            output += e.joint + " target: " + target + " actual: " + actual + " diff: " + diff + "\n";
         }
+        output += " grade: " + Mathf.Sqrt(gradesum) / weightsum;
+        if (Input.GetKeyDown(KeyCode.D))
+            Debug.Log(output);
         return Mathf.Sqrt(gradesum) / weightsum;
     }
     public static Pose snap_pose(ManagerManager manager) //make suree there is a skeleton to snap
@@ -66,6 +73,7 @@ public class ProGrading {
             //ZigInputJoint A = manager.mZigManager.Joints[e.Key];
             //ZigInputJoint B = manager.mZigManager.Joints[e.Value];
             //pe.angle = manager.mProjectionManager.get_relative(A, B);
+            pe.weight = 1;
             pe.angle = manager.mProjectionManager.get_smoothed_relative(e.Key, e.Value);
             pe.joint = e.Key;
             p.mElements.Add(pe);

@@ -5,10 +5,11 @@ public class ChoiceObjectPair : FlatElementMultiBase {
     FlatElementImage mSquare;
     DifficultyObject mDifficultyStars;
     DifficultyObject mDifficultyBalls;
-    FlatBodyObject mBody;
+    FlatBodyObject mBody = null;
 
     float mSide = 45;
     float mRightBot = -80;
+
     public ChoiceObjectPair(Texture2D aLeftTex, int aDepth)
     {
         mSquare = new FlatElementImage(aLeftTex, aDepth);
@@ -34,11 +35,33 @@ public class ChoiceObjectPair : FlatElementMultiBase {
         mElements.Add(new FlatElementMultiBase.ElementOffset(mBody, new Vector3(mSide + 15, -5, 0)));
     }
 
+    public void set_pose(ProGrading.Pose aPose)
+    {
+        if (mBody != null)
+            mBody.set_target_pose(aPose);
+    }
+    public void set_difficulty(int difficulty)
+    {
+        mDifficultyStars.Enabled = false;
+        mDifficultyBalls.Difficulty = difficulty;
+    }
+
+    public void set_perfectness(int perfectness)
+    {
+        mDifficultyBalls.Enabled = false;
+        mDifficultyStars.Difficulty = perfectness;
+    }
+
+    public void fade_pose(bool aIn)
+    {
+        if (mBody != null)
+            mBody.SoftColor = aIn ? new Color(0.5f, 0.5f, 0.5f, 0.5f) : new Color(0.5f, 0.5f, 0.5f, 0);
+    }
     public override Color SoftColor
     {
         get
         {
-            return mDifficultyBalls.SoftColor;
+            return base.SoftColor;
         }
         set
         {
@@ -60,7 +83,6 @@ public class ChoiceObjectPair : FlatElementMultiBase {
 
     public override void update_parameters(float aDeltaTime)
     {
-        //mBody.
         base.update_parameters(aDeltaTime);
     }
 }

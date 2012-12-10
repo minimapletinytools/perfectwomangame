@@ -102,6 +102,8 @@ public class BodyManager : FakeMonoBehaviour {
         mManager.mEventManager.character_changed_event += character_changed_listener;
 	}
 
+
+    int write_counter = 0;
     public override void Update()
     {
         if (mFlat != null)
@@ -129,13 +131,17 @@ public class BodyManager : FakeMonoBehaviour {
                 if (Input.GetKeyDown(KeyCode.Space))
                 {
                     if (mManager.mZigManager.has_user())
-                        ProGrading.write_pose_to_file(ProGrading.snap_pose(mManager), "char_kinect.txt");
+                    {
+                        write_counter++;
+                        ProGrading.write_pose_to_file(ProGrading.snap_pose(mManager), "char_kinect"+write_counter+".txt");
+                    }
                 }
             }
             else if (mMode == 1)
             {
                 if (Input.GetKeyDown(KeyCode.Space))
                 {
+                    write_counter++;
                     ProGrading.Pose p = new ProGrading.Pose();
                     foreach (KeyValuePair<ZigJointId, GameObject> e in mFlat.mParts)
                     {
@@ -144,7 +150,7 @@ public class BodyManager : FakeMonoBehaviour {
                         pe.angle = e.Value.transform.rotation.eulerAngles.z;
                         p.mElements.Add(pe);
                     }
-                    ProGrading.write_pose_to_file(p, "char_manual.txt");
+                    ProGrading.write_pose_to_file(p, "char_manual" + write_counter + ".txt");
                 }
             }
         }

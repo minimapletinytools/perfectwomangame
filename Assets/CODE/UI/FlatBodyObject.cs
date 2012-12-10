@@ -27,13 +27,19 @@ public class FlatBodyObject : FlatElementBase
     public void set_target_pose(ProGrading.Pose aPose)
     {
         mTargetPose = aPose;
+        
+    }
+
+    public override void update_parameters(float aDeltaTime)
+    {
         if (mTargetPose != null)
         {
             foreach (ProGrading.PoseElement e in mTargetPose.mElements)
             {
-                mParts[e.joint].transform.rotation = Quaternion.AngleAxis(e.angle, Vector3.forward);
+                mParts[e.joint].transform.rotation = Quaternion.Slerp(mParts[e.joint].transform.rotation, Quaternion.AngleAxis(e.angle, Vector3.forward), 0.1f);
             }
         }
+        base.update_parameters(aDeltaTime);
     }
 
     public override void destroy()

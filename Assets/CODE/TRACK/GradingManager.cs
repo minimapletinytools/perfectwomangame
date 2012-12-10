@@ -134,7 +134,6 @@ public class GradingManager : FakeMonoBehaviour {
     {
         float weightsum = 0;
         float gradesum = 0;
-        string output = "";
         foreach (WeightedZigJointPair e in mImportant)
         {
 			float target = mManager.mProjectionManager.get_relative(aPose.mPose[e.A],aPose.mPose[e.B]);
@@ -144,10 +143,9 @@ public class GradingManager : FakeMonoBehaviour {
             gradesum += diff*diff*e.weight;
             weightsum += e.weight;
 
-            output += e.A + " target: " + target + " actual: " + actual + " diff: " + diff + " grade: " + diff * diff * e.weight + "\n";
+           
         }
-        if (Input.GetKeyDown(KeyCode.Space))
-            Debug.Log(output);
+        
 		return Mathf.Sqrt(gradesum)/weightsum;
     }
     public override void Update()

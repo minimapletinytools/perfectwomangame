@@ -28,7 +28,6 @@ public class CharacterTextureBehaviour : MonoBehaviour {
     public Texture2D waist;
     public Texture2D atWaist;
 
-    public TextAsset properPose;
     public TextAsset[] properPoses;
 
     public Texture2D background1;

@@ -3,7 +3,15 @@ using System.Collections;
 
 public class DifficultyObject : FlatElementMultiBase
 {
-    public int Difficulty { get; private set; }
+    int mDifficulty;
+    public int Difficulty 
+    {
+        get { return mDifficulty; } 
+        set
+        {
+            mDifficulty = value;
+        } 
+    }
 
 
     public FlatElementImage[] mImageElements = new FlatElementImage[4];
@@ -19,7 +27,7 @@ public class DifficultyObject : FlatElementMultiBase
         
 
 
-        Difficulty = 4;
+        Difficulty = 0;
     }
 
     public override void set()
@@ -29,10 +37,12 @@ public class DifficultyObject : FlatElementMultiBase
         {
             if (i <= Difficulty)
             {
+                base.SoftPosition = base.SoftPosition;
                 mImageElements[i].set();
             }
             else
             {
+                //TODO probably should not call every frame poo poo....
                 mImageElements[i].HardPosition = (Random.insideUnitCircle.normalized * 3000);
             }
         }
