@@ -202,7 +202,7 @@ public class FlatBodyObject : FlatElementBase
 
         return new Vector3(-BodyManager.convert_units(x), BodyManager.convert_units(y));
     }
-    static Vector3 find_first_color(Color32 c, Texture2D aTex)
+    public static Vector3 find_first_color(Color32 c, Texture2D aTex)
     {
 
         Color32[] colors = aTex.GetPixels32();

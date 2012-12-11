@@ -62,6 +62,12 @@ public class BackgroundManager  : FakeMonoBehaviour
         mBackground.mImage.set_new_texture(aCharacter.background1);
 
         //TODO background and forgeground elements
+        mBackgroundElements.destroy();
+        mForegroundElements.destroy();
+        for (int i = 0; i < aCharacter.backgroundElements.Length; i++)
+        {
+            mBackgroundElements.add_image(aCharacter.backgroundElements[i], FlatBodyObject.find_first_color(new Color(255, 0, 5 * i / (float)255), aCharacter.elementPositoner));
+        }
 
         //resize the camera
         foreach (Camera c in mManager.mCameraManager.AllCameras)
