@@ -210,7 +210,6 @@ public class InterfaceManager : FakeMonoBehaviour {
             mChoices[i].set_difficulty(mManager.mGameManager.get_difficulty(i));
             if (level <= mManager.mGameManager.CurrentLevel && i > 0 && mManager.mGameManager.PastChoices[level] != subIndex)
             {
-                Debug.Log("disabling");
                 mChoices[i].Enabled = false;
             }
             if (level == mManager.mGameManager.CurrentLevel+1)
@@ -247,6 +246,21 @@ public class InterfaceManager : FakeMonoBehaviour {
         //TODO
     }
 
+    public void set_perfect_time(float perfect, float time)
+    {
+        mPerfectMeter.Percentage = perfect;
+        mTimeMeter.Percentage = time;
+
+        if (perfect > 0.5f)
+            mPerfectMeter.mLocalColor = (new Color(Random.RandomRange(0f, 1f), Random.RandomRange(0f, 1f), Random.RandomRange(0f, 1f))) * 0.2f;
+        else mPerfectMeter.mLocalColor = new Color(0, 0, 0, 0);
+        if (perfect > 0.8f)
+            mPerfectMeter.mLocalPosition = Random.insideUnitCircle * 10;
+        else mPerfectMeter.mLocalPosition = Vector3.zero;
+        if (perfect > 0.9f)
+            mPerfectMeter.mLocalRotation = Quaternion.AngleAxis(Random.RandomRange(-5f, 5f), Vector3.forward);
+        else mPerfectMeter.mLocalRotation = Quaternion.identity;
+    }
 
 
     public void reset_camera()

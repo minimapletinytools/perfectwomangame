@@ -149,6 +149,13 @@ public class FlatElementMultiBase : FlatElementBase
     {
         foreach (ElementOffset e in mElements)
             e.Element.update_parameters(aDeltaTime);
+        foreach (ElementOffset e in mElements) //kind of a hack, you should really do virtual properties for local rotation etc.. or do sometig even fancier
+        {
+            e.Element.mLocalColor = mLocalColor;
+            e.Element.mLocalPosition = mLocalPosition;
+            e.Element.mLocalRotation = mLocalRotation;
+            e.Element.mLocalScale = mLocalScale;
+        }
     }
 
     public override void set()

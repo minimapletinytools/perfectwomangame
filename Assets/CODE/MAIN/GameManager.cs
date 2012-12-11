@@ -28,7 +28,7 @@ public class GameManager : FakeMonoBehaviour
         }
     }
 
-    public const float LEVEL_TIME_TOTAL = 5;
+    public const float LEVEL_TIME_TOTAL = 30;
     public const float SELECTION_THRESHOLD = 30;
     public const float CHOICE_TIME = 3;
 
@@ -41,6 +41,8 @@ public class GameManager : FakeMonoBehaviour
     public int TotalScore
     { get; private set; }
     public float TimeRemaining
+    { get; private set; }
+    public float CurrentGrade
     { get; private set; }
 
     public ProGrading.Pose CurrentPose
@@ -152,8 +154,8 @@ public class GameManager : FakeMonoBehaviour
 
         if (!Started && User && Time.timeSinceLevelLoad > mMinStartTime)
         {
-            advance_scene();
-            TimeRemaining = LEVEL_TIME_TOTAL;
+            advance_scene(5);
+            
             //maybe less time for fetus???
             Started = true;
         }
@@ -162,13 +164,13 @@ public class GameManager : FakeMonoBehaviour
         {
             TimeRemaining -= Time.deltaTime;
 
-
             pose_grading();
+            mManager.mInterfaceManager.set_perfect_time(ProGrading.grade_to_perfect(CurrentGrade), (LEVEL_TIME_TOTAL - TimeRemaining) / LEVEL_TIME_TOTAL);
 
             //goto next scene
             if (TimeRemaining < 0)
             {
-                advance_scene();
+                advance_scene(LEVEL_TIME_TOTAL);
             }
         }
     }
@@ -183,7 +185,8 @@ public class GameManager : FakeMonoBehaviour
         }
         if (CurrentPose != null && mManager.mTransparentBodyManager.mFlat.mTargetPose != null)
         {
-            mManager.mInterfaceManager.mGrade = ProGrading.grade_pose(CurrentPose, mManager.mTransparentBodyManager.mFlat.mTargetPose);
+            CurrentGrade = ProGrading.grade_pose(CurrentPose, mManager.mTransparentBodyManager.mFlat.mTargetPose);
+            mManager.mInterfaceManager.mGrade = CurrentGrade;
         }
         if (CurrentPose != null)
         {
@@ -211,7 +214,7 @@ public class GameManager : FakeMonoBehaviour
             mManager.mInterfaceManager.set_choice(NextContendingChoice);
         }
     }
-    void advance_scene()
+    void advance_scene(float aSceneTime)
     {
         
         CurrentLevel++;
@@ -226,8 +229,7 @@ public class GameManager : FakeMonoBehaviour
         else
         {
             start_character(get_choice_index(NextContendingChoice, CurrentLevel));
-
-            TimeRemaining = LEVEL_TIME_TOTAL;
+            TimeRemaining = aSceneTime;
             mEvents.add_event((new GameEvents.FocusCameraOnElementEvent(mManager.mInterfaceManager.mFlatCamera, mManager.mInterfaceManager.mBlueBar)).get_event(), Mathf.Clamp(TimeRemaining - CHOICE_TIME,0,Mathf.Infinity));
             mEvents.add_event((new GameEvents.ResetElementScaleEvent(mManager.mInterfaceManager.mBlueBar)).get_event(), TimeRemaining);
 
