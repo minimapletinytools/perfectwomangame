@@ -106,6 +106,7 @@ public class GameManager : FakeMonoBehaviour
     }
     public int get_difficulty(int index)
     {
+        //TODO maybe some thing more complicated lol
         return (int)Mathf.Clamp(mDifficulties[index],0,3);
     }
     public int get_perfectness(int index)
@@ -155,7 +156,6 @@ public class GameManager : FakeMonoBehaviour
         if (!Started && User && Time.timeSinceLevelLoad > mMinStartTime)
         {
             advance_scene(CHOICE_TIME + 5);
-            
             //maybe less time for fetus???
             Started = true;
         }
@@ -164,9 +164,19 @@ public class GameManager : FakeMonoBehaviour
         {
             TimeRemaining -= Time.deltaTime;
 
-            pose_grading();
-            mManager.mCameraManager.set_camera_effects(ProGrading.grade_to_perfect(CurrentGrade));
-            mManager.mInterfaceManager.set_perfect_time(ProGrading.grade_to_perfect(CurrentGrade), (LEVEL_TIME_TOTAL - TimeRemaining) / LEVEL_TIME_TOTAL);
+            if (CurrentLevel != 0)
+            {
+                pose_grading();
+                mManager.mCameraManager.set_camera_effects(ProGrading.grade_to_perfect(CurrentGrade));
+                mManager.mInterfaceManager.set_perfect_time(ProGrading.grade_to_perfect(CurrentGrade), (LEVEL_TIME_TOTAL - TimeRemaining) / LEVEL_TIME_TOTAL);
+
+                adjust_difficulty();
+            } 
+            else 
+            {
+                mManager.mCameraManager.set_camera_effects(0.3f);
+                mManager.mInterfaceManager.set_perfect_time(0, (LEVEL_TIME_TOTAL - TimeRemaining) / LEVEL_TIME_TOTAL);
+            }
 
             //goto next scene
             if (TimeRemaining < 0)
@@ -217,11 +227,33 @@ public class GameManager : FakeMonoBehaviour
             mManager.mInterfaceManager.set_choice(NextContendingChoice);
         }
     }
+
+    void adjust_difficulty()
+    {
+        for (int i = 0; i < 29; i++)
+        {
+            float prevDifficulty = get_difficulty(i);
+            mDifficulties[i] +=
+                CharacterDifficulties.difficulties[CurrentIndex].values[i] *
+                ProGrading.grade_to_perfect(CurrentGrade) *
+                Time.deltaTime / LEVEL_TIME_TOTAL * 20; // TODO should not be 100
+
+            if (get_difficulty(i) != prevDifficulty)
+            {
+                //TODO play particle effects and make difficulty change event
+                mChoicePoses = get_poses(CurrentLevel);
+                mManager.mInterfaceManager.set_bottom_poses(mChoicePoses);
+                mManager.mInterfaceManager.set_choice_difficulties();
+            }
+        }
+    }
+
     void advance_scene(float aSceneTime)
     {
         
         CurrentLevel++;
         PastChoices[CurrentLevel] = NextContendingChoice;
+        CurrentIndex = get_choice_index(NextContendingChoice, CurrentLevel);
         
         mManager.mInterfaceManager.reset_camera(); //TODO maybe should be event
 
@@ -231,7 +263,7 @@ public class GameManager : FakeMonoBehaviour
         }
         else
         {
-            start_character(get_choice_index(NextContendingChoice, CurrentLevel));
+            start_character(CurrentIndex);
             TimeRemaining = aSceneTime;
             mEvents.add_event((new GameEvents.FocusCameraOnElementEvent(mManager.mInterfaceManager.mFlatCamera, mManager.mInterfaceManager.mBlueBar)).get_event(), Mathf.Clamp(TimeRemaining - CHOICE_TIME,0,Mathf.Infinity));
             mEvents.add_event((new GameEvents.ResetElementScaleEvent(mManager.mInterfaceManager.mBlueBar)).get_event(), TimeRemaining);

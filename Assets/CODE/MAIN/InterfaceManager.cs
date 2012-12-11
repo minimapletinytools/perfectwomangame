@@ -136,7 +136,7 @@ public class InterfaceManager : FakeMonoBehaviour {
         mScoreBackground.HardPosition = random_position();
         mScoreBackground.SoftPosition = mMeterBackground.SoftPosition + new Vector3(-400,0,0);
 
-        mScoreText = new FlatElementText(refs.menuFont, 700, "999", 3);
+        mScoreText = new FlatElementText(refs.menuFont, 700, "0", 3);
         mScoreText.HardPosition = random_position();
         mScoreText.SoftPosition = mScoreBackground.SoftPosition + new Vector3(0,-35,0);
         mScoreText.SoftColor = new Color(1f, 1f, 1f, 1f);

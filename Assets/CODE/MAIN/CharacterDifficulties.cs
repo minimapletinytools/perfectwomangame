@@ -13,6 +13,9 @@ public class CharacterDifficulties
 
     static CharacterDifficulties()
     {
+        for (int i = 0; i < 29; i++)
+            difficulties[i] = new Difficulty();
+
         difficulties[0].values = new float[] { 0, 
             0, 0, 0, 0, 
             0, 0, 0, 0, 
@@ -30,29 +33,29 @@ public class CharacterDifficulties
             -1, 1, -1, 1, 
             0, 1, 0, 1 };
         difficulties[2].values = new float[] { 0, 
-            0, 0, 0, 0, 
-            0, 0, 0, 0, 
-            0, 0, 0, 0, 
-            0, 0, 0, 0, 
-            0, 0, 0, 0, 
-            0, 0, 0, 0, 
-            0, 0, 0, 0 };
+            0, 0, 0, 1, 
+            1, -1, 0, 1, 
+            0, -1, 0, 0, 
+            0, -1, -1, 0, 
+            0, -1, 0, 0, 
+            1, -1, 0, 0, 
+            -1, -1, 0, 0 };
         difficulties[3].values = new float[] { 0, 
-            0, 0, 0, 0, 
-            0, 0, 0, 0, 
-            0, 0, 0, 0, 
-            0, 0, 0, 0, 
-            0, 0, 0, 0, 
-            0, 0, 0, 0, 
-            0, 0, 0, 0 };
+            0, 0, 0, -1, 
+            -1, 1, 0, -1, 
+            1, 1, 0, 0, 
+            100, 100, -1, 0, 
+            100, 1, 0, 0, 
+            100, 1, 0, 0, 
+            0, 0, 1, -1 };
         difficulties[4].values = new float[] { 0, 
             0, 0, 0, 0, 
             0, 0, 0, 0, 
             0, 0, 0, 0, 
-            0, 0, 0, 0, 
-            0, 0, 0, 0, 
-            0, 0, 0, 0, 
-            0, 0, 0, 0 };
+            1, 0, 0, -1, 
+            1, 1, 0, -1, 
+            1, 0, 1, -1, 
+            0, 1, 0, 0 };
         difficulties[5].values = new float[] { 0, 
             0, 0, 0, 0, 
             0, 0, 0, 0, 

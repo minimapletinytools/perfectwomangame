@@ -18,8 +18,6 @@ public class ChoiceObjectPair : FlatElementMultiBase {
         mElements.Add(new FlatElementMultiBase.ElementOffset(mSquare, new Vector3(mSide, 0, 0)));
         mElements.Add(new FlatElementMultiBase.ElementOffset(mDifficultyStars, new Vector3(-mSide, mRightBot, 0)));
         mElements.Add(new FlatElementMultiBase.ElementOffset(mDifficultyBalls, new Vector3(-mSide, mRightBot, 0)));
-        mDifficultyBalls.Enabled = false;
-
         PrimaryGameObject = create_primary_from_elements();
     }
 
