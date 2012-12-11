@@ -138,7 +138,7 @@ public class InterfaceManager : FakeMonoBehaviour {
 
         mScoreText = new FlatElementText(refs.menuFont, 700, "999", 3);
         mScoreText.HardPosition = random_position();
-        mScoreText.SoftPosition = mScoreBackground.SoftPosition + new Vector3(0,-30,0);
+        mScoreText.SoftPosition = mScoreBackground.SoftPosition + new Vector3(0,-35,0);
         mScoreText.SoftColor = new Color(1f, 1f, 1f, 1f);
 
         mMultiplier = new FlatElementImage(null, 4);
@@ -158,7 +158,7 @@ public class InterfaceManager : FakeMonoBehaviour {
         set_choice(0);
         mBigBadBox.HardPosition = mBigBadBox.SoftPosition;
         mQuestion = new FlatElementImage(refs.questions[0], 4);
-        mQuestion.SoftPosition = mBlueBar.SoftPosition + new Vector3(0, 200, 0);
+        mQuestion.SoftPosition = mBlueBar.SoftPosition + new Vector3(0, 240, 0);
 
 
         for (int i = 0; i < 29; i++)

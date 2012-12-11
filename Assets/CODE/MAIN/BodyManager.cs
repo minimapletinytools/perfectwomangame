@@ -44,7 +44,10 @@ public class BodyManager : FakeMonoBehaviour {
         destroy_character();
         mFlat = new FlatBodyObject(aCharacter,-1);
         set_layer(mLayer);
-        mFlat.HardPosition = Random.insideUnitCircle.normalized * 300000;
+        if(ManagerManager.Manager.mGameManager.CurrentLevel == 0)
+            mFlat.HardPosition = Random.insideUnitCircle.normalized * 30000;
+        else
+            mFlat.HardPosition = Random.insideUnitCircle.normalized * 1000;
         mFlat.SoftPosition = Vector3.zero;
         mOffset = (new Vector3(BodyManager.convert_units(aCharacter.background1.width) / 4.0f, 0, 0) + BodyManager.convert_units(aCharacter.adjust));
         mFlat.SoftPosition = mFlat.SoftPosition + mOffset;

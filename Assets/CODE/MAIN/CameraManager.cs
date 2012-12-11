@@ -21,8 +21,16 @@ public class CameraManager : FakeMonoBehaviour {
         MainBodyCamera.cullingMask = 1 << 1;
         MainBodyCamera.depth = 3;
         MainBodyCamera.clearFlags = CameraClearFlags.Depth;
-        //MainBodyCameraBloomEffect = MainBodyCamera.gameObject.AddComponent<BloomAndLensFlares>();
-        //MainBodyCameraBloomEffect.addBrightStuffOneOneShader = Blo
+        MainBodyCameraBloomEffect = MainBodyCamera.gameObject.AddComponent<BloomAndLensFlares>();
+        BloomAndLensFlares templateBloom = ImageEffects.GetComponent<BloomAndLensFlares>();
+        MainBodyCameraBloomEffect.addBrightStuffOneOneShader = templateBloom.addBrightStuffOneOneShader;
+        MainBodyCameraBloomEffect.brightPassFilterShader = templateBloom.brightPassFilterShader;
+        MainBodyCameraBloomEffect.hollywoodFlaresShader = templateBloom.hollywoodFlaresShader;
+        MainBodyCameraBloomEffect.lensFlareShader = templateBloom.lensFlareShader;
+        MainBodyCameraBloomEffect.screenBlendShader = templateBloom.screenBlendShader;
+        MainBodyCameraBloomEffect.separableBlurShader = templateBloom.separableBlurShader;
+        MainBodyCameraBloomEffect.vignetteShader = templateBloom.vignetteShader;
+        MainBodyCameraBloomEffect.bloomIntensity = 0;
         mManager.mBodyManager.set_layer(1);
 
         
@@ -48,7 +56,12 @@ public class CameraManager : FakeMonoBehaviour {
             c.isOrthoGraphic = true;
         }
 	}
-	
+
+    public void set_camera_effects(float perfect)
+    {
+        float interp = 0.1f;
+        MainBodyCameraBloomEffect.bloomIntensity = MainBodyCameraBloomEffect.bloomIntensity*(1-interp) + perfect * 5*interp;
+    }
     public override void Update()
     {
 	}

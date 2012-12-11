@@ -46,8 +46,8 @@ public class MeterObject : FlatElementMultiBase {
 
     public override void update_parameters(float aDeltaTime)
     {
-        mFillOffset.Element.SoftInterpolation = 0.8f;
-        mFillOffset.Element.SoftPosition = SoftPosition + new Vector3((757 / 2f - 245) - Percentage * 512/2f, 0, 0);
+        //mFillOffset.Element.SoftInterpolation = 1.0f;
+        mFillOffset.Element.HardPosition = SoftPosition + new Vector3((757 / 2f - 245) - Percentage * 512/2f, 0, 0);
         base.update_parameters(aDeltaTime);
     }
 

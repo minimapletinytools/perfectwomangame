@@ -28,9 +28,9 @@ public class GameManager : FakeMonoBehaviour
         }
     }
 
-    public const float LEVEL_TIME_TOTAL = 30;
+    public const float LEVEL_TIME_TOTAL = 40;
     public const float SELECTION_THRESHOLD = 30;
-    public const float CHOICE_TIME = 3;
+    public const float CHOICE_TIME = 10;
 
     public Camera mCamera;
     public AudioSource mSource;
@@ -154,7 +154,7 @@ public class GameManager : FakeMonoBehaviour
 
         if (!Started && User && Time.timeSinceLevelLoad > mMinStartTime)
         {
-            advance_scene(5);
+            advance_scene(CHOICE_TIME + 5);
             
             //maybe less time for fetus???
             Started = true;
@@ -165,6 +165,7 @@ public class GameManager : FakeMonoBehaviour
             TimeRemaining -= Time.deltaTime;
 
             pose_grading();
+            mManager.mCameraManager.set_camera_effects(ProGrading.grade_to_perfect(CurrentGrade));
             mManager.mInterfaceManager.set_perfect_time(ProGrading.grade_to_perfect(CurrentGrade), (LEVEL_TIME_TOTAL - TimeRemaining) / LEVEL_TIME_TOTAL);
 
             //goto next scene
@@ -188,7 +189,8 @@ public class GameManager : FakeMonoBehaviour
             CurrentGrade = ProGrading.grade_pose(CurrentPose, mManager.mTransparentBodyManager.mFlat.mTargetPose);
             mManager.mInterfaceManager.mGrade = CurrentGrade;
         }
-        TotalScore += Time.deltaTime * CurrentGrade * 1f;
+        TotalScore += Time.deltaTime * ProGrading.grade_to_perfect(CurrentGrade) * 10f;
+
         if (CurrentPose != null)
         {
             //grade for next choice
