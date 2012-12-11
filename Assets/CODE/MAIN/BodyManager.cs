@@ -118,6 +118,9 @@ public class BodyManager : FakeMonoBehaviour {
                     if(mManager.mZigManager.Joints.ContainsKey(ZigJointId.Waist))
                         position = mManager.mZigManager.Joints[ZigJointId.Waist].Position;
                     position.z = 0;
+                    position.y = 0;
+                    position.x *= -1;
+                    if (Mathf.Abs(position.x) < 10) position.x = 0; //fake snapping, TODO this should probbaly be in grading manager if anywhere...
                     mFlat.SoftPosition = position/1.5f + mOffset;
                 }
 

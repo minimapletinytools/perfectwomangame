@@ -38,7 +38,7 @@ public class GameManager : FakeMonoBehaviour
     { get; private set; }
     public int CurrentIndex
     { get; private set; }
-    public int TotalScore
+    public float TotalScore
     { get; private set; }
     public float TimeRemaining
     { get; private set; }
@@ -188,6 +188,7 @@ public class GameManager : FakeMonoBehaviour
             CurrentGrade = ProGrading.grade_pose(CurrentPose, mManager.mTransparentBodyManager.mFlat.mTargetPose);
             mManager.mInterfaceManager.mGrade = CurrentGrade;
         }
+        TotalScore += Time.deltaTime * CurrentGrade * 1f;
         if (CurrentPose != null)
         {
             //grade for next choice

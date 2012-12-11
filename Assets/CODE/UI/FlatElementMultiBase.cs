@@ -133,6 +133,7 @@ public class FlatElementMultiBase : FlatElementBase
     }
     public override Color HardColor
     {
+        
         get { return HardColor; }
         set { 
             base.HardColor = value;

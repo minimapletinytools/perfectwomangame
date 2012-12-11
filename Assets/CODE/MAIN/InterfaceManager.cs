@@ -136,9 +136,10 @@ public class InterfaceManager : FakeMonoBehaviour {
         mScoreBackground.HardPosition = random_position();
         mScoreBackground.SoftPosition = mMeterBackground.SoftPosition + new Vector3(-400,0,0);
 
-        mScoreText = new FlatElementText(refs.menuFont, 50, "999", 3);
+        mScoreText = new FlatElementText(refs.menuFont, 700, "999", 3);
         mScoreText.HardPosition = random_position();
-        mScoreText.SoftPosition = mScoreBackground.SoftPosition;
+        mScoreText.SoftPosition = mScoreBackground.SoftPosition + new Vector3(0,-30,0);
+        mScoreText.SoftColor = new Color(1f, 1f, 1f, 1f);
 
         mMultiplier = new FlatElementImage(null, 4);
         mMultiplier.SoftPosition = mScoreBackground.SoftPosition + new Vector3(-250, -50, 0);
@@ -251,6 +252,7 @@ public class InterfaceManager : FakeMonoBehaviour {
         mPerfectMeter.Percentage = perfect;
         mTimeMeter.Percentage = time;
 
+        mScoreText.Text = ((int)(mManager.mGameManager.TotalScore)).ToString();
         if (perfect > 0.5f)
             mPerfectMeter.mLocalColor = (new Color(Random.RandomRange(0f, 1f), Random.RandomRange(0f, 1f), Random.RandomRange(0f, 1f))) * 0.2f;
         else mPerfectMeter.mLocalColor = new Color(0, 0, 0, 0);
