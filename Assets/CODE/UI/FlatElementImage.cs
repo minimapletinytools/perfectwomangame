@@ -21,7 +21,9 @@ public class FlatElementImage : FlatElementBase
         get
         {
             Vector2 center = new Vector2(PrimaryGameObject.transform.position.x,PrimaryGameObject.transform.position.y);
-            Vector2 extents = mImage.PixelDimension;
+            Vector2 extents = mImage.BaseDimension;
+            extents.x *= SoftScale.x;
+            extents.y *= SoftScale.y;
             return new Rect(center.x - extents.x / 2.0f, center.y - extents.y / 2.0f, extents.x, extents.y);
         }
     }

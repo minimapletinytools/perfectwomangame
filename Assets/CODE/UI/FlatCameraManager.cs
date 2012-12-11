@@ -67,7 +67,6 @@ public class FlatCameraManager{
     public void focus_camera_on_element(FlatElementBase aElement)
     {
         Rect focus = aElement.BoundingBox;
-
              //TODO what if camera is not orthographic
         float texRatio = focus.width / (float)focus.height;
         float camRatio = this.Camera.aspect;
@@ -75,7 +74,9 @@ public class FlatCameraManager{
             Interpolator.TargetOrthographicHeight = BodyManager.convert_units(focus.width / camRatio) / 2.0f;
         else
             Interpolator.TargetOrthographicHeight = BodyManager.convert_units(focus.height) / 2.0f;
-        Interpolator.TargetSpatialPosition = new SpatialPosition(aElement.HardPosition, Quaternion.identity);
+        Vector3 position = aElement.HardPosition;
+        position.z = Center.z + Distance;
+        Interpolator.TargetSpatialPosition = new SpatialPosition(position, Camera.transform.rotation);
     }
 
     //other stuff

@@ -8,6 +8,8 @@ public class MenuReferenceBehaviour : MonoBehaviour {
 
     public Font menuFont;
 
+    public Texture2D gameBackground;
+
     public Texture2D pinkBackground;
     public Texture2D blueBar;
     public Texture2D meterBackground;

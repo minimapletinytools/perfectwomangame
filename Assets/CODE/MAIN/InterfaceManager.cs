@@ -15,14 +15,15 @@ public class InterfaceManager : FakeMonoBehaviour {
     bool mIsSetup = false;
 
 
-    FlatCameraManager mFlatCamera;
+    public FlatCameraManager mFlatCamera;
     CharacterTextureBehaviour mMiniMan;
 
     //elements
     HashSet<FlatElementBase> mElement = new HashSet<FlatElementBase>();
 
+    FlatElementImage mGameBackground;
     FlatElementImage mPinkBackground;
-    FlatElementImage mBlueBar;
+    public FlatElementImage mBlueBar;
     FlatElementImage mMeterBackground;
 
     //meter elements
@@ -59,11 +60,12 @@ public class InterfaceManager : FakeMonoBehaviour {
         Vector3 r;
         if (i == 0)
         {
-            r = mBlueBar.SoftPosition + new Vector3(0, 0, 0) + new Vector3(0, level * heightSpace + heightOffset, 0);
             tier = -1;
+            r = mBlueBar.SoftPosition + new Vector3(0, 0, 0) + new Vector3(0, (-tier-1) * heightSpace, 0) + new Vector3(0, level * heightSpace + heightOffset, 0);
+            
         }
         else
-            r = mBlueBar.SoftPosition + choice_offset(0, (i - 1) % 4) + new Vector3(0, -tier * heightSpace, 0) + new Vector3(0, level * heightSpace + heightOffset, 0);
+            r = mBlueBar.SoftPosition + choice_offset(0, (i - 1) % 4) + new Vector3(0, (-tier-1) * heightSpace, 0) + new Vector3(0, level * heightSpace + heightOffset, 0);
 
         if (tier + 1 - level < 0)
             r += new Vector3(0, heightSpace + middleOffset, 0);
@@ -81,10 +83,16 @@ public class InterfaceManager : FakeMonoBehaviour {
         mBehaviour.mManager = this;
         mFlatCamera = new FlatCameraManager(new Vector3(10000, 0, 0), 10);
         mMiniMan = ((GameObject)GameObject.Instantiate(ManagerManager.Manager.mMenuReferences.miniMan)).GetComponent<CharacterTextureBehaviour>();
+
+        mGameBackground = new FlatElementImage(ManagerManager.Manager.mMenuReferences.gameBackground, 0);
+        mGameBackground.HardPosition = mFlatCamera.get_point(0, 0);
+        mGameBackground.Enabled = false;
         
     }
     public override void Update()
     {
+        mFlatCamera.update(Time.deltaTime);
+
         foreach (FlatElementBase e in mElement)
         {
             //e.mLocalColor = (new Color(Random.Range(0f, 1f), Random.Range(0f, 1f), Random.Range(0f, 1f)))*0.1f;
@@ -101,6 +109,7 @@ public class InterfaceManager : FakeMonoBehaviour {
     public void setup_elements()
     {
         MenuReferenceBehaviour refs = mManager.mMenuReferences;
+
         //setup flat elements
         mPinkBackground = new FlatElementImage(refs.pinkBackground, 0);
         mPinkBackground.HardPosition = random_position();
@@ -199,8 +208,9 @@ public class InterfaceManager : FakeMonoBehaviour {
             int level = mManager.mGameManager.get_level_from_choice_index(i);
             mChoices[i].SoftPosition = generic_offset(i, mManager.mGameManager.CurrentLevel);
             mChoices[i].set_difficulty(mManager.mGameManager.get_difficulty(i));
-            if (level < mManager.mGameManager.CurrentLevel && i > 0 && mManager.mGameManager.PastChoices[level] != subIndex)
+            if (level <= mManager.mGameManager.CurrentLevel && i > 0 && mManager.mGameManager.PastChoices[level] != subIndex)
             {
+                Debug.Log("disabling");
                 mChoices[i].Enabled = false;
             }
             if (level == mManager.mGameManager.CurrentLevel+1)
@@ -237,9 +247,12 @@ public class InterfaceManager : FakeMonoBehaviour {
         //TODO
     }
 
-    
 
 
+    public void reset_camera()
+    {
+        mFlatCamera.focus_camera_on_element(mGameBackground);
+    }
 
 
     public void character_changed_listener(CharacterTextureBehaviour aCharacter)

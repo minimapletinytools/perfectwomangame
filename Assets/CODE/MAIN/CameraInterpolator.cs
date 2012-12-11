@@ -31,6 +31,7 @@ public class CameraInterpolator
         this.Camera = c;
         TargetFOV = c.fov;
         TargetOrthographicHeight = c.orthographicSize;
+        TargetSpatialPosition = new SpatialPosition(c.transform);
         SoftInterpolation = 0.2f;
     }
 

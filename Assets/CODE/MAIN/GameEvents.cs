@@ -16,10 +16,53 @@ public class GameEvents {
             return true;
         }
 
-        GameManager.GameEventDelegate get_event()
+        public GameManager.GameEventDelegate get_event()
         {
             return call;
         }
+    }
+
+    public class ResetElementScaleEvent
+    {
+        FlatElementBase mElement;
+        public ResetElementScaleEvent(FlatElementBase aElement)
+        {
+            mElement = aElement;
+        }
+        bool call(float aTime)
+        {
+            mElement.SoftScale = new Vector3(1, 1, 1);
+            return true;
+        }
+
+        public GameManager.GameEventDelegate get_event()
+        {
+            return call;
+        }
+    }
+    public class FocusCameraOnElementEvent
+    {
+        FlatCameraManager mCamera;
+        FlatElementBase mElement;
+        public FocusCameraOnElementEvent(FlatCameraManager aCamera, FlatElementBase aElement)
+        {
+            mElement = aElement;
+            mCamera = aCamera;
+        }
+
+        bool call(float aTime)
+        {
+            mElement.SoftScale = new Vector3(1.2f, 1.2f, 1f);
+            mCamera.focus_camera_on_element(mElement);
+            mElement.SoftScale = new Vector3(1.25f, 1.25f, 1f);
+            return true;
+        }
+
+        public GameManager.GameEventDelegate get_event()
+        {
+            return call;
+        }
+
     }
     
 }

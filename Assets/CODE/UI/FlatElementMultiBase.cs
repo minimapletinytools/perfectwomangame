@@ -20,6 +20,13 @@ public class FlatElementMultiBase : FlatElementBase
     }
     public List<ElementOffset> mElements = new List<ElementOffset>();
 
+    protected GameObject create_primary_from_elements()
+    {
+        GameObject r = new GameObject("genMultiFlatParent");
+        foreach (ElementOffset e in mElements)
+            e.Element.PrimaryGameObject.transform.parent = r.transform;
+        return r;
+    }
     public override void destroy()
     {
         foreach (ElementOffset e in mElements)

@@ -18,8 +18,9 @@ public class ChoiceObjectPair : FlatElementMultiBase {
         mElements.Add(new FlatElementMultiBase.ElementOffset(mSquare, new Vector3(mSide, 0, 0)));
         mElements.Add(new FlatElementMultiBase.ElementOffset(mDifficultyStars, new Vector3(-mSide, mRightBot, 0)));
         mElements.Add(new FlatElementMultiBase.ElementOffset(mDifficultyBalls, new Vector3(-mSide, mRightBot, 0)));
-
         mDifficultyBalls.Enabled = false;
+
+        PrimaryGameObject = create_primary_from_elements();
     }
 
     public ChoiceObjectPair(Texture2D aLeftTex, CharacterTextureBehaviour aChar, ProGrading.Pose aPose, int aDepth)
@@ -33,6 +34,8 @@ public class ChoiceObjectPair : FlatElementMultiBase {
         mElements.Add(new FlatElementMultiBase.ElementOffset(mDifficultyStars, new Vector3(-mSide, mRightBot, 0)));
         mElements.Add(new FlatElementMultiBase.ElementOffset(mDifficultyBalls, new Vector3(-mSide, mRightBot, 0)));
         mElements.Add(new FlatElementMultiBase.ElementOffset(mBody, new Vector3(mSide + 15, -5, 0)));
+
+        PrimaryGameObject = create_primary_from_elements();
     }
 
     public void set_pose(ProGrading.Pose aPose)

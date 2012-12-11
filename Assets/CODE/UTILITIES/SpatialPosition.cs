@@ -1,6 +1,6 @@
 using UnityEngine;
 using System.Collections;
-public class SpatialPosition : MonoBehaviour {
+public class SpatialPosition {
 	public Vector3 p = new Vector3();
 	public Quaternion r = new Quaternion();
 	public SpatialPosition(){}

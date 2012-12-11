@@ -6,27 +6,31 @@ public class GameManager : FakeMonoBehaviour
     public delegate bool GameEventDelegate(float time);
     public class TimedEventHandler
     {
-        LinkedList<KeyValuePair<QuTimer, GameEventDelegate>> mTimedEvents = new LinkedList<KeyValuePair<QuTimer, GameEventDelegate>>();
-        public void update(float aDeltaTime, FlatElementBase aElement)
+        Dictionary<QuTimer, GameEventDelegate> mTimedEvents = new Dictionary<QuTimer, GameEventDelegate>();
+        public void update(float aDeltaTime)
         {
+            List<KeyValuePair<QuTimer, GameEventDelegate>> removal = new List<KeyValuePair<QuTimer, GameEventDelegate>>();
             foreach (KeyValuePair<QuTimer, GameEventDelegate> e in mTimedEvents)
             {
                 e.Key.update(aDeltaTime);
                 if (e.Key.isExpired())
                 {
                     if (e.Value(aDeltaTime))
-                        mTimedEvents.Remove(e);
+                        removal.Add(e);
                 }
             }
+            foreach (KeyValuePair<QuTimer, GameEventDelegate> e in removal)
+                mTimedEvents.Remove(e.Key);
         }
         public void add_event(GameEventDelegate aEvent, float aTime)
         {
-            mTimedEvents.AddLast(new KeyValuePair<QuTimer, GameEventDelegate>(new QuTimer(0, aTime), aEvent));
+            mTimedEvents.Add(new QuTimer(0, aTime), aEvent);
         }
     }
 
-    public const float LEVEL_TIME_TOTAL = 30;
+    public const float LEVEL_TIME_TOTAL = 5;
     public const float SELECTION_THRESHOLD = 30;
+    public const float CHOICE_TIME = 3;
 
     public Camera mCamera;
     public AudioSource mSource;
@@ -136,6 +140,8 @@ public class GameManager : FakeMonoBehaviour
     {
         User = (mManager.mZigManager.has_user());
 
+        mEvents.update(Time.deltaTime);
+
         //TODO indicate to player to start the game
         if (!Started && !User)
         {
@@ -147,7 +153,7 @@ public class GameManager : FakeMonoBehaviour
         if (!Started && User && Time.timeSinceLevelLoad > mMinStartTime)
         {
             advance_scene();
-            TimeRemaining = 30;
+            TimeRemaining = LEVEL_TIME_TOTAL;
             //maybe less time for fetus???
             Started = true;
         }
@@ -157,18 +163,30 @@ public class GameManager : FakeMonoBehaviour
             TimeRemaining -= Time.deltaTime;
 
 
-            if (User)
+            pose_grading();
+
+            //goto next scene
+            if (TimeRemaining < 0)
             {
-                CurrentPose = ProGrading.snap_pose(mManager);
-                //Debug.Log("waist angle " + mManager.mZigManager.Joints[ZigJointId.Waist].Rotation.flat_rotation());
+                advance_scene();
             }
+        }
+    }
 
-            if (CurrentPose != null && CurrentIndex != 0 && mManager.mTransparentBodyManager.mFlat.mTargetPose != null)
-            {
-                mManager.mInterfaceManager.mGrade = ProGrading.grade_pose(CurrentPose, mManager.mTransparentBodyManager.mFlat.mTargetPose);    
-            }
+    void pose_grading()
+    {
 
-
+        if (User)
+        {
+            CurrentPose = ProGrading.snap_pose(mManager);
+            //Debug.Log("waist angle " + mManager.mZigManager.Joints[ZigJointId.Waist].Rotation.flat_rotation());
+        }
+        if (CurrentPose != null && mManager.mTransparentBodyManager.mFlat.mTargetPose != null)
+        {
+            mManager.mInterfaceManager.mGrade = ProGrading.grade_pose(CurrentPose, mManager.mTransparentBodyManager.mFlat.mTargetPose);
+        }
+        if (CurrentPose != null)
+        {
             //grade for next choice
             int minIndex = 0;
             float minGrade = Mathf.Infinity;
@@ -191,19 +209,16 @@ public class GameManager : FakeMonoBehaviour
                 NextContendingChoice = get_default_choice(CurrentLevel);
             else NextContendingChoice = minIndex;
             mManager.mInterfaceManager.set_choice(NextContendingChoice);
-
-            //goto next scene
-            if (TimeRemaining < 0)
-            {
-                advance_scene();
-            }
         }
     }
-
-
     void advance_scene()
     {
+        
         CurrentLevel++;
+        PastChoices[CurrentLevel] = NextContendingChoice;
+        
+        mManager.mInterfaceManager.reset_camera(); //TODO maybe should be event
+
         if (NextContendingChoice == -1)
         {
             //TODO you lose??
@@ -213,7 +228,9 @@ public class GameManager : FakeMonoBehaviour
             start_character(get_choice_index(NextContendingChoice, CurrentLevel));
 
             TimeRemaining = LEVEL_TIME_TOTAL;
-            //TODO create event to make the obnoxious CHOOSE_NEXT thingy
+            mEvents.add_event((new GameEvents.FocusCameraOnElementEvent(mManager.mInterfaceManager.mFlatCamera, mManager.mInterfaceManager.mBlueBar)).get_event(), Mathf.Clamp(TimeRemaining - CHOICE_TIME,0,Mathf.Infinity));
+            mEvents.add_event((new GameEvents.ResetElementScaleEvent(mManager.mInterfaceManager.mBlueBar)).get_event(), TimeRemaining);
+
 
             //figure out next poses
             NextContendingChoice = get_default_choice(CurrentLevel);

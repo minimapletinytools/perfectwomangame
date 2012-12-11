@@ -14,14 +14,16 @@ public class ImageGameObjectUtility
     public Material PlaneMaterial { get; private set; }
 
     public Vector2 BaseDimension { get; private set; }
-    Vector2 mPixelDimension;
     public Vector2 PixelDimension
     {
-        get { return mPixelDimension; }
+        get 
+        { 
+            Vector3 planeScale = PlaneObject.transform.localScale;
+            return new Vector2(planeScale.x*10, planeScale.y*10); //techincally, you need to do something like convert units
+        }
         set
         {
-            mPixelDimension = value;
-            PlaneObject.transform.localScale = new Vector3(BodyManager.convert_units(mPixelDimension.x) / 10.0f, 1, BodyManager.convert_units(mPixelDimension.y) / 10.0f);
+            PlaneObject.transform.localScale = new Vector3(BodyManager.convert_units(value.x) / 10.0f, 1, BodyManager.convert_units(value.y) / 10.0f);
         }
     }
 
@@ -32,7 +34,6 @@ public class ImageGameObjectUtility
         PlaneMaterial = new Material(ManagerManager.Manager.mReferences.mDefaultCharacterShader);
         PlaneObject.renderer.material = PlaneMaterial;
         set_new_texture(aTex);
-        PixelDimension = BaseDimension;
 
         PlaneObject.transform.rotation = Quaternion.AngleAxis(90, Vector3.right) * PlaneObject.transform.rotation;
         PlaneObject.transform.parent = ParentObject.transform;
