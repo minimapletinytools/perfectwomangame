@@ -22,7 +22,7 @@ public class DifficultyObject : FlatElementMultiBase
         for (int i = 0; i < 4; i++)
         {
             mImageElements[i] = new FlatElementImage(aTex, aDepth);
-            mElements.Add(new FlatElementMultiBase.ElementOffset(mImageElements[i], new Vector3(0, i * 40, 0)));
+            mElements.Add(new FlatElementMultiBase.ElementOffset(mImageElements[i], new Vector3(0, i * 47, 0)));
             mImageElements[i].PrimaryGameObject.transform.parent = PrimaryGameObject.transform;
             mNaughtyPositions[i] = (Random.insideUnitCircle.normalized * 3000);
 

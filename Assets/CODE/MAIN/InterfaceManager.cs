@@ -234,6 +234,18 @@ public class InterfaceManager : FakeMonoBehaviour {
         }
     }
 
+    public void set_question(int level)
+    {
+        if (level < mManager.mMenuReferences.questions.Length) 
+            mQuestion.mImage.set_new_texture(mManager.mMenuReferences.questions[level]);
+    }
+
+    public void set_choosing_percentages(float[] aPercentages)
+    {
+        for (int i = 0; i < 4; i++)
+            mBottomChoices[i].mMeter.Percentage = aPercentages[i]; 
+    }
+
     public void set_bottom_poses(ProGrading.Pose[] aPoses)
     {
         for (int i = 0; i < 4; i++)

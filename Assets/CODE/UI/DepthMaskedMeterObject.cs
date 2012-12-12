@@ -42,10 +42,13 @@ public class MeterImageObject : FlatElementBase
     public override void update_parameters(float aDeltaTime)
     {
         mCurrentPercentage = mCurrentPercentage * (1 - SoftInterpolation) + mPercentage * (SoftInterpolation);
-        SoftColor = (new Color(0.5f, 0, 0, 0.5f))*mCurrentPercentage + (new Color(0,0,0.5f,0.5f))*(1-mCurrentPercentage); //hack
+        SoftColor = (new Color(0.5f, 0, 0, 0.2f))*mCurrentPercentage + (new Color(0,0,0.5f,0.2f))*(1-mCurrentPercentage); //hack
         if (Style == FillStyle.DU)
         {
-            PrimaryGameObject.GetComponentInChildren<Renderer>().material.mainTextureScale = new Vector2(1f, mCurrentPercentage);
+            Material m = PrimaryGameObject.GetComponentInChildren<Renderer>().material;
+            m.mainTextureScale = new Vector2(1f, mCurrentPercentage);
+            //m.mainTextureOffset = new Vector2(0, mCurrentPercentage == 0 ? 0 : 1/mCurrentPercentage);
+            m.mainTextureOffset = new Vector2(0, 0);
             //float scaleX = Mathf.Cos(Time.time) * 0.5F + 1;
             //float scaleY = Mathf.Sin(Time.time) * 0.5F + 1;
             //PrimaryGameObject.GetComponentInChildren<Renderer>().material.mainTextureScale = new Vector2(scaleX, scaleY);
@@ -55,11 +58,13 @@ public class MeterImageObject : FlatElementBase
         }
         else
             throw new UnityException("Peter was too lazy to implement this fill style");
+        this.SoftInterpolation = 1;
         base.update_parameters(aDeltaTime);
+        
     }
     public override void set_position(Vector3 aPos)
     {
         if (Style == FillStyle.DU)
-            PrimaryGameObject.transform.position = aPos + new Vector3(0,-mPercentage*mImage.BaseDimension.y/2,0);
+            PrimaryGameObject.transform.position = aPos + new Vector3(0,-(1-mPercentage)*mImage.BaseDimension.y/2f,0);
     }
 }

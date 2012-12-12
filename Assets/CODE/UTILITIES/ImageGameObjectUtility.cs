@@ -31,6 +31,8 @@ public class ImageGameObjectUtility
     {
         ParentObject = new GameObject("genImageObjectParent");
         PlaneObject = GameObject.CreatePrimitive(PrimitiveType.Plane);
+        //PlaneObject = (GameObject)GameObject.Instantiate(ManagerManager.Manager.mReferences.mPlanePrefab);
+        GameObject.DestroyImmediate(PlaneObject.GetComponent<BoxCollider>());
         PlaneMaterial = new Material(ManagerManager.Manager.mReferences.mDefaultCharacterShader);
         PlaneObject.renderer.material = PlaneMaterial;
         set_new_texture(aTex);
