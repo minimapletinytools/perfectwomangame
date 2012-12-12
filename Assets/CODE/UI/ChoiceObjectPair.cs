@@ -6,6 +6,7 @@ public class ChoiceObjectPair : FlatElementMultiBase {
     DifficultyObject mDifficultyStars;
     DifficultyObject mDifficultyBalls;
     public FlatBodyObject mBody = null;
+    public MeterImageObject mMeter = null;
 
     float mSide = 45;
     float mRightBot = -80;
@@ -26,11 +27,15 @@ public class ChoiceObjectPair : FlatElementMultiBase {
         mSquare = new FlatElementImage(aLeftTex, aDepth);
         mDifficultyStars = new DifficultyObject(ManagerManager.Manager.mMenuReferences.perfectnessStar, aDepth);
         mDifficultyBalls = new DifficultyObject(ManagerManager.Manager.mMenuReferences.difficultyDot, aDepth);
-        mBody = new FlatBodyObject(aChar,aDepth+1);
+        mMeter = new MeterImageObject(aLeftTex, MeterImageObject.FillStyle.DU, aDepth + 1);
+        mMeter.Percentage = 0.5f;
+        mBody = new FlatBodyObject(aChar,aDepth+2);
         mBody.set_target_pose(aPose);
+        
         mElements.Add(new FlatElementMultiBase.ElementOffset(mSquare, new Vector3(mSide, 0, 0)));
         mElements.Add(new FlatElementMultiBase.ElementOffset(mDifficultyStars, new Vector3(-mSide, mRightBot, 0)));
         mElements.Add(new FlatElementMultiBase.ElementOffset(mDifficultyBalls, new Vector3(-mSide, mRightBot, 0)));
+        mElements.Add(new FlatElementMultiBase.ElementOffset(mMeter, new Vector3(mSide,0, 0)));
         mElements.Add(new FlatElementMultiBase.ElementOffset(mBody, new Vector3(mSide + 22, -5, 0)));
 
         PrimaryGameObject = create_primary_from_elements();

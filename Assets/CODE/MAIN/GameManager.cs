@@ -31,6 +31,8 @@ public class GameManager : FakeMonoBehaviour
     public const float LEVEL_TIME_TOTAL = 40;
     public const float SELECTION_THRESHOLD = 30;
     public const float CHOICE_TIME = 10;
+    public const float CHOOSING_PERCENTAGE_GROWTH_RATE = 0.3f;
+    public const float CHOOSING_PERCENTAGE_DECLINE_RATE = 1f;
 
     public Camera mCamera;
     public AudioSource mSource;
@@ -44,6 +46,10 @@ public class GameManager : FakeMonoBehaviour
     { get; private set; }
     public float CurrentGrade
     { get; private set; }
+
+    public float[] ChoosingPercentages
+    { get; private set; }
+
 
     public ProGrading.Pose CurrentPose
     { get; private set; }
@@ -129,6 +135,7 @@ public class GameManager : FakeMonoBehaviour
         for (int i = 0; i < 29; i++)
             mDifficulties[i] = 0;
         PastChoices = new int[8]{0,-1,-1,-1,-1,-1,-1,-1};
+        ChoosingPercentages = new float[4] { 0, 0, 0, 0 };
         
     }
     public override void Start()
@@ -233,9 +240,33 @@ public class GameManager : FakeMonoBehaviour
             }
             //Debug.Log(output);
             if (minGrade > SELECTION_THRESHOLD)
+            {
                 NextContendingChoice = get_default_choice(CurrentLevel);
-            else NextContendingChoice = minIndex;
-            mManager.mInterfaceManager.set_choice(NextContendingChoice);
+                //mManager.mInterfaceManager.set_choice(-1);
+                mManager.mInterfaceManager.set_choice(NextContendingChoice);
+            }
+            else
+            {
+                NextContendingChoice = minIndex;
+                mManager.mInterfaceManager.set_choice(NextContendingChoice);
+            }
+
+            for (int i = 0; i < 4; i++)
+            {
+                if (NextContendingChoice == i)
+                {
+                    ChoosingPercentages[i] = Mathf.Clamp01(ChoosingPercentages[i] + CHOOSING_PERCENTAGE_GROWTH_RATE * Time.deltaTime);
+                }
+                else
+                {
+                    ChoosingPercentages[i] = Mathf.Clamp01(ChoosingPercentages[i] - CHOOSING_PERCENTAGE_DECLINE_RATE * Time.deltaTime);
+                }
+                if (ChoosingPercentages[i] == 1)
+                {
+                    //you made a choice!!!
+                }
+            }
+
         }
     }
 

@@ -38,7 +38,7 @@ public class InterfaceManager : FakeMonoBehaviour {
     //blue bar elements
     ChoiceObjectPair[] mTopChoices = new ChoiceObjectPair[4];
     ChoiceObjectPair[] mBottomChoices = new ChoiceObjectPair[4];
-    FlatBodyObject mCurrentBody;
+    FlatBodyObject mCurrentBody = null;
     FlatElementImage mBigBadBox;
     FlatElementImage mQuestion;
 
@@ -93,7 +93,8 @@ public class InterfaceManager : FakeMonoBehaviour {
     public override void Update()
     {
         mFlatCamera.update(Time.deltaTime);
-        BodyManager.match_body_to_projection(mCurrentBody);
+        if(mCurrentBody != null)
+            BodyManager.match_body_to_projection(mCurrentBody);
         foreach (FlatElementBase e in mElement)
         {
             //e.mLocalColor = (new Color(Random.Range(0f, 1f), Random.Range(0f, 1f), Random.Range(0f, 1f)))*0.1f;
@@ -156,7 +157,6 @@ public class InterfaceManager : FakeMonoBehaviour {
         }
 
         mBigBadBox = new FlatElementImage(refs.bigBadBox, 4);
-        set_choice(0);
         mBigBadBox.HardPosition = mBigBadBox.SoftPosition;
         mQuestion = new FlatElementImage(refs.questions[0], 4);
         mQuestion.SoftPosition = mBlueBar.SoftPosition + new Vector3(0, 240, 0);
@@ -172,6 +172,8 @@ public class InterfaceManager : FakeMonoBehaviour {
         mCurrentBody = new FlatBodyObject(mMiniMan, 4);
         mCurrentBody.SoftColor = new Color(0.6f, 0.3f, 0.3f, 0.2f);
         mCurrentBody.HardPosition = random_position();
+
+        set_choice(-1);
 
 
         mElement.Add(mPinkBackground);
