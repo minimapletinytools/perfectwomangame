@@ -28,46 +28,18 @@ public class GameManager : FakeMonoBehaviour
         }
     }
 
+    //constants
     public const float LEVEL_TIME_TOTAL = 10;
     public const float SELECTION_THRESHOLD = 17;
-    //public const float CHOICE_TIME = 10; //irrelevent
     public const float CHOOSING_PERCENTAGE_GROWTH_RATE = 0.15f;
     public const float CHOOSING_PERCENTAGE_DECLINE_RATE = 1f;
 
+    //
     public Camera mCamera;
     public AudioSource mSource;
-    public int CurrentLevel
-    { get; private set; }
-    public int CurrentIndex
-    { get; private set; }
-    public float TotalScore
-    { get; private set; }
-    public float TimeRemaining
-    { get; private set; }
-    public float CurrentGrade
-    { get; private set; }
-    public bool IsLoading
-    { get; private set; }
+    public TimedEventHandler mEvents = new TimedEventHandler();
 
-    public float[] ChoosingPercentages
-    { get; private set; }
-
-
-    public ProGrading.Pose CurrentPose
-    { get; private set; }
-    public int NextContendingChoice
-    { get; private set; }
-
-    float mMinStartTime = 0;
-    public bool Started
-    { get; private set; }
-    public bool User
-    { get; private set; }
-
-    float[] mDifficulties = new float[29];
-    public int[] PastChoices
-    { get; private set; }
-
+    //pretend constants
     int[] mPerfectness = new int[29]{ 0, 
             0, 1, 2, 3, 
             3, 2, 1, 0, 
@@ -76,13 +48,50 @@ public class GameManager : FakeMonoBehaviour
             0, 1, 2, 3, 
             3, 2, 1, 0, 
             2, 1, 3, 0 };
+    string[] mLevelToAge = new string[8] { "0", "05", "16", "27", "34", "45", "60", "80" };
+    ProGrading.Pose[] mPossibleChoicePoses;
+    ProGrading.Pose[] mDifficultyTargetPoses = null;
 
-    ProGrading.Pose[] mPossiblePoses;
 
-    ProGrading.Pose[] mChoicePoses = new ProGrading.Pose[4]{null,null,null,null};
-    
-    public TimedEventHandler mEvents = new TimedEventHandler();
 
+
+    //basic gam estate variables
+    float mMinStartTime = 0;
+    public bool Started
+    { get; private set; }
+    public bool User
+    { get; private set; }
+
+
+    //specific game state variables
+    public int CurrentLevel
+    { get; private set; }
+    public int CurrentIndex
+    { get; private set; }
+    public float TotalScore
+    { get; private set; }
+    public float TimeRemaining
+    { get; private set; }
+    float[] mDifficulties = new float[29];
+    public int[] PastChoices
+    { get; private set; }
+
+    //local game state variabbles
+    public float[] ChoosingPercentages
+    { get; private set; }
+    public float CurrentGrade
+    { get; private set; }
+    public ProGrading.Pose CurrentPose
+    { get; private set; }
+    public int NextContendingChoice
+    { get; private set; }
+    ProGrading.Pose[] mChoicePoses = new ProGrading.Pose[4] { null, null, null, null };
+
+    //asset bundle loading nonsense
+    public bool IsLoading
+    { get; private set; }
+    public AssetBundle CurrentAssetBundle
+    { get; private set; }
 
 
     //choice and difficulty accessors
@@ -127,16 +136,14 @@ public class GameManager : FakeMonoBehaviour
     }
 
 
-    void reset_choosing_percentages()
-    {
-        ChoosingPercentages = new float[4] { 0, 0, 0, 0 };
-    }
+    
     public GameManager(ManagerManager aManager)
         : base(aManager) 
     {
         CurrentPose = null;
         CurrentLevel = -1;
         IsLoading = false;
+        CurrentAssetBundle = null;
         NextContendingChoice = 0; //this means fetus
         TotalScore = 0;
         TimeRemaining = LEVEL_TIME_TOTAL;
@@ -153,15 +160,16 @@ public class GameManager : FakeMonoBehaviour
         mManager.mEventManager.character_changed_event += character_changed_listener;
 
         //set just the background
+        /*
         GameObject dummyChar = (GameObject)GameObject.Instantiate(mManager.mReferences.mCharacters[0]);
         mManager.mBackgroundManager.set_background(dummyChar.GetComponent<CharacterTextureBehaviour>());
-        GameObject.Destroy(dummyChar);
+        GameObject.Destroy(dummyChar);*/
 
-        ProGrading.Pose[] mPossiblePoses = new ProGrading.Pose[mManager.mReferences.mPossiblePoses.Length];
-        for (int i = 0; i < mPossiblePoses.Length; i++)
-        { mPossiblePoses[i] = ProGrading.read_pose(mManager.mReferences.mPossiblePoses[i]); }
+        mPossibleChoicePoses = new ProGrading.Pose[mManager.mReferences.mPossiblePoses.Length];
+        for (int i = 0; i < mPossibleChoicePoses.Length; i++)
+        { mPossibleChoicePoses[i] = ProGrading.read_pose(mManager.mReferences.mPossiblePoses[i]); }
 
-        mManager.mAssetLoader.load_character("0.unity3d");
+        mManager.mAssetLoader.load_poses("POSES");
 
     }
     public override void Update()
@@ -222,7 +230,7 @@ public class GameManager : FakeMonoBehaviour
         
     }
 
-
+    //used by update routine
     void pose_grading()
     {
         if (CurrentPose != null && mManager.mTransparentBodyManager.mFlat.mTargetPose != null)
@@ -232,7 +240,6 @@ public class GameManager : FakeMonoBehaviour
         }
         TotalScore += Time.deltaTime * ProGrading.grade_to_perfect(CurrentGrade) * 10f;
     }
-
     void choice_grading()
     {
         if (CurrentPose != null)
@@ -285,7 +292,6 @@ public class GameManager : FakeMonoBehaviour
             mManager.mInterfaceManager.set_choosing_percentages(ChoosingPercentages);
         }
     }
-
     void adjust_difficulty()
     {
         for (int i = 0; i < 29; i++)
@@ -306,32 +312,47 @@ public class GameManager : FakeMonoBehaviour
         }
     }
 
-    void scene_loaded_callback(CharacterTextureBehaviour aChar)
+
+    string construct_bundle_name(int level, int index)
+    {
+        return level + "-" + mLevelToAge[index];
+    }
+    void advance_scene(float aSceneTime)
     {
         CurrentLevel++;
         PastChoices[CurrentLevel] = NextContendingChoice;
         CurrentIndex = get_choice_index(NextContendingChoice, CurrentLevel);
+        TimeRemaining = aSceneTime;
+        IsLoading = true;
+        mManager.mAssetLoader.load_character(construct_bundle_name(CurrentLevel,CurrentIndex));
+        //TODO loading bar
+    }
 
+    //used by advance_scene
+    public void scene_loaded_callback(AssetBundle aBundle, string aBundleName)
+    {
 
-        if (NextContendingChoice == -1)
-        {
-            //TODO you lose??
-        }
-        else
-        {
-            start_character(CurrentIndex);
+        GameObject pf = (GameObject)aBundle.Load(aBundleName, typeof(GameObject));
+        Debug.Log("instantiating " + aBundleName + " " + pf);
+        GameObject instant = (GameObject)GameObject.Instantiate(pf);
+        start_character(instant.GetComponent<CharacterTextureBehaviour>(),CurrentIndex);
+        GameObject.Destroy(instant);
+
+        if (CurrentAssetBundle != null)
+            CurrentAssetBundle.Unload(true);
+        CurrentAssetBundle = aBundle;
             
-            //mEvents.add_event((new GameEvents.FocusCameraOnElementEvent(mManager.mInterfaceManager.mFlatCamera, mManager.mInterfaceManager.mBlueBar)).get_event(), Mathf.Clamp(TimeRemaining - CHOICE_TIME,0,Mathf.Infinity));
-            mEvents.add_event((new GameEvents.FocusCameraOnElementEvent(mManager.mInterfaceManager.mFlatCamera, mManager.mInterfaceManager.mBlueBar)).get_event(), Mathf.Clamp(TimeRemaining, 0, Mathf.Infinity));
-            //mEvents.add_event((new GameEvents.ResetElementScaleEvent(mManager.mInterfaceManager.mBlueBar)).get_event(), TimeRemaining);
+        //mEvents.add_event((new GameEvents.FocusCameraOnElementEvent(mManager.mInterfaceManager.mFlatCamera, mManager.mInterfaceManager.mBlueBar)).get_event(), Mathf.Clamp(TimeRemaining - CHOICE_TIME,0,Mathf.Infinity));
+        mEvents.add_event((new GameEvents.FocusCameraOnElementEvent(mManager.mInterfaceManager.mFlatCamera, mManager.mInterfaceManager.mBlueBar)).get_event(), Mathf.Clamp(TimeRemaining, 0, Mathf.Infinity));
+        //mEvents.add_event((new GameEvents.ResetElementScaleEvent(mManager.mInterfaceManager.mBlueBar)).get_event(), TimeRemaining);
 
-            //figure out next poses
-            NextContendingChoice = get_default_choice(CurrentLevel);
-            mChoicePoses = get_poses(CurrentLevel);
-            mManager.mInterfaceManager.set_choice_difficulties();
-            mManager.mInterfaceManager.set_question(CurrentLevel);
-            mManager.mInterfaceManager.set_bottom_poses(mChoicePoses);
-        }
+        //figure out next poses
+        NextContendingChoice = get_default_choice(CurrentLevel);
+        mChoicePoses = get_poses(CurrentLevel);
+        mManager.mInterfaceManager.set_choice_difficulties();
+        mManager.mInterfaceManager.set_question(CurrentLevel);
+        mManager.mInterfaceManager.set_bottom_poses(mChoicePoses);
+
 
         //reset the interface camera
         mEvents.add_event((new GameEvents.ResetElementScaleEvent(mManager.mInterfaceManager.mBlueBar)).get_event(), 0);
@@ -339,35 +360,29 @@ public class GameManager : FakeMonoBehaviour
         //reset choosing percentages
         reset_choosing_percentages();
         mManager.mInterfaceManager.set_choice(-1);
-    }
 
-    void advance_scene(float aSceneTime)
-    {
-        CurrentLevel++;
-        PastChoices[CurrentLevel] = NextContendingChoice;
-        CurrentIndex = get_choice_index(NextContendingChoice, CurrentLevel);
-        TimeRemaining = aSceneTime;
-        mManager.mAssetLoader.load_character(CurrentLevel + "-" + CurrentIndex + ".unity3d");
-        //TODO loading bar
+        IsLoading = false;
     }
-    void start_character(int index)
+    void reset_choosing_percentages()
     {
-        GameObject demoChar = (GameObject)GameObject.Instantiate(mManager.mReferences.mCharacters[index]);
-        mManager.mEventManager.character_changed_event(demoChar.GetComponent<CharacterTextureBehaviour>());
-        mManager.mEventManager.character_setup_event(demoChar.GetComponent<CharacterTextureBehaviour>());
-        GameObject.Destroy(demoChar);
+        ChoosingPercentages = new float[4] { 0, 0, 0, 0 };
+    }
+    void start_character(CharacterTextureBehaviour container,int index)
+    {
+        mManager.mEventManager.character_changed_event(container);
+        mManager.mEventManager.character_setup_event(container);
 
-        //set transparent target pose
-        //TODO needs to read based on previous choice
-        if (mChoicePoses[NextContendingChoice] != null)
+        if (get_pose_at_index(index, get_difficulty(index)) != null)
         {
-            mManager.mTransparentBodyManager.set_target_pose(mChoicePoses[NextContendingChoice]);
+            mManager.mTransparentBodyManager.set_target_pose(get_pose_at_index(index, get_difficulty(index)));
             mManager.mTransparentBodyManager.mFlat.SoftColor = new Color(0.5f, 0.5f, 0.5f, 0.2f);
         }
-        else
+        else if (CurrentLevel == 0)
         {
             mManager.mTransparentBodyManager.mFlat.SoftColor = new Color(0.5f, 0.5f, 0.5f, 0.0f);
         }
+        else
+            throw new UnityException("Missing Pose for index " + index + " difficulty " + get_difficulty(index));
     }
     public void character_changed_listener(CharacterTextureBehaviour aCharacter)
     {
@@ -376,22 +391,63 @@ public class GameManager : FakeMonoBehaviour
         mSource.Play();
     }
 
+
+
+
+    //pose related
     ProGrading.Pose[] get_poses(int level)
     {
         ProGrading.Pose[] r = new ProGrading.Pose[4];
-        for(int i = 0; i < 4; i++)
+        for (int i = 0; i < 4; i++)
         {
-            if(mManager.mReferences.mCharacters[get_choice_index(i,level+1)] != null)
-            {
-                GameObject demoChar = (GameObject)GameObject.Instantiate(mManager.mReferences.mCharacters[get_choice_index(i,level+1)]);
-                r[i] = ProGrading.read_pose(demoChar.GetComponent<CharacterTextureBehaviour>().properPoses[get_difficulty(get_choice_index(i,level+1))]);
-                GameObject.Destroy(demoChar);
-            }
-            else r[i] = null;
+            int index = get_choice_index(i, level + 1);
+            r[i] = mDifficultyTargetPoses[index * 4 + get_difficulty(index)];
         }
         return r;
     }
-
+    ProGrading.Pose get_pose_at_index(int index, int difficulty)
+    {
+        if (mDifficultyTargetPoses == null)
+            return null;
+        if (index == 0)
+            return null; //fetus has no target pose although there is a space for it...
+        return mDifficultyTargetPoses[index*4 + difficulty - 3];
+    }
+    public void pose_bundle_loaded_callback(AssetBundle aBundle)
+    {
+        ProGrading.Pose defaultPose = mPossibleChoicePoses[0];
+        mDifficultyTargetPoses = new ProGrading.Pose[28 * 4 + 1];
+        for (int i = 0; i < 28 * 4 + 1; i++)
+            mDifficultyTargetPoses[i] = null;
+        for (int i = 0; i < 28; i++)
+        {
+            string bundle = construct_bundle_name(get_level_from_choice_index(i + 1), i % 4);
+            if (mManager.mAssetLoader.does_bundle_exist(bundle))
+            {
+                ProGrading.Pose firstNotNullPose = null;
+                for (int j = 0; j < 4; j++)
+                {
+                    TextAsset poseText = (TextAsset)aBundle.Load(bundle + "-" + j, typeof(TextAsset));
+                    if (poseText != null)
+                    {
+                        mDifficultyTargetPoses[1 + 4 * i + j] = ProGrading.read_pose(poseText);
+                        if (firstNotNullPose == null)
+                            firstNotNullPose = mDifficultyTargetPoses[1 + 4 * i + j];
+                    }
+                }
+                for (int j = 0; j < 4; j++)
+                {
+                    if (mDifficultyTargetPoses[1 + 4 * i + j] == null)
+                    {
+                        if (firstNotNullPose == null)
+                            mDifficultyTargetPoses[1 + 4 * i + j] = defaultPose;
+                        else
+                            mDifficultyTargetPoses[1 + 4 * i + j] = firstNotNullPose;
+                    }
+                }
+            }
+        }
+    }
 
     //move this stuff elsewhere poo poo
     public static void Shuffle<T>(T[] array)
@@ -409,9 +465,9 @@ public class GameManager : FakeMonoBehaviour
     ProGrading.Pose[] get_random_possible_poses()
     {
         ProGrading.Pose[] r = new ProGrading.Pose[4];
-        Shuffle<ProGrading.Pose>(mPossiblePoses);
+        Shuffle<ProGrading.Pose>(mPossibleChoicePoses);
         for (int i = 0; i < 4; i++)
-            r[i] = mPossiblePoses[i];
+            r[i] = mPossibleChoicePoses[i];
         return r;
     }
 }

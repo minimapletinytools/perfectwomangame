@@ -1,66 +1,73 @@
 using UnityEngine;
-using System.Collections;
+using System.Collections.Generic;
 
 public class AssetBundleLoader : FakeMonoBehaviour
 {
 
 
-    public AssetBundleCreateRequest ActiveRequest
-    {
-        get;
-        private set;
-    }
+    public delegate void AssetBundleLoadedDelegate(AssetBundle bundle);
 
-    public WWW ActiveWWWRequest
-    {
-        get;
-        private set;
-    }
+    System.Collections.Generic.Dictionary<WWW, AssetBundleLoadedDelegate> mRequestLists = new System.Collections.Generic.Dictionary<WWW, AssetBundleLoadedDelegate>();
+
+
+
+
     public AssetBundleLoader(ManagerManager aManager)
         : base(aManager) 
     {
-        ActiveRequest = null;
-        ActiveWWWRequest = null;
     }
 
     public override void Update()
     {
-        if (ActiveRequest != null)
+
+        List<WWW> removal = new System.Collections.Generic.List<WWW>();
+        foreach (KeyValuePair<WWW,AssetBundleLoadedDelegate> e in mRequestLists)
         {
-            if (ActiveRequest.isDone)
+            if (e.Key.isDone)
             {
-                GameObject pf = (GameObject)ActiveRequest.assetBundle.Load("0",typeof(GameObject));
-                Debug.Log("trying to instatiate " + pf);
-                GameObject instant = (GameObject)GameObject.Instantiate(pf);
+                removal.Add(e.Key);
+                e.Value(e.Key.assetBundle);
             }
         }
-
-        if (ActiveWWWRequest != null)
-        {
-        }
-
+        foreach (WWW e in removal)
+            mRequestLists.Remove(e);
         
     }
 
+    public bool does_bundle_exist(string aBundleName)
+    {
+        string filename = Application.dataPath + "/Resources/" + aBundleName + ".unity3d";
+        return System.IO.File.Exists(filename);
+    }
+
+
+    public class CharacterBundleLoadedCallback
+    {
+        string BundleName { get; set; }
+        public CharacterBundleLoadedCallback(string aBundleName)
+        {
+            BundleName = aBundleName;
+        }
+        public void call(AssetBundle aBundle)
+        {
+            ManagerManager.Manager.mGameManager.scene_loaded_callback(aBundle, BundleName);
+        }
+    }
     //public System.Collections.IEnumerable load_character(string aChar)
     public void load_character(string aChar)
     {
-
-        Debug.Log("wtf");
-        string filename = "file://" + Application.dataPath + "Resources/" + aChar;
+        string filename = "file://" + Application.dataPath + "/Resources/" + aChar + ".unity3d";
         Debug.Log("loading from " + filename);
-        ActiveWWWRequest = new WWW(filename);
-        
-        TextAsset fuck = (TextAsset)Resources.Load("0", typeof(TextAsset));
-        ActiveRequest = AssetBundle.CreateFromMemory(fuck.bytes);
+        mRequestLists.Add(new WWW(filename), (new CharacterBundleLoadedCallback(aChar)).call);
+    }
 
-        /*
-        AssetBundle character = req.assetBundle;
-        Debug.Log(character);
-        GameObject pf = (GameObject)character.Load("0/0", typeof(GameObject));
-        Debug.Log(pf);
-        pf = (GameObject)character.Load("0", typeof(GameObject));
-        Debug.Log(pf);
-        throw new UnityException("poo");*/
+
+    public void load_poses(string aAssetBundle)
+    {
+        string filename = "file://" + Application.dataPath + "/Resources/" + aAssetBundle + ".unity3d";
+        Debug.Log("loading from " + filename);
+        WWW request = new WWW(filename);
+        request.threadPriority = ThreadPriority.High;
+        mRequestLists.Add(request, ManagerManager.Manager.mGameManager.pose_bundle_loaded_callback);
     }
 }
