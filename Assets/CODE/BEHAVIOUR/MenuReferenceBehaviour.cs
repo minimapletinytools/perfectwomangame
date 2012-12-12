@@ -2,7 +2,7 @@ using UnityEngine;
 using System.Collections;
 
 public class MenuReferenceBehaviour : MonoBehaviour {
-
+    public AssetBundle poo;
     public GameObject miniMan;
     public TextAsset cheapPose;
 

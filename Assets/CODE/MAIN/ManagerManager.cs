@@ -33,7 +33,9 @@ public class ManagerManager : MonoBehaviour{
     public BackgroundManager mBackgroundManager;
     public CameraManager mCameraManager;
     public ParticleManager mParticleManager;
+    public AssetBundleLoader mAssetLoader;
     public GameManager mGameManager;
+    
 
     public PrefabReferenceBehaviour mReferences;
     public MenuReferenceBehaviour mMenuReferences;
@@ -55,7 +57,7 @@ public class ManagerManager : MonoBehaviour{
         mBackgroundManager = new BackgroundManager(this);
         mCameraManager = new CameraManager(this);
         mParticleManager = new ParticleManager(this);
-
+        mAssetLoader = new AssetBundleLoader(this);
         mGameManager = new GameManager(this);
 
 		if(mStartDelegates != null) 

@@ -46,6 +46,8 @@ public class GameManager : FakeMonoBehaviour
     { get; private set; }
     public float CurrentGrade
     { get; private set; }
+    public bool IsLoading
+    { get; private set; }
 
     public float[] ChoosingPercentages
     { get; private set; }
@@ -79,8 +81,9 @@ public class GameManager : FakeMonoBehaviour
 
     ProGrading.Pose[] mChoicePoses = new ProGrading.Pose[4]{null,null,null,null};
     
-
     public TimedEventHandler mEvents = new TimedEventHandler();
+
+
 
     //choice and difficulty accessors
     public bool does_choice_exist(int index)
@@ -133,6 +136,7 @@ public class GameManager : FakeMonoBehaviour
     {
         CurrentPose = null;
         CurrentLevel = -1;
+        IsLoading = false;
         NextContendingChoice = 0; //this means fetus
         TotalScore = 0;
         TimeRemaining = LEVEL_TIME_TOTAL;
@@ -157,6 +161,8 @@ public class GameManager : FakeMonoBehaviour
         for (int i = 0; i < mPossiblePoses.Length; i++)
         { mPossiblePoses[i] = ProGrading.read_pose(mManager.mReferences.mPossiblePoses[i]); }
 
+        mManager.mAssetLoader.load_character("0.unity3d");
+
     }
     public override void Update()
     {
@@ -174,6 +180,7 @@ public class GameManager : FakeMonoBehaviour
 
         if (!Started && User && Time.timeSinceLevelLoad > mMinStartTime)
         {   
+
             advance_scene(5);
             //maybe less time for fetus???
             Started = true;
@@ -181,35 +188,40 @@ public class GameManager : FakeMonoBehaviour
 
         if (Started)
         {
-            TimeRemaining -= Time.deltaTime;
+            if (!IsLoading)
+            {
+                TimeRemaining -= Time.deltaTime;
 
-            if (User)
-            {
-                CurrentPose = ProGrading.snap_pose(mManager);
-            }
+                if (User)
+                {
+                    CurrentPose = ProGrading.snap_pose(mManager);
+                }
 
-            if (CurrentLevel != 0)
-            {
-                pose_grading();
-                mManager.mCameraManager.set_camera_effects(ProGrading.grade_to_perfect(CurrentGrade));
-                mManager.mInterfaceManager.set_perfect_time(ProGrading.grade_to_perfect(CurrentGrade), (LEVEL_TIME_TOTAL - TimeRemaining) / LEVEL_TIME_TOTAL);
-                adjust_difficulty();
-            } 
-            else 
-            {
-                mManager.mCameraManager.set_camera_effects(0.3f);
-                mManager.mInterfaceManager.set_perfect_time(0, (LEVEL_TIME_TOTAL - TimeRemaining) / LEVEL_TIME_TOTAL);
-            }
+                if (CurrentLevel != 0)
+                {
+                    pose_grading();
+                    mManager.mCameraManager.set_camera_effects(ProGrading.grade_to_perfect(CurrentGrade));
+                    mManager.mInterfaceManager.set_perfect_time(ProGrading.grade_to_perfect(CurrentGrade), (LEVEL_TIME_TOTAL - TimeRemaining) / LEVEL_TIME_TOTAL);
+                    adjust_difficulty();
+                }
+                else
+                {
+                    mManager.mCameraManager.set_camera_effects(0.3f);
+                    mManager.mInterfaceManager.set_perfect_time(0, (LEVEL_TIME_TOTAL - TimeRemaining) / LEVEL_TIME_TOTAL);
+                }
 
-            //goto next scene
-            if (TimeRemaining < 0)
-            {
-                TimeRemaining = 0;
-                choice_grading();
-                //advance_scene(LEVEL_TIME_TOTAL);
+                //goto next scene
+                if (TimeRemaining < 0)
+                {
+                    TimeRemaining = 0;
+                    choice_grading();
+                    //advance_scene(LEVEL_TIME_TOTAL);
+                }
             }
         }
+        
     }
+
 
     void pose_grading()
     {
@@ -294,13 +306,12 @@ public class GameManager : FakeMonoBehaviour
         }
     }
 
-    void advance_scene(float aSceneTime)
+    void scene_loaded_callback(CharacterTextureBehaviour aChar)
     {
-        
         CurrentLevel++;
         PastChoices[CurrentLevel] = NextContendingChoice;
         CurrentIndex = get_choice_index(NextContendingChoice, CurrentLevel);
-        
+
 
         if (NextContendingChoice == -1)
         {
@@ -309,7 +320,7 @@ public class GameManager : FakeMonoBehaviour
         else
         {
             start_character(CurrentIndex);
-            TimeRemaining = aSceneTime;
+            
             //mEvents.add_event((new GameEvents.FocusCameraOnElementEvent(mManager.mInterfaceManager.mFlatCamera, mManager.mInterfaceManager.mBlueBar)).get_event(), Mathf.Clamp(TimeRemaining - CHOICE_TIME,0,Mathf.Infinity));
             mEvents.add_event((new GameEvents.FocusCameraOnElementEvent(mManager.mInterfaceManager.mFlatCamera, mManager.mInterfaceManager.mBlueBar)).get_event(), Mathf.Clamp(TimeRemaining, 0, Mathf.Infinity));
             //mEvents.add_event((new GameEvents.ResetElementScaleEvent(mManager.mInterfaceManager.mBlueBar)).get_event(), TimeRemaining);
@@ -328,7 +339,16 @@ public class GameManager : FakeMonoBehaviour
         //reset choosing percentages
         reset_choosing_percentages();
         mManager.mInterfaceManager.set_choice(-1);
+    }
 
+    void advance_scene(float aSceneTime)
+    {
+        CurrentLevel++;
+        PastChoices[CurrentLevel] = NextContendingChoice;
+        CurrentIndex = get_choice_index(NextContendingChoice, CurrentLevel);
+        TimeRemaining = aSceneTime;
+        mManager.mAssetLoader.load_character(CurrentLevel + "-" + CurrentIndex + ".unity3d");
+        //TODO loading bar
     }
     void start_character(int index)
     {
