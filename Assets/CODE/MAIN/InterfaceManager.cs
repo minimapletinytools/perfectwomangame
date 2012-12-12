@@ -38,6 +38,7 @@ public class InterfaceManager : FakeMonoBehaviour {
     //blue bar elements
     ChoiceObjectPair[] mTopChoices = new ChoiceObjectPair[4];
     ChoiceObjectPair[] mBottomChoices = new ChoiceObjectPair[4];
+    FlatBodyObject mCurrentBody;
     FlatElementImage mBigBadBox;
     FlatElementImage mQuestion;
 
@@ -92,14 +93,14 @@ public class InterfaceManager : FakeMonoBehaviour {
     public override void Update()
     {
         mFlatCamera.update(Time.deltaTime);
-
+        BodyManager.match_body_to_projection(mCurrentBody);
         foreach (FlatElementBase e in mElement)
         {
             //e.mLocalColor = (new Color(Random.Range(0f, 1f), Random.Range(0f, 1f), Random.Range(0f, 1f)))*0.1f;
             e.update(Time.deltaTime);            
         }
     }
-
+    
     public Vector3 random_position()
     {
         //UGG piece of junk...
@@ -168,6 +169,9 @@ public class InterfaceManager : FakeMonoBehaviour {
             mChoices[i].SoftPosition = generic_offset(i, 0);
         }
 
+        mCurrentBody = new FlatBodyObject(mMiniMan, 4);
+        mCurrentBody.SoftColor = new Color(0.6f, 0.3f, 0.3f, 0.2f);
+        mCurrentBody.HardPosition = random_position();
 
 
         mElement.Add(mPinkBackground);
@@ -187,6 +191,7 @@ public class InterfaceManager : FakeMonoBehaviour {
             mElement.Add(mChoices[i]);
         mElement.Add(mBigBadBox);
         mElement.Add(mQuestion);
+        mElement.Add(mCurrentBody);
 
 
         mIsSetup = true;
@@ -196,9 +201,15 @@ public class InterfaceManager : FakeMonoBehaviour {
     public void set_choice(int index)
     {
         if (index == -1)
+        {
             mBigBadBox.SoftPosition = new Vector3(-3000, 400, 0);
-        else 
+            mCurrentBody.SoftPosition = new Vector3(-3000, 400, 0);
+        }
+        else
+        {
             mBigBadBox.SoftPosition = mBlueBar.SoftPosition + choice_offset(0, index, true) + new Vector3(48, 0, 0);
+            mCurrentBody.SoftPosition = mBottomChoices[index].mBody.SoftPosition;
+        }
     }
 
     public void set_choice_difficulties()

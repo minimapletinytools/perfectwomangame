@@ -1,5 +1,4 @@
 ::TODO::
--
 DONE-fix relative positioning with flat camera
 DONE-seperate out body manager poo poo
 DONE-fix depth and sun shaft for character, can you do it????

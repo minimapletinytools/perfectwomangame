@@ -69,7 +69,10 @@ public class GameManager : FakeMonoBehaviour
             3, 2, 1, 0, 
             2, 1, 3, 0 };
 
+    ProGrading.Pose[] mPossiblePoses;
+
     ProGrading.Pose[] mChoicePoses = new ProGrading.Pose[4]{null,null,null,null};
+    
 
     public TimedEventHandler mEvents = new TimedEventHandler();
 
@@ -138,6 +141,11 @@ public class GameManager : FakeMonoBehaviour
         GameObject dummyChar = (GameObject)GameObject.Instantiate(mManager.mReferences.mCharacters[0]);
         mManager.mBackgroundManager.set_background(dummyChar.GetComponent<CharacterTextureBehaviour>());
         GameObject.Destroy(dummyChar);
+
+        ProGrading.Pose[] mPossiblePoses = new ProGrading.Pose[mManager.mReferences.mPossiblePoses.Length];
+        for (int i = 0; i < mPossiblePoses.Length; i++)
+        { mPossiblePoses[i] = ProGrading.read_pose(mManager.mReferences.mPossiblePoses[i]); }
+
     }
     public override void Update()
     {
@@ -164,16 +172,22 @@ public class GameManager : FakeMonoBehaviour
         {
             TimeRemaining -= Time.deltaTime;
 
+            if (User)
+            {
+                CurrentPose = ProGrading.snap_pose(mManager);
+            }
+
             if (CurrentLevel != 0)
             {
                 pose_grading();
+                choice_grading();
                 mManager.mCameraManager.set_camera_effects(ProGrading.grade_to_perfect(CurrentGrade));
                 mManager.mInterfaceManager.set_perfect_time(ProGrading.grade_to_perfect(CurrentGrade), (LEVEL_TIME_TOTAL - TimeRemaining) / LEVEL_TIME_TOTAL);
-
                 adjust_difficulty();
             } 
             else 
             {
+                choice_grading();
                 mManager.mCameraManager.set_camera_effects(0.3f);
                 mManager.mInterfaceManager.set_perfect_time(0, (LEVEL_TIME_TOTAL - TimeRemaining) / LEVEL_TIME_TOTAL);
             }
@@ -188,19 +202,16 @@ public class GameManager : FakeMonoBehaviour
 
     void pose_grading()
     {
-
-        if (User)
-        {
-            CurrentPose = ProGrading.snap_pose(mManager);
-            //Debug.Log("waist angle " + mManager.mZigManager.Joints[ZigJointId.Waist].Rotation.flat_rotation());
-        }
         if (CurrentPose != null && mManager.mTransparentBodyManager.mFlat.mTargetPose != null)
         {
             CurrentGrade = ProGrading.grade_pose(CurrentPose, mManager.mTransparentBodyManager.mFlat.mTargetPose);
             mManager.mInterfaceManager.mGrade = CurrentGrade;
         }
         TotalScore += Time.deltaTime * ProGrading.grade_to_perfect(CurrentGrade) * 10f;
+    }
 
+    void choice_grading()
+    {
         if (CurrentPose != null)
         {
             //grade for next choice
@@ -315,7 +326,29 @@ public class GameManager : FakeMonoBehaviour
             }
             else r[i] = null;
         }
+        return r;
+    }
 
+
+    //move this stuff elsewhere poo poo
+    public static void Shuffle<T>(T[] array)
+    {
+        for (int i = array.Length; i > 1; i--)
+        {
+            // Pick random element to swap.
+            int j = Random.Range(0,i-1); // 0 <= j <= i-1
+            // Swap.
+            T tmp = array[j];
+            array[j] = array[i - 1];
+            array[i - 1] = tmp;
+        }
+    }
+    ProGrading.Pose[] get_random_possible_poses()
+    {
+        ProGrading.Pose[] r = new ProGrading.Pose[4];
+        Shuffle<ProGrading.Pose>(mPossiblePoses);
+        for (int i = 0; i < 4; i++)
+            r[i] = mPossiblePoses[i];
         return r;
     }
 }

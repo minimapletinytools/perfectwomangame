@@ -19,7 +19,7 @@ public class FlatElementAnimations {
         aElement.mLocalColor = aForce * (new Color(Random.Range(-1f, 1f), Random.Range(-1f, 1f), Random.Range(-1f, 1f)));
     }
     
-    public float One(float aTime) { return 1; }
+    public static float One(float aTime) { return 1; }
 
     public class GenericAnimation
     {
@@ -32,6 +32,8 @@ public class FlatElementAnimations {
             mTime = new QuTimer(0, aTime);
             mForce = aForce;
             mChange = aChange;
+            mFunction = aFunction;
+            
         }
         public bool animate(FlatElementBase aElement, float aDeltaTime)
         {
@@ -41,15 +43,15 @@ public class FlatElementAnimations {
         }
     }
 
-    public ElementAnimationDelegate position_jiggle_delegate(float aTime, float aForce)
+    public static ElementAnimationDelegate position_jiggle_delegate(float aTime, float aForce)
     {
         return (new GenericAnimation(aTime, aForce, SetPosition, One)).animate;
     }
-    public ElementAnimationDelegate color_jiggle_delegate(float aTime, float aForce)
+    public static ElementAnimationDelegate color_jiggle_delegate(float aTime, float aForce)
     {
         return (new GenericAnimation(aTime, aForce, SetColor, One)).animate;
     }
-    public ElementAnimationDelegate rotation_jiggle_delegate(float aTime, float aForce)
+    public static ElementAnimationDelegate rotation_jiggle_delegate(float aTime, float aForce)
     {
         return (new GenericAnimation(aTime, aForce, SetRotation, One)).animate;
     }

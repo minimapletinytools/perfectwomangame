@@ -5,7 +5,7 @@ public class ChoiceObjectPair : FlatElementMultiBase {
     FlatElementImage mSquare;
     DifficultyObject mDifficultyStars;
     DifficultyObject mDifficultyBalls;
-    FlatBodyObject mBody = null;
+    public FlatBodyObject mBody = null;
 
     float mSide = 45;
     float mRightBot = -80;
@@ -31,7 +31,7 @@ public class ChoiceObjectPair : FlatElementMultiBase {
         mElements.Add(new FlatElementMultiBase.ElementOffset(mSquare, new Vector3(mSide, 0, 0)));
         mElements.Add(new FlatElementMultiBase.ElementOffset(mDifficultyStars, new Vector3(-mSide, mRightBot, 0)));
         mElements.Add(new FlatElementMultiBase.ElementOffset(mDifficultyBalls, new Vector3(-mSide, mRightBot, 0)));
-        mElements.Add(new FlatElementMultiBase.ElementOffset(mBody, new Vector3(mSide + 15, -5, 0)));
+        mElements.Add(new FlatElementMultiBase.ElementOffset(mBody, new Vector3(mSide + 22, -5, 0)));
 
         PrimaryGameObject = create_primary_from_elements();
     }

@@ -12,5 +12,6 @@ public class FlatElementMultiImage : FlatElementMultiBase
     {
         FlatElementImage image = new FlatElementImage(aTex, Depth + mElements.Count);
         mElements.Add(new ElementOffset(image, aOffset));
+        SoftPosition = SoftPosition;
     }
 }

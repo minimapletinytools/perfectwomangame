@@ -20,7 +20,7 @@ public class BackgroundManager  : FakeMonoBehaviour
         mBackground = new FlatElementImage(null, 0);
         mBackground.HardPosition = Vector3.zero;
 
-        mBackgroundElements = new FlatElementMultiImage(1);
+        mBackgroundElements = new FlatElementMultiImage(5);
         mForegroundElements = new FlatElementMultiImage(100);
 	}
 	
@@ -67,8 +67,14 @@ public class BackgroundManager  : FakeMonoBehaviour
         for (int i = 0; i < aCharacter.backgroundElements.Length; i++)
         {
             mBackgroundElements.add_image(aCharacter.backgroundElements[i], FlatBodyObject.find_first_color(new Color(255, 0, 5 * i / (float)255), aCharacter.elementPositoner));
+            mBackgroundElements.mElements[mBackgroundElements.mElements.Count - 1].Element.Events.add_event(FlatElementAnimations.position_jiggle_delegate(Mathf.Infinity, 5),0);
+        }
+        for (int i = 0; i < aCharacter.foregroundElements.Length; i++)
+        {
+            mForegroundElements.add_image(aCharacter.foregroundElements[i], FlatBodyObject.find_first_color(new Color(255, 0, 5 * i / (float)255), aCharacter.elementPositoner));
         }
 
+        set_background_layer(mBackgroundLayer);
         //resize the camera
         foreach (Camera c in mManager.mCameraManager.AllCameras)
             resize_camera_against_texture(c, aCharacter.background1);

@@ -6,22 +6,26 @@ public class FlatElementBase {
     
     public class TimedEventHandler
     {
-        LinkedList<KeyValuePair<QuTimer, FlatElementAnimations.ElementAnimationDelegate>> mTimedEvents = new LinkedList<KeyValuePair<QuTimer, FlatElementAnimations.ElementAnimationDelegate>>();
+        Dictionary<QuTimer, FlatElementAnimations.ElementAnimationDelegate> mTimedEvents = new Dictionary<QuTimer, FlatElementAnimations.ElementAnimationDelegate>();
         public void update(float aDeltaTime, FlatElementBase aElement)
         {
+            LinkedList<KeyValuePair<QuTimer, FlatElementAnimations.ElementAnimationDelegate>> removal = new LinkedList<KeyValuePair<QuTimer, FlatElementAnimations.ElementAnimationDelegate>>();
             foreach (KeyValuePair<QuTimer, FlatElementAnimations.ElementAnimationDelegate> e in mTimedEvents)
             {
                 e.Key.update(aDeltaTime);
                 if (e.Key.isExpired())
                 {
-                    if (e.Value(aElement, aDeltaTime))
-                        mTimedEvents.Remove(e);
+                    if (e.Value(aElement,aDeltaTime))
+                        removal.AddLast(e);
+
                 }
             }
+            foreach (KeyValuePair<QuTimer, FlatElementAnimations.ElementAnimationDelegate> e in removal)
+                mTimedEvents.Remove(e.Key);
         }
         public void add_event(FlatElementAnimations.ElementAnimationDelegate aEvent, float aTime)
         {
-            mTimedEvents.AddLast(new KeyValuePair<QuTimer,FlatElementAnimations.ElementAnimationDelegate>(new QuTimer(0,aTime),aEvent));
+            mTimedEvents[new QuTimer(0,aTime)] = aEvent;
         }
     }
 
@@ -205,12 +209,12 @@ public class FlatElementBase {
 
     public void update(float aDeltaTime)
     {
-        Events.update(aDeltaTime, this);
         update_parameters(aDeltaTime);
         set();
     }
     public virtual void update_parameters(float aDeltaTime)
     {
+        Events.update(aDeltaTime, this);
         mCurrentPosition = (1 - SoftInterpolation) * mCurrentPosition + SoftInterpolation * mTargetPosition;
         mCurrentRotation = Quaternion.Slerp(mCurrentRotation, mTargetRotation, SoftInterpolation);
         mCurrentScale = (1 - SoftInterpolation) * mCurrentScale + SoftInterpolation * mTargetScale;

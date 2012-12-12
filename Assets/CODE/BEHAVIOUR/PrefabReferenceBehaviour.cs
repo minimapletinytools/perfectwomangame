@@ -9,5 +9,7 @@ public class PrefabReferenceBehaviour : MonoBehaviour {
     public GameObject[] mCharacters; //29, 0 is fetus, row major (or was it collumn?)
     public GameObject mImageEffectsPrefabs;
 
+    public TextAsset[] mPossiblePoses;
+
     //ScreenEffectShader nonsense here
 }

@@ -115,24 +115,19 @@ public class BodyManager : FakeMonoBehaviour {
             mFlat.set();
             if (mMode == 0)
             {
-                if (mManager.mGameManager.Started)
+
+                if (ManagerManager.Manager.mGameManager.Started)
                 {
                     Vector3 position = Vector3.zero;
-                    if(mManager.mZigManager.Joints.ContainsKey(ZigJointId.Waist))
-                        position = mManager.mZigManager.Joints[ZigJointId.Waist].Position;
+                    if (ManagerManager.Manager.mZigManager.Joints.ContainsKey(ZigJointId.Waist))
+                        position = ManagerManager.Manager.mZigManager.Joints[ZigJointId.Waist].Position;
                     position.z = 0;
                     position.y = 0;
                     position.x *= -1;
                     if (Mathf.Abs(position.x) < 10) position.x = 0; //fake snapping, TODO this should probbaly be in grading manager if anywhere...
-                    mFlat.SoftPosition = position/1.5f + mOffset;
+                    mFlat.SoftPosition = position / 1.5f + mOffset;
                 }
-
-                foreach (KeyValuePair<ZigJointId, ProjectionManager.Stupid> e in mManager.mProjectionManager.mImportant)
-                {
-                    mFlat.mParts[e.Key].transform.rotation = Quaternion.AngleAxis(e.Value.smoothing.current, Vector3.forward);
-                }
-                mFlat.mParts[ZigJointId.Waist].transform.rotation = Quaternion.AngleAxis(mManager.mProjectionManager.mWaist.current, Vector3.forward);
-
+                match_body_to_projection(mFlat);
 
                 if (Input.GetKeyDown(KeyCode.Space))
                 {
@@ -162,6 +157,15 @@ public class BodyManager : FakeMonoBehaviour {
         }
         
 	}
+
+    public static void match_body_to_projection(FlatBodyObject aObject)
+    {
+        foreach (KeyValuePair<ZigJointId, ProjectionManager.Stupid> e in ManagerManager.Manager.mProjectionManager.mImportant)
+        {
+            aObject.mParts[e.Key].transform.rotation = Quaternion.AngleAxis(e.Value.smoothing.current, Vector3.forward);
+        }
+        aObject.mParts[ZigJointId.Waist].transform.rotation = Quaternion.AngleAxis(ManagerManager.Manager.mProjectionManager.mWaist.current, Vector3.forward);
+    }
 
     public static ZigJointId get_parent(ZigJointId joint)
     {
