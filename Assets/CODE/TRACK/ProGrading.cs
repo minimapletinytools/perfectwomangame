@@ -44,7 +44,7 @@ public class ProGrading {
 
     public static float grade_to_perfect(float aGrade)
     {
-        return Mathf.Clamp((20 - aGrade) / 20.0f, 0, 1);
+        return Mathf.Clamp((16 - aGrade) / 16f, 0, 1);
     }
     public static float grade_pose(Pose A, Pose B) //weight is taken from Pose B, B is traget
     {

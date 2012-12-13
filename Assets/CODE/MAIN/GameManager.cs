@@ -29,8 +29,9 @@ public class GameManager : FakeMonoBehaviour
     }
 
     //constants
-    public const float LEVEL_TIME_TOTAL = 10;
-    public const float SELECTION_THRESHOLD = 17;
+    public const float LEVEL_TIME_TOTAL = 30;
+    public const float SELECTION_THRESHOLD = 9;
+    public const float GRADING_THRESHOLD = 10;
     public const float CHOOSING_PERCENTAGE_GROWTH_RATE = 0.15f;
     public const float CHOOSING_PERCENTAGE_DECLINE_RATE = 1f;
 
@@ -195,7 +196,7 @@ public class GameManager : FakeMonoBehaviour
         if (!Started && User && Time.timeSinceLevelLoad > mMinStartTime)
         {   
 
-            advance_scene(5);
+            advance_scene(LEVEL_TIME_TOTAL);
             //maybe less time for fetus???
             Started = true;
         }
@@ -239,6 +240,7 @@ public class GameManager : FakeMonoBehaviour
                             if (!does_choice_exist(get_choice_index(i, CurrentLevel + 1)))
                                 mChoicePoses[i] = null;
                         mManager.mInterfaceManager.set_bottom_poses(mChoicePoses);
+                        mManager.mInterfaceManager.mBlueBar.Depth = 2;
                     }
                     TimeRemaining = -999;
                     choice_grading();
@@ -257,7 +259,7 @@ public class GameManager : FakeMonoBehaviour
             CurrentGrade = ProGrading.grade_pose(CurrentPose, mManager.mTransparentBodyManager.mFlat.mTargetPose);
             mManager.mInterfaceManager.mGrade = CurrentGrade;
         }
-        TotalScore += Time.deltaTime * ProGrading.grade_to_perfect(CurrentGrade) * 10f;
+        TotalScore += Time.deltaTime * ProGrading.grade_to_perfect(CurrentGrade) * 5f * mPerfectness[CurrentIndex];
     }
     void choice_grading()
     {
@@ -355,6 +357,7 @@ public class GameManager : FakeMonoBehaviour
             this.character_changed_listener(instance.GetComponent<CharacterTextureBehaviour>());
             mManager.mInterfaceManager.mScoreText.SoftPosition = mManager.mBackgroundManager.mBackgroundElements.mElements[0].Element.SoftPosition;
             GameObject.Destroy(instance);
+            mManager.mInterfaceManager.mBlueBar.Depth = 100;
             IsLoading = true;
         }
         
@@ -386,7 +389,7 @@ public class GameManager : FakeMonoBehaviour
         mManager.mInterfaceManager.set_bottom_poses(mChoicePoses);
 
 
-        //reset the interface camera
+        //reset the interface
         mEvents.add_event((new GameEvents.FadeInTopChoiceInInterfaceEvent(mManager.mInterfaceManager)).get_event(), 0.5f);
         mManager.mInterfaceManager.reset_camera();
         reset_choosing_percentages();
@@ -394,7 +397,7 @@ public class GameManager : FakeMonoBehaviour
         mManager.mInterfaceManager.set_choosing_percentages(ChoosingPercentages);
         mManager.mInterfaceManager.fade_out_choices();
         mManager.mInterfaceManager.set_choice(-1);
-
+        mManager.mInterfaceManager.mBlueBar.Depth = 100;
         IsLoading = false;
     }
     void reset_choosing_percentages()
@@ -409,7 +412,7 @@ public class GameManager : FakeMonoBehaviour
         if (get_pose_at_index(index, get_difficulty(index)) != null)
         {
             mManager.mTransparentBodyManager.set_target_pose(get_pose_at_index(index, get_difficulty(index)));
-            mManager.mTransparentBodyManager.mFlat.SoftColor = new Color(0.5f, 0.5f, 0.5f, 0.2f);
+            mManager.mTransparentBodyManager.mFlat.SoftColor = new Color(0.5f, 0.5f, 0.5f, 0.35f);
         }
         else if (CurrentLevel == 0)
         {
@@ -435,7 +438,7 @@ public class GameManager : FakeMonoBehaviour
         for (int i = 0; i < 4; i++)
         {
             int index = get_choice_index(i, level + 1);
-            r[i] = mDifficultyTargetPoses[index * 4 + get_difficulty(index)];
+            r[i] = mDifficultyTargetPoses[index * 4 - 3 + get_difficulty(index)];
         }
         return r;
     }

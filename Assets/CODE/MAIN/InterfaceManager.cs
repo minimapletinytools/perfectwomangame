@@ -205,7 +205,8 @@ public class InterfaceManager : FakeMonoBehaviour {
         if (index == -1)
         {
             mBigBadBox.SoftPosition = new Vector3(-3000, 400, 0);
-            mCurrentBody.SoftPosition = new Vector3(-3000, 400, 0);
+            //mCurrentBody.SoftPosition = new Vector3(-3000, 400, 0);
+            mCurrentBody.SoftPosition = mBlueBar.SoftPosition;
         }
         else
         {
