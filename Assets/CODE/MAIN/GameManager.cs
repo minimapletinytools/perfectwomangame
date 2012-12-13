@@ -339,12 +339,25 @@ public class GameManager : FakeMonoBehaviour
     void advance_scene(float aSceneTime)
     {
         CurrentLevel++;
-        PastChoices[CurrentLevel] = NextContendingChoice;
-        CurrentIndex = get_choice_index(NextContendingChoice, CurrentLevel);
-        TimeRemaining = aSceneTime;
-        IsLoading = true;
-        mManager.mAssetLoader.load_character(construct_bundle_name(CurrentLevel,NextContendingChoice));
-        //TODO loading bar
+        
+        if (CurrentLevel < 8)
+        {
+            PastChoices[CurrentLevel] = NextContendingChoice;
+            CurrentIndex = get_choice_index(NextContendingChoice, CurrentLevel);
+            TimeRemaining = aSceneTime;
+            IsLoading = true;
+            mManager.mAssetLoader.load_character(construct_bundle_name(CurrentLevel, NextContendingChoice));
+        }
+        else//hack
+        {
+            GameObject instance = (GameObject)GameObject.Instantiate(mManager.mReferences.mGrave);
+            mManager.mBackgroundManager.character_changed_listener(instance.GetComponent<CharacterTextureBehaviour>());
+            this.character_changed_listener(instance.GetComponent<CharacterTextureBehaviour>());
+            mManager.mInterfaceManager.mScoreText.SoftPosition = mManager.mBackgroundManager.mBackgroundElements.mElements[0].Element.SoftPosition;
+            GameObject.Destroy(instance);
+            IsLoading = true;
+        }
+        
     }
 
     //used by advance_scene

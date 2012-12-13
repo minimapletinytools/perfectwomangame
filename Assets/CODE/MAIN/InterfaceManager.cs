@@ -30,7 +30,7 @@ public class InterfaceManager : FakeMonoBehaviour {
     MeterObject mTimeMeter;
     MeterObject mPerfectMeter;
     FlatElementImage mScoreBackground;
-    FlatElementText mScoreText;
+    public FlatElementText mScoreText;
     FlatElementImage mMultiplier;
 
 

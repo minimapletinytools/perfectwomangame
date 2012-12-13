@@ -8,7 +8,7 @@ public class BackgroundManager  : FakeMonoBehaviour
 
     FlatElementImage mBackground;
 
-    FlatElementMultiImage mBackgroundElements;
+    public FlatElementMultiImage mBackgroundElements;
 
     FlatElementMultiImage mForegroundElements;
     
