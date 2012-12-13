@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 using System.Collections;
 
 public class CharacterDifficulties
@@ -24,7 +24,8 @@ public class CharacterDifficulties
             0, 0, 0, 0, 
             0, 0, 0, 0, 
             0, 0, 0, 0 };
-        difficulties[1].values = new float[] { 0, 
+
+        difficulties[1].values = new float[] { 0,  //5-1
             0, 0, 0, 0, 
             1, 0, 0, 0, 
             0, 0, 0, 1, 
@@ -33,7 +34,7 @@ public class CharacterDifficulties
             -1, 1, -1, 1, 
             0, 1, 0, 1 };
         difficulties[2].values = new float[] { 0, 
-            0, 0, 0, 1, 
+            0, 0, 0, 0, 
             1, -1, 0, 1, 
             0, -1, 0, 0, 
             0, -1, -1, 0, 
@@ -56,7 +57,7 @@ public class CharacterDifficulties
             1, 1, 0, -1, 
             1, 0, 1, -1, 
             0, 1, 0, 0 };
-        difficulties[5].values = new float[] { 0, 
+        difficulties[5].values = new float[] { 0, //16-1
             0, 0, 0, 0, 
             0, 0, 0, 0, 
             0, 0, 0, 0, 
@@ -88,7 +89,7 @@ public class CharacterDifficulties
             0, 0, 0, 0, 
             0, 0, 0, 0, 
             0, 0, 0, 0 };
-        difficulties[9].values = new float[] { 0, 
+        difficulties[9].values = new float[] { 0, //27-1
             0, 0, 0, 0, 
             0, 0, 0, 0, 
             0, 0, 0, 0, 
@@ -120,7 +121,7 @@ public class CharacterDifficulties
             0, 0, 0, 0, 
             0, 0, 0, 0, 
             0, 0, 0, 0 };
-        difficulties[13].values = new float[] { 0, 
+        difficulties[13].values = new float[] { 0, //34-1
             0, 0, 0, 0, 
             0, 0, 0, 0, 
             0, 0, 0, 0, 
@@ -152,7 +153,7 @@ public class CharacterDifficulties
             0, 0, 0, 0, 
             0, 0, 0, 0, 
             0, 0, 0, 0 };
-        difficulties[17].values = new float[] { 0, 
+        difficulties[17].values = new float[] { 0, //45-1
             0, 0, 0, 0, 
             0, 0, 0, 0, 
             0, 0, 0, 0, 
@@ -184,7 +185,7 @@ public class CharacterDifficulties
             0, 0, 0, 0, 
             0, 0, 0, 0, 
             0, 0, 0, 0 };
-        difficulties[21].values = new float[] { 0, 
+        difficulties[21].values = new float[] { 0, //60-1
             0, 0, 0, 0, 
             0, 0, 0, 0, 
             0, 0, 0, 0, 
@@ -216,7 +217,7 @@ public class CharacterDifficulties
             0, 0, 0, 0, 
             0, 0, 0, 0, 
             0, 0, 0, 0 };
-        difficulties[25].values = new float[] { 0, 
+        difficulties[25].values = new float[] { 0, //80-1
             0, 0, 0, 0, 
             0, 0, 0, 0, 
             0, 0, 0, 0, 

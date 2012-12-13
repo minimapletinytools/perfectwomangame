@@ -75,6 +75,8 @@ public class GameManager : FakeMonoBehaviour
     float[] mDifficulties = new float[29];
     public int[] PastChoices
     { get; private set; }
+    public bool IsStateChoosing
+    { get { return TimeRemaining <= 0; } }
 
     //local game state variabbles
     public float[] ChoosingPercentages
@@ -97,7 +99,12 @@ public class GameManager : FakeMonoBehaviour
     //choice and difficulty accessors
     public bool does_choice_exist(int index)
     {
-        return mManager.mReferences.mCharacters[get_choice_index(index, CurrentLevel+1)] != null;
+        //return mManager.mReferences.mCharacters[get_choice_index(index, CurrentLevel+1)] != null;
+
+        if(index <= 0)
+            return true;
+        return mDifficultyTargetPoses[index * 4 - 3] != null;
+
     }
     public int get_choice_index(int index, int level)
     {
@@ -151,7 +158,6 @@ public class GameManager : FakeMonoBehaviour
             mDifficulties[i] = 0;
         PastChoices = new int[8]{0,-1,-1,-1,-1,-1,-1,-1};
         reset_choosing_percentages();
-        
     }
     public override void Start()
     {
@@ -198,7 +204,17 @@ public class GameManager : FakeMonoBehaviour
         {
             if (!IsLoading)
             {
+                
                 TimeRemaining -= Time.deltaTime;
+                if (TimeRemaining < 0 && TimeRemaining > -999) //this is a hack, move me somewhere else
+                {
+                    mChoicePoses = get_random_possible_poses();
+                    for (int i = 0; i < 4; i++)
+                        if (does_choice_exist(get_choice_index(i, CurrentLevel + 1)))
+                            mChoicePoses[i] = null;
+                    mManager.mInterfaceManager.set_bottom_poses(mChoicePoses);
+                }
+                
 
                 if (User)
                 {
@@ -207,10 +223,13 @@ public class GameManager : FakeMonoBehaviour
 
                 if (CurrentLevel != 0)
                 {
-                    pose_grading();
-                    mManager.mCameraManager.set_camera_effects(ProGrading.grade_to_perfect(CurrentGrade));
-                    mManager.mInterfaceManager.set_perfect_time(ProGrading.grade_to_perfect(CurrentGrade), (LEVEL_TIME_TOTAL - TimeRemaining) / LEVEL_TIME_TOTAL);
-                    adjust_difficulty();
+                    if (!IsStateChoosing)
+                    {
+                        pose_grading();
+                        mManager.mCameraManager.set_camera_effects(ProGrading.grade_to_perfect(CurrentGrade));
+                        mManager.mInterfaceManager.set_perfect_time(ProGrading.grade_to_perfect(CurrentGrade), (LEVEL_TIME_TOTAL - TimeRemaining) / LEVEL_TIME_TOTAL);
+                        adjust_difficulty();
+                    }
                 }
                 else
                 {
@@ -221,7 +240,7 @@ public class GameManager : FakeMonoBehaviour
                 //goto next scene
                 if (TimeRemaining < 0)
                 {
-                    TimeRemaining = 0;
+                    TimeRemaining = -999;
                     choice_grading();
                     //advance_scene(LEVEL_TIME_TOTAL);
                 }
@@ -315,7 +334,7 @@ public class GameManager : FakeMonoBehaviour
 
     string construct_bundle_name(int level, int index)
     {
-        return level + "-" + mLevelToAge[index];
+        return mLevelToAge[level] + "-" + (index+1);
     }
     void advance_scene(float aSceneTime)
     {
@@ -445,6 +464,10 @@ public class GameManager : FakeMonoBehaviour
                             mDifficultyTargetPoses[1 + 4 * i + j] = firstNotNullPose;
                     }
                 }
+            }
+            else
+            {
+                //Debug.Log("no character found for " + bundle);
             }
         }
     }
