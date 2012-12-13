@@ -3,7 +3,7 @@ using System.Collections;
 
 public class BackgroundManager  : FakeMonoBehaviour
 {
-    int mBackgroundLayer = 0;
+    public int mBackgroundLayer = 0; //should not be private TODO
     int mForegroundLayer = 0;
 
     FlatElementImage mBackground;

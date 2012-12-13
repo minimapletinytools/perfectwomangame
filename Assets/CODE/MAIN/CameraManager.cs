@@ -9,17 +9,18 @@ public class CameraManager : FakeMonoBehaviour {
     public Camera TransparentBodyCamera { get; private set; } //layer 2
     public EdgeDetectEffect TransparentBodyCameraEdgeEffect { get; private set; }
     public Camera BackgroundCamera { get; private set; } //layer 3
+    public Camera ForegroundCamera { get; private set; } //layer 4
 
     GameObject ImageEffects { get; set; }
 
-    public Camera[] AllCameras { get { return new Camera[] { MainBodyCamera,TransparentBodyCamera,BackgroundCamera};} }
+    public Camera[] AllCameras { get { return new Camera[] { MainBodyCamera,TransparentBodyCamera,BackgroundCamera,ForegroundCamera};} }
 	public override void Start () 
     {
         ImageEffects = (GameObject)GameObject.Instantiate(mManager.mReferences.mImageEffectsPrefabs);
 
         MainBodyCamera = (new GameObject("genMainCamera")).AddComponent<Camera>();
         MainBodyCamera.cullingMask = 1 << 1;
-        MainBodyCamera.depth = 3;
+        MainBodyCamera.depth = 4;
         MainBodyCamera.clearFlags = CameraClearFlags.Depth;
         MainBodyCameraBloomEffect = MainBodyCamera.gameObject.AddComponent<BloomAndLensFlares>();
         BloomAndLensFlares templateBloom = ImageEffects.GetComponent<BloomAndLensFlares>();
@@ -36,16 +37,22 @@ public class CameraManager : FakeMonoBehaviour {
         
         TransparentBodyCamera = (new GameObject("genTransparentCamera")).AddComponent<Camera>();
         TransparentBodyCamera.cullingMask = 1 << 2;
-        TransparentBodyCamera.depth = 2;
+        TransparentBodyCamera.depth = 3;
         TransparentBodyCamera.clearFlags = CameraClearFlags.Depth;
         TransparentBodyCameraEdgeEffect = TransparentBodyCamera.gameObject.AddComponent<EdgeDetectEffect>();
         mManager.mTransparentBodyManager.set_layer(2);
 
         BackgroundCamera = (new GameObject("genBackgroundCamera")).AddComponent<Camera>();
         BackgroundCamera.cullingMask = 1 << 3;
-        BackgroundCamera.depth = 1;
+        BackgroundCamera.depth = 2;
         BackgroundCamera.clearFlags = CameraClearFlags.Depth;
         mManager.mBackgroundManager.set_background_layer(3);
+
+        ForegroundCamera = (new GameObject("genForegroundCamera")).AddComponent<Camera>();
+        ForegroundCamera.cullingMask = 1 << 4;
+        ForegroundCamera.depth = 1;
+        ForegroundCamera.clearFlags = CameraClearFlags.Depth;
+        mManager.mBackgroundManager.set_foreground_layer(4);
         
         //TODO need to do render textures for this to work properly...
 

@@ -35,6 +35,9 @@ public class GameManager : FakeMonoBehaviour
     public const float CHOOSING_PERCENTAGE_GROWTH_RATE = 0.15f;
     public const float CHOOSING_PERCENTAGE_DECLINE_RATE = 1f;
 
+    //public const bool DEBUGGING = true;
+    public const bool DEBUGGING = false;
+
     //
     public Camera mCamera;
     public AudioSource mSource;
@@ -194,9 +197,10 @@ public class GameManager : FakeMonoBehaviour
         }
 
         if (!Started && User && Time.timeSinceLevelLoad > mMinStartTime)
-        {   
+        {
 
-            advance_scene(LEVEL_TIME_TOTAL);
+            if (DEBUGGING) advance_scene(1);
+            else advance_scene(LEVEL_TIME_TOTAL);
             //maybe less time for fetus???
             Started = true;
         }
@@ -221,7 +225,8 @@ public class GameManager : FakeMonoBehaviour
                         pose_grading();
                         mManager.mCameraManager.set_camera_effects(ProGrading.grade_to_perfect(CurrentGrade));
                         mManager.mInterfaceManager.set_perfect_time(ProGrading.grade_to_perfect(CurrentGrade), (LEVEL_TIME_TOTAL - TimeRemaining) / LEVEL_TIME_TOTAL);
-                        adjust_difficulty();
+                        if (CurrentLevel != 7) //no more choices to be made tee hee
+                            adjust_difficulty();
                     }
                 }
                 else
@@ -235,12 +240,19 @@ public class GameManager : FakeMonoBehaviour
                 {
                     if(TimeRemaining > -999) //this is a hack, move me somewhere else
                     {
-                        mChoicePoses = get_random_possible_poses();
-                        for (int i = 0; i < 4; i++)
-                            if (!does_choice_exist(get_choice_index(i, CurrentLevel + 1)))
-                                mChoicePoses[i] = null;
-                        mManager.mInterfaceManager.set_bottom_poses(mChoicePoses);
-                        mManager.mInterfaceManager.mBlueBar.Depth = 2;
+                        if (CurrentLevel < 7)//hack
+                        {
+                            mChoicePoses = get_random_possible_poses();
+                            for (int i = 0; i < 4; i++)
+                                if (!does_choice_exist(get_choice_index(i, CurrentLevel + 1)))
+                                    mChoicePoses[i] = null;
+                            mManager.mInterfaceManager.set_bottom_poses(mChoicePoses);
+                            mManager.mInterfaceManager.mBlueBar.Depth = 2;
+                        }
+                        else
+                        {
+                            advance_scene(999999);
+                        }
                     }
                     TimeRemaining = -999;
                     choice_grading();
@@ -259,7 +271,7 @@ public class GameManager : FakeMonoBehaviour
             CurrentGrade = ProGrading.grade_pose(CurrentPose, mManager.mTransparentBodyManager.mFlat.mTargetPose);
             mManager.mInterfaceManager.mGrade = CurrentGrade;
         }
-        TotalScore += Time.deltaTime * ProGrading.grade_to_perfect(CurrentGrade) * 5f * mPerfectness[CurrentIndex];
+        TotalScore += Time.deltaTime * ProGrading.grade_to_perfect(CurrentGrade) * 5f * (mPerfectness[CurrentIndex]+1);
     }
     void choice_grading()
     {
@@ -325,10 +337,13 @@ public class GameManager : FakeMonoBehaviour
 
             if (get_difficulty(i) != prevDifficulty)
             {
-                //TODO play particle effects and make difficulty change event
-                mChoicePoses = get_poses(CurrentLevel);
-                mManager.mInterfaceManager.set_bottom_poses(mChoicePoses);
-                mManager.mInterfaceManager.set_choice_difficulties();
+                
+                {
+                    //TODO play particle effects and make difficulty change event
+                    mChoicePoses = get_poses(CurrentLevel);
+                    mManager.mInterfaceManager.set_bottom_poses(mChoicePoses);
+                    mManager.mInterfaceManager.set_choice_difficulties();
+                }
             }
         }
     }
@@ -340,7 +355,15 @@ public class GameManager : FakeMonoBehaviour
     }
     void advance_scene(float aSceneTime)
     {
+
+
         CurrentLevel++;
+
+        if (DEBUGGING)
+        {
+            if (CurrentLevel == 1)//hack
+                CurrentLevel = 7;
+        }
         
         if (CurrentLevel < 8)
         {
@@ -350,14 +373,30 @@ public class GameManager : FakeMonoBehaviour
             IsLoading = true;
             mManager.mAssetLoader.load_character(construct_bundle_name(CurrentLevel, NextContendingChoice));
         }
-        else//hack
+        else//complete hack
         {
+            
+            TimeRemaining = 9999;
+            
             GameObject instance = (GameObject)GameObject.Instantiate(mManager.mReferences.mGrave);
             mManager.mBackgroundManager.character_changed_listener(instance.GetComponent<CharacterTextureBehaviour>());
             this.character_changed_listener(instance.GetComponent<CharacterTextureBehaviour>());
-            mManager.mInterfaceManager.mScoreText.SoftPosition = mManager.mBackgroundManager.mBackgroundElements.mElements[0].Element.SoftPosition;
+            mManager.mInterfaceManager.mScoreText.SoftPosition = mManager.mBackgroundManager.mBackgroundElements.mElements[0].Element.SoftPosition + new Vector3(0,-150,0);
+            mManager.mInterfaceManager.mScoreText.Depth = 101;
+            foreach (Renderer f in mManager.mInterfaceManager.mScoreText.PrimaryGameObject.GetComponentsInChildren<Renderer>()) //hack to make it show in background camera...
+                f.gameObject.layer = mManager.mBackgroundManager.mBackgroundLayer;
             GameObject.Destroy(instance);
+
+            mManager.mBodyManager.character_changed_listener(null);
+            mManager.mTransparentBodyManager.character_changed_listener(null);
             mManager.mInterfaceManager.mBlueBar.Depth = 100;
+            mEvents.add_event((new GameEvents.FadeInTopChoiceInInterfaceEvent(mManager.mInterfaceManager)).get_event(), 0.5f);
+            mManager.mInterfaceManager.reset_camera();
+            reset_choosing_percentages();
+            mManager.mInterfaceManager.mBlueBar.SoftScale = Vector3.one;
+            mManager.mInterfaceManager.set_choosing_percentages(ChoosingPercentages);
+            mManager.mInterfaceManager.fade_out_choices();
+            mManager.mInterfaceManager.set_choice(-1);
             IsLoading = true;
         }
         
@@ -383,7 +422,8 @@ public class GameManager : FakeMonoBehaviour
 
         //figure out next poses
         NextContendingChoice = get_default_choice(CurrentLevel);
-        mChoicePoses = get_poses(CurrentLevel);
+        if(CurrentLevel < 7)
+            mChoicePoses = get_poses(CurrentLevel);
         mManager.mInterfaceManager.set_choice_difficulties();
         mManager.mInterfaceManager.set_question(CurrentLevel);
         mManager.mInterfaceManager.set_bottom_poses(mChoicePoses);
