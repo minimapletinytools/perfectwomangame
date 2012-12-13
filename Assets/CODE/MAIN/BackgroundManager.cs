@@ -72,10 +72,11 @@ public class BackgroundManager  : FakeMonoBehaviour
         }
         for (int i = 0; i < aCharacter.foregroundElements.Length; i++)
         {
-            mForegroundElements.add_image(aCharacter.foregroundElements[i], FlatBodyObject.find_first_color(new Color(255, 0, 5 * i / (float)255), aCharacter.elementPositoner));
+            //mForegroundElements.add_image(aCharacter.foregroundElements[i], FlatBodyObject.find_first_color(new Color(0, 255, 5 * i / (float)255), aCharacter.elementPositoner));
         }
 
         set_background_layer(mBackgroundLayer);
+        set_foreground_layer(mForegroundLayer);
         //resize the camera
         foreach (Camera c in mManager.mCameraManager.AllCameras)
             resize_camera_against_texture(c, aCharacter.background1);

@@ -362,7 +362,7 @@ public class GameManager : FakeMonoBehaviour
         if (DEBUGGING)
         {
             if (CurrentLevel == 1)//hack
-                CurrentLevel = 7;
+                CurrentLevel = 6;
         }
         
         if (CurrentLevel < 8)

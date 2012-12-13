@@ -50,7 +50,7 @@ public class CameraManager : FakeMonoBehaviour {
 
         ForegroundCamera = (new GameObject("genForegroundCamera")).AddComponent<Camera>();
         ForegroundCamera.cullingMask = 1 << 4;
-        ForegroundCamera.depth = 1;
+        ForegroundCamera.depth = 5;
         ForegroundCamera.clearFlags = CameraClearFlags.Depth;
         mManager.mBackgroundManager.set_foreground_layer(4);
         
