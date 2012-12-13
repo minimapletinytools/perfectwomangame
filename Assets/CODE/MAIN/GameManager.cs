@@ -29,7 +29,7 @@ public class GameManager : FakeMonoBehaviour
     }
 
     //constants
-    public const float LEVEL_TIME_TOTAL = 10;
+    public const float LEVEL_TIME_TOTAL = 1000;
     public const float SELECTION_THRESHOLD = 17;
     public const float CHOOSING_PERCENTAGE_GROWTH_RATE = 0.15f;
     public const float CHOOSING_PERCENTAGE_DECLINE_RATE = 1f;
