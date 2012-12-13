@@ -166,10 +166,10 @@ public class GameManager : FakeMonoBehaviour
         mManager.mEventManager.character_changed_event += character_changed_listener;
 
         //set just the background
-        
+        /*
         GameObject dummyChar = (GameObject)GameObject.Instantiate(mManager.mReferences.mCharacters[0]);
         mManager.mBackgroundManager.set_background(dummyChar.GetComponent<CharacterTextureBehaviour>());
-        GameObject.Destroy(dummyChar);
+        GameObject.Destroy(dummyChar);*/
 
         mPossibleChoicePoses = new ProGrading.Pose[mManager.mReferences.mPossiblePoses.Length];
         for (int i = 0; i < mPossibleChoicePoses.Length; i++)

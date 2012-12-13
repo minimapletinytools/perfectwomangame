@@ -7,7 +7,7 @@ public class PrefabReferenceBehaviour : MonoBehaviour {
 	public GameObject mDemoChar;
 	public Shader mDefaultCharacterShader;
     public Texture2D mDefaultParticleTexture;
-    public GameObject[] mCharacters; //29, 0 is fetus, row major (or was it collumn?)
+    //public GameObject[] mCharacters; //29, 0 is fetus, row major (or was it collumn?)
     public GameObject mGrave;
     public GameObject mImageEffectsPrefabs;
     public GameObject mPlanePrefab;
