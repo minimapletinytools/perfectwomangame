@@ -2,7 +2,7 @@ using UnityEngine;
 using System.Collections;
 
 public class ChoiceObjectPair : FlatElementMultiBase {
-    FlatElementImage mSquare;
+    public FlatElementImage mSquare;
     DifficultyObject mDifficultyStars;
     DifficultyObject mDifficultyBalls;
     public FlatBodyObject mBody = null;

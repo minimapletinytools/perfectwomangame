@@ -70,7 +70,7 @@ public class InterfaceManager : FakeMonoBehaviour {
 
         if (tier + 1 - level < 0)
             r += new Vector3(0, heightSpace + middleOffset, 0);
-        else r += new Vector3(0, -middleOffset, 0);
+        else r += new Vector3(0, heightSpace-middleOffset, 0);
         return r;
     }
 
@@ -264,12 +264,21 @@ public class InterfaceManager : FakeMonoBehaviour {
 
     public void fade_out_choices()
     {
-        //TODO
+        for (int i = 0; i < 4; i++)
+        {
+            mTopChoices[i].mSquare.SoftColor = new Color(0.5f, 0.5f, 0.5f, 0f);
+        }
     }
 
     public void fade_in_choices()
     {
-        //TODO
+        for (int i = 0; i < 4; i++)
+        {
+            int index = mManager.mGameManager.get_choice_index(i, mManager.mGameManager.CurrentLevel + 1);
+            if (index < 29)
+                mTopChoices[i].mSquare.mImage.set_new_texture(mManager.mMenuReferences.boxes[index]);
+            mTopChoices[i].mSquare.SoftColor = new Color(0.5f, 0.5f, 0.5f, 0.5f);
+        }
     }
 
     public void set_perfect_time(float perfect, float time)

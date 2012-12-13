@@ -41,13 +41,13 @@ public class GameManager : FakeMonoBehaviour
 
     //pretend constants
     int[] mPerfectness = new int[29]{ 0, 
-            0, 1, 2, 3, 
-            3, 2, 1, 0, 
-            0, 1, 2, 3, 
-            3, 2, 1, 0,
-            0, 1, 2, 3, 
-            3, 2, 1, 0, 
-            2, 1, 3, 0 };
+            3, 1, 0, 2, 
+            0, 1, 3, 2, 
+            3, 0, 2, 1, 
+            1, 3, 0, 2,
+            1, 0, 3, 2, 
+            0, 3, 1, 2, 
+            1, 0, 2, 3 };
     string[] mLevelToAge = new string[8] { "0", "05", "16", "27", "34", "45", "60", "80" };
     ProGrading.Pose[] mPossibleChoicePoses;
     ProGrading.Pose[] mDifficultyTargetPoses = null;
@@ -206,14 +206,6 @@ public class GameManager : FakeMonoBehaviour
             {
                 
                 TimeRemaining -= Time.deltaTime;
-                if (TimeRemaining < 0 && TimeRemaining > -999) //this is a hack, move me somewhere else
-                {
-                    mChoicePoses = get_random_possible_poses();
-                    for (int i = 0; i < 4; i++)
-                        if (does_choice_exist(get_choice_index(i, CurrentLevel + 1)))
-                            mChoicePoses[i] = null;
-                    mManager.mInterfaceManager.set_bottom_poses(mChoicePoses);
-                }
                 
 
                 if (User)
@@ -240,6 +232,14 @@ public class GameManager : FakeMonoBehaviour
                 //goto next scene
                 if (TimeRemaining < 0)
                 {
+                    if(TimeRemaining > -999) //this is a hack, move me somewhere else
+                    {
+                        mChoicePoses = get_random_possible_poses();
+                        for (int i = 0; i < 4; i++)
+                            if (!does_choice_exist(get_choice_index(i, CurrentLevel + 1)))
+                                mChoicePoses[i] = null;
+                        mManager.mInterfaceManager.set_bottom_poses(mChoicePoses);
+                    }
                     TimeRemaining = -999;
                     choice_grading();
                     //advance_scene(LEVEL_TIME_TOTAL);
@@ -343,7 +343,7 @@ public class GameManager : FakeMonoBehaviour
         CurrentIndex = get_choice_index(NextContendingChoice, CurrentLevel);
         TimeRemaining = aSceneTime;
         IsLoading = true;
-        mManager.mAssetLoader.load_character(construct_bundle_name(CurrentLevel,CurrentIndex));
+        mManager.mAssetLoader.load_character(construct_bundle_name(CurrentLevel,NextContendingChoice));
         //TODO loading bar
     }
 
@@ -374,10 +374,11 @@ public class GameManager : FakeMonoBehaviour
 
 
         //reset the interface camera
-        mEvents.add_event((new GameEvents.ResetElementScaleEvent(mManager.mInterfaceManager.mBlueBar)).get_event(), 0);
+        mEvents.add_event((new GameEvents.FadeInTopChoiceInInterfaceEvent(mManager.mInterfaceManager)).get_event(), 0.5f);
         mManager.mInterfaceManager.reset_camera();
-        //reset choosing percentages
         reset_choosing_percentages();
+        mManager.mInterfaceManager.set_choosing_percentages(ChoosingPercentages);
+        mManager.mInterfaceManager.fade_out_choices();
         mManager.mInterfaceManager.set_choice(-1);
 
         IsLoading = false;

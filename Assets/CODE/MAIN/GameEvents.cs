@@ -64,5 +64,25 @@ public class GameEvents {
         }
 
     }
-    
+
+    public class FadeInTopChoiceInInterfaceEvent
+    {
+        InterfaceManager mInterface;
+        public FadeInTopChoiceInInterfaceEvent(InterfaceManager aInterface)
+        {
+            mInterface = aInterface;
+        }
+
+        bool call(float aTime)
+        {
+            mInterface.fade_in_choices();
+            return true;
+        }
+
+        public GameManager.GameEventDelegate get_event()
+        {
+            return call;
+        }
+
+    }
 }
