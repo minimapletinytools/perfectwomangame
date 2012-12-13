@@ -59,6 +59,16 @@ public class FlatElementAnimations {
 
     public class FloatingAnimation
     {
-        //TODO
+        public float mOffset;
+        public FloatingAnimation(float aOffset)
+        {
+            mOffset = aOffset;
+        }
+        public bool animate(FlatElementBase aElement, float aDeltaTime)
+        {
+            float angle = 20 * Mathf.Cos(aDeltaTime + mOffset);
+            aElement.mLocalRotation = Quaternion.AngleAxis(angle, Vector3.forward);
+            return false;
+        }
     }
 }

@@ -29,7 +29,7 @@ public class GameManager : FakeMonoBehaviour
     }
 
     //constants
-    public const float LEVEL_TIME_TOTAL = 1000;
+    public const float LEVEL_TIME_TOTAL = 10;
     public const float SELECTION_THRESHOLD = 17;
     public const float CHOOSING_PERCENTAGE_GROWTH_RATE = 0.15f;
     public const float CHOOSING_PERCENTAGE_DECLINE_RATE = 1f;
@@ -166,10 +166,10 @@ public class GameManager : FakeMonoBehaviour
         mManager.mEventManager.character_changed_event += character_changed_listener;
 
         //set just the background
-        /*
+        
         GameObject dummyChar = (GameObject)GameObject.Instantiate(mManager.mReferences.mCharacters[0]);
         mManager.mBackgroundManager.set_background(dummyChar.GetComponent<CharacterTextureBehaviour>());
-        GameObject.Destroy(dummyChar);*/
+        GameObject.Destroy(dummyChar);
 
         mPossibleChoicePoses = new ProGrading.Pose[mManager.mReferences.mPossiblePoses.Length];
         for (int i = 0; i < mPossibleChoicePoses.Length; i++)
@@ -377,6 +377,7 @@ public class GameManager : FakeMonoBehaviour
         mEvents.add_event((new GameEvents.FadeInTopChoiceInInterfaceEvent(mManager.mInterfaceManager)).get_event(), 0.5f);
         mManager.mInterfaceManager.reset_camera();
         reset_choosing_percentages();
+        mManager.mInterfaceManager.mBlueBar.SoftScale = Vector3.one;
         mManager.mInterfaceManager.set_choosing_percentages(ChoosingPercentages);
         mManager.mInterfaceManager.fade_out_choices();
         mManager.mInterfaceManager.set_choice(-1);
@@ -435,7 +436,6 @@ public class GameManager : FakeMonoBehaviour
     }
     public void pose_bundle_loaded_callback(AssetBundle aBundle)
     {
-        ProGrading.Pose defaultPose = mPossibleChoicePoses[0];
         mDifficultyTargetPoses = new ProGrading.Pose[28 * 4 + 1];
         for (int i = 0; i < 28 * 4 + 1; i++)
             mDifficultyTargetPoses[i] = null;
@@ -460,7 +460,7 @@ public class GameManager : FakeMonoBehaviour
                     if (mDifficultyTargetPoses[1 + 4 * i + j] == null)
                     {
                         if (firstNotNullPose == null)
-                            mDifficultyTargetPoses[1 + 4 * i + j] = defaultPose;
+                            mDifficultyTargetPoses[1 + 4 * i + j] = ProGrading.read_pose(mManager.mReferences.mDefaultTargetPoses[j]);
                         else
                             mDifficultyTargetPoses[1 + 4 * i + j] = firstNotNullPose;
                     }

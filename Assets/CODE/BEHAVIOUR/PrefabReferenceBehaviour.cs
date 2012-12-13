@@ -12,6 +12,5 @@ public class PrefabReferenceBehaviour : MonoBehaviour {
     public GameObject mPlanePrefab;
     public TextAsset[] mPossiblePoses;
     public TextAsset[] mDefaultTargetPoses;
-
-    //ScreenEffectShader nonsense here
+        
 }
