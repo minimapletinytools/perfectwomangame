@@ -1,0 +1,3 @@
+*.unity3d
+*.unity3d.meta
+!POSES.unity3d

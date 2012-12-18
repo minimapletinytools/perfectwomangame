@@ -516,7 +516,12 @@ public class GameManager : FakeMonoBehaviour
                     if (mDifficultyTargetPoses[1 + 4 * i + j] == null)
                     {
                         if (firstNotNullPose == null)
-                            mDifficultyTargetPoses[1 + 4 * i + j] = ProGrading.read_pose(mManager.mReferences.mDefaultTargetPoses[j]);
+                        {
+                            if(j == 3)
+                                mDifficultyTargetPoses[1 + 4 * i + j] = ProGrading.read_pose(mManager.mReferences.mDefaultTargetPoses[Random.Range(3,11)]);
+                            else
+                                mDifficultyTargetPoses[1 + 4 * i + j] = ProGrading.read_pose(mManager.mReferences.mDefaultTargetPoses[j]);
+                        }
                         else
                             mDifficultyTargetPoses[1 + 4 * i + j] = firstNotNullPose;
                     }
