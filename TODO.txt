@@ -1,5 +1,46 @@
 ::TODO::
--rename the game to leas girly game
+:other:
+-move project in repo into its own folder so I can add other projects to the main repo.
+-set up the asset repo (see below)
+-nearest neighbor shader!!
+:kinect related:
+-consider getting snapping to work, but I don't think it's really needed anymore
+-figure out why it's a little messed up on some angles. probably a bug in code
+-get the angles right on osx
+-improve architecture for accessing kinect data
+	-make kinect data class manager	
+	-is user found
+	-is kinect found
+	-get angles (has default ones if no user is found)
+:scripting architecture
+-TODO
+-need lea's story board
+:flat architecture:
+-clean it up and decide if it's ready to ship
+:other architecture:
+-TODO
+-Projection Manager kind of sucks
+	-create a new kinect data algorithm manager (interface?)
+	-takes input from kinect (has access to zigfu I guess), processes (can keep internal state)
+	-outputs data in various forms
+:file architecture:
+-characters should be read in based on filenames from asset bundles
+	-if fail, should not crash (or maybe it should..)
+-create character testing project (in ggfiles even)
+-figure out how to unload characters properly (please!)
+-write script to convert placement images to TextAssets containing needed info
+-write a script to shrink all assets so they aren't ridiculous.
+	-can we incorporate both of the above scripts into unity??? that would be AWESOME
+-make unity editor script more awesome
+	-incorporate scripts from above :DDD
+	-be able to bulk export all asset bundles
+:difficulty/perfect system:
+-character -> statistics
+-questionnaire -> modifies stats -> modifies character perfectness based on their stats
+-performance -> generates dialog -> modifies difficultly based on stats
+-create a mini version of this in python or something
+
+::TODO::
 DONE-fix relative positioning with flat camera
 DONE-seperate out body manager poo poo
 DONE-fix depth and sun shaft for character, can you do it????
