@@ -113,6 +113,8 @@ public class ProjectionManager : FakeMonoBehaviour {
 	{
 		if(A.Id == ZigJointId.None)
 			return 0; //TODO
+		if(!B.GoodPosition) 
+			return -A.Rotation.flat_rotation() + 90;
         return get_relative(A.Position, B.Position);
         /*TODO DELETE
 		Vector3 right = Vector3.Cross(mUp,mNormal);
@@ -129,7 +131,7 @@ public class ProjectionManager : FakeMonoBehaviour {
     public float get_waist(ZigInputJoint waist, ZigInputJoint L, ZigInputJoint R)
     {
         return -waist.Rotation.flat_rotation() + 90;
-        //return get_relative(waist.Position, L.Position * 0.5f + R.Position * 0.5f);
+        //return get_relative(waist.Position, L.Position * 0.5f + R.Position * 0.5f); //TODO use this for OSX...
     }
 
     public float get_waist(Vector3 waist, Vector3 L, Vector3 R)

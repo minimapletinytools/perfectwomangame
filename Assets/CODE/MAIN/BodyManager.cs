@@ -68,6 +68,7 @@ public class BodyManager : FakeMonoBehaviour {
 		return (float)pixelWidth/1.0f; //100 pixels = 1 unit
 	}
 
+	//TODO delete
     public void fix_target_pose()
     {
         /*
@@ -123,7 +124,7 @@ public class BodyManager : FakeMonoBehaviour {
                 if (ManagerManager.Manager.mGameManager.Started)
                 {
                     Vector3 position = Vector3.zero;
-                    if (ManagerManager.Manager.mZigManager.Joints.ContainsKey(ZigJointId.Waist))
+                    if (ManagerManager.Manager.mZigManager.Joints.ContainsKey(ZigJointId.Waist)) //lol you can replace this with try get value... actually I fixed this so just delete this dumb check
                         position = ManagerManager.Manager.mZigManager.Joints[ZigJointId.Waist].Position;
                     position.z = 0;
                     position.y = 0;
@@ -144,7 +145,7 @@ public class BodyManager : FakeMonoBehaviour {
             }
             else if (mMode == 1)
             {
-                if (Input.GetKeyDown(KeyCode.Space))
+                if (Input.GetKeyDown(KeyCode.Space)) //TODO manual pose setting wont work anymore due to targetting on target pose.
                 {
                     write_counter++;
                     ProGrading.Pose p = new ProGrading.Pose();

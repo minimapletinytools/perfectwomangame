@@ -1,4 +1,35 @@
+::ASSET PIPELINE::
+-using current system, can you…
+	-create text asset associated with each image.
+	-text asset should contain original file size information
+	-parse B images for point location and add to text file
+	-resample images if necessary, put this and text file in new directory
+	-finally, automatically make me an asset bundle :)
+
+::BIG QUESTIONS::
+-unloading asset bundles!!! omg
+-make sure all information can be obtained from openNI on OSX
+	-skeleton is different, figure out what skeleton information is good!!
+		-hand position is good but I guess not rotation?? (not that I care)
+		-need to use left/rightKnee rotation and not position of foot
+-figure out why it takes so long to load on OSX, does it take this long on windows??
+	-try running on windows using openni+NITE
+-why is NN scaling not NN	
+
+
+::NEW ZIG MANAGER NONSENSE::
+-POSE current and POSE target to do interpolation
+-POSE target updated via whatever
+	-this means either using positions or angles as before
+-remove get_relative and instead hardcode relative joint information and just do get_angle(ZigJointId)
+-need definitive function to determine openNI or Kinect and use different algorithms in each case
+-if you can't get waist in openNI, need to disable it in pose rendering and grading
+
+::IMPORTANT::
+-remove all background image references 
+
 ::TODO::
+
 :other:
 -move project in repo into its own folder so I can add other projects to the main repo.
 -set up the asset repo (see below)
