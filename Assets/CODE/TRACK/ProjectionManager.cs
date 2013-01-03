@@ -130,8 +130,10 @@ public class ProjectionManager : FakeMonoBehaviour {
 
     public float get_waist(ZigInputJoint waist, ZigInputJoint L, ZigInputJoint R)
     {
-        return -waist.Rotation.flat_rotation() + 90;
-        //return get_relative(waist.Position, L.Position * 0.5f + R.Position * 0.5f); //TODO use this for OSX...
+        if(Application.platform == RuntimePlatform.WindowsPlayer)
+            return -waist.Rotation.flat_rotation() + 90;    
+        else
+            return get_relative(waist.Position, L.Position * 0.5f + R.Position * 0.5f); //TODO use this for OSX...
     }
 
     public float get_waist(Vector3 waist, Vector3 L, Vector3 R)

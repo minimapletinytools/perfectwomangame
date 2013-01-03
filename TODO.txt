@@ -1,10 +1,20 @@
 ::ASSET PIPELINE::
--using current system, can you…
+-using current system, can you
 	-create text asset associated with each image.
 	-text asset should contain original file size information
 	-parse B images for point location and add to text file
 	-resample images if necessary, put this and text file in new directory
 	-finally, automatically make me an asset bundle :)
+	-but I guess if you can't do that then you'll want to use a python script of sorts
+-new file naming scheme
+	-Assets/PRECHAR/<character number>/ (where character number is as before, e.g. 05-1)
+	-AUDIO.mp3 for audio
+	-character files as before, but no longer in CHARACTERS folder
+	-background files should be as follows
+		-BG.png for background
+		-BG-1.png, BG-2.png, ... for BG elements
+		-FG-1.png, ... for FG elements
+		-POSITIONS.png for positions
 
 ::BIG QUESTIONS::
 -unloading asset bundles!!! omg
@@ -29,8 +39,8 @@
 -remove all background image references 
 
 ::TODO::
-
 :other:
+-add quit button
 -move project in repo into its own folder so I can add other projects to the main repo.
 -set up the asset repo (see below)
 -nearest neighbor shader!!
