@@ -98,7 +98,7 @@ public class ZigManager : FakeMonoBehaviour {
 					Joints[joint.Id] = joint;
                 }
             }
-			Debug.Log(output);
+			//Debug.Log(output);
         }
     } 
 }
