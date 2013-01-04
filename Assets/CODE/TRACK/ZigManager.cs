@@ -37,6 +37,7 @@ public class ZigManager : FakeMonoBehaviour {
         mZigObject = mManager.gameObject;
         //mZigObject.AddComponent<kinectSpecific>();
 		mZig = mZigObject.GetComponent<Zig>();
+        
 		
         
 		//ZigEngageSingleUser scans for all users but only reports results from one of them (the first I guess)

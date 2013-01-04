@@ -6,16 +6,11 @@ public class AssetBundleLoader : FakeMonoBehaviour
 
 
     public delegate void AssetBundleLoadedDelegate(AssetBundle bundle);
-
     System.Collections.Generic.Dictionary<WWW, AssetBundleLoadedDelegate> mRequestLists = new System.Collections.Generic.Dictionary<WWW, AssetBundleLoadedDelegate>();
-
-
-
 
     public AssetBundleLoader(ManagerManager aManager)
         : base(aManager) 
-    {
-    }
+    {}
 
     public override void Update()
     {

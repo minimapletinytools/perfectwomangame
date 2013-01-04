@@ -18,13 +18,13 @@
 
 ::BIG QUESTIONS::
 -unloading asset bundles!!! omg
--make sure all information can be obtained from openNI on OSX
-	-skeleton is different, figure out what skeleton information is good!!
-		-hand position is good but I guess not rotation?? (not that I care)
-		-need to use left/rightKnee rotation and not position of foot
+DONE/OK-make sure all information can be obtained from openNI on OSX
+	DONE-skeleton is different, figure out what skeleton information is good!!
+		DONE-hand position is good but I guess not rotation?? (not that I care)
+		DONE-need to use left/rightKnee rotation and not position of foot
 -figure out why it takes so long to load on OSX, does it take this long on windows??
-	-try running on windows using openni+NITE
--why is NN scaling not NN	
+	DONE/a little slower but still not as slow-try running on windows using openni+NITE
+-why is Nearest Neighbor scaling not NN	
 
 
 ::NEW ZIG MANAGER NONSENSE::
@@ -32,18 +32,23 @@
 -POSE target updated via whatever
 	-this means either using positions or angles as before
 -remove get_relative and instead hardcode relative joint information and just do get_angle(ZigJointId)
--need definitive function to determine openNI or Kinect and use different algorithms in each case
 -if you can't get waist in openNI, need to disable it in pose rendering and grading
+-need definitive function to determine openNI or Kinect and use different algorithms in each case
+	-function to detect what SDK is being used, this needs to look for zig input container after startup and read which sdk is being used... pfft
+
 
 ::IMPORTANT::
 -remove all background image references 
 
 ::TODO::
 :other:
+-grade against position offset as well??? (or move the transparent one with it) Snap position???
+-do the feet, i.e. want feet to stick to ground 
 -add quit button
+-add keyboard playability (skip)
 -move project in repo into its own folder so I can add other projects to the main repo.
 -set up the asset repo (see below)
--nearest neighbor shader!!
+BLAH-nearest neighbor shader!!
 :kinect related:
 -consider getting snapping to work, but I don't think it's really needed anymore
 -figure out why it's a little messed up on some angles. probably a bug in code
@@ -86,10 +91,9 @@ DONE-fix relative positioning with flat camera
 DONE-seperate out body manager poo poo
 DONE-fix depth and sun shaft for character, can you do it????
 DONE-be able to move character
--grade against position offset as well??? (or move the transparent one with it) Snap position???
--figure out whats wrong with grading
--make sure you fix waist grading because it's different now
--do the feet
+DONE-make sure you fix waist grading because it's different now
+DONE-figure out whats wrong with grading
+
 
 
 ::RIGHT MANAGER NOTES::
