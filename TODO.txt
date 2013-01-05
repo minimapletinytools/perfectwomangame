@@ -58,7 +58,7 @@ BLAH-nearest neighbor shader!!
 	-is user found
 	-is kinect found
 	-get angles (has default ones if no user is found)
-:scripting architecture
+:scripting architecture:
 -TODO
 -need lea's story board
 :flat architecture:
