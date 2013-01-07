@@ -5,6 +5,23 @@ using System.Linq;
 
 public static class CharacterPreprocessor {
 
+    [System.Serializable]
+    public class CharacterData
+    {
+        //ordered as in CharacterPreprocessor.sLimbs
+        public List<List<Vector3>> mMountingPositions = new List<List<Vector3>>();
+        public List<Vector3> mBackgroundPositions = new List<Vector3>();
+        public List<Vector3> mForegroundPositions = new List<Vector3>();
+
+        public List<Vector2> mLimbSizes = new List<Vector2>();
+        public List<Vector2> mBackgroundSizes = new List<Vector2>();
+        public List<Vector2> mForegroundSizes = new List<Vector2>();
+
+        public Vector2 mBackSize = new Vector2();
+
+        public string mName = "";
+    }
+
     static List<string> sLimbs = new List<string>()
     {
         "HEAD",
@@ -29,7 +46,7 @@ public static class CharacterPreprocessor {
     static CharacterPreprocessor()
     {
         sExpected.AddRange(sLimbs.ConvertAll<string>(s => s + "_A.png"));
-        sExpected.AddRange(sLimbs.ConvertAll<string>(s => s + "_B.png"));
+        sExpected.AddRange(sLimbs.ConvertAll<string>(s => s + "_B.png"));q
     }
 
     [MenuItem("Custom/poopootest")]
@@ -63,6 +80,7 @@ public static class CharacterPreprocessor {
         //parse POSITIONS.png for information and add to data struct
         //TODO parse pose information
         //TODO change import settings on images and store their original file sizes into data struct
+        //change image compression as appropirate
         //save <limb>_A.png, BG.png, AUDIO.mp3, BG/FG_<num>.png, and serialized text assets, to AssetBundle
 
 
