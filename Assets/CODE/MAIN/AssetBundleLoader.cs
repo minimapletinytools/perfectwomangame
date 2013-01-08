@@ -3,7 +3,22 @@ using System.Collections.Generic;
 
 public class AssetBundleLoader : FakeMonoBehaviour
 {
+    [System.Serializable]
+    public class CharacterData
+    {
+        //ordered as in CharacterPreprocessor.sLimbs
+        public List<List<Vector3>> mMountingPositions = new List<List<Vector3>>();
+        public List<Vector3> mBackgroundPositions = new List<Vector3>();
+        public List<Vector3> mForegroundPositions = new List<Vector3>();
 
+        public List<Vector2> mLimbSizes = new List<Vector2>();
+        public List<Vector2> mBackgroundSizes = new List<Vector2>();
+        public List<Vector2> mForegroundSizes = new List<Vector2>();
+
+        public Vector2 mBackSize = new Vector2();
+
+        public string mName = "";
+    }
 
     public delegate void AssetBundleLoadedDelegate(AssetBundle bundle);
     System.Collections.Generic.Dictionary<WWW, AssetBundleLoadedDelegate> mRequestLists = new System.Collections.Generic.Dictionary<WWW, AssetBundleLoadedDelegate>();
