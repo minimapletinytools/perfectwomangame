@@ -27,6 +27,18 @@ public class FlatBodyObject : FlatElementBase
     public static IEnumerable<FlatBodyObject> load_sequential(CharacterData.ChaarcterDataImages aImages, CharacterData.CharacterDataSizes aSizes)
     {
         //TODO
+        //GameObject torso = create_object(ZigJointId.Torso, aImages.torso, aSizes.atTorso);
+        /*
+        GameObject waist = create_object(ZigJointId.Waist, aChar.waist, aChar.atWaist);
+        GameObject head = create_object(ZigJointId.Neck, aChar.head, aChar.atHead);
+        GameObject leftUpperArm = create_object(ZigJointId.LeftShoulder, aChar.leftUpperArm, aChar.atLeftUpperArm);
+        GameObject rightUpperArm = create_object(ZigJointId.RightShoulder, aChar.rightUpperArm, aChar.atRightUpperArm);
+        GameObject leftLowerArm = create_object(ZigJointId.LeftElbow, aChar.leftLowerArm, aChar.atLeftLowerArm);
+        GameObject rightLowerArm = create_object(ZigJointId.RightElbow, aChar.rightLowerArm, aChar.atRightLowerArm);
+        GameObject leftUpperLeg = create_object(ZigJointId.LeftHip, aChar.leftUpperLeg, aChar.atLeftUpperLeg);
+        GameObject rightUpperLeg = create_object(ZigJointId.RightHip, aChar.rightUpperLeg, aChar.atRightUpperLeg);
+        GameObject leftLowerLeg = create_object(ZigJointId.LeftKnee, aChar.leftLowerLeg, aChar.atLeftLowerLeg);
+        GameObject rightLowerLeg = create_object(ZigJointId.RightKnee, aChar.rightLowerLeg, aChar.atRightLowerLeg);*/
         yield return null;
     }
 
