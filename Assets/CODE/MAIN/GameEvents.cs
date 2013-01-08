@@ -5,10 +5,10 @@ public class GameEvents {
 
     public class FadeEvent
     {
-        bool mIn;
+        //bool mIn;
         public FadeEvent(bool aIn)
         {
-            mIn = aIn;
+            //mIn = aIn;
         }
 
         bool call(float aTime)

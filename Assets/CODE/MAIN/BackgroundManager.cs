@@ -68,7 +68,7 @@ public class BackgroundManager  : FakeMonoBehaviour
         {
             mBackgroundElements.add_image(aCharacter.backgroundElements[i], FlatBodyObject.find_first_color(new Color(255, 0, 5 * i / (float)255), aCharacter.elementPositoner));
             //mBackgroundElements.mElements[mBackgroundElements.mElements.Count - 1].Element.Events.add_event(FlatElementAnimations.position_jiggle_delegate(Mathf.Infinity, 5),0);
-            mBackgroundElements.mElements[mBackgroundElements.mElements.Count - 1].Element.Events.add_event((new FlatElementAnimations.FloatingAnimation(Random.RandomRange(0f, 10f))).animate,0);
+            mBackgroundElements.mElements[mBackgroundElements.mElements.Count - 1].Element.Events.add_event((new FlatElementAnimations.FloatingAnimation(Random.Range(0f, 10f))).animate,0);
         }
         for (int i = 0; i < aCharacter.foregroundElements.Length; i++)
         {

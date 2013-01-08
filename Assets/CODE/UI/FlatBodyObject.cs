@@ -26,7 +26,7 @@ public class FlatBodyObject : FlatElementBase
 
     public static IEnumerable<FlatBodyObject> load_sequential(CharacterData.ChaarcterDataImages aImages, CharacterData.CharacterDataSizes aSizes)
     {
-        //TODO
+        //TODOgit 
         //GameObject torso = create_object(ZigJointId.Torso, aImages.torso, aSizes.atTorso);
         /*
         GameObject waist = create_object(ZigJointId.Waist, aChar.waist, aChar.atWaist);

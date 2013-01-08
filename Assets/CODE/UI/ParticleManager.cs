@@ -4,7 +4,7 @@ public class ParticleManager : FakeMonoBehaviour {
     public ParticleManager(ManagerManager aManager) : base(aManager) { }
 
 
-    Dictionary<ZigJointId, ParticleSystem> mParticles = new Dictionary<ZigJointId, ParticleSystem>();
+    //Dictionary<ZigJointId, ParticleSystem> mParticles = new Dictionary<ZigJointId, ParticleSystem>();
     public override void Start()
     {
         
