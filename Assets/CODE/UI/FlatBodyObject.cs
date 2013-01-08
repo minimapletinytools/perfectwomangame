@@ -218,7 +218,7 @@ public class FlatBodyObject : FlatElementBase
         throw new UnityException("color " + c.ToString() + " not found in texture " + aTex.name);
     }
 
-    Vector3 get_attachment_point(int aId, Texture2D aTex)
+    public static Vector3 get_attachment_point(int aId, Texture2D aTex)
     {
         Color32 c;
         switch (aId)
@@ -240,6 +240,7 @@ public class FlatBodyObject : FlatElementBase
         }
         return find_first_color(c, aTex);
     }
+
 
     Vector3 get_connection_point_image(ZigJointId A, ZigJointId B, Texture2D aBTex)
     {
