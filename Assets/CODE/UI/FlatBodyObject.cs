@@ -162,7 +162,14 @@ public class FlatBodyObject : FlatElementBase
             GameObject.Destroy(tempParent);
         }
     }
+
     GameObject create_object(ZigJointId aId, Texture2D aTex, Texture2D aAttachTex)
+    {
+        List<Vector3> attach = new List<Vector3>(){get_attachment_point(0, aAttachTex)};
+        return create_object(aId, aTex, attach);
+    }
+
+    GameObject create_object(ZigJointId aId, Texture2D aTex, List<Vector3> aAttach)
     {
         GameObject parent = new GameObject("genParent" + aId.ToString());
         //GameObject sphere = GameObject.CreatePrimitive(PrimitiveType.Sphere);
@@ -174,13 +181,12 @@ public class FlatBodyObject : FlatElementBase
         kid.transform.rotation = Quaternion.AngleAxis(90, Vector3.right) * kid.transform.rotation;
 
         kid.transform.localScale = new Vector3(BodyManager.convert_units(aTex.width) / 10.0f, 1, BodyManager.convert_units(aTex.height) / 10.0f);
-        kid.transform.position = -get_attachment_point(0, aAttachTex);
+        kid.transform.position = -aAttach[0];
         kid.transform.parent = parent.transform;
 
         mParts[aId] = parent;
         return parent;
     }
-
 
 
 
