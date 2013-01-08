@@ -22,4 +22,5 @@ public class QuHarmonicOscillator {
 		x = -dt*v/det;
 		v = (1-b/m)/det;
 	}
+    public float value() { return x; }
 }

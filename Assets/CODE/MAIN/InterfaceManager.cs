@@ -292,13 +292,13 @@ public class InterfaceManager : FakeMonoBehaviour {
 
         mScoreText.Text = ((int)(mManager.mGameManager.TotalScore)).ToString();
         if (perfect > 0.5f)
-            mPerfectMeter.mLocalColor = (new Color(Random.RandomRange(0f, 1f), Random.RandomRange(0f, 1f), Random.RandomRange(0f, 1f))) * 0.2f;
+            mPerfectMeter.mLocalColor = (new Color(Random.Range(0f, 1f), Random.Range(0f, 1f), Random.Range(0f, 1f))) * 0.2f;
         else mPerfectMeter.mLocalColor = new Color(0, 0, 0, 0);
         if (perfect > 0.8f)
             mPerfectMeter.mLocalPosition = Random.insideUnitCircle * 10;
         else mPerfectMeter.mLocalPosition = Vector3.zero;
         if (perfect > 0.9f)
-            mPerfectMeter.mLocalRotation = Quaternion.AngleAxis(Random.RandomRange(-5f, 5f), Vector3.forward);
+            mPerfectMeter.mLocalRotation = Quaternion.AngleAxis(Random.Range(-5f, 5f), Vector3.forward);
         else mPerfectMeter.mLocalRotation = Quaternion.identity;
     }
 
