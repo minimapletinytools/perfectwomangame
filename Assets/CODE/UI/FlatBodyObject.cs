@@ -101,6 +101,8 @@ public class FlatBodyObject : FlatElementBase
 
         }
 
+        yield return null;
+
         List<KeyValuePair<GameObject, float>> rotateMe = new List<KeyValuePair<GameObject, float>>();
         rotateMe.Add(new KeyValuePair<GameObject, float>(leftUpperArm, -90));
         rotateMe.Add(new KeyValuePair<GameObject, float>(rightUpperArm, -90));
@@ -131,6 +133,8 @@ public class FlatBodyObject : FlatElementBase
                 f.parent = e.Key.transform;
             GameObject.Destroy(tempParent);
         }
+
+        yield return this;
     }
 
     public void set_target_pose(ProGrading.Pose aPose)
