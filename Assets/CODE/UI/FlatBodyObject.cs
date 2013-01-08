@@ -1,10 +1,18 @@
 using UnityEngine;
 using System.Collections.Generic;
-
+using System.Linq;
 public class FlatBodyObject : FlatElementBase
 {
 
-    public static ZigJointId[] mRenderedJoints = { ZigJointId.Neck, ZigJointId.Torso, ZigJointId.Waist, ZigJointId.LeftShoulder, ZigJointId.LeftElbow, ZigJointId.RightShoulder, ZigJointId.RightElbow, ZigJointId.LeftHip, ZigJointId.LeftKnee, ZigJointId.RightHip, ZigJointId.RightShoulder };
+    public static ZigJointId[] mRenderedJoints = { ZigJointId.Neck, ZigJointId.LeftElbow, ZigJointId.LeftKnee, ZigJointId.LeftShoulder, ZigJointId.LeftHip, ZigJointId.RightElbow, ZigJointId.RightKnee, ZigJointId.RightShoulder, ZigJointId.RightHip, ZigJointId.Torso, ZigJointId.Waist };
+    public int get_joint_alpha_index(ZigJointId aId)
+    {
+        int r = -1;
+        for (int i = 0; i < mRenderedJoints.Length; i++)
+            if (mRenderedJoints[i] == aId)
+                r = i;
+        return r;
+    }
     public ProGrading.Pose mTargetPose = null;
     public Dictionary<ZigJointId, GameObject> mParts = new Dictionary<ZigJointId, GameObject>();
     public bool UseDepth { get; set; }
@@ -48,16 +56,81 @@ public class FlatBodyObject : FlatElementBase
         GameObject torso = create_object(ZigJointId.Torso, aImages.torso, aSizes.mLimbSizes[9], aSizes.mMountingPositions[9]);
         yield return null;
         GameObject waist = create_object(ZigJointId.Waist, aImages.waist, aSizes.mLimbSizes[10], aSizes.mMountingPositions[10]);
-        
-        
-        
-        
-        
-        
-        
-        
-        
         yield return null;
+
+        //order things
+        Dictionary<ZigJointId, GameObject> jointObject = new Dictionary<ZigJointId, GameObject>();
+        Dictionary<ZigJointId, Texture2D> jointTexture = new Dictionary<ZigJointId, Texture2D>();
+        jointObject[ZigJointId.Torso] = torso;
+        jointObject[ZigJointId.Waist] = waist;
+        jointObject[ZigJointId.Neck] = head;
+        jointObject[ZigJointId.LeftShoulder] = leftUpperArm;
+        jointObject[ZigJointId.RightShoulder] = rightUpperArm;
+        jointObject[ZigJointId.LeftElbow] = leftLowerArm;
+        jointObject[ZigJointId.RightElbow] = rightLowerArm;
+        jointObject[ZigJointId.LeftHip] = leftUpperLeg;
+        jointObject[ZigJointId.RightHip] = rightUpperLeg;
+        jointObject[ZigJointId.LeftKnee] = leftLowerLeg;
+        jointObject[ZigJointId.RightKnee] = rightLowerLeg;
+
+        //these two are special
+        torso.transform.position = waist.transform.position;
+        torso.transform.position += get_Z_offset(ZigJointId.Torso);
+        waist.transform.position += get_Z_offset(ZigJointId.Waist);
+
+        List<KeyValuePair<ZigJointId, ZigJointId>> relations = new List<KeyValuePair<ZigJointId, ZigJointId>>();
+        relations.Add(new KeyValuePair<ZigJointId, ZigJointId>(ZigJointId.LeftShoulder, ZigJointId.Torso));
+        relations.Add(new KeyValuePair<ZigJointId, ZigJointId>(ZigJointId.RightShoulder, ZigJointId.Torso));
+        relations.Add(new KeyValuePair<ZigJointId, ZigJointId>(ZigJointId.LeftElbow, ZigJointId.LeftShoulder));
+        relations.Add(new KeyValuePair<ZigJointId, ZigJointId>(ZigJointId.RightElbow, ZigJointId.RightShoulder));
+        relations.Add(new KeyValuePair<ZigJointId, ZigJointId>(ZigJointId.LeftHip, ZigJointId.Waist));
+        relations.Add(new KeyValuePair<ZigJointId, ZigJointId>(ZigJointId.RightHip, ZigJointId.Waist));
+        relations.Add(new KeyValuePair<ZigJointId, ZigJointId>(ZigJointId.LeftKnee, ZigJointId.LeftHip));
+        relations.Add(new KeyValuePair<ZigJointId, ZigJointId>(ZigJointId.RightKnee, ZigJointId.RightHip));
+        relations.Add(new KeyValuePair<ZigJointId, ZigJointId>(ZigJointId.Neck, ZigJointId.Torso));
+
+        foreach (KeyValuePair<ZigJointId, ZigJointId> e in relations)
+        {
+            jointObject[e.Key].transform.parent = jointObject[e.Value].transform;
+            jointObject[e.Key].transform.position =
+                jointObject[e.Value].transform.position
+                + get_offset_of_plane(jointObject[e.Value].transform)
+                + get_connection_point_list(e.Key, e.Value, aSizes.mMountingPositions[get_joint_alpha_index(e.Value)])
+                + get_Z_offset(e.Key)
+                - get_Z_offset(e.Value);
+
+        }
+
+        List<KeyValuePair<GameObject, float>> rotateMe = new List<KeyValuePair<GameObject, float>>();
+        rotateMe.Add(new KeyValuePair<GameObject, float>(leftUpperArm, -90));
+        rotateMe.Add(new KeyValuePair<GameObject, float>(rightUpperArm, -90));
+
+        rotateMe.Add(new KeyValuePair<GameObject, float>(leftUpperLeg, -90));
+        rotateMe.Add(new KeyValuePair<GameObject, float>(rightUpperLeg, -90));
+        rotateMe.Add(new KeyValuePair<GameObject, float>(torso, 90));
+        rotateMe.Add(new KeyValuePair<GameObject, float>(waist, -90));
+        rotateMe.Add(new KeyValuePair<GameObject, float>(head, 90));
+
+        rotateMe.Add(new KeyValuePair<GameObject, float>(leftLowerLeg, -90));
+        rotateMe.Add(new KeyValuePair<GameObject, float>(rightLowerLeg, -90));
+        rotateMe.Add(new KeyValuePair<GameObject, float>(leftLowerArm, -90));
+        rotateMe.Add(new KeyValuePair<GameObject, float>(rightLowerArm, -90));
+
+        foreach (KeyValuePair<GameObject, float> e in rotateMe)
+        {
+            GameObject tempParent = new GameObject("genTempParent");
+            tempParent.transform.position = e.Key.transform.position;
+            List<Transform> children = new List<Transform>();
+            for (int i = 0; i < e.Key.transform.GetChildCount(); i++)
+                if (e.Key.transform.GetChild(i).parent == e.Key.transform)
+                    children.Add(e.Key.transform.GetChild(i));
+            foreach (Transform f in children)
+                f.parent = tempParent.transform;
+            tempParent.transform.rotation = Quaternion.AngleAxis(e.Value, Vector3.forward) * tempParent.transform.rotation;
+            foreach (Transform f in children)
+                f.parent = e.Key.transform;
+            GameObject.Destroy(tempParent);
+        }
     }
 
     public void set_target_pose(ProGrading.Pose aPose)
@@ -103,8 +176,6 @@ public class FlatBodyObject : FlatElementBase
         GameObject rightLowerLeg = create_object(ZigJointId.RightKnee, aChar.rightLowerLeg, aChar.atRightLowerLeg);
 
         //order things
-
-
         Dictionary<ZigJointId, GameObject> jointObject = new Dictionary<ZigJointId, GameObject>();
         Dictionary<ZigJointId, Texture2D> jointTexture = new Dictionary<ZigJointId, Texture2D>();
         jointObject[ZigJointId.Torso] = torso;
@@ -313,6 +384,40 @@ public class FlatBodyObject : FlatElementBase
             return get_attachment_point(1, aBTex);
         }
         throw new UnityException("uh oh, can't find attachment point zigjointid map");
+    }
+
+    Vector3 get_connection_point_list(ZigJointId A, ZigJointId B, List<Vector3> aConnect)
+    {
+        int index = -1;
+        if (A == B)
+        {
+            index = 0;
+        }
+        if (B == ZigJointId.Waist)
+        {
+            if (A == ZigJointId.Torso)
+                index = 0;
+            else if (A == ZigJointId.LeftHip)
+                index = 1;
+            else if (A == ZigJointId.RightHip)
+                index = 2;
+        }
+        else if (B == ZigJointId.Torso)
+        {
+            if (A == ZigJointId.Neck)
+                index = 3;
+            else if (A == ZigJointId.LeftShoulder)
+                index = 1;
+            else if (A == ZigJointId.RightShoulder)
+                index = 2;
+        }
+        else
+        {
+            index = 1;
+        }
+        if(index == -1)
+            throw new UnityException("uh oh, can't find attachment point zigjointid map");
+        return aConnect[index];
     }
 
     public Vector3 get_Z_offset(ZigJointId id)
