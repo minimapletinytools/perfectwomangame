@@ -24,6 +24,12 @@ public class FlatBodyObject : FlatElementBase
             Depth = aDepth;
     }
 
+    public static IEnumerable<FlatBodyObject> load_sequential(CharacterData.ChaarcterDataImages aImages, CharacterData.CharacterDataSizes aSizes)
+    {
+        //TODO
+        yield return null;
+    }
+
     public void set_target_pose(ProGrading.Pose aPose)
     {
         mTargetPose = aPose;

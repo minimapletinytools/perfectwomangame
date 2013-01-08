@@ -1,20 +1,4 @@
-::ASSET PIPELINE::
--using current system, can you
-	-create text asset associated with each image.
-	-text asset should contain original file size information
-	-parse B images for point location and add to text file
-	-resample images if necessary, put this and text file in new directory
-	-finally, automatically make me an asset bundle :)
-	-but I guess if you can't do that then you'll want to use a python script of sorts
--new file naming scheme
-	-Assets/PRECHAR/<character number>/ (where character number is as before, e.g. 05-1)
-	-AUDIO.mp3 for audio
-	-character files as before, but no longer in CHARACTERS folder
-	-background files should be as follows
-		-BG.png for background
-		-BG-1.png, BG-2.png, ... for BG elements
-		-FG-1.png, ... for FG elements
-		-POSITIONS.png for positions
+
 
 ::BIG QUESTIONS::
 -unloading asset bundles!!! omg
@@ -58,6 +42,9 @@ BLAH-nearest neighbor shader!!
 	-is user found
 	-is kinect found
 	-get angles (has default ones if no user is found)
+:file architecture:
+-implement new asset bundle structure
+-better loading scheme for asset bundles
 :scripting architecture:
 -TODO
 -need lea's story board
@@ -74,10 +61,10 @@ BLAH-nearest neighbor shader!!
 	-if fail, should not crash (or maybe it should..)
 -create character testing project (in ggfiles even)
 -figure out how to unload characters properly (please!)
--write script to convert placement images to TextAssets containing needed info
--write a script to shrink all assets so they aren't ridiculous.
+DONE-write script to convert placement images to TextAssets containing needed info
+DONE-write a script to shrink all assets so they aren't ridiculous.
 	-can we incorporate both of the above scripts into unity??? that would be AWESOME
--make unity editor script more awesome
+DONE-make unity editor script more awesome
 	-incorporate scripts from above :DDD
 	-be able to bulk export all asset bundles
 :difficulty/perfect system:
@@ -86,6 +73,26 @@ BLAH-nearest neighbor shader!!
 -performance -> generates dialog -> modifies difficultly based on stats
 -create a mini version of this in python or something
 
+
+::ASSET PIPELINE::
+DONE-using current system, can you
+	-create text asset associated with each image.
+	-text asset should contain original file size information
+	-parse B images for point location and add to text file
+	-resample images if necessary, put this and text file in new directory
+	-finally, automatically make me an asset bundle :)
+	-but I guess if you can't do that then you'll want to use a python script of sorts
+DONE-new file naming scheme
+	-Assets/PRECHAR/<character number>/ (where character number is as before, e.g. 05-1)
+	-AUDIO.mp3 for audio
+	-character files as before, but no longer in CHARACTERS folder
+	-background files should be as follows
+		-BACKGROUND.png for background
+		-BG-1.png, BG-2.png, ... for BG elements
+		-FG-1.png, ... for FG elements
+		-POSITIONS.png for positions
+		
+		
 ::TODO::
 DONE-fix relative positioning with flat camera
 DONE-seperate out body manager poo poo
