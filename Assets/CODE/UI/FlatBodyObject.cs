@@ -24,21 +24,39 @@ public class FlatBodyObject : FlatElementBase
             Depth = aDepth;
     }
 
-    public static IEnumerable<FlatBodyObject> load_sequential(CharacterData.ChaarcterDataImages aImages, CharacterData.CharacterDataSizes aSizes)
+    public IEnumerable<FlatBodyObject> load_sequential(CharacterData.ChaarcterDataImages aImages, CharacterData.CharacterDataSizes aSizes)
     {
         //TODOgit 
-        //GameObject torso = create_object(ZigJointId.Torso, aImages.torso, aSizes.atTorso);
-        /*
-        GameObject waist = create_object(ZigJointId.Waist, aChar.waist, aChar.atWaist);
-        GameObject head = create_object(ZigJointId.Neck, aChar.head, aChar.atHead);
-        GameObject leftUpperArm = create_object(ZigJointId.LeftShoulder, aChar.leftUpperArm, aChar.atLeftUpperArm);
-        GameObject rightUpperArm = create_object(ZigJointId.RightShoulder, aChar.rightUpperArm, aChar.atRightUpperArm);
-        GameObject leftLowerArm = create_object(ZigJointId.LeftElbow, aChar.leftLowerArm, aChar.atLeftLowerArm);
-        GameObject rightLowerArm = create_object(ZigJointId.RightElbow, aChar.rightLowerArm, aChar.atRightLowerArm);
-        GameObject leftUpperLeg = create_object(ZigJointId.LeftHip, aChar.leftUpperLeg, aChar.atLeftUpperLeg);
-        GameObject rightUpperLeg = create_object(ZigJointId.RightHip, aChar.rightUpperLeg, aChar.atRightUpperLeg);
-        GameObject leftLowerLeg = create_object(ZigJointId.LeftKnee, aChar.leftLowerLeg, aChar.atLeftLowerLeg);
-        GameObject rightLowerLeg = create_object(ZigJointId.RightKnee, aChar.rightLowerLeg, aChar.atRightLowerLeg);*/
+        GameObject head = create_object(ZigJointId.Neck, aImages.head, aSizes.mLimbSizes[0], aSizes.mMountingPositions[0]);
+        yield return null;
+        GameObject leftLowerArm = create_object(ZigJointId.LeftElbow, aImages.leftLowerArm,  aSizes.mLimbSizes[1], aSizes.mMountingPositions[1]);
+        yield return null;
+        GameObject leftLowerLeg = create_object(ZigJointId.LeftKnee, aImages.leftLowerLeg, aSizes.mLimbSizes[2], aSizes.mMountingPositions[2]);
+        yield return null;
+        GameObject leftUpperArm = create_object(ZigJointId.LeftShoulder, aImages.leftUpperArm, aSizes.mLimbSizes[3], aSizes.mMountingPositions[3]);
+        yield return null;
+        GameObject leftUpperLeg = create_object(ZigJointId.LeftHip, aImages.leftUpperLeg, aSizes.mLimbSizes[4], aSizes.mMountingPositions[4]);
+        yield return null;
+        GameObject rightLowerArm = create_object(ZigJointId.RightElbow, aImages.rightLowerArm, aSizes.mLimbSizes[5], aSizes.mMountingPositions[5]);
+        yield return null;
+        GameObject rightLowerLeg = create_object(ZigJointId.RightKnee, aImages.rightLowerLeg, aSizes.mLimbSizes[6], aSizes.mMountingPositions[6]);
+        yield return null;
+        GameObject rightUpperArm = create_object(ZigJointId.RightShoulder, aImages.rightUpperArm, aSizes.mLimbSizes[7], aSizes.mMountingPositions[7]);
+        yield return null;
+        GameObject rightUpperLeg = create_object(ZigJointId.RightHip, aImages.rightUpperLeg, aSizes.mLimbSizes[8], aSizes.mMountingPositions[8]);
+        yield return null;
+        GameObject torso = create_object(ZigJointId.Torso, aImages.torso, aSizes.mLimbSizes[9], aSizes.mMountingPositions[9]);
+        yield return null;
+        GameObject waist = create_object(ZigJointId.Waist, aImages.waist, aSizes.mLimbSizes[10], aSizes.mMountingPositions[10]);
+        
+        
+        
+        
+        
+        
+        
+        
+        
         yield return null;
     }
 
@@ -175,7 +193,7 @@ public class FlatBodyObject : FlatElementBase
         }
     }
 
-    GameObject create_object(ZigJointId aId, Texture2D aTex, Texture2D aAttachTex)
+    GameObject create_object(ZigJointId aId, Texture2D aTex, Texture2D aAttachTex)  
     {
         List<Vector3> attach = new List<Vector3>(){get_attachment_point(0, aAttachTex)};
         return create_object(aId, aTex, new Vector2(aTex.width,aTex.height), attach);
