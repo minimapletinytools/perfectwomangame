@@ -39,7 +39,7 @@ public class BodyManager : FakeMonoBehaviour {
         }
     }
 
-    public void character_changed_listener(CharacterTextureBehaviour aCharacter)
+    public void character_changed_listener(CharacterLoader aCharacter)
     {
         destroy_character();
 
@@ -52,7 +52,7 @@ public class BodyManager : FakeMonoBehaviour {
             else
                 mFlat.HardPosition = Random.insideUnitCircle.normalized * 1000;
             mFlat.SoftPosition = Vector3.zero;
-            mOffset = (new Vector3(BodyManager.convert_units(aCharacter.background1.width) / 4.0f, 0, 0) + BodyManager.convert_units(aCharacter.adjust));
+            mOffset = (new Vector3(aCharacter.Sizes.mOffset.x, aCharacter.Sizes.mOffset.y,0));
             mFlat.SoftPosition = mFlat.SoftPosition + mOffset;
             mFlat.update(0);
         }

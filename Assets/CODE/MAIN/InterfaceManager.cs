@@ -309,9 +309,9 @@ public class InterfaceManager : FakeMonoBehaviour {
     }
 
 
-    public void character_changed_listener(CharacterTextureBehaviour aCharacter)
+    public void character_changed_listener(CharacterLoader aCharacter)
     {
-        BackgroundManager.resize_camera_against_texture(mFlatCamera.Camera, aCharacter.background1);
+        BackgroundManager.resize_camera(mFlatCamera.Camera, aCharacter.Sizes.mBackSize);
         if(!mIsSetup)
             setup_elements();
     }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 
 public class CharacterData {
 
+    //must match with class defined in ggfiles
     [System.Serializable]
     public class CharacterDataSizes
     {
@@ -17,10 +18,12 @@ public class CharacterData {
 
         public Vector2 mBackSize = new Vector2();
 
+        public Vector2 mOffset = new Vector2();
+
         public string mName = "";
     }
 
-    public class ChaarcterDataImages
+    public class CharacterDataImages
     {
         public Texture2D head;
         public Texture2D leftLowerArm;
@@ -34,16 +37,7 @@ public class CharacterData {
         public Texture2D torso;
         public Texture2D waist;
         public Texture2D background1;
-        public Texture2D[] backgroundElements;
-        public Texture2D[] foregroundElements;
-    }
-
-    public class CharacterDataInstantiated
-    {
-        public CharacterDataSizes Data {get; private set;}
-        public CharacterDataInstantiated(CharacterDataSizes aData)
-        {
-            Data = aData;
-        }
+        public List<Texture2D> backgroundElements = new List<Texture2D>();
+        public List<Texture2D> foregroundElements = new List<Texture2D>();
     }
 }

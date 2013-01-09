@@ -4,10 +4,25 @@ using System.Collections;
 public class FlatElementImage : FlatElementBase
 {
     public ImageGameObjectUtility mImage;
+
+
+    //TODO DELETE this version
     public FlatElementImage(Texture2D aTex, int aDepth)
     {
-        SoftColor = new Color(0.5f,0.5f,0.5f,0.5f);
-        mImage = new ImageGameObjectUtility(aTex);
+        initialize(aTex, null, aDepth);
+    }
+
+
+
+    public FlatElementImage(Texture2D aTex, System.Nullable<Vector2> aSize, int aDepth)
+    {
+        initialize(aTex, aSize, aDepth);
+    }
+
+    public void initialize(Texture2D aTex, System.Nullable<Vector2> aSize, int aDepth)
+    {
+        SoftColor = new Color(0.5f, 0.5f, 0.5f, 0.5f);
+        mImage = new ImageGameObjectUtility(aTex, aSize);
         PrimaryGameObject = mImage.ParentObject;
         Depth = aDepth;
     }

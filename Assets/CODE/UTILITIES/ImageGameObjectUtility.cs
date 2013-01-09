@@ -27,7 +27,7 @@ public class ImageGameObjectUtility
         }
     }
 
-    public ImageGameObjectUtility(Texture2D aTex)
+    public ImageGameObjectUtility(Texture2D aTex, System.Nullable<Vector2> aSize = null)
     {
         ParentObject = new GameObject("genImageObjectParent");
         PlaneObject = GameObject.CreatePrimitive(PrimitiveType.Plane);
@@ -35,18 +35,21 @@ public class ImageGameObjectUtility
         GameObject.DestroyImmediate(PlaneObject.GetComponent<BoxCollider>());
         PlaneMaterial = new Material(ManagerManager.Manager.mReferences.mDefaultCharacterShader);
         PlaneObject.renderer.material = PlaneMaterial;
-        set_new_texture(aTex);
+        set_new_texture(aTex, aSize);
 
         PlaneObject.transform.rotation = Quaternion.AngleAxis(90, Vector3.right) * PlaneObject.transform.rotation;
         PlaneObject.transform.parent = ParentObject.transform;
     }
 
-    public void set_new_texture(Texture2D aTex)
+    public void set_new_texture(Texture2D aTex, System.Nullable<Vector2> aSize = null)
     {
 
         if (aTex != null)
         {
-            BaseDimension = new Vector2(aTex.width, aTex.height);
+            if (aSize == null)
+                BaseDimension = new Vector2(aTex.width, aTex.height);
+            else
+                BaseDimension = aSize.Value;
         }
         else
         {

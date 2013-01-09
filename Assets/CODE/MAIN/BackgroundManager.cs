@@ -52,43 +52,44 @@ public class BackgroundManager  : FakeMonoBehaviour
                 f.gameObject.layer = mForegroundLayer;
     }
 
-    public void character_changed_listener(CharacterTextureBehaviour aCharacter)
-    {
-        set_background(aCharacter);
-    }
-    public void set_background(CharacterTextureBehaviour aCharacter)
+    public void character_changed_listener(CharacterLoader aCharacter)
     {
 
-        mBackground.mImage.set_new_texture(aCharacter.background1);
+        mBackground.mImage.set_new_texture(aCharacter.Images.background1,aCharacter.Sizes.mBackSize);
 
-        //TODO background and forgeground elements
         mBackgroundElements.destroy();
         mForegroundElements.destroy();
-        for (int i = 0; i < aCharacter.backgroundElements.Length; i++)
+        for (int i = 0; i < aCharacter.Images.backgroundElements.Count; i++)
         {
-            mBackgroundElements.add_image(aCharacter.backgroundElements[i], FlatBodyObject.find_first_color(new Color(255, 0, 5 * i / (float)255), aCharacter.elementPositoner));
+            mBackgroundElements.add_image(aCharacter.Images.backgroundElements[i], aCharacter.Sizes.mBackgroundPositions[i]);
             //mBackgroundElements.mElements[mBackgroundElements.mElements.Count - 1].Element.Events.add_event(FlatElementAnimations.position_jiggle_delegate(Mathf.Infinity, 5),0);
             mBackgroundElements.mElements[mBackgroundElements.mElements.Count - 1].Element.Events.add_event((new FlatElementAnimations.FloatingAnimation(Random.Range(0f, 10f))).animate,0);
         }
-        for (int i = 0; i < aCharacter.foregroundElements.Length; i++)
+        for (int i = 0; i < aCharacter.Images.foregroundElements.Count; i++)
         {
-            //mForegroundElements.add_image(aCharacter.foregroundElements[i], FlatBodyObject.find_first_color(new Color(0, 255, 5 * i / (float)255), aCharacter.elementPositoner));
+            //mForegroundElements.add_image(aCharacter.Images.foregroundElements[i], aCharacter.Sizes.mForegroundPositions[i]);
         }
 
         set_background_layer(mBackgroundLayer);
         set_foreground_layer(mForegroundLayer);
         //resize the camera
         foreach (Camera c in mManager.mCameraManager.AllCameras)
-            resize_camera_against_texture(c, aCharacter.background1);
+            resize_camera(c, aCharacter.Sizes.mBackSize);
     }
-    public static void resize_camera_against_texture(Camera aCam, Texture aTex, float aDistance = 1)
+
+    public static void resize_camera(Camera aCam, Vector2 aSize, float aDistance = 1)
     {
         //TODO what if camera is not orthographic
-        float texRatio = aTex.width / (float)aTex.height;
+        float texRatio = aSize.x / (float)aSize.y;
         float camRatio = aCam.aspect;
         if (camRatio > texRatio) //match width
-            aCam.orthographicSize = BodyManager.convert_units(aTex.width / camRatio) / 2.0f;
+            aCam.orthographicSize = BodyManager.convert_units(aSize.x / camRatio) / 2.0f;
         else
-            aCam.orthographicSize = BodyManager.convert_units(aTex.height) / 2.0f;
+            aCam.orthographicSize = BodyManager.convert_units(aSize.y) / 2.0f;
+    }
+    //TODO delete this
+    public static void resize_camera_against_texture(Camera aCam, Texture aTex, float aDistance = 1)
+    {
+        resize_camera(aCam, new Vector2(aTex.width, aTex.height), aDistance);
     }
 }

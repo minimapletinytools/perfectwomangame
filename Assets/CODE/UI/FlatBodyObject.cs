@@ -28,11 +28,28 @@ public class FlatBodyObject : FlatElementBase
         SoftInterpolation = 0.08f;
 
         UseDepth = (aDepth != -1);
-        if(UseDepth)
+        if (UseDepth)
             Depth = aDepth;
     }
 
-    public IEnumerable<FlatBodyObject> load_sequential(CharacterData.ChaarcterDataImages aImages, CharacterData.CharacterDataSizes aSizes)
+    public FlatBodyObject(CharacterLoader aChar, int aDepth = -1)
+    {
+        //TODO fake thread this eventually please..
+        foreach (FlatBodyObject e in load_sequential(aChar.Images, aChar.Sizes))
+            ;
+
+        PrimaryGameObject = new GameObject("genBodyParent");
+        mParts[ZigJointId.Waist].transform.parent = PrimaryGameObject.transform;
+        mParts[ZigJointId.Torso].transform.parent = PrimaryGameObject.transform;
+        SoftColor = new Color(0.5f, 0.5f, 0.5f, 0.5f);
+        SoftInterpolation = 0.08f;
+
+        UseDepth = (aDepth != -1);
+        if (UseDepth)
+            Depth = aDepth;
+    }
+
+    public IEnumerable<FlatBodyObject> load_sequential(CharacterData.CharacterDataImages aImages, CharacterData.CharacterDataSizes aSizes)
     {
         //TODOgit 
         GameObject head = create_object(ZigJointId.Neck, aImages.head, aSizes.mLimbSizes[0], aSizes.mMountingPositions[0]);

@@ -7,8 +7,6 @@ public class ParticleManager : FakeMonoBehaviour {
     //Dictionary<ZigJointId, ParticleSystem> mParticles = new Dictionary<ZigJointId, ParticleSystem>();
     public override void Start()
     {
-        
-        mManager.mEventManager.character_setup_event += character_setup_listener;
 
         /*
         foreach (ZigJointId e in BodyManager.mRenderedJoints)

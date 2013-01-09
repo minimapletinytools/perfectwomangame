@@ -167,7 +167,6 @@ public class GameManager : FakeMonoBehaviour
     {
         mManager.gameObject.AddComponent<AudioListener>();
         mSource = mManager.gameObject.AddComponent<AudioSource>();
-        mManager.mEventManager.character_changed_event += character_changed_listener;
 
         //set just the background
         /*
@@ -379,7 +378,11 @@ public class GameManager : FakeMonoBehaviour
             TimeRemaining = 9999;
             
             GameObject instance = (GameObject)GameObject.Instantiate(mManager.mReferences.mGrave);
-            mManager.mBackgroundManager.character_changed_listener(instance.GetComponent<CharacterTextureBehaviour>());
+
+            //TODO fix this one...
+            //use special grave package maybe???
+
+            //mManager.mBackgroundManager.character_changed_listener(instance.GetComponent<CharacterTextureBehaviour>());
             this.character_changed_listener(instance.GetComponent<CharacterTextureBehaviour>());
             mManager.mInterfaceManager.mScoreText.SoftPosition = mManager.mBackgroundManager.mBackgroundElements.mElements[0].Element.SoftPosition + new Vector3(0,-150,0);
             mManager.mInterfaceManager.mScoreText.Depth = 101;
@@ -405,12 +408,9 @@ public class GameManager : FakeMonoBehaviour
     //used by advance_scene
     public void scene_loaded_callback(AssetBundle aBundle, string aBundleName)
     {
-
-        GameObject pf = (GameObject)aBundle.Load(aBundleName, typeof(GameObject));
-        Debug.Log("instantiating " + aBundleName + " " + pf);
-        GameObject instant = (GameObject)GameObject.Instantiate(pf);
-        start_character(instant.GetComponent<CharacterTextureBehaviour>(),CurrentIndex);
-        GameObject.Destroy(instant);
+        CharacterLoader loader = new CharacterLoader();
+        loader.load_character(aBundle);
+        start_character(loader,CurrentIndex);
 
         if (CurrentAssetBundle != null)
             CurrentAssetBundle.Unload(true);
@@ -444,10 +444,9 @@ public class GameManager : FakeMonoBehaviour
     {
         ChoosingPercentages = new float[4] { 0, 0, 0, 0 };
     }
-    void start_character(CharacterTextureBehaviour container,int index)
+    void start_character(CharacterLoader container,int index)
     {
         mManager.mEventManager.character_changed_event(container);
-        mManager.mEventManager.character_setup_event(container);
 
         if (get_pose_at_index(index, get_difficulty(index)) != null)
         {
