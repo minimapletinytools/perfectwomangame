@@ -51,7 +51,6 @@ public class ProjectionManager : FakeMonoBehaviour {
         void set_current(float interp)
         {
             //current = interp * current + target * (1 - interp);
-            
             if (current - target > 180)
                 target += 360;
             else if (current - target < -180)
@@ -74,17 +73,6 @@ public class ProjectionManager : FakeMonoBehaviour {
     }
     public Dictionary<ZigJointId, Stupid> mImportant = new Dictionary<ZigJointId, Stupid>();
 	public override void Start () {
-        /*mImportant[new GradingManager.WeightedZigJointPair(ZigJointId.LeftShoulder, ZigJointId.LeftElbow,1)] = new Smoothing();
-        mImportant[new GradingManager.WeightedZigJointPair(ZigJointId.LeftElbow, ZigJointId.LeftHand, 1)] = new Smoothing();
-        mImportant[new GradingManager.WeightedZigJointPair(ZigJointId.LeftHip, ZigJointId.LeftKnee, 1)] = new Smoothing();
-        mImportant[new GradingManager.WeightedZigJointPair(ZigJointId.LeftKnee, ZigJointId.LeftAnkle, 1)] = new Smoothing();
-        mImportant[new GradingManager.WeightedZigJointPair(ZigJointId.RightShoulder, ZigJointId.RightElbow, 1)] = new Smoothing();
-        mImportant[new GradingManager.WeightedZigJointPair(ZigJointId.RightElbow, ZigJointId.RightHand, 1)] = new Smoothing();
-        mImportant[new GradingManager.WeightedZigJointPair(ZigJointId.RightHip, ZigJointId.RightKnee, 1)] = new Smoothing();
-        mImportant[new GradingManager.WeightedZigJointPair(ZigJointId.RightKnee, ZigJointId.RightAnkle, 1)] = new Smoothing();
-        mImportant[new GradingManager.WeightedZigJointPair(ZigJointId.Neck, ZigJointId.Head, 1)] = new Smoothing();
-        mImportant[new GradingManager.WeightedZigJointPair(ZigJointId.Torso, ZigJointId.Neck, 1)] = new Smoothing();*/
-
         mImportant[ZigJointId.LeftShoulder] = new Stupid(ZigJointId.LeftElbow);
         mImportant[ZigJointId.LeftElbow] = new Stupid(ZigJointId.LeftHand);
         mImportant[ZigJointId.LeftHip] = new Stupid(ZigJointId.LeftKnee);
@@ -101,10 +89,6 @@ public class ProjectionManager : FakeMonoBehaviour {
 	public Vector3 mUp = Vector3.up;
     public float mSmoothing = 0.5f;
 	
-	public void compute_normal()
-	{
-		//TODO
-	}
 	public float get_smoothed_relative(ZigJointId A, ZigJointId B)
 	{
 		return mImportant[A].smoothing.current;
@@ -112,35 +96,19 @@ public class ProjectionManager : FakeMonoBehaviour {
 	public float get_relative(ZigInputJoint A, ZigInputJoint B)
 	{
 		if(A.Id == ZigJointId.None)
-			return 0; //TODO
+			return 0;
 		if(!B.GoodPosition) 
 			return -A.Rotation.flat_rotation() + 90;
         return get_relative(A.Position, B.Position);
-        /*TODO DELETE
-		Vector3 right = Vector3.Cross(mUp,mNormal);
-		Vector3 v = B.Position - A.Position;
-		Vector3 projected = Vector3.Exclude(mNormal,v);
-		float r = Vector3.Angle(right,v);
-        if (Vector3.Dot(Vector3.Cross(right, projected), mNormal) < 0)
-        {
-            r *= -1;
-        }
-		return -r;*/
 	}
 
     public float get_waist(ZigInputJoint waist, ZigInputJoint L, ZigInputJoint R)
     {
-        if(Application.platform == RuntimePlatform.WindowsPlayer)
+        if(!mManager.mZigManager.using_nite())
             return -waist.Rotation.flat_rotation() + 90;    
         else
             return get_relative(waist.Position, L.Position * 0.5f + R.Position * 0.5f); //TODO use this for OSX...
     }
-
-    public float get_waist(Vector3 waist, Vector3 L, Vector3 R)
-    {
-        return get_relative(waist, L * 0.5f + R * 0.5f);
-    }
-
 
     public float get_relative(Vector3 A, Vector3 B)
     {

@@ -6,6 +6,7 @@ public class ZigManager : FakeMonoBehaviour {
 	Zig mZig = null;
 	ZigEngageSingleUser mZigEngageSingleUser = null;
     ZigCallbackBehaviour mZigCallbackBehaviour = null;
+    ZigInput mZigInput = null;
     public Dictionary<ZigJointId, ZigInputJoint> Joints{get; private set;}
     public ZigManager(ManagerManager aManager) : base(aManager)
 	{
@@ -49,16 +50,30 @@ public class ZigManager : FakeMonoBehaviour {
 		//this is the only way to get callbacks from ZigEngageSingleUser
 		mZigCallbackBehaviour = mZigObject.AddComponent<ZigCallbackBehaviour>();
         mZigCallbackBehaviour.mUpdateUserDelegate += this.Zig_UpdateUser;
+
+        
 	}
 	
 	public override void Update () 
 	{
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (mZigInput == null)
         {
-            //Debug.Log(mManager.mGradingManager.print_pose());
+            GameObject container = GameObject.Find("ZigInputContainer");
+            if(container != null)
+                mZigInput = container.GetComponent<ZigInput>();
         }
 	}
-	
+
+    public bool using_nite()
+    {
+        if (mZigInput != null)
+        {
+            return !mZigInput.kinectSDK;
+        }
+
+        //default is true because it is a safer choice
+        return true;
+    }
 	
 	public bool has_user()
 	{

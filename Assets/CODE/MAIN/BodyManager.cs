@@ -124,8 +124,9 @@ public class BodyManager : FakeMonoBehaviour {
                 if (ManagerManager.Manager.mGameManager.Started)
                 {
                     Vector3 position = Vector3.zero;
-                    if (ManagerManager.Manager.mZigManager.Joints.ContainsKey(ZigJointId.Waist)) //lol you can replace this with try get value... actually I fixed this so just delete this dumb check
-                        position = ManagerManager.Manager.mZigManager.Joints[ZigJointId.Waist].Position;
+                    if (!mManager.mZigManager.using_nite())
+                        position = mManager.mZigManager.Joints[ZigJointId.Waist].Position;
+                    else position = mManager.mZigManager.Joints[ZigJointId.Torso].Position;
                     position.z = 0;
                     position.y = 0;
                     position.x *= -1;
