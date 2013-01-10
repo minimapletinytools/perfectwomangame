@@ -2,8 +2,8 @@
 
 ::BIG QUESTIONS::
 -unloading asset bundles!!! omg
-DONE/OK-make sure all information can be obtained from openNI on OSX
 	DONE-skeleton is different, figure out what skeleton information is good!!
+DONE/OK-make sure all information can be obtained from openNI on OSX
 		DONE-hand position is good but I guess not rotation?? (not that I care)
 		DONE-need to use left/rightKnee rotation and not position of foot
 -figure out why it takes so long to load on OSX, does it take this long on windows??
@@ -23,7 +23,7 @@ DONE/OK-make sure all information can be obtained from openNI on OSX
 
 ::TODO::
 :other:
--create character testing project (in ggfiles even)
+IGNORE-create character testing project (in ggfiles even)
 -grade against position offset as well??? (or move the transparent one with it) Snap position???
 -do the feet, i.e. want feet to stick to ground 
 -add quit button

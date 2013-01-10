@@ -181,6 +181,8 @@ public class GameManager : FakeMonoBehaviour
         mManager.mAssetLoader.load_poses("POSES");
 
     }
+
+    
     public override void Update()
     {
         User = (mManager.mZigManager.has_user());
@@ -208,8 +210,11 @@ public class GameManager : FakeMonoBehaviour
         {
             if (!IsLoading)
             {
-                
+
+                hack_keyboard_input();
+
                 TimeRemaining -= Time.deltaTime;
+               
                 
 
                 if (User)
@@ -324,6 +329,8 @@ public class GameManager : FakeMonoBehaviour
             mManager.mInterfaceManager.set_choosing_percentages(ChoosingPercentages);
         }
     }
+
+    //TODO this is completely different now
     void adjust_difficulty()
     {
         for (int i = 0; i < 29; i++)
@@ -354,15 +361,7 @@ public class GameManager : FakeMonoBehaviour
     }
     void advance_scene(float aSceneTime)
     {
-
-
         CurrentLevel++;
-
-        if (DEBUGGING)
-        {
-            if (CurrentLevel == 1)//hack
-                CurrentLevel = 6;
-        }
         
         if (CurrentLevel < 8)
         {
@@ -530,14 +529,13 @@ public class GameManager : FakeMonoBehaviour
             }
         }
     }
-
     //move this stuff elsewhere poo poo
     public static void Shuffle<T>(T[] array)
     {
         for (int i = array.Length; i > 1; i--)
         {
             // Pick random element to swap.
-            int j = Random.Range(0,i-1); // 0 <= j <= i-1
+            int j = Random.Range(0, i - 1); // 0 <= j <= i-1
             // Swap.
             T tmp = array[j];
             array[j] = array[i - 1];
@@ -552,4 +550,31 @@ public class GameManager : FakeMonoBehaviour
             r[i] = mPossibleChoicePoses[i];
         return r;
     }
+
+
+
+    //hack nonsense
+    public void hack_choice(int choice)
+    {
+        NextContendingChoice = choice;
+        advance_scene(LEVEL_TIME_TOTAL);
+    }
+
+    public void hack_keyboard_input()
+    {
+        //keyboard input hack
+        if (Input.GetKeyDown(KeyCode.Space))
+            TimeRemaining = 0;
+        if (Input.GetKeyDown(KeyCode.Alpha1))
+            hack_choice(0);
+        else if (Input.GetKeyDown(KeyCode.Alpha2))
+            hack_choice(1);
+        else if (Input.GetKeyDown(KeyCode.Alpha3))
+            hack_choice(2);
+        else if (Input.GetKeyDown(KeyCode.Alpha4))
+            hack_choice(3);
+
+    }
+
+   
 }

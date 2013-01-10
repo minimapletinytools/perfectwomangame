@@ -42,15 +42,10 @@ public class CharacterLoader {
             Images.foregroundElements.Add(aBundle.Load("FG_" + (i + 1), typeof(Texture2D)) as Texture2D);
 
         TextAsset cd = aBundle.Load("CD", typeof(TextAsset)) as TextAsset;
-        Debug.Log(cd.text);
         System.IO.MemoryStream stream = new System.IO.MemoryStream(cd.bytes);
         System.Xml.Serialization.XmlSerializer xs = new System.Xml.Serialization.XmlSerializer(typeof(CharacterData.CharacterDataSizes));
         Sizes = xs.Deserialize(stream) as CharacterData.CharacterDataSizes;
         Done = true;
-
-        Debug.Log("character bundle finished loading ");
-        Debug.Log("bgi, bfgi, bgp, fgp: " + Images.backgroundElements.Count + " " + Images.foregroundElements.Count + " " + Sizes.mBackgroundPositions.Count + " " + Sizes.mForegroundPositions.Count);
-        Debug.Log("limb positions, sizes: " + Sizes.mMountingPositions.Count + " " + Sizes.mLimbSizes.Count);
         yield break;
     }
 }
