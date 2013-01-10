@@ -86,7 +86,7 @@ public class InterfaceManager : FakeMonoBehaviour {
         mFlatCamera = new FlatCameraManager(new Vector3(10000, 0, 0), 10);
         mMiniMan = ((GameObject)GameObject.Instantiate(ManagerManager.Manager.mMenuReferences.miniMan)).GetComponent<CharacterTextureBehaviour>();
 
-        mGameBackground = new FlatElementImage(ManagerManager.Manager.mMenuReferences.gameBackground, 0);
+        mGameBackground = new FlatElementImage(null, 0); //TODO need image here???
         mGameBackground.HardPosition = mFlatCamera.get_point(0, 0);
         mGameBackground.Enabled = false;
         

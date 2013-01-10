@@ -21,11 +21,9 @@ DONE/OK-make sure all information can be obtained from openNI on OSX
 	-function to detect what SDK is being used, this needs to look for zig input container after startup and read which sdk is being used... pfft
 
 
-::IMPORTANT::
--remove all background image references 
-
 ::TODO::
 :other:
+-create character testing project (in ggfiles even)
 -grade against position offset as well??? (or move the transparent one with it) Snap position???
 -do the feet, i.e. want feet to stick to ground 
 -add quit button
@@ -33,6 +31,7 @@ DONE/OK-make sure all information can be obtained from openNI on OSX
 -move project in repo into its own folder so I can add other projects to the main repo.
 -set up the asset repo (see below)
 BLAH-nearest neighbor shader!!
+
 :kinect related:
 -consider getting snapping to work, but I don't think it's really needed anymore
 -figure out why it's a little messed up on some angles. probably a bug in code
@@ -42,9 +41,7 @@ BLAH-nearest neighbor shader!!
 	-is user found
 	-is kinect found
 	-get angles (has default ones if no user is found)
-:file architecture:
--implement new asset bundle structure
--better loading scheme for asset bundles
+
 :scripting architecture:
 -TODO
 -need lea's story board
@@ -58,11 +55,11 @@ BLAH-nearest neighbor shader!!
 	-outputs data in various forms
 	
 :file architecture:
--redesign it so it's not a big sloppy mess liek it is now... or not
+-better loading scheme for asset bundles
+DONE-implement new asset bundle structure
+IGNORE-redesign it so it's not a big sloppy mess liek it is now... or not
 DONE-characters should be read in based on filenames from asset bundles
 	-if fail, should not crash (or maybe it should..)
--create character testing project (in ggfiles even)
--figure out how to unload characters properly (please!)
 DONE-write script to convert placement images to TextAssets containing needed info
 DONE-write a script to shrink all assets so they aren't ridiculous.
 	-can we incorporate both of the above scripts into unity??? that would be AWESOME
@@ -76,6 +73,8 @@ DONE-make unity editor script more awesome
 -performance -> generates dialog -> modifies difficultly based on stats
 -create a mini version of this in python or something
 
+::IMPORTANT::
+DONE-remove all background image references 
 
 ::ASSET PIPELINE::
 DONE-using current system, can you

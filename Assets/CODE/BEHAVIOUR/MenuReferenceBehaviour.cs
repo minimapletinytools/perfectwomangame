@@ -2,13 +2,11 @@ using UnityEngine;
 using System.Collections;
 
 public class MenuReferenceBehaviour : MonoBehaviour {
-    public AssetBundle poo;
+    
     public GameObject miniMan;
     public TextAsset cheapPose;
 
     public Font menuFont;
-
-    public Texture2D gameBackground;
 
     public Texture2D pinkBackground;
     public Texture2D blueBar;
