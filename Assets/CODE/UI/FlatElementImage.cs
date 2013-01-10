@@ -12,8 +12,6 @@ public class FlatElementImage : FlatElementBase
         initialize(aTex, null, aDepth);
     }
 
-
-
     public FlatElementImage(Texture2D aTex, System.Nullable<Vector2> aSize, int aDepth)
     {
         initialize(aTex, aSize, aDepth);

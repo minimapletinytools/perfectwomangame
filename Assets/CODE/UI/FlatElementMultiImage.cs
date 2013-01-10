@@ -8,12 +8,9 @@ public class FlatElementMultiImage : FlatElementMultiBase
         Depth = aDepth;
     }
 
-    public void add_image(Texture2D aTex, Vector3 aOffset, Vector3 aSize)
+    public void add_image(Texture2D aTex, Vector3 aOffset, Vector2? aSize = null)
     {
-    }
-    public void add_image(Texture2D aTex, Vector3 aOffset)
-    {
-        FlatElementImage image = new FlatElementImage(aTex, Depth + mElements.Count);
+        FlatElementImage image = new FlatElementImage(aTex,  aSize, Depth + mElements.Count);
         mElements.Add(new ElementOffset(image, aOffset));
         SoftPosition = SoftPosition;
     }
