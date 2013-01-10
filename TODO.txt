@@ -26,10 +26,10 @@ DONE/OK-make sure all information can be obtained from openNI on OSX
 IGNORE-create character testing project (in ggfiles even)
 -grade against position offset as well??? (or move the transparent one with it) Snap position???
 -do the feet, i.e. want feet to stick to ground 
--add quit button
--add keyboard playability (skip)
--move project in repo into its own folder so I can add other projects to the main repo.
--set up the asset repo (see below)
+DONE-add quit button
+DONE-add keyboard playability (skip)
+DONE-move project in repo into its own folder so I can add other projects to the main repo.
+DONE-set up the asset repo (see below)
 BLAH-nearest neighbor shader!!
 
 :kinect related:

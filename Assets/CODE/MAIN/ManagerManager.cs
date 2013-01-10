@@ -89,7 +89,9 @@ public class ManagerManager : MonoBehaviour{
 			mFixedUpdateDelegates -= aScript.FixedUpdate;
 	}
 		
-	void Update () {	
+	void Update () {
+        if (Input.GetKeyDown(KeyCode.Escape))
+            Application.Quit();
 		if(mUpdateDelegates != null) 
 			mUpdateDelegates();
 	}

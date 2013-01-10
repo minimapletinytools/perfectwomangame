@@ -44,17 +44,15 @@ public class ImageGameObjectUtility
     public void set_new_texture(Texture2D aTex, System.Nullable<Vector2> aSize = null)
     {
 
-        if (aTex != null)
+        if (aSize == null)
         {
-            if (aSize == null)
+            if (aTex != null)
                 BaseDimension = new Vector2(aTex.width, aTex.height);
             else
-                BaseDimension = aSize.Value;
+                BaseDimension = new Vector2(1, 1);
         }
         else
-        {
-            BaseDimension = new Vector2(1, 1);
-        }
+            BaseDimension = aSize.Value;
         PlaneObject.renderer.material.mainTexture = aTex;
         PixelDimension = BaseDimension;
     }

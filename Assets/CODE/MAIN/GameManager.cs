@@ -563,9 +563,9 @@ public class GameManager : FakeMonoBehaviour
     public void hack_keyboard_input()
     {
         //keyboard input hack
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Alpha0))
             TimeRemaining = 0;
-        if (Input.GetKeyDown(KeyCode.Alpha1))
+        else if (Input.GetKeyDown(KeyCode.Alpha1))
             hack_choice(0);
         else if (Input.GetKeyDown(KeyCode.Alpha2))
             hack_choice(1);
