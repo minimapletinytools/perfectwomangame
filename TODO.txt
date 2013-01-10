@@ -10,7 +10,7 @@ DONE/OK-make sure all information can be obtained from openNI on OSX
 	DONE/a little slower but still not as slow-try running on windows using openni+NITE
 -why is Nearest Neighbor scaling not NN	
 
-
+	
 ::NEW ZIG MANAGER NONSENSE::
 -POSE current and POSE target to do interpolation
 -POSE target updated via whatever
@@ -56,8 +56,10 @@ BLAH-nearest neighbor shader!!
 	-create a new kinect data algorithm manager (interface?)
 	-takes input from kinect (has access to zigfu I guess), processes (can keep internal state)
 	-outputs data in various forms
+	
 :file architecture:
--characters should be read in based on filenames from asset bundles
+-redesign it so it's not a big sloppy mess liek it is now... or not
+DONE-characters should be read in based on filenames from asset bundles
 	-if fail, should not crash (or maybe it should..)
 -create character testing project (in ggfiles even)
 -figure out how to unload characters properly (please!)
@@ -67,6 +69,7 @@ DONE-write a script to shrink all assets so they aren't ridiculous.
 DONE-make unity editor script more awesome
 	-incorporate scripts from above :DDD
 	-be able to bulk export all asset bundles
+	
 :difficulty/perfect system:
 -character -> statistics
 -questionnaire -> modifies stats -> modifies character perfectness based on their stats

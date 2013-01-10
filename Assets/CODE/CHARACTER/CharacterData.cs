@@ -25,6 +25,8 @@ public class CharacterData {
 
     public class CharacterDataImages
     {
+        public AudioClip backgroundMusic;
+
         public Texture2D head;
         public Texture2D leftLowerArm;
         public Texture2D leftLowerLeg;

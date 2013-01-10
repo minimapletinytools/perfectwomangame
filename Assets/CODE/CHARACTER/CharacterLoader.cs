@@ -11,7 +11,11 @@ public class CharacterLoader {
         Images = new CharacterData.CharacterDataImages();
         Sizes = new CharacterData.CharacterDataSizes();
     }
-
+    public void complete_load_characte(AssetBundle aBundle)
+    {
+        while (load_character(aBundle).GetEnumerator().MoveNext())
+            ;
+    }
     public IEnumerable<int> load_character(AssetBundle aBundle)
     {
         Debug.Log("loading character in CharacterLoader " + aBundle.name);

@@ -372,66 +372,53 @@ public class GameManager : FakeMonoBehaviour
             IsLoading = true;
             mManager.mAssetLoader.load_character(construct_bundle_name(CurrentLevel, NextContendingChoice));
         }
-        else//complete hack
+        else
         {
             
             TimeRemaining = 9999;
-            
-            GameObject instance = (GameObject)GameObject.Instantiate(mManager.mReferences.mGrave);
-
-            //TODO fix this one...
-            //use special grave package maybe???
-
-            //mManager.mBackgroundManager.character_changed_listener(instance.GetComponent<CharacterTextureBehaviour>());
-            this.character_changed_listener(instance.GetComponent<CharacterTextureBehaviour>());
-            mManager.mInterfaceManager.mScoreText.SoftPosition = mManager.mBackgroundManager.mBackgroundElements.mElements[0].Element.SoftPosition + new Vector3(0,-150,0);
-            mManager.mInterfaceManager.mScoreText.Depth = 101;
-            foreach (Renderer f in mManager.mInterfaceManager.mScoreText.PrimaryGameObject.GetComponentsInChildren<Renderer>()) //hack to make it show in background camera...
-                f.gameObject.layer = mManager.mBackgroundManager.mBackgroundLayer;
-            GameObject.Destroy(instance);
-
-            mManager.mBodyManager.character_changed_listener(null);
-            mManager.mTransparentBodyManager.character_changed_listener(null);
-            mManager.mInterfaceManager.mBlueBar.Depth = 100;
-            mEvents.add_event((new GameEvents.FadeInTopChoiceInInterfaceEvent(mManager.mInterfaceManager)).get_event(), 0.5f);
-            mManager.mInterfaceManager.reset_camera();
-            reset_choosing_percentages();
-            mManager.mInterfaceManager.mBlueBar.SoftScale = Vector3.one;
-            mManager.mInterfaceManager.set_choosing_percentages(ChoosingPercentages);
-            mManager.mInterfaceManager.fade_out_choices();
-            mManager.mInterfaceManager.set_choice(-1);
+            mManager.mAssetLoader.load_character("999");
             IsLoading = true;
         }
         
     }
 
     //used by advance_scene
-    public void scene_loaded_callback(AssetBundle aBundle, string aBundleName)
+    public void scene_loaded_callback(AssetBundle aBundle, string aBundleName) //TODO do not aBundleName
     {
         CharacterLoader loader = new CharacterLoader();
-        while (loader.load_character(aBundle).GetEnumerator().MoveNext())
-            ;
-        loader.load_character(aBundle);
-        start_character(loader,CurrentIndex);
+        loader.complete_load_characte(aBundle);
+        
+        if (aBundle.name == "999")
+        {
+            mManager.mInterfaceManager.mScoreText.SoftPosition = mManager.mBackgroundManager.mBackgroundElements.mElements[0].Element.SoftPosition + new Vector3(0, -150, 0);
+            mManager.mInterfaceManager.mScoreText.Depth = 101;
+            foreach (Renderer f in mManager.mInterfaceManager.mScoreText.PrimaryGameObject.GetComponentsInChildren<Renderer>()) //hack to make it show in background camera...
+                f.gameObject.layer = mManager.mBackgroundManager.mBackgroundLayer;
 
-        if (CurrentAssetBundle != null)
-            CurrentAssetBundle.Unload(true);
-        CurrentAssetBundle = aBundle;
-            
-        //mEvents.add_event((new GameEvents.FocusCameraOnElementEvent(mManager.mInterfaceManager.mFlatCamera, mManager.mInterfaceManager.mBlueBar)).get_event(), Mathf.Clamp(TimeRemaining - CHOICE_TIME,0,Mathf.Infinity));
-        mEvents.add_event((new GameEvents.FocusCameraOnElementEvent(mManager.mInterfaceManager.mFlatCamera, mManager.mInterfaceManager.mBlueBar)).get_event(), Mathf.Clamp(TimeRemaining, 0, Mathf.Infinity));
-        //mEvents.add_event((new GameEvents.ResetElementScaleEvent(mManager.mInterfaceManager.mBlueBar)).get_event(), TimeRemaining);
+            mManager.mBackgroundManager.character_changed_listener(loader);
+            set_music(loader.Images.backgroundMusic);
+            mManager.mBodyManager.character_changed_listener(null);
+            mManager.mTransparentBodyManager.character_changed_listener(null);
 
-        //figure out next poses
-        NextContendingChoice = get_default_choice(CurrentLevel);
-        if(CurrentLevel < 7)
-            mChoicePoses = get_poses(CurrentLevel);
-        mManager.mInterfaceManager.set_choice_difficulties();
-        mManager.mInterfaceManager.set_question(CurrentLevel);
-        mManager.mInterfaceManager.set_bottom_poses(mChoicePoses);
+        }
+        else
+        {
+            start_character(loader, CurrentIndex);
 
+            //mEvents.add_event((new GameEvents.FocusCameraOnElementEvent(mManager.mInterfaceManager.mFlatCamera, mManager.mInterfaceManager.mBlueBar)).get_event(), Mathf.Clamp(TimeRemaining - CHOICE_TIME,0,Mathf.Infinity));
+            mEvents.add_event((new GameEvents.FocusCameraOnElementEvent(mManager.mInterfaceManager.mFlatCamera, mManager.mInterfaceManager.mBlueBar)).get_event(), Mathf.Clamp(TimeRemaining, 0, Mathf.Infinity));
+            //mEvents.add_event((new GameEvents.ResetElementScaleEvent(mManager.mInterfaceManager.mBlueBar)).get_event(), TimeRemaining);
 
-        //reset the interface
+            //figure out next poses
+            NextContendingChoice = get_default_choice(CurrentLevel);
+            if (CurrentLevel < 7)
+                mChoicePoses = get_poses(CurrentLevel);
+            mManager.mInterfaceManager.set_choice_difficulties();
+            mManager.mInterfaceManager.set_question(CurrentLevel);
+            mManager.mInterfaceManager.set_bottom_poses(mChoicePoses);    
+        }
+
+        //reset the interface 
         mEvents.add_event((new GameEvents.FadeInTopChoiceInInterfaceEvent(mManager.mInterfaceManager)).get_event(), 0.5f);
         mManager.mInterfaceManager.reset_camera();
         reset_choosing_percentages();
@@ -441,15 +428,25 @@ public class GameManager : FakeMonoBehaviour
         mManager.mInterfaceManager.set_choice(-1);
         mManager.mInterfaceManager.mBlueBar.Depth = 100;
         IsLoading = false;
+
+        //unload old bundle //TODO I don't think this is working
+        if (CurrentAssetBundle != null)
+            CurrentAssetBundle.Unload(true);
+        CurrentAssetBundle = aBundle;
     }
+
     void reset_choosing_percentages()
     {
         ChoosingPercentages = new float[4] { 0, 0, 0, 0 };
     }
-    void start_character(CharacterLoader container,int index)
+
+    void start_character(CharacterLoader container, int index)
     {
         mManager.mEventManager.character_changed_event(container);
 
+        set_music(container.Images.backgroundMusic);
+
+        //setup transparent body manager
         if (get_pose_at_index(index, get_difficulty(index)) != null)
         {
             mManager.mTransparentBodyManager.set_target_pose(get_pose_at_index(index, get_difficulty(index)));
@@ -462,15 +459,14 @@ public class GameManager : FakeMonoBehaviour
         else
             throw new UnityException("Missing Pose for index " + index + " difficulty " + get_difficulty(index));
     }
-    public void character_changed_listener(CharacterTextureBehaviour aCharacter)
+
+    public void set_music(AudioClip music)
     {
-        mSource.clip = aCharacter.backgroundMusic;
+        //TODO fading nonsense
+        mSource.clip = music;
         mSource.loop = true;
         mSource.Play();
     }
-
-
-
 
     //pose related
     ProGrading.Pose[] get_poses(int level)
