@@ -409,6 +409,8 @@ public class GameManager : FakeMonoBehaviour
     public void scene_loaded_callback(AssetBundle aBundle, string aBundleName)
     {
         CharacterLoader loader = new CharacterLoader();
+        while (loader.load_character(aBundle).GetEnumerator().MoveNext())
+            ;
         loader.load_character(aBundle);
         start_character(loader,CurrentIndex);
 

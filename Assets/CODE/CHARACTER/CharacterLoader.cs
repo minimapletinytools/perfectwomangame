@@ -14,17 +14,22 @@ public class CharacterLoader {
 
     public IEnumerable<int> load_character(AssetBundle aBundle)
     {
-        Images.head = aBundle.Load("HEAD_A", typeof(Texture2D)) as Texture2D;
-        Images.leftLowerArm = aBundle.Load("LLA_A", typeof(Texture2D)) as Texture2D;
-        Images.leftLowerLeg = aBundle.Load("LLL_A", typeof(Texture2D)) as Texture2D;
-        Images.leftUpperArm = aBundle.Load("LUA_A", typeof(Texture2D)) as Texture2D;
-        Images.leftUpperLeg = aBundle.Load("LUL_A", typeof(Texture2D)) as Texture2D;
-        Images.rightLowerArm = aBundle.Load("RLA_A", typeof(Texture2D)) as Texture2D;
-        Images.rightLowerLeg = aBundle.Load("RLL_A", typeof(Texture2D)) as Texture2D;
-        Images.rightUpperArm = aBundle.Load("RUA_A", typeof(Texture2D)) as Texture2D;
-        Images.rightUpperLeg = aBundle.Load("RUL_A", typeof(Texture2D)) as Texture2D;
-        Images.torso = aBundle.Load("TORSO_A", typeof(Texture2D)) as Texture2D;
-        Images.waist = aBundle.Load("WAIST_A", typeof(Texture2D)) as Texture2D;
+        Debug.Log("loading character in CharacterLoader " + aBundle.name);
+
+        if (aBundle.name != "999")
+        {
+            Images.head = aBundle.Load("HEAD_A", typeof(Texture2D)) as Texture2D;
+            Images.leftLowerArm = aBundle.Load("LLA_A", typeof(Texture2D)) as Texture2D;
+            Images.leftLowerLeg = aBundle.Load("LLL_A", typeof(Texture2D)) as Texture2D;
+            Images.leftUpperArm = aBundle.Load("LUA_A", typeof(Texture2D)) as Texture2D;
+            Images.leftUpperLeg = aBundle.Load("LUL_A", typeof(Texture2D)) as Texture2D;
+            Images.rightLowerArm = aBundle.Load("RLA_A", typeof(Texture2D)) as Texture2D;
+            Images.rightLowerLeg = aBundle.Load("RLL_A", typeof(Texture2D)) as Texture2D;
+            Images.rightUpperArm = aBundle.Load("RUA_A", typeof(Texture2D)) as Texture2D;
+            Images.rightUpperLeg = aBundle.Load("RUL_A", typeof(Texture2D)) as Texture2D;
+            Images.torso = aBundle.Load("TORSO_A", typeof(Texture2D)) as Texture2D;
+            Images.waist = aBundle.Load("WAIST_A", typeof(Texture2D)) as Texture2D;
+        }
 
         Images.background1 = aBundle.Load("BACKGROUND", typeof(Texture2D)) as Texture2D;
         for (int i = 0; aBundle.Contains("BG_" + (i+1)); i++)
@@ -33,11 +38,15 @@ public class CharacterLoader {
             Images.foregroundElements.Add(aBundle.Load("FG_" + (i + 1), typeof(Texture2D)) as Texture2D);
 
         TextAsset cd = aBundle.Load("CD", typeof(TextAsset)) as TextAsset;
+        Debug.Log(cd.text);
         System.IO.MemoryStream stream = new System.IO.MemoryStream(cd.bytes);
         System.Xml.Serialization.XmlSerializer xs = new System.Xml.Serialization.XmlSerializer(typeof(CharacterData.CharacterDataSizes));
         Sizes = xs.Deserialize(stream) as CharacterData.CharacterDataSizes;
         Done = true;
 
-        yield return 0;
+        Debug.Log("character bundle finished loading ");
+        Debug.Log("bgi, bfgi, bgp, fgp: " + Images.backgroundElements.Count + " " + Images.foregroundElements.Count + " " + Sizes.mBackgroundPositions.Count + " " + Sizes.mForegroundPositions.Count);
+        Debug.Log("limb positions, sizes: " + Sizes.mMountingPositions.Count + " " + Sizes.mLimbSizes.Count);
+        yield break;
     }
 }
