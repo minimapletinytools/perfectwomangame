@@ -67,8 +67,10 @@ public class BackgroundManager  : FakeMonoBehaviour
         }
         for (int i = 0; i < aCharacter.Images.foregroundElements.Count; i++)
         {
-            //mForegroundElements.add_image(aCharacter.Images.foregroundElements[i], aCharacter.Sizes.mForegroundPositions[i],aCharacter.Sizes.mForegroundSizes[i]);
+            mForegroundElements.add_image(aCharacter.Images.foregroundElements[i], aCharacter.Sizes.mForegroundPositions[i],aCharacter.Sizes.mForegroundSizes[i]);
         }
+
+       
 
         set_background_layer(mBackgroundLayer);
         set_foreground_layer(mForegroundLayer);

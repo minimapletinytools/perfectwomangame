@@ -6,7 +6,7 @@
 -create a mini version of this in python or something
 :stats:
 -TODO this sucks
-- <-> means two stats are inversely proportional
+-<-> means two stats are inversely proportional
 	-stress<->relax (were stressed, were relaxed) 
 	-respect (were well respected) 
 	-money<->poor (made a lot of money, had a good standard of living, lived humbly, poorly)
