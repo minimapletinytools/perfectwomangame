@@ -9,12 +9,14 @@ public class FakeMonoBehaviour {
 	public FakeMonoBehaviour(ManagerManager aManager)
 	{
 		mManager = aManager;
-		mManager.register_FakeMonoBehaviour(this);
+        if(aManager != null)
+		    mManager.register_FakeMonoBehaviour(this);
 	}
 	
 	~FakeMonoBehaviour()
 	{
-		mManager.deregister_FakeMonoBehaviour(this);
+        if (mManager != null)
+		    mManager.deregister_FakeMonoBehaviour(this);
 	}
 	
 	
