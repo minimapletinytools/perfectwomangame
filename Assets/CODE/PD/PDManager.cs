@@ -10,7 +10,6 @@ public class PDManager : FakeMonoBehaviour
 
     public override void Start () 
     {
-        //TODO
 	}
 
     public override void Update()

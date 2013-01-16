@@ -7,6 +7,8 @@ public class PDTester : MonoBehaviour {
 
     PDManager mP = new PDManager(null);
     int mCurrentState = 0;
+    PDCharacterStats[] mStats = PDCharacters.characters;
+
 	void Update () {
 	    
 	}
@@ -23,5 +25,6 @@ public class PDTester : MonoBehaviour {
 
     void advance(int choice)
     {
+
     }
 }

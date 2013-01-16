@@ -3,6 +3,12 @@ using System.Collections.Generic;
 
 public class PDCharacterStats 
 {
+    public class Adjustment
+    {
+        float l,r,m;
+        public Adjustment() { l = r = m = 0; }
+        public Adjustment(float al, float ar, float am) { l = al; r = ar; m = am; }
+    }
     Dictionary<PDStats.Stats, float> mDifficultyValues = new Dictionary<PDStats.Stats, float>()
     {
         {PDStats.Stats.EDUCATION,0},
@@ -14,18 +20,48 @@ public class PDCharacterStats
         {PDStats.Stats.WISDOM,0}
     };
 
+    Dictionary<PDStats.Stats, Adjustment> mAdjustmentValues = new Dictionary<PDStats.Stats, Adjustment>()
+    {
+        {PDStats.Stats.EDUCATION, new Adjustment(0,0,0)},
+        {PDStats.Stats.EXPRESSION,new Adjustment(0,0,0)},
+        {PDStats.Stats.HEALTH,new Adjustment(0,0,0)},
+        {PDStats.Stats.MONEY,new Adjustment(0,0,0)},
+        {PDStats.Stats.RESPECT,new Adjustment(0,0,0)},
+        {PDStats.Stats.ROMANCE,new Adjustment(0,0,0)},
+        {PDStats.Stats.WISDOM,new Adjustment(0,0,0)}
+    };
+
+
+    public Dictionary<PDStats.Stats, Adjustment> AdjustmentValues { get { return mAdjustmentValues; } }
     public Dictionary<PDStats.Stats, float> DifficultyValues { get { return mDifficultyValues; } }
 
-    public PDCharacterStats(float[] aValues)
+    public PDCharacterStats(float[] aValues = null)
     {
-        mDifficultyValues[PDStats.Stats.EDUCATION] = aValues[0];
-        mDifficultyValues[PDStats.Stats.EXPRESSION] = aValues[1];
-        mDifficultyValues[PDStats.Stats.HEALTH] = aValues[2];
-        mDifficultyValues[PDStats.Stats.MONEY] = aValues[3];
-        mDifficultyValues[PDStats.Stats.RESPECT] = aValues[4];
-        mDifficultyValues[PDStats.Stats.ROMANCE] = aValues[5];
-        mDifficultyValues[PDStats.Stats.WISDOM] = aValues[6];
+        if (aValues != null)
+        {
+            mDifficultyValues[PDStats.Stats.EDUCATION] = aValues[0];
+            mDifficultyValues[PDStats.Stats.EXPRESSION] = aValues[1];
+            mDifficultyValues[PDStats.Stats.HEALTH] = aValues[2];
+            mDifficultyValues[PDStats.Stats.MONEY] = aValues[3];
+            mDifficultyValues[PDStats.Stats.RESPECT] = aValues[4];
+            mDifficultyValues[PDStats.Stats.ROMANCE] = aValues[5];
+            mDifficultyValues[PDStats.Stats.WISDOM] = aValues[6];
+        }
     }
 
-    //public static 
+    public float EDUCATION { get { return mDifficultyValues[PDStats.Stats.EDUCATION]; } set { mDifficultyValues[PDStats.Stats.EDUCATION] = value; } }
+    public float EXPRESSION { get { return mDifficultyValues[PDStats.Stats.EXPRESSION]; } set { mDifficultyValues[PDStats.Stats.EXPRESSION] = value; } }
+    public float HEALTH { get { return mDifficultyValues[PDStats.Stats.HEALTH]; } set { mDifficultyValues[PDStats.Stats.HEALTH] = value; } }
+    public float MONEY { get { return mDifficultyValues[PDStats.Stats.MONEY]; } set { mDifficultyValues[PDStats.Stats.MONEY] = value; } }
+    public float RESPECT { get { return mDifficultyValues[PDStats.Stats.RESPECT]; } set { mDifficultyValues[PDStats.Stats.RESPECT] = value; } }
+    public float ROMANCE { get { return mDifficultyValues[PDStats.Stats.ROMANCE]; } set { mDifficultyValues[PDStats.Stats.ROMANCE] = value; } }
+    public float WISDOM { get { return mDifficultyValues[PDStats.Stats.WISDOM]; } set { mDifficultyValues[PDStats.Stats.WISDOM] = value; } }
+
+    public void generate_adjustment_values_from_difficulty_values()
+    {
+        foreach (KeyValuePair<PDStats.Stats, float> e in mDifficultyValues)
+        {
+            mAdjustmentValues[e.Key] = new Adjustment(0, e.Value, 0.5f);
+        }
+    }
 }
