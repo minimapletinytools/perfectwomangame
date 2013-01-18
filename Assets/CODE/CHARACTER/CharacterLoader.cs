@@ -11,16 +11,16 @@ public class CharacterLoader {
         Images = new CharacterData.CharacterDataImages();
         Sizes = new CharacterData.CharacterDataSizes();
     }
-    public void complete_load_characte(AssetBundle aBundle)
+    public void complete_load_character(AssetBundle aBundle, string aName)
     {
-        while (load_character(aBundle).GetEnumerator().MoveNext())
+        while (load_character(aBundle,aName).GetEnumerator().MoveNext())
             ;
     }
-    public IEnumerable<int> load_character(AssetBundle aBundle)
+    public IEnumerable<int> load_character(AssetBundle aBundle, string aName)
     {
-        Debug.Log("loading character in CharacterLoader " + aBundle.name);
-
-        if (aBundle.name != "999")
+        string output = "Loading character " + aName + "\n";
+        //TODO this wont work....
+        if (aName != "999")
         {
             Images.head = aBundle.Load("HEAD_A", typeof(Texture2D)) as Texture2D;
             Images.leftLowerArm = aBundle.Load("LLA_A", typeof(Texture2D)) as Texture2D;
@@ -41,10 +41,15 @@ public class CharacterLoader {
         for (int i = 0; aBundle.Contains("FG_" + (i + 1)); i++)
             Images.foregroundElements.Add(aBundle.Load("FG_" + (i + 1), typeof(Texture2D)) as Texture2D);
 
+        output += "found bg fg: " + Images.backgroundElements.Count + " " + Images.foregroundElements.Count + "\n";
+        
+
         TextAsset cd = aBundle.Load("CD", typeof(TextAsset)) as TextAsset;
         System.IO.MemoryStream stream = new System.IO.MemoryStream(cd.bytes);
         System.Xml.Serialization.XmlSerializer xs = new System.Xml.Serialization.XmlSerializer(typeof(CharacterData.CharacterDataSizes));
         Sizes = xs.Deserialize(stream) as CharacterData.CharacterDataSizes;
+        output += "offset " + Sizes.mOffset;
+        Debug.Log(output);
         Done = true;
         yield break;
     }

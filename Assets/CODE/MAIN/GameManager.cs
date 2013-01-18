@@ -384,8 +384,11 @@ public class GameManager : FakeMonoBehaviour
     //used by advance_scene
     public void scene_loaded_callback(AssetBundle aBundle, string aBundleName) //TODO do not aBundleName
     {
+
+
         CharacterLoader loader = new CharacterLoader();
-        loader.complete_load_characte(aBundle);
+        //Debug.Log("loading character in CharacterLoader " + aBundleName);
+        loader.complete_load_character(aBundle,aBundleName);
         
         if (aBundle.name == "999")
         {
