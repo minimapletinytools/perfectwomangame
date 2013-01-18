@@ -7,15 +7,11 @@ public class PDStats
     {
         EDUCATION,
         EXPRESSION,
+        FAMILY,
         HEALTH,
         MONEY,
         RESPECT,
         ROMANCE,
         WISDOM
-        
-        
-        
     }
-
-
 }

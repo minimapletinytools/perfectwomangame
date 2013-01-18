@@ -10,6 +10,7 @@ public class PDCharacters
         {
             EDUCATION = 0,
             EXPRESSION = 0,
+            FAMILY = 0,
             HEALTH = 0,
             MONEY = 0,
             RESPECT = 0,
@@ -20,6 +21,7 @@ public class PDCharacters
         {
             EDUCATION = 0,
             EXPRESSION = 0,
+            FAMILY = 0,
             HEALTH = 0,
             MONEY = 0,
             RESPECT = 0,
@@ -30,6 +32,7 @@ public class PDCharacters
         {
             EDUCATION = 0,
             EXPRESSION = 0,
+            FAMILY = 0,
             HEALTH = 0,
             MONEY = 0,
             RESPECT = 0,
@@ -40,6 +43,7 @@ public class PDCharacters
         {
             EDUCATION = 0,
             EXPRESSION = 0,
+            FAMILY = 0,
             HEALTH = 0,
             MONEY = 0,
             RESPECT = 0,
@@ -50,6 +54,7 @@ public class PDCharacters
         {
             EDUCATION = 0,
             EXPRESSION = 0,
+            FAMILY = 0,
             HEALTH = 0,
             MONEY = 0,
             RESPECT = 0,
@@ -60,6 +65,7 @@ public class PDCharacters
         {
             EDUCATION = 0,
             EXPRESSION = 0,
+            FAMILY = 0,
             HEALTH = 0,
             MONEY = 0,
             RESPECT = 0,
@@ -70,6 +76,7 @@ public class PDCharacters
         {
             EDUCATION = 0,
             EXPRESSION = 0,
+            FAMILY = 0,
             HEALTH = 0,
             MONEY = 0,
             RESPECT = 0,
@@ -80,6 +87,7 @@ public class PDCharacters
         {
             EDUCATION = 0,
             EXPRESSION = 0,
+            FAMILY = 0,
             HEALTH = 0,
             MONEY = 0,
             RESPECT = 0,
@@ -90,6 +98,7 @@ public class PDCharacters
         {
             EDUCATION = 0,
             EXPRESSION = 0,
+            FAMILY = 0,
             HEALTH = 0,
             MONEY = 0,
             RESPECT = 0,
@@ -100,6 +109,7 @@ public class PDCharacters
         {
             EDUCATION = 0,
             EXPRESSION = 0,
+            FAMILY = 0,
             HEALTH = 0,
             MONEY = 0,
             RESPECT = 0,
@@ -110,6 +120,7 @@ public class PDCharacters
         {
             EDUCATION = 0,
             EXPRESSION = 0,
+            FAMILY = 0,
             HEALTH = 0,
             MONEY = 0,
             RESPECT = 0,
@@ -120,6 +131,7 @@ public class PDCharacters
         {
             EDUCATION = 0,
             EXPRESSION = 0,
+            FAMILY = 0,
             HEALTH = 0,
             MONEY = 0,
             RESPECT = 0,
@@ -130,6 +142,7 @@ public class PDCharacters
         {
             EDUCATION = 0,
             EXPRESSION = 0,
+            FAMILY = 0,
             HEALTH = 0,
             MONEY = 0,
             RESPECT = 0,
@@ -140,6 +153,7 @@ public class PDCharacters
         {
             EDUCATION = 0,
             EXPRESSION = 0,
+            FAMILY = 0,
             HEALTH = 0,
             MONEY = 0,
             RESPECT = 0,
@@ -150,6 +164,7 @@ public class PDCharacters
         {
             EDUCATION = 0,
             EXPRESSION = 0,
+            FAMILY = 0,
             HEALTH = 0,
             MONEY = 0,
             RESPECT = 0,
@@ -160,6 +175,7 @@ public class PDCharacters
         {
             EDUCATION = 0,
             EXPRESSION = 0,
+            FAMILY = 0,
             HEALTH = 0,
             MONEY = 0,
             RESPECT = 0,
@@ -170,6 +186,7 @@ public class PDCharacters
         {
             EDUCATION = 0,
             EXPRESSION = 0,
+            FAMILY = 0,
             HEALTH = 0,
             MONEY = 0,
             RESPECT = 0,
@@ -180,6 +197,7 @@ public class PDCharacters
         {
             EDUCATION = 0,
             EXPRESSION = 0,
+            FAMILY = 0,
             HEALTH = 0,
             MONEY = 0,
             RESPECT = 0,
@@ -190,6 +208,7 @@ public class PDCharacters
         {
             EDUCATION = 0,
             EXPRESSION = 0,
+            FAMILY = 0,
             HEALTH = 0,
             MONEY = 0,
             RESPECT = 0,
@@ -200,6 +219,7 @@ public class PDCharacters
         {
             EDUCATION = 0,
             EXPRESSION = 0,
+            FAMILY = 0,
             HEALTH = 0,
             MONEY = 0,
             RESPECT = 0,
@@ -210,6 +230,7 @@ public class PDCharacters
         {
             EDUCATION = 0,
             EXPRESSION = 0,
+            FAMILY = 0,
             HEALTH = 0,
             MONEY = 0,
             RESPECT = 0,
@@ -220,6 +241,7 @@ public class PDCharacters
         {
             EDUCATION = 0,
             EXPRESSION = 0,
+            FAMILY = 0,
             HEALTH = 0,
             MONEY = 0,
             RESPECT = 0,
@@ -230,6 +252,7 @@ public class PDCharacters
         {
             EDUCATION = 0,
             EXPRESSION = 0,
+            FAMILY = 0,
             HEALTH = 0,
             MONEY = 0,
             RESPECT = 0,
@@ -240,6 +263,7 @@ public class PDCharacters
         {
             EDUCATION = 0,
             EXPRESSION = 0,
+            FAMILY = 0,
             HEALTH = 0,
             MONEY = 0,
             RESPECT = 0,
@@ -250,6 +274,7 @@ public class PDCharacters
         {
             EDUCATION = 0,
             EXPRESSION = 0,
+            FAMILY = 0,
             HEALTH = 0,
             MONEY = 0,
             RESPECT = 0,
@@ -260,6 +285,7 @@ public class PDCharacters
         {
             EDUCATION = 0,
             EXPRESSION = 0,
+            FAMILY = 0,
             HEALTH = 0,
             MONEY = 0,
             RESPECT = 0,
@@ -270,6 +296,7 @@ public class PDCharacters
         {
             EDUCATION = 0,
             EXPRESSION = 0,
+            FAMILY = 0,
             HEALTH = 0,
             MONEY = 0,
             RESPECT = 0,
@@ -280,6 +307,7 @@ public class PDCharacters
         {
             EDUCATION = 0,
             EXPRESSION = 0,
+            FAMILY = 0,
             HEALTH = 0,
             MONEY = 0,
             RESPECT = 0,
@@ -290,6 +318,7 @@ public class PDCharacters
         {
             EDUCATION = 0,
             EXPRESSION = 0,
+            FAMILY = 0,
             HEALTH = 0,
             MONEY = 0,
             RESPECT = 0,

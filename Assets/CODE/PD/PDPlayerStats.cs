@@ -8,6 +8,7 @@ public class PDPlayerstats
     {
         {PDStats.Stats.EDUCATION,0},
         {PDStats.Stats.EXPRESSION,0},
+        {PDStats.Stats.FAMILY,0},
         {PDStats.Stats.HEALTH,0},
         {PDStats.Stats.MONEY,0},
         {PDStats.Stats.RESPECT,0},
