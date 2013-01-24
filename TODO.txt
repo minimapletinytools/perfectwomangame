@@ -1,8 +1,8 @@
 ::NEXT::
 -get game back to its original state with lea's new assets
 -fake PD
-	-grid of numbers representing difficulty
-	-particle effect created over numbers that change
+	DONE-grid of numbers representing difficulty
+	IGNORE-particle effect created over numbers that change
 	-
 
 ::D/P system::
