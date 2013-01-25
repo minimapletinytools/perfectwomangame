@@ -5,7 +5,10 @@ public class PDCharacters
 {
     public static PDCharacterStats[] characters = new PDCharacterStats[]
     {
-        new PDCharacterStats(){},   //FETUS 0-0
+        new PDCharacterStats() //FETUS 0-0
+        {
+            Title = "Fetus"
+        },   
         new PDCharacterStats()      //05-1
         {
             EDUCATION = 0,
@@ -15,7 +18,9 @@ public class PDCharacters
             MONEY = 0,
             RESPECT = 0,
             ROMANCE = 0,
-            WISDOM = 0
+            WISDOM = 0,
+
+            Title = "Princess"
         },
         new PDCharacterStats()      //05-2
         {
@@ -26,7 +31,9 @@ public class PDCharacters
             MONEY = 0,
             RESPECT = 0,
             ROMANCE = 0,
-            WISDOM = 0
+            WISDOM = 0,
+
+            Title = "Princess"
         },
         new PDCharacterStats()      //05-3
         {
@@ -37,7 +44,9 @@ public class PDCharacters
             MONEY = 0,
             RESPECT = 0,
             ROMANCE = 0,
-            WISDOM = 0
+            WISDOM = 0,
+
+            Title = "Princess"
         },
         new PDCharacterStats()      //05-4
         {
@@ -48,7 +57,9 @@ public class PDCharacters
             MONEY = 0,
             RESPECT = 0,
             ROMANCE = 0,
-            WISDOM = 0
+            WISDOM = 0,
+
+            Title = "Princess"
         },
         new PDCharacterStats()      //16-1
         {
@@ -59,7 +70,9 @@ public class PDCharacters
             MONEY = 0,
             RESPECT = 0,
             ROMANCE = 0,
-            WISDOM = 0
+            WISDOM = 0,
+
+            Title = "Person"
         },
         new PDCharacterStats()      //16-2
         {
@@ -70,7 +83,9 @@ public class PDCharacters
             MONEY = 0,
             RESPECT = 0,
             ROMANCE = 0,
-            WISDOM = 0
+            WISDOM = 0,
+
+            Title = "Person"
         },
         new PDCharacterStats()      //16-3
         {
@@ -81,7 +96,9 @@ public class PDCharacters
             MONEY = 0,
             RESPECT = 0,
             ROMANCE = 0,
-            WISDOM = 0
+            WISDOM = 0,
+
+            Title = "Person"
         },
         new PDCharacterStats()      //16-4
         {
@@ -92,7 +109,9 @@ public class PDCharacters
             MONEY = 0,
             RESPECT = 0,
             ROMANCE = 0,
-            WISDOM = 0
+            WISDOM = 0,
+
+            Title = "Person"
         },
         new PDCharacterStats()      //27-1
         {
@@ -103,7 +122,9 @@ public class PDCharacters
             MONEY = 0,
             RESPECT = 0,
             ROMANCE = 0,
-            WISDOM = 0
+            WISDOM = 0,
+
+            Title = "Person"
         },
         new PDCharacterStats()      //27-2
         {
@@ -114,7 +135,9 @@ public class PDCharacters
             MONEY = 0,
             RESPECT = 0,
             ROMANCE = 0,
-            WISDOM = 0
+            WISDOM = 0,
+
+            Title = "Person"
         },
         new PDCharacterStats()      //27-3
         {
@@ -125,7 +148,9 @@ public class PDCharacters
             MONEY = 0,
             RESPECT = 0,
             ROMANCE = 0,
-            WISDOM = 0
+            WISDOM = 0,
+
+            Title = "Person"
         },
         new PDCharacterStats()      //27-4
         {
@@ -136,7 +161,9 @@ public class PDCharacters
             MONEY = 0,
             RESPECT = 0,
             ROMANCE = 0,
-            WISDOM = 0
+            WISDOM = 0,
+
+            Title = "Person"
         },
         new PDCharacterStats()      //34-1
         {
@@ -147,7 +174,9 @@ public class PDCharacters
             MONEY = 0,
             RESPECT = 0,
             ROMANCE = 0,
-            WISDOM = 0
+            WISDOM = 0,
+
+            Title = "Person"
         },
         new PDCharacterStats()      //34-2
         {
@@ -158,7 +187,9 @@ public class PDCharacters
             MONEY = 0,
             RESPECT = 0,
             ROMANCE = 0,
-            WISDOM = 0
+            WISDOM = 0,
+
+            Title = "Person"
         },
         new PDCharacterStats()      //34-3
         {
@@ -169,7 +200,9 @@ public class PDCharacters
             MONEY = 0,
             RESPECT = 0,
             ROMANCE = 0,
-            WISDOM = 0
+            WISDOM = 0,
+
+            Title = "Person"
         },
         new PDCharacterStats()      //34-4
         {
@@ -180,7 +213,9 @@ public class PDCharacters
             MONEY = 0,
             RESPECT = 0,
             ROMANCE = 0,
-            WISDOM = 0
+            WISDOM = 0,
+
+            Title = "Person"
         },
         new PDCharacterStats()      //45-1
         {
@@ -191,7 +226,9 @@ public class PDCharacters
             MONEY = 0,
             RESPECT = 0,
             ROMANCE = 0,
-            WISDOM = 0
+            WISDOM = 0,
+
+            Title = "Person"
         },
         new PDCharacterStats()      //45-2
         {
@@ -202,7 +239,9 @@ public class PDCharacters
             MONEY = 0,
             RESPECT = 0,
             ROMANCE = 0,
-            WISDOM = 0
+            WISDOM = 0,
+
+            Title = "Person"
         },
         new PDCharacterStats()      //45-3
         {
@@ -213,7 +252,9 @@ public class PDCharacters
             MONEY = 0,
             RESPECT = 0,
             ROMANCE = 0,
-            WISDOM = 0
+            WISDOM = 0,
+
+            Title = "Person"
         },
         new PDCharacterStats()      //45-4
         {
@@ -224,7 +265,9 @@ public class PDCharacters
             MONEY = 0,
             RESPECT = 0,
             ROMANCE = 0,
-            WISDOM = 0
+            WISDOM = 0,
+
+            Title = "Person"
         },
         new PDCharacterStats()      //60-1
         {
@@ -235,7 +278,9 @@ public class PDCharacters
             MONEY = 0,
             RESPECT = 0,
             ROMANCE = 0,
-            WISDOM = 0
+            WISDOM = 0,
+
+            Title = "Person"
         },
         new PDCharacterStats()      //60-2
         {
@@ -246,7 +291,9 @@ public class PDCharacters
             MONEY = 0,
             RESPECT = 0,
             ROMANCE = 0,
-            WISDOM = 0
+            WISDOM = 0,
+
+            Title = "Person"
         },
         new PDCharacterStats()      //60-3
         {
@@ -257,7 +304,9 @@ public class PDCharacters
             MONEY = 0,
             RESPECT = 0,
             ROMANCE = 0,
-            WISDOM = 0
+            WISDOM = 0,
+
+            Title = "Person"
         },
         new PDCharacterStats()      //60-4
         {
@@ -268,7 +317,9 @@ public class PDCharacters
             MONEY = 0,
             RESPECT = 0,
             ROMANCE = 0,
-            WISDOM = 0
+            WISDOM = 0,
+
+            Title = "Person"
         },
         new PDCharacterStats()      //80-1
         {
@@ -279,7 +330,9 @@ public class PDCharacters
             MONEY = 0,
             RESPECT = 0,
             ROMANCE = 0,
-            WISDOM = 0
+            WISDOM = 0,
+
+            Title = "Person"
         },
         new PDCharacterStats()      //80-2
         {
@@ -290,7 +343,9 @@ public class PDCharacters
             MONEY = 0,
             RESPECT = 0,
             ROMANCE = 0,
-            WISDOM = 0
+            WISDOM = 0,
+
+            Title = "Person"
         },
         new PDCharacterStats()      //80-3
         {
@@ -301,7 +356,9 @@ public class PDCharacters
             MONEY = 0,
             RESPECT = 0,
             ROMANCE = 0,
-            WISDOM = 0
+            WISDOM = 0,
+
+            Title = "Person"
         },
         new PDCharacterStats()      //80-4
         {
@@ -323,7 +380,9 @@ public class PDCharacters
             MONEY = 0,
             RESPECT = 0,
             ROMANCE = 0,
-            WISDOM = 0
+            WISDOM = 0,
+
+            Title = "Grave"
         }
 
     };

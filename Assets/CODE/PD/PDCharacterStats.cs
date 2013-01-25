@@ -61,6 +61,8 @@ public class PDCharacterStats
     public float ROMANCE { get { return mDifficultyValues[PDStats.Stats.ROMANCE]; } set { mDifficultyValues[PDStats.Stats.ROMANCE] = value; } }
     public float WISDOM { get { return mDifficultyValues[PDStats.Stats.WISDOM]; } set { mDifficultyValues[PDStats.Stats.WISDOM] = value; } }
 
+    public string Title { get; set; }
+
     public void generate_adjustment_values_from_difficulty_values()
     {
         foreach (KeyValuePair<PDStats.Stats, float> e in mDifficultyValues)

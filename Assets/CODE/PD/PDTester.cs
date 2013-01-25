@@ -106,7 +106,10 @@ public class PDTester : MonoBehaviour {
     //for events
     void stop_flashing()
     {
-
+        foreach (PDInstance e in mInstances)
+        {
+            e.Difficulty = e.NextDifficulty;
+        }
     }
 
 }
