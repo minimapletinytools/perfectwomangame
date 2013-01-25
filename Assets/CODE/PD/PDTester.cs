@@ -20,6 +20,7 @@ public class PDTester : MonoBehaviour {
     PDCharacterStats[] mStats;
     PDInstance[] mInstances;
     PDPlayerstats mPlayer;
+    string mPrompt = "hi";
 
 
     TimedEventDistributor mEvents;
@@ -84,6 +85,8 @@ public class PDTester : MonoBehaviour {
             if (GUI.Button(new Rect(100 + i * GRID_SPACING.x, 50, GRID_SIZE.x, GRID_SIZE.y), i.ToString()))
                 advance(i);
 
+        GUI.TextField(new Rect(100, 150, 500, 50), mPrompt);
+
         for (int i = 0; i < 7; i++)
         {
             for (int j = 0; j < 4; j++)
@@ -98,7 +101,22 @@ public class PDTester : MonoBehaviour {
 
     void advance(int choice)
     {
+        TimedEventDistributor.TimedEventChain chain =  mEvents.add_event(
+            delegate(float time)
+            {
+                this.mPrompt = "your life was womp womp";
+                return true;
+            },
+            4
+        );
 
+        //TODO foreach stat
+        foreach (PDStats.Stats e in PDStats.EnumerableStats)
+        {
+
+        }
+
+        
     }
 
 

@@ -15,6 +15,8 @@ public class PDStats
         WISDOM
     }
 
+    public static Stats[] EnumerableStats = new Stats[] { Stats.EDUCATION, Stats.EXPRESSION, Stats.FAMILY, Stats.HEALTH, Stats.MONEY, Stats.RESPECT, Stats.ROMANCE, Stats.WISDOM };
+
     public List<string[]> positive_sentences = new List<string[]>()
     {
         new string[]{"you became more educated"},
