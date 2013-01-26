@@ -176,7 +176,7 @@ public class PDTester : MonoBehaviour {
                 delegate(float time)
                 {
                     Debug.Log("stop flash on " + loopStat);
-                    stop_flashing();
+                    stop_flashing();    
                     if(time > 1)
                         return true;
                     return false;
