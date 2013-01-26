@@ -11,12 +11,12 @@ public class PDCharacters
         },   
         new PDCharacterStats()      //05-1
         {
-            EDUCATION = 0,
+            EDUCATION = 1,
             EXPRESSION = 0,
-            FAMILY = 0,
+            FAMILY = 1,
             HEALTH = 0,
             MONEY = 0,
-            RESPECT = 0,
+            RESPECT = 1,
             ROMANCE = 0,
             WISDOM = 0,
 
@@ -27,10 +27,10 @@ public class PDCharacters
             EDUCATION = 0,
             EXPRESSION = 0,
             FAMILY = 0,
-            HEALTH = 0,
+            HEALTH = -1,
             MONEY = 0,
             RESPECT = 0,
-            ROMANCE = 0,
+            ROMANCE = 4,
             WISDOM = 0,
 
             Title = "Princess"
@@ -39,7 +39,7 @@ public class PDCharacters
         {
             EDUCATION = 0,
             EXPRESSION = 0,
-            FAMILY = 0,
+            FAMILY = 2,
             HEALTH = 0,
             MONEY = 0,
             RESPECT = 0,

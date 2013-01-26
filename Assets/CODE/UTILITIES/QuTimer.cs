@@ -70,6 +70,10 @@ public class QuTimer{
 	{
 		return mCurrent-mStart;
 	}
+    public float getTImeSinceExpired()
+    {
+        return mCurrent - mTarget;
+    }
     public float getLinear()
 	{
 		if(isExpired())

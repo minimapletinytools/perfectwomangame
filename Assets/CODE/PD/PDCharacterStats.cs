@@ -5,7 +5,7 @@ public class PDCharacterStats
 {
     public class Adjustment
     {
-        float l,r,m;
+        public float l,r,m;
         public Adjustment() { l = r = m = 0; }
         public Adjustment(float al, float ar, float am) { l = al; r = ar; m = am; }
     }
@@ -67,7 +67,8 @@ public class PDCharacterStats
     {
         foreach (KeyValuePair<PDStats.Stats, float> e in mDifficultyValues)
         {
-            mAdjustmentValues[e.Key] = new Adjustment(0, e.Value, 0.5f);
+            if (Random.Range(0, 2) == 0) 
+                mAdjustmentValues[e.Key] = new Adjustment(-0.5f, e.Value, 0.5f);
         }
     }
 }

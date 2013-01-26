@@ -6,41 +6,57 @@ public class TimedEventDistributor
 
     public class TimedEventChain
     {
-        TimedEventDistributor mEventDistributor;
         TimedEventChain mFollow = null;
-        float mTime = -1;
+        float mTime = 0;
         System.Func<float, bool> mEvent = null;
-        TimedEventChain(TimedEventDistributor aEventDistributor)
+        bool mDone = false;
+        float mFollowTimer = 0;
+        float mTimeDone = 0;
+        TimedEventChain()
         {
-            mEventDistributor = aEventDistributor;
         }
         public TimedEventChain then(System.Func<float, bool> aEvent, float aTime)
         {
             mEvent = aEvent;
             mTime = aTime;
-            mFollow = new TimedEventChain(mEventDistributor);
+            mFollow = new TimedEventChain();
             return mFollow;
         }
         public TimedEventChain then_one_shot(System.Action aEvent)
         {
-            mEvent = delegate(float time) { aEvent(); return true; };
-            mTime = 0;
-            mFollow = new TimedEventChain(mEventDistributor);
-            return mFollow;
+            return then(delegate(float time) { aEvent(); return true; }, 0);
         }
 
         public bool call(float aTime)
         {
-            bool r = mEvent(aTime);
-            if (r && mFollow != null && mFollow.mEvent != null)
-                mEventDistributor.add_event(mFollow.call, mFollow.mTime);
-            return r;
+            if (mEvent == null) //base case
+                return true;
+
+            if (!mDone) //do my action
+            {
+                mDone = mEvent(aTime);
+                if (mDone)
+                    mTimeDone = aTime;
+            }
+
+            if (mDone && mFollow != null) //if my action is done, do following action
+            {
+                mFollowTimer = aTime-mTimeDone; //increase time
+                //Debug.Log(mFollowTimer + " " + mFollow.mTime);
+                if (mFollowTimer > mFollow.mTime) //if it's time to do followup do it
+                    return mFollow.call(mFollowTimer-mFollow.mTime); //return the results
+                else 
+                    return false; //not time yet
+            }
+            return mDone;
         }
 
         public static TimedEventChain first(TimedEventDistributor aEventDistributor, System.Func<float, bool> aEvent, float aTime)
         {
-            TimedEventChain f = new TimedEventChain(aEventDistributor);
-            return f.then(aEvent, aTime);
+            TimedEventChain f = new TimedEventChain();
+            TimedEventChain r =  f.then(aEvent, aTime);
+            aEventDistributor.add_event_raw(f.call, aTime);
+            return r;
         }
     }
 
@@ -83,23 +99,25 @@ public class TimedEventDistributor
 
     public void update(float aDeltaTime)
     {
-        List<KeyValuePair<QuTimer, System.Func<float,bool>>> removal = new List<KeyValuePair<QuTimer, System.Func<float,bool>>>();
-        foreach (KeyValuePair<QuTimer, System.Func<float,bool>> e in mEvents)
+        Dictionary<QuTimer, System.Func<float, bool>> copy = new Dictionary<QuTimer, System.Func<float, bool>>(mEvents);
+        foreach (KeyValuePair<QuTimer, System.Func<float,bool>> e in copy)
         {
             e.Key.update(aDeltaTime);
             if (e.Key.isExpired())
             {
-                if (e.Value(aDeltaTime))
-                    removal.Add(e);
+                if (e.Value(e.Key.getTImeSinceExpired()))
+                    mEvents.Remove(e.Key);
             }
         }
-        foreach (KeyValuePair<QuTimer, System.Func<float,bool>> e in removal)
-            mEvents.Remove(e.Key);
+    }
+
+    public void add_event_raw(System.Func<float, bool> aEvent, float aTime)
+    {
+        mEvents.Add(new QuTimer(0, aTime), aEvent);
     }
     public TimedEventChain add_event(System.Func<float,bool> aEvent, float aTime)
     {
         TimedEventChain r = TimedEventChain.first(this, aEvent, aTime);
-        mEvents.Add(new QuTimer(0, aTime), r.call);
         return r;
     }
 

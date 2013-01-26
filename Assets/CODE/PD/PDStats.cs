@@ -17,7 +17,7 @@ public class PDStats
 
     public static Stats[] EnumerableStats = new Stats[] { Stats.EDUCATION, Stats.EXPRESSION, Stats.FAMILY, Stats.HEALTH, Stats.MONEY, Stats.RESPECT, Stats.ROMANCE, Stats.WISDOM };
 
-    public List<string[]> positive_sentences = new List<string[]>()
+    public static List<string[]> positive_sentences = new List<string[]>()
     {
         new string[]{"you became more educated"},
         new string[]{"you made an independent video game", "you made progress on your artistic endeavors"},
@@ -29,7 +29,7 @@ public class PDStats
         new string[]{"you became more cultured", "you gained life experiences"}
     };
 
-    public List<string[]> negative_sentences = new List<string[]>()
+    public static List<string[]> negative_sentences = new List<string[]>()
     {
         new string[]{"you forgot a lot of what you learned"},
         new string[]{"your creativity was stifled"},
