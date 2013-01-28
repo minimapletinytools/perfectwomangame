@@ -33,7 +33,7 @@ public class PDCharacters
             ROMANCE = 4,
             WISDOM = 0,
 
-            Title = "Princess"
+            Title = "Child Star"
         },
         new PDCharacterStats()      //05-3
         {
@@ -46,7 +46,7 @@ public class PDCharacters
             ROMANCE = 0,
             WISDOM = 0,
 
-            Title = "Princess"
+            Title = "Street Kid"
         },
         new PDCharacterStats()      //05-4
         {
@@ -59,7 +59,7 @@ public class PDCharacters
             ROMANCE = 0,
             WISDOM = 0,
 
-            Title = "Princess"
+            Title = "1 of 12"
         },
         new PDCharacterStats()      //16-1
         {
@@ -72,7 +72,7 @@ public class PDCharacters
             ROMANCE = 0,
             WISDOM = 0,
 
-            Title = "Person"
+            Title = "Responsible Sister"
         },
         new PDCharacterStats()      //16-2
         {
@@ -85,7 +85,7 @@ public class PDCharacters
             ROMANCE = 0,
             WISDOM = 0,
 
-            Title = "Person"
+            Title = "Nerd"
         },
         new PDCharacterStats()      //16-3
         {
@@ -98,7 +98,7 @@ public class PDCharacters
             ROMANCE = 0,
             WISDOM = 0,
 
-            Title = "Person"
+            Title = "Sexy Lady"
         },
         new PDCharacterStats()      //16-4
         {
@@ -111,7 +111,7 @@ public class PDCharacters
             ROMANCE = 0,
             WISDOM = 0,
 
-            Title = "Person"
+            Title = "Band Member"
         },
         new PDCharacterStats()      //27-1
         {
@@ -124,7 +124,7 @@ public class PDCharacters
             ROMANCE = 0,
             WISDOM = 0,
 
-            Title = "Person"
+            Title = "Mother"
         },
         new PDCharacterStats()      //27-2
         {
@@ -137,7 +137,7 @@ public class PDCharacters
             ROMANCE = 0,
             WISDOM = 0,
 
-            Title = "Person"
+            Title = "Drug User"
         },
         new PDCharacterStats()      //27-3
         {
@@ -150,7 +150,7 @@ public class PDCharacters
             ROMANCE = 0,
             WISDOM = 0,
 
-            Title = "Person"
+            Title = "Oktoberfest Bartender"
         },
         new PDCharacterStats()      //27-4
         {
@@ -163,7 +163,7 @@ public class PDCharacters
             ROMANCE = 0,
             WISDOM = 0,
 
-            Title = "Person"
+            Title = "Pot Head"
         },
         new PDCharacterStats()      //34-1
         {
@@ -176,7 +176,7 @@ public class PDCharacters
             ROMANCE = 0,
             WISDOM = 0,
 
-            Title = "Person"
+            Title = "Soccer Mom in Danville"
         },
         new PDCharacterStats()      //34-2
         {
@@ -189,7 +189,7 @@ public class PDCharacters
             ROMANCE = 0,
             WISDOM = 0,
 
-            Title = "Person"
+            Title = "MIT Professor giving a TED talk"
         },
         new PDCharacterStats()      //34-3
         {
@@ -202,7 +202,7 @@ public class PDCharacters
             ROMANCE = 0,
             WISDOM = 0,
 
-            Title = "Person"
+            Title = "Sad Person"
         },
         new PDCharacterStats()      //34-4
         {
@@ -215,7 +215,7 @@ public class PDCharacters
             ROMANCE = 0,
             WISDOM = 0,
 
-            Title = "Person"
+            Title = "Foster Parent in Costa Rica"
         },
         new PDCharacterStats()      //45-1
         {
@@ -228,7 +228,7 @@ public class PDCharacters
             ROMANCE = 0,
             WISDOM = 0,
 
-            Title = "Person"
+            Title = "Rich Married Woman"
         },
         new PDCharacterStats()      //45-2
         {
@@ -241,7 +241,7 @@ public class PDCharacters
             ROMANCE = 0,
             WISDOM = 0,
 
-            Title = "Person"
+            Title = "Stressed Out Lady"
         },
         new PDCharacterStats()      //45-3
         {
@@ -254,7 +254,7 @@ public class PDCharacters
             ROMANCE = 0,
             WISDOM = 0,
 
-            Title = "Person"
+            Title = "Famosu Actress"
         },
         new PDCharacterStats()      //45-4
         {
@@ -267,7 +267,7 @@ public class PDCharacters
             ROMANCE = 0,
             WISDOM = 0,
 
-            Title = "Person"
+            Title = "Belly Dance Instructor"
         },
         new PDCharacterStats()      //60-1
         {
@@ -280,7 +280,7 @@ public class PDCharacters
             ROMANCE = 0,
             WISDOM = 0,
 
-            Title = "Person"
+            Title = "Upset Mother"
         },
         new PDCharacterStats()      //60-2
         {
@@ -293,7 +293,7 @@ public class PDCharacters
             ROMANCE = 0,
             WISDOM = 0,
 
-            Title = "Person"
+            Title = "Foreign Minister"
         },
         new PDCharacterStats()      //60-3
         {
@@ -306,7 +306,7 @@ public class PDCharacters
             ROMANCE = 0,
             WISDOM = 0,
 
-            Title = "Person"
+            Title = "Charity Speaker"
         },
         new PDCharacterStats()      //60-4
         {
@@ -319,7 +319,7 @@ public class PDCharacters
             ROMANCE = 0,
             WISDOM = 0,
 
-            Title = "Person"
+            Title = "Intellectual"
         },
         new PDCharacterStats()      //80-1
         {
@@ -332,7 +332,7 @@ public class PDCharacters
             ROMANCE = 0,
             WISDOM = 0,
 
-            Title = "Person"
+            Title = "Follower of God"
         },
         new PDCharacterStats()      //80-2
         {
@@ -345,7 +345,7 @@ public class PDCharacters
             ROMANCE = 0,
             WISDOM = 0,
 
-            Title = "Person"
+            Title = "Crazy Cat Lady"
         },
         new PDCharacterStats()      //80-3
         {
@@ -358,7 +358,7 @@ public class PDCharacters
             ROMANCE = 0,
             WISDOM = 0,
 
-            Title = "Person"
+            Title = "Senile Senior"
         },
         new PDCharacterStats()      //80-4
         {
@@ -369,7 +369,9 @@ public class PDCharacters
             MONEY = 0,
             RESPECT = 0,
             ROMANCE = 0,
-            WISDOM = 0
+            WISDOM = 0,
+
+            Title = "Wise Grandma"
         },
         new PDCharacterStats()      //999
         {
@@ -382,7 +384,7 @@ public class PDCharacters
             ROMANCE = 0,
             WISDOM = 0,
 
-            Title = "Grave"
+            Title = "Burried"
         }
 
     };

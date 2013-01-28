@@ -17,7 +17,7 @@ public class PDTester : MonoBehaviour {
 
 
     PDManager mP;
-    int mCurrentState = 0;
+    int mCurrentState = -1;
     PDCharacterStats[] mStats;
     PDInstance[] mInstances;
     PDPlayerstats mPlayer;
@@ -26,22 +26,32 @@ public class PDTester : MonoBehaviour {
     bool mChanging = false;
     float mPerfect = 0.5f;
 
-
     TimedEventDistributor mEvents;
+
+    int[] mPerfectness = new int[28]{  
+            3, 1, 0, 2, 
+            0, 1, 3, 2, 
+            3, 0, 2, 1, 
+            1, 3, 0, 2,
+            1, 0, 3, 2, 
+            0, 3, 1, 2, 
+            1, 0, 2, 3 };
 
     PDCharacterStats get_character()
     {
-        return mStats[mCurrentState];
+        return mStats[mCurrentState+1];
     }
 
     int get_index(int age, int group)
     {
-        return age * 4 + group;
+        return (age-1) * 4 + group;
     }
 
     int get_age(int index)
     {
-        return index / 4;
+        if (index == -1)
+            return 0;
+        return (index) / 4 + 1;
     }
 
     void Start()
@@ -70,7 +80,7 @@ public class PDTester : MonoBehaviour {
     {
         for (int i = 0; i < 7; i++)
         {
-            int[] answer = mPlayer.difficulty_relative(new PDCharacterStats[] { mStats[4 * i + 0], mStats[4 * i + 1], mStats[4 * i + 2], mStats[4 * i + 3] });
+            int[] answer = mPlayer.difficulty_relative(new PDCharacterStats[] { mStats[4 * i + 0 + 1], mStats[4 * i + 1 + 1], mStats[4 * i + 2 + 1], mStats[4 * i + 3 + 1] });
             for (int j = 0; j < 4; j++)
             {
                 mInstances[i * 4 + j].NextDifficulty = answer[j];
@@ -88,7 +98,7 @@ public class PDTester : MonoBehaviour {
         PDInstance ins = mInstances[get_index(age,group)];
         if (ins.Changed && mFlashing)
             return random_string();
-        return ins.Difficulty.ToString();
+        return ins.Difficulty.ToString() + "\n\n" + mPerfectness[get_index(age,group)];
     }
     string random_string()
     {
@@ -119,7 +129,7 @@ public class PDTester : MonoBehaviour {
         {
             for (int j = 0; j < 4; j++)
             {
-                GUI.TextArea(new Rect(GRID_OFFSET.x + j * GRID_SPACING.x, GRID_OFFSET.y + i * GRID_SPACING.y, GRID_SIZE.x, GRID_SIZE.y), get_display_string(i,j));
+                GUI.TextArea(new Rect(GRID_OFFSET.x + j * GRID_SPACING.x, GRID_OFFSET.y + i * GRID_SPACING.y, GRID_SIZE.x, GRID_SIZE.y), get_display_string(i+1,j));
             }
         }
 
@@ -127,19 +137,57 @@ public class PDTester : MonoBehaviour {
         //GUI.TextArea(new Rect(50, 150, Screen.width - 100, Screen.height - 250), "nonsense");
     }
 
+    string construct_life_sentence(int life, float performance)
+    {
+
+        if (life == -1)
+            return "you were in your mother's womb";
+
+        string r = "your ";
+
+        if (mPerfectness[life] == 0)
+            r += "shitty";
+        else if (mPerfectness[life] == 1)
+            r += "ok";
+        else if (mPerfectness[life] == 2)
+            r += "ideal";
+        else if (mPerfectness[life] == 3)
+            r += "perfect";
+
+        r += " life as a ";
+
+        r += mStats[life].Title;
+            
+        r += " was ";
+
+        if (performance < 0.25)
+            r += "terrible";
+        else if (performance < 0.5)
+            r += "mediocre";
+        else if (performance < 0.75)
+            r += "good";
+        else
+            r += "amazing";
+
+        return r;
+    }
+
     void advance(int choice)
     {
         if (mChanging)
             return;
-        Debug.Log("advancing " + choice);
+        
         compute_next_difficulties();
-        mCurrentState = get_age(mCurrentState) + 1 + choice;
+        int lastLife = mCurrentState;
+        mCurrentState = 4*(get_age(mCurrentState)) + choice;
+
+        Debug.Log("advancing from " + lastLife + " to " + mCurrentState);
         
         TimedEventDistributor.TimedEventChain chain =  mEvents.add_event(
             delegate(float time)
             {
                 mChanging = true;
-                this.mPrompt = "your life was womp womp";
+                this.mPrompt = construct_life_sentence(mCurrentState, mPerfect);
                 if (time > 2)
                 {
                     return true;
@@ -148,7 +196,6 @@ public class PDTester : MonoBehaviour {
             },
             0);
         
-        //TODO foreach stat
         foreach (PDStats.Stats e in PDStats.EnumerableStats)
         {
             PDStats.Stats loopStat = e;
@@ -168,14 +215,14 @@ public class PDTester : MonoBehaviour {
                 0).then(
                 delegate(float time)
                 {
-                    Debug.Log("flash on " + loopStat);
+                    //Debug.Log("flash on " + loopStat);
                     start_flashing();
                     return true;
                 },
                 0).then(
                 delegate(float time)
                 {
-                    Debug.Log("stop flash on " + loopStat);
+                    //Debug.Log("stop flash on " + loopStat);
                     stop_flashing();    
                     if(time > 1)
                         return true;
