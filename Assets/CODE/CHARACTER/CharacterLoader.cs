@@ -5,11 +5,13 @@ public class CharacterLoader {
     public bool Done { get; private set; }
     public CharacterData.CharacterDataImages Images { get; private set; }
     public CharacterData.CharacterDataSizes Sizes { get; private set; }
+    public string Name { get; private set; }
     public CharacterLoader()
     {
         Done = false;
         Images = new CharacterData.CharacterDataImages();
         Sizes = new CharacterData.CharacterDataSizes();
+        Name = "unset";
     }
     public void complete_load_character(AssetBundle aBundle, string aName)
     {
@@ -18,6 +20,7 @@ public class CharacterLoader {
     }
     public IEnumerable<int> load_character(AssetBundle aBundle, string aName)
     {
+        Name = aName;
         string output = "Loading character " + aName + "\n";
         //TODO this wont work....
         if (aName != "999")
