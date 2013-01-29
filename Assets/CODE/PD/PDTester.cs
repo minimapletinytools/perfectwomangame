@@ -156,7 +156,7 @@ public class PDTester : MonoBehaviour {
 
         r += " life as a ";
 
-        r += mStats[life].Title;
+        r += mStats[life+1].Title;
             
         r += " was ";
 
