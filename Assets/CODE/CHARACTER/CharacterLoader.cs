@@ -43,9 +43,9 @@ public class CharacterLoader {
             Images.backgroundElements.Add(aBundle.Load("BG_" + (i + 1), typeof(Texture2D)) as Texture2D);
         for (int i = 0; aBundle.Contains("FG_" + (i + 1)); i++)
             Images.foregroundElements.Add(aBundle.Load("FG_" + (i + 1), typeof(Texture2D)) as Texture2D);
-
         output += "found bg fg: " + Images.backgroundElements.Count + " " + Images.foregroundElements.Count + "\n";
-        
+
+        Images.backgroundMusic = aBundle.Load("AUDIO", typeof(AudioClip)) as AudioClip; //optional
 
         TextAsset cd = aBundle.Load("CD", typeof(TextAsset)) as TextAsset;
         System.IO.MemoryStream stream = new System.IO.MemoryStream(cd.bytes);
