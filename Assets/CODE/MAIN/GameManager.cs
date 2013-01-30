@@ -395,7 +395,7 @@ public class GameManager : FakeMonoBehaviour
         //Debug.Log("loading character in CharacterLoader " + aBundleName);
         loader.complete_load_character(aBundle,aBundleName);
         
-        if (aBundle.name == "999")
+        if (aBundleName == "999")
         {
             mManager.mInterfaceManager.mScoreText.SoftPosition = mManager.mBackgroundManager.mBackgroundElements.mElements[0].Element.SoftPosition + new Vector3(0, -150, 0);
             mManager.mInterfaceManager.mScoreText.Depth = 101;
@@ -452,20 +452,23 @@ public class GameManager : FakeMonoBehaviour
 
         set_music(container.Images.backgroundMusic);
 
-        //setup transparent body manager
-        if (get_pose_at_index(index, get_difficulty(index)) != null)
+        if (container.Name != "999")
         {
-            mManager.mTransparentBodyManager.set_target_pose(get_pose_at_index(index, get_difficulty(index)));
-            mManager.mTransparentBodyManager.mFlat.SoftColor = new Color(0.5f, 0.5f, 0.5f, 0.35f);
+            //setup transparent body manager
+            if (get_pose_at_index(index, get_difficulty(index)) != null)
+            {
+                mManager.mTransparentBodyManager.set_target_pose(get_pose_at_index(index, get_difficulty(index)));
+                mManager.mTransparentBodyManager.mFlat.SoftColor = new Color(0.5f, 0.5f, 0.5f, 0.35f);
+            }
+            else if (CurrentLevel == 0)
+            {
+                mManager.mTransparentBodyManager.mFlat.SoftColor = new Color(0.5f, 0.5f, 0.5f, 0.0f);
+            }
+            else
+                throw new UnityException("Missing Pose for index " + index + " difficulty " + get_difficulty(index));
         }
-        else if (CurrentLevel == 0)
-        {
-            mManager.mTransparentBodyManager.mFlat.SoftColor = new Color(0.5f, 0.5f, 0.5f, 0.0f);
-        }
-        else
-            throw new UnityException("Missing Pose for index " + index + " difficulty " + get_difficulty(index));
     }
-
+         
     public void set_music(AudioClip music)
     {
         //TODO fading nonsense
@@ -520,8 +523,8 @@ public class GameManager : FakeMonoBehaviour
                     {
                         if (firstNotNullPose == null)
                         {
-                            if(j == 3)
-                                mDifficultyTargetPoses[1 + 4 * i + j] = ProGrading.read_pose(mManager.mReferences.mDefaultTargetPoses[Random.Range(3,11)]);
+                            if (j == 3)
+                                mDifficultyTargetPoses[1 + 4 * i + j] = ProGrading.read_pose(mManager.mReferences.mDefaultTargetPoses[Random.Range(3, 11)]);
                             else
                                 mDifficultyTargetPoses[1 + 4 * i + j] = ProGrading.read_pose(mManager.mReferences.mDefaultTargetPoses[j]);
                         }
@@ -535,7 +538,7 @@ public class GameManager : FakeMonoBehaviour
                 //Debug.Log("no character found for " + bundle);
             }
         }
-
+        
         aBundle.Unload(true); //don't need this anymore I don't ithnk...
     }
     //move this stuff elsewhere poo poo

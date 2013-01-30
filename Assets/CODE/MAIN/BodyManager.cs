@@ -43,7 +43,7 @@ public class BodyManager : FakeMonoBehaviour {
     {
         destroy_character();
 
-        if (aCharacter != null)
+        if (aCharacter != null && aCharacter.Name != "999")
         {
             mFlat = new FlatBodyObject(aCharacter, -1);
             set_layer(mLayer);

@@ -22,7 +22,7 @@ public class CharacterLoader {
     {
         Name = aName;
         string output = "Loading character " + aName + "\n";
-        //TODO this wont work....
+
         if (aName != "999")
         {
             Images.head = aBundle.Load("HEAD_A", typeof(Texture2D)) as Texture2D;
