@@ -1,4 +1,7 @@
 ::NEXT::
+DONE-do configuration screen somehow???
+DONE (bad fix)-get rid of the zigfu logo
+-do scene reset at end of game and see if that solves your memory issue
 -get game back to its original state with lea's new assets
 -fake P
 	DONE-grid of numbers representing difficulty

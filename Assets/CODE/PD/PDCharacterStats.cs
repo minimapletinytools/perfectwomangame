@@ -31,6 +31,7 @@ public class PDCharacterStats
         {PDStats.Stats.RESPECT,new Adjustment(0,0,0)},
         {PDStats.Stats.ROMANCE,new Adjustment(0,0,0)},
         {PDStats.Stats.WISDOM,new Adjustment(0,0,0)}
+
     };
 
 

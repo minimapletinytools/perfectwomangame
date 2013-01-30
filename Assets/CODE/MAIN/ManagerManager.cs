@@ -41,11 +41,13 @@ public class ManagerManager : MonoBehaviour{
     public MenuReferenceBehaviour mMenuReferences;
 
 	void Awake () {
+
+        Debug.Log("setting up managers");
         mReferences = GetComponent<PrefabReferenceBehaviour>();
         mMenuReferences = GetComponent<MenuReferenceBehaviour>();
 
-        if (sManager == null)
-            Manager = this;
+        
+        Manager = this;
 
         mEventManager = new EventManager(this);
         mInputManager = new InputManager(this);
@@ -92,6 +94,11 @@ public class ManagerManager : MonoBehaviour{
 	void Update () {
         if (Input.GetKeyDown(KeyCode.Escape))
             Application.Quit();
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            mGameManager.unload_current_asset_bundle();
+            Application.LoadLevel("kinect_test");
+        }
 		if(mUpdateDelegates != null) 
 			mUpdateDelegates();
 	}

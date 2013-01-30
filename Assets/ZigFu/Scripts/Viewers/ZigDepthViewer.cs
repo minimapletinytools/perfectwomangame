@@ -122,6 +122,7 @@ public class ZigDepthViewer : MonoBehaviour {
 
     void Zig_Update(ZigInput input)
     {
+        
         if (UseHistogram) {
             UpdateHistogram(ZigInput.Depth);
         }
@@ -141,8 +142,10 @@ public class ZigDepthViewer : MonoBehaviour {
     }
 
     void OnGUI() {
+        GUI.depth = int.MinValue;
         if (null == target) {
-            GUI.DrawTexture(new Rect(Screen.width - texture.width - 10, Screen.height - texture.height - 10, texture.width, texture.height), texture);
+            //GUI.DrawTexture(new Rect(Screen.width - texture.width - 10, Screen.height - texture.height - 10, texture.width, texture.height), texture);
+            GUI.DrawTexture(new Rect(10, Screen.height - texture.height - 10, texture.width, texture.height), texture);
         }
     }
 }

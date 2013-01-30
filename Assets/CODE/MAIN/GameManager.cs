@@ -98,7 +98,12 @@ public class GameManager : FakeMonoBehaviour
     { get; private set; }
     public AssetBundle CurrentAssetBundle
     { get; private set; }
-
+    public void unload_current_asset_bundle()
+    {
+        if (CurrentAssetBundle != null)
+            CurrentAssetBundle.Unload(true);
+    }
+    
 
     //choice and difficulty accessors
     public bool does_choice_exist(int index)
@@ -432,8 +437,7 @@ public class GameManager : FakeMonoBehaviour
         IsLoading = false;
 
         //unload old bundle //TODO I don't think this is working
-        if (CurrentAssetBundle != null)
-            CurrentAssetBundle.Unload(true);
+        unload_current_asset_bundle();
         CurrentAssetBundle = aBundle;
     }
 
@@ -531,6 +535,8 @@ public class GameManager : FakeMonoBehaviour
                 //Debug.Log("no character found for " + bundle);
             }
         }
+
+        aBundle.Unload(true); //don't need this anymore I don't ithnk...
     }
     //move this stuff elsewhere poo poo
     public static void Shuffle<T>(T[] array)
