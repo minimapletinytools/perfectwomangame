@@ -88,8 +88,7 @@ public class PDCharacterStats
     {
         foreach (KeyValuePair<PDStats.Stats, float> e in mDifficultyValues)
         {
-            if (Random.Range(0, 2) == 0) 
-                mAdjustmentValues[e.Key] = new Adjustment(-0.5f, e.Value, 0.5f);
+            mAdjustmentValues[e.Key] = new Adjustment(0, e.Value, 0);
         }
     }
 }

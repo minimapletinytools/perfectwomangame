@@ -172,36 +172,41 @@ public class PDTester : MonoBehaviour {
         return r;
     }
 
+    void reset_state_changes()
+    {
+        //this is a hack but we need to reset the NextStats in player so the delegates do what they need to do
+        Dictionary<PDStats.Stats, float> keys = new Dictionary<PDStats.Stats, float>(mPlayer.NextValues);
+        foreach (PDStats.Stats e in keys.Keys)
+            mPlayer.NextValues[e] = mPlayer.Values[e];
+    }
+
     void advance(int choice)
     {
         if (mChanging)
             return;
-        
-        compute_next_difficulties();
-        int lastLife = mCurrentState;
-        mCurrentState = 4*(get_age(mCurrentState)) + choice;
 
-        Debug.Log("advancing from " + lastLife + " to " + mCurrentState);
+
         
-        TimedEventDistributor.TimedEventChain chain =  mEvents.add_event(
-            delegate(float time)
+        int lastLife = mCurrentState; // -1 is grave
+        //fetus is age 0, increases from there (which is why we don't add 1 to get_age results)
+        mCurrentState = 4*(get_age(mCurrentState)) + choice;
+        Debug.Log("advancing from " + lastLife + " to " + mCurrentState);
+        TimedEventDistributor.TimedEventChain chain =  mEvents.add_one_shot_event(
+            delegate()
             {
                 mChanging = true;
                 this.mPrompt = construct_life_sentence(mCurrentState, mPerfect);
-                if (time > 2)
-                {
-                    return true;
-                }
-                return false;
             },
             0);
-        
+
+        bool first = true;
         foreach (PDStats.Stats e in PDStats.EnumerableStats)
         {
             PDStats.Stats loopStat = e;
             mPlayer.change_stats(get_character(), mPerfect, e);
             int change = mPlayer.get_change(e);
-            if(change == 0) 
+            reset_state_changes();
+            if (change == 0)
                 continue;
             chain = chain.then(
                 delegate(float time)
@@ -212,7 +217,7 @@ public class PDTester : MonoBehaviour {
                     compute_next_difficulties();
                     return true;
                 },
-                0).then(
+                2).then(
                 delegate(float time)
                 {
                     //Debug.Log("flash on " + loopStat);
@@ -223,13 +228,13 @@ public class PDTester : MonoBehaviour {
                 delegate(float time)
                 {
                     //Debug.Log("stop flash on " + loopStat);
-                    stop_flashing();    
-                    if(time > 1)
-                        return true;
-                    return false;
+                    stop_flashing();
+                    return true;
                 },
                 2);
+            first = false;
         }
+
         chain.then_one_shot(
             delegate() 
             {
@@ -237,10 +242,6 @@ public class PDTester : MonoBehaviour {
                 mChanging = false;
                 mPlayer.set_stats();
             });
-        //this is a hack but we need to reset the NextStats in player so the delegates do what they need to do
-         Dictionary<PDStats.Stats, float> keys = new Dictionary<PDStats.Stats,float>(mPlayer.NextValues);
-        foreach(PDStats.Stats e in keys.Keys)
-            mPlayer.NextValues[e] = mPlayer.Values[e];
     }
 
 
