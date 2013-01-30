@@ -8,6 +8,7 @@ public class PDCharacterStats
         public float l,r,m;
         public Adjustment() { l = r = m = 0; }
         public Adjustment(float al, float ar, float am) { l = al; r = ar; m = am; }
+        public Adjustment(float ar) { l = 0; r = ar; m = 0; }
     }
     Dictionary<PDStats.Stats, float> mDifficultyValues = new Dictionary<PDStats.Stats, float>()
     {
@@ -51,6 +52,15 @@ public class PDCharacterStats
             mDifficultyValues[PDStats.Stats.ROMANCE] = aValues[6];
             mDifficultyValues[PDStats.Stats.WISDOM] = aValues[7];
         }
+
+            ADJUST_EDUCATION = new PDCharacterStats.Adjustment(0);
+            ADJUST_EXPRESSION = new PDCharacterStats.Adjustment(0);
+            ADJUST_FAMILY = new PDCharacterStats.Adjustment(0);
+            ADJUST_HEALTH = new PDCharacterStats.Adjustment(0);
+            ADJUST_MONEY = new PDCharacterStats.Adjustment(0);
+            ADJUST_RESPECT = new PDCharacterStats.Adjustment(0);
+            ADJUST_ROMANCE = new PDCharacterStats.Adjustment(0);
+            ADJUST_WISDOM = new PDCharacterStats.Adjustment(0);
     }
 
     public float EDUCATION { get { return mDifficultyValues[PDStats.Stats.EDUCATION]; } set { mDifficultyValues[PDStats.Stats.EDUCATION] = value; } }
@@ -61,6 +71,16 @@ public class PDCharacterStats
     public float RESPECT { get { return mDifficultyValues[PDStats.Stats.RESPECT]; } set { mDifficultyValues[PDStats.Stats.RESPECT] = value; } }
     public float ROMANCE { get { return mDifficultyValues[PDStats.Stats.ROMANCE]; } set { mDifficultyValues[PDStats.Stats.ROMANCE] = value; } }
     public float WISDOM { get { return mDifficultyValues[PDStats.Stats.WISDOM]; } set { mDifficultyValues[PDStats.Stats.WISDOM] = value; } }
+
+
+    public Adjustment ADJUST_EDUCATION { get { return mAdjustmentValues[PDStats.Stats.EDUCATION]; } set { mAdjustmentValues[PDStats.Stats.EDUCATION] = value; } }
+    public Adjustment ADJUST_EXPRESSION { get { return mAdjustmentValues[PDStats.Stats.EXPRESSION]; } set { mAdjustmentValues[PDStats.Stats.EXPRESSION] = value; } }
+    public Adjustment ADJUST_FAMILY { get { return mAdjustmentValues[PDStats.Stats.FAMILY]; } set { mAdjustmentValues[PDStats.Stats.FAMILY] = value; } }
+    public Adjustment ADJUST_HEALTH { get { return mAdjustmentValues[PDStats.Stats.HEALTH]; } set { mAdjustmentValues[PDStats.Stats.HEALTH] = value; } }
+    public Adjustment ADJUST_MONEY { get { return mAdjustmentValues[PDStats.Stats.MONEY]; } set { mAdjustmentValues[PDStats.Stats.MONEY] = value; } }
+    public Adjustment ADJUST_RESPECT { get { return mAdjustmentValues[PDStats.Stats.RESPECT]; } set { mAdjustmentValues[PDStats.Stats.RESPECT] = value; } }
+    public Adjustment ADJUST_ROMANCE { get { return mAdjustmentValues[PDStats.Stats.ROMANCE]; } set { mAdjustmentValues[PDStats.Stats.ROMANCE] = value; } }
+    public Adjustment ADJUST_WISDOM { get { return mAdjustmentValues[PDStats.Stats.WISDOM]; } set { mAdjustmentValues[PDStats.Stats.WISDOM] = value; } }
 
     public string Title { get; set; }
 

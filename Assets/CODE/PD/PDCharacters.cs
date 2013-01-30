@@ -20,6 +20,15 @@ public class PDCharacters
             ROMANCE = 5,
             WISDOM = 0,
 
+            ADJUST_EDUCATION = new PDCharacterStats.Adjustment(0),
+            ADJUST_EXPRESSION = new PDCharacterStats.Adjustment(0),
+            ADJUST_FAMILY = new PDCharacterStats.Adjustment(0),
+            ADJUST_HEALTH = new PDCharacterStats.Adjustment(0),
+            ADJUST_MONEY = new PDCharacterStats.Adjustment(0),
+            ADJUST_RESPECT = new PDCharacterStats.Adjustment(0),
+            ADJUST_ROMANCE = new PDCharacterStats.Adjustment(0),
+            ADJUST_WISDOM = new PDCharacterStats.Adjustment(0),
+
             Title = "Princess"
         },
         new PDCharacterStats()      //05-2
@@ -33,6 +42,15 @@ public class PDCharacters
             ROMANCE = 0,
             WISDOM = -5,
 
+            ADJUST_EDUCATION = new PDCharacterStats.Adjustment(0),
+            ADJUST_EXPRESSION = new PDCharacterStats.Adjustment(0),
+            ADJUST_FAMILY = new PDCharacterStats.Adjustment(0),
+            ADJUST_HEALTH = new PDCharacterStats.Adjustment(0),
+            ADJUST_MONEY = new PDCharacterStats.Adjustment(0),
+            ADJUST_RESPECT = new PDCharacterStats.Adjustment(0),
+            ADJUST_ROMANCE = new PDCharacterStats.Adjustment(0),
+            ADJUST_WISDOM = new PDCharacterStats.Adjustment(0),
+
             Title = "Child Star"
         },
         new PDCharacterStats()      //05-3
@@ -45,6 +63,15 @@ public class PDCharacters
             RESPECT = 5,
             ROMANCE = 0,
             WISDOM = 100,
+            
+            ADJUST_EDUCATION = new PDCharacterStats.Adjustment(0),
+            ADJUST_EXPRESSION = new PDCharacterStats.Adjustment(0),
+            ADJUST_FAMILY = new PDCharacterStats.Adjustment(0),
+            ADJUST_HEALTH = new PDCharacterStats.Adjustment(0),
+            ADJUST_MONEY = new PDCharacterStats.Adjustment(0),
+            ADJUST_RESPECT = new PDCharacterStats.Adjustment(0),
+            ADJUST_ROMANCE = new PDCharacterStats.Adjustment(0),
+            ADJUST_WISDOM = new PDCharacterStats.Adjustment(0),
 
             Title = "Street Kid"
         },
@@ -59,6 +86,15 @@ public class PDCharacters
             ROMANCE = 0,
             WISDOM = 5,
 
+            ADJUST_EDUCATION = new PDCharacterStats.Adjustment(0),
+            ADJUST_EXPRESSION = new PDCharacterStats.Adjustment(0),
+            ADJUST_FAMILY = new PDCharacterStats.Adjustment(0),
+            ADJUST_HEALTH = new PDCharacterStats.Adjustment(0),
+            ADJUST_MONEY = new PDCharacterStats.Adjustment(0),
+            ADJUST_RESPECT = new PDCharacterStats.Adjustment(0),
+            ADJUST_ROMANCE = new PDCharacterStats.Adjustment(0),
+            ADJUST_WISDOM = new PDCharacterStats.Adjustment(0),
+
             Title = "1 of 12"
         },
         new PDCharacterStats()      //16-1
@@ -71,6 +107,15 @@ public class PDCharacters
             RESPECT = -5,
             ROMANCE = 0,
             WISDOM = 100,
+
+            ADJUST_EDUCATION = new PDCharacterStats.Adjustment(0),
+            ADJUST_EXPRESSION = new PDCharacterStats.Adjustment(0),
+            ADJUST_FAMILY = new PDCharacterStats.Adjustment(0),
+            ADJUST_HEALTH = new PDCharacterStats.Adjustment(0),
+            ADJUST_MONEY = new PDCharacterStats.Adjustment(0),
+            ADJUST_RESPECT = new PDCharacterStats.Adjustment(0),
+            ADJUST_ROMANCE = new PDCharacterStats.Adjustment(0),
+            ADJUST_WISDOM = new PDCharacterStats.Adjustment(0),
 
             Title = "Responsible Sister"
         },
@@ -85,6 +130,15 @@ public class PDCharacters
             ROMANCE = 0,
             WISDOM = 0,
 
+            ADJUST_EDUCATION = new PDCharacterStats.Adjustment(0),
+            ADJUST_EXPRESSION = new PDCharacterStats.Adjustment(0),
+            ADJUST_FAMILY = new PDCharacterStats.Adjustment(0),
+            ADJUST_HEALTH = new PDCharacterStats.Adjustment(0),
+            ADJUST_MONEY = new PDCharacterStats.Adjustment(0),
+            ADJUST_RESPECT = new PDCharacterStats.Adjustment(0),
+            ADJUST_ROMANCE = new PDCharacterStats.Adjustment(0),
+            ADJUST_WISDOM = new PDCharacterStats.Adjustment(0),
+
             Title = "Nerd"
         },
         new PDCharacterStats()      //16-3
@@ -98,6 +152,15 @@ public class PDCharacters
             ROMANCE = 0,
             WISDOM = 0,
 
+            ADJUST_EDUCATION = new PDCharacterStats.Adjustment(0),
+            ADJUST_EXPRESSION = new PDCharacterStats.Adjustment(0),
+            ADJUST_FAMILY = new PDCharacterStats.Adjustment(0),
+            ADJUST_HEALTH = new PDCharacterStats.Adjustment(0),
+            ADJUST_MONEY = new PDCharacterStats.Adjustment(0),
+            ADJUST_RESPECT = new PDCharacterStats.Adjustment(0),
+            ADJUST_ROMANCE = new PDCharacterStats.Adjustment(0),
+            ADJUST_WISDOM = new PDCharacterStats.Adjustment(0),
+
             Title = "Sexy Lady"
         },
         new PDCharacterStats()      //16-4
@@ -110,6 +173,15 @@ public class PDCharacters
             RESPECT = 5,
             ROMANCE = 0,
             WISDOM = 0,
+            
+            ADJUST_EDUCATION = new PDCharacterStats.Adjustment(0),
+            ADJUST_EXPRESSION = new PDCharacterStats.Adjustment(0),
+            ADJUST_FAMILY = new PDCharacterStats.Adjustment(0),
+            ADJUST_HEALTH = new PDCharacterStats.Adjustment(0),
+            ADJUST_MONEY = new PDCharacterStats.Adjustment(0),
+            ADJUST_RESPECT = new PDCharacterStats.Adjustment(0),
+            ADJUST_ROMANCE = new PDCharacterStats.Adjustment(0),
+            ADJUST_WISDOM = new PDCharacterStats.Adjustment(0),
 
             Title = "Band Member"
         },
@@ -123,6 +195,15 @@ public class PDCharacters
             RESPECT = 5,
             ROMANCE = 0,
             WISDOM = 5,
+            
+            ADJUST_EDUCATION = new PDCharacterStats.Adjustment(0),
+            ADJUST_EXPRESSION = new PDCharacterStats.Adjustment(0),
+            ADJUST_FAMILY = new PDCharacterStats.Adjustment(0),
+            ADJUST_HEALTH = new PDCharacterStats.Adjustment(0),
+            ADJUST_MONEY = new PDCharacterStats.Adjustment(0),
+            ADJUST_RESPECT = new PDCharacterStats.Adjustment(0),
+            ADJUST_ROMANCE = new PDCharacterStats.Adjustment(0),
+            ADJUST_WISDOM = new PDCharacterStats.Adjustment(0),
 
             Title = "Mother"
         },
@@ -136,6 +217,15 @@ public class PDCharacters
             RESPECT = 5,
             ROMANCE = 0,
             WISDOM = -5,
+            
+            ADJUST_EDUCATION = new PDCharacterStats.Adjustment(0),
+            ADJUST_EXPRESSION = new PDCharacterStats.Adjustment(0),
+            ADJUST_FAMILY = new PDCharacterStats.Adjustment(0),
+            ADJUST_HEALTH = new PDCharacterStats.Adjustment(0),
+            ADJUST_MONEY = new PDCharacterStats.Adjustment(0),
+            ADJUST_RESPECT = new PDCharacterStats.Adjustment(0),
+            ADJUST_ROMANCE = new PDCharacterStats.Adjustment(0),
+            ADJUST_WISDOM = new PDCharacterStats.Adjustment(0),
 
             Title = "Drug User"
         },
@@ -149,6 +239,15 @@ public class PDCharacters
             RESPECT = -5,
             ROMANCE = 0,
             WISDOM = 0,
+            
+            ADJUST_EDUCATION = new PDCharacterStats.Adjustment(0),
+            ADJUST_EXPRESSION = new PDCharacterStats.Adjustment(0),
+            ADJUST_FAMILY = new PDCharacterStats.Adjustment(0),
+            ADJUST_HEALTH = new PDCharacterStats.Adjustment(0),
+            ADJUST_MONEY = new PDCharacterStats.Adjustment(0),
+            ADJUST_RESPECT = new PDCharacterStats.Adjustment(0),
+            ADJUST_ROMANCE = new PDCharacterStats.Adjustment(0),
+            ADJUST_WISDOM = new PDCharacterStats.Adjustment(0),
 
             Title = "Oktoberfest Bartender"
         },
@@ -162,6 +261,15 @@ public class PDCharacters
             RESPECT = 0,
             ROMANCE = 0,
             WISDOM = 0,
+            
+            ADJUST_EDUCATION = new PDCharacterStats.Adjustment(0),
+            ADJUST_EXPRESSION = new PDCharacterStats.Adjustment(0),
+            ADJUST_FAMILY = new PDCharacterStats.Adjustment(0),
+            ADJUST_HEALTH = new PDCharacterStats.Adjustment(0),
+            ADJUST_MONEY = new PDCharacterStats.Adjustment(0),
+            ADJUST_RESPECT = new PDCharacterStats.Adjustment(0),
+            ADJUST_ROMANCE = new PDCharacterStats.Adjustment(0),
+            ADJUST_WISDOM = new PDCharacterStats.Adjustment(0),
 
             Title = "Pot Head"
         },
@@ -175,6 +283,15 @@ public class PDCharacters
             RESPECT = 0,
             ROMANCE = 0,
             WISDOM = 0,
+            
+            ADJUST_EDUCATION = new PDCharacterStats.Adjustment(0),
+            ADJUST_EXPRESSION = new PDCharacterStats.Adjustment(0),
+            ADJUST_FAMILY = new PDCharacterStats.Adjustment(0),
+            ADJUST_HEALTH = new PDCharacterStats.Adjustment(0),
+            ADJUST_MONEY = new PDCharacterStats.Adjustment(0),
+            ADJUST_RESPECT = new PDCharacterStats.Adjustment(0),
+            ADJUST_ROMANCE = new PDCharacterStats.Adjustment(0),
+            ADJUST_WISDOM = new PDCharacterStats.Adjustment(0),
 
             Title = "Soccer Mom in Danville"
         },
@@ -188,6 +305,15 @@ public class PDCharacters
             RESPECT = 100,
             ROMANCE = 0,
             WISDOM = -100,
+            
+            ADJUST_EDUCATION = new PDCharacterStats.Adjustment(0),
+            ADJUST_EXPRESSION = new PDCharacterStats.Adjustment(0),
+            ADJUST_FAMILY = new PDCharacterStats.Adjustment(0),
+            ADJUST_HEALTH = new PDCharacterStats.Adjustment(0),
+            ADJUST_MONEY = new PDCharacterStats.Adjustment(0),
+            ADJUST_RESPECT = new PDCharacterStats.Adjustment(0),
+            ADJUST_ROMANCE = new PDCharacterStats.Adjustment(0),
+            ADJUST_WISDOM = new PDCharacterStats.Adjustment(0),
 
             Title = "MIT Professor giving a TED talk"
         },
@@ -201,6 +327,15 @@ public class PDCharacters
             RESPECT = 5,
             ROMANCE = 0,
             WISDOM = 100,
+            
+            ADJUST_EDUCATION = new PDCharacterStats.Adjustment(0),
+            ADJUST_EXPRESSION = new PDCharacterStats.Adjustment(0),
+            ADJUST_FAMILY = new PDCharacterStats.Adjustment(0),
+            ADJUST_HEALTH = new PDCharacterStats.Adjustment(0),
+            ADJUST_MONEY = new PDCharacterStats.Adjustment(0),
+            ADJUST_RESPECT = new PDCharacterStats.Adjustment(0),
+            ADJUST_ROMANCE = new PDCharacterStats.Adjustment(0),
+            ADJUST_WISDOM = new PDCharacterStats.Adjustment(0),
 
             Title = "Sad Person"
         },
@@ -214,6 +349,15 @@ public class PDCharacters
             RESPECT = 0,
             ROMANCE = 0,
             WISDOM = 5,
+            
+            ADJUST_EDUCATION = new PDCharacterStats.Adjustment(0),
+            ADJUST_EXPRESSION = new PDCharacterStats.Adjustment(0),
+            ADJUST_FAMILY = new PDCharacterStats.Adjustment(0),
+            ADJUST_HEALTH = new PDCharacterStats.Adjustment(0),
+            ADJUST_MONEY = new PDCharacterStats.Adjustment(0),
+            ADJUST_RESPECT = new PDCharacterStats.Adjustment(0),
+            ADJUST_ROMANCE = new PDCharacterStats.Adjustment(0),
+            ADJUST_WISDOM = new PDCharacterStats.Adjustment(0),
 
             Title = "Foster Parent in Costa Rica"
         },
@@ -227,6 +371,15 @@ public class PDCharacters
             RESPECT = 5,
             ROMANCE = 0,
             WISDOM = -5,
+            
+            ADJUST_EDUCATION = new PDCharacterStats.Adjustment(0),
+            ADJUST_EXPRESSION = new PDCharacterStats.Adjustment(0),
+            ADJUST_FAMILY = new PDCharacterStats.Adjustment(0),
+            ADJUST_HEALTH = new PDCharacterStats.Adjustment(0),
+            ADJUST_MONEY = new PDCharacterStats.Adjustment(0),
+            ADJUST_RESPECT = new PDCharacterStats.Adjustment(0),
+            ADJUST_ROMANCE = new PDCharacterStats.Adjustment(0),
+            ADJUST_WISDOM = new PDCharacterStats.Adjustment(0),
 
             Title = "Rich Married Woman"
         },
@@ -240,6 +393,15 @@ public class PDCharacters
             RESPECT = -5,
             ROMANCE = 0,
             WISDOM = 0,
+            
+            ADJUST_EDUCATION = new PDCharacterStats.Adjustment(0),
+            ADJUST_EXPRESSION = new PDCharacterStats.Adjustment(0),
+            ADJUST_FAMILY = new PDCharacterStats.Adjustment(0),
+            ADJUST_HEALTH = new PDCharacterStats.Adjustment(0),
+            ADJUST_MONEY = new PDCharacterStats.Adjustment(0),
+            ADJUST_RESPECT = new PDCharacterStats.Adjustment(0),
+            ADJUST_ROMANCE = new PDCharacterStats.Adjustment(0),
+            ADJUST_WISDOM = new PDCharacterStats.Adjustment(0),
 
             Title = "Stressed Out Lady"
         },
@@ -253,6 +415,15 @@ public class PDCharacters
             RESPECT = 100,
             ROMANCE = 0,
             WISDOM = 5,
+            
+            ADJUST_EDUCATION = new PDCharacterStats.Adjustment(0),
+            ADJUST_EXPRESSION = new PDCharacterStats.Adjustment(0),
+            ADJUST_FAMILY = new PDCharacterStats.Adjustment(0),
+            ADJUST_HEALTH = new PDCharacterStats.Adjustment(0),
+            ADJUST_MONEY = new PDCharacterStats.Adjustment(0),
+            ADJUST_RESPECT = new PDCharacterStats.Adjustment(0),
+            ADJUST_ROMANCE = new PDCharacterStats.Adjustment(0),
+            ADJUST_WISDOM = new PDCharacterStats.Adjustment(0),
 
             Title = "Famosu Actress"
         },
@@ -266,6 +437,15 @@ public class PDCharacters
             RESPECT = 0,
             ROMANCE = 0,
             WISDOM = 0,
+            
+            ADJUST_EDUCATION = new PDCharacterStats.Adjustment(0),
+            ADJUST_EXPRESSION = new PDCharacterStats.Adjustment(0),
+            ADJUST_FAMILY = new PDCharacterStats.Adjustment(0),
+            ADJUST_HEALTH = new PDCharacterStats.Adjustment(0),
+            ADJUST_MONEY = new PDCharacterStats.Adjustment(0),
+            ADJUST_RESPECT = new PDCharacterStats.Adjustment(0),
+            ADJUST_ROMANCE = new PDCharacterStats.Adjustment(0),
+            ADJUST_WISDOM = new PDCharacterStats.Adjustment(0),
 
             Title = "Belly Dance Instructor"
         },
@@ -279,6 +459,15 @@ public class PDCharacters
             RESPECT = 0,
             ROMANCE = 0,
             WISDOM = 0,
+            
+            ADJUST_EDUCATION = new PDCharacterStats.Adjustment(0),
+            ADJUST_EXPRESSION = new PDCharacterStats.Adjustment(0),
+            ADJUST_FAMILY = new PDCharacterStats.Adjustment(0),
+            ADJUST_HEALTH = new PDCharacterStats.Adjustment(0),
+            ADJUST_MONEY = new PDCharacterStats.Adjustment(0),
+            ADJUST_RESPECT = new PDCharacterStats.Adjustment(0),
+            ADJUST_ROMANCE = new PDCharacterStats.Adjustment(0),
+            ADJUST_WISDOM = new PDCharacterStats.Adjustment(0),
 
             Title = "Upset Mother"
         },
@@ -292,6 +481,15 @@ public class PDCharacters
             RESPECT = 100,
             ROMANCE = 0,
             WISDOM = 5,
+            
+            ADJUST_EDUCATION = new PDCharacterStats.Adjustment(0),
+            ADJUST_EXPRESSION = new PDCharacterStats.Adjustment(0),
+            ADJUST_FAMILY = new PDCharacterStats.Adjustment(0),
+            ADJUST_HEALTH = new PDCharacterStats.Adjustment(0),
+            ADJUST_MONEY = new PDCharacterStats.Adjustment(0),
+            ADJUST_RESPECT = new PDCharacterStats.Adjustment(0),
+            ADJUST_ROMANCE = new PDCharacterStats.Adjustment(0),
+            ADJUST_WISDOM = new PDCharacterStats.Adjustment(0),
 
             Title = "Foreign Minister"
         },
@@ -305,6 +503,15 @@ public class PDCharacters
             RESPECT = 5,
             ROMANCE = 0,
             WISDOM = -5,
+            
+            ADJUST_EDUCATION = new PDCharacterStats.Adjustment(0),
+            ADJUST_EXPRESSION = new PDCharacterStats.Adjustment(0),
+            ADJUST_FAMILY = new PDCharacterStats.Adjustment(0),
+            ADJUST_HEALTH = new PDCharacterStats.Adjustment(0),
+            ADJUST_MONEY = new PDCharacterStats.Adjustment(0),
+            ADJUST_RESPECT = new PDCharacterStats.Adjustment(0),
+            ADJUST_ROMANCE = new PDCharacterStats.Adjustment(0),
+            ADJUST_WISDOM = new PDCharacterStats.Adjustment(0),
 
             Title = "Charity Speaker"
         },
@@ -318,6 +525,15 @@ public class PDCharacters
             RESPECT = 0,
             ROMANCE = 0,
             WISDOM = 5,
+            
+            ADJUST_EDUCATION = new PDCharacterStats.Adjustment(0),
+            ADJUST_EXPRESSION = new PDCharacterStats.Adjustment(0),
+            ADJUST_FAMILY = new PDCharacterStats.Adjustment(0),
+            ADJUST_HEALTH = new PDCharacterStats.Adjustment(0),
+            ADJUST_MONEY = new PDCharacterStats.Adjustment(0),
+            ADJUST_RESPECT = new PDCharacterStats.Adjustment(0),
+            ADJUST_ROMANCE = new PDCharacterStats.Adjustment(0),
+            ADJUST_WISDOM = new PDCharacterStats.Adjustment(0),
 
             Title = "Intellectual"
         },
@@ -331,6 +547,15 @@ public class PDCharacters
             RESPECT = 0,
             ROMANCE = 0,
             WISDOM = 0,
+            
+            ADJUST_EDUCATION = new PDCharacterStats.Adjustment(0),
+            ADJUST_EXPRESSION = new PDCharacterStats.Adjustment(0),
+            ADJUST_FAMILY = new PDCharacterStats.Adjustment(0),
+            ADJUST_HEALTH = new PDCharacterStats.Adjustment(0),
+            ADJUST_MONEY = new PDCharacterStats.Adjustment(0),
+            ADJUST_RESPECT = new PDCharacterStats.Adjustment(0),
+            ADJUST_ROMANCE = new PDCharacterStats.Adjustment(0),
+            ADJUST_WISDOM = new PDCharacterStats.Adjustment(0),
 
             Title = "Follower of God"
         },
@@ -344,6 +569,15 @@ public class PDCharacters
             RESPECT = -100,
             ROMANCE = 0,
             WISDOM = -100,
+            
+            ADJUST_EDUCATION = new PDCharacterStats.Adjustment(0),
+            ADJUST_EXPRESSION = new PDCharacterStats.Adjustment(0),
+            ADJUST_FAMILY = new PDCharacterStats.Adjustment(0),
+            ADJUST_HEALTH = new PDCharacterStats.Adjustment(0),
+            ADJUST_MONEY = new PDCharacterStats.Adjustment(0),
+            ADJUST_RESPECT = new PDCharacterStats.Adjustment(0),
+            ADJUST_ROMANCE = new PDCharacterStats.Adjustment(0),
+            ADJUST_WISDOM = new PDCharacterStats.Adjustment(0),
 
             Title = "Crazy Cat Lady"
         },
@@ -357,6 +591,15 @@ public class PDCharacters
             RESPECT = -5,
             ROMANCE = 0,
             WISDOM = 0,
+            
+            ADJUST_EDUCATION = new PDCharacterStats.Adjustment(0),
+            ADJUST_EXPRESSION = new PDCharacterStats.Adjustment(0),
+            ADJUST_FAMILY = new PDCharacterStats.Adjustment(0),
+            ADJUST_HEALTH = new PDCharacterStats.Adjustment(0),
+            ADJUST_MONEY = new PDCharacterStats.Adjustment(0),
+            ADJUST_RESPECT = new PDCharacterStats.Adjustment(0),
+            ADJUST_ROMANCE = new PDCharacterStats.Adjustment(0),
+            ADJUST_WISDOM = new PDCharacterStats.Adjustment(0),
 
             Title = "Senile Senior"
         },
@@ -370,19 +613,20 @@ public class PDCharacters
             RESPECT = 100,
             ROMANCE = 0,
             WISDOM = 100,
+            
+            ADJUST_EDUCATION = new PDCharacterStats.Adjustment(0),
+            ADJUST_EXPRESSION = new PDCharacterStats.Adjustment(0),
+            ADJUST_FAMILY = new PDCharacterStats.Adjustment(0),
+            ADJUST_HEALTH = new PDCharacterStats.Adjustment(0),
+            ADJUST_MONEY = new PDCharacterStats.Adjustment(0),
+            ADJUST_RESPECT = new PDCharacterStats.Adjustment(0),
+            ADJUST_ROMANCE = new PDCharacterStats.Adjustment(0),
+            ADJUST_WISDOM = new PDCharacterStats.Adjustment(0),
 
             Title = "Wise Grandma"
         },
         new PDCharacterStats()      //999
         {
-            EDUCATION = 0,
-            EXPRESSION = 0,
-            FAMILY = 0,
-            HEALTH = 0,
-            MONEY = 0,
-            RESPECT = 0,
-            ROMANCE = 0,
-            WISDOM = 0,
 
             Title = "Burried"
         }
