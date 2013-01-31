@@ -8,34 +8,6 @@ DONE/goodenough-do scene reset at end of game and see if that solves your memory
 	IGNORE-particle effect created over numbers that change
 	-
 
-::D/P system::
-:abstract:
--character -> statistics
--questionnaire -> modifies stats -> modifies character perfectness based on their stats
--performance -> generates dialog -> modifies difficultly based on stats
--create a mini version of this in python or something
-:stats:
--TODO this sucks
--<-> means two stats are inversely proportional
-	-stress<->relax (were stressed, were relaxed) 
-	-respect (were well respected) 
-	-money<->poor (made a lot of money, had a good standard of living, lived humbly, poorly)
-	-sexy (had a good sex life)
-	-health (were healthy)
-	-education (learned a lot)
-	-wisdom (gained life experience)
--stats have opposing for sentence construction	
-	-using "but" and "and" to construct sentences
-:sentences:
--you performed the <awful/mediocre/good/perfect> life of a ______ <terribly/passable/ok/excellently>
--foreach stat that changed signifigantly
-	-construct sentence
-	-wait
-	-change difficulties
-	-wait
-
-
-
 ::BIG QUESTIONS::
 -unloading asset bundles!!! omg
 	-try reloading current scene to restart game
@@ -71,7 +43,8 @@ BLAH-nearest neighbor shader!!
 
 :kinect related:
 -consider getting snapping to work, but I don't think it's really needed anymore
--figure out why it's a little messed up on some angles. probably a bug in code
+DONE-write character debugger to figure out why everything is fucked up
+DONE-figure out why it's a little messed up on some angles. probably a bug in code
 DONE-improve architecture for accessing kinect data
 	-make kinect data class manager	
 	-is user found
@@ -94,7 +67,7 @@ IGNORE-Projection Manager kind of sucks
 	-outputs data in various forms
 	
 :file architecture:
--better loading scheme for asset bundles
+IGNORE-better loading scheme for asset bundles
 DONE-implement new asset bundle structure
 IGNORE-redesign it so it's not a big sloppy mess liek it is now... or not
 DONE-characters should be read in based on filenames from asset bundles

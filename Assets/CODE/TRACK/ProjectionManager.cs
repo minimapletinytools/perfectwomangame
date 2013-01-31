@@ -72,7 +72,8 @@ public class ProjectionManager : FakeMonoBehaviour {
         public Stupid(ZigJointId other) { otherEnd = other; }
     }
     public Dictionary<ZigJointId, Stupid> mImportant = new Dictionary<ZigJointId, Stupid>();
-	public override void Start () {
+	public override void Start () 
+    {
         mImportant[ZigJointId.LeftShoulder] = new Stupid(ZigJointId.LeftElbow);
         mImportant[ZigJointId.LeftElbow] = new Stupid(ZigJointId.LeftHand);
         mImportant[ZigJointId.LeftHip] = new Stupid(ZigJointId.LeftKnee);
@@ -99,7 +100,8 @@ public class ProjectionManager : FakeMonoBehaviour {
 			return 0;
 		if(!B.GoodPosition) 
 			return -A.Rotation.flat_rotation() + 90;
-        return get_relative(A.Position, B.Position);
+        float r =  get_relative(A.Position, B.Position);
+        return r;
 	}
 
     public float get_waist(ZigInputJoint waist, ZigInputJoint L, ZigInputJoint R)
@@ -114,18 +116,52 @@ public class ProjectionManager : FakeMonoBehaviour {
     {
         Vector3 right = Vector3.Cross(mUp, mNormal);
         Vector3 v = B - A;
+       
         Vector3 projected = Vector3.Exclude(mNormal, v);
-        float r = Vector3.Angle(right, v);
+        float r = Vector3.Angle(right, projected);
         if (Vector3.Dot(Vector3.Cross(right, projected), mNormal) < 0)
         {
             r *= -1;
         }
         return -r;
     }
-	
+
+    /*
+    Dictionary<ZigJointId, GameObject> mDebugCharacter = new Dictionary<ZigJointId, GameObject>();
+    public static ZigJointId[] mFullJoints = { ZigJointId.Neck, ZigJointId.LeftElbow, ZigJointId.LeftKnee, ZigJointId.LeftShoulder, ZigJointId.LeftHip, ZigJointId.RightElbow, ZigJointId.RightKnee, ZigJointId.RightShoulder, ZigJointId.RightHip, ZigJointId.Torso};
+    public static ZigJointId[] mStubJoints = { ZigJointId.LeftHand, ZigJointId.RightHand, ZigJointId.LeftAnkle, ZigJointId.RightAnkle };
+    public void create_debug_character()
+    {
+        GameObject parent = new GameObject("DEBUG_CHARACTER_PARENT");
+        foreach (ZigJointId e in mFullJoints)
+        {
+            GameObject j = (GameObject)GameObject.Instantiate(mManager.mReferences.mDebugLimb);
+            j.transform.parent = parent.transform;
+            j.transform.localScale = new Vector3(30, 30, 30);
+            mDebugCharacter[e] = j;
+        }
+        foreach (ZigJointId e in mStubJoints)
+        {
+            GameObject j = (GameObject)GameObject.Instantiate(mManager.mReferences.mDebugLimb);
+            GameObject.Destroy(j.transform.FindChild("Cylinder"));
+            j.transform.parent = parent.transform;
+            j.transform.localScale = new Vector3(30, 30, 30);
+            mDebugCharacter[e] = j;
+        }
+    }
+    public void update_debug_character()
+    {
+        foreach (var e in mDebugCharacter)
+        {
+            e.Value.transform.position = mManager.mZigManager.Joints[e.Key].Position;
+            e.Value.transform.rotation = mManager.mZigManager.Joints[e.Key].Rotation;
+        }
+    }*/
+
 	public override void Update () {
         if (mManager.mZigManager.has_user())
         {
+
             foreach (KeyValuePair<ZigJointId,Stupid> e in mImportant)
             {
                 if (e.Key != ZigJointId.None)
