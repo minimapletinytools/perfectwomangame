@@ -2,15 +2,15 @@
 DONE-do configuration screen somehow???
 DONE (bad fix)-get rid of the zigfu logo
 DONE/goodenough-do scene reset at end of game and see if that solves your memory issue
--get game back to its original state with lea's new assets
+DONE/CLOSE ENOUGH-get game back to its original state with lea's new assets
 -fake P
 	DONE-grid of numbers representing difficulty
 	IGNORE-particle effect created over numbers that change
 	-
 
 ::BIG QUESTIONS::
--unloading asset bundles!!! omg
-	-try reloading current scene to restart game
+DONE/CLOSE ENOUGH-unloading asset bundles!!! omg
+	DONE-try reloading current scene to restart game
 DONE-skeleton is different, figure out what skeleton information is good!!
 DONE/OK-make sure all information can be obtained from openNI on OSX
 		DONE-hand position is good but I guess not rotation?? (not that I care)
