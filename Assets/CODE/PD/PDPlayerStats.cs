@@ -71,13 +71,41 @@ public class PDPlayerstats
 
     public float grade_absolute(PDCharacterStats aStat)
     {
+        //TODO
+        //groups
+        //both positive, both negative, opposite signs
+        float r = 0;
+        foreach (var e in NextValues)
+        {
+            float cdv = aStat.DifficultyValues[e.Key];
+            if (cdv == 0) //no effect when stat is zero
+                continue;
+            if (e.Value < 0 && cdv < 0)
+                if (e.Value <= cdv)
+                    ;
+                else
+                    ;
+            if (e.Value > 0 && cdv > 0)
+                if (e.Value >= cdv)
+                    ;
+                else
+                    ;
+
+
+            
+        }
+
+
+        return r;
+
+        /* TODO delsete
         float r = 0;
         //grades against next values
         foreach (var e in NextValues)
         {
             r += e.Value * aStat.DifficultyValues[e.Key];
         }
-        return r;
+        return r;*/
     }
     public int difficulty_absolute(PDCharacterStats aStat)
     {
@@ -97,7 +125,7 @@ public class PDPlayerstats
         float[] orig = new float[4];
         for (int i = 0; i < 4; i++)
             orig[i] = grade_absolute(aStats[i]);
-        return r.OrderBy(x => orig[x]).ToArray(); //TODO is this correct?
+        return r.OrderBy(x => orig[x]).ToArray(); 
     }
 }
     
