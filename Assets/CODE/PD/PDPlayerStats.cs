@@ -95,7 +95,6 @@ public class PDPlayerstats
             
         }
 
-
         return r;
 
         /* TODO delsete
