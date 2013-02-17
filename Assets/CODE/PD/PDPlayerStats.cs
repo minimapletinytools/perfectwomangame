@@ -69,28 +69,35 @@ public class PDPlayerstats
     }
 
 
+	//negative is easy, positive is hard
     public float grade_absolute(PDCharacterStats aStat)
     {
         //TODO
         //groups
         //both positive, both negative, opposite signs
         float r = 0;
+		float sum = aStat.DifficultyValues.Values.Sum();
         foreach (var e in NextValues)
         {
             float cdv = aStat.DifficultyValues[e.Key];
             if (cdv == 0) //no effect when stat is zero
                 continue;
-            if (e.Value < 0 && cdv < 0)
-                if (e.Value <= cdv)
-                    ;
+			float pdv = e.Value;
+			
+			
+            if (pdv < 0 && cdv < 0)
+                if (pdv <= cdv)
+                    r -= cdv / sum;
                 else
-                    ;
-            if (e.Value > 0 && cdv > 0)
-                if (e.Value >= cdv)
-                    ;
+                    r += 0;
+            else if (pdv > 0 && cdv > 0)
+                if (pdv >= cdv)
+                    r -= cdv/sum;
                 else
-                    ;
-
+                    r += 0;
+			else
+				r += Mathf.Abs((pdv-cdv)/sum);
+			return r;
 
             
         }
