@@ -98,8 +98,6 @@ public class PDPlayerstats
 			else
 				r += Mathf.Abs((pdv-cdv)/sum);
 			return r;
-
-            
         }
 
         return r;
@@ -115,8 +113,15 @@ public class PDPlayerstats
     }
     public int difficulty_absolute(PDCharacterStats aStat)
     {
-        //TODO 
-        return 0;
+        float g = grade_absolute(aStat);
+		if(g <= -0.5f) 
+			return 0;
+		else if(g <= 0.25)
+			return 1;
+		else if(g < 1f)
+			return 2;
+		else
+			return 3;
     }
     public int[] difficulty_absolute(PDCharacterStats[] aStats)
     {
