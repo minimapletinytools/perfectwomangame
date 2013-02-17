@@ -80,7 +80,7 @@ public class PDTester : MonoBehaviour {
     {
         for (int i = 0; i < 7; i++)
         {
-            int[] answer = mPlayer.difficulty_relative(new PDCharacterStats[] { mStats[4 * i + 0 + 1], mStats[4 * i + 1 + 1], mStats[4 * i + 2 + 1], mStats[4 * i + 3 + 1] });
+            int[] answer = mPlayer.difficulty_absolute(new PDCharacterStats[] { mStats[4 * i + 0 + 1], mStats[4 * i + 1 + 1], mStats[4 * i + 2 + 1], mStats[4 * i + 3 + 1] });
             for (int j = 0; j < 4; j++)
             {
                 mInstances[i * 4 + j].NextDifficulty = answer[j];
