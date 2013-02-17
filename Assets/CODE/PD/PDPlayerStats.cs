@@ -71,6 +71,7 @@ public class PDPlayerstats
 
     public float grade_absolute(PDCharacterStats aStat)
     {
+        var mapDiffToChange = 
         //TODO
         //groups
         //both positive, both negative, opposite signs
