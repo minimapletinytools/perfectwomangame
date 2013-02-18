@@ -72,7 +72,8 @@ public class PDTester : MonoBehaviour {
         mPlayer.set_stats();
         foreach (PDCharacterStats e in mStats)
         {
-            e.generate_adjustment_values_from_difficulty_values();
+            //e.generate_adjustment_values_from_difficulty_values();
+            e.randomize_all_stats();    
         }
     }
 
@@ -98,7 +99,7 @@ public class PDTester : MonoBehaviour {
         PDInstance ins = mInstances[get_index(age,group)];
         if (ins.Changed && mFlashing)
             return random_string();
-        return ins.Difficulty.ToString() + "\n\n" + mPerfectness[get_index(age,group)];
+        return ins.Difficulty.ToString() + "\n\nP: " + mPerfectness[get_index(age,group)];
     }
     string random_string()
     {

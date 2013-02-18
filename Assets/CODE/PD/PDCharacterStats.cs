@@ -91,4 +91,26 @@ public class PDCharacterStats
             mAdjustmentValues[e.Key] = new Adjustment(0, e.Value, 0);
         }
     }
+
+    public void randomize_all_stats()
+    {
+
+        var keys = new List<PDStats.Stats>(mAdjustmentValues.Keys);
+        foreach (var e in keys)
+        {
+            if (Random.Range(0f, 1f) < 0.5f)
+                mAdjustmentValues[e] = new Adjustment(0, Random.Range(0f, 5f), 0);
+            else
+                mAdjustmentValues[e] = new Adjustment();
+        }
+
+        foreach (var e in keys)
+        {
+            if (Random.Range(0f, 1f) < 0.5f)
+                mDifficultyValues[e] = Random.Range(0f, 5f);
+            else
+                mDifficultyValues[e] = 0;
+        }
+
+    }
 }
