@@ -13,6 +13,20 @@ public class BodyManager : FakeMonoBehaviour {
         mMode = 1;
         mFlat.set_target_pose(aPose);
         fix_target_pose();
+
+
+        //hack
+        if (((ManagerManager.Manager.mRecordMode) && mMode == 1))
+        {
+            for (int i = 0; i < 100; i++)
+            {
+                mFlat.update_parameters(100);
+            }
+            mFlat.HardColor = new Color32(255, 255, 255, 255);
+            mFlat.SoftInterpolation = 1;
+            mFlat.set();
+        }
+
     }
 
     public void set_layer(int layer)
@@ -39,6 +53,7 @@ public class BodyManager : FakeMonoBehaviour {
         }
     }
 
+    //TODO should call this directly and get rid of that stupid callback thing in events
     public void character_changed_listener(CharacterLoader aCharacter)
     {
         destroy_character();
@@ -111,13 +126,17 @@ public class BodyManager : FakeMonoBehaviour {
 	}
 
 
-    int write_counter = 0;
+
     public override void Update()
     {
         if (mFlat != null)
         {
-            mFlat.update_parameters(Time.deltaTime);
-            mFlat.set();
+            //if were not in record mode for the tranpsarent one
+            if (!((ManagerManager.Manager.mRecordMode) && mMode == 1))
+            {
+                mFlat.update_parameters(Time.deltaTime);
+                mFlat.set();
+            }
             if (mMode == 0)
             {
 
@@ -139,8 +158,7 @@ public class BodyManager : FakeMonoBehaviour {
                 {
                     if (mManager.mZigManager.has_user())
                     {
-                        write_counter++;
-                        ProGrading.write_pose_to_file(ProGrading.snap_pose(mManager), "char_kinect"+write_counter+".txt");
+                        ProGrading.write_pose_to_file(ProGrading.snap_pose(mManager), "char_kinect_"+ManagerManager.ScreenShotName +".txt");
                     }
                 }
             }
@@ -148,7 +166,6 @@ public class BodyManager : FakeMonoBehaviour {
             {
                 if (Input.GetKeyDown(KeyCode.Space)) //TODO manual pose setting wont work anymore due to targetting on target pose.
                 {
-                    write_counter++;
                     ProGrading.Pose p = new ProGrading.Pose();
                     foreach (KeyValuePair<ZigJointId, GameObject> e in mFlat.mParts)
                     {
@@ -157,7 +174,7 @@ public class BodyManager : FakeMonoBehaviour {
                         pe.angle = e.Value.transform.rotation.eulerAngles.z;
                         p.mElements.Add(pe);
                     }
-                    ProGrading.write_pose_to_file(p, "char_manual" + write_counter + ".txt");
+                    ProGrading.write_pose_to_file(p, "char_manual_" + ManagerManager.ScreenShotName + ".txt");
                 }
             }
         }

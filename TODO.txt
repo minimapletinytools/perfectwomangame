@@ -1,4 +1,8 @@
 ::TODO3::
+:EASY POSE:
+DONE-take screen cap when doing so...
+DONE-allow manual mode (fuck)
+
 :CONFIG SCREEN:
 -set colors properly on depth image
 	-gray on white

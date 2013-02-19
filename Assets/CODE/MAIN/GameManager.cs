@@ -260,7 +260,7 @@ public class GameManager : FakeMonoBehaviour
                         }
                         else
                         {
-                            advance_scene(999999);
+                            advance_scene(90); 
                         }
                     }
                     TimeRemaining = -999;
@@ -367,7 +367,7 @@ public class GameManager : FakeMonoBehaviour
     void advance_scene(float aSceneTime)
     {
         CurrentLevel++;
-        
+        Debug.Log("advancing scene with remaining time " + aSceneTime);
         if (CurrentLevel < 8)
         {
             PastChoices[CurrentLevel] = NextContendingChoice;
@@ -465,7 +465,10 @@ public class GameManager : FakeMonoBehaviour
                 mManager.mTransparentBodyManager.mFlat.SoftColor = new Color(0.5f, 0.5f, 0.5f, 0.0f);
             }
             else
-                throw new UnityException("Missing Pose for index " + index + " difficulty " + get_difficulty(index));
+            {
+                Debug.Log("Missing Pose for index " + index + " difficulty " + get_difficulty(index));
+                //throw new UnityException("Missing Pose for index " + index + " difficulty " + get_difficulty(index));
+            }
         }
     }
          
@@ -566,10 +569,10 @@ public class GameManager : FakeMonoBehaviour
 
 
     //hack nonsense
-    public void hack_choice(int choice)
+    public void hack_choice(int choice, float time = -1)
     {
         NextContendingChoice = choice;
-        advance_scene(LEVEL_TIME_TOTAL);
+        advance_scene((time == -1) ? LEVEL_TIME_TOTAL : time);
     }
 
     public void hack_keyboard_input()

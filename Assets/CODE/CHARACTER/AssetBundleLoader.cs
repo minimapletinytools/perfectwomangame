@@ -16,7 +16,9 @@ public class AssetBundleLoader : FakeMonoBehaviour
     {
 
         List<WWW> removal = new System.Collections.Generic.List<WWW>();
-        foreach (KeyValuePair<WWW,AssetBundleLoadedDelegate> e in mRequestLists)
+        //TODO gets out of sync error here why??
+        //not a huge deal since itonly happens in my recording scene. Probbably some stupid threading error...
+        foreach (KeyValuePair<WWW,AssetBundleLoadedDelegate> e in mRequestLists) 
         {
             if (e.Key.isDone)
             {
