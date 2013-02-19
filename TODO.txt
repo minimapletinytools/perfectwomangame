@@ -1,19 +1,22 @@
 ::TODO3::
+
+
 :EASY POSE:
 DONE-take screen cap when doing so...
 DONE-allow manual mode (fuck)
+IGNORE-fix that one bug in asset bundle loading 
 
 :CONFIG SCREEN:
--set colors properly on depth image
-	-gray on white
+DONE-set colors properly on depth image
+	DONE-gray on white
 -display logo image nonsense for at least 5 seconds
 	-either says kinect detected please wait for game to begin
 	-or kinect not found
--transition to depth image, position in center
+DONE-transition to depth image, position in center
 -please make a T-pose
 	-hold it (and do some sort of color bar transition)
 -transition to game
-	-bonus, have depth image shrink into corner when game starts
+	DONE-bonus, have depth image shrink into corner when game starts
 
 :GAME:
 -new pose system/grading
