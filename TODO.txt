@@ -1,3 +1,77 @@
+::TODO3::
+:CONFIG SCREEN:
+-set colors properly on depth image
+	-gray on white
+-display logo image nonsense for at least 5 seconds
+	-either says kinect detected please wait for game to begin
+	-or kinect not found
+-transition to depth image, position in center
+-please make a T-pose
+	-hold it (and do some sort of color bar transition)
+-transition to game
+	-bonus, have depth image shrink into corner when game starts
+
+:GAME:
+-new pose system/grading
+	-TODO
+-PD system
+	-fuck
+-game scripting
+	-TODO
+
+:UI:
+-font writing class
+	-TODO
+-new GRAPH component
+	-keep a FlatGraphElement[7] ages (for final score screen)
+	-create texture2d matching PERFORMANCE.png
+	-create draw point function (draws a circle at a given point)
+	-call/use as appropriate
+-new bars
+	-remove pink bar
+	-clean out the current blue bar
+	-display name and age
+	-display performance graph (above)	
+		-shake when time is running out
+		-flash when near perfect
+	-display score graph
+		-shake on near perfect score
+-new icons
+	-asset bundle generator for these ages
+		-shrink images and connection points as appropriate
+		-flatten colors
+		-create <age>_tiny.unity3d
+		-can we bulk operate this???
+	-preload in all icons at beginning of game (is this ok??)
+	-do the animations from the poses
+	-set the colors according to difficulty
+	-test it, does it run fast enough?? (maybe make a slow version)
+-new message system
+	-enter_message(string, message, time)
+	-exit message (if needed)
+-new choice system
+	-on enter
+		-fly out score and title
+		-fly in new text and choices
+		-enlarge blue bar
+	-on exit
+		-reverse
+	-new graphics, and new animated characters for icons
+		-new flat class to do this
+		-display perfectness only
+	-where do I put the guy when no choice is selected?
+
+:CUTSCENES:
+
+:DEATH:
+
+
+:BONUS:
+
+:END/WIN:
+
+
+		
 ::NEXT::
 DONE-do configuration screen somehow???
 DONE (bad fix)-get rid of the zigfu logo
