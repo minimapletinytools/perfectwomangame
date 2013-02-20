@@ -32,7 +32,7 @@ DONE-transition to depth image, position in center
 -new GRAPH component
 	-keep a FlatGraphElement[7] ages (for final score screen)
 	-create texture2d matching PERFORMANCE.png
-	-create draw point function (draws a circle at a given point)
+	DONE-create draw point function (draws a circle at a given point)
 	-call/use as appropriate
 -new bars
 	-remove pink bar

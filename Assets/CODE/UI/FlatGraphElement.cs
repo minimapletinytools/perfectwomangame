@@ -10,9 +10,30 @@ public class FlatGraphElement : FlatElementImage {
         mImage.set_new_texture(mGraphTexture);
     }
 
-    public void draw_point(int x, int y, Color aColor)
+    //TODO test
+    //x y are in [0,1] from lower left
+    public void draw_point(Vector2 aCenter, float radius, Color aColor)
     {
-        //TODO
+        Color[] modifyMe = mGraphTexture.GetPixels();
+        int x = (int)(aCenter.x * mGraphTexture.width);
+        int y = (int)(aCenter.y * mGraphTexture.height);
+
+        for (int i = -(int)(radius + 1); i < radius + 1; i++)
+        {
+            int mx = x + i;
+            if (mx < 0 || mx >= mGraphTexture.width - 1)
+                continue;
+            for (int j = -(int)(radius + 1); j < radius + 1; j++)
+            {
+                int my = y + j;
+                if (my < 0 || my >= mGraphTexture.height - 1)
+                    continue;
+                float distance = (Mathf.Abs(i) + Mathf.Abs(j)) / (2*radius);
+                Color orig = modifyMe[my * mGraphTexture.width + mx];
+                modifyMe[my * mGraphTexture.width + mx] = orig * (1 - aColor.a) + aColor.a * aColor;
+            }
+        }
+        mGraphTexture.SetPixels(modifyMe);
     }
 
     
