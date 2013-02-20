@@ -166,6 +166,7 @@ public class ZigDepthViewer : MonoBehaviour {
         currentRect.height = (1 - lambda) * currentRect.height + lambda * targetRect.height;
     }
 
+
     void OnGUI() {
         GUI.depth = int.MinValue;
         if (null == target) {
