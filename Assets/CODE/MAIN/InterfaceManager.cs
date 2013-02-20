@@ -42,6 +42,8 @@ public class InterfaceManager : FakeMonoBehaviour {
     FlatElementImage mBigBadBox;
     FlatElementImage mQuestion;
 
+    //nonsense
+    FlatGraphElement mGraph;
     public Vector3 choice_offset(int y, int x, bool blue = false) //-1 is bottom, 0 is middel 1 is top
     {
         if (!blue)
@@ -177,6 +179,14 @@ public class InterfaceManager : FakeMonoBehaviour {
         set_choice(-1);
 
 
+
+        mGraph = new FlatGraphElement(400, 250, 6);
+        for (int i = 0; i < 100; i++)
+            mGraph.draw_point(Random.insideUnitCircle / 2f + new Vector2(0.5f, 0.5f), 10, new Color(Random.Range(0f, 1f), Random.Range(0f, 1f), Random.Range(0f, 1f)));
+        mGraph.HardPosition = random_position();
+        mGraph.SoftPosition = mBlueBar.SoftPosition + new Vector3(400, 0, 0);
+
+
         mElement.Add(mPinkBackground);
         mElement.Add(mBlueBar);
         mElement.Add(mMeterBackground);
@@ -196,6 +206,7 @@ public class InterfaceManager : FakeMonoBehaviour {
         mElement.Add(mQuestion);
         mElement.Add(mCurrentBody);
 
+        mElement.Add(mGraph);
 
         mIsSetup = true;
     }

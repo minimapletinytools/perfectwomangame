@@ -7,9 +7,20 @@ public class FlatGraphElement : FlatElementImage {
     public FlatGraphElement(int width, int height, int aDepth):base(null,aDepth)
     {
         mGraphTexture = new Texture2D(width,height);
-        mImage.set_new_texture(mGraphTexture);
+        clear_to_white();
+
+        //kind of a hack
+        initialize(mGraphTexture, null, aDepth);
     }
 
+    public void clear_to_white()
+    {
+        Color[] modifyMe = mGraphTexture.GetPixels();
+        for (int i = 0; i < modifyMe.Length; i++)
+            modifyMe[i] = new Color(1, 1, 1);
+        mGraphTexture.SetPixels(modifyMe);
+        mGraphTexture.Apply();
+    }
     //TODO test
     //x y are in [0,1] from lower left
     public void draw_point(Vector2 aCenter, float radius, Color aColor)
@@ -30,12 +41,10 @@ public class FlatGraphElement : FlatElementImage {
                     continue;
                 float distance = (Mathf.Abs(i) + Mathf.Abs(j)) / (2*radius);
                 Color orig = modifyMe[my * mGraphTexture.width + mx];
-                modifyMe[my * mGraphTexture.width + mx] = orig * (1 - aColor.a) + aColor.a * aColor;
+                modifyMe[my * mGraphTexture.width + mx] = orig * (distance) + aColor * (1-distance);
             }
         }
         mGraphTexture.SetPixels(modifyMe);
+        mGraphTexture.Apply();
     }
-
-    
-    public ImageGameObjectUtility mImage;
 }
