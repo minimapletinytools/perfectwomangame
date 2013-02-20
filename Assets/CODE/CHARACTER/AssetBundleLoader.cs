@@ -50,6 +50,21 @@ public class AssetBundleLoader : FakeMonoBehaviour
             ManagerManager.Manager.mGameManager.scene_loaded_callback(aBundle, BundleName);
         }
     }
+
+    public class MiniBundleLoadedCallback
+    {
+        string BundleName { get; set; }
+        public MiniBundleLoadedCallback(string aBundleName)
+        {
+            BundleName = aBundleName;
+        }
+        public void call(AssetBundle aBundle)
+        {
+            //TODO
+            ManagerManager.Manager.mInterfaceManager.mini_bundle_loaded_listener(aBundle, BundleName);
+        }
+    }
+
     //public System.Collections.IEnumerable load_character(string aChar)
     public void load_character(string aChar)
     {
@@ -58,6 +73,12 @@ public class AssetBundleLoader : FakeMonoBehaviour
         mRequestLists.Add(new WWW(filename), (new CharacterBundleLoadedCallback(aChar)).call);
     }
 
+    public void load_mini_characater(string aChar)
+    {
+        string filename = "file://" + Application.dataPath + "/Resources/" + aChar + "_mini.unity3d";
+        Debug.Log("loading from " + filename);
+        mRequestLists.Add(new WWW(filename), (new MiniBundleLoadedCallback(aChar)).call);
+    }
 
     public void load_poses(string aAssetBundle)
     {
@@ -67,4 +88,5 @@ public class AssetBundleLoader : FakeMonoBehaviour
         request.threadPriority = ThreadPriority.High;
         mRequestLists.Add(request, ManagerManager.Manager.mGameManager.pose_bundle_loaded_callback);
     }
+
 }

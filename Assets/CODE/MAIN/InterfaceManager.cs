@@ -180,11 +180,12 @@ public class InterfaceManager : FakeMonoBehaviour {
 
 
 
+        /*
         mGraph = new FlatGraphElement(400, 250, 6);
         for (int i = 0; i < 100; i++)
             mGraph.draw_point(Random.insideUnitCircle / 2f + new Vector2(0.5f, 0.5f), 10, new Color(Random.Range(0f, 1f), Random.Range(0f, 1f), Random.Range(0f, 1f)));
         mGraph.HardPosition = random_position();
-        mGraph.SoftPosition = mBlueBar.SoftPosition + new Vector3(400, 0, 0);
+        mGraph.SoftPosition = mBlueBar.SoftPosition + new Vector3(400, 0, 0);*/
 
 
         mElement.Add(mPinkBackground);
@@ -206,7 +207,7 @@ public class InterfaceManager : FakeMonoBehaviour {
         mElement.Add(mQuestion);
         mElement.Add(mCurrentBody);
 
-        mElement.Add(mGraph);
+        //mElement.Add(mGraph);
 
         mIsSetup = true;
     }
@@ -294,7 +295,7 @@ public class InterfaceManager : FakeMonoBehaviour {
             }
             mTopChoices[i].mSquare.SoftColor = new Color(0.5f, 0.5f, 0.5f, 0.5f);
         }
-    }
+    }   
 
     public void set_perfect_time(float perfect, float time)
     {
@@ -325,5 +326,18 @@ public class InterfaceManager : FakeMonoBehaviour {
         BackgroundManager.resize_camera(mFlatCamera.Camera, aCharacter.Sizes.mBackSize);
         if(!mIsSetup)
             setup_elements();
+    }
+
+    public void mini_bundle_loaded_listener(AssetBundle aBundle, string aBundleName)
+    {
+
+
+        CharacterLoader loader = new CharacterLoader();
+        loader.complete_load_character(aBundle, aBundleName);
+        //TODO
+        //new FlatBodyObject(loader);
+
+        //unload bundles??? nah
+        
     }
 }

@@ -1,5 +1,6 @@
 ::TODO3::
-
+-get old version running OK on a machine as a backup
+DONE-use Colliderless plane
 
 :EASY POSE:
 DONE-take screen cap when doing so...
@@ -44,11 +45,11 @@ DONE-transition to depth image, position in center
 	-display score graph
 		-shake on near perfect score
 -new icons
-	-asset bundle generator for these ages
+	DONE-asset bundle generator for these ages
 		-shrink images and connection points as appropriate
 		-flatten colors
 		-create <age>_tiny.unity3d
-		-can we bulk operate this???
+		YES-can we bulk operate this???
 	-preload in all icons at beginning of game (is this ok??)
 	-do the animations from the poses
 	-set the colors according to difficulty

@@ -44,7 +44,7 @@ public class ManagerManager : MonoBehaviour{
 
 	void Awake () {
 
-        Debug.Log("setting up managers");
+        //Debug.Log("setting up managers");
         mReferences = GetComponent<PrefabReferenceBehaviour>();
         mMenuReferences = GetComponent<MenuReferenceBehaviour>();
 
