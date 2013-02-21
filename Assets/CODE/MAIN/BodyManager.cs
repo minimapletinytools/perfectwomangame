@@ -152,7 +152,7 @@ public class BodyManager : FakeMonoBehaviour {
                     if (Mathf.Abs(position.x) < 10) position.x = 0; //fake snapping, TODO this should probbaly be in grading manager if anywhere...
                     mFlat.SoftPosition = position / 1.5f + mOffset;
                 }
-                match_body_to_projection(mFlat);
+                mFlat.match_body_to_projection(mManager.mProjectionManager);
 
                 if (Input.GetKeyDown(KeyCode.Space))
                 {
@@ -181,14 +181,6 @@ public class BodyManager : FakeMonoBehaviour {
         
 	}
 
-    public static void match_body_to_projection(FlatBodyObject aObject)
-    {
-        foreach (KeyValuePair<ZigJointId, ProjectionManager.Stupid> e in ManagerManager.Manager.mProjectionManager.mImportant)
-        {
-            aObject.mParts[e.Key].transform.rotation = Quaternion.AngleAxis(e.Value.smoothing.current, Vector3.forward);
-        }
-        aObject.mParts[ZigJointId.Waist].transform.rotation = Quaternion.AngleAxis(ManagerManager.Manager.mProjectionManager.mWaist.current, Vector3.forward);
-    }
 
     public static ZigJointId get_parent(ZigJointId joint)
     {

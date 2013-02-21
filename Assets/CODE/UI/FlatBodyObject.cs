@@ -49,12 +49,48 @@ public class FlatBodyObject : FlatElementBase
             Depth = aDepth;
     }
 
+    public void match_body_to_projection(ProjectionManager aManager)
+    {
+        foreach (KeyValuePair<ZigJointId, ProjectionManager.Stupid> e in aManager.mImportant)
+        {
+            mParts[e.Key].transform.rotation = Quaternion.AngleAxis(e.Value.smoothing.current, Vector3.forward);
+        }
+        mParts[ZigJointId.Waist].transform.rotation = Quaternion.AngleAxis(aManager.mWaist.current, Vector3.forward);
+    }
+
+    public void set_target_pose(ProGrading.Pose aPose)
+    {
+        mTargetPose = aPose;
+    }
+
+    public override void update_parameters(float aDeltaTime)
+    {
+        if (mTargetPose != null)
+        {
+            foreach (ProGrading.PoseElement e in mTargetPose.mElements)
+            {
+                mParts[e.joint].transform.rotation = Quaternion.Slerp(mParts[e.joint].transform.rotation, Quaternion.AngleAxis(e.angle, Vector3.forward), 0.1f);
+            }
+        }
+        base.update_parameters(aDeltaTime);
+    }
+
+    public override void destroy()
+    {
+        mTargetPose = null;
+        //mMode = -1;
+        foreach (GameObject e in mParts.Values)
+            GameObject.Destroy(e);
+        mParts.Clear();
+    }
+
+
     public IEnumerable<FlatBodyObject> load_sequential(CharacterData.CharacterDataImages aImages, CharacterData.CharacterDataSizes aSizes)
     {
         //TODOgit 
         GameObject head = create_object(ZigJointId.Neck, aImages.head, aSizes.mLimbSizes[0], aSizes.mMountingPositions[0]);
         yield return null;
-        GameObject leftLowerArm = create_object(ZigJointId.LeftElbow, aImages.leftLowerArm,  aSizes.mLimbSizes[1], aSizes.mMountingPositions[1]);
+        GameObject leftLowerArm = create_object(ZigJointId.LeftElbow, aImages.leftLowerArm, aSizes.mLimbSizes[1], aSizes.mMountingPositions[1]);
         yield return null;
         GameObject leftLowerLeg = create_object(ZigJointId.LeftKnee, aImages.leftLowerLeg, aSizes.mLimbSizes[2], aSizes.mMountingPositions[2]);
         yield return null;
@@ -154,32 +190,7 @@ public class FlatBodyObject : FlatElementBase
         yield return this;
     }
 
-    public void set_target_pose(ProGrading.Pose aPose)
-    {
-        mTargetPose = aPose;
-        
-    }
 
-    public override void update_parameters(float aDeltaTime)
-    {
-        if (mTargetPose != null)
-        {
-            foreach (ProGrading.PoseElement e in mTargetPose.mElements)
-            {
-                mParts[e.joint].transform.rotation = Quaternion.Slerp(mParts[e.joint].transform.rotation, Quaternion.AngleAxis(e.angle, Vector3.forward), 0.1f);
-            }
-        }
-        base.update_parameters(aDeltaTime);
-    }
-
-    public override void destroy()
-    {
-        mTargetPose = null;
-        //mMode = -1;
-        foreach (GameObject e in mParts.Values)
-            GameObject.Destroy(e);
-        mParts.Clear();
-    }
 
     //useful
     void create_body(CharacterTextureBehaviour aChar)

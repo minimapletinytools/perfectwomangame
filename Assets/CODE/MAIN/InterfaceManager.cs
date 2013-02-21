@@ -96,8 +96,8 @@ public class InterfaceManager : FakeMonoBehaviour {
     public override void Update()
     {
         mFlatCamera.update(Time.deltaTime);
-        if(mCurrentBody != null)
-            BodyManager.match_body_to_projection(mCurrentBody);
+        if (mCurrentBody != null)
+            mCurrentBody.match_body_to_projection(mManager.mProjectionManager);
         foreach (FlatElementBase e in mElement)
         {
             //e.mLocalColor = (new Color(Random.Range(0f, 1f), Random.Range(0f, 1f), Random.Range(0f, 1f)))*0.1f;
