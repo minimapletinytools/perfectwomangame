@@ -1,5 +1,5 @@
 ::TODO3::
--make test bundle version please!!! GEEZ
+DONE-make test bundle version please!!! GEEZ
 -get old version running OK on a machine as a backup
 DONE-use Colliderless plane
 -make pose cycling for performance...

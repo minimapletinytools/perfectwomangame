@@ -22,7 +22,7 @@ public class ManagerManager : MonoBehaviour{
 	public delegate void VoidDelegate();
 	HashSet<FakeMonoBehaviour> mScripts = new HashSet<FakeMonoBehaviour>();
 	VoidDelegate mStartDelegates = null;
-	VoidDelegate mUpdateDelegates = null;
+	public VoidDelegate mUpdateDelegates = null;
 	VoidDelegate mFixedUpdateDelegates = null;
 
     public EventManager mEventManager;

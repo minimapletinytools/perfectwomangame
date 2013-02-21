@@ -394,51 +394,63 @@ public class GameManager : FakeMonoBehaviour
         CharacterLoader loader = new CharacterLoader();
         //Debug.Log("loading character in CharacterLoader " + aBundleName);
         loader.complete_load_character(aBundle,aBundleName);
-        
-        if (aBundleName == "999")
+
+        try
         {
-            mManager.mInterfaceManager.mScoreText.SoftPosition = mManager.mBackgroundManager.mBackgroundElements.mElements[0].Element.SoftPosition + new Vector3(0, -150, 0);
-            mManager.mInterfaceManager.mScoreText.Depth = 101;
-            foreach (Renderer f in mManager.mInterfaceManager.mScoreText.PrimaryGameObject.GetComponentsInChildren<Renderer>()) //hack to make it show in background camera...
-                f.gameObject.layer = mManager.mBackgroundManager.mBackgroundLayer;
 
-            mManager.mBackgroundManager.character_changed_listener(loader);
-            set_music(loader.Images.backgroundMusic);
-            mManager.mBodyManager.character_changed_listener(null);
-            mManager.mTransparentBodyManager.character_changed_listener(null);
+            if (aBundleName == "999")
+            {
+                mManager.mInterfaceManager.mScoreText.SoftPosition = mManager.mBackgroundManager.mBackgroundElements.mElements[0].Element.SoftPosition + new Vector3(0, -150, 0);
+                mManager.mInterfaceManager.mScoreText.Depth = 101;
+                foreach (Renderer f in mManager.mInterfaceManager.mScoreText.PrimaryGameObject.GetComponentsInChildren<Renderer>()) //hack to make it show in background camera...
+                    f.gameObject.layer = mManager.mBackgroundManager.mBackgroundLayer;
 
+                mManager.mBackgroundManager.character_changed_listener(loader);
+                set_music(loader.Images.backgroundMusic);
+                mManager.mBodyManager.character_changed_listener(null);
+                mManager.mTransparentBodyManager.character_changed_listener(null);
+
+            }
+            else
+            {
+                start_character(loader, CurrentIndex);
+
+                //mEvents.add_event((new GameEvents.FocusCameraOnElementEvent(mManager.mInterfaceManager.mFlatCamera, mManager.mInterfaceManager.mBlueBar)).get_event(), Mathf.Clamp(TimeRemaining - CHOICE_TIME,0,Mathf.Infinity));
+                mEvents.add_event((new GameEvents.FocusCameraOnElementEvent(mManager.mInterfaceManager.mFlatCamera, mManager.mInterfaceManager.mBlueBar)).get_event(), Mathf.Clamp(TimeRemaining, 0, Mathf.Infinity));
+                //mEvents.add_event((new GameEvents.ResetElementScaleEvent(mManager.mInterfaceManager.mBlueBar)).get_event(), TimeRemaining);
+
+                //figure out next poses
+                NextContendingChoice = get_default_choice(CurrentLevel);
+                if (CurrentLevel < 7)
+                    mChoicePoses = get_poses(CurrentLevel);
+                mManager.mInterfaceManager.set_choice_difficulties();
+                mManager.mInterfaceManager.set_question(CurrentLevel);
+                mManager.mInterfaceManager.set_bottom_poses(mChoicePoses);
+            }
+
+            //reset the interface 
+            mEvents.add_event((new GameEvents.FadeInTopChoiceInInterfaceEvent(mManager.mInterfaceManager)).get_event(), 0.5f);
+            mManager.mInterfaceManager.reset_camera();
+            reset_choosing_percentages();
+            mManager.mInterfaceManager.mBlueBar.SoftScale = Vector3.one;
+            mManager.mInterfaceManager.set_choosing_percentages(ChoosingPercentages);
+            mManager.mInterfaceManager.fade_out_choices();
+            mManager.mInterfaceManager.set_choice(-1);
+            mManager.mInterfaceManager.mBlueBar.Depth = 100;
+            
         }
-        else
+        catch //this is a hack for TestingSceneBehaviour
         {
-            start_character(loader, CurrentIndex);
-
-            //mEvents.add_event((new GameEvents.FocusCameraOnElementEvent(mManager.mInterfaceManager.mFlatCamera, mManager.mInterfaceManager.mBlueBar)).get_event(), Mathf.Clamp(TimeRemaining - CHOICE_TIME,0,Mathf.Infinity));
-            mEvents.add_event((new GameEvents.FocusCameraOnElementEvent(mManager.mInterfaceManager.mFlatCamera, mManager.mInterfaceManager.mBlueBar)).get_event(), Mathf.Clamp(TimeRemaining, 0, Mathf.Infinity));
-            //mEvents.add_event((new GameEvents.ResetElementScaleEvent(mManager.mInterfaceManager.mBlueBar)).get_event(), TimeRemaining);
-
-            //figure out next poses
-            NextContendingChoice = get_default_choice(CurrentLevel);
-            if (CurrentLevel < 7)
-                mChoicePoses = get_poses(CurrentLevel);
-            mManager.mInterfaceManager.set_choice_difficulties();
-            mManager.mInterfaceManager.set_question(CurrentLevel);
-            mManager.mInterfaceManager.set_bottom_poses(mChoicePoses);    
+            Debug.Log("caught exception in SceneLoadedCallback lol");
         }
+        finally
+        {
+            IsLoading = false;
 
-        //reset the interface 
-        mEvents.add_event((new GameEvents.FadeInTopChoiceInInterfaceEvent(mManager.mInterfaceManager)).get_event(), 0.5f);
-        mManager.mInterfaceManager.reset_camera();
-        reset_choosing_percentages();
-        mManager.mInterfaceManager.mBlueBar.SoftScale = Vector3.one;
-        mManager.mInterfaceManager.set_choosing_percentages(ChoosingPercentages);
-        mManager.mInterfaceManager.fade_out_choices();
-        mManager.mInterfaceManager.set_choice(-1);
-        mManager.mInterfaceManager.mBlueBar.Depth = 100;
-        IsLoading = false;
-
-        //unload old bundle //TODO I don't think this is working
-        unload_current_asset_bundle();
-        CurrentAssetBundle = aBundle;
+            //unload old bundle //TODO I don't think this is working
+            unload_current_asset_bundle();
+            CurrentAssetBundle = aBundle;
+        }
     }
 
     void reset_choosing_percentages()
@@ -488,6 +500,7 @@ public class GameManager : FakeMonoBehaviour
         {
             int index = get_choice_index(i, level + 1);
             r[i] = mDifficultyTargetPoses[index * 4 - 3 + get_difficulty(index)];
+
         }
         return r;
     }
