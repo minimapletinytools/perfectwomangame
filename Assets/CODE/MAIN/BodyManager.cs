@@ -88,7 +88,28 @@ public class BodyManager : FakeMonoBehaviour {
         mManager.mEventManager.character_changed_event += character_changed_listener;
 	}
 
-
+    public void write_pose(string aFilename, bool aManual)
+    {
+        if (aManual)
+        {
+            ProGrading.Pose p = new ProGrading.Pose();
+            foreach (KeyValuePair<ZigJointId, GameObject> e in mFlat.mParts)
+            {
+                ProGrading.PoseElement pe = new ProGrading.PoseElement();
+                pe.joint = e.Key;
+                pe.angle = e.Value.transform.rotation.eulerAngles.z;
+                p.mElements.Add(pe);
+            }
+            ProGrading.write_pose_to_file(p, aFilename);
+        }
+        else
+        {
+            if (mManager.mZigManager.has_user())
+            {
+                ProGrading.write_pose_to_file(ProGrading.snap_pose(mManager),aFilename);
+            }
+        }
+    }
 
     public override void Update()
     {
@@ -108,29 +129,6 @@ public class BodyManager : FakeMonoBehaviour {
                     mFlat.match_body_location_to_projection(mManager.mZigManager);
                 }
                 mFlat.match_body_to_projection(mManager.mProjectionManager);
-
-                if (Input.GetKeyDown(KeyCode.Space))
-                {
-                    if (mManager.mZigManager.has_user())
-                    {
-                        ProGrading.write_pose_to_file(ProGrading.snap_pose(mManager), "char_kinect_"+ManagerManager.ScreenShotName +".txt");
-                    }
-                }
-            }
-            else if (mMode == 1)
-            {
-                if (Input.GetKeyDown(KeyCode.Space)) //TODO manual pose setting wont work anymore due to targetting on target pose.
-                {
-                    ProGrading.Pose p = new ProGrading.Pose();
-                    foreach (KeyValuePair<ZigJointId, GameObject> e in mFlat.mParts)
-                    {
-                        ProGrading.PoseElement pe = new ProGrading.PoseElement();
-                        pe.joint = e.Key;
-                        pe.angle = e.Value.transform.rotation.eulerAngles.z;
-                        p.mElements.Add(pe);
-                    }
-                    ProGrading.write_pose_to_file(p, "char_manual_" + ManagerManager.ScreenShotName + ".txt");
-                }
             }
         }
         

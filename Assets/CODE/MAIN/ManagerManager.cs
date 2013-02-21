@@ -110,7 +110,13 @@ public class ManagerManager : MonoBehaviour{
     //Screenshot nonsense
     //TODO move this nonsense into its own class
     static int sScreenShotNumber = 0;
-    public static string ScreenShotName { get { return "char" + sScreenShotNumber; } }
+    public static string sScreenShotPrefix = "char";
+    public static bool sTakeManual = true;
+    public static bool sTakeKinect = true;
+    public static string sFolderPrefix = "Assets/Resources/POSE_TESTING/";
+    public static string sImageFolderPrefix = "";
+    public static string ScreenShotName { get { return sScreenShotPrefix + sScreenShotNumber; } }
+    
     void take_screenshot(string filename, Camera cam)
     {
         
@@ -140,11 +146,19 @@ public class ManagerManager : MonoBehaviour{
         if (Input.GetKeyDown(KeyCode.Space))
         {
             Camera cam = mCameraManager.MainBodyCamera;
-            string filename = "char_kinect_" + ScreenShotName + ".png";
-            take_screenshot(filename, cam);
+            string filename = sImageFolderPrefix + ScreenShotName + "_k.png";
+            if (sTakeKinect)
+            {
+                take_screenshot(filename, cam);
+                mBodyManager.write_pose(sFolderPrefix + ScreenShotName + "_k.txt", false);
+            }
             cam = mCameraManager.TransparentBodyCamera;
-            filename = "char_manual_" + ScreenShotName + ".png";
-            take_screenshot(filename, cam);
+            filename = sImageFolderPrefix + ScreenShotName + "_m.png";
+            if (sTakeManual)
+            {
+                take_screenshot(filename, cam);
+                mBodyManager.write_pose(sFolderPrefix + ScreenShotName + "_m.txt", true);
+            }
             sScreenShotNumber++;
         }
     }
