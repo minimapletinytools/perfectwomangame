@@ -142,15 +142,7 @@ public class BodyManager : FakeMonoBehaviour {
 
                 if (ManagerManager.Manager.mGameManager.Started)
                 {
-                    Vector3 position = Vector3.zero;
-                    if (!mManager.mZigManager.using_nite())
-                        position = mManager.mZigManager.Joints[ZigJointId.Waist].Position;
-                    else position = mManager.mZigManager.Joints[ZigJointId.Torso].Position;
-                    position.z = 0;
-                    position.y = 0;
-                    position.x *= -1;
-                    if (Mathf.Abs(position.x) < 10) position.x = 0; //fake snapping, TODO this should probbaly be in grading manager if anywhere...
-                    mFlat.SoftPosition = position / 1.5f + mOffset;
+                    mFlat.match_body_location_to_projection(mManager.mZigManager);
                 }
                 mFlat.match_body_to_projection(mManager.mProjectionManager);
 

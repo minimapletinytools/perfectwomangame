@@ -15,6 +15,7 @@ public class FlatBodyObject : FlatElementBase
     }
     public ProGrading.Pose mTargetPose = null;
     public Dictionary<ZigJointId, GameObject> mParts = new Dictionary<ZigJointId, GameObject>();
+    Vector3 mOffset = Vector3.zero;
     public bool UseDepth { get; set; }
 
 
@@ -38,6 +39,8 @@ public class FlatBodyObject : FlatElementBase
         foreach (FlatBodyObject e in load_sequential(aChar.Images, aChar.Sizes))
             ;
 
+        mOffset = (new Vector3(aChar.Sizes.mOffset.x, aChar.Sizes.mOffset.y, 0));
+
         PrimaryGameObject = new GameObject("genBodyParent");
         mParts[ZigJointId.Waist].transform.parent = PrimaryGameObject.transform;
         mParts[ZigJointId.Torso].transform.parent = PrimaryGameObject.transform;
@@ -49,6 +52,19 @@ public class FlatBodyObject : FlatElementBase
             Depth = aDepth;
     }
 
+
+    public void match_body_location_to_projection(ZigManager aManager)
+    {
+        Vector3 position = Vector3.zero;
+        if (!aManager.using_nite())
+            position = aManager.Joints[ZigJointId.Waist].Position;
+        else position = aManager.Joints[ZigJointId.Torso].Position;
+        position.z = 0;
+        position.y = 0;
+        position.x *= -1;
+        if (Mathf.Abs(position.x) < 10) position.x = 0; //fake snapping, TODO this should probbaly be in grading manager if anywhere...
+        SoftPosition = position / 1.5f + mOffset;
+    }
     public void match_body_to_projection(ProjectionManager aManager)
     {
         foreach (KeyValuePair<ZigJointId, ProjectionManager.Stupid> e in aManager.mImportant)
