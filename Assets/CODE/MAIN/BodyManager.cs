@@ -12,7 +12,6 @@ public class BodyManager : FakeMonoBehaviour {
     {
         mMode = 1;
         mFlat.set_target_pose(aPose);
-        fix_target_pose();
 
 
         //hack
@@ -82,42 +81,6 @@ public class BodyManager : FakeMonoBehaviour {
 	{
 		return (float)pixelWidth/1.0f; //100 pixels = 1 unit
 	}
-
-	//TODO delete
-    public void fix_target_pose()
-    {
-        /*
-        ProGrading.Pose pose = mFlat.mTargetPose;
-        List<ProGrading.PoseElement> elements = pose.mElements;
-        int waistIndex = -1; 
-        int kneeIndex = -1;
-        for (int i = 0; i < elements.Count; i++)
-        {
-            if (elements[i].joint == ZigJointId.Waist)
-                waistIndex = i;
-            if (elements[i].joint == ZigJointId.LeftHip)
-                kneeIndex = i;
-        }
-        float measured = elements[waistIndex].angle + 100;
-        int maxIter = 100;
-        while(maxIter > 0 && Mathf.Abs(measured-elements[waistIndex].angle) > 0.1f)
-        {
-            if (maxIter == 100)
-            {
-                elements[waistIndex].angle = mManager.mProjectionManager.get_waist(mFlat.mParts[ZigJointId.Waist].transform.position, mFlat.mParts[ZigJointId.LeftKnee].transform.position, mFlat.mParts[ZigJointId.RightKnee].transform.position);
-                measured = mManager.mProjectionManager.get_waist(mFlat.mParts[ZigJointId.Waist].transform.position, mFlat.mParts[ZigJointId.LeftKnee].transform.position, mFlat.mParts[ZigJointId.RightKnee].transform.position);
-            }
-            elements[kneeIndex].angle -= (measured - elements[waistIndex].angle) * 0.5f;
-            pose.mElements = elements;
-            mFlat.set_target_pose(pose);
-            measured = mManager.mProjectionManager.get_waist(mFlat.mParts[ZigJointId.Waist].transform.position, mFlat.mParts[ZigJointId.LeftKnee].transform.position, mFlat.mParts[ZigJointId.RightKnee].transform.position);
-            maxIter--;
-        }
-        pose.mElements = elements;
-        mFlat.set_target_pose(pose);
-        Debug.Log("fixed with iterations " + maxIter + " diff " + (measured - elements[waistIndex].angle));
-         */
-    }
 
 	public override void Start () 
     {
