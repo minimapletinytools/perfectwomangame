@@ -1,8 +1,12 @@
 ::TODO3::
 DONE-make test bundle version please!!! GEEZ
--get old version running OK on a machine as a backup
 DONE-use Colliderless plane
+-get old version running OK on a machine as a backup
 -make pose cycling for performance...
+-transitioning into the game
+	-start the game blown out white and fade into the game??
+	-consider doing the render texture trick to overwrite the UI nonsense
+
 
 :EASY POSE:
 DONE-take screen cap when doing so...
@@ -55,6 +59,7 @@ DONE-transition to depth image, position in center
 	-preload in all icons at beginning of game (is this ok??)
 	-do the animations from the poses
 	-set the colors according to difficulty
+	-display only perfectness stars
 	-test it, does it run fast enough?? (maybe make a slow version)
 -new message system
 	-enter_message(string, message, time)
@@ -70,15 +75,51 @@ DONE-transition to depth image, position in center
 		-new flat class to do this
 		-display perfectness only
 	-where do I put the guy when no choice is selected?
-
+-particle effect system nonsense
+	-TODO
+-new font system
+-new text overlay system
+	-uses font system	
+	-draws one of several random bubbles over the play area of the screen
+	
 :CUTSCENES:
+-add cutscene elements to the file format
+	-CUTSCENE<X>-<Y>.png 
+	-dot in POSITION.png where color is (0,0,X + Y * 5,255)
+	-ordered from top to bottom
+-bonus, text file describing effects
+	-EFFECTS.txt
+		-<filename> <effect name> <value>
+		-if not specified, then uses default effect
+-transition in
+	-fly out all BG FG and character elements
+	-fly in all cutscene elements for appropriate cutscene
 
-:DEATH:
+:EARLY DEATH:
+-generic death version
+	-store it inside of a generic character container??? (or double use the graveyard/fetus scene or something)
+-for specific death, use CUTSCENE4 and same format above
+-restart game (by reloading the scene I guess)
 
+:NORMAL DEATH:
+-this is just a specific death at age 80
+-additionally, different text
 
 :BONUS:
+-goes to age 100 
+-presents only one choice
+-4 stars!
+-plays different text
 
 :END/WIN:
+-blow the screen out white and transition into graveyard
+-for each character
+	-character icons come up from the bottom w/performance charts
+	-text bubble describing achievement	
+	-reflect change on graveyard
+	-draw angel teehee
+-blow the screen out white
+-end the game
 
 
 		
