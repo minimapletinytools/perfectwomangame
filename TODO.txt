@@ -3,7 +3,12 @@
 	-loading characters and distributing those characters to bg/
 
 
+
 ::TODO3::
+-type up usage guide for lea
+-type up usage guide for cutscenes and death
+-fix pose recording???
+-add new characters from lea
 DONE-make test bundle version please!!! GEEZ
 DONE-use Colliderless plane
 -get old version running OK on a machine as a backup
