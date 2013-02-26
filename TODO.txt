@@ -1,3 +1,8 @@
+::NEEEEEW GAME MANAGER NONSENSE::
+-responsibilities
+	-loading characters and distributing those characters to bg/
+
+
 ::TODO3::
 DONE-make test bundle version please!!! GEEZ
 DONE-use Colliderless plane
