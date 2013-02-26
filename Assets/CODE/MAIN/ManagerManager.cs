@@ -157,7 +157,7 @@ public class ManagerManager : MonoBehaviour{
             if (sTakeManual)
             {
                 take_screenshot(filename, cam);
-                mBodyManager.write_pose(sFolderPrefix + ScreenShotName + "_m.txt", true);
+                mTransparentBodyManager.write_pose(sFolderPrefix + ScreenShotName + "_m.txt", true);
             }
             sScreenShotNumber++;
         }

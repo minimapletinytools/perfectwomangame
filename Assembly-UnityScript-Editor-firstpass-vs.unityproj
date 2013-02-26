@@ -112,8 +112,10 @@
      <None Include="Assets\Standard Assets\Image Effects (Pro Only)\_Sources\Shaders\NoiseEffectShaderYUV.shader" />
      <None Include="Assets\POSES\choice_KICK.txt" />
      <None Include="Assets\Resources\POSE_TESTING\pose_HARD_0.txt" />
+     <None Include="Assets\Resources\POSE_TESTING\char1_k.txt" />
      <None Include="Assets\Standard Assets\Image Effects (Pro Only)\_Sources\Shaders\GlowEffectDownsample.shader" />
      <None Include="Assets\Standard Assets\Image Effects (Pro Only)\_Sources\Shaders\CreaseApply.shader" />
+     <None Include="Assets\Resources\POSE_TESTING\char0_k.txt" />
      <None Include="Assets\POSES\choice_M.txt" />
      <None Include="Assets\Standard Assets\Image Effects (Pro Only)\_Sources\Shaders\ChromaticAberrationShader.shader" />
      <None Include="Assets\POSES\old_poses\char_kinect13.txt" />
@@ -126,10 +128,12 @@
      <None Include="Assets\POSES\old_poses\char_kinect18.txt" />
      <None Include="Assets\Resources\POSE_TESTING\choice_T.txt" />
      <None Include="Assets\POSES\choice_STAR.txt" />
+     <None Include="Assets\Resources\POSE_TESTING\char0_m.txt" />
      <None Include="Assets\Standard Assets\Image Effects (Pro Only)\_Sources\Shaders\_BloomAndFlares\SeparableBlurPlus.shader" />
      <None Include="Assets\Resources\POSE_TESTING\pose_IMP_0.txt" />
      <None Include="Assets\Standard Assets\Image Effects (Pro Only)\_Sources\Shaders\_BloomAndFlares\MultiPassHollywoodFlares.shader" />
      <None Include="Assets\Standard Assets\Image Effects (Pro Only)\_Sources\Shaders\_Antialiasing\DLAA.shader" />
+     <None Include="Assets\Resources\POSE_TESTING\char1_m.txt" />
      <None Include="Assets\Resources\POSE_TESTING\choice_7.txt" />
      <None Include="Assets\Standard Assets\Image Effects (Pro Only)\_Sources\Shaders\_DepthOfField\SeparableBlur.shader" />
      <None Include="Assets\Standard Assets\Image Effects (Pro Only)\_Sources\Shaders\ColorCorrectionEffect.shader" />
