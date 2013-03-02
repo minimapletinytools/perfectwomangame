@@ -5,17 +5,18 @@
 
 
 ::TODO3::
-DONE-type up usage guide for lea
-DONE-type up usage guide for cutscenes and death
-DONE-fix pose recording???
--add new characters from lea
-DONE-make test bundle version please!!! GEEZ
-DONE-use Colliderless plane
--get old version running OK on a machine as a backup
+-make sure the game works and restarts properly
+DONE-get old version running OK on a machine as a backup
 -make pose cycling for performance...
 -transitioning into the game
 	-start the game blown out white and fade into the game??
-	-consider doing the render texture trick to overwrite the UI nonsense
+	-consider doing the render texture trick to overwrite the UI nonsensen
+DONE-type up usage guide for lea
+DONE-type up usage guide for cutscenes and death
+DONE-fix pose recording???
+DONE-add new characters from lea
+DONE-make test bundle version please!!! GEEZ
+DONE-use Colliderless plane
 
 
 :EASY POSE:

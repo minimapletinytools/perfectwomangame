@@ -98,14 +98,17 @@ public class ManagerManager : MonoBehaviour{
             Application.Quit();
         if (Input.GetKeyDown(KeyCode.R))
         {
-            mGameManager.unload_current_asset_bundle();
-            Application.LoadLevel("kinect_test");
+            restart_game();
         }
 		if(mUpdateDelegates != null) 
 			mUpdateDelegates();
 	}
 
-
+    public void restart_game()
+    {
+        mGameManager.unload_current_asset_bundle();
+        Application.LoadLevel("kinect_test");
+    }
 
     //Screenshot nonsense
     //TODO move this nonsense into its own class

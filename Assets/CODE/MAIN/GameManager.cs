@@ -258,9 +258,13 @@ public class GameManager : FakeMonoBehaviour
                             mManager.mInterfaceManager.set_bottom_poses(mChoicePoses);
                             mManager.mInterfaceManager.mBlueBar.Depth = 2;
                         }
-                        else
+                        else if (CurrentLevel == 7)
                         {
                             advance_scene(90); 
+                        }
+                        else if (CurrentLevel == 8)
+                        {
+                            mManager.restart_game();
                         }
                     }
                     TimeRemaining = -999;
@@ -379,8 +383,12 @@ public class GameManager : FakeMonoBehaviour
         else
         {
             
-            TimeRemaining = 9999;
+            TimeRemaining = 45;
             mManager.mAssetLoader.load_character("999");
+            for(int i = 0; i < 10; i++) //quick hack to disable camera glow effect
+                mManager.mCameraManager.set_camera_effects(0);
+
+
             IsLoading = true;
         }
         
@@ -462,6 +470,7 @@ public class GameManager : FakeMonoBehaviour
     {
         mManager.mEventManager.character_changed_event(container);
 
+        Debug.Log("going to play sound " + container.Images.backgroundMusic);
         set_music(container.Images.backgroundMusic);
 
         if (container.Name != "999")
