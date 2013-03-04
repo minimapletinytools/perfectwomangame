@@ -12,7 +12,23 @@ public class ImageGameObjectUtility
     public GameObject ParentObject { get; private set; }
     public GameObject PlaneObject { get; private set; }
     public Material PlaneMaterial { get; private set; }
-
+	
+	public Vector2 TextureOffset {
+		get{
+			return PlaneMaterial.mainTextureOffset;
+		}
+		set{
+			PlaneMaterial.mainTextureOffset = value;
+		}
+	}
+	public Vector2 TextureScale {
+		get{
+			return PlaneMaterial.mainTextureScale;
+		}
+		set{
+			PlaneMaterial.mainTextureScale = value;
+		}
+	}
     public Vector2 BaseDimension { get; private set; }
     public Vector2 PixelDimension
     {
@@ -53,7 +69,8 @@ public class ImageGameObjectUtility
         }
         else
             BaseDimension = aSize.Value;
-        PlaneObject.renderer.material.mainTexture = aTex;
+        //PlaneObject.renderer.material.mainTexture = aTex;
+		PlaneMaterial.mainTexture = aTex;
         PixelDimension = BaseDimension;
     }
 
