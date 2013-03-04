@@ -5,8 +5,9 @@
 
 
 ::TODO3::
+-test your new font module
 DONE-make the game runnable without kinect
--make sure the game works and restarts properly
+IGNORE-make sure the game works and restarts properly
 DONE-get old version running OK on a machine as a backup
 -make pose cycling for performance...
 -transitioning into the game
