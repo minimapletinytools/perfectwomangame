@@ -18,6 +18,20 @@ public class SetupForRecordingBehaviour : MonoBehaviour {
         ManagerManager.sTakeKinect = record_kinect;
         ManagerManager.sScreenShotPrefix = prefix;
 	}
+	
+	void Update()
+	{
+		//hack to disable glow
+		ManagerManager.Manager.mCameraManager.set_camera_effects(0);
+		ManagerManager.Manager.mCameraManager.set_camera_effects(0);
+		ManagerManager.Manager.mCameraManager.set_camera_effects(0);
+		ManagerManager.Manager.mCameraManager.set_camera_effects(0);
+		ManagerManager.Manager.mCameraManager.set_camera_effects(0);
+		ManagerManager.Manager.mCameraManager.set_camera_effects(0);
+		ManagerManager.Manager.mCameraManager.set_camera_effects(0);
+		ManagerManager.Manager.mCameraManager.set_camera_effects(0);
+		ManagerManager.Manager.mCameraManager.set_camera_effects(0);
+	}
 
 
     public void character_changed_listener(CharacterLoader aCharacter)

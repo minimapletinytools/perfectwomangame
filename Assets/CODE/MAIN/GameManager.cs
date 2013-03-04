@@ -194,9 +194,13 @@ public class GameManager : FakeMonoBehaviour
 
         mEvents.update(Time.deltaTime);
 
-        //TODO indicate to player to start the game
+        //we jsut start the game automagically for now
         if (!Started && !User)
         {
+			if (DEBUGGING) advance_scene(1);
+            else advance_scene(LEVEL_TIME_TOTAL);
+            //maybe less time for fetus???
+            Started = true;
         }
         else if (User)
         {
@@ -205,10 +209,10 @@ public class GameManager : FakeMonoBehaviour
         if (!Started && User && Time.timeSinceLevelLoad > mMinStartTime)
         {
 
-            if (DEBUGGING) advance_scene(1);
+            /*if (DEBUGGING) advance_scene(1);
             else advance_scene(LEVEL_TIME_TOTAL);
             //maybe less time for fetus???
-            Started = true;
+            Started = true;*/
         }
 
         if (Started)
