@@ -186,6 +186,11 @@ public class InterfaceManager : FakeMonoBehaviour {
             mGraph.draw_point(Random.insideUnitCircle / 2f + new Vector2(0.5f, 0.5f), 10, new Color(Random.Range(0f, 1f), Random.Range(0f, 1f), Random.Range(0f, 1f)));
         mGraph.HardPosition = random_position();
         mGraph.SoftPosition = mBlueBar.SoftPosition + new Vector3(400, 0, 0);*/
+		//mElement.Add(mGraph);
+		
+		FlatElementSpriteText spriteTex = new FlatElementSpriteText(refs.fontTex,20,"testmessage",10);
+		spriteTex.SoftPosition = mBlueBar.SoftPosition + new Vector3(400, 0, 0);
+		mElement.Add (spriteTex);
 
 
         mElement.Add(mPinkBackground);
@@ -207,7 +212,7 @@ public class InterfaceManager : FakeMonoBehaviour {
         mElement.Add(mQuestion);
         mElement.Add(mCurrentBody);
 
-        //mElement.Add(mGraph);
+        
 
         mIsSetup = true;
     }

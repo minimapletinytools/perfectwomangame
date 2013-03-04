@@ -5,6 +5,7 @@ public class MenuReferenceBehaviour : MonoBehaviour {
     
     public GameObject miniMan;
     public TextAsset cheapPose;
+	public Texture2D fontTex;
 
     public Font menuFont;
 

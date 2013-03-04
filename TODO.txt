@@ -5,7 +5,7 @@
 
 
 ::TODO3::
--test your new font module
+DONE-test your new font module
 DONE-make the game runnable without kinect
 IGNORE-make sure the game works and restarts properly
 DONE-get old version running OK on a machine as a backup

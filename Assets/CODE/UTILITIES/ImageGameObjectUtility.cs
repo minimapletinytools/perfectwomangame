@@ -15,18 +15,18 @@ public class ImageGameObjectUtility
 	
 	public Vector2 TextureOffset {
 		get{
-			return PlaneMaterial.mainTextureOffset;
+			return PlaneObject.renderer.material.mainTextureOffset;
 		}
 		set{
-			PlaneMaterial.mainTextureOffset = value;
+			PlaneObject.renderer.material.mainTextureOffset = value;
 		}
 	}
 	public Vector2 TextureScale {
 		get{
-			return PlaneMaterial.mainTextureScale;
+			return PlaneObject.renderer.material.mainTextureScale;
 		}
 		set{
-			PlaneMaterial.mainTextureScale = value;
+			PlaneObject.renderer.material.mainTextureScale = value;
 		}
 	}
     public Vector2 BaseDimension { get; private set; }
