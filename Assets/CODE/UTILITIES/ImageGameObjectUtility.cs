@@ -69,8 +69,7 @@ public class ImageGameObjectUtility
         }
         else
             BaseDimension = aSize.Value;
-        //PlaneObject.renderer.material.mainTexture = aTex;
-		PlaneMaterial.mainTexture = aTex;
+        PlaneObject.renderer.material.mainTexture = aTex;
         PixelDimension = BaseDimension;
     }
 
