@@ -55,7 +55,6 @@ public class BackgroundManager  : FakeMonoBehaviour
     public void character_changed_listener(CharacterLoader aCharacter)
     {
 		
-		Debug.Log ("aosnethaonsteueonth");
 
         mBackground.mImage.set_new_texture(aCharacter.Images.background1,aCharacter.Sizes.mBackSize);
 
