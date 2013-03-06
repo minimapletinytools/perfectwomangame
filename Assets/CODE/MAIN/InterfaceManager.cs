@@ -188,9 +188,10 @@ public class InterfaceManager : FakeMonoBehaviour {
         mGraph.SoftPosition = mBlueBar.SoftPosition + new Vector3(400, 0, 0);*/
 		//mElement.Add(mGraph);
 		
+		/*
 		FlatElementSpriteText spriteTex = new FlatElementSpriteText(refs.fontTex,20,"testmessage",10);
 		spriteTex.SoftPosition = mBlueBar.SoftPosition + new Vector3(400, 0, 0);
-		mElement.Add (spriteTex);
+		mElement.Add (spriteTex);*/
 
 
         mElement.Add(mPinkBackground);

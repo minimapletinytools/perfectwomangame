@@ -451,8 +451,9 @@ public class GameManager : FakeMonoBehaviour
             mManager.mInterfaceManager.mBlueBar.Depth = 100;
             
         }
-        catch //this is a hack for TestingSceneBehaviour
+        catch(UnityException e) //this is a hack for TestingSceneBehaviour
         {
+			Debug.Log (e);
             Debug.Log("caught exception in SceneLoadedCallback lol");
         }
         finally

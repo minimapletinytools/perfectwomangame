@@ -55,14 +55,3 @@ public class PerformanceStats
 		Graph = null;
 	}
 }
-
-
-public class NewGameManager : FakeMonoBehaviour
-{
-    public NewGameManager(ManagerManager aManager)
-        : base(aManager) 
-    {
-    }
-
-    
-}
