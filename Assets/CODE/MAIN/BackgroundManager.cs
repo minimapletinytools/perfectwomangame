@@ -62,13 +62,23 @@ public class BackgroundManager  : FakeMonoBehaviour
         mForegroundElements.destroy();
         for (int i = 0; i < aCharacter.Images.backgroundElements.Count; i++)
         {
-            mBackgroundElements.add_image(aCharacter.Images.backgroundElements[i], aCharacter.Sizes.mBackgroundPositions[i],aCharacter.Sizes.mBackgroundSizes[i]);
-            mBackgroundElements.mElements[mBackgroundElements.mElements.Count - 1].Element.Events.add_event(FlatElementAnimations.position_jiggle_delegate(Mathf.Infinity, 5),0);
-            mBackgroundElements.mElements[mBackgroundElements.mElements.Count - 1].Element.Events.add_event((new FlatElementAnimations.FloatingAnimation(Random.Range(0f, 10f))).animate,0);
+			if(aCharacter.Sizes.mBackgroundPositions.Count > i)
+			{
+	            mBackgroundElements.add_image(aCharacter.Images.backgroundElements[i], aCharacter.Sizes.mBackgroundPositions[i],aCharacter.Sizes.mBackgroundSizes[i]);
+	            mBackgroundElements.mElements[mBackgroundElements.mElements.Count - 1].Element.Events.add_event(FlatElementAnimations.position_jiggle_delegate(Mathf.Infinity, 5),0);
+	            mBackgroundElements.mElements[mBackgroundElements.mElements.Count - 1].Element.Events.add_event((new FlatElementAnimations.FloatingAnimation(Random.Range(0f, 10f))).animate,0);
+			}
+			else
+				Debug.Log("ERRRROR no position for background image");
         }
         for (int i = 0; i < aCharacter.Images.foregroundElements.Count; i++)
         {
-            mForegroundElements.add_image(aCharacter.Images.foregroundElements[i], aCharacter.Sizes.mForegroundPositions[i],aCharacter.Sizes.mForegroundSizes[i]);
+			if(aCharacter.Sizes.mForegroundPositions.Count > i)
+			{
+            	mForegroundElements.add_image(aCharacter.Images.foregroundElements[i], aCharacter.Sizes.mForegroundPositions[i],aCharacter.Sizes.mForegroundSizes[i]);
+			}
+			else
+				Debug.Log("ERRRROR no position for background image");
         }
 
        

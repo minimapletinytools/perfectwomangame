@@ -513,7 +513,11 @@ public class GameManager : FakeMonoBehaviour
         for (int i = 0; i < 4; i++)
         {
             int index = get_choice_index(i, level + 1);
-            r[i] = mDifficultyTargetPoses[index * 4 - 3 + get_difficulty(index)];
+			int realIndex = index * 4 - 3 + get_difficulty(index);
+			if(realIndex < mDifficultyTargetPoses.Length && realIndex >= 0)
+            	r[i] = mDifficultyTargetPoses[realIndex];
+			else
+				throw new UnityException("NO POSE FOUND EXCEPTION");
 
         }
         return r;
