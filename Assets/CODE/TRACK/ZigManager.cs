@@ -58,12 +58,22 @@ public class ZigManager : FakeMonoBehaviour {
 	
 	public override void Update () 
 	{
+		
         if (mZigInput == null)
         {
             GameObject container = GameObject.Find("ZigInputContainer");
             if(container != null)
                 mZigInput = container.GetComponent<ZigInput>();
         }
+	}
+	
+	public int is_reader_connected() //0 - not connected, 1 - trying to connect, 2 - connected
+	{
+		if(mZigInput == null)
+			return 1;
+		else if(mZigInput.ReaderInited == true)
+			return 2;
+		else return 0;
 	}
 
     public bool using_nite()

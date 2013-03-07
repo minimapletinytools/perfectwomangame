@@ -14,6 +14,9 @@ public class TransitionCameraManager : FakeMonoBehaviour
 	
     public FlatCameraManager mFlatCamera;
 	SunShafts mSunShafts;
+	AlternativeDepthViewer mADV = null;
+	
+	FlatElementImage mDepthImage;
     HashSet<FlatElementBase> mElement = new HashSet<FlatElementBase>();
 	
 	
@@ -43,15 +46,37 @@ public class TransitionCameraManager : FakeMonoBehaviour
 		mSunShafts.useDepthTexture = shafts.useDepthTexture;
 		mSunShafts.useSkyBoxAlpha = shafts.useSkyBoxAlpha;
 		//???mSunShafts.sunTransform = shafts.sunTransform;
-
+		
+		
+		mDepthImage = new FlatElementImage(null,0); 
+		mElement.Add(mDepthImage);
 	}
 
     
     public override void Update()
     {
+		//w/e
+		if(mADV == null)
+			mADV = mManager.mZigManager.DepthView;
+		mDepthImage.mImage.set_new_texture(mADV.DepthTexture,new Vector2(mFlatCamera.Width,mFlatCamera.Height));
+		
         TED.update(Time.deltaTime);
 
         
+	}
+	
+	public void start_configuration_display()
+	{
+		//display logo
+		//if no kinect is found
+			//display no kinect found nonsesnse
+			//mManager.mZigManager.is_reader_connected()
+		//if kinect is found and five seconds elapsed, fade in depth image
+		//if user is not found prompt stand in front of the kinect so the knicet sees all of you
+		//if 3 seconds elapsed and user is found, 1 sec GOOD, center in camera
+		//if 3 second elapsed and user is near center, 1 sec GOOD, make a t pose
+		//if 3 seconds elapesed and user is in tpose, 1 sec GOOD, begin fadeout
+			//on fadeoutcb, move depth image to lower left corner	
 	}
 	
 	public void fade(System.Action aFadeCompleteCb)
