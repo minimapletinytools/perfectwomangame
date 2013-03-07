@@ -29,14 +29,15 @@ public class ManagerManager : MonoBehaviour{
     public InputManager mInputManager;
     public ZigManager mZigManager;
 	public ProjectionManager mProjectionManager;
-    public InterfaceManager mInterfaceManager;
+    public NewInterfaceManager mInterfaceManager;
     public BodyManager mBodyManager;
     public BodyManager mTransparentBodyManager;
     public BackgroundManager mBackgroundManager;
     public CameraManager mCameraManager;
     public ParticleManager mParticleManager;
     public AssetBundleLoader mAssetLoader;
-    public GameManager mGameManager;
+    public NewGameManager mGameManager;
+	public TransitionCameraManager mTransitionCameraManager;
     
 
     public PrefabReferenceBehaviour mReferences;
@@ -55,14 +56,15 @@ public class ManagerManager : MonoBehaviour{
         mInputManager = new InputManager(this);
 		mZigManager = new ZigManager(this);
 		mProjectionManager = new ProjectionManager(this);
-        mInterfaceManager = new InterfaceManager(this);
+        mInterfaceManager = new NewInterfaceManager(this);
         mBodyManager = new BodyManager(this);
         mTransparentBodyManager = new BodyManager(this);
         mBackgroundManager = new BackgroundManager(this);
         mCameraManager = new CameraManager(this);
         mParticleManager = new ParticleManager(this);
         mAssetLoader = new AssetBundleLoader(this);
-        mGameManager = new GameManager(this);
+        mGameManager = new NewGameManager(this);
+		mTransitionCameraManager = new TransitionCameraManager(this);
 
 		if(mStartDelegates != null) 
 			mStartDelegates();
@@ -106,7 +108,7 @@ public class ManagerManager : MonoBehaviour{
 
     public void restart_game()
     {
-        mGameManager.unload_current_asset_bundle();
+        mGameManager.cleanup();
         Application.LoadLevel("kinect_test");
     }
 

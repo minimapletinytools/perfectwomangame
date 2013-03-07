@@ -123,8 +123,9 @@ public class BodyManager : FakeMonoBehaviour {
             }
             if (mMode == 0)
             {
-
-                if (ManagerManager.Manager.mGameManager.Started)
+				
+				//TODO do I need this??
+                //if (ManagerManager.Manager.mGameManager.Started)
                 {
                     mFlat.match_body_location_to_projection(mManager.mZigManager);
                 }

@@ -10,7 +10,7 @@ public class TestingSceneBehaviour : MonoBehaviour {
 	void Start () {
         //hack so game manager wont do it's mojo
         ManagerManager.Manager.mUpdateDelegates -= ManagerManager.Manager.mGameManager.Update;
-        ManagerManager.Manager.mAssetLoader.load_character(loadme);
+        //ManagerManager.Manager.mAssetLoader.load_character(loadme);
         mFiles = parse_text_files();
         mIndex = mFiles.Length - 1;
 	}

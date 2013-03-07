@@ -2,7 +2,8 @@ using UnityEngine;
 using System.Collections.Generic;
 
 public class GameEvents {
-
+	
+	/*
     public class FadeEvent
     {
         //bool mIn;
@@ -85,4 +86,5 @@ public class GameEvents {
         }
 
     }
+    */
 }

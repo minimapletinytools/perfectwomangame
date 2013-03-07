@@ -9,6 +9,11 @@ public class NewGameManager : FakeMonoBehaviour
     {
     }
 	
+	//TODO implement these
+	public int CurrentLevel
+    { get; private set; }
+	
+	
 	public override void Start()
 	{
 		//TODO load necessary nonsense
@@ -26,6 +31,17 @@ public class NewGameManager : FakeMonoBehaviour
         //User = (mManager.mZigManager.has_user());
 
         
+	}
+	
+	public void cleanup()
+	{
+		//TODO
+	}
+	
+	
+	public void hack_choice(int choice, float time = -1)
+	{
+		//TODO
 	}
     
 }

@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 
+/*
 public class GameManager : FakeMonoBehaviour
 {
     public delegate bool GameEventDelegate(float time);
@@ -174,10 +175,10 @@ public class GameManager : FakeMonoBehaviour
         mSource = mManager.gameObject.AddComponent<AudioSource>();
 
         //set just the background
-        /*
-        GameObject dummyChar = (GameObject)GameObject.Instantiate(mManager.mReferences.mCharacters[0]);
-        mManager.mBackgroundManager.set_background(dummyChar.GetComponent<CharacterTextureBehaviour>());
-        GameObject.Destroy(dummyChar);*/
+        
+        //GameObject dummyChar = (GameObject)GameObject.Instantiate(mManager.mReferences.mCharacters[0]);
+        //mManager.mBackgroundManager.set_background(dummyChar.GetComponent<CharacterTextureBehaviour>());
+        //GameObject.Destroy(dummyChar);
 
         mPossibleChoicePoses = new ProGrading.Pose[mManager.mReferences.mPossiblePoses.Length];
         for (int i = 0; i < mPossibleChoicePoses.Length; i++)
@@ -209,10 +210,10 @@ public class GameManager : FakeMonoBehaviour
         if (!Started && User && Time.timeSinceLevelLoad > mMinStartTime)
         {
 
-            /*if (DEBUGGING) advance_scene(1);
-            else advance_scene(LEVEL_TIME_TOTAL);
+            //if (DEBUGGING) advance_scene(1);
+            //else advance_scene(LEVEL_TIME_TOTAL);
             //maybe less time for fetus???
-            Started = true;*/
+            //Started = true;
         }
 
         if (Started)
@@ -624,3 +625,4 @@ public class GameManager : FakeMonoBehaviour
 
    
 }
+*/

@@ -1,6 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
-
+/*
 public class InterfaceManager : FakeMonoBehaviour {
     public InterfaceManager(ManagerManager aManager) : base(aManager) { }
 
@@ -180,18 +180,18 @@ public class InterfaceManager : FakeMonoBehaviour {
 
 
 
-        /*
-        mGraph = new FlatGraphElement(400, 250, 6);
-        for (int i = 0; i < 100; i++)
-            mGraph.draw_point(Random.insideUnitCircle / 2f + new Vector2(0.5f, 0.5f), 10, new Color(Random.Range(0f, 1f), Random.Range(0f, 1f), Random.Range(0f, 1f)));
-        mGraph.HardPosition = random_position();
-        mGraph.SoftPosition = mBlueBar.SoftPosition + new Vector3(400, 0, 0);*/
+        
+        //mGraph = new FlatGraphElement(400, 250, 6);
+        //for (int i = 0; i < 100; i++)
+        //    mGraph.draw_point(Random.insideUnitCircle / 2f + new Vector2(0.5f, 0.5f), 10, new Color(Random.Range(0f, 1f), Random.Range(0f, 1f), Random.Range(0f, 1f)));
+        //mGraph.HardPosition = random_position();
+        //mGraph.SoftPosition = mBlueBar.SoftPosition + new Vector3(400, 0, 0);
 		//mElement.Add(mGraph);
 		
-		/*
-		FlatElementSpriteText spriteTex = new FlatElementSpriteText(refs.fontTex,20,"testmessage",10);
-		spriteTex.SoftPosition = mBlueBar.SoftPosition + new Vector3(400, 0, 0);
-		mElement.Add (spriteTex);*/
+		
+		//FlatElementSpriteText spriteTex = new FlatElementSpriteText(refs.fontTex,20,"testmessage",10);
+		//spriteTex.SoftPosition = mBlueBar.SoftPosition + new Vector3(400, 0, 0);
+		//mElement.Add (spriteTex);
 
 
         mElement.Add(mPinkBackground);
@@ -347,3 +347,4 @@ public class InterfaceManager : FakeMonoBehaviour {
         
     }
 }
+*/

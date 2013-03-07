@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections;
 
-public class AssetBundleManager {
+public class AssetBundleCallbacks {
 	
 	//responsibilities
 	//load poses and distribute as appropriate
