@@ -7,6 +7,7 @@ public class ZigManager : FakeMonoBehaviour {
 	ZigEngageSingleUser mZigEngageSingleUser = null;
     ZigCallbackBehaviour mZigCallbackBehaviour = null;
     ZigInput mZigInput = null;
+	public AlternativeDepthViewer DepthView { get; private set; }
     public Dictionary<ZigJointId, ZigInputJoint> Joints{get; private set;}
     public ZigManager(ManagerManager aManager) : base(aManager)
 	{
@@ -36,6 +37,7 @@ public class ZigManager : FakeMonoBehaviour {
 	// Use this for initialization
 	public override void Start () {
         mZigObject = mManager.gameObject;
+		DepthView = mZigObject.AddComponent<AlternativeDepthViewer>();
         //mZigObject.AddComponent<kinectSpecific>();
 		mZig = mZigObject.GetComponent<Zig>();
         
