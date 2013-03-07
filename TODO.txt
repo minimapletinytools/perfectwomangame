@@ -5,6 +5,7 @@
 
 
 ::TODO3::
+-remove zigdepthviewer from scripts in testing scene and recording scene
 -make it so you can choose your pose in testing scene
 -mellow out glow
 DONE-test your new font module
