@@ -7,7 +7,7 @@ public class AlternativeDepthViewer : MonoBehaviour {
     Color32 BackgroundColor = Color.white;
     Color32 BaseColor = Color.gray;
     public bool UseHistogram = true;
-    Texture2D texture;
+    public Texture2D DepthTexture {get; private set;}
     ResolutionData textureSize;
 
     float[] depthHistogramMap;
@@ -20,15 +20,15 @@ public class AlternativeDepthViewer : MonoBehaviour {
             target = renderer;
         }
         textureSize = ResolutionData.FromZigResolution(TextureSize);
-        texture = new Texture2D(textureSize.Width, textureSize.Height);
-        texture.wrapMode = TextureWrapMode.Clamp;
+        DepthTexture = new Texture2D(textureSize.Width, textureSize.Height);
+        DepthTexture.wrapMode = TextureWrapMode.Clamp;
         depthHistogramMap = new float[MaxDepth];
         depthToColor = new Color32[MaxDepth];
         outputPixels = new Color32[textureSize.Width * textureSize.Height];
         ZigInput.Instance.AddListener(gameObject);
 
         if (null != target) {
-            target.material.mainTexture = texture;
+            target.material.mainTexture = DepthTexture;
         }
 	}
 
@@ -86,8 +86,8 @@ public class AlternativeDepthViewer : MonoBehaviour {
                 outputPixels[outputIndex] = depthToColor[rawDepthMap[depthIndex]];
             }
         }
-        texture.SetPixels32(outputPixels);
-        texture.Apply();
+        DepthTexture.SetPixels32(outputPixels);
+        DepthTexture.Apply();
     }
 
     void Zig_Update(ZigInput input)
@@ -140,7 +140,7 @@ public class AlternativeDepthViewer : MonoBehaviour {
         GUI.depth = int.MinValue;
         if (null == target) {
             //GUI.DrawTexture(new Rect(Screen.width - texture.width - 10, Screen.height - texture.height - 10, texture.width, texture.height), texture);
-            GUI.DrawTexture(currentRect, texture);
+            GUI.DrawTexture(currentRect, DepthTexture);
         }
     }
 }
