@@ -11,6 +11,12 @@ public class TransitionCameraManager : FakeMonoBehaviour
 	
 	public TimedEventDistributor TED { get; private set; }
 	
+	
+    public FlatCameraManager mFlatCamera;
+	SunShafts mSunShafts;
+    HashSet<FlatElementBase> mElement = new HashSet<FlatElementBase>();
+	
+	
     public TransitionCameraManager(ManagerManager aManager)
         : base(aManager) 
     {
@@ -20,7 +26,24 @@ public class TransitionCameraManager : FakeMonoBehaviour
 	
 	public override void Start()
 	{
+		mFlatCamera = new FlatCameraManager(new Vector3(10000, 10000, 0), 10);
+		mFlatCamera.Camera.depth = 101; //we want this on top always
 		
+        SunShafts shafts = ((GameObject)GameObject.Instantiate(mManager.mReferences.mImageEffectsPrefabs)).GetComponent<SunShafts>();
+		mSunShafts = mFlatCamera.Camera.gameObject.AddComponent<SunShafts>();
+		mSunShafts.maxRadius = shafts.maxRadius;
+		mSunShafts.radialBlurIterations = shafts.radialBlurIterations;
+		mSunShafts.resolution = shafts.resolution;
+		mSunShafts.screenBlendMode = shafts.screenBlendMode;
+		mSunShafts.simpleClearShader = shafts.simpleClearShader;
+		mSunShafts.sunColor = shafts.sunColor;
+		mSunShafts.sunShaftBlurRadius = shafts.sunShaftBlurRadius;
+		mSunShafts.sunShaftIntensity = shafts.sunShaftIntensity;
+		mSunShafts.sunShaftsShader = shafts.sunShaftsShader;
+		mSunShafts.useDepthTexture = shafts.useDepthTexture;
+		mSunShafts.useSkyBoxAlpha = shafts.useSkyBoxAlpha;
+		//???mSunShafts.sunTransform = shafts.sunTransform;
+
 	}
 
     
@@ -33,11 +56,14 @@ public class TransitionCameraManager : FakeMonoBehaviour
 	
 	public void fade(System.Action aFadeCompleteCb)
 	{
+		float fadeTime = 3;
+		float maxFade = 40;
 		TimedEventDistributor.TimedEventChain chain = TED.add_event(
 			delegate(float time)
             {
-                //TODO if fade is complete
-					return true;
+				float l = (time/fadeTime);
+				mSunShafts.sunShaftIntensity = (1-l)*0 + l*maxFade;
+				return l>=1;
             },
         0).then_one_shot(
 			delegate()
@@ -47,8 +73,9 @@ public class TransitionCameraManager : FakeMonoBehaviour
 		).then(
 			delegate(float time)
 			{
-				//TODO if fade out is complete
-					return true;
+				float l = (time/fadeTime);
+				mSunShafts.sunShaftIntensity = (1-l)*maxFade + l*0;
+				return l>=1;
 			},
 		0);
 	}
