@@ -36,6 +36,7 @@ public class MusicManager : FakeMonoBehaviour
 			{
 				float l = time/FADE_TIME;
 				mMusicSource.volume = 1-l;
+				return l > 1;
 			}
 		);
 	}
@@ -47,6 +48,7 @@ public class MusicManager : FakeMonoBehaviour
 			{
 				float l = time/FADE_TIME;
 				mMusicSource.volume = l;
+				return l > 1;
 			}
 		);
 	}
