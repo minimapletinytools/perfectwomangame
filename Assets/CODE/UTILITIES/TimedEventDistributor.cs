@@ -15,7 +15,7 @@ public class TimedEventDistributor
         TimedEventChain()
         {
         }
-        public TimedEventChain then(System.Func<float, bool> aEvent, float aTime)
+        public TimedEventChain then(System.Func<float, bool> aEvent, float aTime = 0)
         {
             mEvent = aEvent;
             mTime = aTime;
@@ -27,7 +27,7 @@ public class TimedEventDistributor
             return then(delegate(float time) { aEvent(); return true; }, 0);
         }
 
-        public bool call(float aTime)
+        public bool call(float aTime = 0)
         {
             if (mEvent == null) //base case
                 return true;
@@ -51,7 +51,7 @@ public class TimedEventDistributor
             return mDone;
         }
 
-        public static TimedEventChain first(TimedEventDistributor aEventDistributor, System.Func<float, bool> aEvent, float aTime)
+        public static TimedEventChain first(TimedEventDistributor aEventDistributor, System.Func<float, bool> aEvent, float aTime = 0)
         {
             TimedEventChain f = new TimedEventChain();
             TimedEventChain r =  f.then(aEvent, aTime);
@@ -111,17 +111,17 @@ public class TimedEventDistributor
         }
     }
 
-    public void add_event_raw(System.Func<float, bool> aEvent, float aTime)
+    public void add_event_raw(System.Func<float, bool> aEvent, float aTime = 0)
     {
         mEvents.Add(new QuTimer(0, aTime), aEvent);
     }
-    public TimedEventChain add_event(System.Func<float,bool> aEvent, float aTime)
+    public TimedEventChain add_event(System.Func<float,bool> aEvent, float aTime = 0)
     {
         TimedEventChain r = TimedEventChain.first(this, aEvent, aTime);
         return r;
     }
 
-    public TimedEventChain add_one_shot_event(System.Action aEvent, float aTime)
+    public TimedEventChain add_one_shot_event(System.Action aEvent, float aTime = 0)
     {
         return add_event(delegate(float time) { aEvent(); return true; }, aTime);
     }

@@ -5,6 +5,9 @@ using System.Collections.Generic;
 //this class also handles initialization camera nonsense
 public class TransitionCameraManager : FakeMonoBehaviour
 {
+	static float FADE_TIME = 3;
+	static float MAX_FADE = 40;
+	
 	
 	//render to this guy someday eventually ha ha...
 	public RenderTexture AllRenderTexture { get; private set; }
@@ -50,6 +53,8 @@ public class TransitionCameraManager : FakeMonoBehaviour
 		
 		mDepthImage = new FlatElementImage(null,0); 
 		mElement.Add(mDepthImage);
+		
+		TED.add_event(fade_in,0);
 	}
 
     
@@ -79,15 +84,20 @@ public class TransitionCameraManager : FakeMonoBehaviour
 			//on fadeoutcb, move depth image to lower left corner	
 	}
 	
+	public bool fade_in(float time)
+	{
+		float l = (time/FADE_TIME);
+		mSunShafts.sunShaftIntensity = (1-l)*MAX_FADE + l*0;
+		return l>=1;
+	}
 	public void fade(System.Action aFadeCompleteCb)
 	{
-		float fadeTime = 3;
-		float maxFade = 40;
+		
 		TimedEventDistributor.TimedEventChain chain = TED.add_event(
 			delegate(float time)
             {
-				float l = (time/fadeTime);
-				mSunShafts.sunShaftIntensity = (1-l)*0 + l*maxFade;
+				float l = (time/FADE_TIME);
+				mSunShafts.sunShaftIntensity = (1-l)*0 + l*MAX_FADE;
 				return l>=1;
             },
         0).then_one_shot(
@@ -96,12 +106,7 @@ public class TransitionCameraManager : FakeMonoBehaviour
 				aFadeCompleteCb();
 			}
 		).then(
-			delegate(float time)
-			{
-				float l = (time/fadeTime);
-				mSunShafts.sunShaftIntensity = (1-l)*maxFade + l*0;
-				return l>=1;
-			},
+			fade_in,
 		0);
 	}
 	

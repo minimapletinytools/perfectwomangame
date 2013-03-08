@@ -15,6 +15,7 @@
 	-GameManger
 	-GameEvents
 	-InterfaceBehaviour
+	
 DONE-test your new font module
 DONE-make the game runnable without kinect
 IGNORE-make sure the game works and restarts properly
