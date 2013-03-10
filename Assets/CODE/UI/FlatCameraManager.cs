@@ -63,7 +63,12 @@ public class FlatCameraManager{
         Camera.depth = 100;
         Camera.clearFlags = CameraClearFlags.Depth;
     }
-
+	
+	public void fit_camera_to_screen()
+	{
+		Interpolator.TargetOrthographicHeight = Screen.height;
+	}
+	
     public void focus_camera_on_element(FlatElementBase aElement)
     {
         Rect focus = aElement.BoundingBox;

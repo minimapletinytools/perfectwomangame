@@ -3,17 +3,14 @@ using System.Collections;
 
 public class AssetBundleCallbacks {
 	
-	//responsibilities
-	//load poses and distribute as appropriate
-	
-	//load minis and distribute as appropriate
-	
-	//load regular poses on request and distribute as appropriate
-	
+	NewGameManager mManager;
+	public AssetBundleCallbacks(NewGameManager aManager)
+	{
+		mManager = aManager;
+	}
 	
 	
 	//mini bundle related
-	
 	public void load_mini_characters()
 	{
 	
@@ -35,14 +32,9 @@ public class AssetBundleCallbacks {
 		//TODO
 	}
 	
-	
-	public void load_poses()
-	{
-		//TODO
-	}
 	public void pose_bundle_loaded_callback(AssetBundle aBundle)
     {
-		//TODO
+		//TODO store info or give it to NGM
         
         aBundle.Unload(true); //don't need this anymore I don't ithnk...
     }

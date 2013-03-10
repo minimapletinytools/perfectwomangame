@@ -51,6 +51,13 @@ public class BackgroundManager  : FakeMonoBehaviour
             foreach (Renderer f in e.Element.PrimaryGameObject.GetComponentsInChildren<Renderer>())
                 f.gameObject.layer = mForegroundLayer;
     }
+	
+	
+	
+	
+	
+	
+	
 
     public void character_changed_listener(CharacterLoader aCharacter)
     {
