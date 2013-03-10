@@ -34,6 +34,7 @@ public class TransitionCameraManager : FakeMonoBehaviour
 	{
 		mFlatCamera = new FlatCameraManager(new Vector3(10000, 10000, 0), 10);
 		mFlatCamera.Camera.depth = 101; //we want this on top always
+		mFlatCamera.fit_camera_to_screen();
 		
         SunShafts shafts = ((GameObject)GameObject.Instantiate(mManager.mReferences.mImageEffectsPrefabs)).GetComponent<SunShafts>();
 		mSunShafts = mFlatCamera.Camera.gameObject.AddComponent<SunShafts>();
@@ -54,7 +55,7 @@ public class TransitionCameraManager : FakeMonoBehaviour
 		mDepthImage = new FlatElementImage(null,0); 
 		mElement.Add(mDepthImage);
 		
-		TED.add_event(fade_in,0);
+		start_configuration_display();
 	}
 
     
@@ -72,6 +73,10 @@ public class TransitionCameraManager : FakeMonoBehaviour
 	
 	public void start_configuration_display()
 	{
+		
+		//fade in
+		TED.add_event(fade_in,0);
+		
 		//display logo
 		//if no kinect is found
 			//display no kinect found nonsesnse

@@ -14,14 +14,23 @@ public class NewGameManager : FakeMonoBehaviour
     { get; private set; }
 	
 	
+	AssetBundleCallbacks mAssetCallbacks;
+	
+	//actual game data
+	//PerformanceStats[] mPerformanceStats = new PerformanceStats[10];
+	
 	public override void Start()
 	{
-		//TODO load necessary nonsense
-			//mManager.mAssetLoader.load_poses("POSES");
+		mAssetCallbacks = new AssetBundleCallbacks(this);
+		mManager.mAssetLoader.new_load_character("0-1",mAssetCallbacks);
+		mManager.mAssetLoader.new_load_poses("POSES",mAssetCallbacks);
 		
 		//TODO initialize game state
 			//start in on loading screen
 			//interfaceManager -> loading screen ...
+		
+		//initialize game data
+		
 	
 	}
 
@@ -29,7 +38,12 @@ public class NewGameManager : FakeMonoBehaviour
     public override void Update()
     {
         //User = (mManager.mZigManager.has_user());
-
+		
+		//begin mode (nothing)
+		//play mode (timer, score, and tracking running)
+		//cutscene mode (disable characters, bg manager needs to transition into cutscene mode)
+		//selection mode (nothing) -> prompts fade out
+		//change character behind fade -> fade in
         
 	}
 	

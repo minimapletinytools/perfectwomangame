@@ -95,7 +95,17 @@ public class ManagerManager : MonoBehaviour{
 			mFixedUpdateDelegates -= aScript.FixedUpdate;
 	}
 		
+	//for screen resolution callback
+	Vector2 mLastScreenSize = new Vector2();
 	void Update () {
+		
+		
+		Vector2 newScreenSize = new Vector2(Screen.width,Screen.height);
+		if(mLastScreenSize != newScreenSize)
+			;//TODO screne changed callback
+		mLastScreenSize = newScreenSize;
+		
+		
         if (Input.GetKeyDown(KeyCode.Escape))
             Application.Quit();
         if (Input.GetKeyDown(KeyCode.R))
@@ -105,7 +115,11 @@ public class ManagerManager : MonoBehaviour{
 		if(mUpdateDelegates != null) 
 			mUpdateDelegates();
 	}
-
+	
+	void FixedUpdate() {
+		if(mFixedUpdateDelegates != null) mFixedUpdateDelegates();
+	}
+	
     public void restart_game()
     {
         mGameManager.cleanup();
@@ -168,7 +182,4 @@ public class ManagerManager : MonoBehaviour{
         }
     }
 	
-	void FixedUpdate() {
-		if(mFixedUpdateDelegates != null) mFixedUpdateDelegates();
-	}
 }
