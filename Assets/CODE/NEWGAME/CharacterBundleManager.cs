@@ -38,10 +38,10 @@ public class CharacterBundleManager : FakeMonoBehaviour {
 	Dictionary<string, ProGrading.Pose> mPoses = new Dictionary<string, ProGrading.Pose>();
 	public string construct_pose_string(CharacterIndex aIndex, int aDiff, int aStage)
 	{
-		string r;
+		string r = "";
 		r += aIndex.StringIdentifier;
 		r += "_";
-		r += (new string[] {'a','b','c','d'})[aDiff];
+		r += (new string[] {"a","b","c","d"})[aDiff];
 		r += "-";
 		r += aStage;
 		return r;
@@ -69,6 +69,7 @@ public class CharacterBundleManager : FakeMonoBehaviour {
 		else
 		{
 			r.poses.Add(mManager.mMenuReferences.cheapPose.to_pose());
+			return r;
 		}
 	}
 	public void pose_bundle_loaded_callback(AssetBundle aBundle)
