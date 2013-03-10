@@ -14,16 +14,12 @@ public class NewGameManager : FakeMonoBehaviour
     { get; private set; }
 	
 	
-	AssetBundleCallbacks mAssetCallbacks;
 	
 	//actual game data
 	//PerformanceStats[] mPerformanceStats = new PerformanceStats[10];
 	
 	public override void Start()
 	{
-		mAssetCallbacks = new AssetBundleCallbacks(this);
-		mManager.mAssetLoader.new_load_character("0-1",mAssetCallbacks);
-		mManager.mAssetLoader.new_load_poses("POSES",mAssetCallbacks);
 		
 		//TODO initialize game state
 			//start in on loading screen
@@ -45,6 +41,14 @@ public class NewGameManager : FakeMonoBehaviour
 		//selection mode (nothing) -> prompts fade out
 		//change character behind fade -> fade in
         
+	}
+	
+	public void unset_character()
+	{
+	}
+	
+	public void set_character()
+	{
 	}
 	
 	public void cleanup()

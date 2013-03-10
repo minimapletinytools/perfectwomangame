@@ -37,14 +37,14 @@ public class AssetBundleLoader : FakeMonoBehaviour
         return System.IO.File.Exists(filename);
     }
 
-	public void new_load_character(string aChar, AssetBundleCallbacks aManager)
+	public void new_load_character(string aChar, CharacterBundleManager aManager)
 	{
 		string filename = "file://" + Application.dataPath + "/Resources/" + aChar + ".unity3d";
         Debug.Log("loading from " + filename);
         mRequestLists.Add(new WWW(filename), (delegate(AssetBundle aBundle) { aManager.scene_loaded_callback(aBundle,aChar); }));
 	}
 	
-	public void new_load_mini_characater(string aChar, AssetBundleCallbacks aManager)
+	public void new_load_mini_characater(string aChar, CharacterBundleManager aManager)
     {
         string filename = "file://" + Application.dataPath + "/Resources/" + aChar + "_mini.unity3d";
         Debug.Log("loading mini char from " + filename);
@@ -53,7 +53,7 @@ public class AssetBundleLoader : FakeMonoBehaviour
         //mRequestLists.Add(new WWW(filename), cbDelegate);
     }
 	
- 	public void new_load_poses(string aAssetBundle, AssetBundleCallbacks aManager)
+ 	public void new_load_poses(string aAssetBundle, CharacterBundleManager aManager)
     {
         string filename = "file://" + Application.dataPath + "/Resources/" + aAssetBundle + ".unity3d";
         Debug.Log("loading poses from " + filename);

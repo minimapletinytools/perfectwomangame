@@ -3,19 +3,28 @@
 	-loading characters and distributing those characters to bg/
 
 
+::NEW POSE NONSENSE::
+-NAMING FORMAT
+	-<age>-<1/2/3/4>_<a/b/c/d>-<1/2/3/...>.txt (should always be 3 frames, but can be more/less)
+	-fallback to characters in same age
+	
+	
+
 
 ::TODO3::
-DONE-add scaling to flat font
-DONE-remove zigdepthviewer from scripts in testing scene and recording scene
+-setup asset bundler to load new poses
+-move character
 -make it so you can choose your pose in testing scene
 -mellow out glow
 -add character name to characterdata so you don't need to pass name around :(
-
 -delete
 	-InterfaceManager
 	-GameManger
 	-GameEvents
 	-InterfaceBehaviour
+
+DONE-add scaling to flat font
+DONE-remove zigdepthviewer from scripts in testing scene and recording scene
 	
 DONE-test your new font module
 DONE-make the game runnable without kinect

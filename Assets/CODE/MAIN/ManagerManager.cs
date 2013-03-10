@@ -38,6 +38,7 @@ public class ManagerManager : MonoBehaviour{
     public AssetBundleLoader mAssetLoader;
     public NewGameManager mGameManager;
 	public TransitionCameraManager mTransitionCameraManager;
+	public CharacterBundleManager mCharacterBundleManager;
     
 
     public PrefabReferenceBehaviour mReferences;
@@ -65,7 +66,8 @@ public class ManagerManager : MonoBehaviour{
         mAssetLoader = new AssetBundleLoader(this);
         mGameManager = new NewGameManager(this);
 		mTransitionCameraManager = new TransitionCameraManager(this);
-
+		mCharacterBundleManager = new CharacterBundleManager(this);
+		
 		if(mStartDelegates != null) 
 			mStartDelegates();
 

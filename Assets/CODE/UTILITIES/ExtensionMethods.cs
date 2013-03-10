@@ -24,4 +24,10 @@ public static class ExtensionMethods  {
     {
         return aQuat.eulerAngles.z;
     }
+	
+	//textasset
+	public static ProGrading.Pose to_pose(this TextAsset aAsset)
+	{
+		return ProGrading.read_pose(aAsset);
+	}
 }
