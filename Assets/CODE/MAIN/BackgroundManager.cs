@@ -5,11 +5,8 @@ public class BackgroundManager  : FakeMonoBehaviour
 {
     public int mBackgroundLayer = 0; //should not be private TODO
     int mForegroundLayer = 0;
-
     FlatElementImage mBackground;
-
     public FlatElementMultiImage mBackgroundElements;
-
     FlatElementMultiImage mForegroundElements;
     
     public BackgroundManager(ManagerManager aManager) : base(aManager) { }
@@ -52,13 +49,6 @@ public class BackgroundManager  : FakeMonoBehaviour
                 f.gameObject.layer = mForegroundLayer;
     }
 	
-	
-	
-	
-	
-	
-	
-
     public void character_changed_listener(CharacterLoader aCharacter)
     {
 		
@@ -95,6 +85,9 @@ public class BackgroundManager  : FakeMonoBehaviour
         //resize the camera
         foreach (Camera c in mManager.mCameraManager.AllCameras)
             resize_camera(c, aCharacter.Sizes.mBackSize);
+		
+		
+		//TODO could in theory buffre cutscenes and deaths here.
     }
 
     public static void resize_camera(Camera aCam, Vector2 aSize, float aDistance = 1)

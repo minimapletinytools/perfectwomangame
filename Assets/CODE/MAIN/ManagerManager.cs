@@ -39,7 +39,7 @@ public class ManagerManager : MonoBehaviour{
     public NewGameManager mGameManager;
 	public TransitionCameraManager mTransitionCameraManager;
 	public CharacterBundleManager mCharacterBundleManager;
-    
+	public MusicManager mMusicManager;
 
     public PrefabReferenceBehaviour mReferences;
     public MenuReferenceBehaviour mMenuReferences;
@@ -67,6 +67,7 @@ public class ManagerManager : MonoBehaviour{
         mGameManager = new NewGameManager(this);
 		mTransitionCameraManager = new TransitionCameraManager(this);
 		mCharacterBundleManager = new CharacterBundleManager(this);
+		mMusicManager = new MusicManager(this);
 		
 		if(mStartDelegates != null) 
 			mStartDelegates();

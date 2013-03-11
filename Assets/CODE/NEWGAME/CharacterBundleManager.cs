@@ -7,6 +7,11 @@ public class CharacterBundleManager : FakeMonoBehaviour {
 	{
 	}
 	
+	public override void Start()
+	{
+		mManager.mAssetLoader.new_load_poses("POSES",this);
+	}
+			
 	
 	//mini bundle related
 	public void load_mini_characters()
@@ -28,10 +33,12 @@ public class CharacterBundleManager : FakeMonoBehaviour {
         CharacterLoader loader = new CharacterLoader();
         loader.complete_load_character(aBundle,aBundleName);
 	
+		//here we assume the game wants the new character to be loaded so we load it
 		//set new character in the two body managers and in background manager
 		mManager.mBackgroundManager.character_changed_listener(loader);
 		mManager.mBodyManager.character_changed_listener(loader);
 		mManager.mTransparentBodyManager.character_changed_listener(loader);
+		mManager.mMusicManager.character_changed_listener(loader);
 	}
 	
 	

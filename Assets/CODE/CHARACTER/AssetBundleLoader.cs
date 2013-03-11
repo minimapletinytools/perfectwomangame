@@ -11,7 +11,7 @@ public class AssetBundleLoader : FakeMonoBehaviour
     public AssetBundleLoader(ManagerManager aManager)
         : base(aManager) 
     {}
-
+	
     public override void Update()
     {
 

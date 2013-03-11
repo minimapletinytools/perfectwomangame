@@ -25,11 +25,35 @@ public class NewGameManager : FakeMonoBehaviour
 			//start in on loading screen
 			//interfaceManager -> loading screen ...
 		
+		
+		
 		//initialize game data
 		
 	
 	}
-
+	
+	public void initialize_fetus()
+	{
+		mManager.mAssetLoader.new_load_character("0-1",mManager.mCharacterBundleManager);
+	}
+	
+	public void character_changed_listener(CharacterLoader aCharacter)
+	{
+		//at this point, we can assume both body manager, music and background managers have been set accordingly
+		
+		//TODO
+		switch(aCharacter.Name)
+		{
+			case "0-1":
+				break;
+			case "100":
+				break;
+			case "999":
+				break;
+			default:
+				break;
+		}
+	}
     
     public override void Update()
     {

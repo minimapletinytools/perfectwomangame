@@ -21,12 +21,12 @@ public class MusicManager : FakeMonoBehaviour
 	{
 		mMusicSource = mManager.gameObject.AddComponent<AudioSource>();
 		mFadingSource = mManager.gameObject.AddComponent<AudioSource>();
-		TED.update(Time.deltaTime);
+		
 	}
 	
 	public override void Update()
 	{
-		
+		TED.update(Time.deltaTime);
 	}
 	
 	public void fade_out()
@@ -53,6 +53,15 @@ public class MusicManager : FakeMonoBehaviour
 		);
 	}
 	
+	
+	
+	//MusicManager assumes responsibility for fading in the music for the next character
+	//but not fading out the music from the last character
+	public void character_changed_listener(CharacterLoader aCharacter)
+	{
+		mMusicSource.clip = aCharacter.Images.backgroundMusic;
+		fade_in();
+	}
 	
 	
 }
