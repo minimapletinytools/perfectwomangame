@@ -9,7 +9,42 @@
 	-fallback to characters in same age
 	
 	
-
+::NEW INTERFACE MANAGER NONSENSE::
+-BLUE BAR
+	-PLAY
+		-NAME
+		-PERFORMANCE GRAPH
+		-SCORE
+		-transition to CUTSCENE
+	-CUTSCENE
+		-???
+		-transition to CHOOSE
+	-CHOOSE
+		-variable # CHOICES
+		-variable # CHOICE_BODY
+		-put MINIMAN in extra space to the right
+		-transition to PLAY -> (fade)
+-PINK BAR
+	-variable 3/4 CHARS
+	-PLAY
+		-display past CHARS above BLUE BAR
+		-display all future CHARS below BLUE BAR
+	-CUTSCENE
+		-TODO???
+	-UNTIMELY DEATH
+		-future choices fall off the bottom (ugg) -> (fade)
+	-GRAVE
+		-PERFORMANCE CHARTS come in one at a time
+			-synchronized with TEXT
+			-synchronized with GLORY
+		-TODO other sentences...
+-TEXT
+	-displays messages over character
+-GLORY
+	-GRAVE
+		-characters come in one at a time surounding the grave in an arc
+		-words appear on the grave
+			-maybe special glowy light effect over grave????
 
 ::TODO3::
 -setup asset bundler to load new poses

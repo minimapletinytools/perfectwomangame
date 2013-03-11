@@ -9,8 +9,6 @@ public class NewInterfaceManager : FakeMonoBehaviour {
     HashSet<FlatElementBase> mElement = new HashSet<FlatElementBase>();
 	
 	
-	
-	//
     CharacterTextureBehaviour mMiniMan;
 	FlatBodyObject mCurrentBody = null;
 
@@ -34,7 +32,10 @@ public class NewInterfaceManager : FakeMonoBehaviour {
         if (mCurrentBody != null)
             mCurrentBody.match_body_to_projection(mManager.mProjectionManager);
         foreach (FlatElementBase e in mElement)
-            e.update(Time.deltaTime);            
+            e.update(Time.deltaTime);       
+		
+		
+		//TODO if PLAY update graph
     }
     
     public Vector3 random_position()
@@ -42,4 +43,28 @@ public class NewInterfaceManager : FakeMonoBehaviour {
         //UGG piece of junk...
         return (new Vector3(Random.Range(-1f, 1f), Random.Range(-1f, 1f), 0)).normalized * Random.Range(2000,20000);
     }
+	
+	
+	//BLUE BAR
+	FlatElementImage mBB;
+	//PLAY
+	List<FlatGraphElement> mPerformanceGraphs = new List<FlatGraphElement>(); //maps age index to graph, null means no graph (e.g. fetus)
+	FlatElementImage mPerformanceGraphFrame;
+	FlatElementSpriteText mBBText;
+	FlatElementSpriteText mBBScoreFrame;
+	FlatElementSpriteText mBBScoreText;
+	//CUTSCENE
+	//???
+	//CHOOSING
+	
+	
+	
+	
+	//PINK BAR
+	
+	//TEXT
+	
+	//GLORY
+	public void add_glory_character(){}
+	
 }
