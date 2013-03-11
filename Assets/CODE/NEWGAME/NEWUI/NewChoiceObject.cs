@@ -28,6 +28,7 @@ public class NewChoiceObject : FlatElementMultiBase {
         mElements.Add(new FlatElementMultiBase.ElementOffset(mBody, new Vector3(0,0,0)));
 
         PrimaryGameObject = create_primary_from_elements();
+		Depth = aDepth;
     }
 
     public void set_pose(ProGrading.Pose aPose)

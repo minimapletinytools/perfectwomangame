@@ -48,15 +48,18 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 	//BLUE BAR
 	FlatElementImage mBB;
 	//PLAY
-	List<FlatGraphElement> mPerformanceGraphs = new List<FlatGraphElement>(); //maps age index to graph, null means no graph (e.g. fetus)
-	FlatElementImage mPerformanceGraphFrame;
+	List<FlatGraphElement> mBBPerformanceGraphs = new List<FlatGraphElement>(); //maps age index to graph, null means no graph (e.g. fetus)
+	FlatElementImage mBBPerformanceGraphFrame;
 	FlatElementSpriteText mBBText;
 	FlatElementSpriteText mBBScoreFrame;
 	FlatElementSpriteText mBBScoreText;
 	//CUTSCENE
 	//???
 	//CHOOSING
-	
+	List<NewChoiceObject> mBBChoices = new List<NewChoiceObject>();
+	List<FlatBodyObject> mBBChoiceBodies = new List<FlatBodyObject>();
+	FlatBodyObject mBBMiniMan;
+	FlatElementImage mBBChoiceBox;
 	
 	
 	

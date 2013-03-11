@@ -84,16 +84,21 @@ public class FlatElementSpriteText : FlatElementMultiBase {
 		mElements.Add(new FlatElementMultiBase.ElementOffset(new FlatElementSpriteChar(mTex,mCharacterWidth,aWord,Depth),Vector3.zero));
 		update_font_size();
 	}
-	void add_string(string aStr)
+	public void add_string(string aStr)
 	{	
 		foreach(char s in aStr)
 			add_word(s);
 	}
-	void clear()
+	public void clear()
 	{
 		destroy();
 		mHasWord = false;
 		create_filler();
+	}
+	public void new_string(string aStr)
+	{
+		clear();
+		add_string(aStr);
 	}
 		
 }
