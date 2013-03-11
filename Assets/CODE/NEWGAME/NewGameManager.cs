@@ -28,7 +28,7 @@ public class NewGameManager : FakeMonoBehaviour
 		
 		
 		//initialize game data
-		
+		initialize_fetus();
 	
 	}
 	

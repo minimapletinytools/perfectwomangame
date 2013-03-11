@@ -1,6 +1,53 @@
 ::NEEEEEW GAME MANAGER NONSENSE::
--responsibilities
-	-loading characters and distributing those characters to bg/
+-EVENTS (ngm is responsible for most scripted events)
+	-transition to CUTSCENE  (or skip this and go straight to CHOOSE for fetus)
+		-INTERFACE 
+		-BACKGROUND
+	-transition to DEATH
+		-INTERFACE 
+		-BACKGROUND
+		-go to transition to GRAVE
+	-transition to CHOOSE
+		-INTERFACE (BLUE BAR)
+	-transition to PLAY
+		-INTERFACE (BLUE BAR)
+	-transition to TRANSITION (play)
+		-TRANSITION -> BUNDLE -> TRANSITION
+	-transition to TRANSITION (grave)
+		-TRANSITION -> BUNDLE -> TRANSITION
+
+-CUTSCENE
+	-FETUS
+		-skip
+	-REG
+	-DEATH
+	-100
+	-GRAVE
+		-see grave section
+-GRAVE
+	-HISTORY (graph + text -> angle)
+	-STORY (your ___ made it ____ to be ____)
+	-FINAL SCORE (whizz bang!!!)
+	-CREDITS
+
+-FETUS
+	-basically do nothing lol
+	-needs to NOT update the bluebar
+-NORMAL
+	-internal SCORE
+	-update UI
+		-score
+		-graph
+		-effects
+	-tell BACKGROUND to glow
+-100
+	-???
+-GRAVE
+	-restart game lol
+
+
+	
+
 
 
 ::NEW POSE NONSENSE::
