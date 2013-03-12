@@ -62,6 +62,17 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 	List<FlatBodyObject> mBBChoiceBodies = new List<FlatBodyObject>();
 	FlatBodyObject mBBMiniMan;
 	FlatElementImage mBBChoiceBox;
+	public void set_bb_full_size()
+	{
+		Vector2 baseSize = new Vector2(mBB.BoundingBox.width,mBB.BoundingBox.height);
+		Vector2 desiredSize = new Vector2(mFlatCamera.Width+30,mFlatCamera.Height+30);
+		mBB.set_scale(new Vector3(desiredSize.x/baseSize.x,desiredSize.y/baseSize.y),1);
+	}
+	public void set_bb_small()
+	{
+		mBB.set_scale(new Vector2(1,1,1));
+	}
+	
 	public void update_bb_for_performance(float perfect, float time)
 	{
 	}
@@ -104,9 +115,10 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 	
 	
 	
+	//TODO This needs to handle creating a new graphobject thingy maybe
 	public void set_for_PLAY()
 	{
-		//TODO transition BB back to its orig place
+		set_bb_small();
 		//transition in BB contents
 	}
 	
@@ -161,12 +173,16 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 		
 		chain.then_one_shot(delegate(){cutsceneCompleteCb();});
 	}
+	
 	public void set_for_choice()
 	{
 		//TODO
-		//transition BB to full screen
+		set_bb_full_size();
 		//transition out BB contents
 		//transition in CHOICE items
+		
+		int numberEntries = 4; //this means 3 choices + space for person
+		
 	}
 	
 	
