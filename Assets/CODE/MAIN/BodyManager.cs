@@ -42,7 +42,13 @@ public class BodyManager : FakeMonoBehaviour {
             }
         }
     }
-
+	
+	
+	public void transition_character_out()
+	{
+		mFlat.SoftColor = new Color(1,1,1,0);
+	}
+	
     public void destroy_character()
     {
         if (mFlat != null)
@@ -68,6 +74,12 @@ public class BodyManager : FakeMonoBehaviour {
             mFlat.SoftPosition = Vector3.zero;
             mOffset = (new Vector3(aCharacter.Sizes.mOffset.x, aCharacter.Sizes.mOffset.y,0));
             mFlat.SoftPosition = mFlat.SoftPosition + mOffset;
+			
+			if(mMode == 0)
+				mFlat.SoftColor = new Color(0.5f, 0.5f, 0.5f, 0.5f);
+			else if (mMode == 1)
+				mFlat.SoftColor = new Color(0.5f, 0.5f, 0.5f, 0.35f);
+			
             mFlat.update(0);
         }
     }
@@ -121,7 +133,7 @@ public class BodyManager : FakeMonoBehaviour {
                 mFlat.update_parameters(Time.deltaTime);
                 mFlat.set();
             }
-            if (mMode == 0)
+            else if (mMode == 0)
             {
 				
 				//TODO do I need this??
@@ -130,6 +142,8 @@ public class BodyManager : FakeMonoBehaviour {
                     mFlat.match_body_location_to_projection(mManager.mZigManager);
                 }
                 mFlat.match_body_to_projection(mManager.mProjectionManager);
+				mFlat.update_parameters(Time.deltaTime);
+                mFlat.set();
             }
         }
         

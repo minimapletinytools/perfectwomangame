@@ -36,8 +36,14 @@ public class CharacterBundleManager : FakeMonoBehaviour {
 		//here we assume the game wants the new character to be loaded so we load it
 		//set new character in the two body managers and in background manager
 		mManager.mBackgroundManager.character_changed_listener(loader);
-		mManager.mBodyManager.character_changed_listener(loader);
-		mManager.mTransparentBodyManager.character_changed_listener(loader);
+		if(aBundleName != "999"){ //special behaviour for grave
+			mManager.mBodyManager.character_changed_listener(loader);
+			mManager.mTransparentBodyManager.character_changed_listener(loader);
+		}
+		else{
+			mManager.mBodyManager.destroy_character();
+			mManager.mTransparentBodyManager.destroy_character();
+		}
 		mManager.mMusicManager.character_changed_listener(loader);
 	}
 	

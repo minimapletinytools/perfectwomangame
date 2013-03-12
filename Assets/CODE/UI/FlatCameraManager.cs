@@ -46,7 +46,7 @@ public class FlatCameraManager{
         IsOrthographic = true;
         Interpolator = new CameraInterpolator(this.Camera);
     }
-
+	
     public void update(float aDeltaTime)
     {
         Interpolator.update(aDeltaTime);

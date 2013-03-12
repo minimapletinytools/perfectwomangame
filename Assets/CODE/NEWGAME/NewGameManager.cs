@@ -43,7 +43,7 @@ public class NewGameManager : FakeMonoBehaviour
 	public void character_changed_listener(CharacterLoader aCharacter)
 	{
 		//at this point, we can assume both body manager, music and background managers have been set accordingly
-		
+		//i.e. this is part of transition to PLAY or GRAVE
 		//TODO
 		switch(aCharacter.Name)
 		{
