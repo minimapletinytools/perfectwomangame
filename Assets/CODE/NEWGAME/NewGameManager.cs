@@ -1,6 +1,10 @@
 using UnityEngine;
 using System.Collections.Generic;
 
+public enum GameState
+{
+	NONE,PLAY,CUTSCENE,DEATH,CHOICE,TRANSITION,GRAVE
+}
 
 public class NewGameManager : FakeMonoBehaviour
 {
@@ -14,6 +18,8 @@ public class NewGameManager : FakeMonoBehaviour
 	public int CurrentLevel
     { get; private set; }
 	
+	public GameState GS
+	{ get; private set; }
 	
 	public PerformanceStats CurrentPerformanceStat
 	{ get { return mPerformanceStats[mPerformanceStats.Count-1]; } }
@@ -24,6 +30,7 @@ public class NewGameManager : FakeMonoBehaviour
 	
 	public override void Start()
 	{
+		GS = GameState.NONE;
 		TED = new TimedEventDistributor();
 		
 		//TODO initialize game state
@@ -41,7 +48,7 @@ public class NewGameManager : FakeMonoBehaviour
 	{
 		mManager.mAssetLoader.new_load_character("0-1",mManager.mCharacterBundleManager);
 		
-		transition_to_CUTSCENE();
+		
 	}
 	
 	public void initialize_choice(int choiceIndex)
@@ -84,6 +91,7 @@ public class NewGameManager : FakeMonoBehaviour
 	
 	public void transition_to_CUTSCENE()
 	{
+		GS = GameState.CUTSCENE;
 		mManager.mInterfaceManager.set_for_CUTSCENE(
 			delegate() { transition_to_CHOOSE(); }
 		);
@@ -92,6 +100,7 @@ public class NewGameManager : FakeMonoBehaviour
 	
 	public void transition_to_DEATH()
 	{
+		GS = GameState.DEATH;	
 		//mManager.mInterfaceManager
 		//mManager.mBackgroundManager
 		
@@ -100,7 +109,8 @@ public class NewGameManager : FakeMonoBehaviour
 	
 	public void transition_to_CHOOSE()
 	{
-		//mManager.mInterfaceManager.set_for_choice();
+		GS = transition_to_CHOOSE;
+		mManager.mInterfaceManager.set_for_CHOICE();
 		
 	}
 	
@@ -111,14 +121,21 @@ public class NewGameManager : FakeMonoBehaviour
 	
 	public void transition_to_TRANSITION_play()
 	{
+		GS = GameState.TRANSITION;
 		//mManager.mTransitionCameraManager.fade
 	}
 	
 	public void transition_to_TRANSITION_grave()
 	{
+		GS = GameState.TRANSITION;
 		//mManager.mTransitionCameraManager.fade
 	}
 	
+	public void transition_to_GRAVE()
+	{
+		GS = GameState.GRAVE;
+		//TODO
+	}
 	
 	public void cleanup()
 	{
