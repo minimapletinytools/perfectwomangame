@@ -39,6 +39,8 @@ public class CharacterBundleManager : FakeMonoBehaviour {
 		if(aBundleName != "999"){ //special behaviour for grave
 			mManager.mBodyManager.character_changed_listener(loader);
 			mManager.mTransparentBodyManager.character_changed_listener(loader);
+			//TODO set to actual pose that we want
+			mManager.mTransparentBodyManager.set_target_pose(mManager.mMenuReferences.cheapPose.to_pose());
 		}
 		else{
 			mManager.mBodyManager.destroy_character();

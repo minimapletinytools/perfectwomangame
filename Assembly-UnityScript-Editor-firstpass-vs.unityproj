@@ -59,6 +59,7 @@
      <None Include="Assets\POSES\choice_STRAIGHT.txt" />
      <None Include="Assets\POSES\choice_T.txt" />
      <None Include="Assets\POSES\pose_HARD_0.txt" />
+     <None Include="Assets\MATERIALS\SHADERS\TransparentBodyShader.shader" />
      <None Include="Assets\POSES\old_poses\char_kinect14.txt" />
      <None Include="Assets\Standard Assets\Image Effects (Pro Only)\_Sources\Shaders\ShowAlphaChannel.shader" />
      <None Include="Assets\POSES\old_poses\char_kinect10.txt" />

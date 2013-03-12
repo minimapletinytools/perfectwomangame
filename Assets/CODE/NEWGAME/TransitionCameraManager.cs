@@ -5,7 +5,7 @@ using System.Collections.Generic;
 //this class also handles initialization camera nonsense
 public class TransitionCameraManager : FakeMonoBehaviour
 {
-	static float FADE_TIME = 3f;
+	static float FADE_TIME = 0.2f;
 	static float MAX_FADE = 40;
 	
 	
@@ -116,7 +116,7 @@ public class TransitionCameraManager : FakeMonoBehaviour
 		//if 3 seconds elapesed and user is in tpose, 1 sec GOOD, begin fadeout
 			//on fadeoutcb, move depth image to lower left corner	
 		
-		TED.add_event(go_to_fetus,6f);
+		TED.add_event(go_to_fetus,0.1f);
 	}
 	
 	public void destroy_configuration_display()

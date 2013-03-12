@@ -51,7 +51,7 @@ public class FlatBodyObject : FlatElementBase
         if (UseDepth)
             Depth = aDepth;
     }
-
+	
 
     public void match_body_location_to_projection(ZigManager aManager)
     {

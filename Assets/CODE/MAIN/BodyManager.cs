@@ -5,15 +5,12 @@ using System.Collections.Generic;
 public class BodyManager : FakeMonoBehaviour {
 	public BodyManager(ManagerManager aManager) : base(aManager) {}
     public FlatBodyObject mFlat;
-    int mMode = 0; // 0 - from kinect, 1 - from pose, -1 none
+    public int mMode = 0; // 0 - from kinect, 1 - from pose, -1 none
     int mLayer = 0;
     Vector3 mOffset;
     public void set_target_pose(ProGrading.Pose aPose)
     {
-        mMode = 1;
         mFlat.set_target_pose(aPose);
-
-
         //hack
         if (((ManagerManager.Manager.mRecordMode) && mMode == 1))
         {
@@ -78,7 +75,10 @@ public class BodyManager : FakeMonoBehaviour {
 			if(mMode == 0)
 				mFlat.SoftColor = new Color(0.5f, 0.5f, 0.5f, 0.5f);
 			else if (mMode == 1)
+			{
 				mFlat.SoftColor = new Color(0.5f, 0.5f, 0.5f, 0.35f);
+				mFlat.HardShader = mManager.mReferences.mTransparentCharacaterShader;
+			}
 			
             mFlat.update(0);
         }

@@ -61,6 +61,7 @@ public class ManagerManager : MonoBehaviour{
         mInterfaceManager = new NewInterfaceManager(this);
         mBodyManager = new BodyManager(this);
         mTransparentBodyManager = new BodyManager(this);
+		mTransparentBodyManager.mMode = 1; //nasty
         mBackgroundManager = new BackgroundManager(this);
         mCameraManager = new CameraManager(this);
         mParticleManager = new ParticleManager(this);
@@ -72,8 +73,7 @@ public class ManagerManager : MonoBehaviour{
 		
 		if(mStartDelegates != null) 
 			mStartDelegates();
-
-         
+		
 	}
 	
 	public void register_FakeMonoBehaviour(FakeMonoBehaviour aScript)

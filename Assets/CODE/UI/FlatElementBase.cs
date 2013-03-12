@@ -147,7 +147,21 @@ public class FlatElementBase {
                 e.material.renderQueue = mDepth;
         }
     }
-
+	
+	
+	
+    public virtual Shader HardShader
+    {
+		set
+		{
+			if (PrimaryGameObject != null)
+	        {
+	            foreach (Renderer e in PrimaryGameObject.GetComponentsInChildren<Renderer>())
+	            	e.material.shader = value;
+	        }
+		}
+    }
+	
     public virtual void destroy()
     {
     }
