@@ -7,6 +7,7 @@ public class ZigManager : FakeMonoBehaviour {
 	ZigEngageSingleUser mZigEngageSingleUser = null;
     ZigCallbackBehaviour mZigCallbackBehaviour = null;
     ZigInput mZigInput = null;
+	public AlternativeDepthViewer DepthView { get; private set; }
     public Dictionary<ZigJointId, ZigInputJoint> Joints{get; private set;}
     public ZigManager(ManagerManager aManager) : base(aManager)
 	{
@@ -36,6 +37,7 @@ public class ZigManager : FakeMonoBehaviour {
 	// Use this for initialization
 	public override void Start () {
         mZigObject = mManager.gameObject;
+		DepthView = mZigObject.AddComponent<AlternativeDepthViewer>();
         //mZigObject.AddComponent<kinectSpecific>();
 		mZig = mZigObject.GetComponent<Zig>();
         
@@ -56,12 +58,22 @@ public class ZigManager : FakeMonoBehaviour {
 	
 	public override void Update () 
 	{
+		
         if (mZigInput == null)
         {
             GameObject container = GameObject.Find("ZigInputContainer");
             if(container != null)
                 mZigInput = container.GetComponent<ZigInput>();
         }
+	}
+	
+	public int is_reader_connected() //0 - not connected, 1 - trying to connect, 2 - connected
+	{
+		if(mZigInput == null)
+			return 1;
+		else if(mZigInput.ReaderInited == true)
+			return 2;
+		else return 0;
 	}
 
     public bool using_nite()

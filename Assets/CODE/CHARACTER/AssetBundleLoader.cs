@@ -88,5 +88,30 @@ public class AssetBundleLoader : FakeMonoBehaviour
         request.threadPriority = ThreadPriority.High;
         mRequestLists.Add(request, ManagerManager.Manager.mGameManager.pose_bundle_loaded_callback);
     }
-
+	
+	public void new_load_character(string aChar, AssetBundleManager aManager)
+	{
+		string filename = "file://" + Application.dataPath + "/Resources/" + aChar + ".unity3d";
+        Debug.Log("loading from " + filename);
+        mRequestLists.Add(new WWW(filename), (delegate(AssetBundle aBundle) { aManager.scene_loaded_callback(aBundle,aChar); }));
+	}
+	
+	public void new_load_mini_characater(string aChar, AssetBundleManager aManager)
+    {
+        string filename = "file://" + Application.dataPath + "/Resources/" + aChar + "_mini.unity3d";
+        Debug.Log("loading mini char from " + filename);
+		//TODO
+		//var cbDelegate = delegate(AssetBundle aBundle) { aManager.scene_loaded_callback(aBundle,aChar); };
+        //mRequestLists.Add(new WWW(filename), cbDelegate);
+    }
+	
+ 	public void new_load_poses(string aAssetBundle, AssetBundleManager aManager)
+    {
+        string filename = "file://" + Application.dataPath + "/Resources/" + aAssetBundle + ".unity3d";
+        Debug.Log("loading poses from " + filename);
+        WWW request = new WWW(filename);
+        request.threadPriority = ThreadPriority.High;
+        mRequestLists.Add(request, delegate(AssetBundle aBundle) { aManager.pose_bundle_loaded_callback(aBundle); });
+    }
+	
 }

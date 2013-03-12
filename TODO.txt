@@ -5,7 +5,10 @@
 
 
 ::TODO3::
+-remove zigdepthviewer from scripts in testing scene and recording scene
 -make it so you can choose your pose in testing scene
+-mellow out glow
+-add character name to characterdata so you don't need to pass name around :(
 DONE-test your new font module
 DONE-make the game runnable without kinect
 IGNORE-make sure the game works and restarts properly

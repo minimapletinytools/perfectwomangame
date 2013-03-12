@@ -11,7 +11,12 @@ public class NewGameManager : FakeMonoBehaviour
 	
 	public override void Start()
 	{
+		//TODO load necessary nonsense
 			//mManager.mAssetLoader.load_poses("POSES");
+		
+		//TODO initialize game state
+			//start in on loading screen
+			//interfaceManager -> loading screen ...
 	
 	}
 
