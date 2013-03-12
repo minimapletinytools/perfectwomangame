@@ -1,5 +1,5 @@
 using UnityEngine;
-using System.Collections;
+using System.Collections.Generic;
 
 
 public class NewGameManager : FakeMonoBehaviour
@@ -10,15 +10,17 @@ public class NewGameManager : FakeMonoBehaviour
     }
 	public TimedEventDistributor TED { get; private set; }
 	
-	//TODO implement these
+	//TODO implement these or delete
 	public int CurrentLevel
     { get; private set; }
 	
 	
+	public PerformanceStats CurrentPerformanceStat
+	{ get { return mPerformanceStats[mPerformanceStats.Count-1]; } }
 	
 	
 	//actual game data
-	//PerformanceStats[] mPerformanceStats = new PerformanceStats[10];
+	List<PerformanceStats> mPerformanceStats = new List<PerformanceStats>();
 	
 	public override void Start()
 	{
@@ -38,6 +40,16 @@ public class NewGameManager : FakeMonoBehaviour
 	public void initialize_fetus()
 	{
 		mManager.mAssetLoader.new_load_character("0-1",mManager.mCharacterBundleManager);
+	}
+	
+	public void initialize_choice(int choiceIndex)
+	{
+		//TODO	
+	}
+	
+	public void initialize_grave()
+	{
+		mManager.mAssetLoader.new_load_character("999",mManager.mCharacterBundleManager);
 	}
 	
 	public void character_changed_listener(CharacterLoader aCharacter)
@@ -70,20 +82,47 @@ public class NewGameManager : FakeMonoBehaviour
         
 		TED.update(Time.deltaTime);
 	}
+	 
 	
-	public void unset_character()
+	public void transition_to_CUTSCENE()
 	{
+		//mManager.mInterfaceManager
+		//mManager.mBackgroundManager
 	}
 	
-	public void set_character()
+	public void transition_to_DEATH()
 	{
+		//mManager.mInterfaceManager
+		//mManager.mBackgroundManager
+		
+		//initialize_grave();
 	}
+	
+	public void transition_to_CHOOSE()
+	{
+		//mManager.mInterfaceManager.set_for_choice();
+		
+	}
+	
+	public void transition_to_PLAY()
+	{
+		//mManager.mInterfaceManager.set_for_PLAY();
+	}
+	
+	public void transition_to_TRANSITION_play()
+	{
+		//mManager.mTransitionCameraManager.fade
+	}
+	
+	public void transition_to_TRANSITION_grave()
+	{
+		//mManager.mTransitionCameraManager.fade
+	}
+	
 	
 	public void cleanup()
 	{
-		//TODO
 	}
-	
 	
 	public void hack_choice(int choice, float time = -1)
 	{
