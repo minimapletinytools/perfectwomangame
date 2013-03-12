@@ -99,6 +99,8 @@ public class TransitionCameraManager : FakeMonoBehaviour
 		mPWCredits.HardPosition = mFlatCamera.Center + new Vector3(0,-100,0);
 		mPWCredits.HardScale = (new Vector3(1,1,1))*0.8f;
 		
+		//TODO GL and FA logo
+		
 		mElement.Add(mPWLogo);
 		mElement.Add(mPWCredits);
 		
@@ -128,7 +130,7 @@ public class TransitionCameraManager : FakeMonoBehaviour
 	
 	public bool go_to_fetus(float time)
 	{
-		//TODO if no kinect, return false
+		//TODO if user is not roughly in the center of the screen, return false
 		
 		fade(
 			delegate()

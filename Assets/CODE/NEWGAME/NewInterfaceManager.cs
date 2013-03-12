@@ -60,6 +60,9 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 	List<FlatBodyObject> mBBChoiceBodies = new List<FlatBodyObject>();
 	FlatBodyObject mBBMiniMan;
 	FlatElementImage mBBChoiceBox;
+	public void update_bb_for_performance(float perfect, float time)
+	{
+	}
 	
 	
 	
@@ -69,5 +72,26 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 	
 	//GLORY
 	public void add_glory_character(){}
+	
+	
+	
+	public void set_for_PLAY()
+	{
+		//TODO transition BB back to its orig place
+		//transition in BB contents
+	}
+	public void set_for_CUTSCENE()
+	{
+		//TODO rearange INTERFACE
+		//TODO script cutscene 
+	}
+	public void set_for_choice()
+	{
+		//TODO
+		//transition BB to full screen
+		//transition out BB contents
+		//transition in CHOICE items
+	}
+	
 	
 }

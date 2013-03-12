@@ -8,10 +8,12 @@ public class NewGameManager : FakeMonoBehaviour
         : base(aManager) 
     {
     }
+	public TimedEventDistributor TED { get; private set; }
 	
 	//TODO implement these
 	public int CurrentLevel
     { get; private set; }
+	
 	
 	
 	
@@ -20,6 +22,7 @@ public class NewGameManager : FakeMonoBehaviour
 	
 	public override void Start()
 	{
+		TED = new TimedEventDistributor();
 		
 		//TODO initialize game state
 			//start in on loading screen
@@ -65,6 +68,7 @@ public class NewGameManager : FakeMonoBehaviour
 		//selection mode (nothing) -> prompts fade out
 		//change character behind fade -> fade in
         
+		TED.update(Time.deltaTime);
 	}
 	
 	public void unset_character()
