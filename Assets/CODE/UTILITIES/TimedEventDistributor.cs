@@ -22,9 +22,9 @@ public class TimedEventDistributor
             mFollow = new TimedEventChain();
             return mFollow;
         }
-        public TimedEventChain then_one_shot(System.Action aEvent)
+        public TimedEventChain then_one_shot(System.Action aEvent, float aTime = 0)
         {
-            return then(delegate(float time) { aEvent(); return true; }, 0);
+            return then(delegate(float time) { aEvent(); return true; }, aTime);
         }
 
         public bool call(float aTime = 0)

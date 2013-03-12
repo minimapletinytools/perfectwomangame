@@ -11,10 +11,12 @@ public class PopupTextObject : FlatElementMultiBase {
     {
 		//TODO finish and position
 		
+		Texture2D fontTex = ManagerManager.Manager.mNewRef.genericFontTex;
+		int fontWidth = ManagerManager.Manager.mNewRef.genericFontTexWidth;
 		mBackground = new FlatElementImage(aBgTex, aDepth);
-		//mText = new FlatElementSpriteText(,,"",aDepth+1);
-		//mTextLine1 = new FlatElementSpriteText(,,"",aDepth+1);
-		//mTextLine2 =  = new FlatElementSpriteText(,,"",aDepth+1);
+		mText = new FlatElementSpriteText(fontTex,fontWidth,"",aDepth+1);
+		mTextLine1 = new FlatElementSpriteText(fontTex,fontWidth,"",aDepth+1);
+		mTextLine2 = new FlatElementSpriteText(fontTex,fontWidth,"",aDepth+1);
         
 		mElements.Add(new FlatElementMultiBase.ElementOffset(mBackground, new Vector3(0, 0, 0)));
 		mElements.Add(new FlatElementMultiBase.ElementOffset(mText, new Vector3(0, 0, 0)));

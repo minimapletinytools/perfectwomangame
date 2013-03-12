@@ -40,6 +40,8 @@ public class NewGameManager : FakeMonoBehaviour
 	public void initialize_fetus()
 	{
 		mManager.mAssetLoader.new_load_character("0-1",mManager.mCharacterBundleManager);
+		
+		transition_to_CUTSCENE();
 	}
 	
 	public void initialize_choice(int choiceIndex)
@@ -74,11 +76,7 @@ public class NewGameManager : FakeMonoBehaviour
     {
         //User = (mManager.mZigManager.has_user());
 		
-		//begin mode (nothing)
-		//play mode (timer, score, and tracking running)
-		//cutscene mode (disable characters, bg manager needs to transition into cutscene mode)
-		//selection mode (nothing) -> prompts fade out
-		//change character behind fade -> fade in
+		//TODO handle tracking and scoring
         
 		TED.update(Time.deltaTime);
 	}
@@ -86,7 +84,9 @@ public class NewGameManager : FakeMonoBehaviour
 	
 	public void transition_to_CUTSCENE()
 	{
-		//mManager.mInterfaceManager
+		mManager.mInterfaceManager.set_for_CUTSCENE(
+			delegate() { transition_to_CHOOSE(); }
+		);
 		//mManager.mBackgroundManager
 	}
 	
