@@ -1,3 +1,6 @@
+::LIST OF ASSETS NEEDED::
+FONT
+
 ::NEEEEEW GAME MANAGER NONSENSE::
 -EVENTS (ngm is responsible for most scripted events)
 	-transition to CUTSCENE  (or skip this and go straight to CHOOSE for fetus)
@@ -94,7 +97,9 @@
 			-maybe special glowy light effect over grave????
 
 ::TODO3::
+-add jiggle to text
 -make a test build relatively soon to make sure everything is stil OK
+	-FUCK
 -setup asset bundler to load new poses
 -move character
 -make it so you can choose your pose in testing scene

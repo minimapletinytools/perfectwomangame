@@ -5,7 +5,7 @@ using System.Collections.Generic;
 //this class also handles initialization camera nonsense
 public class TransitionCameraManager : FakeMonoBehaviour
 {
-	static float FADE_TIME = 3;
+	static float FADE_TIME = 0.1f;
 	static float MAX_FADE = 40;
 	
 	
@@ -21,6 +21,12 @@ public class TransitionCameraManager : FakeMonoBehaviour
 	
 	FlatElementImage mDepthImage;
     HashSet<FlatElementBase> mElement = new HashSet<FlatElementBase>();
+	
+	//configuration nonsense
+	FlatElementSpriteText mPWLogo;
+	FlatElementSpriteText mPWCredits;
+	FlatElementImage mGLLogo;
+	FlatElementImage mFilmLogo;
 	
 	
     public TransitionCameraManager(ManagerManager aManager)
@@ -62,20 +68,40 @@ public class TransitionCameraManager : FakeMonoBehaviour
     public override void Update()
     {
 		//w/e
+		//TODO do something with this.
 		if(mADV == null)
 			mADV = mManager.mZigManager.DepthView;
 		mDepthImage.mImage.set_new_texture(mADV.DepthTexture,new Vector2(mFlatCamera.Width,mFlatCamera.Height));
 		
+		
+		mFlatCamera.update(Time.deltaTime);
+		foreach (FlatElementBase e in mElement)
+            e.update(Time.deltaTime);            
+		
         TED.update(Time.deltaTime);
-
+		
         
 	}
+	
+	
 	
 	public void start_configuration_display()
 	{
 		
 		//fade in
 		TED.add_event(fade_in,0);
+		
+		NewMenuReferenceBehaviour refs = mManager.mNewRef;
+		mPWLogo = new FlatElementSpriteText(refs.genericFontTex,refs.genericFontTexWidth,"Perfect Woman",1);
+		mPWLogo.HardPosition = mFlatCamera.Center + new Vector3(0,100,0);
+		mPWLogo.HardScale = (new Vector3(1,1,1))*1.5f;
+		mPWCredits = new FlatElementSpriteText(refs.genericFontTex,refs.genericFontTexWidth,"by Peter Lu and Lea Schoenfelder",1);
+		mPWCredits.HardPosition = mFlatCamera.Center + new Vector3(0,-100,0);
+		mPWCredits.HardScale = (new Vector3(1,1,1))*0.8f;
+		
+		mElement.Add(mPWLogo);
+		mElement.Add(mPWCredits);
+		
 		
 		//display logo
 		//if no kinect is found
@@ -87,6 +113,31 @@ public class TransitionCameraManager : FakeMonoBehaviour
 		//if 3 second elapsed and user is near center, 1 sec GOOD, make a t pose
 		//if 3 seconds elapesed and user is in tpose, 1 sec GOOD, begin fadeout
 			//on fadeoutcb, move depth image to lower left corner	
+		
+		TED.add_event(go_to_fetus,0.1f);
+	}
+	
+	public void destroy_configuration_display()
+	{
+		//we assume things have faded already so we can just destroy
+		mPWLogo.destroy();
+		mPWCredits.destroy();
+		//mGLLogo.destroy();
+		//mFilmLogo.destroy();
+	}
+	
+	public bool go_to_fetus(float time)
+	{
+		//TODO if no kinect, return false
+		
+		fade(
+			delegate()
+			{
+				mManager.mGameManager.initialize_fetus();
+				destroy_configuration_display();
+			}
+		);
+		return true;
 	}
 	
 	public bool fade_in(float time)
@@ -95,16 +146,17 @@ public class TransitionCameraManager : FakeMonoBehaviour
 		mSunShafts.sunShaftIntensity = (1-l)*MAX_FADE + l*0;
 		return l>=1;
 	}
+	public bool fade_out(float time)
+	{
+		float l = (time/FADE_TIME);
+		mSunShafts.sunShaftIntensity = (1-l)*0 + l*MAX_FADE;
+		return l>=1;
+	}
 	public void fade(System.Action aFadeCompleteCb)
 	{
 		
 		TimedEventDistributor.TimedEventChain chain = TED.add_event(
-			delegate(float time)
-            {
-				float l = (time/FADE_TIME);
-				mSunShafts.sunShaftIntensity = (1-l)*0 + l*MAX_FADE;
-				return l>=1;
-            },
+			fade_out,
         0).then_one_shot(
 			delegate()
 			{

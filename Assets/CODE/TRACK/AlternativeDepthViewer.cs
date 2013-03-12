@@ -113,7 +113,8 @@ public class AlternativeDepthViewer : MonoBehaviour {
 
 
     Rect targetRect = new Rect(10, Screen.height - 120 - 10, 160, 120);
-    Rect currentRect = new Rect(0, 0, Screen.width, Screen.height);
+	Rect currentRect = new Rect(10, Screen.height - 120 - 10, 160, 120);
+    //Rect currentRect = new Rect(0, 0, Screen.width, Screen.height);
     public void set_full(bool full)
     {
         if (full)

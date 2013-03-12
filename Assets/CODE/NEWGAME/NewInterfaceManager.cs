@@ -19,12 +19,12 @@ public class NewInterfaceManager : FakeMonoBehaviour {
         mFlatCamera = new FlatCameraManager(new Vector3(10000, 0, 0), 10);
         mMiniMan = ((GameObject)GameObject.Instantiate(ManagerManager.Manager.mMenuReferences.miniMan)).GetComponent<CharacterTextureBehaviour>();        
 		
-		
+		/*
 		var refs = mManager.mMenuReferences;
 		FlatElementSpriteText spriteTex = new FlatElementSpriteText(refs.fontTex,20,"testmessage",10);
 		spriteTex.SoftPosition = mFlatCamera.Center;
 		spriteTex.SoftScale = new Vector3(0.5f,0.5f,0.5f);
-		mElement.Add (spriteTex);
+		mElement.Add (spriteTex);*/
     }
     public override void Update()
     {

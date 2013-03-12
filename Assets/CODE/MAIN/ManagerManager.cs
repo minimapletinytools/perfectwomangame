@@ -43,13 +43,14 @@ public class ManagerManager : MonoBehaviour{
 
     public PrefabReferenceBehaviour mReferences;
     public MenuReferenceBehaviour mMenuReferences;
+	public NewMenuReferenceBehaviour mNewRef;
 
 	void Awake () {
 
         //Debug.Log("setting up managers");
         mReferences = GetComponent<PrefabReferenceBehaviour>();
         mMenuReferences = GetComponent<MenuReferenceBehaviour>();
-
+		mNewRef = GetComponent<NewMenuReferenceBehaviour>();
         
         Manager = this;
 
