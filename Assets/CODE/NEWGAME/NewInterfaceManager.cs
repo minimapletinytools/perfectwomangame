@@ -27,6 +27,13 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 		spriteTex.SoftPosition = mFlatCamera.Center;
 		spriteTex.SoftScale = new Vector3(0.5f,0.5f,0.5f);
 		mElement.Add (spriteTex);*/
+		
+		/*
+		var refs = mManager.mMenuReferences;
+		FlatElementText text = new FlatElementText(mManager.mNewRef.genericFontPrefab,50,"aeuaeuoe",10);
+		text.SoftPosition = mFlatCamera.Center;
+		text.SoftScale = new Vector3(0.5f,0.5f,0.5f);
+		mElement.Add (text);*/
     }
     public override void Update()
     {

@@ -14,7 +14,7 @@ public class NewGameManager : FakeMonoBehaviour
     }
 	public TimedEventDistributor TED { get; private set; }
 	
-	//TODO implement these or delete
+	//TODO implement this or delete
 	public int CurrentLevel
     { get; private set; }
 	
@@ -79,17 +79,38 @@ public class NewGameManager : FakeMonoBehaviour
 		}
 	}
     
+	
+	
     public override void Update()
     {
         //User = (mManager.mZigManager.has_user());
 		
-		//TODO handle tracking and scoring
 		if(GS == GameState.PLAY)
-		{
-			
-		}
+			update_PLAY();
         
 		TED.update(Time.deltaTime);
+	}
+	
+	public float TimeRemaining
+	{
+		get; private set; 
+	}
+	public void update_PLAY()
+	{
+		TimeRemaining -= Time.deltaTime;
+	
+		//TODO tracking
+		
+		//TODO scoring
+		
+		if(TimeRemaining < 0)
+		{
+			update_PLAY();
+			transition_to_CUTSCENE();
+		}
+	}
+	public void cleanup_PLAY()
+	{
 	}
 	
 	public void transition_to_CUTSCENE()
@@ -141,6 +162,7 @@ public class NewGameManager : FakeMonoBehaviour
 	
 	public void cleanup()
 	{
+		//TODO
 	}
 	
 	public void hack_choice(int choice, float time = -1)

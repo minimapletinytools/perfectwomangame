@@ -24,6 +24,19 @@ public class FlatElementText : FlatElementBase
         set { mMesh.text = value; }
     }
             
+	public FlatElementText(GameObject fontPrefab, int aSize, string aText, int aDepth)
+	{
+		 GameObject.Instantiate(fontPrefab);
+		PrimaryGameObject = GameObject.Instantiate(fontPrefab) as GameObject;
+		mRenderer = PrimaryGameObject.renderer;
+		mMesh = PrimaryGameObject.GetComponent<TextMesh>();
+		mMesh.anchor = TextAnchor.MiddleCenter;
+        Size = aSize;
+        Text = aText;
+		Depth = aDepth;
+	}
+	
+	//this wont work...
     public FlatElementText(Font aFont, int aSize, string aText, int aDepth)
     {
         
@@ -31,12 +44,17 @@ public class FlatElementText : FlatElementBase
         GameObject textElement = new GameObject("genTextElement");
         textElement.transform.rotation = Quaternion.AngleAxis(180, Vector3.up);
         mRenderer = textElement.AddComponent<MeshRenderer>();
-        mRenderer.material = aFont.material;
+		//aFont.material.SetColor("_TextColor",new Color(1,1,1,1));
+		
         mMesh = textElement.AddComponent<TextMesh>();
         mMesh.font = aFont;
         mMesh.anchor = TextAnchor.MiddleCenter;
         Size = aSize;
         Text = aText;
+		
+		mRenderer.material = mMesh.font.material;
+		mRenderer.material.color = new Color(1,1,1,1);
+		
         textElement.transform.parent = PrimaryGameObject.transform;
         Depth = aDepth;
     }
