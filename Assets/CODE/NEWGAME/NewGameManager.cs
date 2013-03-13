@@ -84,16 +84,19 @@ public class NewGameManager : FakeMonoBehaviour
         //User = (mManager.mZigManager.has_user());
 		
 		//TODO handle tracking and scoring
+		if(GS == GameState.PLAY)
+		{
+			
+		}
         
 		TED.update(Time.deltaTime);
 	}
-	 
 	
 	public void transition_to_CUTSCENE()
 	{
 		GS = GameState.CUTSCENE;
 		mManager.mInterfaceManager.set_for_CUTSCENE(
-			delegate() { transition_to_CHOOSE(); }
+			delegate() { transition_to_CHOICE(); }
 		);
 		//mManager.mBackgroundManager
 	}
@@ -107,11 +110,10 @@ public class NewGameManager : FakeMonoBehaviour
 		//initialize_grave();
 	}
 	
-	public void transition_to_CHOOSE()
+	public void transition_to_CHOICE()
 	{
-		GS = transition_to_CHOOSE;
-		mManager.mInterfaceManager.set_for_CHOICE();
-		
+		GS = GameState.CHOICE;
+		mManager.mInterfaceManager.set_for_CHOICE();	
 	}
 	
 	public void transition_to_PLAY()

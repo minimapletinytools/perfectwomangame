@@ -27,6 +27,15 @@
 		-TRANSITION -> BUNDLE -> TRANSITION
 	-transition to TRANSITION (grave)
 		-TRANSITION -> BUNDLE -> TRANSITION
+-PLAY
+	-count down timer
+	-grab POSES and update
+	-compute performance
+		-update score
+		-update graph
+	-if performance is too bad
+		-transition to DEATH
+	-if timer is done, transition to CUTSCENE
 
 -CUTSCENE
 	-FETUS

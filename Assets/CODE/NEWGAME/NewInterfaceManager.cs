@@ -66,11 +66,11 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 	{
 		Vector2 baseSize = new Vector2(mBB.BoundingBox.width,mBB.BoundingBox.height);
 		Vector2 desiredSize = new Vector2(mFlatCamera.Width+30,mFlatCamera.Height+30);
-		mBB.set_scale(new Vector3(desiredSize.x/baseSize.x,desiredSize.y/baseSize.y),1);
+		mBB.set_scale(new Vector3(desiredSize.x/baseSize.x,desiredSize.y/baseSize.y,1));
 	}
 	public void set_bb_small()
 	{
-		mBB.set_scale(new Vector2(1,1,1));
+		mBB.set_scale(new Vector3(1,1,1));
 	}
 	
 	public void update_bb_for_performance(float perfect, float time)
@@ -174,7 +174,7 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 		chain.then_one_shot(delegate(){cutsceneCompleteCb();});
 	}
 	
-	public void set_for_choice()
+	public void set_for_CHOICE()
 	{
 		//TODO
 		set_bb_full_size();
