@@ -26,7 +26,6 @@ public class FlatElementText : FlatElementBase
             
 	public FlatElementText(GameObject fontPrefab, int aSize, string aText, int aDepth)
 	{
-		 GameObject.Instantiate(fontPrefab);
 		PrimaryGameObject = GameObject.Instantiate(fontPrefab) as GameObject;
 		mRenderer = PrimaryGameObject.renderer;
 		mMesh = PrimaryGameObject.GetComponent<TextMesh>();
@@ -44,7 +43,6 @@ public class FlatElementText : FlatElementBase
         GameObject textElement = new GameObject("genTextElement");
         textElement.transform.rotation = Quaternion.AngleAxis(180, Vector3.up);
         mRenderer = textElement.AddComponent<MeshRenderer>();
-		//aFont.material.SetColor("_TextColor",new Color(1,1,1,1));
 		
         mMesh = textElement.AddComponent<TextMesh>();
         mMesh.font = aFont;
@@ -53,7 +51,6 @@ public class FlatElementText : FlatElementBase
         Text = aText;
 		
 		mRenderer.material = mMesh.font.material;
-		mRenderer.material.color = new Color(1,1,1,1);
 		
         textElement.transform.parent = PrimaryGameObject.transform;
         Depth = aDepth;

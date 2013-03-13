@@ -170,6 +170,7 @@ public class FlatElementBase {
     {
         SoftInterpolation = 0.3f;
         HardScale = Vector3.one;
+		SoftColor = new Color(1,1,1,1);//new Color(0.5f,0.5f,0.5f,1);
         Events = new TimedEventHandler();
     }
 
