@@ -1,6 +1,6 @@
 using UnityEngine;
 using System.Collections;
-
+using System;
 
 public struct CharacterIndex
 {
@@ -33,10 +33,28 @@ public struct CharacterIndex
 	public CharacterIndex(int ageIndex, int choiceIndex)
 	{
 		if(ageIndex == 0 && choiceIndex == 0) Index = 0;
-		else if(ageIndex == 28 && choiceIndex == 0) Index = 8;
-		else if(ageIndex == 29 && choiceIndex == 0) Index = 9;
+		else if(ageIndex == 8 && choiceIndex == 0) Index = 28;
+		else if(ageIndex == 9 && choiceIndex == 0) Index = 29;
 		else if(ageIndex == -1) Index = -1;
 		else Index = 4*(ageIndex-1) + choiceIndex + 1;
+	}
+	public CharacterIndex(string aBundleName)
+	{
+		if(aBundleName == "0-1")
+			Index = 0;
+		else if(aBundleName == "100")
+			Index = 28;
+		else if(aBundleName == "999")
+			Index = 29;
+		else
+		{
+			string[] split = aBundleName.Split('-');
+			int i = 0;
+			for(;i<sLevelToAge.Length;i++)
+				if(sLevelToAge[i] == split[0])
+					break;
+			Index = 4*(i-1) + Convert.ToInt32(split[1]);
+		}
 	}
 }
 public class PerformanceStats
@@ -45,13 +63,13 @@ public class PerformanceStats
 	public float Score { get; set; }
 	public int Perfect { get; set; }
 	public int Difficulty { get; set; }
-	public Texture2D Graph { get; set; }
+	public FlatGraphElement PerformanceGraph { get; private set; }
 	public PerformanceStats()
 	{
 		Character = new CharacterIndex(-1);
 		Score = 0;
 		Perfect = 0;
 		Difficulty = 0;
-		Graph = null;
+		PerformanceGraph = new FlatGraphElement(ManagerManager.Manager.mNewRef.bbGraphBackground,10);
 	}
 }
