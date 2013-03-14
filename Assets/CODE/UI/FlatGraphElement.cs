@@ -12,6 +12,11 @@ public class FlatGraphElement : FlatElementImage {
         //kind of a hack
         initialize(mGraphTexture, null, aDepth);
     }
+	
+	public FlatGraphElement(Texture2D aBgTex, int aDepth):base(aBgTex,aDepth)
+    {
+        mGraphTexture = aBgTex;
+    }
 
     public void clear_to_white()
     {

@@ -29,12 +29,12 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 		mElement.Add (spriteTex);*/
 		
 		
-		var refs = mManager.mMenuReferences;
+		/*var refs = mManager.mMenuReferences;
 		//FlatElementText text = new FlatElementText(mManager.mNewRef.genericFontPrefab,50,"aeuaeuoe",10);
 		FlatElementText text = new FlatElementText(refs.menuFont,50,"aeuaeuoe",10);
 		text.SoftPosition = mFlatCamera.Center;
-		text.SoftScale = new Vector3(0.5f,0.5f,0.5f);
-		mElement.Add (text);
+		text.SoftScale = new ector3(0.5f,0.5f,0.5f);
+		mElement.Add (text);*/
     }
     public override void Update()
     {
@@ -58,31 +58,135 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 	//BLUE BAR
 	FlatElementImage mBB;
 	//PLAY
-	List<FlatGraphElement> mBBPerformanceGraphs = new List<FlatGraphElement>(); //maps age index to graph, null means no graph (e.g. fetus)
+	FlatGraphElement mBBLastPerformanceGraph = null; //owned by Character
 	FlatElementImage mBBPerformanceGraphFrame;
-	FlatElementSpriteText mBBText;
-	FlatElementSpriteText mBBScoreFrame;
-	FlatElementSpriteText mBBScoreText;
+	FlatElementText mBBText;
+	FlatElementImage mBBScoreFrame;
+	FlatElementText mBBScoreText;
 	//CUTSCENE
 	//???
 	//CHOOSING
+	int BB_NUM_CHOICES = 3;
 	List<NewChoiceObject> mBBChoices = new List<NewChoiceObject>();
 	List<FlatBodyObject> mBBChoiceBodies = new List<FlatBodyObject>();
 	FlatBodyObject mBBMiniMan;
 	FlatElementImage mBBChoiceBox;
+	
+	public void setup_bb()
+	{
+		var newRef = mManager.mNewRef;
+		MenuReferenceBehaviour menuRef = mManager.mMenuReferences;
+		var refs = mManager.mReferences;
+		
+		
+		mBB = new FlatElementImage(mManager.mNewRef.bbBackground,8);
+		mBB.HardPosition = random_position();
+		mElement.Add(mBB);
+		
+		//BB small nonsense
+		mBBText = new FlatElementText(mManager.mNewRef.genericFont,25,"",10);
+		mBBScoreFrame = new FlatElementImage(mManager.mNewRef.bbScoreBackground,9);
+		mBBScoreText  = new FlatElementText(mManager.mNewRef.genericFont,25,"0",10);
+		mBBPerformanceGraphFrame = new FlatElementImage(mManager.mNewRef.bbGraphBackground,9);
+		mBBText.HardPosition = random_position();
+		mBBScoreFrame.HardPosition = random_position();
+		mBBScoreText.HardPosition = random_position();
+		mBBPerformanceGraphFrame.HardPosition = random_position();
+		mElement.Add(mBBText);
+		mElement.Add(mBBScoreFrame);
+		mElement.Add(mBBScoreText);
+		mElement.Add(mBBPerformanceGraphFrame);
+		
+		//BB choice nonsense
+		var miniMan = ((GameObject)GameObject.Instantiate(menuRef.miniMan)).GetComponent<CharacterTextureBehaviour>();
+		mBBMiniMan = new FlatBodyObject(miniMan,10);
+		mBBChoiceBox = new FlatElementImage(newRef.bbChoiceBox,15);
+		for(int i = 0; i < BB_NUM_CHOICES; i++)
+		{
+			mBBChoices.Add(new NewChoiceObject(11));
+			mBBChoiceBodies.Add(new FlatBodyObject(miniMan,11));
+		}
+		
+		
+	}
+	public FlatGraphElement set_bb_graph(FlatGraphElement aGraph)
+	{
+		FlatGraphElement r = mBBLastPerformanceGraph;
+		if(mBBLastPerformanceGraph != null)
+		{
+			mBBLastPerformanceGraph.SoftColor = new Color(1,1,1,0);
+			//mBBLastPerformanceGraph.Enabled = false;
+			//mElement.Remove(mBBLastPerformanceGraph);
+		}
+		mBBLastPerformanceGraph = aGraph;
+		//TODO
+		//mBBLastPerformanceGraph.SoftPosition = 
+		
+		return r;
+	}
+	
+	public void set_bb_choice_poses(List<ProGrading.Pose> aPoses)
+	{
+		for(int i = 0; i < BB_NUM_CHOICES; i++)
+		{
+			mBBChoiceBodies[i].set_target_pose(aPoses[i]);
+		}
+	}
+	public void set_bb_choice_bodies(List<CharacterLoader> aBodies)
+	{
+		for(int i = 0; i < BB_NUM_CHOICES; i++)
+		{
+			mBBChoices[i].set_actual_character(aBodies[i]);
+		}
+	}
+	
+	void fade_bb_contents(bool small)
+	{
+		Color smallColor = small ? new Color(1,1,1,1) : new Color(1,1,1,0);
+		Color fullColor = !small ? new Color(1,1,1,1) : new Color(1,1,1,0);
+	
+		mBBText.SoftColor = smallColor;
+		mBBScoreFrame.SoftColor = smallColor;
+		mBBScoreText.SoftColor = smallColor;
+		mBBLastPerformanceGraph.SoftColor = smallColor;
+		
+		foreach(FlatBodyObject e in mBBChoiceBodies)
+			e.SoftColor = fullColor;
+		foreach(NewChoiceObject e in mBBChoices)
+			e.SoftColor = fullColor;
+		mBBMiniMan.SoftColor = fullColor;
+		mBBChoiceBox.SoftColor = fullColor;
+	}
+	
+	//make sure choice contents are made first before calling this
 	public void set_bb_full_size()
 	{
 		Vector2 baseSize = new Vector2(mBB.BoundingBox.width,mBB.BoundingBox.height);
 		Vector2 desiredSize = new Vector2(mFlatCamera.Width+30,mFlatCamera.Height+30);
 		mBB.set_scale(new Vector3(desiredSize.x/baseSize.x,desiredSize.y/baseSize.y,1));
+		
+		//TODO CHOICE contents
+		
+		fade_bb_contents(false);
 	}
+	
+	//make sure set_bb_graph is called before this
 	public void set_bb_small()
 	{
 		mBB.set_scale(new Vector3(1,1,1));
+		
+		mBB.SoftPosition = mFlatCamera.get_point(-0.5f, 0) + new Vector3(0,-150,0);
+		mBBText.SoftPosition = mBB.SoftPosition + new Vector3(0,100,0);
+		mBBScoreFrame.SoftPosition = mBB.SoftPosition + new Vector3(-250,-50,0);
+		mBBScoreText.SoftPosition = mBB.SoftPosition + new Vector3(-250,-50,0);
+		mBBLastPerformanceGraph.SoftPosition = mBB.SoftPosition + new Vector3(100,-50,0);
+		
+		fade_bb_contents(true);
 	}
 	
-	public void update_bb_for_performance(float perfect, float time)
+	public void update_bb_score(float aScore)
 	{
+		mBBScoreText.Text = ((int)aScore).ToString();
 	}
 	
 	
@@ -193,5 +297,8 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 		
 	}
 	
-	
+	public void set_for_DEATH(List<FlatGraphElement> aGraphs)
+	{
+		//TODO
+	}
 }
