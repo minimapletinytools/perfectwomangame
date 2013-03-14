@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
+using System.Linq;
 
 public class CharacterLoader {
     public bool Done { get; private set; }
@@ -44,6 +45,15 @@ public class CharacterLoader {
         for (int i = 0; aBundle.Contains("FG-" + (i + 1)); i++)
             Images.foregroundElements.Add(aBundle.Load("FG-" + (i + 1), typeof(Texture2D)) as Texture2D);
         output += "found bg fg: " + Images.backgroundElements.Count + " " + Images.foregroundElements.Count + "\n";
+		
+		int MAX_CUTSCENES = 5;
+		Images.cutsceneElements = new List<List<Texture2D>>();
+		for(int i = 0; i < MAX_CUTSCENES; i++)
+			Images.cutsceneElements.Add(new List<Texture2D>());
+		for(int i = 0; i < MAX_CUTSCENES; i++)
+			for(int j = 0; aBundle.Contains("CUTSCENE"+i+"_"+j);j++)
+				Images.cutsceneElements[i].Add(aBundle.Load("CUTSCENE"+i+"_"+j, typeof(Texture2D)) as Texture2D);
+		//output += "found cutscene: " + Images.cutsceneElements
 
         Images.backgroundMusic = aBundle.Load("AUDIO", typeof(AudioClip)) as AudioClip; //optional
 
