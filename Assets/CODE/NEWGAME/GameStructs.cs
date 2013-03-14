@@ -21,6 +21,11 @@ public struct CharacterIndex
 			else return -1;
 		}
 	}
+	public int Age{
+		get{
+			return System.Convert.ToInt32(sLevelToAge[Level]);
+		}
+	}
 	public string StringIdentifier{
 		get{
 			return sLevelToAge[Level] + "-" + Choice;

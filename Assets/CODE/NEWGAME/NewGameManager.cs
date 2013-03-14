@@ -58,8 +58,6 @@ public class NewGameManager : FakeMonoBehaviour
 	public void initialize_fetus()
 	{
 		mManager.mAssetLoader.new_load_character("0-1",mManager.mCharacterBundleManager);
-		
-		
 	}
 	
 	public void initialize_choice(int choiceIndex)
@@ -67,10 +65,6 @@ public class NewGameManager : FakeMonoBehaviour
 		//TODO	
 	}
 	
-	public void initialize_grave()
-	{
-		mManager.mAssetLoader.new_load_character("999",mManager.mCharacterBundleManager);
-	}
 	
 	public void character_changed_listener(CharacterLoader aCharacter)
 	{
@@ -86,6 +80,8 @@ public class NewGameManager : FakeMonoBehaviour
 		switch(aCharacter.Name)
 		{
 			case "0-1":
+				TimeRemaining = 5;
+				DeathCharacter = aCharacter; //so hopefully AssetBundle.unload doesn't fudge this up...
 				break;
 			case "100":
 				break;
@@ -121,8 +117,11 @@ public class NewGameManager : FakeMonoBehaviour
 	{
 		TimeRemaining -= Time.deltaTime;
 		
+		//this basically means we aren't 0 or 100 or 999
+		//if (CurrentPerformanceStat.Character.Level != 0 && CurrentPerformanceStat.Character.Level != 8 && CurrentPerformanceStat.Character.Level != 9)
 		if (CurrentTargetPose != null && mManager.mTransparentBodyManager.mFlat.mTargetPose != null)
         {
+			//TODO
             //float grade = ProGrading.grade_pose(CurrentPose, mManager.mTransparentBodyManager.mFlat.mTargetPose);
 			//TODO update interface with percent completion
 			//PercentTimeCompletion
@@ -133,12 +132,13 @@ public class NewGameManager : FakeMonoBehaviour
 		
 		if(TimeRemaining < 0)
 		{
-			update_PLAY();
+			finish_PLAY();
 			transition_to_CUTSCENE();
 		}
 	}
 	public void finish_PLAY()
 	{
+		//do I even need this??
 	}
 	
 	public void transition_to_CUTSCENE()
@@ -148,17 +148,33 @@ public class NewGameManager : FakeMonoBehaviour
 			delegate() { transition_to_CHOICE(); }
 		);
 		
-		//TODO check if cutsceen exsits...
+		//TODO eventually wont be cutscene 0
 		mManager.mBackgroundManager.load_cutscene(0,CurrentCharacterLoader);
 	}
 	
+	CharacterLoader DeathCharacter
+	{ get; set; }
 	public void transition_to_DEATH()
 	{
 		GS = GameState.DEATH;	
 		//mManager.mInterfaceManager
 		//mManager.mBackgroundManager
+		mManager.mBackgroundManager.load_cutscene(4,DeathCharacter);
+		
+		//TODO transition to grave
 		//TODO get grave cutscene stuff..
 		//initialize_grave();
+		
+		//var chain = TED.add_event(
+		mManager.mInterfaceManager.set_for_DEATH(CurrentPerformanceStat.Character)
+			.then_one_shot(delegate(){mManager.mTransitionCameraManager.fade(initialize_GRAVE);},3);
+	}
+	
+	public void initialize_GRAVE()
+	{
+		GS = GameState.GRAVE;
+		mManager.mAssetLoader.new_load_character("999",mManager.mCharacterBundleManager);
+		//mManager.mInterfaceManager.
 	}
 	
 	public void transition_to_CHOICE()
@@ -169,6 +185,7 @@ public class NewGameManager : FakeMonoBehaviour
 	
 	public void transition_to_PLAY()
 	{
+		GS = GameState.PLAY;
 		//mManager.mInterfaceManager.set_for_PLAY();
 	}
 	
@@ -176,18 +193,6 @@ public class NewGameManager : FakeMonoBehaviour
 	{
 		GS = GameState.TRANSITION;
 		//mManager.mTransitionCameraManager.fade
-	}
-	
-	public void transition_to_TRANSITION_grave()
-	{
-		GS = GameState.TRANSITION;
-		//mManager.mTransitionCameraManager.fade
-	}
-	
-	public void transition_to_GRAVE()
-	{
-		GS = GameState.GRAVE;
-		//TODO
 	}
 	
 	public void cleanup()

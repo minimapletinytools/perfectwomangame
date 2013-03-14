@@ -47,6 +47,7 @@ public class CharacterBundleManager : FakeMonoBehaviour {
 			mManager.mTransparentBodyManager.destroy_character();
 		}
 		mManager.mMusicManager.character_changed_listener(loader);
+		mManager.mGameManager.character_changed_listener(loader);
 	}
 	
 	

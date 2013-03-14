@@ -297,7 +297,62 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 		
 	}
 	
-	public void set_for_DEATH(List<FlatGraphElement> aGraphs)
+	//returns amount of time this will take
+	public TimedEventDistributor.TimedEventChain set_for_DEATH(CharacterIndex aChar)
+	{
+		TimedEventDistributor.TimedEventChain chain;
+		float textTime = 3;
+		if(aChar.Level == 7)
+		{
+			//80
+			chain = TED.add_one_shot_event(
+				delegate()
+				{
+					add_timed_text_bubble("It's time for you to\ndie a natural death",textTime);
+				},
+	        0).then_one_shot( //dummy 
+			delegate(){},textTime);
+		}
+		else if (aChar.Level == 8)
+		{
+			//100!!!
+			chain = TED.add_one_shot_event(
+				delegate()
+				{
+					add_timed_text_bubble("Congragulations",textTime);
+				},
+	        0).then_one_shot(
+				delegate()
+				{
+					add_timed_text_bubble("Your life was\nmay not have been\nperfect",textTime);
+				},
+			textTime).then_one_shot(
+				delegate()
+				{
+					add_timed_text_bubble("but you lived\n100 years",textTime);
+				},
+			textTime).then_one_shot( //dummy 
+				delegate(){},textTime);
+		}
+		else
+		{
+			chain = TED.add_one_shot_event(
+				delegate()
+				{
+					add_timed_text_bubble("You die\nat the age of\n" + aChar.Age,textTime);
+				},
+	        1).then_one_shot(
+				delegate()
+				{
+					//TODO pink bar animations
+				}
+			).then_one_shot( //dummy 
+				delegate(){},0);
+		}
+		
+		return chain;
+	}
+	public void set_for_GRAVE(List<FlatGraphElement> aGraphs)
 	{
 		//TODO
 	}

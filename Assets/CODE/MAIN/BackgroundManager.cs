@@ -87,11 +87,6 @@ public class BackgroundManager  : FakeMonoBehaviour
         mBackgroundElements.destroy();
         mForegroundElements.destroy();
 		
-		foreach(var e in aCharacter.Sizes.mStaticElements)
-			Debug.Log(e.Name);
-		foreach(var e in aCharacter.Images.staticElements)
-			Debug.Log(e.Key);
-		
 		load_images(aCharacter,mBackgroundElements,"BG-",1);
 		load_images(aCharacter,mBackgroundElements,"FG-",1);
 
