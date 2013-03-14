@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
+using System.Linq;
 
 public enum GameState
 {
@@ -18,8 +19,16 @@ public class NewGameManager : FakeMonoBehaviour
 	public int CurrentLevel
     { get; private set; }
 	
+	
+	
 	public GameState GS
 	{ get; private set; }
+	
+	public float TotalScore{ 
+		get{
+			return mPerformanceStats.Sum(delegate (PerformanceStats e) { return e.Score; });
+		}
+	}
 	
 	public PerformanceStats CurrentPerformanceStat
 	{ get { return mPerformanceStats[mPerformanceStats.Count-1]; } }
@@ -65,6 +74,11 @@ public class NewGameManager : FakeMonoBehaviour
 	{
 		//at this point, we can assume both body manager, music and background managers have been set accordingly
 		//i.e. this is part of transition to PLAY or GRAVE
+		
+		//set new character data
+		mPerformanceStats.Add(new PerformanceStats());
+		CurrentPerformanceStat.Character = new CharacterIndex(aCharacter.Name);
+		
 		//TODO
 		switch(aCharacter.Name)
 		{
@@ -92,16 +106,27 @@ public class NewGameManager : FakeMonoBehaviour
 	}
 	
 	public float TimeRemaining
-	{
-		get; private set; 
-	}
+	{ get; private set; }
+	public float TimeTotal
+	{ get; private set; }
+	public float PercentTimeCompletion
+	{ get { return TimeRemaining/TimeTotal; } }
+	public ProGrading.Pose CurrentTargetPose
+    { get; private set; }
+	
 	public void update_PLAY()
 	{
 		TimeRemaining -= Time.deltaTime;
-	
-		//TODO tracking
 		
-		//TODO scoring
+		if (CurrentTargetPose != null && mManager.mTransparentBodyManager.mFlat.mTargetPose != null)
+        {
+            //float grade = ProGrading.grade_pose(CurrentPose, mManager.mTransparentBodyManager.mFlat.mTargetPose);
+			//TODO update interface with percent completion
+			//PercentTimeCompletion
+			
+			//TODO update score
+			//CurrentPerformanceStat.Score
+        }
 		
 		if(TimeRemaining < 0)
 		{
@@ -109,7 +134,7 @@ public class NewGameManager : FakeMonoBehaviour
 			transition_to_CUTSCENE();
 		}
 	}
-	public void cleanup_PLAY()
+	public void finish_PLAY()
 	{
 	}
 	
