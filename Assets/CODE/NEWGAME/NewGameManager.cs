@@ -19,7 +19,8 @@ public class NewGameManager : FakeMonoBehaviour
 	public int CurrentLevel
     { get; private set; }
 	
-	
+	public CharacterLoader CurrentCharacterLoader
+	{ get; private set; }
 	
 	public GameState GS
 	{ get; private set; }
@@ -39,6 +40,7 @@ public class NewGameManager : FakeMonoBehaviour
 	
 	public override void Start()
 	{
+		CurrentCharacterLoader = null;
 		GS = GameState.NONE;
 		TED = new TimedEventDistributor();
 		
@@ -46,7 +48,7 @@ public class NewGameManager : FakeMonoBehaviour
 			//start in on loading screen
 			//interfaceManager -> loading screen ...
 		
-		
+		//TODO buffer grave
 		
 		//initialize game data
 		//initialize_fetus();
@@ -74,6 +76,7 @@ public class NewGameManager : FakeMonoBehaviour
 	{
 		//at this point, we can assume both body manager, music and background managers have been set accordingly
 		//i.e. this is part of transition to PLAY or GRAVE
+		CurrentCharacterLoader = aCharacter;
 		
 		//set new character data
 		mPerformanceStats.Add(new PerformanceStats());
@@ -144,7 +147,9 @@ public class NewGameManager : FakeMonoBehaviour
 		mManager.mInterfaceManager.set_for_CUTSCENE(
 			delegate() { transition_to_CHOICE(); }
 		);
-		//mManager.mBackgroundManager
+		
+		//TODO check if cutsceen exsits...
+		mManager.mBackgroundManager.load_cutscene(0,CurrentCharacterLoader);
 	}
 	
 	public void transition_to_DEATH()
@@ -152,7 +157,7 @@ public class NewGameManager : FakeMonoBehaviour
 		GS = GameState.DEATH;	
 		//mManager.mInterfaceManager
 		//mManager.mBackgroundManager
-		
+		//TODO get grave cutscene stuff..
 		//initialize_grave();
 	}
 	
