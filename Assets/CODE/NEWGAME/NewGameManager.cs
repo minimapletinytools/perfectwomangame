@@ -58,6 +58,8 @@ public class NewGameManager : FakeMonoBehaviour
 	public void initialize_fetus()
 	{
 		mManager.mAssetLoader.new_load_character("0-1",mManager.mCharacterBundleManager);
+		//do oI actually want this here??
+		mManager.mInterfaceManager.setup_bb();
 	}
 	
 	public void initialize_choice(int choiceIndex)
@@ -80,14 +82,20 @@ public class NewGameManager : FakeMonoBehaviour
 		switch(aCharacter.Name)
 		{
 			case "0-1":
-				TimeRemaining = 5;
 				DeathCharacter = aCharacter; //so hopefully AssetBundle.unload doesn't fudge this up...
+				TimeRemaining = 5;
+				transition_to_PLAY();
 				break;
 			case "100":
+				TimeRemaining = 5;
+				transition_to_PLAY();
 				break;
 			case "999":
+				//transition_to_GRAVE();
 				break;
 			default:
+				TimeRemaining = 5;
+				transition_to_PLAY();
 				break;
 		}
 	}

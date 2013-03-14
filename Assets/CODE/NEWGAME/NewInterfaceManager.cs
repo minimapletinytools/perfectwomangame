@@ -204,19 +204,21 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 			delegate(float aTime)
 			{
 				//TODO set message
-				to.SoftPosition = mFlatCamera.Center + new Vector3(-500,0,0);
+				to.SoftPosition = mFlatCamera.Center + new Vector3(500,0,0);
 				mElement.Add(to);
 				return true;
 			},
         0).then_one_shot(
 			delegate()
 			{
-				to.SoftPosition = random_position();
+				//to.SoftPosition = random_position();
+				to.SoftColor = new Color32(1,1,1,0);
 			},
 		duration).then_one_shot(
 			delegate()
 			{
 				mElement.Remove(to);
+				to.destroy();
 			},
 		2);
 		
