@@ -1,5 +1,5 @@
 using UnityEngine;
-using System.Collections;
+using System.Collections.Generic;
 
 public class BackgroundManager  : FakeMonoBehaviour
 {
@@ -48,6 +48,24 @@ public class BackgroundManager  : FakeMonoBehaviour
             foreach (Renderer f in e.Element.PrimaryGameObject.GetComponentsInChildren<Renderer>())
                 f.gameObject.layer = mForegroundLayer;
     }
+	
+	//note aCharacter need not be the same as teh original character (use this or death)
+	public void load_cutscene(int aNum, CharacterLoader aCharacter)
+	{
+		foreach(FlatElementMultiBase.ElementOffset e in mBackgroundElements.mElements)
+			e.Element.SoftColor = new Color(1,1,1,0);
+		foreach(FlatElementMultiBase.ElementOffset e in mForegroundElements.mElements)
+			e.Element.SoftColor = new Color(1,1,1,0);
+		
+		List<Texture2D> process = aCharacter.Images.cutsceneElements[aNum];
+		List<Vector2> sizes = aCharacter.Sizes.mCutsceneSizes[aNum];
+		List<Vector3> positions = aCharacter.Sizes.mCutscenePositions[aNum];
+		for(int i = 0; i < process.Count; i++)
+		{
+			mForegroundElements.add_image(process[i],positions[i],sizes[i]);
+		}
+		
+	}
 	
     public void character_changed_listener(CharacterLoader aCharacter)
     {
