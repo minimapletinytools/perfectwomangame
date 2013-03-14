@@ -49,6 +49,25 @@ public class BackgroundManager  : FakeMonoBehaviour
                 f.gameObject.layer = mForegroundLayer;
     }
 	
+	
+	
+	public void load_images(CharacterLoader aCharacter, FlatElementMultiImage aMulti, string aPrefix, int aBegin = 0)
+	{
+		for(int i = aBegin; i < 100; i++)
+		{
+			string name = aPrefix+i;
+			CharacterData.ImageSizeOffsetAnimationData data = aCharacter.Sizes.find_static_element(name);
+			if(data == null)
+				break;
+			Texture2D tex = aCharacter.Images.staticElements[name];
+			//if(tex == null)
+				//throw new UnityException("data exists for " + data.Name + " but texture does not");
+			aMulti.add_image(tex,data.Offset,data.Size);
+			//TODO effects
+		}
+	}
+	
+	
 	//note aCharacter need not be the same as teh original character (use this or death)
 	public void load_cutscene(int aNum, CharacterLoader aCharacter)
 	{
@@ -57,49 +76,28 @@ public class BackgroundManager  : FakeMonoBehaviour
 		foreach(FlatElementMultiBase.ElementOffset e in mForegroundElements.mElements)
 			e.Element.SoftColor = new Color(1,1,1,0);
 		
-		List<Texture2D> process = aCharacter.Images.cutsceneElements[aNum];
-		List<Vector2> sizes = aCharacter.Sizes.mCutsceneSizes[aNum];
-		List<Vector3> positions = aCharacter.Sizes.mCutscenePositions[aNum];
-		for(int i = 0; i < process.Count; i++)
-		{
-			mForegroundElements.add_image(process[i],positions[i],sizes[i]);
-		}
-		
+		string prefix = "CUTSCENE"+aNum+"_";
+		load_images(aCharacter,mForegroundElements,prefix);
+		set_foreground_layer(mForegroundLayer);
 	}
 	
     public void character_changed_listener(CharacterLoader aCharacter)
     {
-		
-
         mBackground.mImage.set_new_texture(aCharacter.Images.background1,aCharacter.Sizes.mBackSize);
-
         mBackgroundElements.destroy();
         mForegroundElements.destroy();
-        for (int i = 0; i < aCharacter.Images.backgroundElements.Count; i++)
-        {
-			if(aCharacter.Sizes.mBackgroundPositions.Count > i)
-			{
-	            mBackgroundElements.add_image(aCharacter.Images.backgroundElements[i], aCharacter.Sizes.mBackgroundPositions[i],aCharacter.Sizes.mBackgroundSizes[i]);
-	            mBackgroundElements.mElements[mBackgroundElements.mElements.Count - 1].Element.Events.add_event(FlatElementAnimations.position_jiggle_delegate(Mathf.Infinity, 5),0);
-	            mBackgroundElements.mElements[mBackgroundElements.mElements.Count - 1].Element.Events.add_event((new FlatElementAnimations.FloatingAnimation(Random.Range(0f, 10f))).animate,0);
-			}
-			else
-				Debug.Log("ERRRROR no position for background image");
-        }
-        for (int i = 0; i < aCharacter.Images.foregroundElements.Count; i++)
-        {
-			if(aCharacter.Sizes.mForegroundPositions.Count > i)
-			{
-            	mForegroundElements.add_image(aCharacter.Images.foregroundElements[i], aCharacter.Sizes.mForegroundPositions[i],aCharacter.Sizes.mForegroundSizes[i]);
-			}
-			else
-				Debug.Log("ERRRROR no position for background image");
-        }
-
-       
+		
+		foreach(var e in aCharacter.Sizes.mStaticElements)
+			Debug.Log(e.Name);
+		foreach(var e in aCharacter.Images.staticElements)
+			Debug.Log(e.Key);
+		
+		load_images(aCharacter,mBackgroundElements,"BG-",1);
+		load_images(aCharacter,mBackgroundElements,"FG-",1);
 
         set_background_layer(mBackgroundLayer);
         set_foreground_layer(mForegroundLayer);
+		
         //resize the camera
         foreach (Camera c in mManager.mCameraManager.AllCameras)
             resize_camera(c, aCharacter.Sizes.mBackSize);

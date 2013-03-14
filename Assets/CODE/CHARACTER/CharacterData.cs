@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 
-public class CharacterData {
+public static class CharacterData {
 	
 	[System.Serializable]
 	public class ImageSizeOffsetAnimationData
@@ -11,7 +11,7 @@ public class CharacterData {
 		public Vector3 Offset {get; set;}
 		public Vector2 Size {get; set;}
 	}
-    //must match with class defined in ggfiles
+	
     [System.Serializable]
     public class CharacterDataSizes
     {
@@ -19,20 +19,18 @@ public class CharacterData {
         public List<List<Vector3>> mMountingPositions = new List<List<Vector3>>();
 		public List<Vector2> mLimbSizes = new List<Vector2>();
 		
-		//TODO delete
-        public List<Vector3> mBackgroundPositions = new List<Vector3>();
-        public List<Vector3> mForegroundPositions = new List<Vector3>();
-		public List<List<Vector3>> mCutscenePositions = new List<List<Vector3>>();
-        public List<Vector2> mBackgroundSizes = new List<Vector2>();
-        public List<Vector2> mForegroundSizes = new List<Vector2>();
-		public List<List<Vector2>> mCutsceneSizes = new List<List<Vector2>>();
-		
 		public List<ImageSizeOffsetAnimationData> mStaticElements = new List<ImageSizeOffsetAnimationData>();
 
         public Vector2 mBackSize = new Vector2();
         public Vector2 mOffset = new Vector2();
         public string mName = "";
     }
+	
+	public static ImageSizeOffsetAnimationData find_static_element(this CharacterDataSizes aData, string name)
+	{
+		try{return aData.mStaticElements.Find(e => e.Name == name);}
+		catch{return null;}
+	}
 
     public class CharacterDataImages
     {
@@ -56,6 +54,6 @@ public class CharacterData {
         public List<Texture2D> foregroundElements = new List<Texture2D>();
 		public List<List<Texture2D>> cutsceneElements = new List<List<Texture2D>>();
 		
-		Dictionary<string, Texture2D> staticElements = new Dictionary<string, Texture2D>();
+		public Dictionary<string, Texture2D> staticElements = new Dictionary<string, Texture2D>();
     }
 }

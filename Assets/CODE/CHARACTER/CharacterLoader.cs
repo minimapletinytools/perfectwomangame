@@ -23,7 +23,7 @@ public class CharacterLoader {
     {
         Name = aName;
         string output = "Loading character " + aName + "\n";
-
+		
         if (aName != "999")
         {
             Images.head = aBundle.Load("HEAD_A", typeof(Texture2D)) as Texture2D;
@@ -38,23 +38,9 @@ public class CharacterLoader {
             Images.torso = aBundle.Load("TORSO_A", typeof(Texture2D)) as Texture2D;
             Images.waist = aBundle.Load("WAIST_A", typeof(Texture2D)) as Texture2D;
         }
-
-        Images.background1 = aBundle.Load("BACKGROUND", typeof(Texture2D)) as Texture2D;
-        for (int i = 0; aBundle.Contains("BG-" + (i+1)); i++)
-            Images.backgroundElements.Add(aBundle.Load("BG-" + (i + 1), typeof(Texture2D)) as Texture2D);
-        for (int i = 0; aBundle.Contains("FG-" + (i + 1)); i++)
-            Images.foregroundElements.Add(aBundle.Load("FG-" + (i + 1), typeof(Texture2D)) as Texture2D);
-        output += "found bg fg: " + Images.backgroundElements.Count + " " + Images.foregroundElements.Count + "\n";
 		
-		int MAX_CUTSCENES = 5;
-		Images.cutsceneElements = new List<List<Texture2D>>();
-		for(int i = 0; i < MAX_CUTSCENES; i++)
-			Images.cutsceneElements.Add(new List<Texture2D>());
-		for(int i = 0; i < MAX_CUTSCENES; i++)
-			for(int j = 0; aBundle.Contains("CUTSCENE"+i+"_"+j);j++)
-				Images.cutsceneElements[i].Add(aBundle.Load("CUTSCENE"+i+"_"+j, typeof(Texture2D)) as Texture2D);
-		//output += "found cutscene: " + Images.cutsceneElements
-
+		
+		Images.background1 = aBundle.Load("BACKGROUND", typeof(Texture2D)) as Texture2D;
         Images.backgroundMusic = aBundle.Load("AUDIO", typeof(AudioClip)) as AudioClip; //optional
 
         TextAsset cd = aBundle.Load("CD", typeof(TextAsset)) as TextAsset;
@@ -62,6 +48,15 @@ public class CharacterLoader {
         System.Xml.Serialization.XmlSerializer xs = new System.Xml.Serialization.XmlSerializer(typeof(CharacterData.CharacterDataSizes));
         Sizes = xs.Deserialize(stream) as CharacterData.CharacterDataSizes;
         output += "offset " + Sizes.mOffset;
+		
+		//new static
+		foreach(CharacterData.ImageSizeOffsetAnimationData e in Sizes.mStaticElements)
+		{
+			Images.staticElements.Add(e.Name,aBundle.Load(e.Name) as Texture2D);
+		}
+		
+		
+		
         Debug.Log(output);
         Done = true;
         yield break;
