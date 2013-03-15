@@ -19,7 +19,7 @@ public class PopupTextObject : FlatElementMultiBase {
 		//TODO finish and position
 		
 		mBackground = new FlatElementImage(aBgTex, aDepth);
-		mText = new FlatElementText(ManagerManager.Manager.mNewRef.genericFont,20,"",aDepth+1);
+		mText = new FlatElementText(ManagerManager.Manager.mNewRef.genericFont,500,"",aDepth+1);
         
 		mElements.Add(new FlatElementMultiBase.ElementOffset(mBackground, new Vector3(0, 0, 0)));
 		mElements.Add(new FlatElementMultiBase.ElementOffset(mText, new Vector3(0, 0, 0)));
