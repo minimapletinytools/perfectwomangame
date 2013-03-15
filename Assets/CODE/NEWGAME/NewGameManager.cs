@@ -195,7 +195,7 @@ public class NewGameManager : FakeMonoBehaviour
 	public void transition_to_PLAY()
 	{
 		GS = GameState.PLAY;
-		//mManager.mInterfaceManager.set_for_PLAY();
+		mManager.mInterfaceManager.set_for_PLAY();
 	}
 	
 	public void transition_to_TRANSITION_play()

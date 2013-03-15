@@ -18,7 +18,14 @@ public class NewMenuReferenceBehaviour : MonoBehaviour {
 	public Texture2D bbGraphBackground;
 	public Texture2D bbGraphFrame;
 	public Texture2D bbScoreBackground;
+	
 	//choice
 	public Texture2D bbChoiceBox;
+	public Texture2D bbChoiceFrame;
+	
+	//pink bar
+	public Texture2D pbBackground;
+	
+
 	
 }

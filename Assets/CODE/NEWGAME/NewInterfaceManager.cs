@@ -234,7 +234,6 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 	public void set_for_PLAY()
 	{
 		set_bb_small();
-		//transition in BB contents
 	}
 	
 	

@@ -1,13 +1,3 @@
-::LIST OF ASSETS NEEDED::
--FONT (maybe in diff sizes)
--GL logo (on transparent BG)
--FA logo (on transparent BG)
--frame for depth image
--performance chart frame and background (similar to score bar)
--word bubble
-	-mid size bubble
-	-large size bubble 
-
 ::NEEEEEW GAME MANAGER NONSENSE::
 -EVENTS (ngm is responsible for most scripted events)
 	-transition to CUTSCENE  (or skip this and go straight to CHOOSE for fetus)

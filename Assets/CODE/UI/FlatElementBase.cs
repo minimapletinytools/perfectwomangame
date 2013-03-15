@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 
+
 public class FlatElementBase {
 
     
@@ -65,7 +66,7 @@ public class FlatElementBase {
         }
 
     }
-
+	
     public virtual float SoftInterpolation{get;set;}
     public TimedEventHandler Events { get; private set; }
 
@@ -168,7 +169,7 @@ public class FlatElementBase {
 
     public FlatElementBase()
     {
-        SoftInterpolation = 0.3f;
+        SoftInterpolation = 0.1f;
         HardScale = Vector3.one;
 		SoftColor = new Color(1,1,1,1);//new Color(0.5f,0.5f,0.5f,1);
         Events = new TimedEventHandler();
@@ -230,10 +231,13 @@ public class FlatElementBase {
     public virtual void update_parameters(float aDeltaTime)
     {
         Events.update(aDeltaTime, this);
-        mCurrentPosition = (1 - SoftInterpolation) * mCurrentPosition + SoftInterpolation * mTargetPosition;
-        mCurrentRotation = Quaternion.Slerp(mCurrentRotation, mTargetRotation, SoftInterpolation);
-        mCurrentScale = (1 - SoftInterpolation) * mCurrentScale + SoftInterpolation * mTargetScale;
-        mCurrentColor = (1 - SoftInterpolation) * mCurrentColor + SoftInterpolation * mTargetColor;
+		//TODO make this time dependent
+		{
+	        mCurrentPosition = (1 - SoftInterpolation) * mCurrentPosition + SoftInterpolation * mTargetPosition;
+	        mCurrentRotation = Quaternion.Slerp(mCurrentRotation, mTargetRotation, SoftInterpolation);
+	        mCurrentScale = (1 - SoftInterpolation) * mCurrentScale + SoftInterpolation * mTargetScale;
+	        mCurrentColor = (1 - SoftInterpolation) * mCurrentColor + SoftInterpolation * mTargetColor;
+		}
     }
 
     public virtual void set()
