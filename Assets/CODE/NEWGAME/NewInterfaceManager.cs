@@ -199,7 +199,7 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 	{
 		PopupTextObject to = new PopupTextObject(null,10);
 		to.HardPosition = random_position();
-		to.set_text_one_line(aMsg); //TODO more than one line??
+		to.Text = aMsg; //TODO more than one line??
 		TimedEventDistributor.TimedEventChain chain = TED.add_event(
 			delegate(float aTime)
 			{

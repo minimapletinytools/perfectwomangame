@@ -77,6 +77,7 @@ public class NewGameManager : FakeMonoBehaviour
 		//set new character data
 		mPerformanceStats.Add(new PerformanceStats());
 		CurrentPerformanceStat.Character = new CharacterIndex(aCharacter.Name);
+		mManager.mInterfaceManager.set_bb_graph(CurrentPerformanceStat.PerformanceGraph);
 		
 		//TODO
 		switch(aCharacter.Name)

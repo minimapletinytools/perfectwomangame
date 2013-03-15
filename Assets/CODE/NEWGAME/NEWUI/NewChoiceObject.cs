@@ -22,13 +22,13 @@ public class NewChoiceObject : FlatElementMultiBase {
 		//mText = new FlatElementSpriteText(,,"",aDepth+1)
         mPerfect = new DifficultyObject(ManagerManager.Manager.mMenuReferences.perfectnessStar, aDepth);
         //mMeter = new MeterImageObject(, MeterImageObject.FillStyle.DU, aDepth + 1);
-        mMeter.Percentage = 0.0f;
+        //mMeter.Percentage = 0.0f;
         
         //mBody.set_target_pose(aPose);
-		mElements.Add(new FlatElementMultiBase.ElementOffset(mSquare, new Vector3(0, 0, 0)));
-		mElements.Add(new FlatElementMultiBase.ElementOffset(mText, new Vector3(0, 0, 0)));
+		//mElements.Add(new FlatElementMultiBase.ElementOffset(mSquare, new Vector3(0, 0, 0)));
+		//mElements.Add(new FlatElementMultiBase.ElementOffset(mText, new Vector3(0, 0, 0)));
 		mElements.Add(new FlatElementMultiBase.ElementOffset(mPerfect, new Vector3(0,0,0)));
-        mElements.Add(new FlatElementMultiBase.ElementOffset(mMeter, new Vector3(0,0,0)));
+        //mElements.Add(new FlatElementMultiBase.ElementOffset(mMeter, new Vector3(0,0,0)));
         
 		if(aActualChar != null)
 			set_actual_character(aActualChar);
