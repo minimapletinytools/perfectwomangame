@@ -5,6 +5,10 @@ using System;
 public struct CharacterIndex
 {
 	public static string[] sLevelToAge = new string[10] { "0", "05", "16", "27", "34", "45", "60", "80", "100", "999" };
+	public static string[] sIndexToName = new string[]
+	{
+		"In your mother's womb"
+	};
 	public int Index { get; private set; } //-1 means no character
 	public int Choice{
 		get{
@@ -68,13 +72,13 @@ public class PerformanceStats
 	public float Score { get; set; }
 	public int Perfect { get; set; }
 	public int Difficulty { get; set; }
-	public FlatGraphElement PerformanceGraph { get; private set; }
+	public PerformanceGraphObject PerformanceGraph { get; private set; }
 	public PerformanceStats()
 	{
 		Character = new CharacterIndex(-1);
 		Score = 0;
 		Perfect = 0;
 		Difficulty = 0;
-		PerformanceGraph = new FlatGraphElement(ManagerManager.Manager.mNewRef.bbGraphBackground,10);
+		PerformanceGraph = new PerformanceGraphObject(11);
 	}
 }
