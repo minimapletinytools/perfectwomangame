@@ -193,7 +193,21 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 	
 	
 	//PINK BAR
+	FlatElementImage mPB;
+	public void setup_pb()
+	{
+		var newRef = mManager.mNewRef;
+		mPB = new FlatElementImage(newRef.pbBackground,0);
+		mPB.HardPosition = random_position();
+		mPB.SoftPosition = mFlatCamera.get_point(-0.5f, 0);
+		
+		//TODO character icons fuck...
+		
+		mElement.Add(mPB);
+	}
 	
+	
+	//TODO positioning helpers
 	
 	//TEXT
 	public void add_timed_text_bubble(string aMsg, float duration)

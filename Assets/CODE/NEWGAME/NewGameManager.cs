@@ -60,6 +60,7 @@ public class NewGameManager : FakeMonoBehaviour
 		mManager.mAssetLoader.new_load_character("0-1",mManager.mCharacterBundleManager);
 		//do oI actually want this here??
 		mManager.mInterfaceManager.setup_bb();
+		mManager.mInterfaceManager.setup_pb();
 	}
 	
 	public void initialize_choice(int choiceIndex)
