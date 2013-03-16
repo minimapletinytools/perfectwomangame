@@ -58,6 +58,7 @@ public class NewGameManager : FakeMonoBehaviour
 	public void initialize_fetus()
 	{
 		mManager.mAssetLoader.new_load_character("0-1",mManager.mCharacterBundleManager);
+		
 		//do oI actually want this here??
 		mManager.mInterfaceManager.setup_bb();
 		mManager.mInterfaceManager.setup_pb();

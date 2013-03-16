@@ -13,6 +13,9 @@ public class NewMenuReferenceBehaviour : MonoBehaviour {
 	public Texture2D perfectWomanLogo;
 	public Texture2D gameLabLogo;
 	
+	//ui
+	public Texture2D uiPerfectStar;
+	
 	//blue bar
 	public Texture2D bbBackground;
 	public Texture2D bbGraphBackground;
@@ -25,6 +28,8 @@ public class NewMenuReferenceBehaviour : MonoBehaviour {
 	
 	//pink bar
 	public Texture2D pbBackground;
+	public Texture2D pbCharacterIconBackground;
+	
 	
 
 	

@@ -194,6 +194,7 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 	
 	//PINK BAR
 	FlatElementImage mPB;
+	CharacterIconObject[] mPBCharacterIcons = new CharacterIconObject[29];
 	public void setup_pb()
 	{
 		var newRef = mManager.mNewRef;
