@@ -10,15 +10,39 @@ public class CharacterBundleManager : FakeMonoBehaviour {
 	public override void Start()
 	{
 		mManager.mAssetLoader.new_load_poses("POSES",this);
+		load_mini_characters();
 	}
 			
 	
+	
+	CharacterLoader[] mMiniCharacters = new CharacterLoader[29];
 	//mini bundle related
 	public void load_mini_characters()
 	{
-	
-	
+		for(int i = 0; i < 28; i++)
+		{
+			
+			CharacterIndex index = new CharacterIndex(i);
+			if(mManager.mAssetLoader.does_bundle_exist(index.StringIdentifier))
+				mManager.mAssetLoader.new_load_mini_characater(index.StringIdentifier, this);
+			else
+				mMiniCharacters[index.Index] = null;
+		}
     }
+	public void mini_loaded_callback(AssetBundle aBundle, string aBundleName)
+	{
+		int index = (new CharacterIndex(aBundleName)).Index;
+		mMiniCharacters[index] = new CharacterLoader();
+		mMiniCharacters[index].complete_load_character(aBundle,aBundleName);
+	}
+	public FlatBodyObject get_mini_character(CharacterIndex aIndex, int aDepth)
+	{
+		if(mMiniCharacters[aIndex.Index] == null)
+			return new FlatBodyObject(mManager.mMenuReferences.miniMan,aDepth);
+		else
+			return new FlatBodyObject(mMiniCharacters[aIndex.Index],aDepth);
+	}
+	
 
     //scene bundle related
 	AssetBundle mLastCharacterBundle = null;

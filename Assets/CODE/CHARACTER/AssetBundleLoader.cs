@@ -48,9 +48,7 @@ public class AssetBundleLoader : FakeMonoBehaviour
     {
         string filename = "file://" + Application.dataPath + "/Resources/" + aChar + "_mini.unity3d";
         Debug.Log("loading mini char from " + filename);
-		//TODO
-		//var cbDelegate = delegate(AssetBundle aBundle) { aManager.scene_loaded_callback(aBundle,aChar); };
-        //mRequestLists.Add(new WWW(filename), cbDelegate);
+        mRequestLists.Add(new WWW(filename), delegate(AssetBundle aBundle) { aManager.mini_loaded_callback(aBundle,aChar); });
     }
 	
  	public void new_load_poses(string aAssetBundle, CharacterBundleManager aManager)
