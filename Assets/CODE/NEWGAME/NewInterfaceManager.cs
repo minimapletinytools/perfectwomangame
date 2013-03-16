@@ -58,7 +58,7 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 	//BLUE BAR
 	FlatElementImage mBB;
 	//PLAY
-	FlatGraphElement mBBLastPerformanceGraph = null; //owned by Character
+	PerformanceGraphObject mBBLastPerformanceGraph = null; //owned by Character
 	FlatElementImage mBBPerformanceGraphFrame;
 	FlatElementText mBBText;
 	FlatElementImage mBBScoreFrame;
@@ -84,9 +84,9 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 		mElement.Add(mBB);
 		
 		//BB small nonsense
-		mBBText = new FlatElementText(mManager.mNewRef.genericFont,25,"",10);
+		mBBText = new FlatElementText(mManager.mNewRef.genericFont,300,"",10);
 		mBBScoreFrame = new FlatElementImage(mManager.mNewRef.bbScoreBackground,9);
-		mBBScoreText  = new FlatElementText(mManager.mNewRef.genericFont,25,"0",10);
+		mBBScoreText  = new FlatElementText(mManager.mNewRef.genericFont,300,"0",10);
 		mBBPerformanceGraphFrame = new FlatElementImage(mManager.mNewRef.bbGraphBackground,9);
 		mBBText.HardPosition = random_position();
 		mBBScoreFrame.HardPosition = random_position();
@@ -109,9 +109,13 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 		
 		
 	}
-	public FlatGraphElement set_bb_graph(FlatGraphElement aGraph)
+	public void set_new_character(PerformanceStats aChar)
 	{
-		FlatGraphElement r = mBBLastPerformanceGraph;
+		
+		//mBBText.Text = aChar.Character
+		mBBText.Text = "CHARACTER " + aChar.Character.StringIdentifier;
+		
+		PerformanceGraphObject aGraph = aChar.PerformanceGraph;
 		if(mBBLastPerformanceGraph != null)
 		{
 			mBBLastPerformanceGraph.SoftColor = new Color(1,1,1,0);
@@ -119,10 +123,7 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 			//mElement.Remove(mBBLastPerformanceGraph);
 		}
 		mBBLastPerformanceGraph = aGraph;
-		//TODO
-		//mBBLastPerformanceGraph.SoftPosition = 
-		
-		return r;
+		mElement.Add(mBBLastPerformanceGraph);
 	}
 	
 	public void set_bb_choice_poses(List<ProGrading.Pose> aPoses)
@@ -170,7 +171,7 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 		fade_bb_contents(false);
 	}
 	
-	//make sure set_bb_graph is called before this
+	//make sure set_new_character is called before this
 	public void set_bb_small()
 	{
 		mBB.set_scale(new Vector3(1,1,1));

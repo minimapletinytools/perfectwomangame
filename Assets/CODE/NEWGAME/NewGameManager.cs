@@ -77,14 +77,14 @@ public class NewGameManager : FakeMonoBehaviour
 		//set new character data
 		mPerformanceStats.Add(new PerformanceStats());
 		CurrentPerformanceStat.Character = new CharacterIndex(aCharacter.Name);
-		mManager.mInterfaceManager.set_bb_graph(CurrentPerformanceStat.PerformanceGraph);
+		mManager.mInterfaceManager.set_new_character(CurrentPerformanceStat);
 		
 		//TODO
 		switch(aCharacter.Name)
 		{
 			case "0-1":
 				DeathCharacter = aCharacter; //so hopefully AssetBundle.unload doesn't fudge this up...
-				TimeRemaining = 0.1f;
+				TimeRemaining = 10f;
 				transition_to_PLAY();
 				break;
 			case "100":
@@ -137,6 +137,9 @@ public class NewGameManager : FakeMonoBehaviour
 			
 			//TODO update score
 			//CurrentPerformanceStat.Score
+			
+			//TODO update graphics
+			CurrentPerformanceStat.PerformanceGraph.update_graph(PercentTimeCompletion,0.5f);
         }
 		
 		if(TimeRemaining < 0)
