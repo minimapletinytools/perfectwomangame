@@ -11,8 +11,6 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 	
     CharacterTextureBehaviour mMiniMan;
 	FlatBodyObject mCurrentBody = null;
-
-    
 	
 	public override void Start()
     {
@@ -194,7 +192,7 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 	
 	//PINK BAR
 	FlatElementImage mPB;
-	CharacterIconObject[] mPBCharacterIcons = new CharacterIconObject[29];
+	CharacterIconObject[] mPBCharacterIcons = new CharacterIconObject[31];
 	public void setup_pb()
 	{
 		var newRef = mManager.mNewRef;
@@ -202,9 +200,31 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 		mPB.HardPosition = random_position();
 		mPB.SoftPosition = mFlatCamera.get_point(-0.5f, 0);
 		
-		//TODO character icons fuck...
-		
+		foreach(CharacterIndex e in CharacterIndex.sAllCharacters)
+		{
+			mPBCharacterIcons[e.Index] = new CharacterIconObject(
+					mManager.mCharacterBundleManager.get_mini_character(e),5);
+			mElement.Add(mPBCharacterIcons[e.Index]);
+		}
 		mElement.Add(mPB);
+		
+		position_pb_character_icons();
+	}
+	
+	public void position_pb_character_icons()
+	{
+		float padding = 100;
+		float hPadding = 150;
+		foreach(CharacterIndex e in CharacterIndex.sAllCharacters)
+		{
+			Vector3 baseOffset =  mPB.SoftPosition;
+			Vector3 position = Vector3.zero;
+			float netWidth = (e.NumberInRow - 1)*padding;
+			position.x = netWidth/2f + padding*e.Choice;
+			position.y = hPadding*e.Age;
+			mPBCharacterIcons[e.Index].SoftPosition = position;
+		}
+		
 	}
 	
 	

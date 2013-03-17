@@ -15,14 +15,12 @@ public class CharacterBundleManager : FakeMonoBehaviour {
 			
 	
 	
-	CharacterLoader[] mMiniCharacters = new CharacterLoader[29];
+	CharacterLoader[] mMiniCharacters = new CharacterLoader[31];
 	//mini bundle related
 	public void load_mini_characters()
 	{
-		for(int i = 0; i < 28; i++)
+		foreach(CharacterIndex index in CharacterIndex.sAllCharacters)
 		{
-			
-			CharacterIndex index = new CharacterIndex(i);
 			if(mManager.mAssetLoader.does_bundle_exist(index.StringIdentifier))
 				mManager.mAssetLoader.new_load_mini_characater(index.StringIdentifier, this);
 			else
@@ -35,12 +33,19 @@ public class CharacterBundleManager : FakeMonoBehaviour {
 		mMiniCharacters[index] = new CharacterLoader();
 		mMiniCharacters[index].complete_load_character(aBundle,aBundleName);
 	}
-	public FlatBodyObject get_mini_character(CharacterIndex aIndex, int aDepth)
+	public CharacterLoader get_mini_character(CharacterIndex aIndex)
 	{
+		return mMiniCharacters[aIndex.Index];
+		/*
 		if(mMiniCharacters[aIndex.Index] == null)
-			return new FlatBodyObject(mManager.mMenuReferences.miniMan,aDepth);
+		{
+			CharacterTextureBehaviour ctb = (GameObject.Instantiate(mManager.mMenuReferences.miniMan) as  GameObject).GetComponent<CharacterTextureBehaviour>();
+			return new FlatBodyObject(ctb,aDepth);
+			GameObject.Destroy(ctb.gameObject);
+		}
 		else
 			return new FlatBodyObject(mMiniCharacters[aIndex.Index],aDepth);
+			*/
 	}
 	
 

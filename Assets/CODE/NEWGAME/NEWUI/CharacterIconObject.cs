@@ -10,7 +10,19 @@ public class CharacterIconObject : FlatElementMultiBase {
     {
 		mBackground = new FlatElementImage(ManagerManager.Manager.mNewRef.pbCharacterIconBackground,aDepth);
 		mDifficultyStars = new DifficultyObject(ManagerManager.Manager.mNewRef.uiPerfectStar,aDepth+2);
-		mBody = new FlatBodyObject(aIcon, aDepth+1);
+		
+		
+		
+		if(aIcon == null)
+		{
+			CharacterTextureBehaviour ctb = (GameObject.Instantiate(ManagerManager.Manager.mMenuReferences.miniMan) as  GameObject).GetComponent<CharacterTextureBehaviour>();
+			mBody =  new FlatBodyObject(ctb,aDepth);
+			GameObject.Destroy(ctb.gameObject);
+		}
+		else
+			mBody =  new FlatBodyObject(aIcon,aDepth);
+		
+		
 		
 		//TODO position
 		mElements.Add(new ElementOffset(mBackground, new Vector3(0,0,0)));
