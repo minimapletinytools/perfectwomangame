@@ -38,7 +38,7 @@ public struct CharacterIndex
 			if(Index == 0) return 0;
 			else if(Index == 29) return 8;
 			else if(Index == 30) return 9;
-			else if(Index < 29) return (Index-1)/4;
+			else if(Index < 29) return (Index-1)/4+1;
 			else return -1;
 		}
 	}
@@ -49,7 +49,7 @@ public struct CharacterIndex
 	}
 	public string StringIdentifier{
 		get{
-			return sLevelToAge[Level] + "-" + Choice;
+			return sLevelToAge[Level] + "-" + (Choice+1);
 		}
 	}
 	public int NumberInRow{

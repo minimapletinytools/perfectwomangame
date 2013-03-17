@@ -21,7 +21,8 @@ public class CharacterBundleManager : FakeMonoBehaviour {
 	{
 		foreach(CharacterIndex index in CharacterIndex.sAllCharacters)
 		{
-			if(mManager.mAssetLoader.does_bundle_exist(index.StringIdentifier))
+			
+			if(mManager.mAssetLoader.does_bundle_exist(index.StringIdentifier+"_mini"))
 				mManager.mAssetLoader.new_load_mini_characater(index.StringIdentifier, this);
 			else
 				mMiniCharacters[index.Index] = null;

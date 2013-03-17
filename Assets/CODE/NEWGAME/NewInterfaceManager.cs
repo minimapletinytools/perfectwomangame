@@ -221,7 +221,7 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 			Vector3 position = Vector3.zero;
 			float netWidth = (e.NumberInRow - 1)*padding;
 			position.x = netWidth/2f + padding*e.Choice;
-			position.y = hPadding*e.Age;
+			position.y = hPadding*e.Level;
 			mPBCharacterIcons[e.Index].SoftPosition = position;
 		}
 		

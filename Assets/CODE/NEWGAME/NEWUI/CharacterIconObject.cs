@@ -22,7 +22,7 @@ public class CharacterIconObject : FlatElementMultiBase {
 		else
 			mBody =  new FlatBodyObject(aIcon,aDepth);
 		
-		
+		mBody.HardShader = ManagerManager.Manager.mReferences.mMiniCharacterShader;
 		
 		//TODO position
 		mElements.Add(new ElementOffset(mBackground, new Vector3(0,0,0)));
