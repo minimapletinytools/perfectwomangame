@@ -52,6 +52,8 @@ public class NewGameManager : FakeMonoBehaviour
 		
 		//initialize game data
 		//initialize_fetus();
+		
+		mChoiceHelper = new ChoiceHelper();
 	
 	}
 	
@@ -111,6 +113,8 @@ public class NewGameManager : FakeMonoBehaviour
 		
 		if(GS == GameState.PLAY)
 			update_PLAY();
+		if(GS == GameState.CHOICE)
+			update_CHOICE();
         
 		TED.update(Time.deltaTime);
 	}
@@ -155,6 +159,17 @@ public class NewGameManager : FakeMonoBehaviour
 		//do I even need this??
 	}
 	
+	ChoiceHelper mChoiceHelper;
+	public void update_CHOICE()
+	{
+		int choice = mChoiceHelper.update(mManager.mInterfaceManager);
+		if(choice != -1)
+		{
+			transition_to_PLAY();
+			transition_to_TRANSITION_play(CurrentPerformanceStat.Character.get_neighbor(choice));
+		}
+		
+	}
 	public void transition_to_CUTSCENE()
 	{
 		GS = GameState.CUTSCENE;
@@ -203,10 +218,14 @@ public class NewGameManager : FakeMonoBehaviour
 		mManager.mInterfaceManager.set_for_PLAY();
 	}
 	
-	public void transition_to_TRANSITION_play()
+	public void transition_to_TRANSITION_play(CharacterIndex aNextCharacter)
 	{
 		GS = GameState.TRANSITION;
-		//mManager.mTransitionCameraManager.fade
+		mManager.mTransitionCameraManager.fade(
+			delegate(){
+				mManager.mAssetLoader.new_load_character(aNextCharacter.StringIdentifier,mManager.mCharacterBundleManager);
+			}
+		);
 	}
 	
 	public void cleanup()

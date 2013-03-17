@@ -74,6 +74,11 @@ public struct CharacterIndex
 			else return 3; //4
 		}
 	}
+	
+	public CharacterIndex get_neighbor(int choiceIndex)
+	{
+		return new CharacterIndex(Level, choiceIndex);
+	}
 	public CharacterIndex(int aId)
 	{
 		Index = aId;

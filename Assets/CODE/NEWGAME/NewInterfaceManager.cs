@@ -99,8 +99,8 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 		
 		//BB choice nonsense
 		var miniMan = ((GameObject)GameObject.Instantiate(menuRef.miniMan)).GetComponent<CharacterTextureBehaviour>();
-		float padding = 250;
-		float netWidth = (BB_NUM_CHOICES + 1)*padding;
+		float padding = 600;
+		float netWidth = (BB_NUM_CHOICES)*padding;
 		for(int i = 0; i < BB_NUM_CHOICES; i++)
 		{
 			mBBChoices.Add(new NewChoiceObject(11));
@@ -171,6 +171,12 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 		{
 			mBBChoices[i].set_actual_character(mManager.mCharacterBundleManager.get_mini_character(all[i]));
 		}
+	}
+	
+	public void update_bb_choice(CharacterIndex aIndex)
+	{
+		
+		//TODO
 	}
 	
 	void fade_bb_contents(bool small)

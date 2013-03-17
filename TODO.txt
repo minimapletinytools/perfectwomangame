@@ -103,6 +103,7 @@
 			-maybe special glowy light effect over grave????
 
 ::TODO3::
+-duplicate package script
 -add pose processing to NGM
 -add stock choice poses
 -consider getting rid of choice box, it's no longer necessary anywayso 
