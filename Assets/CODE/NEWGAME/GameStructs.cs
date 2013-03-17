@@ -25,11 +25,11 @@ public struct CharacterIndex
 	};
 	
 	
+			
 	public int Index { get; private set; } //-1 means no character
 	public int Choice{
 		get{
-			if(Level == 0) return 0;
-			else if (Level > 7) return 0;
+			if(IsSolo) return 0;
 			else return (Index - 1) % 4;
 		}
 	}
@@ -52,6 +52,21 @@ public struct CharacterIndex
 			return sLevelToAge[Level] + "-" + (Choice+1);
 		}
 	}
+	public bool IsSolo{
+		get{
+			return (Level == 0 || Level > 7);
+		}
+	}
+	public List<CharacterIndex> Neighbors{
+		get{
+			List<CharacterIndex> r = new List<CharacterIndex>();
+			if(!IsSolo)
+				for(int i = 0; i < 4; i++)
+					if(i != Choice)
+						r.Add(new CharacterIndex(Level,i));
+			return r;
+		}
+	}
 	public int NumberInRow{
 		get{
 			if(Index == 0 || Index == 29 || Index == 30)
@@ -63,13 +78,13 @@ public struct CharacterIndex
 	{
 		Index = aId;
 	}
-	public CharacterIndex(int ageIndex, int choiceIndex)
+	public CharacterIndex(int levelIndex, int choiceIndex)
 	{
-		if(ageIndex == 0 && choiceIndex == 0) Index = 0;
-		else if(ageIndex == 8 && choiceIndex == 0) Index = 29;
-		else if(ageIndex == 9 && choiceIndex == 0) Index = 30;
-		else if(ageIndex == -1) Index = -1;
-		else Index = 4*(ageIndex-1) + choiceIndex + 1;
+		if(levelIndex == 0 && choiceIndex == 0) Index = 0;
+		else if(levelIndex == 8 && choiceIndex == 0) Index = 29;
+		else if(levelIndex == 9 && choiceIndex == 0) Index = 30;
+		else if(levelIndex == -1) Index = -1;
+		else Index = 4*(levelIndex-1) + choiceIndex + 1;
 	}
 	public CharacterIndex(string aBundleName)
 	{

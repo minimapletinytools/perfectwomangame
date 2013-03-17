@@ -103,6 +103,9 @@
 			-maybe special glowy light effect over grave????
 
 ::TODO3::
+-add pose processing to NGM
+-add stock choice poses
+-consider getting rid of choice box, it's no longer necessary anywayso 
 -either write fancy pants shader for TBM or add script to camera to render first to texture anda then render to screen with correct blending
 -waist angle hack	
 	-waist angle = interpolation between knee position angle and desired angle 
@@ -113,10 +116,10 @@ DONE-make a test build relatively soon to make sure everything is stil OK
 	-FUCK
 	-FUCK FUCK FUCK
 -setup asset bundler to load new poses
--move character
--make it so you can choose your pose in testing scene
+-move character??
+DONE-make it so you can choose your pose in testing scene
 -mellow out glow
--add character name to characterdata so you don't need to pass name around :(
+DONE-add character name to characterdata so you don't need to pass name around :(
 -delete
 	-InterfaceManager
 	-GameManger

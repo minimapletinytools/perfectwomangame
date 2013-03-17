@@ -95,22 +95,40 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 		mElement.Add(mBBScoreText);
 		mElement.Add(mBBPerformanceGraphFrame);
 		
+		
+		
 		//BB choice nonsense
 		var miniMan = ((GameObject)GameObject.Instantiate(menuRef.miniMan)).GetComponent<CharacterTextureBehaviour>();
-		mBBMiniMan = new FlatBodyObject(miniMan,10);
-		mBBChoiceBox = new FlatElementImage(newRef.bbChoiceBox,15);
+		float padding = 250;
+		float netWidth = (BB_NUM_CHOICES + 1)*padding;
 		for(int i = 0; i < BB_NUM_CHOICES; i++)
 		{
 			mBBChoices.Add(new NewChoiceObject(11));
 			mBBChoiceBodies.Add(new FlatBodyObject(miniMan,11));
+			float xOffset = netWidth/2 - padding*i;
+			mBBChoices[i].HardPosition = new Vector3(xOffset,0,0);
+			mBBChoiceBodies[i].HardPosition = new Vector3(xOffset,-50,0);
+			
+			mElement.Add(mBBChoices[i]);
+			mElement.Add(mBBChoiceBodies[i]);
 		}
 		
+		mBBMiniMan = new FlatBodyObject(miniMan,10);
+		mBBChoiceBox = new FlatElementImage(newRef.bbChoiceBox,15);
+		mBBMiniMan.HardPosition = new Vector3(netWidth/2 - padding*3,0,0);
+		mBBChoiceBox.HardPosition = random_position();
 		
+		mElement.Add(mBBMiniMan);
+		mElement.Add(mBBChoiceBox);
+		
+		GameObject.Destroy(mMiniMan.gameObject);
 	}
+	
+	//this gets called during CHOOSE so BB is full sized
+	//TODO split this into BB and PB parts or move it to the bottom of this file
 	public void set_new_character(PerformanceStats aChar)
 	{
-		
-		//mBBText.Text = aChar.Character
+		//BB
 		mBBText.Text = "CHARACTER " + aChar.Character.StringIdentifier;
 		
 		PerformanceGraphObject aGraph = aChar.PerformanceGraph;
@@ -122,6 +140,15 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 		}
 		mBBLastPerformanceGraph = aGraph;
 		mElement.Add(mBBLastPerformanceGraph);
+		
+		//PB
+		//disable the other characters no that we have made a choice
+		foreach(CharacterIndex e in aChar.Character.Neighbors)
+		{
+			mPBCharacterIcons[e.Index].Enabled = false;
+			//mPBCharacterIcons[e.Index].destroy();
+			//mElement.Remove(mPBCharacterIcons[e.Index]);
+		}
 	}
 	
 	public void set_bb_choice_poses(List<ProGrading.Pose> aPoses)
@@ -131,11 +158,17 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 			mBBChoiceBodies[i].set_target_pose(aPoses[i]);
 		}
 	}
-	public void set_bb_choice_bodies(List<CharacterLoader> aBodies)
+	
+	//TODO arrrrg fuck I want to reuse my flatbody objects!!!
+	//
+	public void set_bb_choice_bodies(CharacterIndex aIndex)
 	{
-		for(int i = 0; i < BB_NUM_CHOICES; i++)
+		CharacterIndex index = new CharacterIndex(aIndex.Level +1,0);
+		var all = index.Neighbors;
+		all.Add(index);
+		for(int i = 0; i < all.Count; i++)
 		{
-			mBBChoices[i].set_actual_character(aBodies[i]);
+			mBBChoices[i].set_actual_character(mManager.mCharacterBundleManager.get_mini_character(all[i]));
 		}
 	}
 	
@@ -217,12 +250,12 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 		float hPadding = 150;
 		foreach(CharacterIndex e in CharacterIndex.sAllCharacters)
 		{
-			Vector3 baseOffset =  mPB.SoftPosition;
+			Vector3 baseOffset =  mPB.SoftPosition; //TODO overall offset
 			Vector3 position = Vector3.zero;
 			float netWidth = (e.NumberInRow - 1)*padding;
-			position.x = netWidth/2f + padding*e.Choice;
-			position.y = hPadding*e.Level;
-			mPBCharacterIcons[e.Index].SoftPosition = position;
+			position.x = netWidth/2f - padding*e.Choice;
+			position.y = -hPadding*e.Level; // TODO make space for blue bar
+			mPBCharacterIcons[e.Index].SoftPosition = baseOffset + position;
 		}
 		
 	}
