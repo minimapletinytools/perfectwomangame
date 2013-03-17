@@ -3,7 +3,7 @@ using System.Collections;
 
 public class NewChoiceObject : FlatElementMultiBase {
     public FlatElementImage mSquare;
-	public FlatElementSpriteText mText;
+	public FlatElementText mText;
 	public DifficultyObject mPerfect;
 	FlatElementMultiBase.ElementOffset mBodyElementOffset = null;
     public MeterImageObject mMeter = null;
@@ -17,18 +17,22 @@ public class NewChoiceObject : FlatElementMultiBase {
 	}
     void initialize(CharacterLoader aActualChar, int aDepth)
     {
+		var newRef = ManagerManager.Manager.mNewRef;
 		//TODO finish and reposition everything
-		//mSquare = new FlatElementImage(, aDepth);
-		//mText = new FlatElementSpriteText(,,"",aDepth+1)
+		mSquare = new FlatElementImage(newRef.bbChoiceBox, aDepth);
+		mText = new FlatElementText(newRef.genericFont,100,"meow",aDepth +1);
         mPerfect = new DifficultyObject(ManagerManager.Manager.mMenuReferences.perfectnessStar, aDepth);
-        //mMeter = new MeterImageObject(, MeterImageObject.FillStyle.DU, aDepth + 1);
-        //mMeter.Percentage = 0.0f;
+        mMeter = new MeterImageObject(newRef.bbChoiceBox, MeterImageObject.FillStyle.DU, aDepth + 1);
+        mMeter.Percentage = 0.0f;
         
         //mBody.set_target_pose(aPose);
-		//mElements.Add(new FlatElementMultiBase.ElementOffset(mSquare, new Vector3(0, 0, 0)));
-		//mElements.Add(new FlatElementMultiBase.ElementOffset(mText, new Vector3(0, 0, 0)));
-		mElements.Add(new FlatElementMultiBase.ElementOffset(mPerfect, new Vector3(0,0,0)));
-        //mElements.Add(new FlatElementMultiBase.ElementOffset(mMeter, new Vector3(0,0,0)));
+		float leftOffset = 20;
+		float rightOffset = 70;
+		
+		mElements.Add(new FlatElementMultiBase.ElementOffset(mSquare, new Vector3(leftOffset,0,0)));
+		mElements.Add(new FlatElementMultiBase.ElementOffset(mText, new Vector3(leftOffset,10,0)));
+		mElements.Add(new FlatElementMultiBase.ElementOffset(mPerfect, new Vector3(rightOffset,0,0)));
+        mElements.Add(new FlatElementMultiBase.ElementOffset(mMeter, new Vector3(leftOffset,0,0)));
         
 		if(aActualChar != null)
 			set_actual_character(aActualChar);
@@ -49,6 +53,8 @@ public class NewChoiceObject : FlatElementMultiBase {
 		//add the new one
 		mBodyElementOffset = new FlatElementMultiBase.ElementOffset(new FlatBodyObject(aActualChar, Depth + 2), new Vector3(0,0,0));
 		mElements.Add(mBodyElementOffset);
+		
+		mText.Text = aActualChar.Name; //TODO actual name
 	}
 
     public void set_pose(ProGrading.Pose aPose)

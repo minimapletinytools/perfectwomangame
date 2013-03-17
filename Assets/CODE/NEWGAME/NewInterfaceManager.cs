@@ -106,8 +106,8 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 			mBBChoices.Add(new NewChoiceObject(11));
 			mBBChoiceBodies.Add(new FlatBodyObject(miniMan,11));
 			float xOffset = netWidth/2 - padding*i;
-			mBBChoices[i].HardPosition = new Vector3(xOffset,0,0);
-			mBBChoiceBodies[i].HardPosition = new Vector3(xOffset,-50,0);
+			mBBChoices[i].HardPosition = mFlatCamera.get_point(0, 0) + new Vector3(xOffset,0,0);
+			mBBChoiceBodies[i].HardPosition = mFlatCamera.get_point(0, 0) + new Vector3(xOffset,-50,0);
 			
 			mElement.Add(mBBChoices[i]);
 			mElement.Add(mBBChoiceBodies[i]);
@@ -115,7 +115,7 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 		
 		mBBMiniMan = new FlatBodyObject(miniMan,10);
 		mBBChoiceBox = new FlatElementImage(newRef.bbChoiceBox,15);
-		mBBMiniMan.HardPosition = new Vector3(netWidth/2 - padding*3,0,0);
+		mBBMiniMan.HardPosition = mFlatCamera.get_point(0, 0) + new Vector3(netWidth/2 - padding*3,0,0);
 		mBBChoiceBox.HardPosition = random_position();
 		
 		mElement.Add(mBBMiniMan);
@@ -151,6 +151,8 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 		}
 	}
 	
+	
+	
 	public void set_bb_choice_poses(List<ProGrading.Pose> aPoses)
 	{
 		for(int i = 0; i < BB_NUM_CHOICES; i++)
@@ -158,7 +160,6 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 			mBBChoiceBodies[i].set_target_pose(aPoses[i]);
 		}
 	}
-	
 	//TODO arrrrg fuck I want to reuse my flatbody objects!!!
 	//
 	public void set_bb_choice_bodies(CharacterIndex aIndex)
@@ -195,7 +196,8 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 	{
 		Vector2 baseSize = new Vector2(mBB.BoundingBox.width,mBB.BoundingBox.height);
 		Vector2 desiredSize = new Vector2(mFlatCamera.Width+30,mFlatCamera.Height+30);
-		mBB.set_scale(new Vector3(desiredSize.x/baseSize.x,desiredSize.y/baseSize.y,1));
+		mBB.SoftScale = new Vector3(desiredSize.x/baseSize.x,desiredSize.y/baseSize.y,1);
+		mBB.SoftPosition = mFlatCamera.get_point(0, 0);
 		
 		//TODO CHOICE contents
 		
@@ -309,6 +311,18 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 	//TODO This should take list of changes as argument
 	public void set_for_CUTSCENE(System.Action cutsceneCompleteCb)
 	{
+		//used for skipping cutscene
+		TED.add_event(
+			delegate(float aTime)
+			{
+				add_timed_text_bubble("CUTSCENE HERE",1);
+				return true;
+			},
+        0).then_one_shot( //dummy 
+			delegate(){cutsceneCompleteCb();},1);
+		return;
+		
+		
 		
 		
 		//TODO rearange INTERFACE
@@ -361,11 +375,6 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 	{
 		//TODO
 		set_bb_full_size();
-		//transition out BB contents
-		//transition in CHOICE items
-		
-		int numberEntries = 4; //this means 3 choices + space for person
-		
 	}
 	
 	//returns amount of time this will take

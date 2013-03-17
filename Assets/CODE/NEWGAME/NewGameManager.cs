@@ -86,7 +86,7 @@ public class NewGameManager : FakeMonoBehaviour
 		{
 			case "0-1":
 				DeathCharacter = aCharacter; //so hopefully AssetBundle.unload doesn't fudge this up...
-				TimeRemaining = 10f;
+				TimeRemaining = 1f;
 				transition_to_PLAY();
 				break;
 			case "100":
