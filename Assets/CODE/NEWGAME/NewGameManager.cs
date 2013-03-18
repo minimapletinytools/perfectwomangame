@@ -82,21 +82,23 @@ public class NewGameManager : FakeMonoBehaviour
 		{
 			case "0-1":
 				DeathCharacter = aCharacter; //so hopefully AssetBundle.unload doesn't fudge this up...
-				TimeRemaining = 1f;
+				TimeRemaining = 30f;
 				transition_to_PLAY();
 				break;
 			case "100":
-				TimeRemaining = 5;
+				TimeRemaining = 30f;
 				transition_to_PLAY();
 				break;
 			case "999":
 				//transition_to_GRAVE();
 				break;
 			default:
-				TimeRemaining = 5;
+				TimeRemaining = 30f;
 				transition_to_PLAY();
 				break;
 		}
+		
+		mManager.mTransitionCameraManager.fade_in_with_sound();
 	}
     
 	
@@ -106,7 +108,13 @@ public class NewGameManager : FakeMonoBehaviour
         //User = (mManager.mZigManager.has_user());
 		
 		if(GS == GameState.PLAY)
+		{
+			if(Input.GetKeyDown(KeyCode.Alpha0))
+			{
+				TimeRemaining = 0;
+			}
 			update_PLAY();
+		}
 		if(GS == GameState.CHOICE)
 			update_CHOICE();
         
@@ -159,8 +167,8 @@ public class NewGameManager : FakeMonoBehaviour
 		int choice = mChoiceHelper.update(mManager.mInterfaceManager);
 		if(choice != -1)
 		{
-			transition_to_PLAY();
-			transition_to_TRANSITION_play(CurrentPerformanceStat.Character.get_neighbor(choice));
+			Debug.Log ("choice is made " + choice);
+			transition_to_TRANSITION_play(CurrentPerformanceStat.Character.get_future_neighbor(choice));
 		}
 		
 	}
@@ -190,7 +198,7 @@ public class NewGameManager : FakeMonoBehaviour
 		
 		//var chain = TED.add_event(
 		mManager.mInterfaceManager.set_for_DEATH(CurrentPerformanceStat.Character)
-			.then_one_shot(delegate(){mManager.mTransitionCameraManager.fade(initialize_GRAVE);},3);
+			.then_one_shot(delegate(){mManager.mTransitionCameraManager.fade_out_with_sound(initialize_GRAVE);},3);
 	}
 	
 	public void initialize_GRAVE()
@@ -204,6 +212,7 @@ public class NewGameManager : FakeMonoBehaviour
 	{
 		GS = GameState.CHOICE;
 		mChoiceHelper.shuffle_and_set_choice_poses(mManager.mInterfaceManager);
+		//TODO mManager.mMusicManager.play_sound_effect(
 		mManager.mInterfaceManager.set_for_CHOICE();	
 	}
 	
@@ -216,11 +225,16 @@ public class NewGameManager : FakeMonoBehaviour
 	public void transition_to_TRANSITION_play(CharacterIndex aNextCharacter)
 	{
 		GS = GameState.TRANSITION;
-		mManager.mTransitionCameraManager.fade(
+		mManager.mInterfaceManager.set_for_PLAY(); //this is jsut visual
+		TED.add_one_shot_event(
 			delegate(){
-				mManager.mAssetLoader.new_load_character(aNextCharacter.StringIdentifier,mManager.mCharacterBundleManager);
-			}
-		);
+				mManager.mTransitionCameraManager.fade_out_with_sound(
+					delegate(){
+						mManager.mAssetLoader.new_load_character(aNextCharacter.StringIdentifier,mManager.mCharacterBundleManager);
+					}
+				);
+			},
+		1);
 	}
 	
 	public void cleanup()

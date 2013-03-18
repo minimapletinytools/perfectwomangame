@@ -4,7 +4,7 @@ using System.Linq;
 public class ChoiceHelper
 {
 	public const float SELECTION_THRESHOLD = 9;
-    public const float CHOOSING_PERCENTAGE_GROWTH_RATE = 0.15f;
+    public const float CHOOSING_PERCENTAGE_GROWTH_RATE = 1f;
     public const float CHOOSING_PERCENTAGE_DECLINE_RATE = 1f;
 	
 	
@@ -21,7 +21,6 @@ public class ChoiceHelper
 	public ChoiceHelper()
 	{
 		load_choice_poses();
-		
 		ChoosingPercentages = new float[4]{0,0,0,0};
 	}
 	
@@ -34,6 +33,8 @@ public class ChoiceHelper
 	
 	public void shuffle_and_set_choice_poses(NewInterfaceManager aInterface)
 	{
+		//reset the choosing percentages from last round
+		ChoosingPercentages = new float[4]{0,0,0,0};
 		mChoicePoses = get_random_possible_poses();
 		aInterface.set_bb_choice_poses(mChoicePoses.ToList());
 	}
@@ -47,7 +48,9 @@ public class ChoiceHelper
         {
             if (mChoicePoses[i] != null)
             {
-                float grade = ProGrading.grade_pose(CurrentPose, mChoicePoses[i]);
+				float grade = 999999;
+				if(CurrentPose != null && mChoicePoses[i] != null)
+					grade = ProGrading.grade_pose(CurrentPose, mChoicePoses[i]);
                 if (grade < minGrade)
                 {
                     minGrade = grade;
@@ -89,12 +92,15 @@ public class ChoiceHelper
             {
                 ChoosingPercentages[i] = Mathf.Clamp01(ChoosingPercentages[i] - CHOOSING_PERCENTAGE_DECLINE_RATE * Time.deltaTime);
             }
+			aInterface.set_bb_choice_percentages(i,ChoosingPercentages[i]);
             if (ChoosingPercentages[i] == 1)
             {
                 //choice is made!!!
 				return NextContendingChoice;
             }
         }
+		
+        
 		return -1;
 	}
 	

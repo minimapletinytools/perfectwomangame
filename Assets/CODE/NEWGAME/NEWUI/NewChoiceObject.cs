@@ -14,6 +14,7 @@ public class NewChoiceObject : FlatElementMultiBase {
 	
 	public float Percentage
 	{
+		get{return mMeter.Percentage;}
 		set
 		{
 			mMeter.Percentage = value;

@@ -74,7 +74,11 @@ public struct CharacterIndex
 			else return 3; //4
 		}
 	}
-	
+	public CharacterIndex get_future_neighbor(int choiceIndex)
+	{
+		if(Level == 9) return new CharacterIndex(-1);
+		return new CharacterIndex(Level +1,choiceIndex);
+	}
 	public CharacterIndex get_neighbor(int choiceIndex)
 	{
 		return new CharacterIndex(Level, choiceIndex);

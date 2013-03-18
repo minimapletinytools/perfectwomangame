@@ -16,8 +16,10 @@ public class PerformanceGraphObject  : FlatElementMultiBase {
 	
 	public void update_graph(float aTime, float aScore)
 	{
+		//TODO needs to compensate for the fact that the score box is not exactly in the center
 		//TODO colorInterp should go trhough more colors...
-		Color colorInterp = (new Color(1,0,0)) * (1-aScore) + (new Color(0,1,0.5f)) * (aScore);
-		mBackground.draw_point(new Vector2(aTime,aScore),7,colorInterp);
+		//Color colorInterp = (new Color(1,0,0)) * (1-aScore) + (new Color(0,1,0.5f)) * (aScore);
+		Color colorInterp = new Color(0,0,0);
+		mBackground.draw_point(new Vector2(aTime,aScore),1,colorInterp);
 	}
 }

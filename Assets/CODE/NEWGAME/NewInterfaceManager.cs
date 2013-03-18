@@ -84,7 +84,7 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 		//BB small nonsense
 		mBBText = new FlatElementText(mManager.mNewRef.genericFont,300,"",10);
 		mBBScoreFrame = new FlatElementImage(mManager.mNewRef.bbScoreBackground,9);
-		mBBScoreText  = new FlatElementText(mManager.mNewRef.genericFont,300,"0",10);
+		mBBScoreText  = new FlatElementText(mManager.mNewRef.genericFont,600,"0",10);
 		mBBPerformanceGraphFrame = new FlatElementImage(mManager.mNewRef.bbGraphBackground,9);
 		mBBText.HardPosition = random_position();
 		mBBScoreFrame.HardPosition = random_position();
@@ -162,14 +162,23 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 	//called by set_for_PLAY()
 	void set_bb_small()
 	{
-		mBB.set_scale(new Vector3(1,1,1));
+		mBB.SoftScale = new Vector3(1,1,1);
 		mBB.SoftPosition = mFlatCamera.get_point(-0.5f, 0) + new Vector3(0,-150,0);
-		mBBText.SoftPosition = mBB.SoftPosition + new Vector3(0,100,0);
-		mBBScoreFrame.SoftPosition = mBB.SoftPosition + new Vector3(-250,-50,0);
-		mBBScoreText.SoftPosition = mBB.SoftPosition + new Vector3(-250,-50,0);
-		mBBLastPerformanceGraph.SoftPosition = mBB.SoftPosition + new Vector3(100,-50,0);
+		mBBText.SoftPosition = mBB.SoftPosition + new Vector3(0,170,0);
+		mBBScoreFrame.SoftPosition = mBB.SoftPosition + new Vector3(-400,-100,0);
+		mBBScoreText.SoftPosition = mBB.SoftPosition + new Vector3(-400,-100,0);
+		mBBLastPerformanceGraph.SoftPosition = mBB.SoftPosition + new Vector3(200,-100,0);
 		
 		fade_bb_contents(true);
+		
+		//meter objects overrides soft color so we have to manually turn the meter off..
+		TED.add_event(
+			delegate(float aTime){
+				foreach(NewChoiceObject e in mBBChoices)
+					e.Percentage = Mathf.Clamp01(e.Percentage * (1-aTime) + 0 * aTime);
+				return (aTime >= 1);
+			},
+		0);
 	}
 	//called by NewGameManager
 	public void update_bb_score(float aScore)
@@ -210,12 +219,13 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 		}
 	}
 	//called by ChoiceHelper
-	public void set_bb_choice_percentages(CharacterIndex aIndex, float aPercent)
+	public void set_bb_choice_percentages(int aIndex, float aPercent)
 	{
-		int index = aIndex.Choice == 3 ? 2 : aIndex.Choice; //TODO delete this
+		//int index = aIndex == 3 ? 2 : aIndex; //TODO delete this
+		if(aIndex == 3) return; //TODO delete this
+		
+		int index = aIndex;
 		mBBChoices[index].Percentage = aPercent;
-		mBBMiniMan.SoftPosition = mBBChoiceBodies[index].SoftPosition;
-		mBBChoiceBox.HardPosition = new Vector3(mBBMiniMan.SoftPosition.x,mBBChoiceBox.HardPosition.y, mBBChoiceBox.HardPosition.z);
 	}
 	
 	
@@ -315,7 +325,8 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 		//disable the other characters no that we have made a choice
 		foreach(CharacterIndex e in aChar.Character.Neighbors)
 		{
-			mPBCharacterIcons[e.Index].Enabled = false;
+			if(mPBCharacterIcons[e.Index] != null)
+				mPBCharacterIcons[e.Index].Enabled = false;
 			//mPBCharacterIcons[e.Index].destroy();
 			//mElement.Remove(mPBCharacterIcons[e.Index]);
 		}
@@ -467,3 +478,4 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 	
 	
 }
+	

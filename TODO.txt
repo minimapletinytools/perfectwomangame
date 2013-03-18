@@ -103,7 +103,7 @@
 			-maybe special glowy light effect over grave????
 
 ::TODO3::
-
+-make audio NOT 3D in ggfiles
 -consider still using the cool chaarcter icons that lea drew for teh pink backgrounds...
 	-use poses for future, icons for past
 -now that you have take/return bodies, use them in NIM between newchoiceobject and charactericon
@@ -124,7 +124,7 @@
 	-GameManger
 	-GameEvents
 	-InterfaceBehaviour
-	
+
 DONE-make stuff in NIM private as appropriate
 DONE-reorganize functions in NIM based on when they are called and name them appropriately
 DONE-duplicate package script

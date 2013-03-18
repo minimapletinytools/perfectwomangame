@@ -5,7 +5,7 @@ using System.Collections.Generic;
 //this class also handles initialization camera nonsense
 public class TransitionCameraManager : FakeMonoBehaviour
 {
-	static float FADE_TIME = 0.2f;
+	static float FADE_TIME = 2.3f;//0.2f;
 	static float MAX_FADE = 40;
 	
 	
@@ -116,7 +116,9 @@ public class TransitionCameraManager : FakeMonoBehaviour
 		//if 3 seconds elapesed and user is in tpose, 1 sec GOOD, begin fadeout
 			//on fadeoutcb, move depth image to lower left corner	
 		
-		TED.add_event(go_to_fetus,0.1f);
+		//skip straight to game
+		//DELETE
+		TED.add_event(go_to_fetus,2);//0.1f);
 	}
 	
 	public void destroy_configuration_display()
@@ -131,8 +133,7 @@ public class TransitionCameraManager : FakeMonoBehaviour
 	public bool go_to_fetus(float time)
 	{
 		//TODO if user is not roughly in the center of the screen, return false
-		
-		fade(
+		TED.add_one_shot_event(
 			delegate()
 			{
 				mManager.mGameManager.initialize_fetus();
@@ -141,33 +142,44 @@ public class TransitionCameraManager : FakeMonoBehaviour
 		);
 		return true;
 	}
-	
-	public bool fade_in(float time)
+	public void fade_in_with_sound()
 	{
-		float l = (time/FADE_TIME);
-		mSunShafts.sunShaftIntensity = (1-l)*MAX_FADE + l*0;
-		return l>=1;
-	}
-	public bool fade_out(float time)
-	{
-		float l = (time/FADE_TIME);
-		mSunShafts.sunShaftIntensity = (1-l)*0 + l*MAX_FADE;
-		return l>=1;
-	}
-	public void fade(System.Action aFadeCompleteCb)
-	{
-		
-		TimedEventDistributor.TimedEventChain chain = TED.add_event(
-			fade_out,
-        0).then_one_shot(
-			delegate()
-			{
-				aFadeCompleteCb();
+		TED.add_one_shot_event(
+			delegate(){ 
+				mManager.mMusicManager.play_sound_effect("transitionIn"); 
 			}
 		).then(
 			fade_in,
 		0);
 	}
+	public void fade_out_with_sound(System.Action aFadeCompleteCb)
+	{
+			
+		TED.add_one_shot_event(
+			delegate(){ 
+				float delay = FADE_TIME-mManager.mMusicManager.get_sound_clip("transitionIn").length;
+				if(delay < 0) delay = 0; 
+				TED.add_one_shot_event( //too bad we don't have awesome branching event chain
+					delegate(){ mManager.mMusicManager.play_sound_effect("transitionOut"); },
+				delay);
+			}
+		).then(
+			fade_out,
+        0).then_one_shot(
+			delegate(){ aFadeCompleteCb(); }
+		);
+	}
 	
-    
+    bool fade_in(float time)
+	{
+		float l = (time/FADE_TIME);
+		mSunShafts.sunShaftIntensity = (1-l)*MAX_FADE + l*0;
+		return l>=1;
+	}
+	bool fade_out(float time)
+	{
+		float l = (time/FADE_TIME);
+		mSunShafts.sunShaftIntensity = (1-l)*0 + l*MAX_FADE;
+		return l>=1;
+	}
 }

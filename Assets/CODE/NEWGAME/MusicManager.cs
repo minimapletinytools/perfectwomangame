@@ -7,9 +7,6 @@ public class MusicManager : FakeMonoBehaviour
 	AudioSource mMusicSource;
 	AudioSource mFadingSource;
 	
-	AudioClip mFadeInClip; 
-	AudioClip mFadeOutClip;
-	
 	
 	Dictionary<string,AudioClip> mSoundEffects  = new Dictionary<string, AudioClip>();
 	
@@ -37,6 +34,13 @@ public class MusicManager : FakeMonoBehaviour
 		TED.update(Time.deltaTime);
 	}
 	
+	public AudioClip get_sound_clip(string aSound)
+	{
+		if(mSoundEffects.ContainsKey(aSound))
+			return mSoundEffects[aSound];
+		return null;
+	}
+	
 	public void play_sound_effect(string aSound)
 	{
 		if(mSoundEffects.ContainsKey(aSound))
@@ -49,9 +53,7 @@ public class MusicManager : FakeMonoBehaviour
 	
 	public void fade_out()
 	{
-		TED.add_one_shot_event(
-			delegate(){ mFadingSource.PlayOneShot(mFadeOutClip); }
-		).then(
+		TED.add_event(
 			delegate(float time)
 			{
 				float l = time/FADE_TIME;
@@ -63,9 +65,7 @@ public class MusicManager : FakeMonoBehaviour
 	
 	public void fade_in()
 	{
-		TED.add_one_shot_event(
-			delegate(){ mFadingSource.PlayOneShot(mFadeOutClip); }
-		).then(
+		TED.add_event(
 			delegate(float time)
 			{
 				float l = time/FADE_TIME;

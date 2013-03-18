@@ -29,6 +29,8 @@ public class CharacterIconObject : FlatElementMultiBase {
 		mElements.Add(new ElementOffset(mDifficultyStars, new Vector3(0,0,0)));
 		mElements.Add(new ElementOffset(mBody, new Vector3(0,0,0)));
 		
+		PrimaryGameObject = create_primary_from_elements();
+		
 		Depth = aDepth;
 	}
 	public FlatBodyObject take_body()

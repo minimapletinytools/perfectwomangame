@@ -42,6 +42,8 @@ public class MeterImageObject : FlatElementBase
     public override void update_parameters(float aDeltaTime)
     {
         mCurrentPercentage = mCurrentPercentage * (1 - SoftInterpolation) + mPercentage * (SoftInterpolation);
+		//TODO the right way to do this is to use SoftColor to cache the desired color
+		//and actually set it over here blending against the meter color.
         SoftColor = (new Color(0.5f, 0, 0, 0.2f))*mCurrentPercentage + (new Color(0,0,0.5f,0.2f))*(1-mCurrentPercentage); //hack
         if (Style == FillStyle.DU)
         {

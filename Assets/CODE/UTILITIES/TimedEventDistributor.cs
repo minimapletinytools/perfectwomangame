@@ -3,7 +3,8 @@ using System.Collections.Generic;
 
 public class TimedEventDistributor 
 {
-
+	
+	//TODO to make this even more awesome you should have a list of chains to follow!!
     public class TimedEventChain
     {
         TimedEventChain mFollow = null;
@@ -105,7 +106,7 @@ public class TimedEventDistributor
             e.Key.update(aDeltaTime);
             if (e.Key.isExpired())
             {
-                if (e.Value(e.Key.getTImeSinceExpired()))
+                if (e.Value(e.Key.getTimeSinceExpired()))
                     mEvents.Remove(e.Key);
             }
         }
