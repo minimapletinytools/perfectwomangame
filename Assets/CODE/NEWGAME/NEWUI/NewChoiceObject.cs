@@ -7,6 +7,7 @@ public class NewChoiceObject : FlatElementMultiBase {
 	public DifficultyObject mPerfect;
 	FlatElementMultiBase.ElementOffset mBodyElementOffset = null;
     public MeterImageObject mMeter = null;
+	FlatBodyObject mBody = null;
 
     float mSide = 45;
     float mRightBot = -80;
@@ -57,12 +58,25 @@ public class NewChoiceObject : FlatElementMultiBase {
 			mBodyElementOffset.Element.destroy();
 		}
 		//add the new one
-		mBodyElementOffset = new FlatElementMultiBase.ElementOffset(new FlatBodyObject(aActualChar, Depth + 2), new Vector3(0,0,0));
+		mBody = new FlatBodyObject(aActualChar, Depth + 2);
+		mBodyElementOffset = new FlatElementMultiBase.ElementOffset(mBody, new Vector3(0,0,0));
 		mElements.Add(mBodyElementOffset);
 		
 		mText.Text = aActualChar.Name; //TODO actual name
 	}
-
+	
+	public FlatBodyObject take_body()
+	{
+		FlatBodyObject r = reposses_element(mBody) as FlatBodyObject;
+		mBody = null;
+		return r;
+	}
+	public void return_body(FlatBodyObject aBody)
+	{
+		mBody = aBody;
+		mElements.Add(new ElementOffset(aBody, new Vector3(0,0,0)));
+	}
+	
     public void set_pose(ProGrading.Pose aPose)
     {
         if (mBodyElementOffset != null)

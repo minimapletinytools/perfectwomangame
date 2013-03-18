@@ -19,7 +19,26 @@ public class FlatElementMultiBase : FlatElementBase
         }
     }
     public List<ElementOffset> mElements = new List<ElementOffset>();
-
+	
+	//returns null if element did not exist.
+	public FlatElementBase reposses_element(FlatElementBase aRemove)
+	{
+		for(int i = 0; i < mElements.Count; i++)
+			if(mElements[i].Element == aRemove)
+			{
+				mElements.RemoveAt(i);
+				return aRemove;
+			}
+		return null;
+	}
+	
+	public void destroy_element(FlatElementBase aRemove)
+	{
+		FlatElementBase d = reposses_element(aRemove);
+		if(d != null)
+			d.destroy();
+	}
+	
     protected GameObject create_primary_from_elements()
     {
         GameObject r = new GameObject("genMultiFlatParent");
