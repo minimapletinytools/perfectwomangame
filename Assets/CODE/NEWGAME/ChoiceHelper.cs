@@ -14,7 +14,7 @@ public class ChoiceHelper
     public ProGrading.Pose[] mChoicePoses = new ProGrading.Pose[4] { null, null, null, null };
 	ProGrading.Pose[] mPossibleChoicePoses;
 	public ProGrading.Pose CurrentPose
-    { get; private set; }
+    { get; set; }
 	
 	public ChoiceHelper()
 	{
@@ -47,6 +47,7 @@ public class ChoiceHelper
                 }
             }
         }
+		
         //Debug.Log(output);
         if (minGrade > SELECTION_THRESHOLD)
         {
@@ -62,6 +63,16 @@ public class ChoiceHelper
 			//update BB
 			//aInterface
         }
+		
+		//hack choice testing
+		if(Input.GetKey(KeyCode.Alpha1))
+			NextContendingChoice = 0;
+		else if(Input.GetKey(KeyCode.Alpha2))
+			NextContendingChoice = 1;
+		else if(Input.GetKey(KeyCode.Alpha3))
+			NextContendingChoice = 2;
+		else if(Input.GetKey(KeyCode.Alpha4))
+			NextContendingChoice = 3;
 
         for (int i = 0; i < 4; i++)
         {

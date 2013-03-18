@@ -99,24 +99,27 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 		
 		//BB choice nonsense
 		var miniMan = ((GameObject)GameObject.Instantiate(menuRef.miniMan)).GetComponent<CharacterTextureBehaviour>();
+		Vector3 miniManScale = new Vector3(2,2,1);
 		float padding = 600;
 		float netWidth = (BB_NUM_CHOICES)*padding;
 		for(int i = 0; i < BB_NUM_CHOICES; i++)
 		{
 			mBBChoices.Add(new NewChoiceObject(11));
-			mBBChoiceBodies.Add(new FlatBodyObject(miniMan,11));
+			mBBChoiceBodies.Add(new FlatBodyObject(miniMan,12));
 			float xOffset = netWidth/2 - padding*i;
 			mBBChoices[i].HardPosition = mFlatCamera.get_point(0, 0) + new Vector3(xOffset,0,0);
-			mBBChoiceBodies[i].HardPosition = mFlatCamera.get_point(0, 0) + new Vector3(xOffset,-50,0);
-			
+			mBBChoiceBodies[i].HardShader = refs.mMiniCharacterShader;
+			mBBChoiceBodies[i].HardPosition = mFlatCamera.get_point(0, 0) + new Vector3(xOffset,-180,0);
+			mBBChoiceBodies[i].HardScale = miniManScale;
 			mElement.Add(mBBChoices[i]);
 			mElement.Add(mBBChoiceBodies[i]);
 		}
 		
 		mBBMiniMan = new FlatBodyObject(miniMan,10);
-		mBBChoiceBox = new FlatElementImage(newRef.bbChoiceBox,15);
+		mBBMiniMan.HardScale = miniManScale;
+		mBBChoiceBox = new FlatElementImage(newRef.bbChoiceFrame,15);
 		mBBMiniMan.HardPosition = mFlatCamera.get_point(0, 0) + new Vector3(netWidth/2 - padding*3,0,0);
-		mBBChoiceBox.HardPosition = random_position();
+		mBBChoiceBox.HardPosition = mBBMiniMan.SoftPosition;
 		
 		mElement.Add(mBBMiniMan);
 		mElement.Add(mBBChoiceBox);
@@ -161,7 +164,7 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 		}
 	}
 	//TODO arrrrg fuck I want to reuse my flatbody objects!!!
-	//
+	//TODO rename this
 	public void set_bb_choice_bodies(CharacterIndex aIndex)
 	{
 		CharacterIndex index = new CharacterIndex(aIndex.Level +1,0);
@@ -173,10 +176,12 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 		}
 	}
 	
-	public void update_bb_choice(CharacterIndex aIndex)
+	public void update_bb_choice(CharacterIndex aIndex, float aPercent)
 	{
-		
-		//TODO
+		int index = aIndex.Choice == 3 ? 2 : aIndex.Choice; //TODO delete this
+		mBBChoices[index].Percentage = aPercent;
+		mBBMiniMan.SoftPosition = mBBChoiceBodies[index].SoftPosition;
+		mBBChoiceBox.HardPosition = new Vector3(mBBMiniMan.SoftPosition.x,mBBChoiceBox.HardPosition.y, mBBChoiceBox.HardPosition.z);
 	}
 	
 	void fade_bb_contents(bool small)
@@ -201,7 +206,7 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 	public void set_bb_full_size()
 	{
 		Vector2 baseSize = new Vector2(mBB.BoundingBox.width,mBB.BoundingBox.height);
-		Vector2 desiredSize = new Vector2(mFlatCamera.Width+30,mFlatCamera.Height+30);
+		Vector2 desiredSize = new Vector2(mFlatCamera.Width+200,mFlatCamera.Height+200);
 		mBB.SoftScale = new Vector3(desiredSize.x/baseSize.x,desiredSize.y/baseSize.y,1);
 		mBB.SoftPosition = mFlatCamera.get_point(0, 0);
 		

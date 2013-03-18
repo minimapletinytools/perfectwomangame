@@ -11,6 +11,13 @@ public class NewChoiceObject : FlatElementMultiBase {
     float mSide = 45;
     float mRightBot = -80;
 	
+	public float Percentage
+	{
+		set
+		{
+			mMeter.Percentage = value;
+		}
+	}
 	public NewChoiceObject(int aDepth)
 	{
 		initialize(null, aDepth);
@@ -24,15 +31,13 @@ public class NewChoiceObject : FlatElementMultiBase {
         mPerfect = new DifficultyObject(ManagerManager.Manager.mMenuReferences.perfectnessStar, aDepth);
         mMeter = new MeterImageObject(newRef.bbChoiceBox, MeterImageObject.FillStyle.DU, aDepth + 1);
         mMeter.Percentage = 0.0f;
+		set_perfectness(3);
         
         //mBody.set_target_pose(aPose);
-		float leftOffset = 20;
-		float rightOffset = 70;
-		
-		mElements.Add(new FlatElementMultiBase.ElementOffset(mSquare, new Vector3(leftOffset,0,0)));
-		mElements.Add(new FlatElementMultiBase.ElementOffset(mText, new Vector3(leftOffset,10,0)));
-		mElements.Add(new FlatElementMultiBase.ElementOffset(mPerfect, new Vector3(rightOffset,0,0)));
-        mElements.Add(new FlatElementMultiBase.ElementOffset(mMeter, new Vector3(leftOffset,0,0)));
+		mElements.Add(new FlatElementMultiBase.ElementOffset(mSquare, new Vector3(0,0,0)));
+		mElements.Add(new FlatElementMultiBase.ElementOffset(mText, new Vector3(0,10,0)));
+		mElements.Add(new FlatElementMultiBase.ElementOffset(mPerfect, new Vector3(-173,10,0)));
+        mElements.Add(new FlatElementMultiBase.ElementOffset(mMeter, new Vector3(0,0,0)));
         
 		if(aActualChar != null)
 			set_actual_character(aActualChar);
