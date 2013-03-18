@@ -103,7 +103,9 @@
 			-maybe special glowy light effect over grave????
 
 ::TODO3::
+
 -consider still using the cool chaarcter icons that lea drew for teh pink backgrounds...
+	-use poses for future, icons for past
 -now that you have take/return bodies, use them in NIM between newchoiceobject and charactericon
 -add pose processing to NGM
 -add stock choice poses
@@ -122,7 +124,8 @@
 	-GameManger
 	-GameEvents
 	-InterfaceBehaviour
-
+	
+DONE-make stuff in NIM private as appropriate
 DONE-reorganize functions in NIM based on when they are called and name them appropriately
 DONE-duplicate package script
 IGNORE-either write fancy pants shader for TBM or add script to camera to render first to texture anda then render to 

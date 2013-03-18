@@ -46,7 +46,7 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 		//TODO if PLAY update graph
     }
     
-    public Vector3 random_position()
+    Vector3 random_position()
     {
         //UGG piece of junk...
         return (new Vector3(Random.Range(-1f, 1f), Random.Range(-1f, 1f), 0)).normalized * Random.Range(2000,20000);
@@ -70,6 +70,7 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 	Vector3 mBBMiniManBasePosition;
 	FlatElementImage mBBChoiceBox;
 	
+	//called by NewGameManager
 	public void setup_bb()
 	{
 		var newRef = mManager.mNewRef;
@@ -127,6 +128,7 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 		GameObject.Destroy(mMiniMan.gameObject);
 	}
 	
+	//called by set_bb_small/full
 	void fade_bb_contents(bool small)
 	{
 		Color smallColor = small ? new Color(1,1,1,1) : new Color(1,1,1,0);
@@ -146,6 +148,7 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 	}
 	
 	//make sure choice contents are made first before calling this
+	//called by set_for_CHOICE()
 	public void set_bb_full_size()
 	{
 		Vector2 baseSize = new Vector2(mBB.BoundingBox.width,mBB.BoundingBox.height);
@@ -156,7 +159,8 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 	}
 	
 	//make sure begin_new_character is called before this
-	public void set_bb_small()
+	//called by set_for_PLAY()
+	void set_bb_small()
 	{
 		mBB.set_scale(new Vector3(1,1,1));
 		mBB.SoftPosition = mFlatCamera.get_point(-0.5f, 0) + new Vector3(0,-150,0);
@@ -220,6 +224,8 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 	//PINK BAR
 	FlatElementImage mPB;
 	CharacterIconObject[] mPBCharacterIcons = new CharacterIconObject[31];
+	
+	//called by NewGameManager
 	public void setup_pb()
 	{
 		var newRef = mManager.mNewRef;
@@ -288,8 +294,8 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 		
 	}
 	
-	//this gets called during CHOOSE so BB is full sized
-	//TODO split this into BB and PB parts or move it to the bottom of this file
+	//this gets called during CHOOSE so BB should be full sized
+	//this gets called by NewGameManager
 	public void begin_new_character(PerformanceStats aChar)
 	{
 		//BB
@@ -315,7 +321,7 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 		}
 	}
 	
-	//TODO This needs to handle creating a new graphobject thingy maybe
+	
 	public void set_for_PLAY()
 	{
 		set_bb_small();

@@ -66,12 +66,6 @@ public class NewGameManager : FakeMonoBehaviour
 		mManager.mInterfaceManager.setup_pb();
 	}
 	
-	public void initialize_choice(int choiceIndex)
-	{
-		//TODO	
-	}
-	
-	
 	public void character_changed_listener(CharacterLoader aCharacter)
 	{
 		//at this point, we can assume both body manager, music and background managers have been set accordingly
