@@ -153,7 +153,9 @@ public class NewGameManager : FakeMonoBehaviour
 		if(TimeRemaining < 0)
 		{
 			finish_PLAY();
-			transition_to_CUTSCENE();
+			if(CurrentPerformanceStat.Character.Index == 0)
+				transition_to_CUTSCENE();
+			else transition_to_CHOICE();
 		}
 	}
 	public void finish_PLAY()

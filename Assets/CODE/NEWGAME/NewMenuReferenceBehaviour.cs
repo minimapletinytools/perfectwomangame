@@ -10,8 +10,8 @@ public class NewMenuReferenceBehaviour : MonoBehaviour {
 	public GameObject genericFontPrefab;
 	
 	//configurator logos
-	public Texture2D perfectWomanLogo;
 	public Texture2D gameLabLogo;
+	public Texture2D filmAkademieLogo;
 	
 	//ui
 	public Texture2D uiPerfectStar;

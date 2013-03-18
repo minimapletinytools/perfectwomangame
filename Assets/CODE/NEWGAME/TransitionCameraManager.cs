@@ -23,8 +23,8 @@ public class TransitionCameraManager : FakeMonoBehaviour
     HashSet<FlatElementBase> mElement = new HashSet<FlatElementBase>();
 	
 	//configuration nonsense
-	FlatElementSpriteText mPWLogo;
-	FlatElementSpriteText mPWCredits;
+	FlatElementText mPWLogo;
+	FlatElementText mPWCredits;
 	FlatElementImage mGLLogo;
 	FlatElementImage mFilmLogo;
 	
@@ -40,7 +40,11 @@ public class TransitionCameraManager : FakeMonoBehaviour
 	{
 		mFlatCamera = new FlatCameraManager(new Vector3(10000, 10000, 0), 10);
 		mFlatCamera.Camera.depth = 101; //we want this on top always
+		mFlatCamera.Camera.clearFlags = CameraClearFlags.SolidColor;
+		mFlatCamera.Camera.backgroundColor = new Color(0.1f,0.1f,0.2f);
 		mFlatCamera.fit_camera_to_screen();
+		mFlatCamera.Interpolator.SoftInterpolation = 1f;
+		mFlatCamera.update(0);
 		
         SunShafts shafts = ((GameObject)GameObject.Instantiate(mManager.mReferences.mImageEffectsPrefabs)).GetComponent<SunShafts>();
 		mSunShafts = mFlatCamera.Camera.gameObject.AddComponent<SunShafts>();
@@ -78,7 +82,10 @@ public class TransitionCameraManager : FakeMonoBehaviour
 		foreach (FlatElementBase e in mElement)
             e.update(Time.deltaTime);            
 		
+		
+		
         TED.update(Time.deltaTime);
+		
 		
         
 	}
@@ -92,17 +99,21 @@ public class TransitionCameraManager : FakeMonoBehaviour
 		TED.add_event(fade_in,0);
 		
 		NewMenuReferenceBehaviour refs = mManager.mNewRef;
-		mPWLogo = new FlatElementSpriteText(refs.genericFontTex,refs.genericFontTexWidth,"Perfect Woman",1);
-		mPWLogo.HardPosition = mFlatCamera.Center + new Vector3(0,100,0);
-		mPWLogo.HardScale = (new Vector3(1,1,1))*1.5f;
-		mPWCredits = new FlatElementSpriteText(refs.genericFontTex,refs.genericFontTexWidth,"by Peter Lu and Lea Schoenfelder",1);
-		mPWCredits.HardPosition = mFlatCamera.Center + new Vector3(0,-100,0);
-		mPWCredits.HardScale = (new Vector3(1,1,1))*0.8f;
+		mPWLogo = new FlatElementText(refs.genericFont,1600,"Perfect Woman",1);
+		mPWLogo.HardPosition = mFlatCamera.Center + new Vector3(0,300,0);
+		mPWCredits =  new FlatElementText(refs.genericFont,800,"A Game by Peter Lu and Lea Schoenfelder",1);
+		mPWCredits.HardPosition = mFlatCamera.Center + new Vector3(0,0,0);
 		
 		//TODO GL and FA logo
+		mGLLogo = new FlatElementImage(refs.gameLabLogo,1);
+		mFilmLogo = new FlatElementImage(refs.filmAkademieLogo,1);
+		mGLLogo.HardPosition = mFlatCamera.get_point(0,-0.5f) + new Vector3(mGLLogo.BoundingBox.width/2 + 50,0,0);
+		mFilmLogo.HardPosition = mFlatCamera.get_point(0,-0.5f) - new Vector3(mFilmLogo.BoundingBox.width/2 + 50,0,0);
 		
 		mElement.Add(mPWLogo);
 		mElement.Add(mPWCredits);
+		mElement.Add(mGLLogo);
+		mElement.Add(mFilmLogo);
 		
 		
 		//display logo
@@ -116,9 +127,17 @@ public class TransitionCameraManager : FakeMonoBehaviour
 		//if 3 seconds elapesed and user is in tpose, 1 sec GOOD, begin fadeout
 			//on fadeoutcb, move depth image to lower left corner	
 		
-		//skip straight to game
-		//DELETE
-		TED.add_event(go_to_fetus,2);//0.1f);
+		TED.add_event(
+			delegate(float aTime){
+				if(Input.GetKeyDown(KeyCode.Alpha0))
+					go_to_fetus(0);
+				else if(aTime > 10) //TODO check if user is found before doing this
+					go_to_fetus(0); 
+				else return false;
+				return true;
+			}
+		);
+		
 	}
 	
 	public void destroy_configuration_display()
@@ -126,14 +145,15 @@ public class TransitionCameraManager : FakeMonoBehaviour
 		//we assume things have faded already so we can just destroy
 		mPWLogo.destroy();
 		mPWCredits.destroy();
-		//mGLLogo.destroy();
-		//mFilmLogo.destroy();
+		mGLLogo.destroy();
+		mFilmLogo.destroy();
+		mFlatCamera.Camera.clearFlags = CameraClearFlags.Depth;
 	}
 	
 	public bool go_to_fetus(float time)
 	{
 		//TODO if user is not roughly in the center of the screen, return false
-		TED.add_one_shot_event(
+		fade_out_with_sound(
 			delegate()
 			{
 				mManager.mGameManager.initialize_fetus();

@@ -1,32 +1,32 @@
-::NEEEEEW GAME MANAGER NONSENSE::
+::NEW GAME MANAGER::
 -EVENTS (ngm is responsible for most scripted events)
-	-transition to CUTSCENE  (or skip this and go straight to CHOOSE for fetus)
+	DONE-transition to CUTSCENE  (or skip this and go straight to CHOOSE for fetus)
 		-INTERFACE 
 		-BACKGROUND
 	-transition to DEATH
 		-INTERFACE 
 		-BACKGROUND
 		-go to transition to GRAVE
-	-transition to CHOOSE
+	DONE-transition to CHOOSE
 		-INTERFACE (BLUE BAR)
-	-transition to PLAY
+	DONE-transition to PLAY
 		-INTERFACE (BLUE BAR)
-	-transition to TRANSITION (play)
+	DONE-transition to TRANSITION (play)
 		-TRANSITION -> BUNDLE -> TRANSITION
 	-transition to TRANSITION (grave)
 		-TRANSITION -> BUNDLE -> TRANSITION
 -PLAY
-	-count down timer
+	DONE-count down timer
 	-grab POSES and update
 	-compute performance
 		-update score
 		-update graph
 	-if performance is too bad
 		-transition to DEATH
-	-if timer is done, transition to CUTSCENE
+	DONE-if timer is done, transition to CUTSCENE
 
 -CUTSCENE
-	-FETUS
+	DONE-FETUS
 		-skip
 	-REG
 	-DEATH
@@ -40,7 +40,6 @@
 	-CREDITS
 
 -FETUS
-	-basically do nothing lol
 	-needs to NOT update the bluebar
 -NORMAL
 	-internal SCORE
@@ -75,7 +74,7 @@
 	-CUTSCENE
 		-???
 		-transition to CHOOSE
-	-CHOOSE
+	DONE-CHOOSE
 		-variable # CHOICES
 		-variable # CHOICE_BODY
 		-put MINIMAN in extra space to the right

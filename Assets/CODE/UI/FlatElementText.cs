@@ -55,4 +55,9 @@ public class FlatElementText : FlatElementBase
         textElement.transform.parent = PrimaryGameObject.transform;
         Depth = aDepth;
     }
+	
+	public override void destroy()
+	{
+		GameObject.Destroy(PrimaryGameObject);
+	}
 }
