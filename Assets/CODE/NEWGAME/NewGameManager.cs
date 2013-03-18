@@ -81,7 +81,7 @@ public class NewGameManager : FakeMonoBehaviour
 		//set new character data
 		mPerformanceStats.Add(new PerformanceStats());
 		CurrentPerformanceStat.Character = new CharacterIndex(aCharacter.Name);
-		mManager.mInterfaceManager.set_new_character(CurrentPerformanceStat);
+		mManager.mInterfaceManager.begin_new_character(CurrentPerformanceStat);
 		
 		//TODO
 		switch(aCharacter.Name)

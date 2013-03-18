@@ -54,7 +54,7 @@ public class ChoiceHelper
             NextContendingChoice = -1;//get_default_choice(CurrentLevel);
             //TODO NO CHOICE
 			//update BB
-			//aInterface.
+			//aInterface.set_bb_
         }
         else
         {

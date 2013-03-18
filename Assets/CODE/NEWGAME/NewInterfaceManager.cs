@@ -150,9 +150,6 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 		Vector2 desiredSize = new Vector2(mFlatCamera.Width+200,mFlatCamera.Height+200);
 		mBB.SoftScale = new Vector3(desiredSize.x/baseSize.x,desiredSize.y/baseSize.y,1);
 		mBB.SoftPosition = mFlatCamera.get_point(0, 0);
-		
-		//TODO CHOICE contents
-		
 		fade_bb_contents(false);
 	}
 	
@@ -160,7 +157,6 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 	public void set_bb_small()
 	{
 		mBB.set_scale(new Vector3(1,1,1));
-		
 		mBB.SoftPosition = mFlatCamera.get_point(-0.5f, 0) + new Vector3(0,-150,0);
 		mBBText.SoftPosition = mBB.SoftPosition + new Vector3(0,100,0);
 		mBBScoreFrame.SoftPosition = mBB.SoftPosition + new Vector3(-250,-50,0);
