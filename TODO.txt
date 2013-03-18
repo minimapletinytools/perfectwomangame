@@ -103,7 +103,7 @@
 			-maybe special glowy light effect over grave????
 
 ::TODO3::
--reorganize functions in NIM based on when they are called and name them appropriately
+DONE-reorganize functions in NIM based on when they are called and name them appropriately
 -duplicate package script
 -add pose processing to NGM
 -add stock choice poses

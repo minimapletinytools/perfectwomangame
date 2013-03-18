@@ -52,7 +52,6 @@ public class NewInterfaceManager : FakeMonoBehaviour {
         return (new Vector3(Random.Range(-1f, 1f), Random.Range(-1f, 1f), 0)).normalized * Random.Range(2000,20000);
     }
 	
-	
 	//BLUE BAR
 	FlatElementImage mBB;
 	//PLAY
@@ -75,7 +74,6 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 		var newRef = mManager.mNewRef;
 		MenuReferenceBehaviour menuRef = mManager.mMenuReferences;
 		var refs = mManager.mReferences;
-		
 		
 		mBB = new FlatElementImage(mManager.mNewRef.bbBackground,8);
 		mBB.HardPosition = random_position();
@@ -127,63 +125,6 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 		GameObject.Destroy(mMiniMan.gameObject);
 	}
 	
-	//this gets called during CHOOSE so BB is full sized
-	//TODO split this into BB and PB parts or move it to the bottom of this file
-	public void set_new_character(PerformanceStats aChar)
-	{
-		//BB
-		mBBText.Text = "CHARACTER " + aChar.Character.StringIdentifier;
-		
-		PerformanceGraphObject aGraph = aChar.PerformanceGraph;
-		if(mBBLastPerformanceGraph != null)
-		{
-			mBBLastPerformanceGraph.SoftColor = new Color(1,1,1,0);
-			//mBBLastPerformanceGraph.Enabled = false;
-			//mElement.Remove(mBBLastPerformanceGraph);
-		}
-		mBBLastPerformanceGraph = aGraph;
-		mElement.Add(mBBLastPerformanceGraph);
-		
-		//PB
-		//disable the other characters no that we have made a choice
-		foreach(CharacterIndex e in aChar.Character.Neighbors)
-		{
-			mPBCharacterIcons[e.Index].Enabled = false;
-			//mPBCharacterIcons[e.Index].destroy();
-			//mElement.Remove(mPBCharacterIcons[e.Index]);
-		}
-	}
-	
-	
-	
-	public void set_bb_choice_poses(List<ProGrading.Pose> aPoses)
-	{
-		for(int i = 0; i < BB_NUM_CHOICES; i++)
-		{
-			mBBChoiceBodies[i].set_target_pose(aPoses[i]);
-		}
-	}
-	//TODO arrrrg fuck I want to reuse my flatbody objects!!!
-	//TODO rename this
-	public void set_bb_choice_bodies(CharacterIndex aIndex)
-	{
-		CharacterIndex index = new CharacterIndex(aIndex.Level +1,0);
-		var all = index.Neighbors;
-		all.Add(index);
-		for(int i = 0; i < all.Count; i++)
-		{
-			mBBChoices[i].set_actual_character(mManager.mCharacterBundleManager.get_mini_character(all[i]));
-		}
-	}
-	
-	public void update_bb_choice(CharacterIndex aIndex, float aPercent)
-	{
-		int index = aIndex.Choice == 3 ? 2 : aIndex.Choice; //TODO delete this
-		mBBChoices[index].Percentage = aPercent;
-		mBBMiniMan.SoftPosition = mBBChoiceBodies[index].SoftPosition;
-		mBBChoiceBox.HardPosition = new Vector3(mBBMiniMan.SoftPosition.x,mBBChoiceBox.HardPosition.y, mBBChoiceBox.HardPosition.z);
-	}
-	
 	void fade_bb_contents(bool small)
 	{
 		Color smallColor = small ? new Color(1,1,1,1) : new Color(1,1,1,0);
@@ -215,7 +156,7 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 		fade_bb_contents(false);
 	}
 	
-	//make sure set_new_character is called before this
+	//make sure begin_new_character is called before this
 	public void set_bb_small()
 	{
 		mBB.set_scale(new Vector3(1,1,1));
@@ -233,6 +174,32 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 	{
 		mBBScoreText.Text = ((int)aScore).ToString();
 	}
+	public void set_bb_choice_poses(List<ProGrading.Pose> aPoses)
+	{
+		for(int i = 0; i < BB_NUM_CHOICES; i++)
+		{
+			mBBChoiceBodies[i].set_target_pose(aPoses[i]);
+		}
+	}
+	//TODO arrrrg I want to reuse my flatbody objects!!!
+	public void set_bb_choice_bodies(CharacterIndex aIndex)
+	{
+		CharacterIndex index = new CharacterIndex(aIndex.Level +1,0);
+		var all = index.Neighbors;
+		all.Add(index);
+		for(int i = 0; i < all.Count; i++)
+		{
+			mBBChoices[i].set_actual_character(mManager.mCharacterBundleManager.get_mini_character(all[i]));
+		}
+	}
+	public void set_bb_choice_percentages(CharacterIndex aIndex, float aPercent)
+	{
+		int index = aIndex.Choice == 3 ? 2 : aIndex.Choice; //TODO delete this
+		mBBChoices[index].Percentage = aPercent;
+		mBBMiniMan.SoftPosition = mBBChoiceBodies[index].SoftPosition;
+		mBBChoiceBox.HardPosition = new Vector3(mBBMiniMan.SoftPosition.x,mBBChoiceBox.HardPosition.y, mBBChoiceBox.HardPosition.z);
+	}
+	
 	
 	
 	
@@ -307,10 +274,32 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 		
 	}
 	
-	//GLORY
-	public void add_glory_character(){}
-	
-	
+	//this gets called during CHOOSE so BB is full sized
+	//TODO split this into BB and PB parts or move it to the bottom of this file
+	public void begin_new_character(PerformanceStats aChar)
+	{
+		//BB
+		mBBText.Text = "CHARACTER " + aChar.Character.StringIdentifier;
+		
+		PerformanceGraphObject aGraph = aChar.PerformanceGraph;
+		if(mBBLastPerformanceGraph != null)
+		{
+			mBBLastPerformanceGraph.SoftColor = new Color(1,1,1,0);
+			//mBBLastPerformanceGraph.Enabled = false;
+			//mElement.Remove(mBBLastPerformanceGraph);
+		}
+		mBBLastPerformanceGraph = aGraph;
+		mElement.Add(mBBLastPerformanceGraph);
+		
+		//PB
+		//disable the other characters no that we have made a choice
+		foreach(CharacterIndex e in aChar.Character.Neighbors)
+		{
+			mPBCharacterIcons[e.Index].Enabled = false;
+			//mPBCharacterIcons[e.Index].destroy();
+			//mElement.Remove(mPBCharacterIcons[e.Index]);
+		}
+	}
 	
 	//TODO This needs to handle creating a new graphobject thingy maybe
 	public void set_for_PLAY()
@@ -447,4 +436,14 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 	{
 		//TODO
 	}
+	
+	
+	
+	//GLORY
+	public void add_glory_character(){}
+	
+	
+	
+	
+	
 }
