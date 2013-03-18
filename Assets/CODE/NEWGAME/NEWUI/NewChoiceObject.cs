@@ -3,7 +3,7 @@ using System.Collections;
 
 public class NewChoiceObject : FlatElementMultiBase {
     public FlatElementImage mSquare;
-	public FlatElementText mText;
+	public FlatElementText mText = null;
 	public DifficultyObject mPerfect;
 	FlatElementMultiBase.ElementOffset mBodyElementOffset = null;
     public MeterImageObject mMeter = null;
@@ -27,7 +27,8 @@ public class NewChoiceObject : FlatElementMultiBase {
 		var newRef = ManagerManager.Manager.mNewRef;
 		//TODO finish and reposition everything
 		mSquare = new FlatElementImage(newRef.bbChoiceBox, aDepth);
-		mText = new FlatElementText(newRef.genericFont,100,"meow",aDepth +1);
+		mText = new FlatElementText(newRef.genericFont,400,"meow",aDepth +1);
+		
         mPerfect = new DifficultyObject(ManagerManager.Manager.mMenuReferences.perfectnessStar, aDepth);
         mMeter = new MeterImageObject(newRef.bbChoiceBox, MeterImageObject.FillStyle.DU, aDepth + 1);
         mMeter.Percentage = 0.0f;
@@ -35,8 +36,8 @@ public class NewChoiceObject : FlatElementMultiBase {
         
         //mBody.set_target_pose(aPose);
 		mElements.Add(new FlatElementMultiBase.ElementOffset(mSquare, new Vector3(0,0,0)));
-		mElements.Add(new FlatElementMultiBase.ElementOffset(mText, new Vector3(0,10,0)));
-		mElements.Add(new FlatElementMultiBase.ElementOffset(mPerfect, new Vector3(-173,10,0)));
+		mElements.Add(new FlatElementMultiBase.ElementOffset(mText, new Vector3(0,20,0)));
+		mElements.Add(new FlatElementMultiBase.ElementOffset(mPerfect, new Vector3(-173,35,0)));
         mElements.Add(new FlatElementMultiBase.ElementOffset(mMeter, new Vector3(0,0,0)));
         
 		if(aActualChar != null)
@@ -84,6 +85,10 @@ public class NewChoiceObject : FlatElementMultiBase {
         {
 			base.SoftColor = value;
             //mDifficultyBalls.SoftColor = value;
+			
+			//DELETE this is a stupid hack
+			if(value.a != 0 && mText != null)
+				mText.SoftColor = new Color(0,0,0,1);
         }
     }
 
