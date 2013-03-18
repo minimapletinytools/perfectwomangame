@@ -209,6 +209,7 @@ public class NewGameManager : FakeMonoBehaviour
 	public void transition_to_CHOICE()
 	{
 		GS = GameState.CHOICE;
+		mChoiceHelper.shuffle_and_set_choice_poses(mManager.mInterfaceManager);
 		mManager.mInterfaceManager.set_for_CHOICE();	
 	}
 	

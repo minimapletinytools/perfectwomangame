@@ -67,6 +67,7 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 	List<NewChoiceObject> mBBChoices = new List<NewChoiceObject>();
 	List<FlatBodyObject> mBBChoiceBodies = new List<FlatBodyObject>();
 	FlatBodyObject mBBMiniMan;
+	Vector3 mBBMiniManBasePosition;
 	FlatElementImage mBBChoiceBox;
 	
 	public void setup_bb()
@@ -116,7 +117,8 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 		mBBMiniMan = new FlatBodyObject(miniMan,10);
 		mBBMiniMan.HardScale = miniManScale;
 		mBBChoiceBox = new FlatElementImage(newRef.bbChoiceFrame,15);
-		mBBMiniMan.HardPosition = mFlatCamera.get_point(0, 0) + new Vector3(netWidth/2 - padding*3,0,0);
+		mBBMiniManBasePosition = mFlatCamera.get_point(0, 0) + new Vector3(netWidth/2 - padding*3,0,0);
+		mBBMiniMan.HardPosition = mBBMiniManBasePosition;
 		mBBChoiceBox.HardPosition = mBBMiniMan.SoftPosition;
 		
 		mElement.Add(mBBMiniMan);
@@ -165,11 +167,12 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 		
 		fade_bb_contents(true);
 	}
-	
+	//called by NewGameManager
 	public void update_bb_score(float aScore)
 	{
 		mBBScoreText.Text = ((int)aScore).ToString();
 	}
+	//called by NewGameManager
 	public void set_bb_choice_poses(List<ProGrading.Pose> aPoses)
 	{
 		for(int i = 0; i < BB_NUM_CHOICES; i++)
@@ -177,7 +180,7 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 			mBBChoiceBodies[i].set_target_pose(aPoses[i]);
 		}
 	}
-	//TODO arrrrg I want to reuse my flatbody objects!!!
+	//called by ChoiceHelper
 	public void set_bb_choice_bodies(CharacterIndex aIndex)
 	{
 		CharacterIndex index = new CharacterIndex(aIndex.Level +1,0);
@@ -188,6 +191,21 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 			mBBChoices[i].set_actual_character(mManager.mCharacterBundleManager.get_mini_character(all[i]));
 		}
 	}
+	//this is the character that is curretnly being selected
+	//called by ChoiceHelper
+	public void set_bb_choice(int aIndex)
+	{
+		if(aIndex == -1) //no choice
+		{
+			mBBMiniMan.SoftPosition = mBBMiniManBasePosition;
+			mBBChoiceBox.SoftPosition = mBBMiniManBasePosition;
+		}
+		else{
+			mBBMiniMan.SoftPosition = mBBChoiceBodies[aIndex].SoftPosition;
+			mBBChoiceBox.SoftPosition = mBBChoices[aIndex].SoftPosition;
+		}
+	}
+	//called by ChoiceHelper
 	public void set_bb_choice_percentages(CharacterIndex aIndex, float aPercent)
 	{
 		int index = aIndex.Choice == 3 ? 2 : aIndex.Choice; //TODO delete this

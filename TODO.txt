@@ -103,31 +103,34 @@
 			-maybe special glowy light effect over grave????
 
 ::TODO3::
-DONE-reorganize functions in NIM based on when they are called and name them appropriately
--duplicate package script
+-consider still using the cool chaarcter icons that lea drew for teh pink backgrounds...
+-now that you have take/return bodies, use them in NIM between newchoiceobject and charactericon
 -add pose processing to NGM
 -add stock choice poses
--consider getting rid of choice box, it's no longer necessary anywayso 
--either write fancy pants shader for TBM or add script to camera to render first to texture anda then render to screen with correct blending
+-consider getting rid of choice box, it's no longer necessary anyways
+-change character icon/choice color based on difficulty
 -waist angle hack	
 	-waist angle = interpolation between knee position angle and desired angle 
 	-interpolated by how close hip angles are to desired
 	-only needed for NITE
 -add jiggle to text
-DONE-make a test build relatively soon to make sure everything is stil OK
-	-FUCK
-	-FUCK FUCK FUCK
 -setup asset bundler to load new poses
 -move character??
-DONE-make it so you can choose your pose in testing scene
 -mellow out glow
-DONE-add character name to characterdata so you don't need to pass name around :(
 -delete
 	-InterfaceManager
 	-GameManger
 	-GameEvents
 	-InterfaceBehaviour
 
+DONE-reorganize functions in NIM based on when they are called and name them appropriately
+DONE-duplicate package script
+IGNORE-either write fancy pants shader for TBM or add script to camera to render first to texture anda then render to 
+DONE-make a test build relatively soon to make sure everything is stil OK
+	-FUCK
+	-FUCK FUCK FUCK
+DONE-make it so you can choose your pose in testing scene
+DONE-add character name to characterdata so you don't need to pass name around :(
 DONE-add scaling to flat font
 DONE-remove zigdepthviewer from scripts in testing scene and recording scene
 	

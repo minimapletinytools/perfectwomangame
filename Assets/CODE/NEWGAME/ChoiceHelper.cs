@@ -1,18 +1,20 @@
 using UnityEngine;
-using System.Collections;
-
+using System.Collections.Generic;
+using System.Linq;
 public class ChoiceHelper
 {
 	public const float SELECTION_THRESHOLD = 9;
     public const float CHOOSING_PERCENTAGE_GROWTH_RATE = 0.15f;
     public const float CHOOSING_PERCENTAGE_DECLINE_RATE = 1f;
 	
-	public float[] ChoosingPercentages
-    { get; private set; }
-	public int NextContendingChoice
-    { get; private set; }
-    public ProGrading.Pose[] mChoicePoses = new ProGrading.Pose[4] { null, null, null, null };
+	
+    ProGrading.Pose[] mChoicePoses = new ProGrading.Pose[4] { null, null, null, null };
 	ProGrading.Pose[] mPossibleChoicePoses;
+	
+	float[] ChoosingPercentages
+    { get; set; }
+	int NextContendingChoice
+    { get; set; }
 	public ProGrading.Pose CurrentPose
     { get; set; }
 	
@@ -20,7 +22,7 @@ public class ChoiceHelper
 	{
 		load_choice_poses();
 		
-		ChoosingPercentages = new float[4];
+		ChoosingPercentages = new float[4]{0,0,0,0};
 	}
 	
 	public void load_choice_poses()
@@ -28,6 +30,12 @@ public class ChoiceHelper
 		mPossibleChoicePoses = new ProGrading.Pose[ManagerManager.Manager.mReferences.mPossiblePoses.Length];
         for (int i = 0; i < mPossibleChoicePoses.Length; i++)
         { mPossibleChoicePoses[i] = ProGrading.read_pose(ManagerManager.Manager.mReferences.mPossiblePoses[i]); }
+	}
+	
+	public void shuffle_and_set_choice_poses(NewInterfaceManager aInterface)
+	{
+		mChoicePoses = get_random_possible_poses();
+		aInterface.set_bb_choice_poses(mChoicePoses.ToList());
 	}
 	
 	//returns choice
@@ -51,18 +59,13 @@ public class ChoiceHelper
         //Debug.Log(output);
         if (minGrade > SELECTION_THRESHOLD)
         {
-            NextContendingChoice = -1;//get_default_choice(CurrentLevel);
-            //TODO NO CHOICE
-			//update BB
-			//aInterface.set_bb_
+            NextContendingChoice = -1;
         }
         else
         {
             NextContendingChoice = minIndex;
-            //TODO made a choice
-			//update BB
-			//aInterface
         }
+	
 		
 		//hack choice testing
 		if(Input.GetKey(KeyCode.Alpha1))
@@ -71,9 +74,11 @@ public class ChoiceHelper
 			NextContendingChoice = 1;
 		else if(Input.GetKey(KeyCode.Alpha3))
 			NextContendingChoice = 2;
-		else if(Input.GetKey(KeyCode.Alpha4))
-			NextContendingChoice = 3;
-
+		//else if(Input.GetKey(KeyCode.Alpha4))
+		//	NextContendingChoice = 3;
+		
+		aInterface.set_bb_choice(NextContendingChoice);
+		
         for (int i = 0; i < 4; i++)
         {
             if (NextContendingChoice == i)
@@ -86,14 +91,13 @@ public class ChoiceHelper
             }
             if (ChoosingPercentages[i] == 1)
             {
-                //TODO choice is made!!!
+                //choice is made!!!
 				return NextContendingChoice;
             }
         }
 		return -1;
 	}
 	
-	//move this stuff elsewhere poo poo
     public static void Shuffle<T>(T[] array)
     {
         for (int i = array.Length; i > 1; i--)
