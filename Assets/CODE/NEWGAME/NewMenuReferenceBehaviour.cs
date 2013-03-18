@@ -31,6 +31,13 @@ public class NewMenuReferenceBehaviour : MonoBehaviour {
 	public Texture2D pbCharacterIconBackground;
 	
 	
-
+	
+	
+	//audio
+	public AudioClip transitionIn;
+	public AudioClip transitionOut;
+	public AudioClip choiceBlip; //played when your selection changes
+	public AudioClip choiceMade; //played when selection is made
+	//TODO mroe
 	
 }

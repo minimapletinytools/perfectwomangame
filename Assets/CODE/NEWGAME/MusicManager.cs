@@ -1,5 +1,5 @@
 using UnityEngine;
-using System.Collections;
+using System.Collections.Generic;
 
 public class MusicManager : FakeMonoBehaviour
 {
@@ -9,6 +9,9 @@ public class MusicManager : FakeMonoBehaviour
 	
 	AudioClip mFadeInClip; 
 	AudioClip mFadeOutClip;
+	
+	
+	Dictionary<string,AudioClip> mSoundEffects  = new Dictionary<string, AudioClip>();
 	
 	public TimedEventDistributor TED { get; private set; }
     public MusicManager(ManagerManager aManager)
@@ -22,6 +25,11 @@ public class MusicManager : FakeMonoBehaviour
 		mMusicSource = mManager.gameObject.AddComponent<AudioSource>();
 		mFadingSource = mManager.gameObject.AddComponent<AudioSource>();
 		
+		
+		mSoundEffects["transitionIn"] = mManager.mNewRef.transitionIn;
+		mSoundEffects["transitionOut"] = mManager.mNewRef.transitionOut;
+		mSoundEffects["choiceBlip"] = mManager.mNewRef.choiceBlip;
+		mSoundEffects["choiceMade"] = mManager.mNewRef.choiceMade;
 	}
 	
 	public override void Update()
@@ -29,9 +37,21 @@ public class MusicManager : FakeMonoBehaviour
 		TED.update(Time.deltaTime);
 	}
 	
+	public void play_sound_effect(string aSound)
+	{
+		if(mSoundEffects.ContainsKey(aSound))
+		{
+			mMusicSource.PlayOneShot(mSoundEffects[aSound]);
+		}
+		else
+			throw new UnityException("sound " + aSound + " not found");
+	}
+	
 	public void fade_out()
 	{
-		TED.add_event(
+		TED.add_one_shot_event(
+			delegate(){ mFadingSource.PlayOneShot(mFadeOutClip); }
+		).then(
 			delegate(float time)
 			{
 				float l = time/FADE_TIME;
@@ -43,7 +63,9 @@ public class MusicManager : FakeMonoBehaviour
 	
 	public void fade_in()
 	{
-		TED.add_event(
+		TED.add_one_shot_event(
+			delegate(){ mFadingSource.PlayOneShot(mFadeOutClip); }
+		).then(
 			delegate(float time)
 			{
 				float l = time/FADE_TIME;
