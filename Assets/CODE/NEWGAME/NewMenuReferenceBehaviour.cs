@@ -31,7 +31,8 @@ public class NewMenuReferenceBehaviour : MonoBehaviour {
 	public Texture2D pbCharacterIconBackground;
 	
 	
-	
+	//text
+	public Texture2D[] textSmallBubble;
 	
 	//audio
 	public AudioClip transitionIn;
