@@ -169,11 +169,11 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 	
 	//make sure begin_new_character is called before this
 	//called by set_for_PLAY()
-	void set_bb_small()
+	void set_bb_small(Vector3? aBBOffset=null)
 	{
 		float bottomVOffset = -50;
 		mBB.SoftScale = new Vector3(1,1,1);
-		mBB.SoftPosition = mFlatCamera.get_point(-0.5f, 0) + new Vector3(0,-150,0);
+		mBB.SoftPosition = mFlatCamera.get_point(-0.5f, 0) + ((aBBOffset == null) ? new Vector3(0,-150,0) : aBBOffset.Value);
 		mBBText.SoftPosition = mBB.SoftPosition + new Vector3(0,160,0);
 		mBBScoreFrame.SoftPosition = mBB.SoftPosition + new Vector3(-350,bottomVOffset,0);
 		mBBScoreText.SoftPosition = mBB.SoftPosition + new Vector3(-350,bottomVOffset-15,0);
@@ -181,7 +181,7 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 		
 		fade_bb_contents(true);
 		
-		mBBQuestionText.SoftColor = new Color(1,0,0,0);
+		mBBQuestionText.SoftColor = new Color(1,0,0,1);
 		
 		//meter objects overrides soft color so we have to manually turn the meter off..
 		TED.add_event(
@@ -263,10 +263,10 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 		}
 		mElement.Add(mPB);
 		
-		position_pb_character_icons();
+		position_pb_character_icons(0);
 	}
 	
-	public void position_pb_character_icons()
+	void position_pb_character_icons(float aSplit)
 	{
 		float padding = 300;
 		float hPadding = 350;
@@ -276,10 +276,15 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 			Vector3 position = Vector3.zero;
 			float netWidth = (e.NumberInRow - 1)*padding;
 			position.x = netWidth/2f - padding*e.Choice;
-			position.y = -hPadding*e.Level; // TODO make space for blue bar
+			position.y = -hPadding*e.Level + aSplit; // TODO make space for blue bar
 			mPBCharacterIcons[e.Index].SoftPosition = baseOffset + position;
 		}
 		
+	}
+	
+	CharacterIconObject take_character_icon(CharacterIndex aIndex)
+	{
+		return mPBCharacterIcons[aIndex.Index];
 	}
 	
 	
@@ -340,6 +345,7 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 				mPBCharacterIcons[e.Index].Enabled = false;
 			//mPBCharacterIcons[e.Index].destroy();
 			//mElement.Remove(mPBCharacterIcons[e.Index]);
+			//mPBCharacterIcons[e.Index]=null;
 		}
 	}
 	
@@ -475,9 +481,70 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 		
 		return chain;
 	}
-	public void set_for_GRAVE(List<FlatGraphElement> aGraphs)
+	
+	public void set_for_GRAVE(List<PerformanceStats> aStats)
 	{
+		float textTime = 3;
+		//clear away BB and PB
+		set_bb_small(new Vector3(0,1000,0));
+		position_pb_character_icons(-2000);
+		
+		TimedEventDistributor.TimedEventChain chain;
+		
+		chain = TED.add_one_shot_event(
+			delegate()
+			{
+				add_timed_text_bubble("Here you rest beneath the earth...",textTime);
+			},
+        3).then_one_shot( //wait a little bit to let the fading finish
+			delegate()
+			{
+				add_timed_text_bubble("here is your life story:",textTime);
+			},
+		textTime).wait (textTime);
+		
+		float sceneTextTime = 4;
+		float startingPosition = mFlatCamera.get_point(0,1).y - aStats[0].PerformanceGraph.BoundingBox.height - 30;
+		float intervalSize = aStats[0].PerformanceGraph.BoundingBox.height + 30;
+		float cioXOffset = mBB.SoftPosition.x + 200;
+		float pgoXOffset = mBB.SoftPosition.x - 100;
+		//make performance graphs come in one at a time from the bottom
+		for(int i = 0; i < aStats.Count; i++)
+		{
+			PerformanceStats ps = aStats[i];
+			//reposition the assosciated character icon and performance graph
+			CharacterIconObject cio = take_character_icon(ps.Character);
+			PerformanceGraphObject pgo = ps.PerformanceGraph;
+			cio.HardPosition = new Vector3(cioXOffset,1000,0);
+			pgo.HardPosition = new Vector3(pgoXOffset,1000,0);
+			
+			chain = chain.then_one_shot(
+				delegate()
+				{
+					//set the text
+					string text = "Your ";
+					text += ps.Perfect;
+					text += " life as a ";
+					text += ps.Character.StringIdentifier;
+					text += " was ";
+					text += ps.Score;
+					add_timed_text_bubble(text,textTime);
+				
+					//move in stuff
+					cio.SoftPosition = new Vector3(cioXOffset,startingPosition - i * intervalSize,0);
+					pgo.SoftPosition = new Vector3(pgoXOffset,startingPosition - i * intervalSize,0);
+				} //TODO play 
+			).then(
+				delegate(float aTime)
+				{
+					//TODO render mini character with golry hoooooo sound
+					return true;
+				},
+			sceneTextTime);
+		}
+		
 		//TODO
+		
 	}
 	
 	

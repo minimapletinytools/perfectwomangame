@@ -27,6 +27,11 @@ public class TimedEventDistributor
         {
             return then(delegate(float time) { aEvent(); return true; }, aTime);
         }
+		
+		public TimedEventChain wait(float aTime)
+        {
+            return then(delegate(float time) { return true; }, aTime);
+        }
 
         public bool call(float aTime = 0)
         {

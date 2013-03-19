@@ -130,3 +130,8 @@ public class PerformanceStats
 		PerformanceGraph = new PerformanceGraphObject(11);
 	}
 }
+
+public class CutsceneData
+{
+	//TODO
+}

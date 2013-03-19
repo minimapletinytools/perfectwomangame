@@ -102,6 +102,10 @@ DONE-NAMING FORMAT
 			-maybe special glowy light effect over grave????
 
 ::TODO3::
+-make a test build
+-restart game 
+-do GRAVE
+-decide on CUTSCENE info format
 -add color fade limit and position move limit to FlatElementBase
 -depth between pb and bb needs to be increased
 -add text bubble to TEXT
