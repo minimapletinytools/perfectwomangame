@@ -140,7 +140,7 @@ public class TransitionCameraManager : FakeMonoBehaviour
 			delegate(float aTime){
 				if(Input.GetKeyDown(KeyCode.Alpha0))
 					go_to_fetus(0);
-				else if(aTime > 100) //TODO check if user is found before doing this
+				else if(aTime > 100) //TODO check if user is found before doing this, also make sure POSE bundle is loaded
 					go_to_fetus(0); 
 				else return false;
 				return true;

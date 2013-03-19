@@ -6,4 +6,5 @@ using System.Collections.Generic;
 public class PoseAnimation
 {
 	public List<ProGrading.Pose> poses = new List<ProGrading.Pose>();
+	public ProGrading.Pose get_pose(int index){ return poses[index % poses.Count]; }
 }
