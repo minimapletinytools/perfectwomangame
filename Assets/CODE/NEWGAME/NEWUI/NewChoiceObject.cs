@@ -39,7 +39,7 @@ public class NewChoiceObject : FlatElementMultiBase {
         //mBody.set_target_pose(aPose);
 		mElements.Add(new FlatElementMultiBase.ElementOffset(mSquare, new Vector3(0,0,0)));
 		mElements.Add(new FlatElementMultiBase.ElementOffset(mText, new Vector3(0,20,0)));
-		mElements.Add(new FlatElementMultiBase.ElementOffset(mPerfect, new Vector3(-173,35,0)));
+		mElements.Add(new FlatElementMultiBase.ElementOffset(mPerfect, new Vector3(-173,65,0)));
         mElements.Add(new FlatElementMultiBase.ElementOffset(mMeter, new Vector3(0,0,0)));
         
 		if(aActualChar != null)

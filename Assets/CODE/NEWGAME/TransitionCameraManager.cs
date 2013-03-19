@@ -41,7 +41,7 @@ public class TransitionCameraManager : FakeMonoBehaviour
 		mFlatCamera = new FlatCameraManager(new Vector3(10000, 10000, 0), 10);
 		mFlatCamera.Camera.depth = 101; //we want this on top always
 		mFlatCamera.Camera.clearFlags = CameraClearFlags.SolidColor;
-		mFlatCamera.Camera.backgroundColor = new Color(0.1f,0.1f,0.2f);
+		mFlatCamera.Camera.backgroundColor = new Color(0.05f,0.05f,0.07f);
 		mFlatCamera.fit_camera_to_screen();
 		mFlatCamera.Interpolator.SoftInterpolation = 1f;
 		mFlatCamera.update(0);
@@ -99,9 +99,10 @@ public class TransitionCameraManager : FakeMonoBehaviour
 		TED.add_event(fade_in,0);
 		
 		NewMenuReferenceBehaviour refs = mManager.mNewRef;
-		mPWLogo = new FlatElementText(refs.genericFont,1600,"Perfect Woman",1);
-		mPWLogo.HardPosition = mFlatCamera.Center + new Vector3(0,300,0);
-		mPWCredits =  new FlatElementText(refs.genericFont,800,"A Game by Peter Lu and Lea Schoenfelder",1);
+		mPWLogo = new FlatElementText(refs.genericFont,1300,"P e r f e c t  W o m a n",1);
+		mPWLogo.HardPosition = mFlatCamera.Center + new Vector3(0,250,0);
+		//S c h ö n f e l d e r
+		mPWCredits =  new FlatElementText(refs.genericFont,600,"A  G a m e  b y  P e t e r  L u  a n d  L e a  S c h o e n f e l d e r",1);
 		mPWCredits.HardPosition = mFlatCamera.Center + new Vector3(0,0,0);
 		
 		//TODO GL and FA logo

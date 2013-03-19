@@ -109,7 +109,7 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 			float xOffset = netWidth/2 - padding*i;
 			mBBChoices[i].HardPosition = mFlatCamera.get_point(0, 0) + new Vector3(xOffset,0,0);
 			mBBChoiceBodies[i].HardShader = refs.mMiniCharacterShader;
-			mBBChoiceBodies[i].HardPosition = mFlatCamera.get_point(0, 0) + new Vector3(xOffset,-180,0);
+			mBBChoiceBodies[i].HardPosition = mFlatCamera.get_point(0, 0) + new Vector3(xOffset,-240,0);
 			mBBChoiceBodies[i].HardScale = miniManScale;
 			mElement.Add(mBBChoices[i]);
 			mElement.Add(mBBChoiceBodies[i]);
@@ -256,8 +256,8 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 	
 	public void position_pb_character_icons()
 	{
-		float padding = 100;
-		float hPadding = 150;
+		float padding = 300;
+		float hPadding = 350;
 		foreach(CharacterIndex e in CharacterIndex.sAllCharacters)
 		{
 			Vector3 baseOffset =  mPB.SoftPosition; //TODO overall offset

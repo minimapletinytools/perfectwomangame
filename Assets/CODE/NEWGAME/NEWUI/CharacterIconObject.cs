@@ -25,9 +25,11 @@ public class CharacterIconObject : FlatElementMultiBase {
 		mBody.HardShader = ManagerManager.Manager.mReferences.mMiniCharacterShader;
 		
 		//TODO position
-		mElements.Add(new ElementOffset(mBackground, new Vector3(0,0,0)));
-		mElements.Add(new ElementOffset(mDifficultyStars, new Vector3(0,0,0)));
-		mElements.Add(new ElementOffset(mBody, new Vector3(0,0,0)));
+		float bodyOffset = mDifficultyStars.mImageElements[0].BoundingBox.width/2 + 5;
+		float starOffset = mBackground.BoundingBox.width/2+5;
+		mElements.Add(new ElementOffset(mDifficultyStars, new Vector3(-starOffset,0,0)));
+		mElements.Add(new ElementOffset(mBackground, new Vector3(bodyOffset,0,0)));
+		mElements.Add(new ElementOffset(mBody, new Vector3(bodyOffset,0,0)));
 		
 		PrimaryGameObject = create_primary_from_elements();
 		
