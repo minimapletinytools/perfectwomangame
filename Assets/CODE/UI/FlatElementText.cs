@@ -56,8 +56,20 @@ public class FlatElementText : FlatElementBase
         Depth = aDepth;
     }
 	
-	public override void destroy()
+	public override void destroy ()
 	{
 		GameObject.Destroy(PrimaryGameObject);
 	}
+	//this is stupid and its here to make the font shadre compatible with the usual shader..
+	public override void set_color(Color aColor)
+    {
+		float r = Mathf.Clamp01(aColor.r*2);
+		float g = Mathf.Clamp01(aColor.g*2);
+		float b = Mathf.Clamp01(aColor.b*2);
+		float a = Mathf.Clamp01(aColor.a*2);
+		Color setMe = new Color(r,g,b,a);
+		//mRenderer.material.SetColor("_TintColor", setMe); 
+		base.set_color(setMe);
+    }
+	
 }

@@ -66,6 +66,7 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 	int BB_NUM_CHOICES = 3;
 	List<NewChoiceObject> mBBChoices = new List<NewChoiceObject>();
 	List<FlatBodyObject> mBBChoiceBodies = new List<FlatBodyObject>();
+	FlatElementText mBBQuestionText;
 	FlatBodyObject mBBMiniMan;
 	Vector3 mBBMiniManBasePosition;
 	FlatElementImage mBBChoiceBox;
@@ -82,7 +83,7 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 		mElement.Add(mBB);
 		
 		//BB small nonsense
-		mBBText = new FlatElementText(mManager.mNewRef.genericFont,300,"",10);
+		mBBText = new FlatElementText(mManager.mNewRef.genericFont,600,"",10);
 		mBBScoreFrame = new FlatElementImage(mManager.mNewRef.bbScoreBackground,9);
 		mBBScoreText  = new FlatElementText(mManager.mNewRef.genericFont,600,"0",10);
 		mBBPerformanceGraphFrame = new FlatElementImage(mManager.mNewRef.bbGraphBackground,9);
@@ -115,6 +116,8 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 			mElement.Add(mBBChoiceBodies[i]);
 		}
 		
+		mBBQuestionText = new FlatElementText(newRef.genericFont,1000,"What will you be like at age ",10);
+		mBBQuestionText.HardPosition = mFlatCamera.get_point(0,0.75f);
 		mBBMiniMan = new FlatBodyObject(miniMan,10);
 		mBBMiniMan.HardScale = miniManScale;
 		mBBChoiceBox = new FlatElementImage(newRef.bbChoiceFrame,15);
@@ -133,6 +136,8 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 	{
 		Color smallColor = small ? new Color(0.5f,0.5f,0.5f,1) : new Color(0.5f,0.5f,0.5f,0);
 		Color fullColor = !small ? new Color(0.5f,0.5f,0.5f,1) : new Color(0.5f,0.5f,0.5f,0);
+		//Color smallColor = small ? new Color(1,1,1,1) : new Color(1,1,1,0);
+		//Color fullColor = !small ? new Color(1,1,1,1) : new Color(1,1,1,0);
 	
 		mBBText.SoftColor = smallColor;
 		mBBScoreFrame.SoftColor = smallColor;
@@ -162,14 +167,17 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 	//called by set_for_PLAY()
 	void set_bb_small()
 	{
+		float bottomVOffset = -50;
 		mBB.SoftScale = new Vector3(1,1,1);
 		mBB.SoftPosition = mFlatCamera.get_point(-0.5f, 0) + new Vector3(0,-150,0);
-		mBBText.SoftPosition = mBB.SoftPosition + new Vector3(0,170,0);
-		mBBScoreFrame.SoftPosition = mBB.SoftPosition + new Vector3(-400,-100,0);
-		mBBScoreText.SoftPosition = mBB.SoftPosition + new Vector3(-400,-100,0);
-		mBBLastPerformanceGraph.SoftPosition = mBB.SoftPosition + new Vector3(200,-100,0);
+		mBBText.SoftPosition = mBB.SoftPosition + new Vector3(0,160,0);
+		mBBScoreFrame.SoftPosition = mBB.SoftPosition + new Vector3(-350,bottomVOffset,0);
+		mBBScoreText.SoftPosition = mBB.SoftPosition + new Vector3(-350,bottomVOffset-15,0);
+		mBBLastPerformanceGraph.SoftPosition = mBB.SoftPosition + new Vector3(150,bottomVOffset,0);
 		
 		fade_bb_contents(true);
+		
+		mBBQuestionText.SoftColor = new Color(1,0,0,0);
 		
 		//meter objects overrides soft color so we have to manually turn the meter off..
 		TED.add_event(

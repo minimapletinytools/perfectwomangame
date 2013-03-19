@@ -73,6 +73,7 @@
      <None Include="Assets\Standard Assets\Image Effects (Pro Only)\_Sources\Shaders\_BloomAndFlares\VignetteShader.shader" />
      <None Include="Assets\Standard Assets\Image Effects (Pro Only)\_Sources\Shaders\_DepthOfField\DepthOfFieldHdr.shader" />
      <None Include="Assets\POSES\old_poses\char_kinect15.txt" />
+     <None Include="Assets\MATERIALS\SHADERS\FlatGenericShader.shader" />
      <None Include="Assets\POSES\choice_7.txt" />
      <None Include="Assets\POSES\old_poses\char_kinect1.txt" />
      <None Include="Assets\Standard Assets\Image Effects (Pro Only)\_Sources\Shaders\MotionBlur.shader" />
