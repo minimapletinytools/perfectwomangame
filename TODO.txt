@@ -102,6 +102,8 @@ DONE-NAMING FORMAT
 			-maybe special glowy light effect over grave????
 
 ::TODO3::
+-add color fade limit and position move limit to FlatElementBase
+-depth between pb and bb needs to be increased
 -add text bubble to TEXT
 -make audio NOT 3D in ggfiles
 -consider still using the cool chaarcter icons that lea drew for teh pink backgrounds...
@@ -110,12 +112,10 @@ DONE-NAMING FORMAT
 -add pose processing to NGM
 -add stock choice poses
 -consider getting rid of choice box, it's no longer necessary anyways
+	-or store choice box not on screen but somewhere else instead	
+		-in this case, need move limit!!
 -change character icon/choice color based on difficulty
 -waist angle hack	
--add jiggle to text
--setup asset bundler to load new poses
--move character??
--mellow out glow
 	-test
 	DONE-waist angle = interpolation between knee position angle and desired angle 
 	DONE-interpolated by how close hip angles are to desired
@@ -126,6 +126,9 @@ DONE-NAMING FORMAT
 	-GameEvents
 	-InterfaceBehaviour
 
+IGNORE-add jiggle to text
+DONE-setup asset bundler to load new poses
+IGNORE-move character??
 DONE-mellow out glow
 DONE-make stuff in NIM private as appropriate
 DONE-reorganize functions in NIM based on when they are called and name them appropriately

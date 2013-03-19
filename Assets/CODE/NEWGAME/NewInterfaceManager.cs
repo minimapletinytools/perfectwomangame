@@ -2,6 +2,10 @@ using UnityEngine;
 using System.Collections.Generic;
 
 public class NewInterfaceManager : FakeMonoBehaviour {
+	static float END_CUTSCENE_DELAY_TIME = 1;
+	
+	
+	
     public NewInterfaceManager(ManagerManager aManager) : base(aManager) { }
 
 	public TimedEventDistributor TED { get; private set; }
@@ -350,6 +354,7 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 	public void set_for_CUTSCENE(System.Action cutsceneCompleteCb)
 	{
 		//used for skipping cutscene
+		/*
 		TED.add_event(
 			delegate(float aTime)
 			{
@@ -357,8 +362,8 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 				return true;
 			},
         0).then_one_shot( //dummy 
-			delegate(){cutsceneCompleteCb();},1);
-		return;
+			delegate(){cutsceneCompleteCb();},END_CUTSCENE_DELAY_TIME);
+		return;*/
 		
 		
 		
@@ -406,7 +411,7 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 			0);
 		}
 		
-		chain.then_one_shot(delegate(){cutsceneCompleteCb();});
+		chain.then_one_shot(delegate(){cutsceneCompleteCb();},END_CUTSCENE_DELAY_TIME);
 	}
 	
 	public void set_for_CHOICE()
