@@ -22,16 +22,6 @@ public class CameraManager : FakeMonoBehaviour {
         MainBodyCamera.cullingMask = 1 << 1;
         MainBodyCamera.depth = 4;
         MainBodyCamera.clearFlags = CameraClearFlags.Depth;
-        MainBodyCameraBloomEffect = MainBodyCamera.gameObject.AddComponent<BloomAndLensFlares>();
-        BloomAndLensFlares templateBloom = ImageEffects.GetComponent<BloomAndLensFlares>();
-        MainBodyCameraBloomEffect.addBrightStuffOneOneShader = templateBloom.addBrightStuffOneOneShader;
-        MainBodyCameraBloomEffect.brightPassFilterShader = templateBloom.brightPassFilterShader;
-        MainBodyCameraBloomEffect.hollywoodFlaresShader = templateBloom.hollywoodFlaresShader;
-        MainBodyCameraBloomEffect.lensFlareShader = templateBloom.lensFlareShader;
-        MainBodyCameraBloomEffect.screenBlendShader = templateBloom.screenBlendShader;
-        MainBodyCameraBloomEffect.separableBlurShader = templateBloom.separableBlurShader;
-        MainBodyCameraBloomEffect.vignetteShader = templateBloom.vignetteShader;
-        MainBodyCameraBloomEffect.bloomIntensity = 0;
         mManager.mBodyManager.set_layer(1);
 
         
@@ -53,9 +43,25 @@ public class CameraManager : FakeMonoBehaviour {
         ForegroundCamera.depth = 5;
         ForegroundCamera.clearFlags = CameraClearFlags.Depth;
         mManager.mBackgroundManager.set_foreground_layer(4);
+		
+		
+		
+		
+        //MainBodyCameraBloomEffect = MainBodyCamera.gameObject.AddComponent<BloomAndLensFlares>();
+		MainBodyCameraBloomEffect = BackgroundCamera.gameObject.AddComponent<BloomAndLensFlares>();
+        BloomAndLensFlares templateBloom = ImageEffects.GetComponent<BloomAndLensFlares>();
+        MainBodyCameraBloomEffect.addBrightStuffOneOneShader = templateBloom.addBrightStuffOneOneShader;
+        MainBodyCameraBloomEffect.brightPassFilterShader = templateBloom.brightPassFilterShader;
+        MainBodyCameraBloomEffect.hollywoodFlaresShader = templateBloom.hollywoodFlaresShader;
+        MainBodyCameraBloomEffect.lensFlareShader = templateBloom.lensFlareShader;
+        MainBodyCameraBloomEffect.screenBlendShader = templateBloom.screenBlendShader;
+        MainBodyCameraBloomEffect.separableBlurShader = templateBloom.separableBlurShader;
+        MainBodyCameraBloomEffect.vignetteShader = templateBloom.vignetteShader;
+        MainBodyCameraBloomEffect.bloomIntensity = 0;
+		
+		
         
         //TODO need to do render textures for this to work properly...
-
         foreach (Camera c in AllCameras)
         {
             c.transform.position = new Vector3(0, 0, 10);
@@ -63,13 +69,19 @@ public class CameraManager : FakeMonoBehaviour {
             c.isOrthoGraphic = true;
         }
 	}
-
-    public void set_camera_effects(float perfect)
+	
+	
+	public static float MAX_BLOOM_INTENSITY = 3;
+	public float mBloomIntensity = 0;
+    public void set_camera_effects(float perfect, bool hard = false)
     {
-        float interp = 0.1f;
-        MainBodyCameraBloomEffect.bloomIntensity = MainBodyCameraBloomEffect.bloomIntensity*(1-interp) + perfect * 5*interp;
+        mBloomIntensity = perfect;
+		if(hard)
+			MainBodyCameraBloomEffect.bloomIntensity = perfect;
     }
     public override void Update()
     {
+		float interp = 0.1f;
+		MainBodyCameraBloomEffect.bloomIntensity = MainBodyCameraBloomEffect.bloomIntensity*(1-interp) + mBloomIntensity * MAX_BLOOM_INTENSITY * interp;
 	}
 }

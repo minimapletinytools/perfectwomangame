@@ -125,6 +125,7 @@ DONE-NAMING FORMAT
 	-GameEvents
 	-InterfaceBehaviour
 
+DONE-mellow out glow
 DONE-make stuff in NIM private as appropriate
 DONE-reorganize functions in NIM based on when they are called and name them appropriately
 DONE-duplicate package script
