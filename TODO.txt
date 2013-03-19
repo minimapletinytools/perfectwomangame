@@ -17,10 +17,10 @@
 		-TRANSITION -> BUNDLE -> TRANSITION
 -PLAY
 	DONE-count down timer
-	-grab POSES and update
-	-compute performance
-		-update score
-		-update graph
+	DONE-grab POSES and update
+	DONE-compute performance
+		DONE-update score
+		DONE-update graph
 	-if performance is too bad
 		-transition to DEATH
 	DONE-if timer is done, transition to CUTSCENE
@@ -42,12 +42,12 @@
 -FETUS
 	-needs to NOT update the bluebar
 -NORMAL
-	-internal SCORE
+	DONE-internal SCORE
 	-update UI
-		-score
+		DONE-score
 		-graph
 		-effects
-	-tell BACKGROUND to glow
+	-tell BACKGROUND to glow???
 -100
 	-???
 -GRAVE
@@ -59,7 +59,7 @@
 
 
 ::NEW POSE NONSENSE::
--NAMING FORMAT
+DONE-NAMING FORMAT
 	-<age>-<1/2/3/4>_<a/b/c/d>-<1/2/3/...>.txt (should always be 3 frames, but can be more/less)
 	-fallback to characters in same age
 	
@@ -67,13 +67,13 @@
 ::NEW INTERFACE MANAGER NONSENSE::
 -BLUE BAR
 	-PLAY
-		-NAME
+		DONE-NAME
 		-PERFORMANCE GRAPH
-		-SCORE
-		-transition to CUTSCENE
+		DONE-SCORE
+		DONE-transition to CUTSCENE
 	-CUTSCENE
 		-???
-		-transition to CHOOSE
+		DONE-transition to CHOOSE
 	DONE-CHOOSE
 		-variable # CHOICES
 		-variable # CHOICE_BODY
@@ -102,6 +102,7 @@
 			-maybe special glowy light effect over grave????
 
 ::TODO3::
+-add text bubble to TEXT
 -make audio NOT 3D in ggfiles
 -consider still using the cool chaarcter icons that lea drew for teh pink backgrounds...
 	-use poses for future, icons for past
