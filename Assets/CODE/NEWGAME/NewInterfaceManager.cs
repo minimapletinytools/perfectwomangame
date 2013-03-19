@@ -131,8 +131,8 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 	//called by set_bb_small/full
 	void fade_bb_contents(bool small)
 	{
-		Color smallColor = small ? new Color(1,1,1,1) : new Color(1,1,1,0);
-		Color fullColor = !small ? new Color(1,1,1,1) : new Color(1,1,1,0);
+		Color smallColor = small ? new Color(0.5f,0.5f,0.5f,1) : new Color(0.5f,0.5f,0.5f,0);
+		Color fullColor = !small ? new Color(0.5f,0.5f,0.5f,1) : new Color(0.5f,0.5f,0.5f,0);
 	
 		mBBText.SoftColor = smallColor;
 		mBBScoreFrame.SoftColor = smallColor;
@@ -291,7 +291,7 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 			delegate()
 			{
 				//to.SoftPosition = random_position();
-				to.SoftColor = new Color32(1,1,1,0);
+				to.SoftColor = new Color32(0,0,0,0);
 				to.SoftInterpolation = 0.05f;
 			},
 		duration).then_one_shot(
@@ -314,7 +314,7 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 		PerformanceGraphObject aGraph = aChar.PerformanceGraph;
 		if(mBBLastPerformanceGraph != null)
 		{
-			mBBLastPerformanceGraph.SoftColor = new Color(1,1,1,0);
+			mBBLastPerformanceGraph.SoftColor = new Color(0.5f,0.5f,0.5f,0);
 			//mBBLastPerformanceGraph.Enabled = false;
 			//mElement.Remove(mBBLastPerformanceGraph);
 		}

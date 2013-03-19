@@ -116,6 +116,15 @@ public class TransitionCameraManager : FakeMonoBehaviour
 		mElement.Add(mFilmLogo);
 		
 		
+		/*
+		PerformanceGraphObject mGraph = new PerformanceGraphObject(10);
+		mGraph.SoftPosition = mFlatCamera.Center;
+		for(int i = 0; i < 500; i++)
+		{
+			mGraph.update_graph(Random.Range(0f,1f),Random.Range(0f,1f));
+		}
+		mElement.Add(mGraph);*/
+		
 		//display logo
 		//if no kinect is found
 			//display no kinect found nonsesnse
@@ -131,7 +140,7 @@ public class TransitionCameraManager : FakeMonoBehaviour
 			delegate(float aTime){
 				if(Input.GetKeyDown(KeyCode.Alpha0))
 					go_to_fetus(0);
-				else if(aTime > 10) //TODO check if user is found before doing this
+				else if(aTime > 100) //TODO check if user is found before doing this
 					go_to_fetus(0); 
 				else return false;
 				return true;

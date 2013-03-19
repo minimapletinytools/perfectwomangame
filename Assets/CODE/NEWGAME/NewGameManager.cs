@@ -136,7 +136,7 @@ public class NewGameManager : FakeMonoBehaviour
 		
 		//this basically means we aren't 0 or 100 or 999
 		//if (CurrentPerformanceStat.Character.Level != 0 && CurrentPerformanceStat.Character.Level != 8 && CurrentPerformanceStat.Character.Level != 9)
-		if (CurrentTargetPose != null && mManager.mTransparentBodyManager.mFlat.mTargetPose != null)
+		//if (CurrentTargetPose != null && mManager.mTransparentBodyManager.mFlat.mTargetPose != null)
         {
 			//TODO
             //float grade = ProGrading.grade_pose(CurrentPose, mManager.mTransparentBodyManager.mFlat.mTargetPose);

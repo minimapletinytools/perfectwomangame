@@ -13,9 +13,13 @@ public class FlatGraphElement : FlatElementImage {
         initialize(mGraphTexture, null, aDepth);
     }
 	
-	public FlatGraphElement(Texture2D aBgTex, int aDepth):base(aBgTex,aDepth)
+	public FlatGraphElement(Texture2D aBgTex, int aDepth):base(null,aDepth)
     {
-        mGraphTexture = aBgTex;
+        mGraphTexture = new Texture2D(aBgTex.width,aBgTex.height,aBgTex.format,false);
+		mGraphTexture.SetPixels(aBgTex.GetPixels());
+		mGraphTexture.Apply();
+		//hack
+        initialize(mGraphTexture, null, aDepth);
     }
 
     public void clear_to_white()
