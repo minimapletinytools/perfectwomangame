@@ -46,6 +46,19 @@ public class ProGrading {
     {
         return Mathf.Clamp((16 - aGrade) / 16f, 0, 1);
     }
+	
+	public static float grade_joint(Pose A, Pose B, ZigJointId aJoint)
+	{
+		PoseElement e = A.find_element(aJoint);
+		PoseElement bPose = B.find_element(aJoint);
+		float target = bPose.angle;
+        float actual = e.angle;
+        float diff = target - actual;
+        while (diff > 180) diff -= 360;
+        while(diff < -180) diff += 360;
+		return diff;
+	}
+	
     public static float grade_pose(Pose A, Pose B) //weight is taken from Pose B, B is traget
     {
         float weightsum = 0;

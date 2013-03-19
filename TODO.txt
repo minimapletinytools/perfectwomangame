@@ -112,13 +112,14 @@ DONE-NAMING FORMAT
 -consider getting rid of choice box, it's no longer necessary anyways
 -change character icon/choice color based on difficulty
 -waist angle hack	
-	-waist angle = interpolation between knee position angle and desired angle 
-	-interpolated by how close hip angles are to desired
-	-only needed for NITE
 -add jiggle to text
 -setup asset bundler to load new poses
 -move character??
 -mellow out glow
+	-test
+	DONE-waist angle = interpolation between knee position angle and desired angle 
+	DONE-interpolated by how close hip angles are to desired
+	DONE-only needed for NITE
 -delete
 	-InterfaceManager
 	-GameManger

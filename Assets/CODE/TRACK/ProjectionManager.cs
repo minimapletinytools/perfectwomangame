@@ -161,7 +161,9 @@ public class ProjectionManager : FakeMonoBehaviour {
 	public override void Update () {
         if (mManager.mZigManager.has_user())
         {
-
+			ProGrading.Pose targetPose = mManager.mGameManager.CurrentTargetPose;
+			ProGrading.Pose currentPose = mManager.mGameManager.CurrentPose; //this may have one frame of lag but oh well
+			
             foreach (KeyValuePair<ZigJointId,Stupid> e in mImportant)
             {
                 if (e.Key != ZigJointId.None)
@@ -189,8 +191,18 @@ public class ProjectionManager : FakeMonoBehaviour {
             }
             try
             {
+				
+				float waistAngle = get_waist(mManager.mZigManager.Joints[ZigJointId.Waist], mManager.mZigManager.Joints[ZigJointId.LeftKnee], mManager.mZigManager.Joints[ZigJointId.RightKnee]);
+				//waist smoothing angle hack
+				if(!mManager.mZigManager.using_nite() && targetPose != null)
+				{
+					float interp = Mathf.Clamp01((ProGrading.grade_joint(currentPose,targetPose,ZigJointId.LeftHip) + ProGrading.grade_joint(currentPose,targetPose,ZigJointId.RightHip))/100f);
+					waistAngle = targetPose.find_element(ZigJointId.Waist).angle * (1-interp) + waistAngle * interp;
+				}
+				mWaist.change(waistAngle,mSmoothing);
+				
                 //mWaist.snap_change(get_waist(mManager.mZigManager.Joints[ZigJointId.Waist], mManager.mZigManager.Joints[ZigJointId.LeftKnee], mManager.mZigManager.Joints[ZigJointId.RightKnee]), mManager.mTransparentBodyManager.mTargetPose.find_element(ZigJointId.Waist).angle, mSmoothing);
-                mWaist.change(get_waist(mManager.mZigManager.Joints[ZigJointId.Waist], mManager.mZigManager.Joints[ZigJointId.LeftKnee], mManager.mZigManager.Joints[ZigJointId.RightKnee]), mSmoothing);
+                //mWaist.change(get_waist(mManager.mZigManager.Joints[ZigJointId.Waist], mManager.mZigManager.Joints[ZigJointId.LeftKnee], mManager.mZigManager.Joints[ZigJointId.RightKnee]), mSmoothing);
                 //mWaist.target = get_waist(mManager.mZigManager.Joints[ZigJointId.Waist], mManager.mZigManager.Joints[ZigJointId.LeftHip], mManager.mZigManager.Joints[ZigJointId.RightHip]);
             }
             catch
