@@ -284,14 +284,13 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 	//TEXT
 	public void add_timed_text_bubble(string aMsg, float duration)
 	{
-		PopupTextObject to = new PopupTextObject(null,10);
+		PopupTextObject to = new PopupTextObject(aMsg,10);
 		to.HardPosition = random_position();
-		to.Text = aMsg; //TODO more than one line??
 		TimedEventDistributor.TimedEventChain chain = TED.add_event(
 			delegate(float aTime)
 			{
 				//TODO set message
-				to.SoftPosition = mFlatCamera.Center + new Vector3(400,0,0);
+				to.SoftPosition = mFlatCamera.get_point(0.40f,0);
 				mElement.Add(to);
 				return true;
 			},
@@ -373,7 +372,7 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 		TimedEventDistributor.TimedEventChain chain = TED.add_event(
 			delegate(float aTime)
 			{
-				add_timed_text_bubble("CUTSCENE BEGIN",firstTextTime);
+				add_timed_text_bubble("CUTSCENE BEGIN OESUNTHOENTUHOEOEUOEU",firstTextTime);
 				return true;
 			},
         0).then_one_shot( //dummy 
