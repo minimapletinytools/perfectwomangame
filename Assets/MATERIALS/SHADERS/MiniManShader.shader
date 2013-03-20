@@ -4,10 +4,13 @@ Shader "Custom/MiniManShader" {
 		_MainTex ("Base (RGB)", 2D) = "white" {}
 	}
 	SubShader {
-		Tags { "RenderType"="Transparent" }
+		Tags { "Queue"="Transparent +100" "IgnoreProjector"="True" "RenderType"="Transparent" }
 		AlphaTest Greater 0
 		Blend SrcAlpha OneMinusSrcAlpha
 		//Blend One Zero
+		ZTest Less
+		Cull Off Lighting Off ZWrite On Fog { Color (0,0,0,0) }
+		
 		CGPROGRAM
 		#pragma surface surf SimpleLambert
 		//this is not lambert at all
