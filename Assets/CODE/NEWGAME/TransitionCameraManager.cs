@@ -63,8 +63,8 @@ public class TransitionCameraManager : FakeMonoBehaviour
 		//???mSunShafts.sunTransform = shafts.sunTransform;
 		
 		
-		mDepthImage = new FlatElementImage(null,0); 
-		mElement.Add(mDepthImage);
+		//mDepthImage = new FlatElementImage(null,0); 
+		//mElement.Add(mDepthImage);
 		
 		start_configuration_display();
 	}
@@ -76,7 +76,7 @@ public class TransitionCameraManager : FakeMonoBehaviour
 		//TODO do something with this.
 		if(mADV == null)
 			mADV = mManager.mZigManager.DepthView;
-		mDepthImage.mImage.set_new_texture(mADV.DepthTexture,new Vector2(mFlatCamera.Width,mFlatCamera.Height));
+		//mDepthImage.mImage.set_new_texture(mADV.DepthTexture,new Vector2(mFlatCamera.Width,mFlatCamera.Height));
 		
 		
 		mFlatCamera.update(Time.deltaTime);

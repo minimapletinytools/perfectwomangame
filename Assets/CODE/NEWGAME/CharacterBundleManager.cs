@@ -9,7 +9,7 @@ public class CharacterBundleManager : FakeMonoBehaviour {
 	
 	public override void Start()
 	{
-		Debug.Log ("starting CBM");
+		//Debug.Log ("starting CBM");
 		mManager.mAssetLoader.new_load_poses("POSES",this);
 		load_mini_characters();
 	}

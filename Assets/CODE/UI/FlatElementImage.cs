@@ -22,6 +22,7 @@ public class FlatElementImage : FlatElementBase
         SoftColor = new Color(0.5f, 0.5f, 0.5f, 0.5f);
         mImage = new ImageGameObjectUtility(aTex, aSize);
         PrimaryGameObject = mImage.ParentObject;
+		PrimaryGameObject.name = "genImageObject_"+aTex.name;
         Depth = aDepth;
     }
 
