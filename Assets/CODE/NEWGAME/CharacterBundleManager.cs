@@ -1,6 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
-
+using System.Threading;
 public class CharacterBundleManager : FakeMonoBehaviour {
 	
 	public CharacterBundleManager(ManagerManager aManager) : base(aManager) 
@@ -9,16 +9,19 @@ public class CharacterBundleManager : FakeMonoBehaviour {
 	
 	public override void Start()
 	{
+		Debug.Log ("starting CBM");
 		mManager.mAssetLoader.new_load_poses("POSES",this);
 		load_mini_characters();
 	}
 			
 	
 	
+	Mutex mMiniCharLock;
 	CharacterLoader[] mMiniCharacters = new CharacterLoader[31];
 	//mini bundle related
 	public void load_mini_characters()
 	{
+		mMiniCharLock = new Mutex();
 		foreach(CharacterIndex index in CharacterIndex.sAllCharacters)
 		{
 			
@@ -31,12 +34,17 @@ public class CharacterBundleManager : FakeMonoBehaviour {
 	public void mini_loaded_callback(AssetBundle aBundle, string aBundleName)
 	{
 		int index = (new CharacterIndex(aBundleName)).Index;
-		mMiniCharacters[index] = new CharacterLoader();
-		mMiniCharacters[index].complete_load_character(aBundle,aBundleName);
+		using(mMiniCharLock)
+		{
+			mMiniCharacters[index] = new CharacterLoader();
+			mMiniCharacters[index].complete_load_character(aBundle,aBundleName);
+		}
+		aBundle.Unload(false);
 	}
 	public CharacterLoader get_mini_character(CharacterIndex aIndex)
 	{
-		return mMiniCharacters[aIndex.Index];
+		using(mMiniCharLock)
+			return mMiniCharacters[aIndex.Index];
 		/*
 		if(mMiniCharacters[aIndex.Index] == null)
 		{
@@ -54,8 +62,8 @@ public class CharacterBundleManager : FakeMonoBehaviour {
 	AssetBundle mLastCharacterBundle = null;
     public void scene_loaded_callback(AssetBundle aBundle, string aBundleName)
     {
-		if(mLastCharacterBundle != null) //we are loading a new bundle so I guess we don't need the old bundle anymore
-			mLastCharacterBundle.Unload(true);
+		//if(mLastCharacterBundle != null) //we are loading a new bundle so I guess we don't need the old bundle anymore
+		//	mLastCharacterBundle.Unload(true);
 	
         //Debug.Log("loading character in CharacterLoader " + aBundleName);
 		//TODo don't do this serial
@@ -78,6 +86,8 @@ public class CharacterBundleManager : FakeMonoBehaviour {
 		}
 		mManager.mMusicManager.character_changed_listener(loader);
 		mManager.mGameManager.character_changed_listener(loader);
+		
+		mLastCharacterBundle.Unload(false);
 	}
 	
 	
@@ -123,4 +133,11 @@ public class CharacterBundleManager : FakeMonoBehaviour {
 		//TODO store info in mPoses
         aBundle.Unload(true); //don't need this anymore I don't ithnk...
     }
+	
+	public void cleanup()
+	{
+		if(mLastCharacterBundle != null)
+			mLastCharacterBundle.Unload(true);
+		
+	}
 }

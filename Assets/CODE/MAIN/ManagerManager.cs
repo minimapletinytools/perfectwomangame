@@ -127,7 +127,28 @@ public class ManagerManager : MonoBehaviour{
 	
     public void restart_game()
     {
+		
         mGameManager.cleanup();
+		
+		//can't hurt
+		mEventManager = null;
+        mInputManager = null;
+		mZigManager = null;
+		mProjectionManager = null;
+        mInterfaceManager = null;
+        mBodyManager = null;
+        mTransparentBodyManager = null;
+        mBackgroundManager = null;
+        mCameraManager = null;
+        mParticleManager = null;
+        mAssetLoader = null;
+        mGameManager = null;
+		mTransitionCameraManager = null;
+		mCharacterBundleManager = null;
+		mMusicManager = null;
+		
+		System.GC.Collect();
+		
         Application.LoadLevel("kinect_test");
     }
 

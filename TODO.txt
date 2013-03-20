@@ -102,6 +102,14 @@ DONE-NAMING FORMAT
 			-maybe special glowy light effect over grave????
 
 ::TODO3::
+-clean up everything referencing menuReferences (this will save a lot of memery)
+-why can't I do GAME OVER in a text bubble???
+-cutscenes not playing after fetus
+-princess gets played twice???
+-turn off transparent during cutscene
+	-I think you need to change the shader to do this peter
+-add a skip cutscene feature FOR SERIOUS!!
+	-this is actually not easy to do lol
 -make a test build
 -restart game 
 -do GRAVE
