@@ -89,7 +89,7 @@ public class NewGameManager : FakeMonoBehaviour
 		switch(aCharacter.Name)
 		{
 			case "0-1":	
-				DeathCharacter = aCharacter; //so hopefully AssetBundle.unload doesn't fudge this up...
+				DeathCharacter = aCharacter; //TODO AssetBundle.undload will actually mess this up...
 				TimeRemaining = 30f;
 				setup_next_poses(true);
 				transition_to_PLAY();
@@ -213,6 +213,8 @@ public class NewGameManager : FakeMonoBehaviour
 	public void transition_to_CUTSCENE()
 	{
 		GS = GameState.CUTSCENE;
+		mManager.mBodyManager.transition_character_out();
+		mManager.mTransparentBodyManager.transition_character_out();
 		mManager.mInterfaceManager.set_for_CUTSCENE(
 			delegate() { transition_to_CHOICE(); }
 		);

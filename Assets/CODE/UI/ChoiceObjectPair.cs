@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections;
 
+//TODO DELETE
 public class ChoiceObjectPair : FlatElementMultiBase {
     public FlatElementImage mSquare;
     DifficultyObject mDifficultyStars;
@@ -14,8 +15,8 @@ public class ChoiceObjectPair : FlatElementMultiBase {
     public ChoiceObjectPair(Texture2D aLeftTex, int aDepth)
     {
         mSquare = new FlatElementImage(aLeftTex, aDepth);
-        mDifficultyStars = new DifficultyObject(ManagerManager.Manager.mMenuReferences.perfectnessStar, aDepth);
-        mDifficultyBalls = new DifficultyObject(ManagerManager.Manager.mMenuReferences.difficultyDot, aDepth);
+        mDifficultyStars = new DifficultyObject(ManagerManager.Manager.mNewRef.uiPerfectStar, aDepth);
+        mDifficultyBalls = new DifficultyObject(ManagerManager.Manager.mNewRef.uiPerfectStar, aDepth);
 
         mElements.Add(new FlatElementMultiBase.ElementOffset(mSquare, new Vector3(mSide, 0, 0)));
         mElements.Add(new FlatElementMultiBase.ElementOffset(mDifficultyStars, new Vector3(-mSide, mRightBot, 0)));
@@ -27,8 +28,8 @@ public class ChoiceObjectPair : FlatElementMultiBase {
     public ChoiceObjectPair(Texture2D aLeftTex, CharacterTextureBehaviour aChar, ProGrading.Pose aPose, int aDepth)
     {
         mSquare = new FlatElementImage(aLeftTex, aDepth);
-        mDifficultyStars = new DifficultyObject(ManagerManager.Manager.mMenuReferences.perfectnessStar, aDepth);
-        mDifficultyBalls = new DifficultyObject(ManagerManager.Manager.mMenuReferences.difficultyDot, aDepth);
+        mDifficultyStars = new DifficultyObject(ManagerManager.Manager.mNewRef.uiPerfectStar, aDepth);
+        mDifficultyBalls = new DifficultyObject(ManagerManager.Manager.mNewRef.uiPerfectStar, aDepth);
        
         
         mElements.Add(new FlatElementMultiBase.ElementOffset(mSquare, new Vector3(mSide, 0, 0)));

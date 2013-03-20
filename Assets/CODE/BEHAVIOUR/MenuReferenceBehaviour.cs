@@ -2,7 +2,7 @@ using UnityEngine;
 using System.Collections;
 
 public class MenuReferenceBehaviour : MonoBehaviour {
-    
+    /*
     public GameObject miniMan;
     public TextAsset cheapPose;
 	public Texture2D fontTex;
@@ -31,6 +31,6 @@ public class MenuReferenceBehaviour : MonoBehaviour {
     public Texture2D[] choiceParticles;
 
     public Texture2D emptyBox;
-    public Texture2D bigBadBox;
+    public Texture2D bigBadBox;*/
     public Texture2D[] boxes; //29
 }

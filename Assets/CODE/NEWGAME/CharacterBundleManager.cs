@@ -78,7 +78,7 @@ public class CharacterBundleManager : FakeMonoBehaviour {
 			mManager.mBodyManager.character_changed_listener(loader);
 			mManager.mTransparentBodyManager.character_changed_listener(loader);
 			//TODO set to actual pose that we want
-			mManager.mTransparentBodyManager.set_target_pose(mManager.mMenuReferences.cheapPose.to_pose());
+			mManager.mTransparentBodyManager.set_target_pose(mManager.mReferences.mCheapPose.to_pose());
 		}
 		else{
 			mManager.mBodyManager.destroy_character();
@@ -124,7 +124,7 @@ public class CharacterBundleManager : FakeMonoBehaviour {
 		}
 		else
 		{
-			r.poses.Add(mManager.mMenuReferences.cheapPose.to_pose());
+			r.poses.Add(mManager.mReferences.mCheapPose.to_pose());
 			return r;
 		}
 	}

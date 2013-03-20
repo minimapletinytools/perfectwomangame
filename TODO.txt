@@ -106,7 +106,7 @@ DONE-NAMING FORMAT
 -why can't I do GAME OVER in a text bubble???
 -cutscenes not playing after fetus
 -princess gets played twice???
--turn off transparent during cutscene
+DONE-turn off transparent during cutscene
 	-I think you need to change the shader to do this peter
 -add a skip cutscene feature FOR SERIOUS!!
 	-this is actually not easy to do lol
@@ -137,6 +137,7 @@ DONE-NAMING FORMAT
 	-GameManger
 	-GameEvents
 	-InterfaceBehaviour
+-put mini in asset bundle as well
 
 IGNORE-add jiggle to text
 DONE-setup asset bundler to load new poses

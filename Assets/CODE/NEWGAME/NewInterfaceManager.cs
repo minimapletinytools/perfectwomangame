@@ -21,7 +21,7 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 		TED = new TimedEventDistributor();
         mFlatCamera = new FlatCameraManager(new Vector3(10000, 0, 0), 10);
 		mFlatCamera.fit_camera_to_screen();
-        mMiniMan = ((GameObject)GameObject.Instantiate(ManagerManager.Manager.mMenuReferences.miniMan)).GetComponent<CharacterTextureBehaviour>();        
+        mMiniMan = ((GameObject)GameObject.Instantiate(ManagerManager.Manager.mReferences.mMiniChar)).GetComponent<CharacterTextureBehaviour>();        
 		
 		/*
 		var refs = mManager.mMenuReferences;
@@ -79,7 +79,6 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 	public void setup_bb()
 	{
 		var newRef = mManager.mNewRef;
-		MenuReferenceBehaviour menuRef = mManager.mMenuReferences;
 		var refs = mManager.mReferences;
 		
 		mBB = new FlatElementImage(mManager.mNewRef.bbBackground,8);
@@ -103,7 +102,7 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 		
 		
 		//BB choice nonsense
-		var miniMan = ((GameObject)GameObject.Instantiate(menuRef.miniMan)).GetComponent<CharacterTextureBehaviour>();
+		var miniMan = ((GameObject)GameObject.Instantiate(refs.mMiniChar)).GetComponent<CharacterTextureBehaviour>();
 		Vector3 miniManScale = new Vector3(2,2,1);
 		float padding = 600;
 		float netWidth = (BB_NUM_CHOICES)*padding;
@@ -499,7 +498,7 @@ public class NewInterfaceManager : FakeMonoBehaviour {
         3).then_one_shot( //wait a little bit to let the fading finish
 			delegate()
 			{
-				add_timed_text_bubble("here is your life story:",textTime);
+				add_timed_text_bubble("This is your life story:",textTime);
 			},
 		textTime).wait (textTime);
 		
@@ -549,7 +548,7 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 		chain = chain.then_one_shot(
 			delegate()
 			{
-				add_timed_text_bubble("FIN",6);
+				add_timed_text_bubble("GAME OVER",6);
 			}
 		,0).then_one_shot(
 			graveCompleteCb

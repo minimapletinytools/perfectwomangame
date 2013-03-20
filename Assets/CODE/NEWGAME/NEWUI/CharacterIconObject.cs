@@ -15,7 +15,7 @@ public class CharacterIconObject : FlatElementMultiBase {
 		
 		if(aIcon == null)
 		{
-			CharacterTextureBehaviour ctb = (GameObject.Instantiate(ManagerManager.Manager.mMenuReferences.miniMan) as  GameObject).GetComponent<CharacterTextureBehaviour>();
+			CharacterTextureBehaviour ctb = (GameObject.Instantiate(ManagerManager.Manager.mReferences.mMiniChar) as  GameObject).GetComponent<CharacterTextureBehaviour>();
 			mBody =  new FlatBodyObject(ctb,aDepth);
 			GameObject.Destroy(ctb.gameObject);
 		}

@@ -3,19 +3,20 @@ using System.Collections;
 
 public class PrefabReferenceBehaviour : MonoBehaviour {
 
-    public GameObject mDebugLimb;
-
-	public GameObject mDemoChar;
+	public GameObject mMiniChar;
+	public TextAsset mCheapPose;
+	
+	//shaders/materials
 	public Shader mDefaultCharacterShader;
 	public Shader mTransparentCharacaterShader;
 	public Shader mMiniCharacterShader;
 	
-    public Texture2D mDefaultParticleTexture;
-    //public GameObject[] mCharacters; //29, 0 is fetus, row major (or was it collumn?)
-    public GameObject mGrave;
-    public GameObject mImageEffectsPrefabs;
+	//important prefabs
+	public GameObject mImageEffectsPrefabs;
     public GameObject mPlanePrefab;
-    public TextAsset[] mPossiblePoses;
-    public TextAsset[] mDefaultTargetPoses;
+	
+	public TextAsset[] mPossiblePoses;
+    //public GameObject[] mCharacters; //29, 0 is fetus, row major (or was it collumn?)
+    //public TextAsset[] mDefaultTargetPoses;
         
 }

@@ -27,9 +27,9 @@ public class PopupTextObject : FlatElementMultiBase {
 		{
 			int splitIndex = (text.Length+1)/2;
 			string r = text.Substring(0,splitIndex);
-			if( text[splitIndex + 1] != ' ')
+			if( text[splitIndex] != ' ')
 				r += "-";
-			r += "\n" + text.Substring(splitIndex +1);
+			r += "\n" + text.Substring(splitIndex);
 			return r;
 		}
 		return text;

@@ -31,7 +31,7 @@ public class NewChoiceObject : FlatElementMultiBase {
 		mSquare = new FlatElementImage(newRef.bbChoiceBox, aDepth);
 		mText = new FlatElementText(newRef.genericFont,400,"meow",aDepth +1);
 		
-        mPerfect = new DifficultyObject(ManagerManager.Manager.mMenuReferences.perfectnessStar, aDepth);
+        mPerfect = new DifficultyObject(ManagerManager.Manager.mNewRef.uiPerfectStar, aDepth);
         mMeter = new MeterImageObject(newRef.bbChoiceBox, MeterImageObject.FillStyle.DU, aDepth + 1);
         mMeter.Percentage = 0.0f;
 		set_perfectness(3);

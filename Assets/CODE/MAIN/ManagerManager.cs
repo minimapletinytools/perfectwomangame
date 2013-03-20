@@ -42,7 +42,7 @@ public class ManagerManager : MonoBehaviour{
 	public MusicManager mMusicManager;
 
     public PrefabReferenceBehaviour mReferences;
-    public MenuReferenceBehaviour mMenuReferences;
+    //public MenuReferenceBehaviour mMenuReferences;
 	public NewMenuReferenceBehaviour mNewRef;
 
 	void Awake () {
@@ -50,7 +50,7 @@ public class ManagerManager : MonoBehaviour{
 		
         //Debug.Log("setting up managers");
         mReferences = GetComponent<PrefabReferenceBehaviour>();
-        mMenuReferences = GetComponent<MenuReferenceBehaviour>();
+        //mMenuReferences = GetComponent<MenuReferenceBehaviour>();
 		mNewRef = GetComponent<NewMenuReferenceBehaviour>();
         
         Manager = this;
