@@ -102,7 +102,7 @@ DONE-NAMING FORMAT
 			-maybe special glowy light effect over grave????
 
 ::TODO3::
--clean up everything referencing menuReferences (this will save a lot of memery)
+DONE-referencing menuReferences (this will save a lot of memery)
 -why can't I do GAME OVER in a text bubble???
 -cutscenes not playing after fetus
 -princess gets played twice???
@@ -115,7 +115,10 @@ DONE-restart game
 -do GRAVE
 -decide on CUTSCENE info format
 -add color fade limit and position move limit to FlatElementBase
--depth between pb and bb needs to be increased
+-depth issues
+	-pb cahracter icons have same depths as stuff on bb
+		-either that or that stupid shader I wrote is messing up the depth test rendering order nonsense
+	-textbubbles appear over blue bar
 -add text bubble to TEXT
 -make audio NOT 3D in ggfiles
 -consider still using the cool chaarcter icons that lea drew for teh pink backgrounds...
@@ -137,6 +140,8 @@ DONE-restart game
 	-GameManger
 	-GameEvents
 	-InterfaceBehaviour
+
+-put all menu stuff in aset bundle too
 -put mini in asset bundle as well
 
 IGNORE-add jiggle to text

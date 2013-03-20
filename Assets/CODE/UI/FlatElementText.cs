@@ -26,30 +26,33 @@ public class FlatElementText : FlatElementBase
             
 	public FlatElementText(GameObject fontPrefab, int aSize, string aText, int aDepth)
 	{
-		PrimaryGameObject = GameObject.Instantiate(fontPrefab) as GameObject;
+		PrimaryGameObject = new GameObject("genTextElementParent");
+		GameObject textElement = GameObject.Instantiate(fontPrefab) as GameObject;
+		textElement.transform.rotation = Quaternion.AngleAxis(180, Vector3.up);
+		textElement.transform.localScale = new Vector3(10,10,10);
 		mRenderer = PrimaryGameObject.renderer;
 		mMesh = PrimaryGameObject.GetComponent<TextMesh>();
 		mMesh.anchor = TextAnchor.MiddleCenter;
         Size = aSize;
         Text = aText;
+		
+		textElement.transform.parent = PrimaryGameObject.transform.parent;
 		Depth = aDepth;
 	}
 	
-	//this wont work...
     public FlatElementText(Font aFont, int aSize, string aText, int aDepth)
     {
-        
         PrimaryGameObject = new GameObject("genTextElementParent");
         GameObject textElement = new GameObject("genTextElement");
         textElement.transform.rotation = Quaternion.AngleAxis(180, Vector3.up);
-        mRenderer = textElement.AddComponent<MeshRenderer>();
+		textElement.transform.localScale = new Vector3(10,10,10);
 		
+        mRenderer = textElement.AddComponent<MeshRenderer>();
         mMesh = textElement.AddComponent<TextMesh>();
         mMesh.font = aFont;
         mMesh.anchor = TextAnchor.MiddleCenter;
         Size = aSize;
         Text = aText;
-		
 		mRenderer.material = mMesh.font.material;
 		
         textElement.transform.parent = PrimaryGameObject.transform;

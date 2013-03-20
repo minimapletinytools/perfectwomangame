@@ -100,10 +100,10 @@ public class TransitionCameraManager : FakeMonoBehaviour
 		TED.add_event(fade_in,0);
 		
 		NewMenuReferenceBehaviour refs = mManager.mNewRef;
-		mPWLogo = new FlatElementText(refs.genericFont,1300,"P e r f e c t  W o m a n",1);
+		mPWLogo = new FlatElementText(refs.genericFont,130,"P e r f e c t  W o m a n",1);
 		mPWLogo.HardPosition = mFlatCamera.Center + new Vector3(0,250,0);
 		//S c h ö n f e l d e r
-		mPWCredits =  new FlatElementText(refs.genericFont,600,"A  G a m e  b y  P e t e r  L u  a n d  L e a  S c h o e n f e l d e r",1);
+		mPWCredits =  new FlatElementText(refs.genericFont,60,"A  G a m e  b y  P e t e r  L u  a n d  L e a  S c h o e n f e l d e r",1);
 		mPWCredits.HardPosition = mFlatCamera.Center + new Vector3(0,0,0);
 		
 		//TODO GL and FA logo

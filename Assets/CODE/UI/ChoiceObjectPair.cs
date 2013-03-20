@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections;
 
-//TODO DELETE
+//TODO DELETE 
 public class ChoiceObjectPair : FlatElementMultiBase {
     public FlatElementImage mSquare;
     DifficultyObject mDifficultyStars;

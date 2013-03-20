@@ -158,7 +158,10 @@ public class FlatElementBase {
 			if (PrimaryGameObject != null)
 	        {
 	            foreach (Renderer e in PrimaryGameObject.GetComponentsInChildren<Renderer>())
+				{
 	            	e.material.shader = value;
+					e.material.renderQueue = mDepth;
+				}
 	        }
 		}
     }

@@ -49,7 +49,7 @@ public class PopupTextObject : FlatElementMultiBase {
 			aText = split_text(aText);
 		}
 		
-		mText = new FlatElementText(ManagerManager.Manager.mNewRef.genericFont,1200,aText,aDepth+1);
+		mText = new FlatElementText(ManagerManager.Manager.mNewRef.genericFont,120,aText,aDepth+1);
 		mElements.Add(new FlatElementMultiBase.ElementOffset(mBackground, new Vector3(0, 0, 0)));
 		mElements.Add(new FlatElementMultiBase.ElementOffset(mText, new Vector3(0, textOffset, 0)));
         PrimaryGameObject = create_primary_from_elements();

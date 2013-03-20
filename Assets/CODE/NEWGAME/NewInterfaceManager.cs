@@ -98,9 +98,9 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 		mElement.Add(mBB);
 		
 		//BB small nonsense
-		mBBText = new FlatElementText(mManager.mNewRef.genericFont,600,"",10);
+		mBBText = new FlatElementText(mManager.mNewRef.genericFont,60,"",10);
 		mBBScoreFrame = new FlatElementImage(mManager.mNewRef.bbScoreBackground,9);
-		mBBScoreText  = new FlatElementText(mManager.mNewRef.genericFont,600,"0",10);
+		mBBScoreText  = new FlatElementText(mManager.mNewRef.genericFont,60,"0",10);
 		mBBPerformanceGraphFrame = new FlatElementImage(mManager.mNewRef.bbGraphBackground,9);
 		mBBText.HardPosition = random_position();
 		mBBScoreFrame.HardPosition = random_position();
@@ -131,7 +131,7 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 			mElement.Add(mBBChoiceBodies[i]);
 		}
 		
-		mBBQuestionText = new FlatElementText(newRef.genericFont,1000,"What will you be like at age ",10);
+		mBBQuestionText = new FlatElementText(newRef.genericFont,100,"What will you be like at age ",10);
 		mBBQuestionText.HardPosition = mFlatCamera.get_point(0,0.75f);
 		mBBMiniMan = new FlatBodyObject(miniMan,10);
 		mBBMiniMan.HardScale = miniManScale;
@@ -522,8 +522,8 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 		float sceneTextTime = 4;
 		float startingPosition = mFlatCamera.get_point(0,1).y - aStats[0].PerformanceGraph.BoundingBox.height - 30;
 		float intervalSize = aStats[0].PerformanceGraph.BoundingBox.height + 30;
-		float cioXOffset = mBB.SoftPosition.x + 200;
-		float pgoXOffset = mBB.SoftPosition.x - 100;
+		float cioXOffset = mBB.SoftPosition.x + 300;
+		float pgoXOffset = mBB.SoftPosition.x - 250;
 		//make performance graphs come in one at a time from the bottom
 		for(int i = 0; i < aStats.Count; i++)
 		{
@@ -565,7 +565,7 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 		chain = chain.then_one_shot(
 			delegate()
 			{
-				add_timed_text_bubble("GAME OVER",6);
+				add_timed_text_bubble("G A M E  O V E R",6);
 			}
 		,0).then_one_shot(
 			graveCompleteCb
