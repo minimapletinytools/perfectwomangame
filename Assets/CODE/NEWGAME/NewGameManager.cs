@@ -179,7 +179,7 @@ public class NewGameManager : FakeMonoBehaviour
 		
 		if(TimeRemaining < 0)
 		{
-			finish_PLAY();
+			CurrentPerformanceStat.Finished = true;
 			if(CurrentPerformanceStat.Character.Index == 0)
 				transition_to_CUTSCENE();
 			else transition_to_CHOICE();
@@ -190,12 +190,9 @@ public class NewGameManager : FakeMonoBehaviour
 		//hack death
 		if(Input.GetKeyDown(KeyCode.D))
 		{
+			CurrentPerformanceStat.Finished = true;
 			transition_to_DEATH();
 		}
-	}
-	public void finish_PLAY()
-	{
-		//do I even need this??
 	}
 	
 	ChoiceHelper mChoiceHelper;
@@ -224,7 +221,8 @@ public class NewGameManager : FakeMonoBehaviour
 			delegate() { transition_to_CHOICE(); }
 		);
 		
-		//TODO eventually wont be cutscene 0
+		
+		//eventually wont be cutscene 0
 		mManager.mBackgroundManager.load_cutscene(0,CurrentCharacterLoader);
 	}
 	
@@ -233,10 +231,11 @@ public class NewGameManager : FakeMonoBehaviour
 	public void transition_to_DEATH()
 	{
 		GS = GameState.DEATH;	
-		//mManager.mInterfaceManager
-		//mManager.mBackgroundManager
-		mManager.mBackgroundManager.load_cutscene(4,DeathCharacter);
 		
+		//mark time of death 
+		CurrentPerformanceStat.DeathTime = PercentTimeCompletion;
+		
+		mManager.mBackgroundManager.load_cutscene(4,DeathCharacter);
 		mManager.mInterfaceManager.set_for_DEATH(CurrentPerformanceStat.Character)
 			.then_one_shot(delegate(){mManager.mTransitionCameraManager.fade_out_with_sound(initialize_GRAVE);},3);
 	}
@@ -267,6 +266,7 @@ public class NewGameManager : FakeMonoBehaviour
 		{
 			CurrentPoseAnimation = null;
 			CurrentTargetPose = null;
+			mManager.mTransparentBodyManager.transition_character_out();
 		}
 		else
 		{

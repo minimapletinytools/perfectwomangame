@@ -110,7 +110,7 @@ DONE-turn off transparent during cutscene
 	-I think you need to change the shader to do this peter
 DONE-add a skip cutscene feature FOR SERIOUS!!
 	-this is actually not easy to do lol
--make a test build
+DOOOOONE OMG IT WORKS!!!!-make a test build 
 DONE-restart game 
 -do GRAVE
 -decide on CUTSCENE info format
@@ -124,8 +124,8 @@ DONE-add text bubble to TEXT
 -consider still using the cool chaarcter icons that lea drew for teh pink backgrounds...
 	-use poses for future, icons for past
 -now that you have take/return bodies, use them in NIM between newchoiceobject and charactericon
--add pose processing to NGM
--add stock choice poses
+DONE-add pose processing to NGM
+DONE-add stock choice poses
 -consider getting rid of choice box, it's no longer necessary anyways
 	-or store choice box not on screen but somewhere else instead	
 		-in this case, need move limit!!

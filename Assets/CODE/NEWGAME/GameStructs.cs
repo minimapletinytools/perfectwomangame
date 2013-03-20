@@ -120,6 +120,10 @@ public class PerformanceStats
 	public float Score { get; set; }
 	public int Perfect { get; set; }
 	public int Difficulty { get; set; }
+	
+	public bool Finished { get; set; } //did we finish with this character already
+	public float DeathTime { get; set; } //what time (0,1) did this character die
+	
 	public PerformanceGraphObject PerformanceGraph { get; private set; }
 	public PerformanceStats()
 	{
@@ -127,6 +131,10 @@ public class PerformanceStats
 		Score = 0;
 		Perfect = 0;
 		Difficulty = 0;
+		Finished = false;
+		TotalTime = 0;
+		DeathTime = -1;
+		
 		PerformanceGraph = new PerformanceGraphObject(11);
 	}
 }
