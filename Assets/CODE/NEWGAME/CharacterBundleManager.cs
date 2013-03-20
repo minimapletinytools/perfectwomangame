@@ -59,15 +59,11 @@ public class CharacterBundleManager : FakeMonoBehaviour {
 	
 
     //scene bundle related
-	AssetBundle mLastCharacterBundle = null;
+	List<AssetBundle> mUnloadAtEnd = new List<AssetBundle>();
     public void scene_loaded_callback(AssetBundle aBundle, string aBundleName)
     {
-		//if(mLastCharacterBundle != null) //we are loading a new bundle so I guess we don't need the old bundle anymore
-		//	mLastCharacterBundle.Unload(true);
-	
         //Debug.Log("loading character in CharacterLoader " + aBundleName);
 		//TODo don't do this serial
-		mLastCharacterBundle = aBundle;
         CharacterLoader loader = new CharacterLoader();
         loader.complete_load_character(aBundle,aBundleName);
 	
@@ -85,9 +81,9 @@ public class CharacterBundleManager : FakeMonoBehaviour {
 			mManager.mTransparentBodyManager.destroy_character();
 		}
 		mManager.mMusicManager.character_changed_listener(loader);
-		mManager.mGameManager.character_changed_listener(loader);
-		
-		mLastCharacterBundle.Unload(false);
+		if(mManager.mGameManager.character_changed_listener(loader))
+			aBundle.Unload(false);
+		else mUnloadAtEnd.Add(aBundle);
 	}
 	
 	
@@ -136,8 +132,8 @@ public class CharacterBundleManager : FakeMonoBehaviour {
 	
 	public void cleanup()
 	{
-		if(mLastCharacterBundle != null)
-			mLastCharacterBundle.Unload(true);
-		
+		foreach(AssetBundle e in mUnloadAtEnd)
+			e.Unload(true);
+		mUnloadAtEnd.Clear();
 	}
 }

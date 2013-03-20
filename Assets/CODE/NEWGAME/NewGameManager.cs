@@ -73,7 +73,7 @@ public class NewGameManager : FakeMonoBehaviour
 		mManager.mAssetLoader.new_load_character("999",mManager.mCharacterBundleManager);
 	}
 	
-	public void character_changed_listener(CharacterLoader aCharacter)
+	public bool character_changed_listener(CharacterLoader aCharacter)
 	{
 		//at this point, we can assume both body manager, music and background managers have been set accordingly
 		//i.e. this is part of transition to PLAY or GRAVE
@@ -111,6 +111,11 @@ public class NewGameManager : FakeMonoBehaviour
 		}
 		
 		mManager.mTransitionCameraManager.fade_in_with_sound();
+		
+		if(aCharacter.Name == "0-1") //in this very special case, we keep the bundle to load the death cutscene
+			return false;
+		
+		return true;
 	}
     
 	
@@ -289,12 +294,6 @@ public class NewGameManager : FakeMonoBehaviour
 				);
 			},
 		1);
-	}
-	
-	public void cleanup()
-	{
-		//TODO
-		
 	}
 	
 	public void hack_choice(int choice, float time = -1)
