@@ -8,8 +8,7 @@ Shader "Custom/MiniManShader" {
 		AlphaTest Greater 0
 		Blend SrcAlpha OneMinusSrcAlpha
 		//Blend One Zero
-		ZTest Less
-		Cull Off Lighting Off ZWrite On Fog { Color (0,0,0,0) }
+		Cull Off Lighting Off ZWrite Off Fog { Color (0,0,0,0) }
 		
 		CGPROGRAM
 		#pragma surface surf SimpleLambert

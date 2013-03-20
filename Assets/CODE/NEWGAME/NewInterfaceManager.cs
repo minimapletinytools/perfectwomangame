@@ -269,7 +269,7 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 		foreach(CharacterIndex e in CharacterIndex.sAllCharacters)
 		{
 			mPBCharacterIcons[e.Index] = new CharacterIconObject(
-					mManager.mCharacterBundleManager.get_mini_character(e),5);
+					mManager.mCharacterBundleManager.get_mini_character(e),1);
 			mElement.Add(mPBCharacterIcons[e.Index]);
 		}
 		mElement.Add(mPB);
@@ -304,7 +304,7 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 	//TEXT
 	public void add_timed_text_bubble(string aMsg, float duration)
 	{
-		PopupTextObject to = new PopupTextObject(aMsg,10);
+		PopupTextObject to = new PopupTextObject(aMsg,8);
 		to.HardPosition = random_position();
 		TimedEventDistributor.TimedEventChain chain = TED.add_event(
 			delegate(float aTime)
