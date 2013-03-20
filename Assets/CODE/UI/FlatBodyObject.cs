@@ -144,8 +144,10 @@ public class FlatBodyObject : FlatElementBase
 
         //these two are special
         torso.transform.position = waist.transform.position;
-        torso.transform.position += get_Z_offset(ZigJointId.Torso);
+        torso.transform.position += get_Z_offset(ZigJointId.Torso); 
         waist.transform.position += get_Z_offset(ZigJointId.Waist);
+		//torso.GetComponentInChildren<Renderer>().material.renderQueue = (int)(get_Z_offset(ZigJointId.Torso).z*(10));
+		//waist.GetComponentInChildren<Renderer>().material.renderQueue = (int)(get_Z_offset(ZigJointId.Waist).z*(10));
 
         List<KeyValuePair<ZigJointId, ZigJointId>> relations = new List<KeyValuePair<ZigJointId, ZigJointId>>();
         relations.Add(new KeyValuePair<ZigJointId, ZigJointId>(ZigJointId.LeftShoulder, ZigJointId.Torso));
@@ -165,8 +167,9 @@ public class FlatBodyObject : FlatElementBase
                 jointObject[e.Value].transform.position
                 + get_offset_of_plane(jointObject[e.Value].transform)
                 + get_connection_point_list(e.Key, e.Value, aSizes.mMountingPositions[get_joint_alpha_index(e.Value)])
-                + get_Z_offset(e.Key)
+                + get_Z_offset(e.Key) 
                 - get_Z_offset(e.Value);
+			//jointObject[e.Key].GetComponentInChildren<Renderer>().material.renderQueue = (int)(get_Z_offset(e.Key).z*(10));
 
         }
 
@@ -473,25 +476,25 @@ public class FlatBodyObject : FlatElementBase
         switch (id)
         {
             case ZigJointId.RightElbow:
-                return new Vector3(0, 0, -0.0f);
+                return new Vector3(0, 0, 0.9f);
             case ZigJointId.LeftElbow:
-                return new Vector3(0, 0, -0.1f);
+                return new Vector3(0, 0, 0.8f);
             case ZigJointId.RightShoulder:
-                return new Vector3(0, 0, -0.2f);
+                return new Vector3(0, 0, 0.7f);
             case ZigJointId.LeftShoulder:
-                return new Vector3(0, 0, -0.3f);
+                return new Vector3(0, 0, 0.6f);
             case ZigJointId.Torso:
-                return new Vector3(0, 0, -0.4f);
+                return new Vector3(0, 0, 0.5f);
             case ZigJointId.Waist:
-                return new Vector3(0, 0, -0.5f);
+                return new Vector3(0, 0, 0.4f);
             case ZigJointId.LeftHip:
-                return new Vector3(0, 0, -0.6f);
+                return new Vector3(0, 0, 0.3f);
             case ZigJointId.RightHip:
-                return new Vector3(0, 0, -0.7f);
+                return new Vector3(0, 0, 0.2f);
             case ZigJointId.RightKnee:
-                return new Vector3(0, 0, -0.8f);
+                return new Vector3(0, 0, 0.1f);
             case ZigJointId.LeftKnee:
-                return new Vector3(0, 0, -0.9f);
+                return new Vector3(0, 0, 0.0f);
         }
         return Vector3.zero;
     }

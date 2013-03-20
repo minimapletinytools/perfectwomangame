@@ -7,7 +7,7 @@ Shader "Custom/TransparentBodyShader" {
 		Tags { "RenderType"="Transparent" }
 		AlphaTest Greater 0
 		Blend SrcAlpha OneMinusSrcAlpha
-		ZTest Less
+		ZTest NotEqual
 		Cull Off Lighting Off ZWrite On Fog { Color (0,0,0,0) }
 		
 		//Blend One Zero
