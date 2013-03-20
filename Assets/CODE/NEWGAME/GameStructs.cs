@@ -5,7 +5,7 @@ using System;
 public struct CharacterIndex
 {
 	public static int NUMBER_AGES = 10;
-	public static string[] sLevelToAge = new string[10] { "0", "05", "16", "27", "34", "45", "60", "80", "100", "999" };
+	public static string[] sLevelToAge = new string[10] { "0", "05", "16", "27", "34", "45", "60", "85", "100", "999" };
 	public static List<CharacterIndex> sAllCharacters = new List<CharacterIndex>()
 	{
 		new CharacterIndex(0),

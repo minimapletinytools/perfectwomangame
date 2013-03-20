@@ -482,7 +482,7 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 		return chain;
 	}
 	
-	public void set_for_GRAVE(List<PerformanceStats> aStats)
+	public void set_for_GRAVE(List<PerformanceStats> aStats, System.Action graveCompleteCb)
 	{
 		float textTime = 3;
 		//clear away BB and PB
@@ -511,12 +511,14 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 		//make performance graphs come in one at a time from the bottom
 		for(int i = 0; i < aStats.Count; i++)
 		{
+			int it = i;
 			PerformanceStats ps = aStats[i];
 			//reposition the assosciated character icon and performance graph
 			CharacterIconObject cio = take_character_icon(ps.Character);
 			PerformanceGraphObject pgo = ps.PerformanceGraph;
 			cio.HardPosition = new Vector3(cioXOffset,1000,0);
 			pgo.HardPosition = new Vector3(pgoXOffset,1000,0);
+			pgo.HardColor = new Color(0.5f,0.5f,0.5f,1);
 			
 			chain = chain.then_one_shot(
 				delegate()
@@ -531,8 +533,8 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 					add_timed_text_bubble(text,textTime);
 				
 					//move in stuff
-					cio.SoftPosition = new Vector3(cioXOffset,startingPosition - i * intervalSize,0);
-					pgo.SoftPosition = new Vector3(pgoXOffset,startingPosition - i * intervalSize,0);
+					cio.SoftPosition = new Vector3(cioXOffset,startingPosition - it * intervalSize,0);
+					pgo.SoftPosition = new Vector3(pgoXOffset,startingPosition - it * intervalSize,0);
 				} //TODO play 
 			).then(
 				delegate(float aTime)
@@ -543,8 +545,15 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 			sceneTextTime);
 		}
 		
-		//TODO
-		
+		//finish it off...
+		chain = chain.then_one_shot(
+			delegate()
+			{
+				add_timed_text_bubble("FIN",6);
+			}
+		,0).then_one_shot(
+			graveCompleteCb
+		,6);
 	}
 	
 	

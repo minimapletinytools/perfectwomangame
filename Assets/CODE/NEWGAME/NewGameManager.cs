@@ -67,6 +67,12 @@ public class NewGameManager : FakeMonoBehaviour
 		mManager.mInterfaceManager.setup_pb();
 	}
 	
+	//TODO rename
+	public void initialize_GRAVE()
+	{
+		mManager.mAssetLoader.new_load_character("999",mManager.mCharacterBundleManager);
+	}
+	
 	public void character_changed_listener(CharacterLoader aCharacter)
 	{
 		//at this point, we can assume both body manager, music and background managers have been set accordingly
@@ -95,7 +101,7 @@ public class NewGameManager : FakeMonoBehaviour
 				break;
 			case "999":
 				setup_next_poses(true);
-				//transition_to_GRAVE();
+				transition_to_GRAVE();
 				break;
 			default:
 				TimeRemaining = 30f;
@@ -173,6 +179,14 @@ public class NewGameManager : FakeMonoBehaviour
 				transition_to_CUTSCENE();
 			else transition_to_CHOICE();
 		}
+		
+		//early death
+		//TODO
+		//hack death
+		if(Input.GetKeyDown(KeyCode.D))
+		{
+			transition_to_DEATH();
+		}
 	}
 	public void finish_PLAY()
 	{
@@ -187,6 +201,12 @@ public class NewGameManager : FakeMonoBehaviour
 		{
 			Debug.Log ("choice is made " + choice);
 			transition_to_TRANSITION_play(CurrentPerformanceStat.Character.get_future_neighbor(choice));
+		}
+		
+		//hack graveo
+		if(Input.GetKeyDown(KeyCode.D))
+		{
+			transition_to_TRANSITION_play(new CharacterIndex("999"));
 		}
 		
 	}
@@ -210,20 +230,19 @@ public class NewGameManager : FakeMonoBehaviour
 		//mManager.mBackgroundManager
 		mManager.mBackgroundManager.load_cutscene(4,DeathCharacter);
 		
-		//TODO transition to grave
-		//TODO get grave cutscene stuff..
-		//initialize_grave();
-		
-		//var chain = TED.add_event(
 		mManager.mInterfaceManager.set_for_DEATH(CurrentPerformanceStat.Character)
 			.then_one_shot(delegate(){mManager.mTransitionCameraManager.fade_out_with_sound(initialize_GRAVE);},3);
 	}
 	
-	public void initialize_GRAVE()
+	public void transition_to_GRAVE()
 	{
 		GS = GameState.GRAVE;
-		mManager.mAssetLoader.new_load_character("999",mManager.mCharacterBundleManager);
-		//mManager.mInterfaceManager.
+		mManager.mInterfaceManager.set_for_GRAVE(mPerformanceStats, 
+			delegate()
+			{
+				mManager.mTransitionCameraManager.fade_out_with_sound(mManager.restart_game);
+			}
+		);
 	}
 	
 	public void transition_to_CHOICE()
@@ -273,6 +292,7 @@ public class NewGameManager : FakeMonoBehaviour
 	public void cleanup()
 	{
 		//TODO
+		
 	}
 	
 	public void hack_choice(int choice, float time = -1)
