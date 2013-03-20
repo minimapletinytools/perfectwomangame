@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
+using System.Linq;
 
 public class FlatElementMultiBase : FlatElementBase
 {
@@ -63,7 +64,20 @@ public class FlatElementMultiBase : FlatElementBase
                 e.Element.Depth = value + i++;
         }
     }
+	
+	public override Rect BoundingBox
+    {
+		get{
+			if(mElements.Count == 0)
+				return new Rect(0,0,0,0);
+			Rect r = mElements[0].Element.BoundingBox;
+			foreach(ElementOffset e in mElements)
+				r = r.union(e.Element.BoundingBox);
+			return r;
+		}
+    }
 
+	
     public override float SoftInterpolation
     {
         get

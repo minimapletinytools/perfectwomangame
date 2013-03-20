@@ -17,7 +17,17 @@ public static class ExtensionMethods  {
 		return aTrans.localScale.component_multiply(global_scale(aTrans.parent));
 	}
 
-
+	
+	//rect stuf
+	public static Rect union(this Rect A, Rect B)
+	{
+		Rect r = A;
+		r.xMin = Mathf.Min(A.xMin,B.xMin);
+		r.yMin = Mathf.Min(A.yMin,B.yMin);
+		r.xMax = Mathf.Max(A.xMax,B.xMax);
+		r.yMax = Mathf.Max(A.yMax,B.yMax);
+		return r;
+	}
 
     //Quaternion stuff
     public static float flat_rotation(this Quaternion aQuat)
