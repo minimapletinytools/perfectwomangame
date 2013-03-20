@@ -47,7 +47,19 @@ public class NewInterfaceManager : FakeMonoBehaviour {
             e.update(Time.deltaTime);       
 		
 		TED.update(Time.deltaTime);
-		//TODO if PLAY update graph
+		
+		
+		//hacks
+		if(Input.GetKeyDown(KeyCode.Alpha0) )
+		{
+			if(mLastCutsceneCompleteCb != null && mLastCutsceneChain != null)
+			{
+				TED.remove_event(mLastCutsceneChain);
+				mLastCutsceneCompleteCb();
+				mLastCutsceneChain = null;
+				mLastCutsceneCompleteCb = null;
+			}
+		}
     }
     
     Vector3 random_position()
@@ -355,7 +367,9 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 	}
 	
 	
-	//TODO This should take list of changes as argument
+	//these are hacks to allow me to skip cutscenes
+	QuTimer mLastCutsceneChain = null;
+	System.Action mLastCutsceneCompleteCb = null;
 	public void set_for_CUTSCENE(System.Action cutsceneCompleteCb)
 	{
 		//used for skipping cutscene
@@ -417,6 +431,9 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 		}
 		
 		chain.then_one_shot(delegate(){cutsceneCompleteCb();},END_CUTSCENE_DELAY_TIME);
+		
+		mLastCutsceneChain = TED.LastEventKeyAdded;
+		mLastCutsceneCompleteCb = cutsceneCompleteCb;
 	}
 	
 	public void set_for_CHOICE()

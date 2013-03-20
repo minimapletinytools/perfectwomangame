@@ -13,6 +13,8 @@ public class TimedEventDistributor
         bool mDone = false;
         float mFollowTimer = 0;
         float mTimeDone = 0;
+		
+		
         TimedEventChain()
         {
         }
@@ -102,6 +104,8 @@ public class TimedEventDistributor
     };*/
 
     Dictionary<QuTimer, System.Func<float,bool>> mEvents = new Dictionary<QuTimer, System.Func<float,bool>>();
+	public QuTimer LastEventKeyAdded
+	{ get; private set; }
 
     public void update(float aDeltaTime)
     {
@@ -116,10 +120,19 @@ public class TimedEventDistributor
             }
         }
     }
-
+	
+	//note, this will hard kill any events so if that event has vital code, it may not be called
+	public void remove_event(QuTimer aKey)
+	{
+		if(aKey != null)
+			mEvents.Remove(aKey);
+				
+	}
     public void add_event_raw(System.Func<float, bool> aEvent, float aTime = 0)
     {
-        mEvents.Add(new QuTimer(0, aTime), aEvent);
+		LastEventKeyAdded = new QuTimer(0, aTime);
+        mEvents.Add(LastEventKeyAdded, aEvent);
+		
     }
     public TimedEventChain add_event(System.Func<float,bool> aEvent, float aTime = 0)
     {

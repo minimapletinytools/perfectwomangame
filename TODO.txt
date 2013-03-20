@@ -111,7 +111,7 @@ DONE-turn off transparent during cutscene
 -add a skip cutscene feature FOR SERIOUS!!
 	-this is actually not easy to do lol
 -make a test build
--restart game 
+DONE-restart game 
 -do GRAVE
 -decide on CUTSCENE info format
 -add color fade limit and position move limit to FlatElementBase
