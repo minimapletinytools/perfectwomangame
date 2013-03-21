@@ -1,6 +1,6 @@
 ::NEW GAME MANAGER::
 -EVENTS (ngm is responsible for most scripted events)
-	DONE-transition to CUTSCENE  (or skip this and go straight to CHOOSE for fetus)
+		DONE-transition to CUTSCENE  (or skip this and go straight to CHOOSE for fetus)
 		-INTERFACE 
 		-BACKGROUND
 	-transition to DEATH
@@ -102,8 +102,10 @@ DONE-TEXT
 			-maybe special glowy light effect over grave????
 
 ::TODO3::
+DONE-character not transitioning out on death cutscene
+DONE-fade out sound not playing
 -add buffer at beginning of ecah level for players to orient themselves
--load death cutscene
+
 -performance chart
 	-alternative method (for performance)
 		-first make sure this isn't a problem with knicet detph tekture (otherwise you are in trouble)
@@ -115,8 +117,8 @@ DONE-TEXT
 	-colors
 	-smoothing of graph (so no jumps in it)
 	-particle effects when losing/winning
--cutscenes not playing after fetus
--princess gets played twice???
+
+
 
 -do GRAVE
 -decide on CUTSCENE info format
@@ -125,14 +127,11 @@ DONE-TEXT
 	-add color fade limit and position move limit to FlatElementBase
 	-if no changes are made, don't make them (for performance)
 
--make audio NOT 3D in ggfiles
+
 -consider still using the cool chaarcter icons that lea drew for teh pink backgrounds...
 	-use poses for future, icons for past
 -now that you have take/return bodies, use them in NIM between newchoiceobject and charactericon
 
--consider getting rid of choice box, it's no longer necessary anyways
-	-or store choice box not on screen but somewhere else instead	
-		-in this case, need move limit!!
 -change character icon/choice color based on difficulty
 -waist angle hack	
 	-test
@@ -145,9 +144,18 @@ DONE-TEXT
 	-GameEvents
 	-InterfaceBehaviour
 
+-make a 2tris plane to save memory
 -put all menu stuff in aset bundle too
 -put mini in asset bundle as well
 
+DONE-music fading 
+DONE-make audio NOT 3D in ggfiles
+DONE-load death cutscene
+DONE-cutscenes not playing after fetus
+DONE-princess gets played twice???
+DONE-consider getting rid of choice box, it's no longer necessary anyways
+	DONE-or store choice box not on screen but somewhere else instead	
+		-in this case, need move limit!!
 DONE-add pose processing to NGM
 DONE-add stock choice poses
 DONE-depth issues

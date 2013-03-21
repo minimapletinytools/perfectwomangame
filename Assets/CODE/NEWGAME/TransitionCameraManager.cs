@@ -140,7 +140,7 @@ public class TransitionCameraManager : FakeMonoBehaviour
 		
 		TED.add_event(
 			delegate(float aTime){
-				if(true)
+				if(false)
 					go_to_fetus(0);
 				else if(Input.GetKeyDown(KeyCode.Alpha0))
 					go_to_fetus(0);
@@ -190,7 +190,7 @@ public class TransitionCameraManager : FakeMonoBehaviour
 			
 		TED.add_one_shot_event(
 			delegate(){ 
-				float delay = FADE_TIME-mManager.mMusicManager.get_sound_clip("transitionIn").length;
+				float delay = FADE_TIME-mManager.mMusicManager.get_sound_clip("transitionOut").length;
 				if(delay < 0) delay = 0; 
 				TED.add_one_shot_event( //too bad we don't have awesome branching event chain
 					delegate(){ mManager.mMusicManager.play_sound_effect("transitionOut"); },

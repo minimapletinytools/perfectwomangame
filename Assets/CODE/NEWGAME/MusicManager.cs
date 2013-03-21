@@ -45,7 +45,8 @@ public class MusicManager : FakeMonoBehaviour
 	{
 		if(mSoundEffects.ContainsKey(aSound))
 		{
-			mMusicSource.PlayOneShot(mSoundEffects[aSound]);
+			//TODO may need to create new sources to make sure they are not being used..
+			mFadingSource.PlayOneShot(mSoundEffects[aSound]);
 		}
 		else
 			throw new UnityException("sound " + aSound + " not found");
@@ -82,6 +83,8 @@ public class MusicManager : FakeMonoBehaviour
 	public void character_changed_listener(CharacterLoader aCharacter)
 	{
 		mMusicSource.clip = aCharacter.Images.backgroundMusic;
+		mMusicSource.volume = 0;
+		mMusicSource.Play();
 		fade_in();
 	}
 	

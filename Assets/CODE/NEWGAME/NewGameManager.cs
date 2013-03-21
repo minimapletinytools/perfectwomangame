@@ -136,13 +136,13 @@ public class NewGameManager : FakeMonoBehaviour
 		
 		if(GS == GameState.PLAY)
 		{
+			update_PLAY();
 			if(Input.GetKeyDown(KeyCode.Alpha0))
 			{
 				TimeRemaining = 0;
 			}
-			update_PLAY();
 		}
-		if(GS == GameState.CHOICE) 
+		else if(GS == GameState.CHOICE) 
 			update_CHOICE();
         
 		TED.update(Time.deltaTime);
@@ -180,7 +180,7 @@ public class NewGameManager : FakeMonoBehaviour
             float grade = ProGrading.grade_pose(CurrentPose, CurrentTargetPose);
 			
 			//TODO this is slooow
-			CurrentPerformanceStat.update_score(PercentTimeCompletion,grade);
+			//CurrentPerformanceStat.update_score(PercentTimeCompletion,grade);
 			
 			//update score
 			mManager.mInterfaceManager.update_bb_score(TotalScore);	
@@ -189,9 +189,12 @@ public class NewGameManager : FakeMonoBehaviour
 		if(TimeRemaining < 0)
 		{
 			CurrentPerformanceStat.Finished = true;
-			if(CurrentPerformanceStat.Character.Index == 0)
-				transition_to_CUTSCENE();
-			else transition_to_CHOICE();
+			transition_to_CUTSCENE();
+			
+			//if we don't want fetus to have a cutscene use this
+			//if(CurrentPerformanceStat.Character.Index != 0)
+			//	transition_to_CUTSCENE();
+			//else transition_to_CHOICE();
 		}
 		
 		//early death
@@ -202,6 +205,11 @@ public class NewGameManager : FakeMonoBehaviour
 			CurrentPerformanceStat.Finished = true;
 			transition_to_DEATH();
 		}
+		
+		//if we don't want the music to play during the cutscenes and whatont...
+		//if(GS != GameState.PLAY)
+		//	mManager.mMusicManager.fade_out();
+			
 	}
 	
 	ChoiceHelper mChoiceHelper;
@@ -227,7 +235,20 @@ public class NewGameManager : FakeMonoBehaviour
 		mManager.mBodyManager.transition_character_out();
 		mManager.mTransparentBodyManager.transition_character_out();
 		mManager.mInterfaceManager.set_for_CUTSCENE(
-			delegate() { transition_to_CHOICE(); }
+			delegate() 
+			{ 
+				TED.add_one_shot_event(
+					delegate() 
+					{	 
+						mManager.mMusicManager.fade_out();
+					}
+				,0).then_one_shot(
+					delegate() 
+					{	 
+						transition_to_CHOICE(); 
+					}
+				,2);
+			}
 		);
 		
 		
@@ -244,9 +265,23 @@ public class NewGameManager : FakeMonoBehaviour
 		//mark time of death 
 		CurrentPerformanceStat.DeathTime = PercentTimeCompletion;
 		
+		//set the cutscene
+		mManager.mBodyManager.transition_character_out();
+		mManager.mTransparentBodyManager.transition_character_out();
 		mManager.mBackgroundManager.load_cutscene(4,DeathCharacter);
+		
 		mManager.mInterfaceManager.set_for_DEATH(CurrentPerformanceStat.Character)
-			.then_one_shot(delegate(){mManager.mTransitionCameraManager.fade_out_with_sound(initialize_GRAVE);},3);
+			.then_one_shot(
+				delegate()
+				{
+					mManager.mMusicManager.fade_out(); 
+				}
+			,0).then_one_shot(
+				delegate()
+				{
+					mManager.mTransitionCameraManager.fade_out_with_sound(initialize_GRAVE);
+				}
+			,3);
 	}
 	
 	public void transition_to_GRAVE()
