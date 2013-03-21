@@ -53,6 +53,32 @@ public class ChangeTextureImportSettingsUnity3 : ScriptableObject
             AssetDatabase.ImportAsset(path);
         }
     }
+	
+	[MenuItem("Custom/Texture/Change Texture Type/NOWRITE")]
+    static void ChangeTextureType_GuiNoWrite()
+    {
+        Object[] textures = GetSelectedTextures();
+        Selection.objects = new Object[0];
+        foreach (Texture2D texture in textures)
+        {
+            string path = AssetDatabase.GetAssetPath(texture);
+            //Debug.Log("path: " + path);
+            TextureImporter textureImporter = AssetImporter.GetAtPath(path) as TextureImporter;
+            textureImporter.textureType = TextureImporterType.Advanced;
+            textureImporter.npotScale = TextureImporterNPOTScale.None;
+            textureImporter.isReadable = false;
+            textureImporter.mipmapEnabled = false;
+            textureImporter.filterMode = FilterMode.Point;
+            textureImporter.textureFormat = TextureImporterFormat.AutomaticCompressed;
+            textureImporter.normalmap = false;
+            textureImporter.maxTextureSize = 4096;
+            TextureImporterSettings st = new TextureImporterSettings();
+            textureImporter.ReadTextureSettings(st);
+            st.wrapMode = TextureWrapMode.Clamp;
+            textureImporter.SetTextureSettings(st);
+            AssetDatabase.ImportAsset(path);
+        }
+    }
 
 
 
