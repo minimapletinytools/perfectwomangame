@@ -87,7 +87,7 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 	Vector3 mBBMiniManBasePosition;
 	FlatElementImage mBBChoiceBox;
 	
-	ParticleStreamObject mTestStream;
+	
 	
 	//called by NewGameManager
 	public void setup_bb()
@@ -140,7 +140,7 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 		mBBChoiceBox = new FlatElementImage(newRef.bbChoiceFrame,15);
 		mBBMiniManBasePosition = mFlatCamera.get_point(0, 0) + new Vector3(netWidth/2 - padding*3,0,0);
 		mBBMiniMan.HardPosition = mBBMiniManBasePosition;
-		mBBChoiceBox.HardPosition = mBBMiniMan.SoftPosition;
+		mBBChoiceBox.HardPosition = random_position();//mBBMiniMan.SoftPosition;
 		
 		mElement.Add(mBBMiniMan);
 		mElement.Add(mBBChoiceBox);
@@ -148,10 +148,6 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 		GameObject.Destroy(mMiniMan.gameObject);
 		
 		
-		mTestStream = new ParticleStreamObject(mBB.Depth +1,Vector3.zero);
-		mTestStream.HardPosition = mBBMiniManBasePosition;
-		mTestStream.Enabled = false;
-		mElement.Add(mTestStream);
 		
 		
 	}
@@ -243,13 +239,10 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 	{
 		if(aIndex == -1) //no choice
 		{
-			mTestStream.Enabled = false;
 			mBBMiniMan.SoftPosition = mBBMiniManBasePosition;
-			mBBChoiceBox.SoftPosition = mBBMiniManBasePosition;
+			mBBChoiceBox.SoftPosition = random_position();//mBBMiniManBasePosition;
 		}
 		else{
-			mTestStream.Enabled = true;
-			mTestStream.Target = mBBChoiceBodies[aIndex].SoftPosition;
 			mBBMiniMan.SoftPosition = mBBChoiceBodies[aIndex].SoftPosition;
 			mBBChoiceBox.SoftPosition = mBBChoices[aIndex].SoftPosition;
 		}
@@ -312,7 +305,30 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 	}
 	
 	
-	//TODO positioning helpers
+	public void add_cutscene_particle_stream(CharacterIndex aTarget)
+	{
+		if(mPBCharacterIcons[aTarget.Index] != null)
+			add_timed_particle_stream(mFlatCamera.get_point(0.40f,0),mPBCharacterIcons[aTarget.Index].SoftPosition,1.2f,1f);
+	}
+	
+	public void add_timed_particle_stream(Vector3 aPosition, Vector3 aTarget, float aDuration, float aDelay)
+	{
+		ParticleStreamObject pso = null;
+		TED.add_one_shot_event(
+			delegate()
+			{
+				pso = new ParticleStreamObject(4,aTarget);
+				pso.HardPosition = aPosition;
+				mElement.Add(pso);
+			},
+		aDelay).then_one_shot(
+			delegate()
+			{
+				mElement.Remove(pso);
+				pso.destroy();
+			},
+		aDuration);
+	}
 	
 	//TEXT
 	public void add_timed_text_bubble(string aMsg, float duration)
@@ -332,7 +348,6 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 			{
 				//to.SoftPosition = random_position();
 				to.SoftColor = new Color32(0,0,0,0);
-				to.SoftInterpolation = 0.05f;
 			},
 		duration).then_one_shot(
 			delegate()
@@ -341,7 +356,6 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 				to.destroy();
 			},
 		2);
-		
 	}
 	
 	//this gets called during CHOOSE so BB should be full sized
@@ -409,7 +423,7 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 		TimedEventDistributor.TimedEventChain chain = TED.add_event(
 			delegate(float aTime)
 			{
-				add_timed_text_bubble("CUTSCENE BEGIN OESUNTHOENTUHOEOEUOEU",firstTextTime);
+				add_timed_text_bubble("BEGIN CUTSCENE",firstTextTime);
 				return true;
 			},
         0).then_one_shot( //dummy 
@@ -425,22 +439,10 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 				{
 					//TODO set message
 					add_timed_text_bubble("MESSAGE " + i,cutsceneTextTime);
+					add_cutscene_particle_stream(CharacterIndex.RandomCharacter);
 					return true;
 				},
-			cutsceneTextTime/2f).then(
-				delegate(float aTime)
-				{
-					//TODO particle effects
-					add_timed_text_bubble("particles",1);
-					return true;
-				},
-			cutsceneTextTime/2f).then(
-				delegate(float aTime)
-				{
-					add_timed_text_bubble("noparts",1);
-					return true;
-				},
-			0);
+			cutsceneTextTime/2f);
 		}
 		
 		chain.then_one_shot(delegate(){cutsceneCompleteCb();},END_CUTSCENE_DELAY_TIME);
@@ -528,7 +530,7 @@ public class NewInterfaceManager : FakeMonoBehaviour {
         3).then_one_shot( //wait a little bit to let the fading finish
 			delegate()
 			{
-				add_timed_text_bubble("This is your life story:",textTime);
+				add_timed_text_bubble("Here is your life story:",textTime);
 			},
 		textTime).wait (textTime);
 		

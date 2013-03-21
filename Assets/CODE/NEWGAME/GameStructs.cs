@@ -26,7 +26,11 @@ public struct CharacterIndex
 	};
 	
 	
-			
+	public static CharacterIndex RandomCharacter{
+		get{
+			return new CharacterIndex(UnityEngine.Random.Range(1,30));
+		}
+	}
 	public int Index { get; private set; } //-1 means no character
 	public int Choice{
 		get{
