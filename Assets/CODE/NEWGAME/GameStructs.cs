@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 using System;
+using System.Linq;
 
 public struct CharacterIndex
 {
@@ -117,7 +118,16 @@ public struct CharacterIndex
 public class PerformanceStats
 {
 	public CharacterIndex Character { get; set; }
-	public float Score { get; set; }
+	public float Score{
+		get{
+			float r = 0;
+			for(int i = 1; i < mScore.Count; i++)
+			{
+				r += mScore[i].Value * (mScore[i].Key-mScore[i-1].Key);
+			}
+			return r;
+		}
+	}
 	public int Perfect { get; set; }
 	public int Difficulty { get; set; }
 	
@@ -128,14 +138,39 @@ public class PerformanceStats
 	public PerformanceStats()
 	{
 		Character = new CharacterIndex(-1);
-		Score = 0;
 		Perfect = 0;
 		Difficulty = 0;
 		Finished = false;
-		TotalTime = 0;
 		DeathTime = -1;
 		
 		PerformanceGraph = new PerformanceGraphObject(11);
+		
+		mScore = new List<KeyValuePair<float, float>>();
+		update_score(0,0); //this is a dummy point
+	}
+	
+	List<KeyValuePair<float,float>> mScore; //time, score
+	
+	public void update_score(float aTime, float aScore)
+	{
+		mScore.Add(new KeyValuePair<float,float>(aTime,aScore));
+		PerformanceGraph.update_graph(aTime,aScore);
+	}
+	
+	//this returns the score in the last <timeBack> 
+	//use this for death
+	public float last_score(float timeBack)
+	{
+		float currentTime = mScore.Last().Key;
+		float r = 0;
+		for(int i = mScore.Count; i > 0; i--)
+		{
+			if(Mathf.Abs(mScore[i].Key - currentTime) > timeBack)
+				break;
+			r += mScore[i].Value * (mScore[i].Key-mScore[i-1].Key);
+			
+		}
+		return r;
 	}
 }
 

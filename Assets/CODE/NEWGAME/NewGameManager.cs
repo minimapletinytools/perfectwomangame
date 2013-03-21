@@ -27,7 +27,10 @@ public class NewGameManager : FakeMonoBehaviour
 	
 	public float TotalScore{ 
 		get{
-			return mPerformanceStats.Sum(delegate (PerformanceStats e) { return e.Score; });
+			//TODO you can probably come up with something better that this can't you???
+			//TODO you could also keep track of the score separetly...
+			//W/E
+			return mPerformanceStats.Sum(delegate (PerformanceStats e) { return e.Score*e.Perfect*100; });
 		}
 	}
 	
@@ -73,6 +76,12 @@ public class NewGameManager : FakeMonoBehaviour
 		mManager.mAssetLoader.new_load_character("999",mManager.mCharacterBundleManager);
 	}
 	
+	
+	public void set_time_for_PLAY(float aTime)
+	{
+		TimeRemaining = aTime;
+		TimeTotal = aTime;
+	}
 	public bool character_changed_listener(CharacterLoader aCharacter)
 	{
 		//at this point, we can assume both body manager, music and background managers have been set accordingly
@@ -90,12 +99,13 @@ public class NewGameManager : FakeMonoBehaviour
 		{
 			case "0-1":	
 				DeathCharacter = aCharacter; //TODO AssetBundle.undload will actually mess this up...
-				TimeRemaining = 30f;
+				set_time_for_PLAY(30f);
+				
 				setup_next_poses(true);
 				transition_to_PLAY();
 				break;
 			case "100":
-				TimeRemaining = 30f;
+				set_time_for_PLAY(30f);
 				setup_next_poses(true);
 				transition_to_PLAY();
 				break;
@@ -104,7 +114,7 @@ public class NewGameManager : FakeMonoBehaviour
 				transition_to_GRAVE();
 				break;
 			default:
-				TimeRemaining = 30f;
+				set_time_for_PLAY(30f);
 				transition_to_PLAY();
 				setup_next_poses();
 				break;
@@ -143,7 +153,7 @@ public class NewGameManager : FakeMonoBehaviour
 	public float TimeTotal
 	{ get; private set; }
 	public float PercentTimeCompletion
-	{ get { return TimeRemaining/TimeTotal; } }
+	{ get { return 1-TimeRemaining/TimeTotal; } }
 	
 	public ProGrading.Pose CurrentPose
 	{ get; private set; }
@@ -155,7 +165,6 @@ public class NewGameManager : FakeMonoBehaviour
 	public void update_PLAY()
 	{
 		TimeRemaining -= Time.deltaTime;
-			
 		
 		//this basically means we aren't 0 or 100 or 999
 		if (CurrentPoseAnimation != null)
@@ -170,8 +179,8 @@ public class NewGameManager : FakeMonoBehaviour
 			
             float grade = ProGrading.grade_pose(CurrentPose, CurrentTargetPose);
 			
-			//update graph
-			CurrentPerformanceStat.PerformanceGraph.update_graph(PercentTimeCompletion,grade);
+			//TODO this is slooow
+			CurrentPerformanceStat.update_score(PercentTimeCompletion,grade);
 			
 			//update score
 			mManager.mInterfaceManager.update_bb_score(TotalScore);	

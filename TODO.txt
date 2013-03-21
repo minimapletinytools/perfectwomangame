@@ -66,9 +66,9 @@ DONE-NAMING FORMAT
 	
 ::NEW INTERFACE MANAGER NONSENSE::
 -BLUE BAR
-	-PLAY
+	DONE-PLAY
 		DONE-NAME
-		-PERFORMANCE GRAPH
+		DONE-PERFORMANCE GRAPH
 		DONE-SCORE
 		DONE-transition to CUTSCENE
 	-CUTSCENE
@@ -104,6 +104,17 @@ DONE-NAMING FORMAT
 ::TODO3::
 DONE-referencing menuReferences (this will save a lot of memery)
 DONE-why can't I do GAME OVER in a text bubble???
+-performance chart
+	-alternative method (for performance)
+		-first make sure this isn't a problem with knicet detph tekture (otherwise you are in trouble)
+		-create dot object/prefab thingy
+		-create rendertexture for camera, and attach it to the imageobject on the graph
+		-setup new camera and put it, the dot, and the graph, on its own layer
+		-move everything into it's own space an drender the camera
+		-disable  the camera so it does not get rendered.
+	-colors
+	-smoothing of graph (so no jumps in it)
+	-particle effects when losing/winning
 -cutscenes not playing after fetus
 -princess gets played twice???
 DONE-turn off transparent during cutscene
