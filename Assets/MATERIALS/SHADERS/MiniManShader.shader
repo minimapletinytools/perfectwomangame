@@ -31,8 +31,8 @@ Shader "Custom/MiniManShader" {
 			{
 				o.Alpha =  _Color.a;
 				//o.Alpha = min(0.5,c.a);
-				o.Albedo = half3(0.7,0.7,0.7);
-				//o.Albedo = half3(0.4,0.4,0.4);
+				//o.Albedo = half3(0.7,0.7,0.7);
+				o.Albedo = half3(0.4,0.4,0.4);
 			}
 			else
 			{

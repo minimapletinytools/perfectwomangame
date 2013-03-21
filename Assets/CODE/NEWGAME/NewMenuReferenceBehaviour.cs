@@ -7,7 +7,6 @@ public class NewMenuReferenceBehaviour : MonoBehaviour {
 	public Texture2D genericFontTex;
 	public int genericFontTexWidth;
 	public Font genericFont;
-	public GameObject genericFontPrefab;
 	
 	//configurator logos
 	public Texture2D gameLabLogo;

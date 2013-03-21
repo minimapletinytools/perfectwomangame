@@ -7,7 +7,7 @@ public class TransitionCameraManager : FakeMonoBehaviour
 {
 	static float FADE_TIME = 2.3f;
 	//static float FADE_TIME = 0.2f;
-	static float MAX_FADE = 40;
+	static float MAX_FADE = 30;
 	
 	
 	//render to this guy someday eventually ha ha...
@@ -140,7 +140,9 @@ public class TransitionCameraManager : FakeMonoBehaviour
 		
 		TED.add_event(
 			delegate(float aTime){
-				if(Input.GetKeyDown(KeyCode.Alpha0))
+				if(true)
+					go_to_fetus(0);
+				else if(Input.GetKeyDown(KeyCode.Alpha0))
 					go_to_fetus(0);
 				else if(aTime > 100) //TODO check if user is found before doing this, also make sure POSE bundle is loaded
 					go_to_fetus(0); 

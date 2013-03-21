@@ -53,6 +53,7 @@ public class PopupTextObject : FlatElementMultiBase {
 		mElements.Add(new FlatElementMultiBase.ElementOffset(mBackground, new Vector3(0, 0, 0)));
 		mElements.Add(new FlatElementMultiBase.ElementOffset(mText, new Vector3(0, textOffset, 0)));
         PrimaryGameObject = create_primary_from_elements();
+		
 		Depth = aDepth;
     }
 	
