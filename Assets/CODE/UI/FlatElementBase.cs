@@ -168,6 +168,8 @@ public class FlatElementBase {
 	
     public virtual void destroy()
     {
+		//obviously, don't call this if you want to handle destruction yourself
+		GameObject.Destroy(PrimaryGameObject);
     }
 
     public FlatElementBase()

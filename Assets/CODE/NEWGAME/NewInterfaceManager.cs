@@ -87,6 +87,8 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 	Vector3 mBBMiniManBasePosition;
 	FlatElementImage mBBChoiceBox;
 	
+	ParticleStreamObject mTestStream;
+	
 	//called by NewGameManager
 	public void setup_bb()
 	{
@@ -144,6 +146,14 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 		mElement.Add(mBBChoiceBox);
 		
 		GameObject.Destroy(mMiniMan.gameObject);
+		
+		
+		mTestStream = new ParticleStreamObject(mBB.Depth +1,Vector3.zero);
+		mTestStream.HardPosition = mBBMiniManBasePosition;
+		mTestStream.Enabled = false;
+		mElement.Add(mTestStream);
+		
+		
 	}
 	
 	//called by set_bb_small/full
@@ -233,10 +243,13 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 	{
 		if(aIndex == -1) //no choice
 		{
+			mTestStream.Enabled = false;
 			mBBMiniMan.SoftPosition = mBBMiniManBasePosition;
 			mBBChoiceBox.SoftPosition = mBBMiniManBasePosition;
 		}
 		else{
+			mTestStream.Enabled = true;
+			mTestStream.Target = mBBChoiceBodies[aIndex].SoftPosition;
 			mBBMiniMan.SoftPosition = mBBChoiceBodies[aIndex].SoftPosition;
 			mBBChoiceBox.SoftPosition = mBBChoices[aIndex].SoftPosition;
 		}
@@ -304,7 +317,7 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 	//TEXT
 	public void add_timed_text_bubble(string aMsg, float duration)
 	{
-		PopupTextObject to = new PopupTextObject(aMsg,8);
+		PopupTextObject to = new PopupTextObject(aMsg,6);
 		to.HardPosition = random_position();
 		TimedEventDistributor.TimedEventChain chain = TED.add_event(
 			delegate(float aTime)

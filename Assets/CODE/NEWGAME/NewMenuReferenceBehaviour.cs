@@ -15,6 +15,7 @@ public class NewMenuReferenceBehaviour : MonoBehaviour {
 	
 	//ui
 	public Texture2D uiPerfectStar;
+	public GameObject uiParticlePrefab;
 	
 	//blue bar
 	public Texture2D bbBackground;
