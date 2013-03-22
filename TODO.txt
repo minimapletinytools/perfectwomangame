@@ -102,9 +102,10 @@ DONE-TEXT
 			-maybe special glowy light effect over grave????
 
 ::TODO3::
-DONE-character not transitioning out on death cutscene
-DONE-fade out sound not playing
+-test with kinect1!!!
 -add buffer at beginning of ecah level for players to orient themselves
+-needs to transition to grave or age 100 at age 85
+-funny behaviour with skip cutscene button w/e
 
 -performance chart
 	-alternative method (for performance)
@@ -148,6 +149,8 @@ DONE-fade out sound not playing
 -put all menu stuff in aset bundle too
 -put mini in asset bundle as well
 
+DONE-character not transitioning out on death cutscene
+DONE-fade out sound not playing
 DONE-music fading 
 DONE-make audio NOT 3D in ggfiles
 DONE-load death cutscene

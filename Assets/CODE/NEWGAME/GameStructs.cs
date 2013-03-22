@@ -6,6 +6,7 @@ using System.Linq;
 public struct CharacterIndex
 {
 	public static int NUMBER_AGES = 10;
+	public static int NUMBER_CHARACTERS = 31;
 	public static string[] sLevelToAge = new string[10] { "0", "05", "16", "27", "34", "45", "60", "85", "100", "999" };
 	public static List<CharacterIndex> sAllCharacters = new List<CharacterIndex>()
 	{
@@ -119,9 +120,31 @@ public struct CharacterIndex
 		}
 	}
 }
-public class PerformanceStats
+
+public class CharacterStats
 {
 	public CharacterIndex Character { get; set; }
+	public int Perfect { get; set; }
+	public int Difficulty { get; set; }
+	
+	public CharacterStats()
+	{
+		Character = new CharacterIndex(-1);
+		Perfect = 0;
+		Difficulty = 0;
+	}
+}
+public class PerformanceStats
+{
+	public CharacterIndex Character {
+		get{
+			return Stats.Character;
+		}
+		set{
+			Stats.Character = value;
+		}
+	}
+	
 	public float Score{
 		get{
 			float r = 0;
@@ -132,18 +155,21 @@ public class PerformanceStats
 			return r;
 		}
 	}
-	public int Perfect { get; set; }
-	public int Difficulty { get; set; }
 	
 	public bool Finished { get; set; } //did we finish with this character already
 	public float DeathTime { get; set; } //what time (0,1) did this character die
 	
 	public PerformanceGraphObject PerformanceGraph { get; private set; }
-	public PerformanceStats()
+	
+	public CharacterStats Stats
+	{ get; private set; }
+	
+	public PerformanceStats(CharacterIndex aChar)
 	{
-		Character = new CharacterIndex(-1);
-		Perfect = 0;
-		Difficulty = 0;
+		
+		Stats = new CharacterStats();
+		Stats.Character = aChar;
+	
 		Finished = false;
 		DeathTime = -1;
 		

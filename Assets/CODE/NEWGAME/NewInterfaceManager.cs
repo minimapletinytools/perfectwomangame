@@ -556,7 +556,7 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 				{
 					//set the text
 					string text = "Your ";
-					text += ps.Perfect;
+					text += ps.Stats.Perfect;
 					text += " life as a ";
 					text += ps.Character.StringIdentifier;
 					text += " was ";

@@ -30,7 +30,7 @@ public class NewGameManager : FakeMonoBehaviour
 			//TODO you can probably come up with something better that this can't you???
 			//TODO you could also keep track of the score separetly...
 			//W/E
-			return mPerformanceStats.Sum(delegate (PerformanceStats e) { return e.Score*e.Perfect*100; });
+			return mPerformanceStats.Sum(delegate (PerformanceStats e) { return e.Score*e.Stats.Perfect*100; });
 		}
 	}
 	
@@ -39,7 +39,9 @@ public class NewGameManager : FakeMonoBehaviour
 	
 	public CharacterIndex CurrentCharacterIndex
 	{ get { return CurrentPerformanceStat.Character; } }
+	
 	//actual game data
+	CharacterHelper mCharacterHelper = new CharacterHelper();
 	List<PerformanceStats> mPerformanceStats = new List<PerformanceStats>();
 	
 	public override void Start()
@@ -90,8 +92,7 @@ public class NewGameManager : FakeMonoBehaviour
 		
 		//set new character data
 		//TODO finish
-		mPerformanceStats.Add(new PerformanceStats());
-		CurrentPerformanceStat.Character = new CharacterIndex(aCharacter.Name);
+		mPerformanceStats.Add(new PerformanceStats(new CharacterIndex(aCharacter.Name)));
 		mManager.mInterfaceManager.begin_new_character(CurrentPerformanceStat);
 		
 		//TODO
@@ -245,7 +246,18 @@ public class NewGameManager : FakeMonoBehaviour
 				,0).then_one_shot(
 					delegate() 
 					{	 
-						transition_to_CHOICE(); 
+						if(CurrentPerformanceStat.Character.Level > 7)
+						{
+							//TODO conditions for age 10
+							if(false)
+							{
+								transition_to_TRANSITION_play(new CharacterIndex("100"));
+							}
+							else
+								transition_to_DEATH();
+						}
+						else
+							transition_to_CHOICE(); 
 					}
 				,2);
 			}
@@ -314,7 +326,7 @@ public class NewGameManager : FakeMonoBehaviour
 		}
 		else
 		{
-			CurrentPoseAnimation = mManager.mCharacterBundleManager.get_pose(CurrentCharacterIndex,CurrentPerformanceStat.Difficulty);
+			CurrentPoseAnimation = mManager.mCharacterBundleManager.get_pose(CurrentCharacterIndex,CurrentPerformanceStat.Stats.Difficulty);
 			CurrentTargetPose = CurrentPoseAnimation.get_pose(0);
 		}
 	}
