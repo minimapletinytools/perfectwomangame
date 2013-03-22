@@ -97,6 +97,7 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 		
 		mBB = new FlatElementImage(mManager.mNewRef.bbBackground,8);
 		mBB.HardPosition = random_position();
+		mBB.SoftPosition =  mFlatCamera.get_point(-0.5f, 0);
 		mElement.Add(mBB);
 		
 		//BB small nonsense
@@ -190,7 +191,7 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 	{
 		float bottomVOffset = -50;
 		mBB.SoftScale = new Vector3(1,1,1);
-		mBB.SoftPosition = mFlatCamera.get_point(-0.5f, 0) + ((aBBOffset == null) ? new Vector3(0,-150,0) : aBBOffset.Value);
+		mBB.SoftPosition = mFlatCamera.get_point(-0.5f, 0) + ((aBBOffset == null) ? new Vector3(0,0,0) : aBBOffset.Value);
 		mBBText.SoftPosition = mBB.SoftPosition + new Vector3(0,160,0);
 		mBBScoreFrame.SoftPosition = mBB.SoftPosition + new Vector3(-350,bottomVOffset,0);
 		mBBScoreText.SoftPosition = mBB.SoftPosition + new Vector3(-350,bottomVOffset-15,0);
@@ -283,17 +284,25 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 		position_pb_character_icons(0);
 	}
 	
-	void position_pb_character_icons(float aSplit)
+	//characters == LEVEL will be behind the BB
+	void position_pb_character_icons(int splitLevel, float vOffset = 0)
 	{
 		float padding = 300;
-		float hPadding = 350;
+		float hPadding = 250;
+		
+		float splitHeight = 210;
 		foreach(CharacterIndex e in CharacterIndex.sAllCharacters)
 		{
-			Vector3 baseOffset =  mPB.SoftPosition; //TODO overall offset
+			Vector3 baseOffset =  mBB.SoftPosition; 
 			Vector3 position = Vector3.zero;
 			float netWidth = (e.NumberInRow - 1)*padding;
 			position.x = netWidth/2f - padding*e.Choice;
-			position.y = -hPadding*e.Level + aSplit; // TODO make space for blue bar
+			int indexOffset = (splitLevel - e.Level);
+			position.y = hPadding*indexOffset + vOffset; 
+			if(indexOffset > 0) //past characters
+				position.y += splitHeight/2;
+			else if (indexOffset < 0) //future characters
+				position.y -= splitHeight/2;
 			mPBCharacterIcons[e.Index].SoftPosition = baseOffset + position;
 		}
 		
@@ -376,6 +385,7 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 		mElement.Add(mBBLastPerformanceGraph);
 		
 		//PB
+		position_pb_character_icons(aChar.Character.Level);
 		//disable the other characters no that we have made a choice
 		foreach(CharacterIndex e in aChar.Character.Neighbors)
 		{
@@ -518,7 +528,7 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 		float textTime = 3;
 		//clear away BB and PB
 		set_bb_small(new Vector3(0,1000,0));
-		position_pb_character_icons(-2000);
+		position_pb_character_icons(0,-3000);
 		
 		TimedEventDistributor.TimedEventChain chain;
 		
