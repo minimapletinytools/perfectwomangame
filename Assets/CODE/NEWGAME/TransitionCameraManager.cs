@@ -144,7 +144,10 @@ public class TransitionCameraManager : FakeMonoBehaviour
 					go_to_fetus(0);
 				else if(Input.GetKeyDown(KeyCode.Alpha0))
 					go_to_fetus(0);
-				else if(aTime > 100) //TODO check if user is found before doing this, also make sure POSE bundle is loaded
+				else if(aTime > 5 && 
+					mManager.mZigManager.has_user() && 
+					mManager.mCharacterBundleManager.is_initial_loaded()
+				)
 					go_to_fetus(0); 
 				else return false;
 				return true;

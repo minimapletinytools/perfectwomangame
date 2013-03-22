@@ -15,9 +15,15 @@ public class CharacterBundleManager : FakeMonoBehaviour {
 	}
 			
 	
+	public bool is_initial_loaded()
+	{
+		return mPosesLoaded && (mNumberCharactersLoading == 0);
+	}
+	
 	
 	Mutex mMiniCharLock;
 	CharacterLoader[] mMiniCharacters = new CharacterLoader[31];
+	int mNumberCharactersLoading = 0;
 	//mini bundle related
 	public void load_mini_characters()
 	{
@@ -26,7 +32,10 @@ public class CharacterBundleManager : FakeMonoBehaviour {
 		{
 			
 			if(mManager.mAssetLoader.does_bundle_exist(index.StringIdentifier+"_mini"))
+			{
+					mNumberCharactersLoading++;
 				mManager.mAssetLoader.new_load_mini_characater(index.StringIdentifier, this);
+			}
 			else
 				mMiniCharacters[index.Index] = null;
 		}
@@ -40,6 +49,7 @@ public class CharacterBundleManager : FakeMonoBehaviour {
 			mMiniCharacters[index].complete_load_character(aBundle,aBundleName);
 		}
 		aBundle.Unload(false);
+		mNumberCharactersLoaded--;
 	}
 	public CharacterLoader get_mini_character(CharacterIndex aIndex)
 	{
@@ -87,6 +97,7 @@ public class CharacterBundleManager : FakeMonoBehaviour {
 	}
 	
 	
+	bool mPosesLoaded = false;
 	Dictionary<string, ProGrading.Pose> mPoses = new Dictionary<string, ProGrading.Pose>();
 	public string construct_pose_string(CharacterIndex aIndex, int aDiff, int aStage)
 	{
@@ -126,8 +137,20 @@ public class CharacterBundleManager : FakeMonoBehaviour {
 	}
 	public void pose_bundle_loaded_callback(AssetBundle aBundle)
     {
-		//TODO store info in mPoses
+		foreach(CharacterIndex e in CharacterIndex.sAllCharacters)
+		{
+			for(int i = 0; i < 4; i++)
+			{
+				for(int j = 0; j < 10; j++) //assuming no mroe than 10 poses per animatino
+				{
+					string s = construct_pose_string(e,i,j);
+					if(aBundle.Contains(s))
+						mPoses[s] = (aBundle.Load(s) as TextAsset).to_pose();
+				}
+			}
+		}
         aBundle.Unload(true); //don't need this anymore I don't ithnk...
+		mPosesLoaded = true;
     }
 	
 	public void cleanup()
