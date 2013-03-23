@@ -11,8 +11,6 @@ public class CharacterIconObject : FlatElementMultiBase {
 		mBackground = new FlatElementImage(ManagerManager.Manager.mNewRef.pbCharacterIconBackground,aDepth);
 		mDifficultyStars = new DifficultyObject(ManagerManager.Manager.mNewRef.uiPerfectStar,aDepth+2);
 		
-		
-		
 		if(aIcon == null)
 		{
 			CharacterTextureBehaviour ctb = (GameObject.Instantiate(ManagerManager.Manager.mReferences.mMiniChar) as  GameObject).GetComponent<CharacterTextureBehaviour>();
@@ -32,8 +30,9 @@ public class CharacterIconObject : FlatElementMultiBase {
 		mElements.Add(new ElementOffset(mBody, new Vector3(bodyOffset,0,0)));
 		
 		PrimaryGameObject = create_primary_from_elements();
-		
 		Depth = aDepth;
+		
+		set_perfectness(0);
 	}
 	public FlatBodyObject take_body()
 	{
@@ -55,4 +54,22 @@ public class CharacterIconObject : FlatElementMultiBase {
     {
         mDifficultyStars.Difficulty = perfectness;
     }
+	
+	
+	public void set_color(Color aColor)
+	{
+		//this is dumb, but it works in our situation...
+		if(SoftColor.a == 0)
+			base.set_color(aColor);
+	}
+	
+	public void set_background_color(Color aColor)
+	{
+		mBackground.SoftColor = aColor;
+	}
+	
+	public void set_body_color(Color aColor)
+	{
+		mBody.SoftColor = aColor;
+	}
 }

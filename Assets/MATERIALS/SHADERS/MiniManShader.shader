@@ -27,18 +27,12 @@ Shader "Custom/MiniManShader" {
 
 		void surf (Input IN, inout SurfaceOutput o) {
 			half4 c = tex2D (_MainTex, IN.uv_MainTex);
-			if(c.a != 0)
-			{
-				o.Alpha =  _Color.a;
-				//o.Alpha = min(0.5,c.a);
-				//o.Albedo = half3(0.7,0.7,0.7);
-				o.Albedo = half3(0.4,0.4,0.4);
-			}
-			else
-			{
-				o.Albedo = c.rgb;
-				o.Alpha = c.a * _Color.a;
-			}
+		
+			o.Albedo = _Color.rgb;
+			
+			o.Alpha = _Color.a * c.a;
+				
+			
 		}
 		ENDCG
 	} 

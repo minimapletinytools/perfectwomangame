@@ -55,6 +55,8 @@ public struct CharacterIndex
 	}
 	public string StringIdentifier{
 		get{
+			if(Index == 29) return "100";
+			if(Index == 30) return "999";
 			return sLevelToAge[Level] + "-" + (Choice+1);
 		}
 	}

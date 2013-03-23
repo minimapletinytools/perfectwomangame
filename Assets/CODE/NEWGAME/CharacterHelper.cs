@@ -19,10 +19,12 @@ public class CharacterHelper
 		
 		Characters = new CharacterStats[CharacterIndex.NUMBER_CHARACTERS];
 		for(int i = 0; i < Characters.Length; i++)
+			Characters[i] = null;
+		foreach(CharacterIndex e in CharacterIndex.sAllCharacters)
 		{
-			Characters[i] = new CharacterStats(){Character = new CharacterIndex(i)};
-			Characters[i].Difficulty = i < 5 ? 0 : 1; //05 characters are easier
-			Characters[i].Perfect = mPerfectness[i]; //TODO maybe just make this random lol?
+			Characters[e.Index] = new CharacterStats(){Character = e};
+			Characters[e.Index].Difficulty = e.Index < 5 ? 0 : 1; //05 characters are easier
+			Characters[e.Index].Perfect = mPerfectness[e.Index]; //TODO maybe just make this random lol?
 		}
 	}
 }

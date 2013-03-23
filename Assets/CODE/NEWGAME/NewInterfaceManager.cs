@@ -70,14 +70,13 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 	
 	//BLUE BAR
 	FlatElementImage mBB;
+	Vector3 mBBBasePosition;
 	//PLAY
 	PerformanceGraphObject mBBLastPerformanceGraph = null; //owned by Character
 	FlatElementImage mBBPerformanceGraphFrame;
 	FlatElementText mBBText;
 	FlatElementImage mBBScoreFrame;
 	FlatElementText mBBScoreText;
-	//CUTSCENE
-	//???
 	//CHOOSING
 	int BB_NUM_CHOICES = 3;
 	List<NewChoiceObject> mBBChoices = new List<NewChoiceObject>();
@@ -97,7 +96,8 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 		
 		mBB = new FlatElementImage(mManager.mNewRef.bbBackground,8);
 		mBB.HardPosition = random_position();
-		mBB.SoftPosition =  mFlatCamera.get_point(-0.5f, 0);
+		mBBBasePosition = mFlatCamera.get_point(-0.5f, 0); 
+		mBB.SoftPosition = mBBBasePosition;
 		mElement.Add(mBB);
 		
 		//BB small nonsense
@@ -187,11 +187,11 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 	
 	//make sure begin_new_character is called before this
 	//called by set_for_PLAY()
-	void set_bb_small(Vector3? aBBOffset=null)
+	void set_bb_small(float aBBOffset = 0)
 	{
 		float bottomVOffset = -50;
 		mBB.SoftScale = new Vector3(1,1,1);
-		mBB.SoftPosition = mFlatCamera.get_point(-0.5f, 0) + ((aBBOffset == null) ? new Vector3(0,0,0) : aBBOffset.Value);
+		mBB.SoftPosition = mBBBasePosition + new Vector3(0,aBBOffset,0);
 		mBBText.SoftPosition = mBB.SoftPosition + new Vector3(0,160,0);
 		mBBScoreFrame.SoftPosition = mBB.SoftPosition + new Vector3(-350,bottomVOffset,0);
 		mBBScoreText.SoftPosition = mBB.SoftPosition + new Vector3(-350,bottomVOffset-15,0);
@@ -271,7 +271,7 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 		var newRef = mManager.mNewRef;
 		mPB = new FlatElementImage(newRef.pbBackground,0);
 		mPB.HardPosition = random_position();
-		mPB.SoftPosition = mFlatCamera.get_point(-0.5f, 0);
+		mPB.SoftPosition = mBBBasePosition;
 		
 		foreach(CharacterIndex e in CharacterIndex.sAllCharacters)
 		{
@@ -284,16 +284,34 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 		position_pb_character_icons(0);
 	}
 	
+	public void set_pb_character_icon_poses(List<KeyValuePair<CharacterIndex,ProGrading.Pose>> aChars)
+	{
+		foreach(var e in aChars)
+		{
+			mPBCharacterIcons[e.Key.Index].mBody.set_target_pose(e.Value);
+		}
+	}
+	
+	public void set_pb_character_icon_colors(List<CharacterStats> aChars)
+	{
+		foreach(CharacterStats e in aChars)
+		{
+			mPBCharacterIcons[e.Character.Index].set_background_color(Color.Lerp(new Color(0.5f,0.5f,0.5f), new Color32(255,200,0,255), e.Perfect/3f));
+			mPBCharacterIcons[e.Character.Index].set_perfectness(e.Perfect);
+			mPBCharacterIcons[e.Character.Index].set_body_color(Color.Lerp(new Color(0.5f,0.5f,0.5f), new Color32(196,30,58,255), e.Difficulty/3f));
+		}
+	}
 	//characters == LEVEL will be behind the BB
 	void position_pb_character_icons(int splitLevel, float vOffset = 0)
 	{
 		float padding = 300;
 		float hPadding = 250;
-		
 		float splitHeight = 210;
+		Vector3 baseOffset =  mBBBasePosition;
+		
 		foreach(CharacterIndex e in CharacterIndex.sAllCharacters)
 		{
-			Vector3 baseOffset =  mBB.SoftPosition; 
+			
 			Vector3 position = Vector3.zero;
 			float netWidth = (e.NumberInRow - 1)*padding;
 			position.x = netWidth/2f - padding*e.Choice;
@@ -440,7 +458,7 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 			delegate(){},firstTextTime);
 		
 		//TODO get actual cutscenes
-		List<int> poo = new List<int>(){0,1,2,3}; //placeholder for cutscene
+		List<int> poo = new List<int>(){0}; //placeholder for cutscene
 		for(int i = 0; i < poo.Count; i++)
 		{
 			float cutsceneTextTime = 5;
@@ -451,8 +469,8 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 					add_timed_text_bubble("MESSAGE " + i,cutsceneTextTime);
 					add_cutscene_particle_stream(CharacterIndex.RandomCharacter);
 					return true;
-				},
-			cutsceneTextTime/2f);
+				}
+			,0).wait(cutsceneTextTime);
 		}
 		
 		chain.then_one_shot(delegate(){cutsceneCompleteCb();},END_CUTSCENE_DELAY_TIME);
@@ -527,11 +545,17 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 	{
 		float textTime = 3;
 		//clear away BB and PB
-		set_bb_small(new Vector3(0,1000,0));
+		set_bb_small(1000);
 		position_pb_character_icons(0,-3000);
 		
-		TimedEventDistributor.TimedEventChain chain;
 		
+		//this is all a hack to get the score to show up right...
+		FlatElementText finalScoreText = new FlatElementText(mManager.mNewRef.genericFont,150,"123",10);
+		foreach (Renderer f in finalScoreText.PrimaryGameObject.GetComponentsInChildren<Renderer>())
+                f.gameObject.layer = 4;
+		finalScoreText.SoftPosition = mManager.mBackgroundManager.mBackgroundElements.mElements[0].Element.SoftPosition + new Vector3(0, -165, 0);
+		
+		TimedEventDistributor.TimedEventChain chain;
 		chain = TED.add_one_shot_event(
 			delegate()
 			{
@@ -545,10 +569,10 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 		textTime).wait (textTime);
 		
 		float sceneTextTime = 4;
-		float startingPosition = mFlatCamera.get_point(0,1).y - aStats[0].PerformanceGraph.BoundingBox.height - 30;
-		float intervalSize = aStats[0].PerformanceGraph.BoundingBox.height + 30;
-		float cioXOffset = mBB.SoftPosition.x + 300;
-		float pgoXOffset = mBB.SoftPosition.x - 250;
+		float startingPosition = mFlatCamera.get_point(0,1).y - aStats[0].PerformanceGraph.BoundingBox.height - 10;
+		float intervalSize = aStats[0].PerformanceGraph.BoundingBox.height + 20;
+		float cioXOffset = mBB.SoftPosition.x + 400;
+		float pgoXOffset = mBB.SoftPosition.x - 180;
 		//make performance graphs come in one at a time from the bottom
 		for(int i = 0; i < aStats.Count; i++)
 		{

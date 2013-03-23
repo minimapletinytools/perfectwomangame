@@ -78,8 +78,6 @@ public class ProGrading {
             output += e.joint + " target: " + target + " actual: " + actual + " diff: " + diff + "\n";
         }
         output += " grade: " + Mathf.Sqrt(gradesum) / weightsum;
-        if (Input.GetKeyDown(KeyCode.D))
-            Debug.Log(output);
         return Mathf.Sqrt(gradesum) / weightsum;
     }
     public static Pose snap_pose(ManagerManager manager) //make suree there is a skeleton to snap

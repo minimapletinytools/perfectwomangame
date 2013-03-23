@@ -4,11 +4,14 @@ using System.Linq;
 
 public enum GameState
 {
-	NONE,PLAY,CUTSCENE,DEATH,CHOICE,TRANSITION,GRAVE
+	NONE,PREPLAY,PLAY,CUTSCENE,DEATH,CHOICE,TRANSITION,GRAVE
 }
 
 public class NewGameManager : FakeMonoBehaviour
 {
+	
+	const float PREPLAY_TIME = 2;
+		
     public NewGameManager(ManagerManager aManager)
         : base(aManager) 
     {
@@ -67,15 +70,18 @@ public class NewGameManager : FakeMonoBehaviour
 	{
 		mManager.mAssetLoader.new_load_character("0-1",mManager.mCharacterBundleManager);
 		
-		//do oI actually want this here??
 		mManager.mInterfaceManager.setup_bb();
 		mManager.mInterfaceManager.setup_pb();
-	}
-	
-	//TODO rename
-	public void initialize_GRAVE()
-	{
-		mManager.mAssetLoader.new_load_character("999",mManager.mCharacterBundleManager);
+		mManager.mInterfaceManager.set_pb_character_icon_colors(mCharacterHelper.Characters.Where(e=>e!=null).ToList());
+		
+		List<KeyValuePair<CharacterIndex,ProGrading.Pose>> poses = new List<KeyValuePair<CharacterIndex, ProGrading.Pose>>();
+		foreach(CharacterIndex e in CharacterIndex.sAllCharacters)
+		{
+			poses.Add(new KeyValuePair<CharacterIndex,ProGrading.Pose>(
+				e,mManager.mCharacterBundleManager.get_pose(e,mCharacterHelper.Characters[e.Index].Difficulty).get_pose(0)));
+		}
+		mManager.mInterfaceManager.set_pb_character_icon_poses(poses);
+		
 	}
 	
 	
@@ -101,7 +107,6 @@ public class NewGameManager : FakeMonoBehaviour
 			case "0-1":	
 				DeathCharacter = aCharacter; //TODO AssetBundle.undload will actually mess this up...
 				set_time_for_PLAY(30f);
-				
 				setup_next_poses(true);
 				transition_to_PLAY();
 				break;
@@ -116,8 +121,8 @@ public class NewGameManager : FakeMonoBehaviour
 				break;
 			default:
 				set_time_for_PLAY(30f);
+				setup_next_poses(false);
 				transition_to_PLAY();
-				setup_next_poses();
 				break;
 		}
 		
@@ -171,17 +176,13 @@ public class NewGameManager : FakeMonoBehaviour
 		if (CurrentPoseAnimation != null)
         {
 			
-			ProGrading.Pose newPose = CurrentPoseAnimation.get_pose((int)(Time.deltaTime/5f));
-			if(CurrentTargetPose != newPose)
-			{
-				CurrentTargetPose = newPose;
-				mManager.mTransparentBodyManager.set_target_pose(newPose);
-			}
+			CurrentTargetPose = CurrentPoseAnimation.get_pose((int)(Time.time/5f));
+			mManager.mTransparentBodyManager.set_target_pose(CurrentTargetPose);
 			
             float grade = ProGrading.grade_pose(CurrentPose, CurrentTargetPose);
 			
 			//TODO this is slooow
-			//CurrentPerformanceStat.update_score(PercentTimeCompletion,grade);
+			//CurrentPerformanceStat.update_score(Percent 	TimeCompletion,grade);
 			
 			//update score
 			mManager.mInterfaceManager.update_bb_score(TotalScore);	
@@ -223,18 +224,21 @@ public class NewGameManager : FakeMonoBehaviour
 			transition_to_TRANSITION_play(CurrentPerformanceStat.Character.get_future_neighbor(choice));
 		}
 		
-		//hack graveo
-		if(Input.GetKeyDown(KeyCode.D))
-		{
-			transition_to_TRANSITION_play(new CharacterIndex("999"));
-		}
-		
 	}
 	public void transition_to_CUTSCENE()
 	{
 		GS = GameState.CUTSCENE;
+		
+		//TODO use hackPD to compute changes
+		//construct change struct to pass into NIM
+		//actualyl set the new difficulties in CharacterHelper
+		
+		//visuals
 		mManager.mBodyManager.transition_character_out();
 		mManager.mTransparentBodyManager.transition_character_out();
+		//eventually wont be cutscene 0
+		mManager.mBackgroundManager.load_cutscene(0,CurrentCharacterLoader);
+		
 		mManager.mInterfaceManager.set_for_CUTSCENE(
 			delegate() 
 			{ 
@@ -246,9 +250,9 @@ public class NewGameManager : FakeMonoBehaviour
 				,0).then_one_shot(
 					delegate() 
 					{	 
-						if(CurrentPerformanceStat.Character.Level > 7)
+						if(CurrentPerformanceStat.Character.Level > 6) //if age 85 or greater
 						{
-							//TODO conditions for age 10
+							//TODO conditions to get to age 100
 							if(false)
 							{
 								transition_to_TRANSITION_play(new CharacterIndex("100"));
@@ -263,13 +267,11 @@ public class NewGameManager : FakeMonoBehaviour
 			}
 		);
 		
-		
-		//eventually wont be cutscene 0
-		mManager.mBackgroundManager.load_cutscene(0,CurrentCharacterLoader);
 	}
 	
 	CharacterLoader DeathCharacter
 	{ get; set; }
+	
 	public void transition_to_DEATH()
 	{
 		GS = GameState.DEATH;	
@@ -286,14 +288,15 @@ public class NewGameManager : FakeMonoBehaviour
 			.then_one_shot(
 				delegate()
 				{
-					mManager.mMusicManager.fade_out(); 
+					transition_to_TRANSITION_play(new CharacterIndex("999"));
+					//mManager.mMusicManager.fade_out(); 
 				}
-			,0).then_one_shot(
+			,0);/*.then_one_shot(
 				delegate()
 				{
 					mManager.mTransitionCameraManager.fade_out_with_sound(initialize_GRAVE);
 				}
-			,3);
+			,3);*/
 	}
 	
 	public void transition_to_GRAVE()
@@ -322,19 +325,23 @@ public class NewGameManager : FakeMonoBehaviour
 		{
 			CurrentPoseAnimation = null;
 			CurrentTargetPose = null;
-			mManager.mTransparentBodyManager.transition_character_out();
 		}
 		else
 		{
 			CurrentPoseAnimation = mManager.mCharacterBundleManager.get_pose(CurrentCharacterIndex,CurrentPerformanceStat.Stats.Difficulty);
 			CurrentTargetPose = CurrentPoseAnimation.get_pose(0);
+			//mManager.mTransparentBodyManager.set_target_pose(CurrentTargetPose);
 		}
 	}
 	
 	public void transition_to_PLAY()
 	{
-		GS = GameState.PLAY;
+		GS = GameState.PREPLAY;
+		//no target pose means we don't want a transparent body
+		if(CurrentTargetPose == null)
+			mManager.mTransparentBodyManager.transition_character_out();
 		mManager.mInterfaceManager.set_for_PLAY();
+		TED.add_one_shot_event(delegate(){ GS = GameState.PLAY; },PREPLAY_TIME);
 	}
 	
 	public void transition_to_TRANSITION_play(CharacterIndex aNextCharacter)

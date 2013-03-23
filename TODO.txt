@@ -102,12 +102,17 @@ DONE-TEXT
 			-maybe special glowy light effect over grave????
 
 ::TODO3::
+-add force character change so you don't have to wait so **** long
+-set camera viewport rect to do black bars.
 -test with kinect1!!!
--add buffer at beginning of ecah level for players to orient themselves
--needs to transition to grave or age 100 at age 85
--funny behaviour with skip cutscene button w/e
-
+-cutscene elements should be set in reverse order I think
+DONE-set poses in character icons
+-increase mini pose size a little maybe??? (they look ugly)
+DONE-pb should not be positioned relative to bb...
 DONE-do different fallback rules for poses
+DONE-change character icon/choice color based on difficulty
+	-background image turns white -> gold based on perfectness
+	-characters turn to red as dificulty inceraess
 -performance chart
 	-alternative method (for performance)
 		-first make sure this isn't a problem with knicet detph tekture (otherwise you are in trouble)
@@ -126,7 +131,8 @@ DONE-do different fallback rules for poses
 -decide on CUTSCENE info format
 
 -FLAT
-	-add color fade limit and position move limit to FlatElementBase
+	DONE-add color fade limit and position move limit to FlatElementBase
+	-position limit...
 	-if no changes are made, don't make them (for performance)
 
 
@@ -134,7 +140,6 @@ DONE-do different fallback rules for poses
 	-use poses for future, icons for past
 -now that you have take/return bodies, use them in NIM between newchoiceobject and charactericon
 
--change character icon/choice color based on difficulty
 -waist angle hack	
 	-test
 	DONE-waist angle = interpolation between knee position angle and desired angle 
@@ -146,9 +151,15 @@ DONE-do different fallback rules for poses
 	-GameEvents
 	-InterfaceBehaviour
 
+
 -make a 2tris plane to save memory
 -put all menu stuff in aset bundle too
 -put mini in asset bundle as well
+-funny behaviour with skip cutscene button w/e
+
+
+DONE-add buffer at beginning of ecah level for players to orient themselves
+DONE-needs to transition to grave or age 100 at age 85
 
 DONE-character not transitioning out on death cutscene
 DONE-fade out sound not playing
