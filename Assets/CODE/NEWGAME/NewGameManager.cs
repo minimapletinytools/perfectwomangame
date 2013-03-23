@@ -184,6 +184,8 @@ public class NewGameManager : FakeMonoBehaviour
 			//TODO this is slooow
 			//CurrentPerformanceStat.update_score(Percent 	TimeCompletion,grade);
 			
+			mManager.mCameraManager.set_camera_effects(grade);
+			
 			//update score
 			mManager.mInterfaceManager.update_bb_score(TotalScore);	
         }

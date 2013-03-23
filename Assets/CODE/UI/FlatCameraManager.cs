@@ -65,13 +65,40 @@ public class FlatCameraManager{
         Camera.clearFlags = CameraClearFlags.Depth;
     }
 	
-	public void fit_camera_to_screen()
+	//TODO rename these functions, make them call each other pfftt
+	
+	public static void fit_camera_to_screen(Camera aCam)
 	{
-		//TODO black bars!!
-		//Camera.aspect = ManagerManager.FORCED_ASPECT_RATIO;
-		Interpolator.TargetOrthographicHeight = Screen.height;
-		Camera.orthographicSize = Screen.height;
+		//comment out this function to disable black bars
+		float desiredAspect = ManagerManager.FORCED_ASPECT_RATIO;
+		float screenRatio = Screen.width / (float)Screen.height;
+		Rect newRect = aCam.rect;
+        if (desiredAspect > screenRatio) //match camera width to screen width
+		{
+			float yGive = screenRatio/desiredAspect; //desiredHeight to screenHeight
+			newRect.y = (1-yGive)/2;
+			newRect.height = yGive;
+		}
+        else
+		{
+			float xGive = desiredAspect/screenRatio; //screen width to camera width
+			newRect.x = (1-xGive)/2;
+			newRect.width = xGive;
+		}
+		aCam.rect = newRect;
+		aCam.aspect = desiredAspect;
+		aCam.orthographicSize = ManagerManager.DESIRED_SCENE_HEIGHT/2f;
+	}
+	
+	public void fit_camera_to_screen(bool hard = true)
+	{
 		
+		Interpolator.TargetOrthographicHeight = ManagerManager.DESIRED_SCENE_HEIGHT/2f;
+		Camera.orthographicSize = ManagerManager.DESIRED_SCENE_HEIGHT/2f;
+		
+		//this is for black bars
+		if(hard)
+			fit_camera_to_screen(Camera);
 	}
 	
     public void focus_camera_on_element(FlatElementBase aElement)

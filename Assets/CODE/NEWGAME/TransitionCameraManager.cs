@@ -5,8 +5,8 @@ using System.Collections.Generic;
 //this class also handles initialization camera nonsense
 public class TransitionCameraManager : FakeMonoBehaviour
 {
-	//static float FADE_TIME = 2.3f;
-	static float FADE_TIME = 0.2f;
+	static float FADE_TIME = 2.3f;
+	//static float FADE_TIME = 0.2f;
 	static float MAX_FADE = 30;
 	
 	
@@ -42,10 +42,8 @@ public class TransitionCameraManager : FakeMonoBehaviour
 		mFlatCamera = new FlatCameraManager(new Vector3(10000, 10000, 0), 10);
 		mFlatCamera.Camera.depth = 101; //we want this on top always
 		mFlatCamera.Camera.clearFlags = CameraClearFlags.SolidColor;
-		mFlatCamera.Camera.backgroundColor = new Color(0.05f,0.05f,0.07f);
-		mFlatCamera.fit_camera_to_screen();
-		mFlatCamera.Interpolator.SoftInterpolation = 1f;
-		mFlatCamera.update(0);
+		mFlatCamera.Camera.backgroundColor = new Color(0.05f,0.05f,0.06f);
+		mFlatCamera.fit_camera_to_screen(false);
 		
         SunShafts shafts = ((GameObject)GameObject.Instantiate(mManager.mReferences.mImageEffectsPrefabs)).GetComponent<SunShafts>();
 		mSunShafts = mFlatCamera.Camera.gameObject.AddComponent<SunShafts>();

@@ -3,7 +3,7 @@
 		DONE-transition to CUTSCENE  (or skip this and go straight to CHOOSE for fetus)
 		-INTERFACE 
 		-BACKGROUND
-	-transition to DEATH
+	DONE-transition to DEATH
 		-INTERFACE 
 		-BACKGROUND
 		-go to transition to GRAVE
@@ -13,7 +13,7 @@
 		-INTERFACE (BLUE BAR)
 	DONE-transition to TRANSITION (play)
 		-TRANSITION -> BUNDLE -> TRANSITION
-	-transition to TRANSITION (grave)
+	DONE-transition to TRANSITION (grave)
 		-TRANSITION -> BUNDLE -> TRANSITION
 -PLAY
 	DONE-count down timer
@@ -40,18 +40,18 @@
 	-CREDITS
 
 -FETUS
-	-needs to NOT update the bluebar
+	DONE-needs to NOT update the bluebar
 -NORMAL
 	DONE-internal SCORE
 	-update UI
 		DONE-score
 		-graph
 		-effects
-	-tell BACKGROUND to glow???
+	DONE-tell BACKGROUND to glow???
 -100
 	-???
 -GRAVE
-	-restart game lol
+	DONE-restart game lol
 
 
 	
@@ -102,17 +102,14 @@ DONE-TEXT
 			-maybe special glowy light effect over grave????
 
 ::TODO3::
+-glow looks AWWWFUUUUUUUUUUUUUUUL!!
 -add force character change so you don't have to wait so **** long
--set camera viewport rect to do black bars.
+
 -test with kinect1!!!
 -cutscene elements should be set in reverse order I think
-DONE-set poses in character icons
+
 -increase mini pose size a little maybe??? (they look ugly)
-DONE-pb should not be positioned relative to bb...
-DONE-do different fallback rules for poses
-DONE-change character icon/choice color based on difficulty
-	-background image turns white -> gold based on perfectness
-	-characters turn to red as dificulty inceraess
+
 -performance chart
 	-alternative method (for performance)
 		-first make sure this isn't a problem with knicet detph tekture (otherwise you are in trouble)
@@ -138,6 +135,9 @@ DONE-change character icon/choice color based on difficulty
 
 -consider still using the cool chaarcter icons that lea drew for teh pink backgrounds...
 	-use poses for future, icons for past
+	-maybe use icons for future as well.. they look way better
+	-make an icon bundle lol...
+	
 -now that you have take/return bodies, use them in NIM between newchoiceobject and charactericon
 
 -waist angle hack	
@@ -151,12 +151,19 @@ DONE-change character icon/choice color based on difficulty
 	-GameEvents
 	-InterfaceBehaviour
 
-
 -make a 2tris plane to save memory
 -put all menu stuff in aset bundle too
 -put mini in asset bundle as well
 -funny behaviour with skip cutscene button w/e
 
+
+DONE-set camera viewport rect to do black bars.
+DONE-set poses in character icons
+DONE-pb should not be positioned relative to bb...
+DONE-do different fallback rules for poses
+DONE-change character icon/choice color based on difficulty
+	-background image turns white -> gold based on perfectness
+	-characters turn to red as dificulty inceraess
 
 DONE-add buffer at beginning of ecah level for players to orient themselves
 DONE-needs to transition to grave or age 100 at age 85

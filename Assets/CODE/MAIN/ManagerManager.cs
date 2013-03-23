@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Reflection;
 public class ManagerManager : MonoBehaviour{
 	public const float FORCED_ASPECT_RATIO = 16/10f;
+	public const float DESIRED_SCENE_HEIGHT = 1800;
 
 
     static ManagerManager sManager = null;
