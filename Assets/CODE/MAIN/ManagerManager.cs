@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
 public class ManagerManager : MonoBehaviour{
-
+	public const float FORCED_ASPECT_RATIO = 16/10f;
 
 
     static ManagerManager sManager = null;

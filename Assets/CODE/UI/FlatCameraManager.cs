@@ -49,6 +49,7 @@ public class FlatCameraManager{
 	
     public void update(float aDeltaTime)
     {
+		//chis is dumb. we don't need the camera interplotaor...
         Interpolator.update(aDeltaTime);
     }
 
@@ -66,7 +67,11 @@ public class FlatCameraManager{
 	
 	public void fit_camera_to_screen()
 	{
+		//TODO black bars!!
+		//Camera.aspect = ManagerManager.FORCED_ASPECT_RATIO;
 		Interpolator.TargetOrthographicHeight = Screen.height;
+		Camera.orthographicSize = Screen.height;
+		
 	}
 	
     public void focus_camera_on_element(FlatElementBase aElement)

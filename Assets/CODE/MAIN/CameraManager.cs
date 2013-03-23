@@ -16,6 +16,13 @@ public class CameraManager : FakeMonoBehaviour {
     public Camera[] AllCameras { get { return new Camera[] { MainBodyCamera,TransparentBodyCamera,BackgroundCamera,ForegroundCamera};} }
 	public override void Start () 
     {
+		Camera wipeCamera = (new GameObject("genWipeCamera")).AddComponent<Camera>();
+		wipeCamera.clearFlags = CameraClearFlags.SolidColor;
+		wipeCamera.backgroundColor = new Color(0,0,0);
+		wipeCamera.depth = -100;
+		
+		//TODO resize cameras to do black bar!!
+		
         ImageEffects = (GameObject)GameObject.Instantiate(mManager.mReferences.mImageEffectsPrefabs);
 
         MainBodyCamera = (new GameObject("genMainCamera")).AddComponent<Camera>();
