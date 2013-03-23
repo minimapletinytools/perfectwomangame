@@ -49,7 +49,7 @@ public class CharacterBundleManager : FakeMonoBehaviour {
 			mMiniCharacters[index].complete_load_character(aBundle,aBundleName);
 		}
 		aBundle.Unload(false);
-		mNumberCharactersLoaded--;
+		mNumberCharactersLoading--;
 	}
 	public CharacterLoader get_mini_character(CharacterIndex aIndex)
 	{
@@ -118,7 +118,9 @@ public class CharacterBundleManager : FakeMonoBehaviour {
 			{
 				string find = construct_pose_string(aIndex,aDiff,stage);
 				if(mPoses.ContainsKey(find))
+				{
 					r.poses.Add(mPoses[find]);
+				}
 				else
 					break;
 			}
@@ -128,6 +130,11 @@ public class CharacterBundleManager : FakeMonoBehaviour {
 		{
 			CharacterIndex fallback = new CharacterIndex(aIndex.Level,aIndex.Choice-1);
 			return get_pose(fallback,aDiff);
+		}
+		else if(aIndex.Level > 4) //TODO DELETE, this is a total hack because we don't have enough poses
+		{
+			CharacterIndex fallback = new CharacterIndex(Random.Range(1,5),0);
+			return get_pose(fallback, aDiff);
 		}
 		else
 		{
@@ -141,11 +148,13 @@ public class CharacterBundleManager : FakeMonoBehaviour {
 		{
 			for(int i = 0; i < 4; i++)
 			{
-				for(int j = 0; j < 10; j++) //assuming no mroe than 10 poses per animatino
+				for(int j = 1; j < 10; j++) //assuming no mroe than 10 poses per animatino
 				{
 					string s = construct_pose_string(e,i,j);
 					if(aBundle.Contains(s))
+					{
 						mPoses[s] = (aBundle.Load(s) as TextAsset).to_pose();
+					}
 				}
 			}
 		}

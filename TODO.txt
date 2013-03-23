@@ -107,6 +107,7 @@ DONE-TEXT
 -needs to transition to grave or age 100 at age 85
 -funny behaviour with skip cutscene button w/e
 
+DONE-do different fallback rules for poses
 -performance chart
 	-alternative method (for performance)
 		-first make sure this isn't a problem with knicet detph tekture (otherwise you are in trouble)
