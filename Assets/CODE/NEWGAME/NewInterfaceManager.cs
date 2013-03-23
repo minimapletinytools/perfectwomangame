@@ -72,7 +72,7 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 	FlatElementImage mBB;
 	Vector3 mBBBasePosition;
 	//PLAY
-	PerformanceGraphObject mBBLastPerformanceGraph = null; //owned by Character
+	PerformanceStats mBBLastPerformanceGraph = null; //owned by Character
 	FlatElementImage mBBPerformanceGraphFrame;
 	FlatElementText mBBText;
 	FlatElementImage mBBScoreFrame;
@@ -164,7 +164,7 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 		mBBText.SoftColor = smallColor;
 		mBBScoreFrame.SoftColor = smallColor;
 		mBBScoreText.SoftColor = smallColor;
-		mBBLastPerformanceGraph.SoftColor = smallColor;
+		mBBLastPerformanceGraph.PerformanceGraph.SoftColor = smallColor;
 		
 		foreach(FlatBodyObject e in mBBChoiceBodies)
 			e.SoftColor = fullColor;
@@ -195,7 +195,7 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 		mBBText.SoftPosition = mBB.SoftPosition + new Vector3(0,160,0);
 		mBBScoreFrame.SoftPosition = mBB.SoftPosition + new Vector3(-350,bottomVOffset,0);
 		mBBScoreText.SoftPosition = mBB.SoftPosition + new Vector3(-350,bottomVOffset-15,0);
-		mBBLastPerformanceGraph.SoftPosition = mBB.SoftPosition + new Vector3(150,bottomVOffset,0);
+		mBBLastPerformanceGraph.PerformanceGraph.SoftPosition = mBB.SoftPosition + new Vector3(150,bottomVOffset,0);
 		
 		fade_bb_contents(true);
 		
@@ -396,16 +396,14 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 	{
 		//BB
 		mBBText.Text = "CHARACTER " + aChar.Character.StringIdentifier;
-		
-		PerformanceGraphObject aGraph = aChar.PerformanceGraph;
-		if(mBBLastPerformanceGraph != null)
+		if(mBBLastPerformanceGraph != null) //fade out the old graph
 		{
-			mBBLastPerformanceGraph.SoftColor = new Color(0.5f,0.5f,0.5f,0);
-			//mBBLastPerformanceGraph.Enabled = false;
-			//mElement.Remove(mBBLastPerformanceGraph);
+			mBBLastPerformanceGraph.PerformanceGraph.SoftColor = new Color(0.5f,0.5f,0.5f,0);
+			//mBBLastPerformanceGraph.PerformanceGraph.Enabled = false;
+			//mElement.Remove(mBBLastPerformanceGraph.PerformanceGraph);
 		}
-		mBBLastPerformanceGraph = aGraph;
-		mElement.Add(mBBLastPerformanceGraph);
+		mBBLastPerformanceGraph = aChar;
+		mElement.Add(mBBLastPerformanceGraph.PerformanceGraph);
 		
 		//PB
 		position_pb_character_icons(aChar.Character.Level);
@@ -446,10 +444,20 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 		
 		
 		
+		//TODO prepare cutscene dialog
+		//list<KeyvaluePair<trait,List<character>>>
 		
-		//TODO rearange INTERFACE
-			//shift BB up
-			//shift PB contents up
+		
+		set_bb_small(mPB.BoundingBox.height/2+160);
+		position_pb_character_icons(mBBLastPerformanceGraph.Character.Level,mPB.BoundingBox.height/2+160);
+		
+		mLastCutsceneCompleteCb = delegate() {
+			//these will get reset by someone else
+			//set_bb_small();
+			//position_pb_character_icons(mBBLastPerformanceGraph.Character.Level,0);
+			cutsceneCompleteCb();
+			
+		};
 		
 		//TODO get actual message
 		float firstTextTime = 3;
@@ -478,7 +486,7 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 			,0).wait(cutsceneTextTime);
 		}
 		
-		chain.then_one_shot(delegate(){cutsceneCompleteCb();},END_CUTSCENE_DELAY_TIME);
+		chain.then_one_shot(delegate(){mLastCutsceneCompleteCb();},END_CUTSCENE_DELAY_TIME);
 		
 		mLastCutsceneChain = TED.LastEventKeyAdded;
 		mLastCutsceneCompleteCb = cutsceneCompleteCb;
@@ -559,6 +567,12 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 		foreach (Renderer f in finalScoreText.PrimaryGameObject.GetComponentsInChildren<Renderer>())
                 f.gameObject.layer = 4;
 		finalScoreText.SoftPosition = mManager.mBackgroundManager.mBackgroundElements.mElements[0].Element.SoftPosition + new Vector3(0, -165, 0);
+		
+		List<Vector3> ghostPositions = new List<Vector3>();
+		for(int i = 1; i < aStats.Count; i++)
+		{
+			
+		}
 		
 		TimedEventDistributor.TimedEventChain chain;
 		chain = TED.add_one_shot_event(

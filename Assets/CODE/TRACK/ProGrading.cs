@@ -80,7 +80,7 @@ public class ProGrading {
         output += " grade: " + Mathf.Sqrt(gradesum) / weightsum;
         return Mathf.Sqrt(gradesum) / weightsum;
     }
-    public static Pose snap_pose(ManagerManager manager) //make suree there is a skeleton to snap
+    public static Pose snap_pose(ManagerManager manager)
     {
         Pose p = new Pose();
         foreach (KeyValuePair<ZigJointId, ZigJointId> e in sPairs)

@@ -138,7 +138,7 @@ public class NewGameManager : FakeMonoBehaviour
 	
     public override void Update()
     {
-		if(mManager.mZigManager.has_user())
+		//if(mManager.mZigManager.has_user())
 		{
         	CurrentPose = ProGrading.snap_pose(mManager); 
 		}
@@ -235,6 +235,7 @@ public class NewGameManager : FakeMonoBehaviour
 		if(choice != -1)
 		{
 			Debug.Log ("choice is made " + choice);
+			mManager.mMusicManager.fade_out_choice_music();
 			transition_to_TRANSITION_play(CurrentPerformanceStat.Character.get_future_neighbor(choice));
 		}
 		
@@ -328,7 +329,7 @@ public class NewGameManager : FakeMonoBehaviour
 	{
 		GS = GameState.CHOICE;
 		mChoiceHelper.shuffle_and_set_choice_poses(mManager.mInterfaceManager);
-		//TODO mManager.mMusicManager.play_sound_effect(
+		mManager.mMusicManager.fade_in_choice_music();
 		mManager.mInterfaceManager.set_for_CHOICE();	
 	}
 	
