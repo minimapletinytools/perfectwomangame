@@ -39,6 +39,7 @@ public class NewMenuReferenceBehaviour : MonoBehaviour {
 	public AudioClip transitionOut;
 	public AudioClip choiceBlip; //played when your selection changes
 	public AudioClip choiceMade; //played when selection is made
+	public AudioClip choiceMusic;
 	//TODO mroe
 	
 }

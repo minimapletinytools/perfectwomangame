@@ -4,7 +4,9 @@ using System.Collections.Generic;
 public class MusicManager : FakeMonoBehaviour
 {
 	static float FADE_TIME = 5;
+	static float CHOICE_FADE_TIME = 2;
 	AudioSource mMusicSource;
+	AudioSource mChoiceSource;
 	AudioSource mFadingSource;
 	
 	
@@ -21,12 +23,14 @@ public class MusicManager : FakeMonoBehaviour
 	{
 		mMusicSource = mManager.gameObject.AddComponent<AudioSource>();
 		mFadingSource = mManager.gameObject.AddComponent<AudioSource>();
-		
+		mChoiceSource = mManager.gameObject.AddComponent<AudioSource>();
 		
 		mSoundEffects["transitionIn"] = mManager.mNewRef.transitionIn;
 		mSoundEffects["transitionOut"] = mManager.mNewRef.transitionOut;
 		mSoundEffects["choiceBlip"] = mManager.mNewRef.choiceBlip;
 		mSoundEffects["choiceMade"] = mManager.mNewRef.choiceMade;
+		mSoundEffects["choiceMusic"] = mManager.mNewRef.choiceMusic;
+		
 	}
 	
 	public override void Update()
@@ -77,6 +81,38 @@ public class MusicManager : FakeMonoBehaviour
 	}
 	
 	
+	public void fade_in_choice_music()
+	{
+		mChoiceSource.clip = get_sound_clip("choiceMusic");
+		mChoiceSource.volume = 0;
+		mChoiceSource.loop = true;
+		mChoiceSource.Play();
+		
+		TED.add_event(
+			delegate(float time)
+			{
+				float l = time/FADE_TIME;
+				mChoiceSource.volume = l;
+				return l > 1;
+			}
+		);
+	}
+	public void fade_out_choice_music()
+	{
+		TED.add_event(
+			delegate(float time)
+			{
+				float l = time/FADE_TIME;
+				mChoiceSource.volume = 1-l;
+				return l > 1;
+			}
+		).then_one_shot(
+			delegate()
+			{
+				mChoiceSource.Stop();
+			}
+		);
+	}
 	
 	//MusicManager assumes responsibility for fading in the music for the next character
 	//but not fading out the music from the last character
