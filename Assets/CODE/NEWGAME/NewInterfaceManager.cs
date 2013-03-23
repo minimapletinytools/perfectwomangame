@@ -216,6 +216,11 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 		mBBScoreText.Text = ((int)aScore).ToString();
 	}
 	//called by NewGameManager
+	public void set_bb_decider_pose(ProGrading.Pose aPose)
+	{
+		mBBMiniMan.set_target_pose(aPose);
+	}
+	//called by NewGameManager
 	public void set_bb_choice_poses(List<ProGrading.Pose> aPoses)
 	{
 		for(int i = 0; i < BB_NUM_CHOICES; i++)

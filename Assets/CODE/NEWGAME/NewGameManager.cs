@@ -138,7 +138,10 @@ public class NewGameManager : FakeMonoBehaviour
 	
     public override void Update()
     {
-        CurrentPose = ProGrading.snap_pose(mManager); 
+		if(mManager.mZigManager.has_user())
+		{
+        	CurrentPose = ProGrading.snap_pose(mManager); 
+		}
 		
 		if(GS == GameState.PLAY)
 		{
@@ -172,6 +175,10 @@ public class NewGameManager : FakeMonoBehaviour
 	{
 		TimeRemaining -= Time.deltaTime;
 		
+		
+		if(CurrentPose != null) //this should never happen but just in case
+			mManager.mBodyManager.set_target_pose(CurrentPose);
+		
 		//this basically means we aren't 0 or 100 or 999
 		if (CurrentPoseAnimation != null)
         {
@@ -179,10 +186,12 @@ public class NewGameManager : FakeMonoBehaviour
 			CurrentTargetPose = CurrentPoseAnimation.get_pose((int)(Time.time/5f));
 			mManager.mTransparentBodyManager.set_target_pose(CurrentTargetPose);
 			
+			
+			
             float grade = ProGrading.grade_pose(CurrentPose, CurrentTargetPose);
 			
 			//TODO this is slooow
-			//CurrentPerformanceStat.update_score(Percent 	TimeCompletion,grade);
+			//CurrentPerformanceStat.update_score(PercentTimeCompletion,grade);
 			
 			mManager.mCameraManager.set_camera_effects(grade);
 			
@@ -193,6 +202,7 @@ public class NewGameManager : FakeMonoBehaviour
 		if(TimeRemaining < 0)
 		{
 			CurrentPerformanceStat.Finished = true;
+			mManager.mCameraManager.set_camera_effects(0);
 			transition_to_CUTSCENE();
 			
 			//if we don't want fetus to have a cutscene use this
@@ -207,6 +217,7 @@ public class NewGameManager : FakeMonoBehaviour
 		if(Input.GetKeyDown(KeyCode.D))
 		{
 			CurrentPerformanceStat.Finished = true;
+			mManager.mCameraManager.set_camera_effects(0);
 			transition_to_DEATH();
 		}
 		
@@ -219,6 +230,7 @@ public class NewGameManager : FakeMonoBehaviour
 	ChoiceHelper mChoiceHelper;
 	public void update_CHOICE()
 	{
+		mChoiceHelper.CurrentPose = CurrentPose;
 		int choice = mChoiceHelper.update(mManager.mInterfaceManager);
 		if(choice != -1)
 		{

@@ -105,7 +105,7 @@ DONE-TEXT
 -glow looks AWWWFUUUUUUUUUUUUUUUL!!
 -add force character change so you don't have to wait so **** long
 
--test with kinect1!!!
+DONE-test with kinect1!!!
 -cutscene elements should be set in reverse order I think
 
 -increase mini pose size a little maybe??? (they look ugly)
