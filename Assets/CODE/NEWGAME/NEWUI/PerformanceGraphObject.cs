@@ -23,14 +23,16 @@ public class PerformanceGraphObject  : FlatElementMultiBase {
 	
 	public void update_graph(float aTime, float aScore)
 	{
-		aScore = 0.06f + aScore * (0.71f-0.06f);
-		aTime = 0.016f + aTime * (0.986f-0.016f);
-		
 		Color colorInterp = new Color(1,1,1,1);
 		if(aScore < 0.5f)
 			colorInterp = Color.Lerp(new Color(1,0,0,1),new Color(0,0,1,1),aScore/0.5f);
 		else
 			colorInterp = Color.Lerp(new Color(0,0,1,1),new Color(1,1,0,1),(aScore-0.5f)/0.5f);
+		
+		aScore = 0.06f + aScore * (0.71f-0.06f);
+		aTime = 0.016f + aTime * (0.986f-0.016f);
+		
+		
 		
 		//mBackground.draw_point(new Vector2(aTime,aScore),5,colorInterp);
 		

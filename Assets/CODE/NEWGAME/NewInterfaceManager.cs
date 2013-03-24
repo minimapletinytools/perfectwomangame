@@ -190,7 +190,7 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 		mBB.SoftPosition = mBBBasePosition + new Vector3(0,aBBOffset,0);
 		mBBText.SoftPosition = mBB.SoftPosition + new Vector3(0,160,0);
 		mBBScoreFrame.SoftPosition = mBB.SoftPosition + new Vector3(-350,bottomVOffset,0);
-		mBBScoreText.SoftPosition = mBB.SoftPosition + new Vector3(-350,bottomVOffset-25,0);
+		mBBScoreText.SoftPosition = mBB.SoftPosition + new Vector3(-350,bottomVOffset-40,0);
 		mBBLastPerformanceGraph.PerformanceGraph.SoftPosition = mBB.SoftPosition + new Vector3(150,bottomVOffset,0);
 		
 		//return bodies if needed
@@ -377,7 +377,8 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 	}
 	
 	//TEXT
-	public void add_timed_text_bubble(string aMsg, float duration)
+	//TODO get rid ofthe stupid yreloffset parameter...
+	public void add_timed_text_bubble(string aMsg, float duration, float yRelOffset = 0)
 	{
 		PopupTextObject to = new PopupTextObject(aMsg,6);
 		to.HardPosition = random_position();
@@ -385,7 +386,7 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 			delegate(float aTime)
 			{
 				//TODO set message
-				to.SoftPosition = mFlatCamera.get_point(0.40f,0);
+				to.SoftPosition = mFlatCamera.get_point(0.40f,yRelOffset);
 				mElement.Add(to);
 				return true;
 			},
@@ -596,6 +597,7 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 		
 		
 		//this is all a hack to get the score to show up right...
+		float scoreIncrementor = 0;
 		FlatElementText finalScoreText = new FlatElementText(mManager.mNewRef.genericFont,150,"123",10);
 		foreach (Renderer f in finalScoreText.PrimaryGameObject.GetComponentsInChildren<Renderer>())
                 f.gameObject.layer = 4;
@@ -612,16 +614,15 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 		chain = TED.add_one_shot_event(
 			delegate()
 			{
-				add_timed_text_bubble("You rest here beneath the earth...",textTime);
+				add_timed_text_bubble("You rest here beneath the earth...",textTime,0.5f);
 			},
         textTime).then_one_shot( //wait a little bit to let the fading finish
 			delegate()
 			{
-				add_timed_text_bubble("Here is your life story:",textTime);
+				add_timed_text_bubble("Here is your life story:",textTime,0.5f);
 			},
 		textTime).wait (textTime);
 		
-		float sceneTextTime = 4;
 		float startingPosition = mFlatCamera.get_point(0,1).y - aStats[0].PerformanceGraph.BoundingBox.height/2f - 10;
 		float intervalSize = aStats[0].PerformanceGraph.BoundingBox.height + 5;
 		float cioXOffset = mBB.SoftPosition.x + 370;
@@ -651,7 +652,7 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 					text += " life as a ";
 					text += ps.Character.FullName;
 					text += " " + performancePhrase[Mathf.Clamp((int)(ps.Score*4),0,3)];
-					add_timed_text_bubble(text,textTime);
+					add_timed_text_bubble(text,textTime,0.5f);
 				
 					//move in stuff
 					cio.SoftPosition = new Vector3(cioXOffset,startingPosition - (it-1) * intervalSize,0);
@@ -660,18 +661,32 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 			).then(
 				delegate(float aTime)
 				{
+					float interpolationTime = 1.5f;
+					float displayScore = scoreIncrementor + (aTime/interpolationTime)*ps.AdjustedScore;
+					finalScoreText.Text = ""+(int)displayScore;
+					if(aTime >  interpolationTime)
+					{
+						scoreIncrementor += ps.AdjustedScore;
+						return true;
+					}
+					return false;
+					
+				},
+			1.5f).then(
+				delegate(float aTime)
+				{
 					//TODO render mini character with golry hoooooo sound
 					//mManager.mMusicManager.play_sound_effect("graveAngel");
 					return true;
 				},
-			sceneTextTime);
+			2);
 		}
 		
 		//finish it off...
 		chain = chain.then_one_shot(
 			delegate()
 			{
-				add_timed_text_bubble("G A M E  O V E R",6);
+				add_timed_text_bubble("G A M E  O V E R",6,0.5f);
 			}
 		,0).then_one_shot(
 			graveCompleteCb

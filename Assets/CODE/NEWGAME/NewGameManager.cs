@@ -33,7 +33,7 @@ public class NewGameManager : FakeMonoBehaviour
 			//TODO you can probably come up with something better that this can't you???
 			//TODO you could also keep track of the score separetly...
 			//W/E
-			return mPerformanceStats.Sum(delegate (PerformanceStats e) { return e.Score*e.Stats.Perfect*100; });
+			return mPerformanceStats.Sum(delegate (PerformanceStats e) { return e.AdjustedScore; });
 		}
 	}
 	
@@ -175,6 +175,7 @@ public class NewGameManager : FakeMonoBehaviour
 	{
 		TimeRemaining -= Time.deltaTime;
 		
+		mManager.mInterfaceManager.update_bb_score(TotalScore);
 		
 		if(CurrentPose != null) //this should never happen but just in case
 			mManager.mBodyManager.set_target_pose(CurrentPose);

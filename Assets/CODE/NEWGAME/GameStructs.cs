@@ -182,7 +182,7 @@ public class CharacterStats
 	public CharacterStats()
 	{
 		Character = new CharacterIndex(-1);
-		Perfect = 0;
+		Perfect = 2;
 		Difficulty = 0;
 	}
 }
@@ -199,12 +199,20 @@ public class PerformanceStats
 	
 	public float Score{
 		get{
+			return mTotalScore;
+			/*
 			float r = 0;
 			for(int i = 1; i < mScore.Count; i++)
 			{
 				r += mScore[i].Value * (mScore[i].Key-mScore[i-1].Key);
 			}
-			return r;
+			return r;*/
+		}
+	}
+	
+	public float AdjustedScore{
+		get{
+			return mTotalScore * Stats.Perfect * 100;
 		}
 	}
 	
@@ -232,10 +240,14 @@ public class PerformanceStats
 	}
 	
 	List<KeyValuePair<float,float>> mScore; //time, score
+	float mTotalScore;
 	
 	public void update_score(float aTime, float aScore)
 	{
+		if(mScore.Count > 0)
+			mTotalScore += (aTime-mScore.Last().Key)*aScore;
 		mScore.Add(new KeyValuePair<float,float>(aTime,aScore));
+		
 		PerformanceGraph.update_graph(aTime,aScore);
 	}
 	

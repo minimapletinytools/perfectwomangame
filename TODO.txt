@@ -4,6 +4,8 @@
 -need to catually show score
 -regular cutscenes
 -test the full game with restart...
+-adjust timings...
+DONE-loer scoer text a little
 DONE-slow down choosing
 DONE-graveyard cutscenes
 DONE-performance charts

@@ -93,7 +93,7 @@ public class NewChoiceObject : FlatElementMultiBase {
 		
 		//hack
 		mBody.HardScale = new Vector3(2.5f,2.5f,2.5f);
-		mElements.Add(new ElementOffset(aBody, new Vector3(0,200,0)));
+		mElements.Add(new ElementOffset(aBody, new Vector3(0,220,0)));
 		SoftPosition = SoftPosition;
 		mBody.PrimaryGameObject.transform.parent = PrimaryGameObject.transform;
 	}
