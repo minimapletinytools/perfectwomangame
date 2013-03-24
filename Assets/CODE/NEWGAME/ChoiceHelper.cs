@@ -4,7 +4,7 @@ using System.Linq;
 public class ChoiceHelper
 {
 	public const float SELECTION_THRESHOLD = 9;
-    public const float CHOOSING_PERCENTAGE_GROWTH_RATE = 1f;
+    public const float CHOOSING_PERCENTAGE_GROWTH_RATE = 4.5f;
     public const float CHOOSING_PERCENTAGE_DECLINE_RATE = 1f;
 	
 	
@@ -70,14 +70,24 @@ public class ChoiceHelper
             NextContendingChoice = minIndex;
         }
 	
+		float growthRate = CHOOSING_PERCENTAGE_GROWTH_RATE;
 		
 		//hack choice testing
 		if(Input.GetKey(KeyCode.Alpha1))
+		{
 			NextContendingChoice = 0;
+			growthRate = 1;
+		}
 		else if(Input.GetKey(KeyCode.Alpha2))
+		{
 			NextContendingChoice = 1;
+			growthRate = 1;
+		}
 		else if(Input.GetKey(KeyCode.Alpha3))
+		{
 			NextContendingChoice = 2;
+			growthRate = 1;
+		}
 		//else if(Input.GetKey(KeyCode.Alpha4))
 		//	NextContendingChoice = 3;
 		
@@ -87,7 +97,7 @@ public class ChoiceHelper
         {
             if (NextContendingChoice == i)
             {
-                ChoosingPercentages[i] = Mathf.Clamp01(ChoosingPercentages[i] + CHOOSING_PERCENTAGE_GROWTH_RATE * Time.deltaTime);
+                ChoosingPercentages[i] = Mathf.Clamp01(ChoosingPercentages[i] + growthRate * Time.deltaTime);
             }
             else
             {

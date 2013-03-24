@@ -245,7 +245,7 @@ public class PerformanceStats
 	{
 		float currentTime = mScore.Last().Key;
 		float r = 0;
-		for(int i = mScore.Count; i > 0; i--)
+		for(int i = mScore.Count-1; i > 0; i--)
 		{
 			if(Mathf.Abs(mScore[i].Key - currentTime) > timeBack)
 				break;

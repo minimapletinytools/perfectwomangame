@@ -1,9 +1,16 @@
 ::Shit to do tomorrow::
-DONE-performance charts
+
 -difficulty nonsene
--graveyard cutscenes
+-need to catually show score
 -regular cutscenes
 -test the full game with restart...
+DONE-slow down choosing
+DONE-graveyard cutscenes
+DONE-performance charts
+DONE-gaveyard score still in the wrong place (what happened?)
+DONE-give all character names
+DONE-choice needs to show poses
+DONE-change fetus cutscene llo
 
 ::NEW GAME MANAGER::
 -EVENTS (ngm is responsible for most scripted events)

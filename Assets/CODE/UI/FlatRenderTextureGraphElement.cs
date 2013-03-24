@@ -20,7 +20,7 @@ public class FlatRenderTextureGraphElement : FlatElementImage {
     //x y are in [0,1] from lower left
     public void draw_point(Vector2 aCenter, GameObject aDot, Color aColor)
     {
-		aDot.GetComponentInChildren<Renderer>().renderer.material.color = aColor;
+		aDot.GetComponentInChildren<Renderer>().renderer.material.SetColor("_TintColor", aColor);
 		Vector2 newCenter = 2*(aCenter - new Vector2(0.5f,0.5f));
 		draw_gameObject(aDot,newCenter);
     }

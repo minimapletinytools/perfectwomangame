@@ -190,7 +190,7 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 		mBB.SoftPosition = mBBBasePosition + new Vector3(0,aBBOffset,0);
 		mBBText.SoftPosition = mBB.SoftPosition + new Vector3(0,160,0);
 		mBBScoreFrame.SoftPosition = mBB.SoftPosition + new Vector3(-350,bottomVOffset,0);
-		mBBScoreText.SoftPosition = mBB.SoftPosition + new Vector3(-350,bottomVOffset-15,0);
+		mBBScoreText.SoftPosition = mBB.SoftPosition + new Vector3(-350,bottomVOffset-25,0);
 		mBBLastPerformanceGraph.PerformanceGraph.SoftPosition = mBB.SoftPosition + new Vector3(150,bottomVOffset,0);
 		
 		//return bodies if needed
@@ -542,7 +542,7 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 			chain = TED.add_one_shot_event(
 				delegate()
 				{
-					add_timed_text_bubble("It's time for you to\ndie a natural death",textTime);
+					add_timed_text_bubble("It's time for you to die a natural death",textTime);
 				},
 	        0).then_one_shot( //dummy 
 			delegate(){},textTime);
@@ -558,12 +558,12 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 	        0).then_one_shot(
 				delegate()
 				{
-					add_timed_text_bubble("Your life was\nmay not have been\nperfect",textTime);
+					add_timed_text_bubble("Your life was may not have been perfect",textTime);
 				},
 			textTime).then_one_shot(
 				delegate()
 				{
-					add_timed_text_bubble("but you lived\n100 years",textTime);
+					add_timed_text_bubble("but you lived 100 years",textTime);
 				},
 			textTime).then_one_shot( //dummy 
 				delegate(){},textTime);
@@ -573,7 +573,7 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 			chain = TED.add_one_shot_event(
 				delegate()
 				{
-					add_timed_text_bubble("You die\nat the age of\n" + aChar.Age,textTime);
+					add_timed_text_bubble("You die at the age of " + aChar.Age,textTime);
 				},
 	        1).then_one_shot(
 				delegate()
@@ -599,7 +599,8 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 		FlatElementText finalScoreText = new FlatElementText(mManager.mNewRef.genericFont,150,"123",10);
 		foreach (Renderer f in finalScoreText.PrimaryGameObject.GetComponentsInChildren<Renderer>())
                 f.gameObject.layer = 4;
-		finalScoreText.SoftPosition = mManager.mBackgroundManager.mBackgroundElements.mElements[0].Element.SoftPosition + new Vector3(0, -165, 0);
+		finalScoreText.SoftPosition = mManager.mBackgroundManager.mBackgroundElements.mElements[0].Element.SoftPosition + new Vector3(0, -200, 0);
+		mElement.Add(finalScoreText);
 		
 		List<Vector3> ghostPositions = new List<Vector3>();
 		for(int i = 1; i < aStats.Count; i++)
@@ -623,10 +624,12 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 		float sceneTextTime = 4;
 		float startingPosition = mFlatCamera.get_point(0,1).y - aStats[0].PerformanceGraph.BoundingBox.height/2f - 10;
 		float intervalSize = aStats[0].PerformanceGraph.BoundingBox.height + 5;
-		float cioXOffset = mBB.SoftPosition.x + 380;
-		float pgoXOffset = mBB.SoftPosition.x - 155;
+		float cioXOffset = mBB.SoftPosition.x + 370;
+		float pgoXOffset = mBB.SoftPosition.x - 145;
 		//make performance graphs come in one at a time from the bottom
-		for(int i = 0; i < aStats.Count; i++)
+		//starting at one means skipping fetus
+		//going less than count means skipping grave
+		for(int i = 1; i < aStats.Count-1; i++)
 		{
 			int it = i;
 			PerformanceStats ps = aStats[i];
@@ -651,8 +654,8 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 					add_timed_text_bubble(text,textTime);
 				
 					//move in stuff
-					cio.SoftPosition = new Vector3(cioXOffset,startingPosition - it * intervalSize,0);
-					pgo.SoftPosition = new Vector3(pgoXOffset,startingPosition - it * intervalSize,0);
+					cio.SoftPosition = new Vector3(cioXOffset,startingPosition - (it-1) * intervalSize,0);
+					pgo.SoftPosition = new Vector3(pgoXOffset,startingPosition - (it-1) * intervalSize,0);
 				} //TODO play 
 			).then(
 				delegate(float aTime)

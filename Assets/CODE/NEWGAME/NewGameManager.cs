@@ -191,7 +191,8 @@ public class NewGameManager : FakeMonoBehaviour
             float grade = ProGrading.grade_pose(CurrentPose, CurrentTargetPose);
 			grade = ProGrading.grade_to_perfect(grade);
 			
-			//CurrentPerformanceStat.update_score(PercentTimeCompletion,grade);
+			//grade = Random.Range(0f,1f);
+			CurrentPerformanceStat.update_score(PercentTimeCompletion,grade);
 			
 			
 			mManager.mCameraManager.set_camera_effects(grade);
@@ -215,7 +216,13 @@ public class NewGameManager : FakeMonoBehaviour
 		//early death
 		//TODO
 		//hack death
-		if(Input.GetKeyDown(KeyCode.D))
+		bool die = false;
+		die |= Input.GetKeyDown(KeyCode.D);
+		if (CurrentPoseAnimation != null && mManager.mZigManager.has_user())
+			if(PercentTimeCompletion > 0.25f)
+				if(CurrentPerformanceStat.last_score(4) < 0.2f)
+					die |= true;
+		if(die)
 		{
 			CurrentPerformanceStat.Finished = true;
 			mManager.mCameraManager.set_camera_effects(0);
@@ -274,7 +281,10 @@ public class NewGameManager : FakeMonoBehaviour
 								transition_to_TRANSITION_play(new CharacterIndex("100"));
 							}
 							else
-								transition_to_DEATH();
+							{
+								transition_to_TRANSITION_play(new CharacterIndex("999"));
+								//transition_to_DEATH();
+							}
 						}
 						else
 							transition_to_CHOICE(); 
@@ -305,14 +315,8 @@ public class NewGameManager : FakeMonoBehaviour
 				delegate()
 				{
 					transition_to_TRANSITION_play(new CharacterIndex("999"));
-					//mManager.mMusicManager.fade_out(); 
 				}
-			,0);/*.then_one_shot(
-				delegate()
-				{
-					mManager.mTransitionCameraManager.fade_out_with_sound(initialize_GRAVE);
-				}
-			,3);*/
+			,0);
 	}
 	
 	public void transition_to_GRAVE()
