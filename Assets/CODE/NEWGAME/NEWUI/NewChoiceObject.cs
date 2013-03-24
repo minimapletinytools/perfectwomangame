@@ -29,7 +29,7 @@ public class NewChoiceObject : FlatElementMultiBase {
 		var newRef = ManagerManager.Manager.mNewRef;
 		//TODO finish and reposition everything
 		mSquare = new FlatElementImage(newRef.bbChoiceBox, aDepth);
-		mText = new FlatElementText(newRef.genericFont,40,"meow",aDepth +1);
+		mText = new FlatElementText(newRef.genericFont,40,"",aDepth +1);
 		
         mPerfect = new DifficultyObject(ManagerManager.Manager.mNewRef.uiPerfectStar, aDepth);
         mMeter = new MeterImageObject(newRef.bbChoiceBox, MeterImageObject.FillStyle.DU, aDepth + 1);
@@ -42,6 +42,7 @@ public class NewChoiceObject : FlatElementMultiBase {
 		mElements.Add(new FlatElementMultiBase.ElementOffset(mPerfect, new Vector3(-173,65,0)));
         mElements.Add(new FlatElementMultiBase.ElementOffset(mMeter, new Vector3(0,0,0)));
         
+		mText.SoftColor = new Color(0,0,0,1);
 		if(aActualChar != null)
 			set_actual_character(aActualChar);
 
@@ -63,9 +64,22 @@ public class NewChoiceObject : FlatElementMultiBase {
 		mBodyElementOffset = new FlatElementMultiBase.ElementOffset(mBody, new Vector3(0,0,0));
 		mElements.Add(mBodyElementOffset);
 		
-		mText.Text = aActualChar.Name; //TODO actual name
+		
+		
+		Character = new CharacterIndex(aActualChar.Name);
 	}
 	
+	CharacterIndex mCharacterIndex = new CharacterIndex(-1);
+	public CharacterIndex Character
+	{ 
+		get{return mCharacterIndex;} 
+		set{
+			mCharacterIndex = value;
+			if(mCharacterIndex.Index != -1)
+				mText.Text = mCharacterIndex.ShortName;
+			else mText.Text = "";
+		}
+	}
 	public FlatBodyObject take_body()
 	{
 		FlatBodyObject r = reposses_element(mBody) as FlatBodyObject;
@@ -75,7 +89,13 @@ public class NewChoiceObject : FlatElementMultiBase {
 	public void return_body(FlatBodyObject aBody)
 	{
 		mBody = aBody;
-		mElements.Add(new ElementOffset(aBody, new Vector3(0,0,0)));
+		mBody.Depth = Depth + 3;
+		
+		//hack
+		mBody.HardScale = new Vector3(2.5f,2.5f,2.5f);
+		mElements.Add(new ElementOffset(aBody, new Vector3(0,170,0)));
+		SoftPosition = SoftPosition;
+		mBody.PrimaryGameObject.transform.parent = PrimaryGameObject.transform;
 	}
 	
     public void set_pose(ProGrading.Pose aPose)
@@ -89,7 +109,6 @@ public class NewChoiceObject : FlatElementMultiBase {
         mPerfect.Difficulty = perfectness;
     }
 	
-	//TODO decide how we want color changes to behave
     public override Color SoftColor
     {
         get
@@ -98,12 +117,21 @@ public class NewChoiceObject : FlatElementMultiBase {
         }
         set
         {
+			//this is also a stupid hack
+			Color bodyColor = new Color(0,0,0,0);
+			if(mBody!=null)
+				bodyColor = mBody.SoftColor;
+			
 			base.SoftColor = value;
             //mDifficultyBalls.SoftColor = value;
 			
 			//DELETE this is a stupid hack
 			if(value.a != 0 && mText != null)
 				mText.SoftColor = new Color(0,0,0,1);
+			
+			//this is also a stupid hack
+			if(mBody!=null)
+				mBody.SoftColor = bodyColor;
         }
     }
 

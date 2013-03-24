@@ -5,6 +5,7 @@ public class CharacterIconObject : FlatElementMultiBase {
 	FlatElementImage mBackground;
 	DifficultyObject mDifficultyStars;
     public FlatBodyObject mBody = null;
+	float mBodyOffset = 0;
 	
     public CharacterIconObject(CharacterLoader aIcon, int aDepth)
     {
@@ -23,11 +24,11 @@ public class CharacterIconObject : FlatElementMultiBase {
 		mBody.HardShader = ManagerManager.Manager.mReferences.mMiniCharacterShader;
 		
 		//TODO position
-		float bodyOffset = mDifficultyStars.mImageElements[0].BoundingBox.width/2 + 5;
+		mBodyOffset = mDifficultyStars.mImageElements[0].BoundingBox.width/2 + 5;
 		float starOffset = mBackground.BoundingBox.width/2+5;
 		mElements.Add(new ElementOffset(mDifficultyStars, new Vector3(-starOffset,-70,0)));
-		mElements.Add(new ElementOffset(mBackground, new Vector3(bodyOffset,0,0)));
-		mElements.Add(new ElementOffset(mBody, new Vector3(bodyOffset,0,0)));
+		mElements.Add(new ElementOffset(mBackground, new Vector3(mBodyOffset,0,0)));
+		mElements.Add(new ElementOffset(mBody, new Vector3(mBodyOffset,0,0)));
 		
 		PrimaryGameObject = create_primary_from_elements();
 		Depth = aDepth;
@@ -43,7 +44,13 @@ public class CharacterIconObject : FlatElementMultiBase {
 	public void return_body(FlatBodyObject aBody)
 	{
 		mBody = aBody;
-		mElements.Add(new ElementOffset(aBody, new Vector3(0,0,0)));
+		mBody.Depth = Depth + 3;
+		
+		//hack
+		mBody.HardScale = new Vector3(1,1,1);
+		mElements.Add(new ElementOffset(aBody, new Vector3(mBodyOffset,0,0)));
+		SoftPosition = SoftPosition;
+		mBody.PrimaryGameObject.transform.parent = PrimaryGameObject.transform;
 	}
 	public void set_pose(ProGrading.Pose aPose)
 	{

@@ -30,6 +30,7 @@ public class MusicManager : FakeMonoBehaviour
 		mSoundEffects["choiceBlip"] = mManager.mNewRef.choiceBlip;
 		mSoundEffects["choiceMade"] = mManager.mNewRef.choiceMade;
 		mSoundEffects["choiceMusic"] = mManager.mNewRef.choiceMusic;
+		mSoundEffects["graveAngel"] = mManager.mNewRef.graveAngel;
 		
 	}
 	

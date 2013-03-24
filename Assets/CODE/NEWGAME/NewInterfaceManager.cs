@@ -73,7 +73,6 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 	Vector3 mBBBasePosition;
 	//PLAY
 	PerformanceStats mBBLastPerformanceGraph = null; //owned by Character
-	FlatElementImage mBBPerformanceGraphFrame;
 	FlatElementText mBBText;
 	FlatElementImage mBBScoreFrame;
 	FlatElementText mBBScoreText;
@@ -104,15 +103,12 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 		mBBText = new FlatElementText(mManager.mNewRef.genericFont,60,"",10);
 		mBBScoreFrame = new FlatElementImage(mManager.mNewRef.bbScoreBackground,9);
 		mBBScoreText  = new FlatElementText(mManager.mNewRef.genericFont,60,"0",10);
-		mBBPerformanceGraphFrame = new FlatElementImage(mManager.mNewRef.bbGraphBackground,9);
 		mBBText.HardPosition = random_position();
 		mBBScoreFrame.HardPosition = random_position();
 		mBBScoreText.HardPosition = random_position();
-		mBBPerformanceGraphFrame.HardPosition = random_position();
 		mElement.Add(mBBText);
 		mElement.Add(mBBScoreFrame);
 		mElement.Add(mBBScoreText);
-		mElement.Add(mBBPerformanceGraphFrame);
 		
 		
 		
@@ -197,6 +193,16 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 		mBBScoreText.SoftPosition = mBB.SoftPosition + new Vector3(-350,bottomVOffset-15,0);
 		mBBLastPerformanceGraph.PerformanceGraph.SoftPosition = mBB.SoftPosition + new Vector3(150,bottomVOffset,0);
 		
+		//return bodies if needed
+		foreach(NewChoiceObject e in mBBChoices)
+		{
+			if(e.Character.Index != -1)
+			{
+				mPBCharacterIcons[e.Character.Index].return_body(e.take_body());
+			}
+			e.Character = new CharacterIndex(-1);
+		}
+		
 		fade_bb_contents(true);
 		
 		mBBQuestionText.SoftColor = new Color(1,0,0,1);
@@ -231,12 +237,14 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 	//called by ChoiceHelper
 	public void set_bb_choice_bodies(CharacterIndex aIndex)
 	{
-		CharacterIndex index = new CharacterIndex(aIndex.Level +1,0);
-		var all = index.Neighbors;
+		CharacterIndex index = new CharacterIndex(aIndex.Level+1,0);
+		var all = index.NeighborsAndSelf;
 		all.Add(index);
-		for(int i = 0; i < all.Count; i++)
+		for(int i = 0; i < 3; i++)
 		{
-			mBBChoices[i].set_actual_character(mManager.mCharacterBundleManager.get_mini_character(all[i]));
+			//mBBChoices[i].set_actual_character(mManager.mCharacterBundleManager.get_mini_character(all[i]));
+			mBBChoices[i].Character = all[i];
+			mBBChoices[i].return_body(take_character_icon(all[i]).take_body()); //make sure to return the body
 		}
 	}
 	//this is the character that is curretnly being selected
@@ -286,6 +294,8 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 		}
 		mElement.Add(mPB);
 		
+		set_pb_character_icon_colors(new List<CharacterStats>());
+		
 		position_pb_character_icons(0);
 	}
 	
@@ -301,17 +311,21 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 	{
 		foreach(CharacterStats e in aChars)
 		{
-			mPBCharacterIcons[e.Character.Index].set_background_color(Color.Lerp(new Color(0.5f,0.5f,0.5f), new Color32(255,200,0,255), e.Perfect/3f));
+			//mPBCharacterIcons[e.Character.Index].set_background_color(Color.Lerp(new Color(0.5f,0.5f,0.5f), new Color32(255,200,0,255), e.Perfect/3f));
 			mPBCharacterIcons[e.Character.Index].set_perfectness(e.Perfect);
-			mPBCharacterIcons[e.Character.Index].set_body_color(Color.Lerp(new Color(0.5f,0.5f,0.5f), new Color32(196,30,58,255), e.Difficulty/3f));
+			mPBCharacterIcons[e.Character.Index].set_body_color(Color.Lerp(new Color(0.5f,0.5f,0.5f), new Color32(255,30,58,255), e.Difficulty/3f));
 		}
+		
+		//top secret
+		mPBCharacterIcons[29].SoftColor = new Color(1,1,1,0);
+		mPBCharacterIcons[30].SoftColor = new Color(1,1,1,0);
 	}
 	//characters == LEVEL will be behind the BB
 	void position_pb_character_icons(int splitLevel, float vOffset = 0)
 	{
 		float padding = 300;
 		float hPadding = 250;
-		float splitHeight = 210;
+		float splitHeight = 220;
 		Vector3 baseOffset =  mBBBasePosition;
 		
 		foreach(CharacterIndex e in CharacterIndex.sAllCharacters)
@@ -395,7 +409,7 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 	public void begin_new_character(PerformanceStats aChar)
 	{
 		//BB
-		mBBText.Text = "CHARACTER " + aChar.Character.StringIdentifier;
+		mBBText.Text = aChar.Character.FullName;
 		if(mBBLastPerformanceGraph != null) //fade out the old graph
 		{
 			mBBLastPerformanceGraph.PerformanceGraph.SoftColor = new Color(0.5f,0.5f,0.5f,0);
@@ -444,36 +458,56 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 		
 		
 		
-		//TODO prepare cutscene dialog
-		//list<KeyvaluePair<trait,List<character>>>
 		
 		
-		set_bb_small(mPB.BoundingBox.height/2+160);
-		position_pb_character_icons(mBBLastPerformanceGraph.Character.Level,mPB.BoundingBox.height/2+160);
+		
+		//this slows the game down a lot...
+		//set_bb_small(mPB.BoundingBox.height/2+205);
+		//position_pb_character_icons(mBBLastPerformanceGraph.Character.Level,mPB.BoundingBox.height/2+205);
 		
 		mLastCutsceneCompleteCb = delegate() {
-			//these will get reset by someone else
+			//this slows the ame down a lot
 			//set_bb_small();
 			//position_pb_character_icons(mBBLastPerformanceGraph.Character.Level,0);
 			cutsceneCompleteCb();
+			mLastCutsceneCompleteCb = null;
+			mLastCutsceneChain = null;
 			
 		};
 		
-		//TODO get actual message
-		float firstTextTime = 3;
+		string[] perfectPhrase = {"awful","mediocre","good", "perfect"};
+		string[] performancePhrase = {"miserably","poorly","well", "excellently"};
+		float firstTextTime = 5f;
 		TimedEventDistributor.TimedEventChain chain = TED.add_event(
 			delegate(float aTime)
 			{
-				add_timed_text_bubble("BEGIN CUTSCENE",firstTextTime);
+				string text = "";
+				if(mBBLastPerformanceGraph.Character.Index == 0 || mBBLastPerformanceGraph.Character.Index == 29)
+				{
+					text = "Prepare to be Born";
+				}
+				else
+				{
+					text += "You lived your ";
+					text += perfectPhrase[mBBLastPerformanceGraph.Stats.Perfect];
+					text += " life as a ";
+					text += mBBLastPerformanceGraph.Character.FullName;
+					text += " " + performancePhrase[Mathf.Clamp((int)(mBBLastPerformanceGraph.Score*4),0,3)];
+				}
+				add_timed_text_bubble(text,firstTextTime);
 				return true;
 			},
         0).then_one_shot( //dummy 
 			delegate(){},firstTextTime);
 		
 		//TODO get actual cutscenes
-		List<int> poo = new List<int>(){0}; //placeholder for cutscene
-		for(int i = 0; i < poo.Count; i++)
+		//TODO prepare cutscene dialog
+		//aoethudnanotdeunoateducnaoegducnoegdu
+		//list<KeyvaluePair<trait,List<character>>> cutscenes = new list<KeyvaluePair<trait, List<character>>>();
+		/*
+		for(int i = 0; i < cutscenes.Count; i++)
 		{
+			//KeyValuePair<PDStats.Stats,List<CharacterIndex>
 			float cutsceneTextTime = 5;
 			chain = chain.then(
 				delegate(float aTime)
@@ -484,12 +518,11 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 					return true;
 				}
 			,0).wait(cutsceneTextTime);
-		}
+		}*/
 		
-		chain.then_one_shot(delegate(){mLastCutsceneCompleteCb();},END_CUTSCENE_DELAY_TIME);
+		chain = chain.then_one_shot(delegate(){mLastCutsceneCompleteCb();},END_CUTSCENE_DELAY_TIME);
 		
 		mLastCutsceneChain = TED.LastEventKeyAdded;
-		mLastCutsceneCompleteCb = cutsceneCompleteCb;
 	}
 	
 	public void set_for_CHOICE()
@@ -502,7 +535,7 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 	public TimedEventDistributor.TimedEventChain set_for_DEATH(CharacterIndex aChar)
 	{
 		TimedEventDistributor.TimedEventChain chain;
-		float textTime = 3;
+		float textTime = 5;
 		if(aChar.Level == 7)
 		{
 			//80
@@ -547,7 +580,7 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 				{
 					//TODO pink bar animations
 				}
-			).then_one_shot( //dummy 
+			,textTime).then_one_shot( //dummy 
 				delegate(){},0);
 		}
 		
@@ -556,9 +589,9 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 	
 	public void set_for_GRAVE(List<PerformanceStats> aStats, System.Action graveCompleteCb)
 	{
-		float textTime = 3;
+		float textTime = 5;
 		//clear away BB and PB
-		set_bb_small(1000);
+		set_bb_small(3000);
 		position_pb_character_icons(0,-3000);
 		
 		
@@ -578,9 +611,9 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 		chain = TED.add_one_shot_event(
 			delegate()
 			{
-				add_timed_text_bubble("Here you rest beneath the earth...",textTime);
+				add_timed_text_bubble("You rest here beneath the earth...",textTime);
 			},
-        3).then_one_shot( //wait a little bit to let the fading finish
+        textTime).then_one_shot( //wait a little bit to let the fading finish
 			delegate()
 			{
 				add_timed_text_bubble("Here is your life story:",textTime);
@@ -588,10 +621,10 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 		textTime).wait (textTime);
 		
 		float sceneTextTime = 4;
-		float startingPosition = mFlatCamera.get_point(0,1).y - aStats[0].PerformanceGraph.BoundingBox.height - 10;
-		float intervalSize = aStats[0].PerformanceGraph.BoundingBox.height + 20;
-		float cioXOffset = mBB.SoftPosition.x + 400;
-		float pgoXOffset = mBB.SoftPosition.x - 180;
+		float startingPosition = mFlatCamera.get_point(0,1).y - aStats[0].PerformanceGraph.BoundingBox.height/2f - 10;
+		float intervalSize = aStats[0].PerformanceGraph.BoundingBox.height + 5;
+		float cioXOffset = mBB.SoftPosition.x + 380;
+		float pgoXOffset = mBB.SoftPosition.x - 155;
 		//make performance graphs come in one at a time from the bottom
 		for(int i = 0; i < aStats.Count; i++)
 		{
@@ -600,20 +633,21 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 			//reposition the assosciated character icon and performance graph
 			CharacterIconObject cio = take_character_icon(ps.Character);
 			PerformanceGraphObject pgo = ps.PerformanceGraph;
-			cio.HardPosition = new Vector3(cioXOffset,1000,0);
-			pgo.HardPosition = new Vector3(pgoXOffset,1000,0);
+			cio.HardPosition = new Vector3(cioXOffset,2000,0);
+			pgo.HardPosition = new Vector3(pgoXOffset,2000,0);
 			pgo.HardColor = new Color(0.5f,0.5f,0.5f,1);
 			
+			string[] perfectPhrase = {"awful","mediocre","good", "perfect"};
+			string[] performancePhrase = {"miserably","poorly","well", "excellently"};
 			chain = chain.then_one_shot(
 				delegate()
 				{
 					//set the text
-					string text = "Your ";
-					text += ps.Stats.Perfect;
+					string text = "You lived your ";
+					text += perfectPhrase[ps.Stats.Perfect];
 					text += " life as a ";
-					text += ps.Character.StringIdentifier;
-					text += " was ";
-					text += ps.Score;
+					text += ps.Character.FullName;
+					text += " " + performancePhrase[Mathf.Clamp((int)(ps.Score*4),0,3)];
 					add_timed_text_bubble(text,textTime);
 				
 					//move in stuff
@@ -624,6 +658,7 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 				delegate(float aTime)
 				{
 					//TODO render mini character with golry hoooooo sound
+					//mManager.mMusicManager.play_sound_effect("graveAngel");
 					return true;
 				},
 			sceneTextTime);

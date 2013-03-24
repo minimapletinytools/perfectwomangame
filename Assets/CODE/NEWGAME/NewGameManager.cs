@@ -189,9 +189,10 @@ public class NewGameManager : FakeMonoBehaviour
 			
 			
             float grade = ProGrading.grade_pose(CurrentPose, CurrentTargetPose);
+			grade = ProGrading.grade_to_perfect(grade);
 			
-			//TODO this is slooow
 			//CurrentPerformanceStat.update_score(PercentTimeCompletion,grade);
+			
 			
 			mManager.mCameraManager.set_camera_effects(grade);
 			
@@ -329,6 +330,7 @@ public class NewGameManager : FakeMonoBehaviour
 	{
 		GS = GameState.CHOICE;
 		mChoiceHelper.shuffle_and_set_choice_poses(mManager.mInterfaceManager);
+		mManager.mInterfaceManager.set_bb_choice_bodies(CurrentCharacterIndex);
 		mManager.mMusicManager.fade_in_choice_music();
 		mManager.mInterfaceManager.set_for_CHOICE();	
 	}

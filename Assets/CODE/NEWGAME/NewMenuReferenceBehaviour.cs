@@ -41,6 +41,7 @@ public class NewMenuReferenceBehaviour : MonoBehaviour {
 	public AudioClip choiceBlip; //played when your selection changes
 	public AudioClip choiceMade; //played when selection is made
 	public AudioClip choiceMusic;
+	public AudioClip graveAngel;
 	//TODO mroe
 	
 }

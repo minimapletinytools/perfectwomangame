@@ -37,6 +37,7 @@ public class ChoiceHelper
 		ChoosingPercentages = new float[4]{0,0,0,0};
 		mChoicePoses = get_random_possible_poses();
 		aInterface.set_bb_choice_poses(mChoicePoses.ToList());
+		
 	}
 	
 	//returns choice

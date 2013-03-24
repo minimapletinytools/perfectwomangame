@@ -625,6 +625,10 @@ public class PDCharacters
 
             Title = "Wise Grandma"
         },
+		new PDCharacterStats() //FETUS 100
+        {
+            Title = "Fetus"
+        }, 
         new PDCharacterStats()      //999
         {
 
