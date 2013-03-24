@@ -4,7 +4,7 @@ using System.Collections;
 public class ImageGameObjectUtility  
 {
 
-    public static GameObject create(Texture2D aTex)
+    public static GameObject create(Texture aTex)
     {
         return (new ImageGameObjectUtility(aTex)).ParentObject;
     }
@@ -43,7 +43,7 @@ public class ImageGameObjectUtility
         }
     }
 
-    public ImageGameObjectUtility(Texture2D aTex, System.Nullable<Vector2> aSize = null)
+    public ImageGameObjectUtility(Texture aTex, System.Nullable<Vector2> aSize = null)
     {
         ParentObject = new GameObject("genImageObjectParent");
         //PlaneObject = GameObject.CreatePrimitive(PrimitiveType.Plane);
@@ -57,7 +57,7 @@ public class ImageGameObjectUtility
         PlaneObject.transform.parent = ParentObject.transform;
     }
 
-    public void set_new_texture(Texture2D aTex, System.Nullable<Vector2> aSize = null)
+    public void set_new_texture(Texture aTex, System.Nullable<Vector2> aSize = null)
     {
 
         if (aSize == null)
