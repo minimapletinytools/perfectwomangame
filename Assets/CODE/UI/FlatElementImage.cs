@@ -7,17 +7,17 @@ public class FlatElementImage : FlatElementBase
 
 
     //TODO DELETE this version
-    public FlatElementImage(Texture2D aTex, int aDepth)
+    public FlatElementImage(Texture aTex, int aDepth)
     {
         initialize(aTex, null, aDepth);
     }
 
-    public FlatElementImage(Texture2D aTex, System.Nullable<Vector2> aSize, int aDepth)
+    public FlatElementImage(Texture aTex, System.Nullable<Vector2> aSize, int aDepth)
     {
         initialize(aTex, aSize, aDepth);
     }
 
-    public void initialize(Texture2D aTex, System.Nullable<Vector2> aSize, int aDepth)
+    public void initialize(Texture aTex, System.Nullable<Vector2> aSize, int aDepth)
     {
         SoftColor = new Color(0.5f, 0.5f, 0.5f, 0.5f);
         mImage = new ImageGameObjectUtility(aTex, aSize);
