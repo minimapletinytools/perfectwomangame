@@ -1,3 +1,10 @@
+::Shit to do tomorrow::
+DONE-performance charts
+-difficulty nonsene
+-graveyard cutscenes
+-regular cutscenes
+-test the full game with restart...
+
 ::NEW GAME MANAGER::
 -EVENTS (ngm is responsible for most scripted events)
 		DONE-transition to CUTSCENE  (or skip this and go straight to CHOOSE for fetus)
@@ -111,7 +118,7 @@ DONE-test with kinect1!!!
 -increase mini pose size a little maybe??? (they look ugly)
 
 -performance chart
-	-alternative method (for performance)
+	DONE FUCK YOU THIS STUPID PIECE OF SHIT -alternative method (for performance)
 		-first make sure this isn't a problem with knicet detph tekture (otherwise you are in trouble)
 		-create dot object/prefab thingy
 		-create rendertexture for camera, and attach it to the imageobject on the graph

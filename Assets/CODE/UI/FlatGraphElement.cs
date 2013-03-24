@@ -3,7 +3,6 @@ using System.Collections;
 
 public class FlatGraphElement : FlatElementImage {
     Texture2D mGraphTexture;
-
     public FlatGraphElement(int width, int height, int aDepth):base(null,aDepth)
     {
         mGraphTexture = new Texture2D(width,height);

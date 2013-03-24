@@ -10,6 +10,7 @@ public class PrefabReferenceBehaviour : MonoBehaviour {
 	public Shader mDefaultCharacterShader;
 	public Shader mTransparentCharacaterShader;
 	public Shader mMiniCharacterShader;
+	public Shader mGraphShader;
 	
 	//important prefabs
 	public GameObject mImageEffectsPrefabs;
