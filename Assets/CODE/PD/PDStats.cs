@@ -25,7 +25,7 @@ public class PDStats
         new string[]{"you had time to exercise","you ate nutritiously"},
         new string[]{"you made a lot of money", "you made A LOT of money"},
         new string[]{"you earned the respect of your peers"},
-        new string[]{"you had a fantastic sex life", "you were very satisfied romantically"},
+        new string[]{"you were very satisfied romantically","you had a fantastic sex life"},
         new string[]{"you became more cultured", "you gained life experiences"}
     };
 
@@ -37,7 +37,7 @@ public class PDStats
         new string[]{"you had a stressful life", "your health declined"},
         new string[]{"you made some poor investments","you lost your savings"},
         new string[]{"you did shameful things"},
-        new string[]{"you barely had sex", "you had a miserable sex life"},
+        new string[]{"you suffered romantically","you barely had sex", "you had a miserable sex life"},
         new string[]{"you did not learn from your mistakes"}
     };
 }

@@ -1,10 +1,14 @@
 ::Shit to do tomorrow::
-
+DONE-set intial difficulties
+-now that your awesome fake difficulty setting is orking, you still need to catually set the character difficulties...
 -difficulty nonsene
--need to catually show score
 -regular cutscenes
 -test the full game with restart...
 -adjust timings...
+-turn off skip intro
+DONE-need to catually show score
+DONE-grave bubbles should be higher
+DONE-choice characters should be higher
 DONE-loer scoer text a little
 DONE-slow down choosing
 DONE-graveyard cutscenes

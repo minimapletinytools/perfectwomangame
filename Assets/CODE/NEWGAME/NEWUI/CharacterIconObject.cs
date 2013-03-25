@@ -75,6 +75,10 @@ public class CharacterIconObject : FlatElementMultiBase {
 		mBackground.SoftColor = aColor;
 	}
 	
+	public void set_difficulty(int aDiff)
+	{
+		set_body_color(Color.Lerp(new Color(0.5f,0.5f,0.5f), new Color32(255,30,58,255), aDiff/3f));
+	}
 	public void set_body_color(Color aColor)
 	{
 		mBody.SoftColor = aColor;

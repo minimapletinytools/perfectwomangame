@@ -138,7 +138,7 @@ public class TransitionCameraManager : FakeMonoBehaviour
 		
 		TED.add_event(
 			delegate(float aTime){
-				if(true)
+				if(false)
 					go_to_fetus(0);
 				else if(Input.GetKeyDown(KeyCode.Alpha0))
 					go_to_fetus(0);

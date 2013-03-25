@@ -77,8 +77,9 @@ public class NewGameManager : FakeMonoBehaviour
 		List<KeyValuePair<CharacterIndex,ProGrading.Pose>> poses = new List<KeyValuePair<CharacterIndex, ProGrading.Pose>>();
 		foreach(CharacterIndex e in CharacterIndex.sAllCharacters)
 		{
-			poses.Add(new KeyValuePair<CharacterIndex,ProGrading.Pose>(
-				e,mManager.mCharacterBundleManager.get_pose(e,mCharacterHelper.Characters[e.Index].Difficulty).get_pose(0)));
+			//poses.Add(new KeyValuePair<CharacterIndex,ProGrading.Pose>(e,mManager.mCharacterBundleManager.get_pose(e,mCharacterHelper.Characters[e.Index].Difficulty).get_pose(0)));
+			var poseAnimation = mManager.mCharacterBundleManager.get_pose(e,mCharacterHelper.Characters[e.Index].Difficulty);
+			poses.Add(new KeyValuePair<CharacterIndex,ProGrading.Pose>(e,poseAnimation.get_pose(Random.Range(0,poseAnimation.poses.Count))));
 		}
 		mManager.mInterfaceManager.set_pb_character_icon_poses(poses);
 		
@@ -98,7 +99,9 @@ public class NewGameManager : FakeMonoBehaviour
 		
 		//set new character data
 		//TODO finish
-		mPerformanceStats.Add(new PerformanceStats(new CharacterIndex(aCharacter.Name)));
+		CharacterIndex newCharIndex = new CharacterIndex(aCharacter.Name);
+		mPerformanceStats.Add(new PerformanceStats(newCharIndex));
+		CurrentPerformanceStat.Stats = mCharacterHelper.Characters[newCharIndex.Index];
 		mManager.mInterfaceManager.begin_new_character(CurrentPerformanceStat);
 		
 		//TODO
@@ -201,6 +204,8 @@ public class NewGameManager : FakeMonoBehaviour
 			//update score
 			mManager.mInterfaceManager.update_bb_score(TotalScore);	
         }
+		else
+			CurrentPerformanceStat.update_score(PercentTimeCompletion,0.5f);
 		
 		if(TimeRemaining < 0)
 		{
@@ -243,11 +248,9 @@ public class NewGameManager : FakeMonoBehaviour
 		int choice = mChoiceHelper.update(mManager.mInterfaceManager);
 		if(choice != -1)
 		{
-			Debug.Log ("choice is made " + choice);
 			mManager.mMusicManager.fade_out_choice_music();
 			transition_to_TRANSITION_play(CurrentPerformanceStat.Character.get_future_neighbor(choice));
 		}
-		
 	}
 	public void transition_to_CUTSCENE()
 	{
@@ -256,6 +259,31 @@ public class NewGameManager : FakeMonoBehaviour
 		//TODO use hackPD to compute changes
 		//construct change struct to pass into NIM
 		//actualyl set the new difficulties in CharacterHelper
+		//super haaack
+		//TODO delet this shit.
+		HackPDChangeSet changes = new HackPDChangeSet();
+		if(CurrentPerformanceStat.Character.Level < 7 && !CurrentPerformanceStat.Character.IsSolo)
+		{
+			var traits = (new List<PDStats.Stats>(PDStats.EnumerableStats));
+			traits.Shuffle();
+			for(int i = 0; i < 3; i++)
+			{
+				for(int j = 0; j < Mathf.Min (4,(30-CurrentPerformanceStat.Character.Index)/3);j++)
+				{
+					CharacterIndex toChange = new CharacterIndex(
+						Random.Range((new CharacterIndex(CurrentPerformanceStat.Character.Level+1,0)).Index,29));
+					if(toChange.Choice == 3)
+						continue;
+					float changeAmnt = Random.Range(0,10) < 5 ? -1 : 1;
+					var changeGroup = new HackPDChangeSet.ChangeGroup(traits[i],toChange,changeAmnt);
+					changeGroup.oldStats = mCharacterHelper.Characters[toChange.Index];
+					changeGroup.newStats = new CharacterStats();
+					changeGroup.newStats.Difficulty = Mathf.Clamp(changeGroup.oldStats.Difficulty + (int)changeAmnt,0,3);
+					if(changeGroup.newStats.Difficulty != changeGroup.oldStats.Difficulty)
+						changes.mChanges.Add(changeGroup);
+				}
+			}
+		}
 		
 		//visuals
 		mManager.mBodyManager.transition_character_out();
@@ -291,7 +319,7 @@ public class NewGameManager : FakeMonoBehaviour
 							transition_to_CHOICE(); 
 					}
 				,2);
-			}
+			}, changes
 		);
 		
 	}
@@ -335,6 +363,11 @@ public class NewGameManager : FakeMonoBehaviour
 	{
 		GS = GameState.CHOICE;
 		mChoiceHelper.shuffle_and_set_choice_poses(mManager.mInterfaceManager);
+		//TODO these bottom two functions should be absoredb by ChoiceHelper
+		//lol this is a dumb hack to not choose the missing character
+		var chars = new CharacterIndex(CurrentPerformanceStat.Character.Level+1,3).Neighbors;
+		var perfs = chars.Select(e=>mCharacterHelper.Characters[e.Index].Perfect).ToList();
+		mManager.mInterfaceManager.set_bb_choice_perfectness(perfs);
 		mManager.mInterfaceManager.set_bb_choice_bodies(CurrentCharacterIndex);
 		mManager.mMusicManager.fade_in_choice_music();
 		mManager.mInterfaceManager.set_for_CHOICE();	
@@ -369,7 +402,7 @@ public class NewGameManager : FakeMonoBehaviour
 	public void transition_to_TRANSITION_play(CharacterIndex aNextCharacter)
 	{
 		GS = GameState.TRANSITION;
-		mManager.mInterfaceManager.set_for_PLAY(); //this is jsut visual
+		mManager.mInterfaceManager.set_for_PLAY(); //this is just visual
 		TED.add_one_shot_event(
 			delegate(){
 				mManager.mTransitionCameraManager.fade_out_with_sound(

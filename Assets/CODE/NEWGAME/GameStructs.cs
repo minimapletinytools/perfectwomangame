@@ -222,7 +222,7 @@ public class PerformanceStats
 	public PerformanceGraphObject PerformanceGraph { get; private set; }
 	
 	public CharacterStats Stats
-	{ get; private set; }
+	{ get; set; }
 	
 	public PerformanceStats(CharacterIndex aChar)
 	{

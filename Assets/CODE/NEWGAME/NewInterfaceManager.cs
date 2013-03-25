@@ -132,7 +132,7 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 		
 		mBBQuestionText = new FlatElementText(newRef.genericFont,100,"What will you be like at age ",10);
 		mBBQuestionText.HardPosition = mFlatCamera.get_point(0,0.75f);
-		mBBMiniMan = new FlatBodyObject(miniMan,10);
+		mBBMiniMan = new FlatBodyObject(miniMan,20);
 		mBBMiniMan.HardScale = miniManScale;
 		mBBChoiceBox = new FlatElementImage(newRef.bbChoiceFrame,15);
 		mBBMiniManBasePosition = mFlatCamera.get_point(0, 0) + new Vector3(netWidth/2 - padding*3,0,0);
@@ -179,6 +179,7 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 		mBB.SoftScale = new Vector3(desiredSize.x/baseSize.x,desiredSize.y/baseSize.y,1);
 		mBB.SoftPosition = mFlatCamera.get_point(0, 0);
 		fade_bb_contents(false);
+		mBBMiniMan.SoftColor = new Color(1,0.3f,0.2f);
 	}
 	
 	//make sure begin_new_character is called before this
@@ -226,12 +227,19 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 	{
 		mBBMiniMan.set_target_pose(aPose);
 	}
-	//called by NewGameManager
+	//called by ChoiceHelper
 	public void set_bb_choice_poses(List<ProGrading.Pose> aPoses)
 	{
 		for(int i = 0; i < BB_NUM_CHOICES; i++)
 		{
 			mBBChoiceBodies[i].set_target_pose(aPoses[i]);
+		}
+	}
+	public void set_bb_choice_perfectness(List<int> aDifficulties)
+	{
+		for(int i = 0; i < BB_NUM_CHOICES; i++)
+		{
+			mBBChoices[i].set_perfectness(aDifficulties[i]);
 		}
 	}
 	//called by ChoiceHelper
@@ -313,7 +321,7 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 		{
 			//mPBCharacterIcons[e.Character.Index].set_background_color(Color.Lerp(new Color(0.5f,0.5f,0.5f), new Color32(255,200,0,255), e.Perfect/3f));
 			mPBCharacterIcons[e.Character.Index].set_perfectness(e.Perfect);
-			mPBCharacterIcons[e.Character.Index].set_body_color(Color.Lerp(new Color(0.5f,0.5f,0.5f), new Color32(255,30,58,255), e.Difficulty/3f));
+			mPBCharacterIcons[e.Character.Index].set_difficulty(e.Difficulty);
 		}
 		
 		//top secret
@@ -443,7 +451,7 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 	//these are hacks to allow me to skip cutscenes
 	QuTimer mLastCutsceneChain = null;
 	System.Action mLastCutsceneCompleteCb = null;
-	public void set_for_CUTSCENE(System.Action cutsceneCompleteCb)
+	public void set_for_CUTSCENE(System.Action cutsceneCompleteCb,HackPDChangeSet aChanges)
 	{
 		//used for skipping cutscene
 		/*
@@ -501,25 +509,28 @@ public class NewInterfaceManager : FakeMonoBehaviour {
         0).then_one_shot( //dummy 
 			delegate(){},firstTextTime);
 		
-		//TODO get actual cutscenes
-		//TODO prepare cutscene dialog
-		//aoethudnanotdeunoateducnaoegducnoegdu
-		//list<KeyvaluePair<trait,List<character>>> cutscenes = new list<KeyvaluePair<trait, List<character>>>();
-		/*
-		for(int i = 0; i < cutscenes.Count; i++)
+		
+		float cutsceneTextTime = 4;
+		foreach(PDStats.Stats e in PDStats.EnumerableStats)
 		{
-			//KeyValuePair<PDStats.Stats,List<CharacterIndex>
-			float cutsceneTextTime = 5;
-			chain = chain.then(
-				delegate(float aTime)
-				{
-					//TODO set message
-					add_timed_text_bubble("MESSAGE " + i,cutsceneTextTime);
-					add_cutscene_particle_stream(CharacterIndex.RandomCharacter);
-					return true;
-				}
-			,0).wait(cutsceneTextTime);
-		}*/
+			var changes = aChanges.get_changes(e);
+			if(changes.Count > 0)
+			{
+				string changeMsg = Random.Range(0,3) == 0 ? PDStats.negative_sentences[(int)e][0] : PDStats.positive_sentences[(int)e][0];
+				chain = chain.then(
+					delegate(float aTime)
+					{
+						add_timed_text_bubble(changeMsg,cutsceneTextTime);
+						foreach(var f in changes)
+						{
+							add_cutscene_particle_stream(f.character);
+							mPBCharacterIcons[f.character.Index].set_difficulty(f.newStats.Difficulty);
+						}
+						return true;
+					}
+				,0).wait(cutsceneTextTime);
+			}
+		}
 		
 		chain = chain.then_one_shot(delegate(){mLastCutsceneCompleteCb();},END_CUTSCENE_DELAY_TIME);
 		
@@ -598,7 +609,7 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 		
 		//this is all a hack to get the score to show up right...
 		float scoreIncrementor = 0;
-		FlatElementText finalScoreText = new FlatElementText(mManager.mNewRef.genericFont,150,"123",10);
+		FlatElementText finalScoreText = new FlatElementText(mManager.mNewRef.genericFont,150,"0",10);
 		foreach (Renderer f in finalScoreText.PrimaryGameObject.GetComponentsInChildren<Renderer>())
                 f.gameObject.layer = 4;
 		finalScoreText.SoftPosition = mManager.mBackgroundManager.mBackgroundElements.mElements[0].Element.SoftPosition + new Vector3(0, -200, 0);

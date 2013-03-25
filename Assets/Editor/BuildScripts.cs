@@ -9,11 +9,24 @@ public class BuildScripts
     {
 		string[] scenes = {"Assets/SCENES/kinect_test.unity"};
  
-		string buildDir = "/Users/user/Desktop/unitybuilds/lea/" + System.DateTime.Now.ToString("MMMdhmm") + "/osx.app";
+		string buildDir = "/Users/user/Desktop/unitybuilds/lea/" + System.DateTime.Now.ToString("MMMdhmm") +"_osx.app";
 		System.IO.Directory.CreateDirectory(buildDir);
 		BuildPipeline.BuildPlayer(scenes , buildDir, BuildTarget.StandaloneOSXIntel, BuildOptions.None);
 		
 		string resourceDstPath = buildDir + "/Contents/Resources";
+		DirectoryCopy(Application.dataPath + "/Resources", resourceDstPath,false);
+    }
+	
+	[MenuItem("Custom/build/WIN")]
+    static void build_w()
+    {
+		string[] scenes = {"Assets/SCENES/kinect_test.unity"};
+ 
+		string buildDir = "/Users/user/Desktop/unitybuilds/lea/" + System.DateTime.Now.ToString("MMMdhmm") + "/PW.exe";
+		System.IO.Directory.CreateDirectory(buildDir);
+		BuildPipeline.BuildPlayer(scenes , buildDir, BuildTarget.StandaloneWindows, BuildOptions.None);
+		
+		string resourceDstPath = buildDir + "_data/Resources";
 		DirectoryCopy(Application.dataPath + "/Resources", resourceDstPath,false);
     }
 	

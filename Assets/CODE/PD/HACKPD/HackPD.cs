@@ -10,6 +10,8 @@ public class HackPDChangeSet
 		public PDStats.Stats stat;
 		public CharacterIndex character;
 		public float changeAmount;
+		public CharacterStats oldStats;
+		public CharacterStats newStats;
 		public ChangeGroup(PDStats.Stats aStat, CharacterIndex aIndex, float aChangeAmount)
 		{
 			stat = aStat;
@@ -17,8 +19,8 @@ public class HackPDChangeSet
 			changeAmount = aChangeAmount;
 		}
 	}
-	public List<ChangeGroup> mChanges;
-	List<ChangeGroup> get_changes(PDStats.Stats aStats)
+	public List<ChangeGroup> mChanges= new List<ChangeGroup>();
+	public List<ChangeGroup> get_changes(PDStats.Stats aStats)
 	{
 		return mChanges.Where(e=>e.stat == aStats).ToList();
 	}
@@ -72,11 +74,25 @@ public class HackPD
 	
 	//needs to take character, performance, and list of N characters to decide how to adjust their difficulties (so the distribution does not get too skewed)
 	//this fuction will diretly modify aCharacters and return a list of characters that had their stats (true for increase in difficulty)
-	public static List<KeyValuePair<CharacterIndex,bool>> get_difficulty_adjust(PerformanceStats aCharacter, List<CharacterStats> aCharacters)
+	public static List<HackPDChangeSet> get_difficulty_adjust(PerformanceStats aCharacter, List<CharacterStats> aCharacters)
 	{
+		//we want average not to differ by more than this
+		int maxCenterDiff = (aCharacters.Count+1)/2;
+		int center = aCharacters.Count * 2;
+		int changingCenter = center;
 		
+		for(int i= 0; i < 2; i++)
+		{
+			aCharacters.Shuffle();
+			foreach(CharacterStats e in aCharacters)
+			{
+				CharacterDifficulties.Difficulty diff = CharacterDifficulties.difficulties[aCharacter.Character.Index];
+				//if(diff[e.Character.Index]
+			}
+			
+			//decide if its okay to change
+			//change it and modify center
+		}
 		return null;
 	}
-	
-	
 }
