@@ -74,6 +74,8 @@ public class NewGameManager : FakeMonoBehaviour
 		mManager.mInterfaceManager.setup_pb();
 		mManager.mInterfaceManager.set_pb_character_icon_colors(mCharacterHelper.Characters.Where(e=>e!=null).ToList());
 		
+		
+		//TODO put this in its own function
 		List<KeyValuePair<CharacterIndex,ProGrading.Pose>> poses = new List<KeyValuePair<CharacterIndex, ProGrading.Pose>>();
 		foreach(CharacterIndex e in CharacterIndex.sAllCharacters)
 		{
@@ -174,6 +176,8 @@ public class NewGameManager : FakeMonoBehaviour
 	public PoseAnimation CurrentPoseAnimation
 	{ get; private set; }
 	
+	public float mLastGrade = 0.5f;
+	
 	public void update_PLAY()
 	{
 		TimeRemaining -= Time.deltaTime;
@@ -181,13 +185,15 @@ public class NewGameManager : FakeMonoBehaviour
 		mManager.mInterfaceManager.update_bb_score(TotalScore);
 		
 		if(CurrentPose != null) //this should never happen but just in case
+		{
 			mManager.mBodyManager.set_target_pose(CurrentPose);
+		}
 		
 		//this basically means we aren't 0 or 100 or 999
 		if (CurrentPoseAnimation != null)
         {
 			
-			CurrentTargetPose = CurrentPoseAnimation.get_pose((int)(Time.time/5f));
+			CurrentTargetPose = CurrentPoseAnimation.get_pose((int)(Time.time/6f));
 			mManager.mTransparentBodyManager.set_target_pose(CurrentTargetPose);
 			
 			
@@ -195,7 +201,15 @@ public class NewGameManager : FakeMonoBehaviour
             float grade = ProGrading.grade_pose(CurrentPose, CurrentTargetPose);
 			grade = ProGrading.grade_to_perfect(grade);
 			
+			float newGrade = mLastGrade*0.95f + grade*0.05f;
+			if(newGrade < mLastGrade)
+				mLastGrade = Mathf.Max(newGrade,mLastGrade - Time.deltaTime/6f);
+			else mLastGrade = newGrade;
+			grade = mLastGrade;
+			
+			//limit decilen bu tnot growth
 			//grade = Random.Range(0f,1f);
+			
 			CurrentPerformanceStat.update_score(PercentTimeCompletion,grade);
 			
 			
@@ -226,7 +240,7 @@ public class NewGameManager : FakeMonoBehaviour
 		die |= Input.GetKeyDown(KeyCode.D);
 		if (CurrentPoseAnimation != null && mManager.mZigManager.has_user())
 			if(PercentTimeCompletion > 0.25f)
-				if(CurrentPerformanceStat.last_score(4) < 0.2f)
+				if(CurrentPerformanceStat.last_score(4)/(4/30f) < 0.2f)
 					die |= true;
 		if(die)
 		{
@@ -244,6 +258,7 @@ public class NewGameManager : FakeMonoBehaviour
 	ChoiceHelper mChoiceHelper;
 	public void update_CHOICE()
 	{
+		mManager.mInterfaceManager.set_bb_decider_pose(CurrentPose);
 		mChoiceHelper.CurrentPose = CurrentPose;
 		int choice = mChoiceHelper.update(mManager.mInterfaceManager);
 		if(choice != -1)
@@ -268,7 +283,7 @@ public class NewGameManager : FakeMonoBehaviour
 			traits.Shuffle();
 			for(int i = 0; i < 3; i++)
 			{
-				for(int j = 0; j < Mathf.Min (4,(30-CurrentPerformanceStat.Character.Index)/3);j++)
+				for(int j = 0; j < Mathf.Min (Random.Range(0,4),(30-CurrentPerformanceStat.Character.Index)/3);j++)
 				{
 					CharacterIndex toChange = new CharacterIndex(
 						Random.Range((new CharacterIndex(CurrentPerformanceStat.Character.Level+1,0)).Index,29));
@@ -417,6 +432,22 @@ public class NewGameManager : FakeMonoBehaviour
 	public void hack_choice(int choice, float time = -1)
 	{
 		//TODO
+	}
+	
+	
+	
+	
+	
+	public void change_character_difficulty(CharacterIndex aChar,  int aDiff)
+	{
+		mCharacterHelper.Characters[aChar.Index].Difficulty = aDiff;
+		
+		//TODO put this in its own function
+		List<KeyValuePair<CharacterIndex,ProGrading.Pose>> poses = new List<KeyValuePair<CharacterIndex, ProGrading.Pose>>();
+		CharacterIndex e = aChar;
+		var poseAnimation = mManager.mCharacterBundleManager.get_pose(e,mCharacterHelper.Characters[e.Index].Difficulty);
+		poses.Add(new KeyValuePair<CharacterIndex,ProGrading.Pose>(e,poseAnimation.get_pose(Random.Range(0,poseAnimation.poses.Count))));
+		mManager.mInterfaceManager.set_pb_character_icon_poses(poses);
 	}
     
 }

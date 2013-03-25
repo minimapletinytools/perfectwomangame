@@ -525,6 +525,8 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 						{
 							add_cutscene_particle_stream(f.character);
 							mPBCharacterIcons[f.character.Index].set_difficulty(f.newStats.Difficulty);
+							//TODO tell NGM about the diff change
+							mManager.mGameManager.change_character_difficulty(f.character,f.newStats.Difficulty);
 						}
 						return true;
 					}
@@ -697,11 +699,11 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 		chain = chain.then_one_shot(
 			delegate()
 			{
-				add_timed_text_bubble("G A M E  O V E R",6,0.5f);
+				add_timed_text_bubble("G A M E  O V E R",15,0.5f);
 			}
 		,0).then_one_shot(
 			graveCompleteCb
-		,6);
+		,15);
 	}
 	
 	

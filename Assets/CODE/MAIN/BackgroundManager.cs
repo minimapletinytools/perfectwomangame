@@ -53,6 +53,28 @@ public class BackgroundManager  : FakeMonoBehaviour
 	
 	public void load_images(CharacterLoader aCharacter, FlatElementMultiImage aMulti, string aPrefix, int aBegin = 0)
 	{
+		//last to first stupid hack..
+		List<CharacterData.ImageSizeOffsetAnimationData> dataList = new List<CharacterData.ImageSizeOffsetAnimationData>();
+		List<string> nameList = new List<string>();
+		for(int i = aBegin; i < 100; i++)
+		{
+			string name = aPrefix+i;
+			CharacterData.ImageSizeOffsetAnimationData data = aCharacter.Sizes.find_static_element(name);
+			if(data == null)
+				break;
+			dataList.Add(data);
+			nameList.Add(name);
+		}
+		
+		for(int i = dataList.Count -1; i>=0; i--)
+		{
+			Texture2D tex = aCharacter.Images.staticElements[nameList[i]];
+			//if(tex == null)
+				//throw new UnityException("data exists for " + data.Name + " but texture does not");
+			aMulti.add_image(tex,dataList[i].Offset,dataList[i].Size);
+		}
+		
+		/*first to last
 		for(int i = aBegin; i < 100; i++)
 		{
 			string name = aPrefix+i;
@@ -64,7 +86,7 @@ public class BackgroundManager  : FakeMonoBehaviour
 				//throw new UnityException("data exists for " + data.Name + " but texture does not");
 			aMulti.add_image(tex,data.Offset,data.Size);
 			//TODO effects
-		}
+		}*/
 	}
 	
 	

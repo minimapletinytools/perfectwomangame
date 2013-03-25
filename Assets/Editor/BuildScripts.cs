@@ -2,6 +2,7 @@
 using UnityEngine;
 using UnityEditor;
 using System.IO;
+using System.IO.Compression;
 public class BuildScripts
 {
     [MenuItem("Custom/build/OSX")]
@@ -22,12 +23,14 @@ public class BuildScripts
     {
 		string[] scenes = {"Assets/SCENES/kinect_test.unity"};
  
-		string buildDir = "/Users/user/Desktop/unitybuilds/lea/" + System.DateTime.Now.ToString("MMMdhmm") + "/PW.exe";
+		string buildDir = "/Users/user/Desktop/unitybuilds/lea/" + System.DateTime.Now.ToString("MMMdhmm") + "";
 		System.IO.Directory.CreateDirectory(buildDir);
-		BuildPipeline.BuildPlayer(scenes , buildDir, BuildTarget.StandaloneWindows, BuildOptions.None);
+		BuildPipeline.BuildPlayer(scenes , buildDir + "/PW.exe", BuildTarget.StandaloneWindows, BuildOptions.None);
 		
-		string resourceDstPath = buildDir + "_data/Resources";
+		string resourceDstPath = buildDir + "/PW_data/Resources";
 		DirectoryCopy(Application.dataPath + "/Resources", resourceDstPath,false);
+		
+		//System.IO.Compression
     }
 	
 	private static void DirectoryCopy(string sourceDirName, string destDirName, bool copySubDirs)

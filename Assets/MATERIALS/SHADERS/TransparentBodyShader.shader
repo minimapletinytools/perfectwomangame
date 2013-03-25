@@ -34,13 +34,13 @@ Shader "Custom/TransparentBodyShader" {
 			{
 				
 				
-				o.Albedo = half3(0.5,0.5,0.5);
+				o.Albedo = half3(0.0,0.0,0.0);
 				
 				float2 screenUV = IN.screenPos.xy / IN.screenPos.w;
 				
 				//if(((int)(screenUV.x*100 + screenUV.y*100) % 2 == 0))
 				{
-					o.Alpha = min(min(0.7,c.a),_Color.a);
+					o.Alpha = min(min(0.75,c.a),_Color.a);
 				
 				}
 			}
