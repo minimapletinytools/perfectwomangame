@@ -276,6 +276,7 @@ public class NewGameManager : FakeMonoBehaviour
 		//actualyl set the new difficulties in CharacterHelper
 		//super haaack
 		//TODO delet this shit.
+		/*
 		HackPDChangeSet changes = new HackPDChangeSet();
 		if(CurrentPerformanceStat.Character.Level < 7 && !CurrentPerformanceStat.Character.IsSolo)
 		{
@@ -284,6 +285,30 @@ public class NewGameManager : FakeMonoBehaviour
 			for(int i = 0; i < 3; i++)
 			{
 				for(int j = 0; j < Mathf.Min (Random.Range(0,4),(30-CurrentPerformanceStat.Character.Index)/3);j++)
+				{
+					CharacterIndex toChange = new CharacterIndex(
+						Random.Range((new CharacterIndex(CurrentPerformanceStat.Character.Level+1,0)).Index,29));
+					if(toChange.Choice == 3)
+						continue;
+					float changeAmnt = Random.Range(0,10) < 5 ? -1 : 1;
+					var changeGroup = new HackPDChangeSet.ChangeGroup(traits[i],toChange,changeAmnt);
+					changeGroup.oldStats = mCharacterHelper.Characters[toChange.Index];
+					changeGroup.newStats = new CharacterStats();
+					changeGroup.newStats.Difficulty = Mathf.Clamp(changeGroup.oldStats.Difficulty + (int)changeAmnt,0,3);
+					if(changeGroup.newStats.Difficulty != changeGroup.oldStats.Difficulty)
+						changes.mChanges.Add(changeGroup);
+				}
+			}
+		}*/
+		
+		//lolo stupid sentece version
+		HackPDChangeSet changes = new HackPDChangeSet();
+		if(CurrentPerformanceStat.Character.Level < 7 && !CurrentPerformanceStat.Character.IsSolo)
+		{
+			var traits = (new List<PDStats.Stats>(PDStats.EnumerableStats));
+			for(int i = 0; i < CharacterHelper.sCharacterSentencs[CurrentPerformanceStat.Character.Index].Count; i++)
+			{
+				for(int j = 0; j < Mathf.Min (Random.Range(0,5),(30-CurrentPerformanceStat.Character.Index)/3);j++)
 				{
 					CharacterIndex toChange = new CharacterIndex(
 						Random.Range((new CharacterIndex(CurrentPerformanceStat.Character.Level+1,0)).Index,29));

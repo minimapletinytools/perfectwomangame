@@ -4,6 +4,7 @@ using System.Collections;
 public class CharacterIconObject : FlatElementMultiBase {
 	FlatElementImage mBackground;
 	DifficultyObject mDifficultyStars;
+	FlatElementMultiBase.ElementOffset mText = null;
     public FlatBodyObject mBody = null;
 	float mBodyOffset = 0;
 	
@@ -11,7 +12,6 @@ public class CharacterIconObject : FlatElementMultiBase {
     {
 		mBackground = new FlatElementImage(ManagerManager.Manager.mNewRef.pbCharacterIconBackground,aDepth);
 		mDifficultyStars = new DifficultyObject(ManagerManager.Manager.mNewRef.uiPerfectStar,aDepth+2);
-		
 		if(aIcon == null)
 		{
 			CharacterTextureBehaviour ctb = (GameObject.Instantiate(ManagerManager.Manager.mReferences.mMiniChar) as  GameObject).GetComponent<CharacterTextureBehaviour>();
@@ -30,10 +30,28 @@ public class CharacterIconObject : FlatElementMultiBase {
 		mElements.Add(new ElementOffset(mBackground, new Vector3(mBodyOffset,0,0)));
 		mElements.Add(new ElementOffset(mBody, new Vector3(mBodyOffset,0,0)));
 		
+		
 		PrimaryGameObject = create_primary_from_elements();
 		Depth = aDepth;
 		
 		set_perfectness(0);
+	}
+	public void set_name(string aName)
+	{
+		//TODO complete hack, fix this..
+		if(mText != null)
+		{
+			mElements.Remove(mText);
+			mText.Element.destroy();
+			mText = null;
+		}
+		if(aName != "")
+		{
+			mText = new ElementOffset(new FlatElementText(ManagerManager.Manager.mNewRef.genericFont,30,"",Depth +2),new Vector3(mBodyOffset,-90,0));
+			(mText.Element as FlatElementText).HardColor = new Color(0,0,0,1);
+			(mText.Element as FlatElementText).Text = aName;
+			mElements.Add(mText);
+		}
 	}
 	public FlatBodyObject take_body()
 	{
@@ -67,7 +85,10 @@ public class CharacterIconObject : FlatElementMultiBase {
 	{
 		//this is dumb, but it works in our situation...
 		if(SoftColor.a == 0)
+		{
+			set_name("");
 			base.set_color(aColor);
+		}
 	}
 	
 	public void set_background_color(Color aColor)

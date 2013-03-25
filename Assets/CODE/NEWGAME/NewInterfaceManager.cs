@@ -298,6 +298,7 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 		{
 			mPBCharacterIcons[e.Index] = new CharacterIconObject(
 					mManager.mCharacterBundleManager.get_mini_character(e),1);
+			mPBCharacterIcons[e.Index].set_name(e.ShortName);
 			mElement.Add(mPBCharacterIcons[e.Index]);
 		}
 		mElement.Add(mPB);
@@ -501,7 +502,7 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 					text += perfectPhrase[mBBLastPerformanceGraph.Stats.Perfect];
 					text += " life as a ";
 					text += mBBLastPerformanceGraph.Character.FullName;
-					text += " " + performancePhrase[Mathf.Clamp((int)(mBBLastPerformanceGraph.Score*4),0,3)];
+					text += " " + performancePhrase[Mathf.Clamp((int)(Mathf.Sqrt(mBBLastPerformanceGraph.Score)*4),0,3)];
 				}
 				add_timed_text_bubble(text,firstTextTime);
 				return true;
@@ -516,7 +517,8 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 			var changes = aChanges.get_changes(e);
 			if(changes.Count > 0)
 			{
-				string changeMsg = Random.Range(0,3) == 0 ? PDStats.negative_sentences[(int)e][0] : PDStats.positive_sentences[(int)e][0];
+				//string changeMsg = Random.Range(0,3) == 0 ? PDStats.negative_sentences[(int)e][0] : PDStats.positive_sentences[(int)e][0];
+				string changeMsg = CharacterHelper.sCharacterSentencs[mBBLastPerformanceGraph.Character.Index][(int)e];
 				chain = chain.then(
 					delegate(float aTime)
 					{
@@ -664,7 +666,7 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 					text += perfectPhrase[ps.Stats.Perfect];
 					text += " life as a ";
 					text += ps.Character.FullName;
-					text += " " + performancePhrase[Mathf.Clamp((int)(ps.Score*4),0,3)];
+					text += " " + performancePhrase[Mathf.Clamp((int)(Mathf.Sqrt(ps.Score)*4),0,3)];
 					add_timed_text_bubble(text,textTime,0.5f);
 				
 					//move in stuff

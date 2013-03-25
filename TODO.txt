@@ -1,3 +1,9 @@
+::new shit to do::
+DONE-make grading easier so you can get prefect sometime
+-add names to pb icons
+-make cutscene sentences
+DONE-make transparent charate green
+
 ::Shit to do tomorrow::
 DONE-set intial difficulties
 -now that your awesome fake difficulty setting is orking, you still need to catually set the character difficulties...

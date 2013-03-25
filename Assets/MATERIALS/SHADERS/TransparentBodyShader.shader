@@ -34,7 +34,7 @@ Shader "Custom/TransparentBodyShader" {
 			{
 				
 				
-				o.Albedo = half3(0.0,0.0,0.0);
+				o.Albedo = half3(0.0,1.0,0.0);
 				
 				float2 screenUV = IN.screenPos.xy / IN.screenPos.w;
 				

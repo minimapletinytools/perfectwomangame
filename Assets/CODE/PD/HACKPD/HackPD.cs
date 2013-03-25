@@ -3,6 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 
 
+public class SentenceHackPDChangeSet
+{
+}
+
 public class HackPDChangeSet
 {
 	public class ChangeGroup
