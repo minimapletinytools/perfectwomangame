@@ -1,4 +1,19 @@
 ::new shit to do::
+-business cards
+-website
+-figure out whats slowing the game down-feedback ideas, after pose changes, you get a blip indicating how well you ddi that pose in that time interval
+-body parts order might be exactly backwards
+	LLA
+	LUA
+	RLA
+	RUA
+	HEAD
+	TORSO
+	WAIST
+	LUL
+	LLL
+	RUL
+	RLL
 DONE-make grading easier so you can get prefect sometime
 -add names to pb icons
 -make cutscene sentences

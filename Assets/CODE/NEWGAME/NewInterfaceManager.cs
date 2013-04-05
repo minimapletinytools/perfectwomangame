@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
+using System.Linq;
 
 public class NewInterfaceManager : FakeMonoBehaviour {
 	static float END_CUTSCENE_DELAY_TIME = 1;
@@ -360,10 +361,28 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 	}
 	
 	
-	public void add_cutscene_particle_stream(CharacterIndex aTarget)
+	public void add_cutscene_particle_stream(CharacterIndex aTarget, PopupTextObject aPopup)
 	{
+		float duration = 2f;
+		float delay = 1f;
 		if(mPBCharacterIcons[aTarget.Index] != null)
-			add_timed_particle_stream(mFlatCamera.get_point(0.40f,0),mPBCharacterIcons[aTarget.Index].SoftPosition,1.2f,1f);
+		{
+			TED.add_one_shot_event(
+				delegate()
+				{
+					//TODO proper color setting routines
+					aPopup.HardColor = new Color(0,1,0);
+					mPBCharacterIcons[aTarget.Index].HardColor = (new Color(0,1,0));
+				},
+			delay).then_one_shot(
+				delegate()
+				{
+					aPopup.HardColor = new Color(1,1,1);
+					mPBCharacterIcons[aTarget.Index].HardColor = (new Color(1,1,1));
+				},
+			duration);
+			add_timed_particle_stream(mFlatCamera.get_point(0.40f,0),mPBCharacterIcons[aTarget.Index].SoftPosition,duration,delay);
+		}
 	}
 	
 	public void add_timed_particle_stream(Vector3 aPosition, Vector3 aTarget, float aDuration, float aDelay)
@@ -387,7 +406,7 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 	
 	//TEXT
 	//TODO get rid ofthe stupid yreloffset parameter...
-	public void add_timed_text_bubble(string aMsg, float duration, float yRelOffset = 0)
+	public PopupTextObject add_timed_text_bubble(string aMsg, float duration, float yRelOffset = 0)
 	{
 		PopupTextObject to = new PopupTextObject(aMsg,6);
 		to.HardPosition = random_position();
@@ -412,6 +431,7 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 				to.destroy();
 			},
 		2);
+		return to;
 	}
 	
 	//this gets called during CHOOSE so BB should be full sized
@@ -522,10 +542,10 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 				chain = chain.then(
 					delegate(float aTime)
 					{
-						add_timed_text_bubble(changeMsg,cutsceneTextTime);
+						var po = add_timed_text_bubble(changeMsg,cutsceneTextTime);
 						foreach(var f in changes)
 						{
-							add_cutscene_particle_stream(f.character);
+							add_cutscene_particle_stream(f.character,po);
 							mPBCharacterIcons[f.character.Index].set_difficulty(f.newStats.Difficulty);
 							//TODO tell NGM about the diff change
 							mManager.mGameManager.change_character_difficulty(f.character,f.newStats.Difficulty);
