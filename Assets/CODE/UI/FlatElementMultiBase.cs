@@ -167,7 +167,7 @@ public class FlatElementMultiBase : FlatElementBase
     public override Color HardColor
     {
         
-        get { return HardColor; }
+        get { return base.HardColor; }
         set { 
             base.HardColor = value;
             foreach (ElementOffset e in mElements)
@@ -176,7 +176,8 @@ public class FlatElementMultiBase : FlatElementBase
     }
 
 
-
+	
+	
 
 
     public override void update_parameters(float aDeltaTime)
@@ -197,10 +198,21 @@ public class FlatElementMultiBase : FlatElementBase
         foreach (ElementOffset e in mElements) //this is even more hacky... poo poo 
             e.Element.Events.update(aDeltaTime, e.Element); 
     }
+	
+	
+    public virtual void set_color(Color aColor)
+    {
+		foreach (ElementOffset e in mElements)
+			e.Element.set_color((aColor*e.Element.HardColor)*2);
+    }
+    
 
     public override void set()
     {
         foreach (ElementOffset e in mElements)
+		{
             e.Element.set();
+		}
+		set_color(HardColor + mLocalColor);
     }
 }
