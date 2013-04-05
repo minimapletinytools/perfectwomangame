@@ -371,14 +371,14 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 				delegate()
 				{
 					//TODO proper color setting routines
-					aPopup.HardColor = new Color(0,1,0);
-					mPBCharacterIcons[aTarget.Index].HardColor = (new Color(0,1,0));
+					aPopup.set_background_color(new Color(0,1,0));
+					mPBCharacterIcons[aTarget.Index].set_background_color(new Color(0,1,0));
 				},
 			delay).then_one_shot(
 				delegate()
 				{
-					aPopup.HardColor = new Color(1,1,1);
-					mPBCharacterIcons[aTarget.Index].HardColor = (new Color(1,1,1));
+					aPopup.set_background_color(new Color(0.5f,0.5f,0.5f));
+					mPBCharacterIcons[aTarget.Index].set_background_color(new Color(0.5f,0.5f,0.5f));
 				},
 			duration);
 			add_timed_particle_stream(mFlatCamera.get_point(0.40f,0),mPBCharacterIcons[aTarget.Index].SoftPosition,duration,delay);

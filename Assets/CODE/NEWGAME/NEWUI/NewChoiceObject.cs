@@ -117,6 +117,7 @@ public class NewChoiceObject : FlatElementMultiBase {
         }
         set
         {
+			
 			//this is also a stupid hack
 			Color bodyColor = new Color(0,0,0,0);
 			if(mBody!=null)

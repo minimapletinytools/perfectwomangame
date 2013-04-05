@@ -62,4 +62,9 @@ public class PopupTextObject : FlatElementMultiBase {
 		//TODO size
 		return ManagerManager.Manager.mNewRef.textSmallBubble[Random.Range(0,ManagerManager.Manager.mNewRef.textSmallBubble.Length)];
 	}
+	
+	public void set_background_color(Color aColor)
+	{
+		mBackground.SoftColor = aColor;	
+	}
 }
