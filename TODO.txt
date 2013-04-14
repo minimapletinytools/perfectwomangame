@@ -1,7 +1,15 @@
 ::new shit to do::
+DONE-update lea's new poses
 -business cards
 -website
 -figure out whats slowing the game down-feedback ideas, after pose changes, you get a blip indicating how well you ddi that pose in that time interval
+-fix hip problem
+-not white text
+-blue box during choice transparent
+	-eventually do our new layout for choosing screen
+-foregrounds behind the puppet
+-green, yellow, orange, red
+-fix glow
 -body parts order might be exactly backwards
 	LLA
 	LUA
@@ -14,6 +22,7 @@
 	LLL
 	RUL
 	RLL
+
 DONE-make grading easier so you can get prefect sometime
 DONE-add names to pb icons
 DONE-make cutscene sentences

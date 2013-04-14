@@ -167,5 +167,20 @@ namespace NUPD
 	}
 	
 	
+	public class CharacterInformationProcessor
+	{
+		public CharacterInformation process_character(string aChar)
+		{
+			CharacterInformation ci = new CharacterInformation();
+			string[] process = aChar.Split('\n');
+			int state = 0; //0 none, 1 CHANGE, 2 DESCRITION
+			foreach(string e in process)
+			{
+				string[] sp = e.Split(" ,");
+			}
+			
+		}
+	}
+	
 	
 }
