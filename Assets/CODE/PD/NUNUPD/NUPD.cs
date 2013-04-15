@@ -29,7 +29,18 @@ namespace NUPD
 		public string LongName {get; set;}
 		public string Description {get; set;}
 		public CharacterIndex Index {get; set;}
-		public List<ChangeSet> ChangeSet {get; set;} 
+		public List<ChangeSet> ChangeSet {get; set;}
+		
+		public static CharacterInformation default_character_info(CharacterIndex aIndex)
+		{
+			CharacterInformation r = new CharacterInformation(){
+				ShortName = aIndex.ShortName,
+				Description = "",
+				Index = aIndex,
+				ChangeSet = new List<ChangeSet>()
+			};
+			return r;
+		}
 		
 		public static CharacterInformation[] sAllCharacters = new CharacterInformation[]
 		{
@@ -169,7 +180,7 @@ namespace NUPD
 	
 	public class CharacterInformationProcessor
 	{
-		public CharacterInformation process_character(string aChar)
+		public static CharacterInformation process_character(string aChar)
 		{
 			string[] keywords = new string[]{"NAME", "NDESC", "INDEX", "CHANGE", "CDESC"};
 			CharacterInformation ci = new CharacterInformation();

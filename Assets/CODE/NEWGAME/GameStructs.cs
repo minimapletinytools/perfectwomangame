@@ -128,9 +128,9 @@ public struct CharacterIndex
 		}
 	}
 	
-	public string Description{get{return INDEX_TO_DESCRIPTION[Index];}}
-	public string ShortName{get{return INDEX_TO_SHORT_NAME[Index];}}
-	public string FullName{get{return INDEX_TO_FULL_NAME[Index];}}
+	public string Description{get{return  Index == -1 ? "none" : INDEX_TO_DESCRIPTION[Index];}}
+	public string ShortName{get{return Index == -1 ? "none" : INDEX_TO_SHORT_NAME[Index];}}
+	public string FullName{get{return  Index == -1 ? "none" : INDEX_TO_FULL_NAME[Index];}}
 	
 	public CharacterIndex get_future_neighbor(int choiceIndex)
 	{
@@ -178,10 +178,12 @@ public class CharacterStats
 	public CharacterIndex Character { get; set; }
 	public int Perfect { get; set; }
 	public int Difficulty { get; set; }
+	public NUPD.CharacterInformation CharacterInfo { get; set; }
 	
 	public CharacterStats()
 	{
 		Character = new CharacterIndex(-1);
+		CharacterInfo = NUPD.CharacterInformation.default_character_info(Character);
 		Perfect = 2;
 		Difficulty = 0;
 	}
