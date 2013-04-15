@@ -99,6 +99,7 @@ public class CharacterBundleManager : FakeMonoBehaviour {
 	
 	bool mPosesLoaded = false;
 	Dictionary<string, ProGrading.Pose> mPoses = new Dictionary<string, ProGrading.Pose>();
+	CharacterHelper mCharacterHelper = new CharacterHelper();
 	public string construct_pose_string(CharacterIndex aIndex, int aDiff, int aStage)
 	{
 		string r = "";
@@ -144,6 +145,21 @@ public class CharacterBundleManager : FakeMonoBehaviour {
 	}
 	public void pose_bundle_loaded_callback(AssetBundle aBundle)
     {
+		
+		foreach(CharacterIndex e in CharacterIndex.sAllCharacters)
+		{
+			string txtName = e.StringIdentifier + "_diff";
+			if(aBundle.Contains(txtName))
+			{
+				mCharacterHelper.Characters[e.Index].CharacterInfo = 
+					NUPD.CharacterInformationProcessor.process_character((aBundle.Load(txtName) as TextAsset).text);
+			}
+			else
+			{
+				mCharacterHelper.Characters[e.Index].CharacterInfo = NUPD.CharacterInformation.default_character_info(e);
+			}
+		}
+		
 		foreach(CharacterIndex e in CharacterIndex.sAllCharacters)
 		{
 			for(int i = 0; i < 4; i++)
