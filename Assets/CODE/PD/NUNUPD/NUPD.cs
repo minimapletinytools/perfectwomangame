@@ -14,6 +14,13 @@ namespace NUPD
 		
 		public string Description {get; set;} 
 		public int[] Changes {get; set;}
+
+        public ChangeSubSet()
+        {
+            Description = "";
+            Changes = new int[CharacterIndex.NUMBER_CHARACTERS];
+
+        }
 	}
 	
 	public class ChangeSet
@@ -21,6 +28,13 @@ namespace NUPD
 		public float UpperThreshold {get; set;}
 		public float LowerThreshold {get; set;}
 		public List<ChangeSubSet> Changes {get; set;}
+
+        public ChangeSet()
+        {
+            UpperThreshold = 1;
+            LowerThreshold = 0;
+            Changes = new List<ChangeSubSet>();
+        }
 	}
 	
 	public class CharacterInformation

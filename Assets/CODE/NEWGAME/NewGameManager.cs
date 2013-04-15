@@ -280,6 +280,7 @@ public class NewGameManager : FakeMonoBehaviour
         {
             Debug.Log("could not find change in thershold with performance: " + CurrentPerformanceStat);
             changes = new NUPD.ChangeSet();
+            changes.Changes.Add(new NUPD.ChangeSubSet() { Description = "No changes available!!" });
         }
 
         //TODO don't put this here
@@ -369,6 +370,8 @@ public class NewGameManager : FakeMonoBehaviour
 	
 	public void transition_to_CHOICE()
 	{
+        //TODO update difficulties in NIM charactericons here in case the user skipped the cutscenes and the diffs did not get updated
+
 		GS = GameState.CHOICE;
 		mChoiceHelper.shuffle_and_set_choice_poses(mManager.mInterfaceManager);
 		//TODO these bottom two functions should be absoredb by ChoiceHelper

@@ -3,9 +3,10 @@
 
 ::new shit to do::
 -new difficulty junk
-	-cbm now loads into local struct. use gm to read from that struct (or copy it)
-	-cutscenes need to use info inside of that struct
-	-make sure there are good default stuff so we don't need all the txt files
+	-delete NGM's local instance of CharacterHelper
+	DONE-cbm now loads into local struct. use gm to read from that struct (or copy it)
+	DONE-cutscenes need to use info inside of that struct
+	DONE-make sure there are good default stuff so we don't need all the txt files
 	-test it
 DONE-update lea's new poses
 -business cards
