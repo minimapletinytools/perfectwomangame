@@ -282,6 +282,16 @@ public class NewGameManager : FakeMonoBehaviour
             changes = new NUPD.ChangeSet();
         }
 
+        //TODO don't put this here
+        foreach (var e in changes.Changes)
+        {
+            var diffChanges = e.Changes;
+            string changeMsg = e.Description;
+            for(int i = 0; i < diffChanges.Length; i++){
+                var cchar = new CharacterIndex(i);
+                mManager.mGameManager.change_character_difficulty(cchar, diffChanges[i]);
+            }
+        }
 		
 		//visuals
 		mManager.mBodyManager.transition_character_out();
