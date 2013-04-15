@@ -1,6 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
-using System;
+using System.Linq;
 
 //this is what character info should have
 //each character has a set of thresholds
@@ -176,8 +176,9 @@ namespace NUPD
 			string[] process = aChar.Split('\n');
 			string lastState = "";
 			
-			ChangeSet operatingChangeSet;
-			ChangeSubSet operatingChangeSubSet;
+			ChangeSet operatingChangeSet = null;
+			ChangeSubSet operatingChangeSubSet = null;
+			int changeSubsetIndexCounter = 0;
 			foreach(string e in process)
 			{
 				string[] sp = e.Split(' ',',');
@@ -188,12 +189,13 @@ namespace NUPD
 				if(!keywords.Contains(first))
 				{
 					if(lastState == "CHANGE") {
-						operatingChangeSet.LowerThreshold = sp[0];
-						operatingChangeSet.LowerThreshold = sp[1];
+						operatingChangeSet.LowerThreshold = (float)System.Convert.ToDouble(sp[0]);
+						operatingChangeSet.LowerThreshold = (float)System.Convert.ToDouble(sp[1]);
 						
 					} else if(lastState == "CDESC") {
 						foreach(string f in sp){
-							operatingChangeSubSet.Add(System.Convert.ToInt32(f));
+							operatingChangeSubSet.Changes[changeSubsetIndexCounter] = (System.Convert.ToInt32(f));
+							changeSubsetIndexCounter++;
 						}
 					}
 				}
@@ -206,10 +208,11 @@ namespace NUPD
 					ci.Index = new CharacterIndex(System.Convert.ToInt32(sp[1]));
 				} else if(first == "CHANGE"){
 					operatingChangeSet = new ChangeSet();
-					operatingChangeSet.Changes = new ChangeSet();
+					operatingChangeSet.Changes = new List<ChangeSubSet>();
 					ci.ChangeSet.Add(operatingChangeSet);
 				} else if(first == "CDESC")
 				{
+					changeSubsetIndexCounter = 0;
 					operatingChangeSubSet = new ChangeSubSet();
 					operatingChangeSubSet.Description = sp[1];
 					operatingChangeSet.Changes.Add(operatingChangeSubSet);
