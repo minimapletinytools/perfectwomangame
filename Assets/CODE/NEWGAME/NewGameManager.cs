@@ -270,60 +270,18 @@ public class NewGameManager : FakeMonoBehaviour
 	public void transition_to_CUTSCENE()
 	{
 		GS = GameState.CUTSCENE;
-		
-		//TODO use hackPD to compute changes
-		//construct change struct to pass into NIM
-		//actualyl set the new difficulties in CharacterHelper
-		//super haaack
-		//TODO delet this shit.
-		/*
-		HackPDChangeSet changes = new HackPDChangeSet();
-		if(CurrentPerformanceStat.Character.Level < 7 && !CurrentPerformanceStat.Character.IsSolo)
-		{
-			var traits = (new List<PDStats.Stats>(PDStats.EnumerableStats));
-			traits.Shuffle();
-			for(int i = 0; i < 3; i++)
-			{
-				for(int j = 0; j < Mathf.Min (Random.Range(0,4),(30-CurrentPerformanceStat.Character.Index)/3);j++)
-				{
-					CharacterIndex toChange = new CharacterIndex(
-						Random.Range((new CharacterIndex(CurrentPerformanceStat.Character.Level+1,0)).Index,29));
-					if(toChange.Choice == 3)
-						continue;
-					float changeAmnt = Random.Range(0,10) < 5 ? -1 : 1;
-					var changeGroup = new HackPDChangeSet.ChangeGroup(traits[i],toChange,changeAmnt);
-					changeGroup.oldStats = mCharacterHelper.Characters[toChange.Index];
-					changeGroup.newStats = new CharacterStats();
-					changeGroup.newStats.Difficulty = Mathf.Clamp(changeGroup.oldStats.Difficulty + (int)changeAmnt,0,3);
-					if(changeGroup.newStats.Difficulty != changeGroup.oldStats.Difficulty)
-						changes.mChanges.Add(changeGroup);
-				}
-			}
-		}*/
-		
-		//lolo stupid sentece version
-		HackPDChangeSet changes = new HackPDChangeSet();
-		if(CurrentPerformanceStat.Character.Level < 7 && !CurrentPerformanceStat.Character.IsSolo)
-		{
-			var traits = (new List<PDStats.Stats>(PDStats.EnumerableStats));
-			for(int i = 0; i < CharacterHelper.sCharacterSentencs[CurrentPerformanceStat.Character.Index].Count; i++)
-			{
-				for(int j = 0; j < Mathf.Min (Random.Range(0,5),(30-CurrentPerformanceStat.Character.Index)/3);j++)
-				{
-					CharacterIndex toChange = new CharacterIndex(
-						Random.Range((new CharacterIndex(CurrentPerformanceStat.Character.Level+1,0)).Index,29));
-					if(toChange.Choice == 3)
-						continue;
-					float changeAmnt = Random.Range(0,10) < 5 ? -1 : 1;
-					var changeGroup = new HackPDChangeSet.ChangeGroup(traits[i],toChange,changeAmnt);
-					changeGroup.oldStats = mCharacterHelper.Characters[toChange.Index];
-					changeGroup.newStats = new CharacterStats();
-					changeGroup.newStats.Difficulty = Mathf.Clamp(changeGroup.oldStats.Difficulty + (int)changeAmnt,0,3);
-					if(changeGroup.newStats.Difficulty != changeGroup.oldStats.Difficulty)
-						changes.mChanges.Add(changeGroup);
-				}
-			}
-		}
+
+        NUPD.ChangeSet changes;
+        try
+        {
+            changes = mManager.mCharacterBundleManager.get_character_helper(CurrentCharacterIndex).CharacterInfo.ChangeSet.Find(e => e.LowerThreshold <= CurrentPerformanceStat.Score && e.UpperThreshold >= CurrentPerformanceStat.Score);
+        }
+        catch
+        {
+            Debug.Log("could not find change in thershold with performance: " + CurrentPerformanceStat);
+            changes = new NUPD.ChangeSet();
+        }
+
 		
 		//visuals
 		mManager.mBodyManager.transition_character_out();
@@ -458,14 +416,19 @@ public class NewGameManager : FakeMonoBehaviour
 	{
 		//TODO
 	}
+
+
+
+
+    public int get_character_difficulty(CharacterIndex aChar)
+    {
+        return mCharacterHelper.Characters[aChar.Index].Difficulty;
+    }
 	
-	
-	
-	
-	
-	public void change_character_difficulty(CharacterIndex aChar,  int aDiff)
+	public void change_character_difficulty(CharacterIndex aChar,  int aChange)
 	{
-		mCharacterHelper.Characters[aChar.Index].Difficulty = aDiff;
+        //TODO if aChange is +/- 9 do something special instead
+		mCharacterHelper.Characters[aChar.Index].Difficulty = Mathf.Clamp(mCharacterHelper.Characters[aChar.Index].Difficulty + aChange,0,3);
 		
 		//TODO put this in its own function
 		List<KeyValuePair<CharacterIndex,ProGrading.Pose>> poses = new List<KeyValuePair<CharacterIndex, ProGrading.Pose>>();

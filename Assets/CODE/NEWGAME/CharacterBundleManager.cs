@@ -110,6 +110,10 @@ public class CharacterBundleManager : FakeMonoBehaviour {
 		r += aStage;
 		return r;
 	}
+    public CharacterStats get_character_helper(CharacterIndex aChar)
+    {
+        return mCharacterHelper.Characters[aChar.Index];
+    }
 	public PoseAnimation get_pose(CharacterIndex aIndex, int aDiff)
 	{
 		PoseAnimation r = new PoseAnimation();

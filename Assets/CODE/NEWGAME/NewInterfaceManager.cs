@@ -472,7 +472,7 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 	//these are hacks to allow me to skip cutscenes
 	QuTimer mLastCutsceneChain = null;
 	System.Action mLastCutsceneCompleteCb = null;
-	public void set_for_CUTSCENE(System.Action cutsceneCompleteCb,HackPDChangeSet aChanges)
+	public void set_for_CUTSCENE(System.Action cutsceneCompleteCb,NUPD.ChangeSet aChanges)
 	{
 		//used for skipping cutscene
 		/*
@@ -532,28 +532,29 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 		
 		
 		float cutsceneTextTime = 4;
-		foreach(PDStats.Stats e in PDStats.EnumerableStats)
+
+
+
+		foreach(var e in aChanges.Changes)
 		{
-			var changes = aChanges.get_changes(e);
-			if(changes.Count > 0)
-			{
-				//string changeMsg = Random.Range(0,3) == 0 ? PDStats.negative_sentences[(int)e][0] : PDStats.positive_sentences[(int)e][0];
-				string changeMsg = CharacterHelper.sCharacterSentencs[mBBLastPerformanceGraph.Character.Index][(int)e];
-				chain = chain.then(
-					delegate(float aTime)
+			//string changeMsg = Random.Range(0,3) == 0 ? PDStats.negative_sentences[(int)e][0] : PDStats.positive_sentences[(int)e][0];
+            var diffChanges = e.Changes;
+            string changeMsg = e.Description;
+			chain = chain.then(
+				delegate(float aTime)
+				{
+					var po = add_timed_text_bubble(changeMsg,cutsceneTextTime);
+					for(int i = 0; i < diffChanges.Length; i++)
 					{
-						var po = add_timed_text_bubble(changeMsg,cutsceneTextTime);
-						foreach(var f in changes)
-						{
-							add_cutscene_particle_stream(f.character,po);
-							mPBCharacterIcons[f.character.Index].set_difficulty(f.newStats.Difficulty);
-							//TODO tell NGM about the diff change
-							mManager.mGameManager.change_character_difficulty(f.character,f.newStats.Difficulty);
-						}
-						return true;
+                        var cchar = new CharacterIndex(i);
+						add_cutscene_particle_stream(cchar,po);
+                        mPBCharacterIcons[cchar.Index].set_difficulty(Mathf.Clamp(mManager.mGameManager.get_character_difficulty(cchar) + diffChanges[i], 0, 3));
+                        //this responsilibity should belong to NGM
+                        //mManager.mGameManager.change_character_difficulty(cchar, diffChanges[i]);
 					}
-				,0).wait(cutsceneTextTime);
-			}
+					return true;
+				}
+			,0).wait(cutsceneTextTime);
 		}
 		
 		chain = chain.then_one_shot(delegate(){mLastCutsceneCompleteCb();},END_CUTSCENE_DELAY_TIME);
