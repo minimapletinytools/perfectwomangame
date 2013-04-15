@@ -1,16 +1,25 @@
+
+
+
 ::new shit to do::
+-new difficulty junk
+	-cbm now loads into local struct. use gm to read from that struct (or copy it)
+	-cutscenes need to use info inside of that struct
+	-make sure there are good default stuff so we don't need all the txt files
+	-test it
 DONE-update lea's new poses
 -business cards
 -website
--figure out whats slowing the game down-feedback ideas, after pose changes, you get a blip indicating how well you ddi that pose in that time interval
+-figure out whats slowing the game down
+-feedback ideas, after pose changes, you get a blip indicating how well you ddi that pose in that time interval
 -fix hip problem
 -not white text
 -blue box during choice transparent
 	-eventually do our new layout for choosing screen
 -foregrounds behind the puppet
--green, yellow, orange, red
+-green, yellow, orange, red for difficulties
 -fix glow
--body parts order might be exactly backwards
+DONE-body parts order might be exactly backwards
 	LLA
 	LUA
 	RLA
