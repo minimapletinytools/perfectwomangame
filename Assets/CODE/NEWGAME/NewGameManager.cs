@@ -44,7 +44,13 @@ public class NewGameManager : FakeMonoBehaviour
 	{ get { return CurrentPerformanceStat.Character; } }
 	
 	//actual game data
-	CharacterHelper mCharacterHelper = new CharacterHelper();
+    CharacterHelper CharacterHelper
+    {
+        get
+        {
+            return mManager.mCharacterBundleManager.get_character_helper();
+        }
+    }
 	List<PerformanceStats> mPerformanceStats = new List<PerformanceStats>();
 	
 	public override void Start()
@@ -72,7 +78,7 @@ public class NewGameManager : FakeMonoBehaviour
 		
 		mManager.mInterfaceManager.setup_bb();
 		mManager.mInterfaceManager.setup_pb();
-		mManager.mInterfaceManager.set_pb_character_icon_colors(mCharacterHelper.Characters.Where(e=>e!=null).ToList());
+		mManager.mInterfaceManager.set_pb_character_icon_colors(CharacterHelper.Characters.Where(e=>e!=null).ToList());
 		
 		
 		//TODO put this in its own function
@@ -80,7 +86,7 @@ public class NewGameManager : FakeMonoBehaviour
 		foreach(CharacterIndex e in CharacterIndex.sAllCharacters)
 		{
 			//poses.Add(new KeyValuePair<CharacterIndex,ProGrading.Pose>(e,mManager.mCharacterBundleManager.get_pose(e,mCharacterHelper.Characters[e.Index].Difficulty).get_pose(0)));
-			var poseAnimation = mManager.mCharacterBundleManager.get_pose(e,mCharacterHelper.Characters[e.Index].Difficulty);
+			var poseAnimation = mManager.mCharacterBundleManager.get_pose(e,CharacterHelper.Characters[e.Index].Difficulty);
 			poses.Add(new KeyValuePair<CharacterIndex,ProGrading.Pose>(e,poseAnimation.get_pose(Random.Range(0,poseAnimation.poses.Count))));
 		}
 		mManager.mInterfaceManager.set_pb_character_icon_poses(poses);
@@ -103,7 +109,7 @@ public class NewGameManager : FakeMonoBehaviour
 		//TODO finish
 		CharacterIndex newCharIndex = new CharacterIndex(aCharacter.Name);
 		mPerformanceStats.Add(new PerformanceStats(newCharIndex));
-		CurrentPerformanceStat.Stats = mCharacterHelper.Characters[newCharIndex.Index];
+		CurrentPerformanceStat.Stats = CharacterHelper.Characters[newCharIndex.Index];
 		mManager.mInterfaceManager.begin_new_character(CurrentPerformanceStat);
 		
 		//TODO
@@ -274,7 +280,7 @@ public class NewGameManager : FakeMonoBehaviour
         NUPD.ChangeSet changes;
         try
         {
-            changes = mManager.mCharacterBundleManager.get_character_helper(CurrentCharacterIndex).CharacterInfo.ChangeSet.Find(e => e.LowerThreshold <= CurrentPerformanceStat.Score && e.UpperThreshold >= CurrentPerformanceStat.Score);
+            changes = mManager.mCharacterBundleManager.get_character_stat(CurrentCharacterIndex).CharacterInfo.ChangeSet.Find(e => e.LowerThreshold <= CurrentPerformanceStat.Score && e.UpperThreshold >= CurrentPerformanceStat.Score);
         }
         catch
         {
@@ -377,7 +383,7 @@ public class NewGameManager : FakeMonoBehaviour
 		//TODO these bottom two functions should be absoredb by ChoiceHelper
 		//lol this is a dumb hack to not choose the missing character
 		var chars = new CharacterIndex(CurrentPerformanceStat.Character.Level+1,3).Neighbors;
-		var perfs = chars.Select(e=>mCharacterHelper.Characters[e.Index].Perfect).ToList();
+		var perfs = chars.Select(e=>CharacterHelper.Characters[e.Index].Perfect).ToList();
 		mManager.mInterfaceManager.set_bb_choice_perfectness(perfs);
 		mManager.mInterfaceManager.set_bb_choice_bodies(CurrentCharacterIndex);
 		mManager.mMusicManager.fade_in_choice_music();
@@ -435,18 +441,18 @@ public class NewGameManager : FakeMonoBehaviour
 
     public int get_character_difficulty(CharacterIndex aChar)
     {
-        return mCharacterHelper.Characters[aChar.Index].Difficulty;
+        return CharacterHelper.Characters[aChar.Index].Difficulty;
     }
 	
 	public void change_character_difficulty(CharacterIndex aChar,  int aChange)
 	{
         //TODO if aChange is +/- 9 do something special instead
-		mCharacterHelper.Characters[aChar.Index].Difficulty = Mathf.Clamp(mCharacterHelper.Characters[aChar.Index].Difficulty + aChange,0,3);
+		CharacterHelper.Characters[aChar.Index].Difficulty = Mathf.Clamp(CharacterHelper.Characters[aChar.Index].Difficulty + aChange,0,3);
 		
 		//TODO put this in its own function
 		List<KeyValuePair<CharacterIndex,ProGrading.Pose>> poses = new List<KeyValuePair<CharacterIndex, ProGrading.Pose>>();
 		CharacterIndex e = aChar;
-		var poseAnimation = mManager.mCharacterBundleManager.get_pose(e,mCharacterHelper.Characters[e.Index].Difficulty);
+		var poseAnimation = mManager.mCharacterBundleManager.get_pose(e,CharacterHelper.Characters[e.Index].Difficulty);
 		poses.Add(new KeyValuePair<CharacterIndex,ProGrading.Pose>(e,poseAnimation.get_pose(Random.Range(0,poseAnimation.poses.Count))));
 		mManager.mInterfaceManager.set_pb_character_icon_poses(poses);
 	}

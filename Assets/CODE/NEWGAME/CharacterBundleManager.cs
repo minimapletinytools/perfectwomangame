@@ -110,7 +110,11 @@ public class CharacterBundleManager : FakeMonoBehaviour {
 		r += aStage;
 		return r;
 	}
-    public CharacterStats get_character_helper(CharacterIndex aChar)
+    public CharacterHelper get_character_helper() //this is just to save some time for refractoring, othrewise should aways use the routine below...
+    {
+        return mCharacterHelper;
+    }
+    public CharacterStats get_character_stat(CharacterIndex aChar)
     {
         return mCharacterHelper.Characters[aChar.Index];
     }
