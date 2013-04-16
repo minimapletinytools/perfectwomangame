@@ -60,7 +60,6 @@ namespace NUPD
 			};
 			return r;
 		}
-		
 		public static CharacterInformation[] sAllCharacters = new CharacterInformation[]
 		{
 			new CharacterInformation()
