@@ -278,9 +278,12 @@ public class NewGameManager : FakeMonoBehaviour
 		GS = GameState.CUTSCENE;
 
         NUPD.ChangeSet changes;
+        
         try
         {
             changes = mManager.mCharacterBundleManager.get_character_stat(CurrentCharacterIndex).CharacterInfo.ChangeSet.Find(e => e.LowerThreshold <= CurrentPerformanceStat.Score && e.UpperThreshold >= CurrentPerformanceStat.Score);
+            if (changes == null)
+                throw new UnityException();
         }
         catch
         {
@@ -296,7 +299,8 @@ public class NewGameManager : FakeMonoBehaviour
             string changeMsg = e.Description;
             for(int i = 0; i < diffChanges.Length; i++){
                 var cchar = new CharacterIndex(i);
-                mManager.mGameManager.change_character_difficulty(cchar, diffChanges[i]);
+                if(diffChanges[i] != 0)
+                    mManager.mGameManager.change_character_difficulty(cchar, diffChanges[i]);
             }
         }
 		
@@ -447,6 +451,7 @@ public class NewGameManager : FakeMonoBehaviour
 	public void change_character_difficulty(CharacterIndex aChar,  int aChange)
 	{
         //TODO if aChange is +/- 9 do something special instead
+        Debug.Log(CharacterHelper.Characters[aChar.Index]);
 		CharacterHelper.Characters[aChar.Index].Difficulty = Mathf.Clamp(CharacterHelper.Characters[aChar.Index].Difficulty + aChange,0,3);
 		
 		//TODO put this in its own function

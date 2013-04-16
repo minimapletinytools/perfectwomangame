@@ -21,6 +21,11 @@ namespace NUPD
             Changes = new int[CharacterIndex.NUMBER_CHARACTERS];
 
         }
+
+        public bool is_positive()
+        {
+            return Changes.Where(e => e < 0).Count() == 0;
+        }
 	}
 	
 	public class ChangeSet
