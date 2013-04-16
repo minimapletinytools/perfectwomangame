@@ -106,7 +106,6 @@ public class NewGameManager : FakeMonoBehaviour
 		CurrentCharacterLoader = aCharacter;
 		
 		//set new character data
-		//TODO finish
 		CharacterIndex newCharIndex = new CharacterIndex(aCharacter.Name);
 		mPerformanceStats.Add(new PerformanceStats(newCharIndex));
 		CurrentPerformanceStat.Stats = CharacterHelper.Characters[newCharIndex.Index];
@@ -280,6 +279,12 @@ public class NewGameManager : FakeMonoBehaviour
         NUPD.ChangeSet changes;
         try
         {
+			if(mManager.mCharacterBundleManager.get_character_stat(CurrentCharacterIndex).CharacterInfo.ChangeSet.Count>0)
+			{
+				//Debug.Log (mManager.mCharacterBundleManager.get_character_stat(CurrentCharacterIndex).CharacterInfo.ChangeSet[0].LowerThreshold);
+				//Debug.Log (mManager.mCharacterBundleManager.get_character_stat(CurrentCharacterIndex).CharacterInfo.ChangeSet[0].UpperThreshold);
+				//Debug.Log (CurrentPerformanceStat.Score);
+			}
             changes = mManager.mCharacterBundleManager.get_character_stat(CurrentCharacterIndex).CharacterInfo.ChangeSet.Find(e => e.LowerThreshold <= CurrentPerformanceStat.Score && e.UpperThreshold >= CurrentPerformanceStat.Score);
         }
         catch
@@ -288,7 +293,7 @@ public class NewGameManager : FakeMonoBehaviour
             changes = new NUPD.ChangeSet();
             changes.Changes.Add(new NUPD.ChangeSubSet() { Description = "No changes available!!" });
         }
-
+		
         //TODO don't put this here
         foreach (var e in changes.Changes)
         {
@@ -296,7 +301,8 @@ public class NewGameManager : FakeMonoBehaviour
             string changeMsg = e.Description;
             for(int i = 0; i < diffChanges.Length; i++){
                 var cchar = new CharacterIndex(i);
-                mManager.mGameManager.change_character_difficulty(cchar, diffChanges[i]);
+				if(diffChanges[i] != 0)
+                	mManager.mGameManager.change_character_difficulty(cchar, diffChanges[i]);
             }
         }
 		

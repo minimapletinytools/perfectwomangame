@@ -546,11 +546,11 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 					var po = add_timed_text_bubble(changeMsg,cutsceneTextTime);
 					for(int i = 0; i < diffChanges.Length; i++)
 					{
-                        var cchar = new CharacterIndex(i);
-						add_cutscene_particle_stream(cchar,po);
-                        mPBCharacterIcons[cchar.Index].set_difficulty(Mathf.Clamp(mManager.mGameManager.get_character_difficulty(cchar) + diffChanges[i], 0, 3));
-                        //this responsilibity should belong to NGM
-                        //mManager.mGameManager.change_character_difficulty(cchar, diffChanges[i]);
+						if(diffChanges[i] != 0){
+                        	var cchar = new CharacterIndex(i);
+							add_cutscene_particle_stream(cchar,po);
+                        	mPBCharacterIcons[cchar.Index].set_difficulty(Mathf.Clamp(mManager.mGameManager.get_character_difficulty(cchar) + diffChanges[i], 0, 3));
+						}
 					}
 					return true;
 				}

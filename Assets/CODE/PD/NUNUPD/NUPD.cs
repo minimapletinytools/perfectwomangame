@@ -40,10 +40,18 @@ namespace NUPD
 	public class CharacterInformation
 	{
 		public string ShortName {get; set;}
-		public string LongName {get; set;}
+		public string LongName {get; set;} //TODO delete this
 		public string Description {get; set;}
 		public CharacterIndex Index {get; set;}
 		public List<ChangeSet> ChangeSet {get; set;}
+		
+		public CharacterInformation()
+		{
+			ShortName = "";
+			Description = "";
+			Index = new CharacterIndex(-1);
+			ChangeSet = new List<ChangeSet>();
+		}
 		
 		public static CharacterInformation default_character_info(CharacterIndex aIndex)
 		{
@@ -198,7 +206,7 @@ namespace NUPD
 		{
 			string[] keywords = new string[]{"NAME", "NDESC", "INDEX", "CHANGE", "CDESC"};
 			CharacterInformation ci = new CharacterInformation();
-			string[] process = aChar.Split('\n');
+			string[] process = aChar.Split(new string[] { "\r\n", "\n" }, System.StringSplitOptions.None);
 			string lastState = "";
 			
 			ChangeSet operatingChangeSet = null;
@@ -206,18 +214,22 @@ namespace NUPD
 			int changeSubsetIndexCounter = 0;
 			foreach(string e in process)
 			{
-				string[] sp = e.Split(' ',',');
+				string[] sp = System.Text.RegularExpressions.Regex.Split(e, @"\s*,\s*|\s\s*").Where(f=>f!="" && f != " ").ToArray();
+				
 				if(sp.Length == 0)
 					continue;
 				string first = sp[0];
+				
+				//Debug.Log (sp.Aggregate((s1,s2)=>s1+"|"+s2+"|"));
 				
 				if(!keywords.Contains(first))
 				{
 					if(lastState == "CHANGE") {
 						operatingChangeSet.LowerThreshold = (float)System.Convert.ToDouble(sp[0]);
-						operatingChangeSet.LowerThreshold = (float)System.Convert.ToDouble(sp[1]);
+						operatingChangeSet.UpperThreshold = (float)System.Convert.ToDouble(sp[1]);
 						
 					} else if(lastState == "CDESC") {
+						//Debug.Log (sp.Aggregate((s1,s2)=>s1+"|"+s2+"|"));
 						foreach(string f in sp){
 							operatingChangeSubSet.Changes[changeSubsetIndexCounter] = (System.Convert.ToInt32(f));
 							changeSubsetIndexCounter++;
@@ -226,11 +238,17 @@ namespace NUPD
 				}
 				
 				if(first == "NAME"){
-					ci.ShortName = sp[1];
+					if(sp.Length > 1)
+						ci.ShortName = sp.Skip(1).Aggregate((s1,s2)=>s1+" "+s2);
 				} else if(first == "NDESC"){
-					ci.Description = sp[1];
+					if(sp.Length > 1)
+						ci.Description = sp.Skip(1).Aggregate((s1,s2)=>s1+" "+s2);
 				} else if(first == "INDEX"){
-					ci.Index = new CharacterIndex(System.Convert.ToInt32(sp[1]));
+					try{ //TODO delete trycatch
+						ci.Index = new CharacterIndex(System.Convert.ToInt32(sp[1] ));
+					}catch{
+						ci.Index = new CharacterIndex(-1);
+					}
 				} else if(first == "CHANGE"){
 					operatingChangeSet = new ChangeSet();
 					operatingChangeSet.Changes = new List<ChangeSubSet>();
@@ -239,11 +257,13 @@ namespace NUPD
 				{
 					changeSubsetIndexCounter = 0;
 					operatingChangeSubSet = new ChangeSubSet();
-					operatingChangeSubSet.Description = sp[1];
+					if(sp.Length > 1)
+						operatingChangeSubSet.Description = sp.Skip(1).Aggregate((s1,s2)=>s1+" "+s2);
 					operatingChangeSet.Changes.Add(operatingChangeSubSet);
 				}
 				
-				lastState = first;
+				if(keywords.Contains(first))
+					lastState = first;
 			}
 			return ci;
 		}
