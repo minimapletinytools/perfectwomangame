@@ -34,7 +34,7 @@ public class TestingSceneBehaviour : MonoBehaviour {
         {
             mIndex = (mIndex + 1) % mFiles.Length;
             ManagerManager.Manager.mTransparentBodyManager.mFlat.SoftColor = new Color(0.5f, 0.5f, 0.5f, 0.35f);
-            ManagerManager.Manager.mTransparentBodyManager.mFlat.SoftPosition = new Vector3(700, 0, 0);
+            ManagerManager.Manager.mTransparentBodyManager.mFlat.SoftPosition = new Vector3(-800, 0, 0);
             ManagerManager.Manager.mTransparentBodyManager.set_target_pose(get_pose_from_file(mFiles[mIndex]));
         }
 	}
