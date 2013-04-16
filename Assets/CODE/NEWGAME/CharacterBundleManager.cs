@@ -156,9 +156,10 @@ public class CharacterBundleManager : FakeMonoBehaviour {
 		
 		foreach(CharacterIndex e in CharacterIndex.sAllCharacters)
 		{
-			string txtName = e.StringIdentifier + "_diff";
+			string txtName = "info_"+e.StringIdentifier;
 			if(aBundle.Contains(txtName))
 			{
+				Debug.Log ("loaded character info " + txtName);
 				mCharacterHelper.Characters[e.Index].CharacterInfo = 
 					NUPD.CharacterInformationProcessor.process_character((aBundle.Load(txtName) as TextAsset).text);
 			}
