@@ -17,7 +17,13 @@ public class ParticleStreamObject  : FlatElementBase {
 		
 		
     }
-	
+
+
+    public override void set_color(Color aColor)
+    {
+        mParticles.startColor = aColor;
+        base.set_color(aColor);
+    }
 	
 	public override void set_position (Vector3 aPos)
 	{
@@ -30,7 +36,7 @@ public class ParticleStreamObject  : FlatElementBase {
 	
 	public override void set_rotation(Quaternion aRot)
 	{
-		//target determines rotation
+		//target determines rotation so we don't want tod anything here.
 	}
 }
 

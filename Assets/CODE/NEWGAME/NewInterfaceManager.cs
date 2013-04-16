@@ -361,7 +361,7 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 	}
 	
 	
-	public void add_cutscene_particle_stream(CharacterIndex aTarget, PopupTextObject aPopup)
+	public void add_cutscene_particle_stream(CharacterIndex aTarget, PopupTextObject aPopup, bool aPositive)
 	{
 		float duration = 2f;
 		float delay = 1f;
@@ -381,17 +381,23 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 					mPBCharacterIcons[aTarget.Index].set_background_color(new Color(0.5f,0.5f,0.5f));
 				},
 			duration);
-			add_timed_particle_stream(mFlatCamera.get_point(0.40f,0),mPBCharacterIcons[aTarget.Index].SoftPosition,duration,delay);
+			add_timed_particle_stream(
+                mFlatCamera.get_point(0.40f,0),
+                mPBCharacterIcons[aTarget.Index].SoftPosition,
+                duration,
+                delay,
+                aPositive ? new Color(0.1f,0.7f,0.2f) : new Color(0.7f,0,0));
 		}
 	}
 	
-	public void add_timed_particle_stream(Vector3 aPosition, Vector3 aTarget, float aDuration, float aDelay)
+	public void add_timed_particle_stream(Vector3 aPosition, Vector3 aTarget, float aDuration, float aDelay, Color aColor)
 	{
 		ParticleStreamObject pso = null;
 		TED.add_one_shot_event(
 			delegate()
 			{
 				pso = new ParticleStreamObject(4,aTarget);
+                pso.HardColor = aColor;
 				pso.HardPosition = aPosition;
 				mElement.Add(pso);
 			},
@@ -546,11 +552,12 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 					var po = add_timed_text_bubble(changeMsg,cutsceneTextTime);
 					for(int i = 0; i < diffChanges.Length; i++)
 					{
-                        var cchar = new CharacterIndex(i);
-						add_cutscene_particle_stream(cchar,po);
-                        mPBCharacterIcons[cchar.Index].set_difficulty(Mathf.Clamp(mManager.mGameManager.get_character_difficulty(cchar) + diffChanges[i], 0, 3));
-                        //this responsilibity should belong to NGM
-                        //mManager.mGameManager.change_character_difficulty(cchar, diffChanges[i]);
+                        if (diffChanges[i] != 0)
+                        {
+                            var cchar = new CharacterIndex(i);
+                            add_cutscene_particle_stream(cchar, po, e.is_positive());
+                            mPBCharacterIcons[cchar.Index].set_difficulty(Mathf.Clamp(mManager.mGameManager.get_character_difficulty(cchar) + diffChanges[i], 0, 3));
+                        }
 					}
 					return true;
 				}
