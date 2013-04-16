@@ -62,9 +62,7 @@ public class FlatElementBase {
                 foreach (Renderer e in PrimaryGameObject.GetComponentsInChildren<Renderer>())
                     e.enabled = value;
             }
-            
         }
-
     }
 	
     public virtual float SoftInterpolation{get;set;}

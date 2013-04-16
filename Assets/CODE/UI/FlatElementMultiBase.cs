@@ -176,6 +176,26 @@ public class FlatElementMultiBase : FlatElementBase
     }
 
 
+
+    bool mEnabled = true;
+    public override bool Enabled
+    {
+        get
+        {
+            return mEnabled;
+        }
+        set
+        {
+            if (mEnabled != value)
+            {
+                foreach (var e in mElements)
+                {
+                    e.Element.Enabled = value;
+                }
+                mEnabled = value;
+            }
+        }
+    }
 	
 	
 
