@@ -106,7 +106,6 @@ public class NewGameManager : FakeMonoBehaviour
 		CurrentCharacterLoader = aCharacter;
 		
 		//set new character data
-		//TODO finish
 		CharacterIndex newCharIndex = new CharacterIndex(aCharacter.Name);
 		mPerformanceStats.Add(new PerformanceStats(newCharIndex));
 		CurrentPerformanceStat.Stats = CharacterHelper.Characters[newCharIndex.Index];
@@ -281,9 +280,13 @@ public class NewGameManager : FakeMonoBehaviour
         
         try
         {
+			if(mManager.mCharacterBundleManager.get_character_stat(CurrentCharacterIndex).CharacterInfo.ChangeSet.Count>0)
+			{
+				//Debug.Log (mManager.mCharacterBundleManager.get_character_stat(CurrentCharacterIndex).CharacterInfo.ChangeSet[0].LowerThreshold);
+				//Debug.Log (mManager.mCharacterBundleManager.get_character_stat(CurrentCharacterIndex).CharacterInfo.ChangeSet[0].UpperThreshold);
+				//Debug.Log (CurrentPerformanceStat.Score);
+			}
             changes = mManager.mCharacterBundleManager.get_character_stat(CurrentCharacterIndex).CharacterInfo.ChangeSet.Find(e => e.LowerThreshold <= CurrentPerformanceStat.Score && e.UpperThreshold >= CurrentPerformanceStat.Score);
-            if (changes == null)
-                throw new UnityException();
         }
         catch
         {
@@ -291,7 +294,7 @@ public class NewGameManager : FakeMonoBehaviour
             changes = new NUPD.ChangeSet();
             changes.Changes.Add(new NUPD.ChangeSubSet() { Description = "No changes available!!" });
         }
-
+		
         //TODO don't put this here
         foreach (var e in changes.Changes)
         {
@@ -299,8 +302,8 @@ public class NewGameManager : FakeMonoBehaviour
             string changeMsg = e.Description;
             for(int i = 0; i < diffChanges.Length; i++){
                 var cchar = new CharacterIndex(i);
-                if(diffChanges[i] != 0)
-                    mManager.mGameManager.change_character_difficulty(cchar, diffChanges[i]);
+				if(diffChanges[i] != 0)
+                	mManager.mGameManager.change_character_difficulty(cchar, diffChanges[i]);
             }
         }
 		
@@ -451,7 +454,6 @@ public class NewGameManager : FakeMonoBehaviour
 	public void change_character_difficulty(CharacterIndex aChar,  int aChange)
 	{
         //TODO if aChange is +/- 9 do something special instead
-        Debug.Log(CharacterHelper.Characters[aChar.Index]);
 		CharacterHelper.Characters[aChar.Index].Difficulty = Mathf.Clamp(CharacterHelper.Characters[aChar.Index].Difficulty + aChange,0,3);
 		
 		//TODO put this in its own function
