@@ -81,15 +81,6 @@ public class CharacterIconObject : FlatElementMultiBase {
     }
 	
 	
-	public void set_color(Color aColor)
-	{
-		//this is dumb, but it works in our situation...
-		if(SoftColor.a == 0)
-		{
-			set_name("");
-			base.set_color(aColor);
-		}
-	}
 	
 	public void set_background_color(Color aColor)
 	{

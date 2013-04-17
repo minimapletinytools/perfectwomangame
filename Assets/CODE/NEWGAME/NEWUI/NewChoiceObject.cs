@@ -124,7 +124,7 @@ public class NewChoiceObject : FlatElementMultiBase {
 				bodyColor = mBody.SoftColor;
 			
 			base.SoftColor = value;
-            //mDifficultyBalls.SoftColor = value;
+            mPerfect.SoftColor = value;
 			
 			//DELETE this is a stupid hack
 			if(value.a != 0 && mText != null)

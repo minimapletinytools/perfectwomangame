@@ -7,9 +7,10 @@
 -website
 -figure out whats slowing the game down
 -feedback ideas, after pose changes, you get a blip indicating how well you ddi that pose in that time interval
--remove second instance of prepare to be born
+-fix timing on cutscenes
+DONE-remove second instance of prepare to be born
 -fix hip problem
--fix transparency issue with the choice object stuff
+DONE-fix transparency issue with the choice object stuff
 DONE-fix transparency problem with character icon texkt
 DONE-not white text
 -blue box during choice transparent

@@ -220,6 +220,7 @@ public class FlatElementMultiBase : FlatElementBase
     }
 	
 	
+    //TODO do your fancy blending version...
     public virtual void set_color(Color aColor)
     {
 		foreach (ElementOffset e in mElements)
@@ -233,6 +234,6 @@ public class FlatElementMultiBase : FlatElementBase
 		{
             e.Element.set();
 		}
-		set_color(HardColor + mLocalColor);
+		//set_color(HardColor + mLocalColor);
     }
 }

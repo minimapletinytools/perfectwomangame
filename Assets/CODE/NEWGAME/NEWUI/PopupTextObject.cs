@@ -50,6 +50,7 @@ public class PopupTextObject : FlatElementMultiBase {
 		}
 		
 		mText = new FlatElementText(ManagerManager.Manager.mNewRef.genericFont,120,aText,aDepth+1);
+        mText.HardColor = new Color(0, 0, 0);
 		mElements.Add(new FlatElementMultiBase.ElementOffset(mBackground, new Vector3(0, 0, 0)));
 		mElements.Add(new FlatElementMultiBase.ElementOffset(mText, new Vector3(0, textOffset, 0)));
         PrimaryGameObject = create_primary_from_elements();
@@ -62,7 +63,10 @@ public class PopupTextObject : FlatElementMultiBase {
 		//TODO size
 		return ManagerManager.Manager.mNewRef.textSmallBubble[Random.Range(0,ManagerManager.Manager.mNewRef.textSmallBubble.Length)];
 	}
-	
+    public void set_text_color(Color aColor)
+    {
+        mText.SoftColor = aColor;
+    }
 	public void set_background_color(Color aColor)
 	{
 		mBackground.SoftColor = aColor;	

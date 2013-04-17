@@ -10,6 +10,19 @@ public class DifficultyObject : FlatElementMultiBase
         set
         {
             mDifficulty = value;
+
+            /* use this if you ever fix blending
+            for (int i = 0; i < 4; i++)
+            {
+                if (i <= Difficulty)
+                {
+                    mImageElements[i].SoftColor = new Color(0.5f, 0.5f, 0.5f, 1);
+                }
+                else
+                {
+                    mImageElements[i].SoftColor = new Color(0.5f, 0.5f, 0.5f, 0);
+                }
+            }*/
         } 
     }
 

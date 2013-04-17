@@ -181,6 +181,7 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 		mBB.SoftPosition = mFlatCamera.get_point(0, 0);
 		fade_bb_contents(false);
 		mBBMiniMan.SoftColor = new Color(1,0.3f,0.2f);
+        mBB.SoftColor = new Color(0.5f, 0.5f, 0.5f, 0.5f);
 	}
 	
 	//make sure begin_new_character is called before this
