@@ -131,7 +131,7 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 			mElement.Add(mBBChoiceBodies[i]);
 		}
 		
-		mBBQuestionText = new FlatElementText(newRef.genericFont,100,"What will you be like at age ",10);
+		mBBQuestionText = new FlatElementText(newRef.genericFont,100,"",10);
 		mBBQuestionText.HardPosition = mFlatCamera.get_point(0,0.75f);
 		mBBMiniMan = new FlatBodyObject(miniMan,20);
 		mBBMiniMan.HardScale = miniManScale;
@@ -142,7 +142,7 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 		
 		mElement.Add(mBBMiniMan);
 		mElement.Add(mBBChoiceBox);
-		
+		mElement.Add(mBBQuestionText);
 		GameObject.Destroy(mMiniMan.gameObject);
 		
 		
@@ -169,6 +169,7 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 			e.SoftColor = fullColor;
 		mBBMiniMan.SoftColor = fullColor;
 		mBBChoiceBox.SoftColor = fullColor;
+		mBBQuestionText.SoftColor = fullColor;
 	}
 	
 	//make sure choice contents are made first before calling this
@@ -181,7 +182,7 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 		mBB.SoftPosition = mFlatCamera.get_point(0, 0);
 		fade_bb_contents(false);
 		mBBMiniMan.SoftColor = new Color(1,0.3f,0.2f);
-        mBB.SoftColor = new Color(0.5f, 0.5f, 0.5f, 0.5f);
+        mBB.SoftColor = new Color(0.5f, 0.5f, 0.5f, 0.2f);
 	}
 	
 	//make sure begin_new_character is called before this
@@ -207,8 +208,6 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 		}
 		
 		fade_bb_contents(true);
-		
-		mBBQuestionText.SoftColor = new Color(1,0,0,1);
 		
 		//meter objects overrides soft color so we have to manually turn the meter off..
 		TED.add_event(
@@ -317,6 +316,8 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 			mPBCharacterIcons[e.Key.Index].mBody.set_target_pose(e.Value);
 		}
 	}
+	
+	
 	
 	public void set_pb_character_icon_colors(List<CharacterStats> aChars)
 	{
@@ -455,6 +456,9 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 		}
 		mBBLastPerformanceGraph = aChar;
 		mElement.Add(mBBLastPerformanceGraph.PerformanceGraph);
+		
+		mBBQuestionText.Text = "What will you be like at age " + aChar.Character.get_future_neighbor(0).Age;
+		mBBQuestionText.PrimaryGameObject.name = "POOP";
 		
 		//PB
 		position_pb_character_icons(aChar.Character.Level);
@@ -641,7 +645,7 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 		
 		//this is all a hack to get the score to show up right...
 		float scoreIncrementor = 0;
-		FlatElementText finalScoreText = new FlatElementText(mManager.mNewRef.genericFont,150,"0",10);
+		FlatElementText finalScoreText = new FlatElementText(mManager.mNewRef.genericFont,150,"",10);
 		foreach (Renderer f in finalScoreText.PrimaryGameObject.GetComponentsInChildren<Renderer>())
                 f.gameObject.layer = 4;
 		finalScoreText.SoftPosition = mManager.mBackgroundManager.mBackgroundElements.mElements[0].Element.SoftPosition + new Vector3(0, -200, 0);

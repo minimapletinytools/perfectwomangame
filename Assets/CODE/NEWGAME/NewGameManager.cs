@@ -357,6 +357,7 @@ public class NewGameManager : FakeMonoBehaviour
 		CurrentPerformanceStat.DeathTime = PercentTimeCompletion;
 		
 		//set the cutscene
+		mManager.mMusicManager.fade_out();
 		mManager.mBodyManager.transition_character_out();
 		mManager.mTransparentBodyManager.transition_character_out();
 		mManager.mBackgroundManager.load_cutscene(4,DeathCharacter);

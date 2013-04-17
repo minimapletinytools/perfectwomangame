@@ -87,9 +87,10 @@ public class CharacterIconObject : FlatElementMultiBase {
 		mBackground.SoftColor = aColor;
 	}
 	
+	public static Color[] sDiffColorMapping = new Color[]{new Color(0,1,0,1), new Color(1,1,0,1), new Color(1,0.5f,0,1), new Color(1,0,0,1)};
 	public void set_difficulty(int aDiff)
 	{
-		set_body_color(Color.Lerp(new Color(0.5f,0.5f,0.5f), new Color32(255,30,58,255), aDiff/3f));
+		set_body_color(sDiffColorMapping[aDiff]);
 	}
 	public void set_body_color(Color aColor)
 	{

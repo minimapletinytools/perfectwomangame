@@ -483,6 +483,8 @@ public class FlatBodyObject : FlatElementBase
                 return new Vector3(0, 0, -0.7f);
             case ZigJointId.LeftShoulder:
                 return new Vector3(0, 0, -0.6f);
+			case ZigJointId.Neck:
+				return new Vector3(0, 0, -0.55f);//lol
             case ZigJointId.Torso:
                 return new Vector3(0, 0, -0.5f);
             case ZigJointId.Waist:

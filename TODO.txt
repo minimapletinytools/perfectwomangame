@@ -1,32 +1,20 @@
-
-
-
 ::new shit to do::
-
+-check perfectness
+-warning for bad performance!!
+DONE-music fading does not on early death 
+DONE-green, yellow, orange, red for difficulties
+-update charactecrs
+-update poses
 -business cards
 -website
 -figure out whats slowing the game down
 -feedback ideas, after pose changes, you get a blip indicating how well you ddi that pose in that time interval
 -fix timing on cutscenes
-DONE-remove second instance of prepare to be born
 -fix hip problem
-DONE-fix transparency issue with the choice object stuff
-DONE-fix transparency problem with character icon texkt
-DONE-not white text
--blue box during choice transparent
-	-eventually do our new layout for choosing screen
+DONE-blue box during choice transparent
 -foregrounds behind the puppet
--green, yellow, orange, red for difficulties
 -fix glow
-
-DONE-new difficulty junk
-	DONE-delete NGM's local instance of CharacterHelper
-	DONE-cbm now loads into local struct. use gm to read from that struct (or copy it)
-	DONE-cutscenes need to use info inside of that struct
-	DONE-make sure there are good default stuff so we don't need all the txt files
-	-test it
-DONE-update lea's new poses
-DONE-body parts order might be exactly backwards
+-body parts order might be exactly backwards
 	LLA
 	LUA
 	RLA
@@ -38,6 +26,24 @@ DONE-body parts order might be exactly backwards
 	LLL
 	RUL
 	RLL
+
+-eventually do our new layout for choosing screen
+
+
+DONE-gravestone starts with no #s
+DONE-Age question is missing
+DONE-remove second instance of prepare to be born
+DONE-fix transparency issue with the choice object stuff
+DONE-fix transparency problem with character icon texkt
+DONE-not white text
+DONE-new difficulty junk
+	DONE-delete NGM's local instance of CharacterHelper
+	DONE-cbm now loads into local struct. use gm to read from that struct (or copy it)
+	DONE-cutscenes need to use info inside of that struct
+	DONE-make sure there are good default stuff so we don't need all the txt files
+	-test it
+DONE-update lea's new poses
+
 
 DONE-make grading easier so you can get prefect sometime
 DONE-add names to pb icons
