@@ -1,16 +1,20 @@
 ::new shit to do::
+-fix hip problem
+	DONE-It hink it'sb ecasu ewaist.position is invalid
+	-test
+
 -check perfectness
 -warning for bad performance!!
 DONE-music fading does not on early death 
 DONE-green, yellow, orange, red for difficulties
--update charactecrs
--update poses
+DONE-update charactecrs
+DONE-update poses
 -business cards
 -website
 -figure out whats slowing the game down
 -feedback ideas, after pose changes, you get a blip indicating how well you ddi that pose in that time interval
 -fix timing on cutscenes
--fix hip problem
+
 DONE-blue box during choice transparent
 -foregrounds behind the puppet
 -fix glow
