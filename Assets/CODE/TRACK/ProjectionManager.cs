@@ -109,7 +109,7 @@ public class ProjectionManager : FakeMonoBehaviour {
         if(!mManager.mZigManager.using_nite())
             return -waist.Rotation.flat_rotation() + 90;    
         else
-            return get_relative(torso.Position, L.Position * 0.5f + R.Position * 0.5f); //TODO use this for OSX...
+            return get_relative(waist.Position, L.Position * 0.5f + R.Position * 0.5f); //TODO use this for OSX...
     }
 
     public float get_relative(Vector3 A, Vector3 B)
@@ -192,7 +192,7 @@ public class ProjectionManager : FakeMonoBehaviour {
             try
             {
 				
-				float waistAngle = get_waist(mManager.mZigManager.Joints[ZigJointId.Waist], mManager.mZigManager.Joints[ZigJointId.LeftKnee], mManager.mZigManager.Joints[ZigJointId.RightKnee]);
+				float waistAngle = get_waist(mManager.mZigManager.Joints[ZigJointId.Torso], mManager.mZigManager.Joints[ZigJointId.LeftKnee], mManager.mZigManager.Joints[ZigJointId.RightKnee]);
 				//waist smoothing angle hack
 				if(!mManager.mZigManager.using_nite() && targetPose != null)
 				{
