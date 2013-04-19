@@ -9,6 +9,7 @@ DONE-music fading does not on early death
 DONE-green, yellow, orange, red for difficulties
 DONE-update charactecrs
 DONE-update poses
+DONE-fix glow
 -business cards
 -website
 -figure out whats slowing the game down
