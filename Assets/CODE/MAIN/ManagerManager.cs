@@ -213,7 +213,6 @@ public class ManagerManager : MonoBehaviour{
 	void OnGUI()
     {
         GUI.depth = int.MinValue;
-        //GUI.Box(new Rect(0, Screen.height-50, 200, 50), "poo");
         //GUI.Box(new Rect(20, 20, 80,30), mDebugString);
     }
 	

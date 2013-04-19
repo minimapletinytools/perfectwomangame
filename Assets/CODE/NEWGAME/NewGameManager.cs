@@ -237,7 +237,7 @@ public class NewGameManager : FakeMonoBehaviour
 		}
 		
 		
-		mManager.mInterfaceManager.enable_warning_text(true);
+		
 		
 		//early death
 		bool die = false;
@@ -248,6 +248,8 @@ public class NewGameManager : FakeMonoBehaviour
 				mManager.mInterfaceManager.enable_warning_text(true);
 			else 
 				mManager.mInterfaceManager.enable_warning_text(false);
+			
+			//mManager.mDebugString = "" + CurrentPerformanceStat.last_score(4/30f)/(4/30f);
 			
 			if(PercentTimeCompletion > 0.25f)
 			{

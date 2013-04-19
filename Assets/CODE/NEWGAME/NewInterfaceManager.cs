@@ -113,7 +113,7 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 		mElement.Add(mBBText);
 		mElement.Add(mBBScoreFrame);
 		mElement.Add(mBBScoreText);
-		
+		mElement.Add(mBBWarningText);
 		
 		
 		//BB choice nonsense
@@ -199,7 +199,7 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 		mBBScoreFrame.SoftPosition = mBB.SoftPosition + new Vector3(-350,bottomVOffset,0);
 		mBBScoreText.SoftPosition = mBB.SoftPosition + new Vector3(-350,bottomVOffset-40,0);
 		mBBLastPerformanceGraph.PerformanceGraph.SoftPosition = mBB.SoftPosition + new Vector3(150,bottomVOffset,0);
-		mBBWarningText.HardPosition = mBB.SoftPosition + new Vector3(150,bottomVOffset,0);
+		mBBWarningText.HardPosition = mBB.SoftPosition + new Vector3(150,bottomVOffset-40,0);
 		
 		//return bodies if needed
 		foreach(NewChoiceObject e in mBBChoices)
@@ -227,7 +227,7 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 	//called by NewGameManager
 	public void enable_warning_text(bool enable)
 	{
-		mBBWarningText.HardColor = ((int)Time.deltaTime*10000) % 2 == 0 && enable? new Color(0.7f,0.3f,0,0.5f) : new Color(0,0,0,0);
+		mBBWarningText.HardColor = (((int)(Time.time*8)) % 2 == 0) && enable ? new Color(0.7f,0.2f,0,0.5f) : new Color(0,0,0,0);
 	}
 	
 	//called by NewGameManager
