@@ -19,7 +19,7 @@ public class CharacterIconObject : FlatElementMultiBase {
 			GameObject.Destroy(ctb.gameObject);
 		}
 		else
-			mBody =  new FlatBodyObject(aIcon,aDepth);
+			mBody =  new FlatBodyObject(aIcon,aDepth+3);
 		
 		mBody.HardShader = ManagerManager.Manager.mReferences.mMiniCharacterShader;
 		
@@ -87,7 +87,7 @@ public class CharacterIconObject : FlatElementMultiBase {
 		mBackground.SoftColor = aColor;
 	}
 	
-	public static Color[] sDiffColorMapping = new Color[]{new Color(0,1,0,1), new Color(1,1,0,1), new Color(1,0.5f,0,1), new Color(1,0,0,1)};
+	public static Color[] sDiffColorMapping = new Color[]{new Color(0,0.8f,0,1), new Color(0.8f,0.8f,0,1), new Color(0.9f,0.4f,0,1), new Color(0.8f,0,0,1)};
 	public void set_difficulty(int aDiff)
 	{
 		set_body_color(sDiffColorMapping[aDiff]);

@@ -409,7 +409,7 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 		TED.add_one_shot_event(
 			delegate()
 			{
-				pso = new ParticleStreamObject(4,aTarget);
+				pso = new ParticleStreamObject(3,aTarget);
                 pso.HardColor = aColor;
 				pso.HardPosition = aPosition;
 				mElement.Add(pso);
