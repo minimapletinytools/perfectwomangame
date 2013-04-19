@@ -476,27 +476,27 @@ public class FlatBodyObject : FlatElementBase
         switch (id)
         {
             case ZigJointId.RightElbow:
-                return new Vector3(0, 0, -0.9f);
+                return new Vector3(0, 0, 0.9f);
             case ZigJointId.LeftElbow:
-                return new Vector3(0, 0, -0.8f);
+                return new Vector3(0, 0, 0.8f);
             case ZigJointId.RightShoulder:
-                return new Vector3(0, 0, -0.7f);
+                return new Vector3(0, 0, 0.7f);
             case ZigJointId.LeftShoulder:
-                return new Vector3(0, 0, -0.6f);
+                return new Vector3(0, 0, 0.6f);
 			case ZigJointId.Neck:
-				return new Vector3(0, 0, -0.55f);//lol
+				return new Vector3(0, 0, 0.55f);//lol
             case ZigJointId.Torso:
-                return new Vector3(0, 0, -0.5f);
+                return new Vector3(0, 0, 0.5f);
             case ZigJointId.Waist:
-                return new Vector3(0, 0, -0.4f);
+                return new Vector3(0, 0, 0.4f);
             case ZigJointId.LeftHip:
-                return new Vector3(0, 0, -0.3f);
+                return new Vector3(0, 0, 0.3f);
             case ZigJointId.RightHip:
-                return new Vector3(0, 0, -0.2f);
+                return new Vector3(0, 0, 0.2f);
             case ZigJointId.RightKnee:
-                return new Vector3(0, 0, -0.1f);
+                return new Vector3(0, 0, 0.1f);
             case ZigJointId.LeftKnee:
-                return new Vector3(0, 0, -0.0f);
+                return new Vector3(0, 0, 0.0f);
         }
         return Vector3.zero;
     }
