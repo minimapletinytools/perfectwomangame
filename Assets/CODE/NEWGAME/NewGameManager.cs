@@ -91,6 +91,9 @@ public class NewGameManager : FakeMonoBehaviour
 		}
 		mManager.mInterfaceManager.set_pb_character_icon_poses(poses);
 		
+		
+		
+		
 	}
 	
 	
@@ -212,14 +215,8 @@ public class NewGameManager : FakeMonoBehaviour
 			else mLastGrade = newGrade;
 			grade = mLastGrade;
 			
-			//limit decilen bu tnot growth
-			//grade = Random.Range(0f,1f);
-			
-			CurrentPerformanceStat.update_score(PercentTimeCompletion,grade);
-			
-			
+			CurrentPerformanceStat.update_score(PercentTimeCompletion,grade);			
 			mManager.mCameraManager.set_camera_effects(grade);
-			
 			//update score
 			mManager.mInterfaceManager.update_bb_score(TotalScore);	
         }
@@ -238,19 +235,30 @@ public class NewGameManager : FakeMonoBehaviour
 			//else transition_to_CHOICE();
 		}
 		
+		
+		mManager.mInterfaceManager.enable_warning_text(true);
+		
 		//early death
-		//TODO
-		//hack death
 		bool die = false;
 		die |= Input.GetKeyDown(KeyCode.D);
 		if (CurrentPoseAnimation != null && mManager.mZigManager.has_user())
+		{
+			if(PercentTimeCompletion > 0.2f && CurrentPerformanceStat.last_score(1.5f/30f)/(1.5f/30f) < 0.2f)
+				mManager.mInterfaceManager.enable_warning_text(true);
+			else 
+				mManager.mInterfaceManager.enable_warning_text(false);
+			
 			if(PercentTimeCompletion > 0.25f)
-				if(CurrentPerformanceStat.last_score(4)/(4/30f) < 0.2f)
+			{
+				if(CurrentPerformanceStat.last_score(4/30f)/(4/30f) < 0.2f)
 					die |= true;
+			}
+		}
 		if(die)
 		{
 			CurrentPerformanceStat.Finished = true;
 			mManager.mCameraManager.set_camera_effects(0);
+			mManager.mInterfaceManager.enable_warning_text(false);
 			transition_to_DEATH();
 		}
 		

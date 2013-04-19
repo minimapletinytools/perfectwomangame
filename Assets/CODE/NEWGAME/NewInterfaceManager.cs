@@ -77,6 +77,7 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 	FlatElementText mBBText;
 	FlatElementImage mBBScoreFrame;
 	FlatElementText mBBScoreText;
+	FlatElementText mBBWarningText = null;
 	//CHOOSING
 	int BB_NUM_CHOICES = 3;
 	List<NewChoiceObject> mBBChoices = new List<NewChoiceObject>();
@@ -103,7 +104,9 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 		//BB small nonsense
 		mBBText = new FlatElementText(mManager.mNewRef.genericFont,60,"",10);
 		mBBScoreFrame = new FlatElementImage(mManager.mNewRef.bbScoreBackground,9);
-		mBBScoreText  = new FlatElementText(mManager.mNewRef.genericFont,60,"0",10);
+		mBBScoreText = new FlatElementText(mManager.mNewRef.genericFont,60,"0",10);
+		mBBWarningText = new FlatElementText(mManager.mNewRef.genericFont,150,"WARNING",12);
+		mBBWarningText.HardColor = new Color(0.5f,0.5f,0.5f,0);
 		mBBText.HardPosition = random_position();
 		mBBScoreFrame.HardPosition = random_position();
 		mBBScoreText.HardPosition = random_position();
@@ -196,6 +199,7 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 		mBBScoreFrame.SoftPosition = mBB.SoftPosition + new Vector3(-350,bottomVOffset,0);
 		mBBScoreText.SoftPosition = mBB.SoftPosition + new Vector3(-350,bottomVOffset-40,0);
 		mBBLastPerformanceGraph.PerformanceGraph.SoftPosition = mBB.SoftPosition + new Vector3(150,bottomVOffset,0);
+		mBBWarningText.HardPosition = mBB.SoftPosition + new Vector3(150,bottomVOffset,0);
 		
 		//return bodies if needed
 		foreach(NewChoiceObject e in mBBChoices)
@@ -218,6 +222,13 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 			},
 		0);
 	}
+	
+	//called by NewGameManager
+	public void enable_warning_text(bool enable)
+	{
+		mBBWarningText.HardColor = ((int)Time.deltaTime*10000) % 2 == 0 && enable? new Color(0.7f,0.3f,0,0.5f) : new Color(0,0,0,0);
+	}
+	
 	//called by NewGameManager
 	public void update_bb_score(float aScore)
 	{

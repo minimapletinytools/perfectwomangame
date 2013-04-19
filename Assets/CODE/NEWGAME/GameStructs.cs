@@ -244,7 +244,7 @@ public class PerformanceStats
 	List<KeyValuePair<float,float>> mScore; //time, score
 	float mTotalScore;
 	
-	public void update_score(float aTime, float aScore)
+	public void update_score(float aTime, float aScore) //time should be between 0 and 1
 	{
 		if(mScore.Count > 0)
 			mTotalScore += (aTime-mScore.Last().Key)*aScore;
