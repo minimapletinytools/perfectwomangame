@@ -212,6 +212,7 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 		}
 		
 		fade_bb_contents(true);
+		mBB.SoftColor = new Color(0.5f, 0.5f, 0.5f, 0.5f);
 		
 		//meter objects overrides soft color so we have to manually turn the meter off..
 		TED.add_event(
@@ -374,18 +375,18 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 	}
 	
 	
-	public void add_cutscene_particle_stream(CharacterIndex aTarget, PopupTextObject aPopup, bool aPositive)
+	public void add_cutscene_particle_stream(CharacterIndex aTarget, PopupTextObject aPopup, float duration, bool aPositive)
 	{
-		float duration = 2f;
-		float delay = 1f;
+		float delay = 0;
+		Color useColor = (!aPositive) ? new Color(0.1f,0.7f,0.2f) : new Color(0.7f,0,0);
 		if(mPBCharacterIcons[aTarget.Index] != null)
 		{
 			TED.add_one_shot_event(
 				delegate()
 				{
 					//TODO proper color setting routines
-					aPopup.set_background_color(new Color(0,1,0));
-					mPBCharacterIcons[aTarget.Index].set_background_color(new Color(0,1,0));
+					aPopup.set_background_color(useColor);
+					mPBCharacterIcons[aTarget.Index].set_background_color(useColor);
 				},
 			delay).then_one_shot(
 				delegate()
@@ -399,7 +400,7 @@ public class NewInterfaceManager : FakeMonoBehaviour {
                 mPBCharacterIcons[aTarget.Index].SoftPosition,
                 duration,
                 delay,
-                aPositive ? new Color(0.1f,0.7f,0.2f) : new Color(0.7f,0,0));
+                useColor);
 		}
 	}
 	
@@ -429,10 +430,10 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 	{
 		PopupTextObject to = new PopupTextObject(aMsg,6);
 		to.HardPosition = random_position();
+		to.set_text_color(new Color(1,0.8f,0.8f,1));
 		TimedEventDistributor.TimedEventChain chain = TED.add_event(
 			delegate(float aTime)
 			{
-				//TODO set message
 				to.SoftPosition = mFlatCamera.get_point(0.40f,yRelOffset);
 				mElement.Add(to);
 				return true;
@@ -441,7 +442,7 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 			delegate()
 			{
 				//to.SoftPosition = random_position();
-				to.SoftColor = new Color32(0,0,0,0);
+				to.SoftColor = new Color(1,1,1,0);
 			},
 		duration).then_one_shot(
 			delegate()
@@ -494,7 +495,7 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 	//these are hacks to allow me to skip cutscenes
 	QuTimer mLastCutsceneChain = null;
 	System.Action mLastCutsceneCompleteCb = null;
-	public void set_for_CUTSCENE(System.Action cutsceneCompleteCb,NUPD.ChangeSet aChanges)
+	public void set_for_CUTSCENE(System.Action cutsceneCompleteCb, NUPD.ChangeSet aChanges)
 	{
 		//used for skipping cutscene
 		/*
@@ -514,13 +515,13 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 		
 		
 		//this slows the game down a lot...
-		//set_bb_small(mPB.BoundingBox.height/2+205);
-		//position_pb_character_icons(mBBLastPerformanceGraph.Character.Level,mPB.BoundingBox.height/2+205);
+		set_bb_small(mPB.BoundingBox.height/2+205);
+		position_pb_character_icons(mBBLastPerformanceGraph.Character.Level,mPB.BoundingBox.height/2+205);
 		
 		mLastCutsceneCompleteCb = delegate() {
 			//this slows the ame down a lot
-			//set_bb_small();
-			//position_pb_character_icons(mBBLastPerformanceGraph.Character.Level,0);
+			set_bb_small();
+			position_pb_character_icons(mBBLastPerformanceGraph.Character.Level,0);
 			cutsceneCompleteCb();
 			mLastCutsceneCompleteCb = null;
 			mLastCutsceneChain = null;
@@ -536,15 +537,11 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 				string text = "";
 				if(mBBLastPerformanceGraph.Character.Index == 0 || mBBLastPerformanceGraph.Character.Index == 29)
 				{
-					text = "Prepare to be Born";
+					text = "Prepare to be Born"; //TODO put this in the text file..
 				}
 				else
 				{
-					text += "You lived your ";
-					text += perfectPhrase[mBBLastPerformanceGraph.Stats.Perfect];
-					text += " life as a ";
-					text += mBBLastPerformanceGraph.Character.FullName;
-					text += " " + performancePhrase[Mathf.Clamp((int)(Mathf.Sqrt(mBBLastPerformanceGraph.Score)*4),0,3)];
+					text = aChanges.PerformanceDescription.Replace("<P>",perfectPhrase[mBBLastPerformanceGraph.Stats.Perfect]);
 				}
 				add_timed_text_bubble(text,firstTextTime);
 				return true;
@@ -553,30 +550,39 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 			delegate(){},firstTextTime);
 		
 		
-		float cutsceneTextTime = 4;
+		float cutsceneTextTime = 6;
 
 
 
 		foreach(var e in aChanges.Changes)
 		{
 			//string changeMsg = Random.Range(0,3) == 0 ? PDStats.negative_sentences[(int)e][0] : PDStats.positive_sentences[(int)e][0];
+			var changes = e;
             var diffChanges = e.Changes;
             string changeMsg = e.Description;
+			PopupTextObject po = null;
 			chain = chain.then(
 				delegate(float aTime)
 				{
-					var po = add_timed_text_bubble(changeMsg,cutsceneTextTime);
+					po = add_timed_text_bubble(changeMsg,cutsceneTextTime);
+					return true;
+				}
+			,0).then(
+				delegate(float aTime)
+				{
 					for(int i = 0; i < diffChanges.Length; i++)
 					{
 						if(diffChanges[i] != 0){
                         	var cchar = new CharacterIndex(i);
-							add_cutscene_particle_stream(cchar,po,e.is_positive());
-                        	mPBCharacterIcons[cchar.Index].set_difficulty(Mathf.Clamp(mManager.mGameManager.get_character_difficulty(cchar) + diffChanges[i], 0, 3));
+							add_cutscene_particle_stream(cchar,po,3f,changes.is_positive());
+							int nDiff = Mathf.Clamp(mManager.mGameManager.get_character_difficulty(cchar) + diffChanges[i], 0, 3);
+							mManager.mGameManager.change_interface_pose(cchar,nDiff);
+                        	mPBCharacterIcons[cchar.Index].set_difficulty(nDiff);
 						}
 					}
 					return true;
 				}
-			,0).wait(cutsceneTextTime);
+			,1.5f).wait (cutsceneTextTime-1.5f);
 		}
 		
 		chain = chain.then_one_shot(delegate(){mLastCutsceneCompleteCb();},END_CUTSCENE_DELAY_TIME);

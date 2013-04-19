@@ -1,25 +1,46 @@
 ::new shit to do::
--fix hip problem
-	DONE-It hink it'sb ecasu ewaist.position is invalid
-	-test
 
--check perfectness
--warning for bad performance!!
-DONE-music fading does not on early death 
-DONE-green, yellow, orange, red for difficulties
-DONE-update charactecrs
-DONE-update poses
+-fix warning nonsense
+-do performance scaling (i.e. take the squareroot of the score)
+DONE-cant seem to get orange idfficulty
+	-seems like initial dificulty fo 1 get set to 2 somehow
+-foregrounds behind the puppet???
+-what you really need to do is change the depth of the characters that are being changed during the particle effects
+DONE-change font color back to black
+
+DONE?-figure out whats going on with eraly death
+DONE-particle effect red not worknig
+DONE-particles need to show up behind the boxes
+W/E-check perfectness
 DONE-fix glow
+
+DONE??-warning for bad performance!!
 -business cards
 -website
 -figure out whats slowing the game down
 -feedback ideas, after pose changes, you get a blip indicating how well you ddi that pose in that time interval
--fix timing on cutscenes
+-eventually do our new layout for choosing screen
 
-DONE-blue box during choice transparent
--foregrounds behind the puppet
--fix glow
--body parts order might be exactly backwards
+
+DONE-fix hip problem
+DONE-chang ecutscene text to red
+DNOE-slow down timing in cutscenes!!!
+
+DONE-flip order on bodyparts
+DONE-fix transparency on blue bar when it shrinks
+DONE-set text to red not the whole bubble
+
+DONE-difficulties need teh change whe nthe particles trigger not before
+DONE-particle effect timing thing fix please 
+DONE-yellow in difficulty nedes to be darker
+
+DONE-music fading does not on early death 
+DONE-green, yellow, orange, red for difficulties
+DONE-update charactecrs
+DONE-update poses
+
+
+DONE-body parts order might be exactly backwards
 	LLA
 	LUA
 	RLA
@@ -31,10 +52,7 @@ DONE-blue box during choice transparent
 	LLL
 	RUL
 	RLL
-
--eventually do our new layout for choosing screen
-
-
+DONE-blue box during choice transparent
 DONE-gravestone starts with no #s
 DONE-Age question is missing
 DONE-remove second instance of prepare to be born

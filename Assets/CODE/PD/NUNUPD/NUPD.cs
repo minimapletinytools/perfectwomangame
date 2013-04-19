@@ -32,6 +32,7 @@ namespace NUPD
 	{
 		public float UpperThreshold {get; set;}
 		public float LowerThreshold {get; set;}
+		public string PerformanceDescription {get; set;}
 		public List<ChangeSubSet> Changes {get; set;}
 
         public ChangeSet()
@@ -68,139 +69,6 @@ namespace NUPD
 			};
 			return r;
 		}
-		public static CharacterInformation[] sAllCharacters = new CharacterInformation[]
-		{
-			new CharacterInformation()
-			{
-				ShortName = "Fetus",
-				LongName = "Fetus",
-				Description = "In your mother's womb",
-				Index = new CharacterIndex(0),
-				ChangeSet = new List<ChangeSet>()
-				{
-					new ChangeSet()
-					{
-						UpperThreshold = 1,
-						LowerThreshold = 0,
-						Changes = new List<ChangeSubSet>()
-						{
-							new ChangeSubSet()
-							{
-								Description = "Prepare to be born!",
-								Changes = new int[]
-								{
-									0, //fetus
-									0,0,0,0, //5
-									0,0,0,0, //16
-									0,0,0,0, //27
-									0,0,0,0, //34
-									0,0,0,0, //45
-									0,0,0,0, //60
-									0,0,0,0, //85
-									0, //100
-									0, //999
-								}
-							}
-						}
-					}
-				}
-			},
-			
-			new CharacterInformation()
-			{
-				ShortName = "Princess",
-				LongName = "In your mother's womb",
-				Description = "",
-				Index = new CharacterIndex(0),
-				ChangeSet = new List<ChangeSet>()
-				{
-					new ChangeSet()
-					{
-						UpperThreshold = 1f,
-						LowerThreshold = 0.5f,
-						Changes = new List<ChangeSubSet>()
-						{
-							new ChangeSubSet()
-							{
-								Description = "You're childhood memories are filled with magic",
-								Changes = new int[]
-								{
-									0, //fetus
-									0,0,0,0, //5
-									0,0,0,0, //16
-									0,0,0,0, //27
-									0,0,0,0, //34
-									0,0,0,0, //45
-									0,0,0,0, //60
-									0,0,0,0, //85
-									0, //100
-									0, //999
-								}
-							},
-							new ChangeSubSet()
-							{
-								Description = "But there was no Prince Charming",
-								Changes = new int[]
-								{
-									0, //fetus
-									0,0,0,0, //5
-									0,0,0,0, //16
-									0,0,0,0, //27
-									0,0,0,0, //34
-									0,0,0,0, //45
-									0,0,0,0, //60
-									0,0,0,0, //85
-									0, //100
-									0, //999
-								}
-							}
-						}
-					},
-					new ChangeSet()
-					{
-						UpperThreshold = 0.5f,
-						LowerThreshold = 0,
-						Changes = new List<ChangeSubSet>()
-						{
-							new ChangeSubSet()
-							{
-								Description = "You're castle was seiged by ogres!!!",
-								Changes = new int[]
-								{
-									0, //fetus
-									0,0,0,0, //5
-									0,0,0,0, //16
-									0,0,0,0, //27
-									0,0,0,0, //34
-									0,0,0,0, //45
-									0,0,0,0, //60
-									0,0,0,0, //85
-									0, //100
-									0, //999
-								}
-							},
-							new ChangeSubSet()
-							{
-								Description = "This is no fantasy, go to your room!",
-								Changes = new int[]
-								{
-									0, //fetus
-									0,0,0,0, //5
-									0,0,0,0, //16
-									0,0,0,0, //27
-									0,0,0,0, //34
-									0,0,0,0, //45
-									0,0,0,0, //60
-									0,0,0,0, //85
-									0, //100
-									0, //999
-								}
-							}
-						}
-					}
-				}
-			}
-		};
 	}
 	
 	
@@ -256,6 +124,8 @@ namespace NUPD
 				} else if(first == "CHANGE"){
 					operatingChangeSet = new ChangeSet();
 					operatingChangeSet.Changes = new List<ChangeSubSet>();
+					if(sp.Length > 1)
+						operatingChangeSet.PerformanceDescription = sp.Skip(1).Aggregate((s1,s2)=>s1+" "+s2);
 					ci.ChangeSet.Add(operatingChangeSet);
 				} else if(first == "CDESC")
 				{

@@ -227,6 +227,7 @@ public class NewGameManager : FakeMonoBehaviour
 		{
 			CurrentPerformanceStat.Finished = true;
 			mManager.mCameraManager.set_camera_effects(0);
+			mManager.mInterfaceManager.enable_warning_text(false);
 			transition_to_CUTSCENE();
 			
 			//if we don't want fetus to have a cutscene use this
@@ -303,17 +304,6 @@ public class NewGameManager : FakeMonoBehaviour
             changes.Changes.Add(new NUPD.ChangeSubSet() { Description = "No changes available!!" });
         }
 		
-        //TODO don't put this here
-        foreach (var e in changes.Changes)
-        {
-            var diffChanges = e.Changes;
-            string changeMsg = e.Description;
-            for(int i = 0; i < diffChanges.Length; i++){
-                var cchar = new CharacterIndex(i);
-				if(diffChanges[i] != 0)
-                	mManager.mGameManager.change_character_difficulty(cchar, diffChanges[i]);
-            }
-        }
 		
 		//visuals
 		mManager.mBodyManager.transition_character_out();
@@ -327,6 +317,20 @@ public class NewGameManager : FakeMonoBehaviour
 				TED.add_one_shot_event(
 					delegate() 
 					{	 
+				
+				        foreach (var e in changes.Changes)
+				        {
+				            var diffChanges = e.Changes;
+				            string changeMsg = e.Description;
+				            for(int i = 0; i < diffChanges.Length; i++){
+				                var cchar = new CharacterIndex(i);
+								if(diffChanges[i] != 0)
+								{
+				                	int nDiff = mManager.mGameManager.change_character_difficulty(cchar, diffChanges[i]);
+									change_interface_pose(cchar,nDiff);
+								}
+				            }
+				        }
 						mManager.mMusicManager.fade_out();
 					}
 				,0).then_one_shot(
@@ -460,17 +464,18 @@ public class NewGameManager : FakeMonoBehaviour
         return CharacterHelper.Characters[aChar.Index].Difficulty;
     }
 	
-	public void change_character_difficulty(CharacterIndex aChar,  int aChange)
+	public int change_character_difficulty(CharacterIndex aChar,  int aChange)
 	{
         //TODO if aChange is +/- 9 do something special instead
 		CharacterHelper.Characters[aChar.Index].Difficulty = Mathf.Clamp(CharacterHelper.Characters[aChar.Index].Difficulty + aChange,0,3);
-		
-		//TODO put this in its own function
+		return CharacterHelper.Characters[aChar.Index].Difficulty;
+	}
+	
+	public void change_interface_pose(CharacterIndex aChar,  int aDiff)
+	{
 		List<KeyValuePair<CharacterIndex,ProGrading.Pose>> poses = new List<KeyValuePair<CharacterIndex, ProGrading.Pose>>();
-		CharacterIndex e = aChar;
-		var poseAnimation = mManager.mCharacterBundleManager.get_pose(e,CharacterHelper.Characters[e.Index].Difficulty);
-		poses.Add(new KeyValuePair<CharacterIndex,ProGrading.Pose>(e,poseAnimation.get_pose(Random.Range(0,poseAnimation.poses.Count))));
+		var poseAnimation = mManager.mCharacterBundleManager.get_pose(aChar,aDiff);
+		poses.Add(new KeyValuePair<CharacterIndex,ProGrading.Pose>(aChar,poseAnimation.get_pose(Random.Range(0,poseAnimation.poses.Count))));
 		mManager.mInterfaceManager.set_pb_character_icon_poses(poses);
 	}
-    
 }
