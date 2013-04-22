@@ -374,7 +374,11 @@ public class NewGameManager : FakeMonoBehaviour
 		mManager.mMusicManager.fade_out();
 		mManager.mBodyManager.transition_character_out();
 		mManager.mTransparentBodyManager.transition_character_out();
-		mManager.mBackgroundManager.load_cutscene(4,DeathCharacter);
+		
+		if(CurrentCharacterLoader.has_cutscene(4))
+			mManager.mBackgroundManager.load_cutscene(4,CurrentCharacterLoader);
+		else
+			mManager.mBackgroundManager.load_cutscene(4,DeathCharacter);
 		
 		mManager.mInterfaceManager.set_for_DEATH(CurrentPerformanceStat.Character)
 			.then_one_shot(

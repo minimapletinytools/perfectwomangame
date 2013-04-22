@@ -1,5 +1,10 @@
-::new shit to do::
+::FEEDBACK::
+-die ways too easily
+-bad sentences have positive changes
+-overall too many positive changes i think.
 
+::new shit to do::
+-add in custom death
 -fix warning nonsense
 -do performance scaling (i.e. take the squareroot of the score)
 DONE-cant seem to get orange idfficulty
@@ -8,7 +13,7 @@ DONE-cant seem to get orange idfficulty
 -what you really need to do is change the depth of the characters that are being changed during the particle effects
 DONE-change font color back to black
 
-DONE?-figure out whats going on with eraly death
+DONE-figure out whats going on with eraly death
 DONE-particle effect red not worknig
 DONE-particles need to show up behind the boxes
 W/E-check perfectness

@@ -14,6 +14,11 @@ public class CharacterLoader {
         Sizes = new CharacterData.CharacterDataSizes();
         Name = "unset";
     }
+	
+	public bool has_cutscene(int aIndex)
+	{
+		return Sizes.find_static_element("CUTSCENE"+aIndex+"_0") != null;
+	}
     public void complete_load_character(AssetBundle aBundle, string aName)
     {
         while (load_character(aBundle,aName).GetEnumerator().MoveNext())
