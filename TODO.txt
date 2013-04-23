@@ -2,15 +2,30 @@
 -die ways too easily
 -bad sentences have positive changes
 -overall too many positive changes i think.
+-feedback ideas, after pose changes, you get a blip indicating how well you ddi that pose in that time interval
+
+
+::TODO100::
+-death
+	-consider making it progressively easier to die
+	-make harder to die
+	-give more advance warning 
+	-should model after rhythm game maybe
+-birth pose for fetus (really please...)
+-maybe make it a little easier to get perfect performance (clamp min score at a larger number)
+-do new layout for choice
+-business cards
+-website
 
 ::new shit to do::
--add in custom death
--fix warning nonsense
--do performance scaling (i.e. take the squareroot of the score)
-DONE-cant seem to get orange idfficulty
-	-seems like initial dificulty fo 1 get set to 2 somehow
 -foregrounds behind the puppet???
 -what you really need to do is change the depth of the characters that are being changed during the particle effects
+
+IGNORE-add in custom death
+DONE-fix warning nonsense
+IGNORE-do performance scaling (i.e. take the squareroot of the score)
+DONE-cant seem to get orange idfficulty
+	-seems like initial dificulty fo 1 get set to 2 somehow
 DONE-change font color back to black
 
 DONE-figure out whats going on with eraly death
@@ -20,12 +35,6 @@ W/E-check perfectness
 DONE-fix glow
 
 DONE??-warning for bad performance!!
--business cards
--website
--figure out whats slowing the game down
--feedback ideas, after pose changes, you get a blip indicating how well you ddi that pose in that time interval
--eventually do our new layout for choosing screen
-
 
 DONE-fix hip problem
 DONE-chang ecutscene text to red
