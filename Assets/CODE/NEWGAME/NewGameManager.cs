@@ -310,8 +310,12 @@ public class NewGameManager : FakeMonoBehaviour
 		//visuals
 		mManager.mBodyManager.transition_character_out();
 		mManager.mTransparentBodyManager.transition_character_out();
-		//eventually wont be cutscene 0
-		mManager.mBackgroundManager.load_cutscene(0,CurrentCharacterLoader);
+		
+		if(CurrentPerformanceStat.Score < 0.5f && CurrentCharacterLoader.has_cutscene(1))
+			mManager.mBackgroundManager.load_cutscene(1,CurrentCharacterLoader);
+		else
+			mManager.mBackgroundManager.load_cutscene(0,CurrentCharacterLoader);
+		
 		
 		mManager.mInterfaceManager.set_for_CUTSCENE(
 			delegate() 
