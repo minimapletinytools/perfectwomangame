@@ -209,7 +209,7 @@ public class ManagerManager : MonoBehaviour{
         }
     }
 	
-	public string mDebugString = "";
+	public string mDebugString = "WORK IN PROGRESS";
 	void OnGUI()
     {
         GUI.depth = int.MinValue;
@@ -217,7 +217,7 @@ public class ManagerManager : MonoBehaviour{
 		GUIStyle style = new GUIStyle();
 		style.fontSize = 20;
 		style.normal.textColor = new Color(1,1,1,1);
-		GUI.TextArea(new Rect(50,50,300,100),"WORK IN PROGRESS",style);
+		GUI.TextArea(new Rect(50,50,300,100),mDebugString,style);
     }
 	
 }
