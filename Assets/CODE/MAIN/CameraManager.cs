@@ -53,8 +53,8 @@ public class CameraManager : FakeMonoBehaviour {
 		
 		
 		
-        //MainBodyCameraBloomEffect = MainBodyCamera.gameObject.AddComponent<BloomAndLensFlares>();
-		MainBodyCameraBloomEffect = BackgroundCamera.gameObject.AddComponent<BloomAndLensFlares>();
+        MainBodyCameraBloomEffect = MainBodyCamera.gameObject.AddComponent<BloomAndLensFlares>();
+		//MainBodyCameraBloomEffect = BackgroundCamera.gameObject.AddComponent<BloomAndLensFlares>();
         BloomAndLensFlares templateBloom = ImageEffects.GetComponent<BloomAndLensFlares>();
         MainBodyCameraBloomEffect.addBrightStuffOneOneShader = templateBloom.addBrightStuffOneOneShader;
         MainBodyCameraBloomEffect.brightPassFilterShader = templateBloom.brightPassFilterShader;

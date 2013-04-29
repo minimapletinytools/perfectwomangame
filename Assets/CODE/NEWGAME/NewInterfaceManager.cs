@@ -105,7 +105,8 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 		mBBText = new FlatElementText(mManager.mNewRef.genericFont,60,"",10);
 		mBBScoreFrame = new FlatElementImage(mManager.mNewRef.bbScoreBackground,9);
 		mBBScoreText = new FlatElementText(mManager.mNewRef.genericFont,60,"0",10);
-		mBBWarningText = new FlatElementText(mManager.mNewRef.genericFont,150,"WARNING",12);
+		//mBBWarningText = new FlatElementText(mManager.mNewRef.genericFont,150,"WARNING",12);
+		mBBWarningText = new FlatElementText(mManager.mNewRef.genericFont,500,"WARNING",12);
 		mBBWarningText.HardColor = new Color(0.5f,0.5f,0.5f,0);
 		mBBText.HardPosition = random_position();
 		mBBScoreFrame.HardPosition = random_position();
@@ -199,7 +200,7 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 		mBBScoreFrame.SoftPosition = mBB.SoftPosition + new Vector3(-350,bottomVOffset,0);
 		mBBScoreText.SoftPosition = mBB.SoftPosition + new Vector3(-350,bottomVOffset-40,0);
 		mBBLastPerformanceGraph.PerformanceGraph.SoftPosition = mBB.SoftPosition + new Vector3(150,bottomVOffset,0);
-		mBBWarningText.HardPosition = mBB.SoftPosition + new Vector3(150,bottomVOffset-40,0);
+		mBBWarningText.HardPosition = mFlatCamera.Center;//mBB.SoftPosition + new Vector3(150,bottomVOffset-40,0);
 		
 		//return bodies if needed
 		foreach(NewChoiceObject e in mBBChoices)
@@ -430,7 +431,7 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 	{
 		PopupTextObject to = new PopupTextObject(aMsg,6);
 		to.HardPosition = random_position();
-		to.set_text_color(new Color(1,0.8f,0.8f,1));
+		to.set_text_color(new Color(0.7f,0.7f,1f,1));
 		TimedEventDistributor.TimedEventChain chain = TED.add_event(
 			delegate(float aTime)
 			{

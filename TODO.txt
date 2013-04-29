@@ -6,21 +6,22 @@
 
 
 ::TODO100::
--moved glow onto person
+DONE-moved glow onto person
 -indicators when body is off the screen
 	-make zigfu depth image only come up when there is a problem
--effect particles look more lie a line
--font should be blue
+DONE-effect particles look more lie a line
+DONE-font should be blue
 -make first three characters in color
 -in choice menu, text will change as you select it
--update names in selection screen (use names from text files)
--buy domain name
+DONE-update names in selection screen (use names from text files)
+DONE-buy domain name
 -death
+	DONE-move warning to middle of screen..
 	-consider making it progressively easier to die
 	DONE-make harder to die
 	-give more advance warning 
 	-should model after rhythm game maybe
--birth pose for fetus (really please...)
+DONE-birth pose for fetus (really please...)
 -maybe make it a little easier to get perfect performance (clamp min score at a larger number)
 -do new layout for choice
 -business cards
