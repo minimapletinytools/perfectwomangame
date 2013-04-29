@@ -120,6 +120,7 @@ public class NewGameManager : FakeMonoBehaviour
 			case "0-1":	
 				DeathCharacter = aCharacter; //TODO AssetBundle.undload will actually mess this up...
 				set_time_for_PLAY(30f);
+				//set_time_for_PLAY(999999f);
 				setup_next_poses(true);
 				transition_to_PLAY();
 				break;
@@ -197,14 +198,12 @@ public class NewGameManager : FakeMonoBehaviour
 			mManager.mBodyManager.set_target_pose(CurrentPose);
 		}
 		
+		
 		//this basically means we aren't 0 or 100 or 999
-		if (CurrentPoseAnimation != null)
+		if (CurrentPoseAnimation != null && CurrentCharacterIndex.Index != 0)
         {
-			
 			CurrentTargetPose = CurrentPoseAnimation.get_pose((int)(Time.time/6f));
 			mManager.mTransparentBodyManager.set_target_pose(CurrentTargetPose);
-			
-			
 			
             float grade = ProGrading.grade_pose(CurrentPose, CurrentTargetPose);
 			grade = ProGrading.grade_to_perfect(grade);
@@ -220,6 +219,18 @@ public class NewGameManager : FakeMonoBehaviour
 			//update score
 			mManager.mInterfaceManager.update_bb_score(TotalScore);	
         }
+		else if(CurrentCharacterIndex.Index == 0 && false) 
+		{
+			//TODO need to pull pose from somewhere else
+			//CurrentTargetPose = CurrentPoseAnimation.get_pose((int)(Time.time/6f));
+			mManager.mTransparentBodyManager.set_target_pose(CurrentTargetPose);
+            float grade = ProGrading.grade_pose(CurrentPose, CurrentTargetPose);
+			grade = ProGrading.grade_to_perfect(grade);
+			if(grade < 2f)
+			{
+				TimeRemaining = 0;
+			}
+		}
 		else
 			CurrentPerformanceStat.update_score(PercentTimeCompletion,0.5f);
 		
@@ -238,22 +249,23 @@ public class NewGameManager : FakeMonoBehaviour
 		
 		
 		
+		if (CurrentPoseAnimation != null)
+		{
+			if(PercentTimeCompletion > 0.2f && CurrentPerformanceStat.last_score(3f/30f)/(3f/30f) < 0.2f)
+				mManager.mInterfaceManager.enable_warning_text(true);
+			else 
+				mManager.mInterfaceManager.enable_warning_text(false);
+		}
 		
 		//early death
 		bool die = false;
 		die |= Input.GetKeyDown(KeyCode.D);
 		if (CurrentPoseAnimation != null && mManager.mZigManager.has_user())
 		{
-			if(PercentTimeCompletion > 0.2f && CurrentPerformanceStat.last_score(1.5f/30f)/(1.5f/30f) < 0.2f)
-				mManager.mInterfaceManager.enable_warning_text(true);
-			else 
-				mManager.mInterfaceManager.enable_warning_text(false);
 			
-			//mManager.mDebugString = "" + CurrentPerformanceStat.last_score(4/30f)/(4/30f);
-			
-			if(PercentTimeCompletion > 0.25f)
+			if(PercentTimeCompletion > 0.35f)
 			{
-				if(CurrentPerformanceStat.last_score(4/30f)/(4/30f) < 0.2f)
+				if(CurrentPerformanceStat.last_score(7/30f)/(7/30f) < 0.2f)
 					die |= true;
 			}
 		}

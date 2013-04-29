@@ -101,7 +101,7 @@ public class ZigManager : FakeMonoBehaviour {
         Vector3 v = B.Position - A.Position;
         return Quaternion.FromToRotation(aRelative, v);
     }
-	
+
 	void Zig_UpdateUser(ZigTrackedUser user)
     {
 		
@@ -128,5 +128,20 @@ public class ZigManager : FakeMonoBehaviour {
             }
 			//Debug.Log(output);
         }
+		
+		
+		//mManager.mDebugString = Joints[ZigJointId.LeftHand].Position.ToString();
     } 
+	
+	public UnityEngine.Rect get_user_bounds()
+	{
+		
+		//TODO
+		foreach(var e in Joints)
+		{
+			//e.Value.Position
+		}
+		return new UnityEngine.Rect();
+	}
+	
 }

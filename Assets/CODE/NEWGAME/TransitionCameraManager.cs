@@ -28,6 +28,7 @@ public class TransitionCameraManager : FakeMonoBehaviour
 	FlatElementText mPWCredits;
 	FlatElementImage mGLLogo;
 	FlatElementImage mFilmLogo;
+	FlatElementText mMessageText;
 	
 	
     public TransitionCameraManager(ManagerManager aManager)
@@ -104,6 +105,9 @@ public class TransitionCameraManager : FakeMonoBehaviour
 		mPWCredits =  new FlatElementText(refs.genericFont,60,"A  G a m e  b y  P e t e r  L u  a n d  L e a  S c h o e n f e l d e r",1);
 		mPWCredits.HardPosition = mFlatCamera.Center + new Vector3(0,0,0);
 		
+		mMessageText = new FlatElementText(refs.genericFont,60,"",1);
+		mMessageText.HardPosition = mFlatCamera.Center + new Vector3(0,400,0);
+		
 		//TODO GL and FA logo
 		mGLLogo = new FlatElementImage(refs.gameLabLogo,1);
 		mFilmLogo = new FlatElementImage(refs.filmAkademieLogo,1);
@@ -114,16 +118,7 @@ public class TransitionCameraManager : FakeMonoBehaviour
 		mElement.Add(mPWCredits);
 		mElement.Add(mGLLogo);
 		mElement.Add(mFilmLogo);
-		
-		
-		/*
-		PerformanceGraphObject mGraph = new PerformanceGraphObject(10);
-		mGraph.SoftPosition = mFlatCamera.Center;
-		for(int i = 0; i < 500; i++)
-		{
-			mGraph.update_graph(Random.Range(0f,1f),Random.Range(0f,1f));
-		}
-		mElement.Add(mGraph);*/
+		mElement.Add(mMessageText);
 		
 		//display logo
 		//if no kinect is found
@@ -135,20 +130,36 @@ public class TransitionCameraManager : FakeMonoBehaviour
 		//if 3 second elapsed and user is near center, 1 sec GOOD, make a t pose
 		//if 3 seconds elapesed and user is in tpose, 1 sec GOOD, begin fadeout
 			//on fadeoutcb, move depth image to lower left corner	
+		//mManager.mZigManager.DepthView.set_full(true);
 		
+		
+		int dState = 0; //0-started, 1-kinect not found
 		TED.add_event(
 			delegate(float aTime){
-				if(false)
-					go_to_fetus(0);
-				else if(Input.GetKeyDown(KeyCode.Alpha0))
-					go_to_fetus(0);
-				else if(aTime > 5 && 
-					mManager.mZigManager.has_user() && 
-					mManager.mCharacterBundleManager.is_initial_loaded()
-				)
+			
+				/*
+				if(!mManager.mZigManager.is_reader_connected())
+					dState = 1;
+				else if(mManager.mZigManager.has_user() && false) //TODO test if user is in frame
+					dState = 4;
+				else if(mManager.mZigManager.has_user()) //TODO test if user is found
+					dState = 3;
+				else
+					dState = 2;
+					*/
+				if((aTime > 5 && mManager.mZigManager.has_user() && mManager.mCharacterBundleManager.is_initial_loaded()) ||
+					Input.GetKeyDown(KeyCode.Alpha0) ||
+					false){
 					go_to_fetus(0); 
-				else return false;
-				return true;
+					return true;
+				}	
+				if(dState == 1)
+					mMessageText.Text = "Kinect not found";
+				else if(dState == 2)
+					mMessageText.Text = "Center yourself in the screen";
+				else
+					mMessageText.Text = "";
+				return false;
 			}
 		);
 		

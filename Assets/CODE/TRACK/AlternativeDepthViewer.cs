@@ -136,12 +136,19 @@ public class AlternativeDepthViewer : MonoBehaviour {
         currentRect.height = (1 - lambda) * currentRect.height + lambda * targetRect.height;
     }
 
-
+	public string Message{get;set;}
+	
     void OnGUI() {
         GUI.depth = int.MinValue;
         if (null == target) {
             //GUI.DrawTexture(new Rect(Screen.width - texture.width - 10, Screen.height - texture.height - 10, texture.width, texture.height), texture);
             GUI.DrawTexture(currentRect, DepthTexture);
         }
+		
+		var style = new GUIStyle();
+		style.font = ManagerManager.Manager.mNewRef.genericFont;
+		style.alignment = TextAnchor.MiddleCenter;
+		style.fontSize = 100;
+		GUI.Box(new Rect(0,0,Screen.width,Screen.height),Message,style);
     }
 }

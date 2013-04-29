@@ -8,7 +8,7 @@
 ::TODO100::
 -death
 	-consider making it progressively easier to die
-	-make harder to die
+	DONE-make harder to die
 	-give more advance warning 
 	-should model after rhythm game maybe
 -birth pose for fetus (really please...)
@@ -16,6 +16,12 @@
 -do new layout for choice
 -business cards
 -website
+
+-scrolling performance charts in end game
+-scrolling credits in end game
+-other end game cutscenes
+
+-intro calibration nonsense
 
 ::new shit to do::
 -foregrounds behind the puppet???

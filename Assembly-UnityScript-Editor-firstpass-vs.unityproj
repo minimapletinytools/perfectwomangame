@@ -96,6 +96,7 @@
      <None Include="Assets\Resources\POSE_TESTING\char1_m.txt" />
      <None Include="Assets\POSES\pose_EASY_0.txt" />
      <None Include="Assets\POSES\pose_IMP_2.txt" />
+     <None Include="Assets\POSES\birth_pose.txt" />
      <None Include="Assets\POSES\old_poses\char_kinect19.txt" />
      <None Include="Assets\Standard Assets\Image Effects (Pro Only)\_Sources\Shaders\_DepthOfField\DepthOfField34.shader" />
      <None Include="Assets\Standard Assets\Image Effects (Pro Only)\_Sources\Shaders\_DepthOfField\TiltShift.shader" />
