@@ -119,9 +119,11 @@ public class NewGameManager : FakeMonoBehaviour
 		{
 			case "0-1":	
 				DeathCharacter = aCharacter; //TODO AssetBundle.undload will actually mess this up...
-				set_time_for_PLAY(30f);
-				//set_time_for_PLAY(999999f);
+				//set_time_for_PLAY(30f);
+				set_time_for_PLAY(999999f);
 				setup_next_poses(true);
+				CurrentTargetPose = mManager.mReferences.mCheapPose.to_pose();
+				mManager.mTransparentBodyManager.set_target_pose(CurrentTargetPose);
 				transition_to_PLAY();
 				break;
 			case "100":
@@ -219,14 +221,13 @@ public class NewGameManager : FakeMonoBehaviour
 			//update score
 			mManager.mInterfaceManager.update_bb_score(TotalScore);	
         }
-		else if(CurrentCharacterIndex.Index == 0 && false) 
+		else if(CurrentCharacterIndex.Index == 0 && true) 
 		{
-			//TODO need to pull pose from somewhere else
-			//CurrentTargetPose = CurrentPoseAnimation.get_pose((int)(Time.time/6f));
+			//pose is loaded in initializer
 			mManager.mTransparentBodyManager.set_target_pose(CurrentTargetPose);
             float grade = ProGrading.grade_pose(CurrentPose, CurrentTargetPose);
 			grade = ProGrading.grade_to_perfect(grade);
-			if(grade < 2f)
+			if(grade < 3f && grade != 0) //0 grade means no kinect was plugged in
 			{
 				TimeRemaining = 0;
 			}
@@ -234,7 +235,7 @@ public class NewGameManager : FakeMonoBehaviour
 		else
 			CurrentPerformanceStat.update_score(PercentTimeCompletion,0.5f);
 		
-		if(TimeRemaining < 0)
+		if(TimeRemaining <= 0)
 		{
 			CurrentPerformanceStat.Finished = true;
 			mManager.mCameraManager.set_camera_effects(0);
@@ -249,7 +250,7 @@ public class NewGameManager : FakeMonoBehaviour
 		
 		
 		
-		if (CurrentPoseAnimation != null)
+		if (CurrentPoseAnimation != null && CurrentCharacterIndex.Index != 0)
 		{
 			if(PercentTimeCompletion > 0.2f && CurrentPerformanceStat.last_score(3f/30f)/(3f/30f) < 0.2f)
 				mManager.mInterfaceManager.enable_warning_text(true);
@@ -260,7 +261,7 @@ public class NewGameManager : FakeMonoBehaviour
 		//early death
 		bool die = false;
 		die |= Input.GetKeyDown(KeyCode.D);
-		if (CurrentPoseAnimation != null && mManager.mZigManager.has_user())
+		if (CurrentPoseAnimation != null && mManager.mZigManager.has_user() && CurrentCharacterIndex.Index != 0)
 		{
 			
 			if(PercentTimeCompletion > 0.35f)

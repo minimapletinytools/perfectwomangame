@@ -6,6 +6,15 @@
 
 
 ::TODO100::
+-moved glow onto person
+-indicators when body is off the screen
+	-make zigfu depth image only come up when there is a problem
+-effect particles look more lie a line
+-font should be blue
+-make first three characters in color
+-in choice menu, text will change as you select it
+-update names in selection screen (use names from text files)
+-buy domain name
 -death
 	-consider making it progressively easier to die
 	DONE-make harder to die
