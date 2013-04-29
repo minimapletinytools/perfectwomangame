@@ -62,7 +62,7 @@ public class CharacterLoader {
 		
 		
 		
-        Debug.Log(output);
+        //Debug.Log(output);
         Done = true;
         yield break;
     }

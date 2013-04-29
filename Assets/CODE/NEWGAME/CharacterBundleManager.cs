@@ -159,7 +159,7 @@ public class CharacterBundleManager : FakeMonoBehaviour {
 			string txtName = "info_"+e.StringIdentifier;
 			if(aBundle.Contains(txtName))
 			{
-				Debug.Log ("loaded character info " + txtName);
+				//Debug.Log ("loaded character info " + txtName);
 				mCharacterHelper.Characters[e.Index].CharacterInfo = 
 					NUPD.CharacterInformationProcessor.process_character((aBundle.Load(txtName) as TextAsset).text);
 			}

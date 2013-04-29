@@ -40,21 +40,21 @@ public class AssetBundleLoader : FakeMonoBehaviour
 	public void new_load_character(string aChar, CharacterBundleManager aManager)
 	{
 		string filename = "file://" + Application.dataPath + "/Resources/" + aChar + ".unity3d";
-        Debug.Log("loading from " + filename);
+        //Debug.Log("loading from " + filename);
         mRequestLists.Add(new WWW(filename), (delegate(AssetBundle aBundle) { aManager.scene_loaded_callback(aBundle,aChar); }));
 	}
 	
 	public void new_load_mini_characater(string aChar, CharacterBundleManager aManager)
     {
         string filename = "file://" + Application.dataPath + "/Resources/" + aChar + "_mini.unity3d";
-        Debug.Log("loading mini char from " + filename);
+        //Debug.Log("loading mini char from " + filename);
         mRequestLists.Add(new WWW(filename), delegate(AssetBundle aBundle) { aManager.mini_loaded_callback(aBundle,aChar); });
     }
 	
  	public void new_load_poses(string aAssetBundle, CharacterBundleManager aManager)
     {
         string filename = "file://" + Application.dataPath + "/Resources/" + aAssetBundle + ".unity3d";
-        Debug.Log("loading poses from " + filename);
+        //Debug.Log("loading poses from " + filename);
         WWW request = new WWW(filename);
         request.threadPriority = ThreadPriority.High;
         mRequestLists.Add(request, delegate(AssetBundle aBundle) { aManager.pose_bundle_loaded_callback(aBundle); });
