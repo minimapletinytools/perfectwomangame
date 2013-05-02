@@ -227,7 +227,9 @@ public class NewGameManager : FakeMonoBehaviour
 			mManager.mTransparentBodyManager.set_target_pose(CurrentTargetPose);
             float grade = ProGrading.grade_pose(CurrentPose, CurrentTargetPose);
 			grade = ProGrading.grade_to_perfect(grade);
-			if(grade < 3f && grade != 0) //0 grade means no kinect was plugged in
+			
+			
+			if(grade > 0.7f) //0 grade means no kinect was plugged in
 			{
 				TimeRemaining = 0;
 			}
@@ -235,21 +237,7 @@ public class NewGameManager : FakeMonoBehaviour
 		else
 			CurrentPerformanceStat.update_score(PercentTimeCompletion,0.5f);
 		
-		if(TimeRemaining <= 0)
-		{
-			CurrentPerformanceStat.Finished = true;
-			mManager.mCameraManager.set_camera_effects(0);
-			mManager.mInterfaceManager.enable_warning_text(false);
-			transition_to_CUTSCENE();
-			
-			//if we don't want fetus to have a cutscene use this
-			//if(CurrentPerformanceStat.Character.Index != 0)
-			//	transition_to_CUTSCENE();
-			//else transition_to_CHOICE();
-		}
-		
-		
-		
+		//warning
 		if (CurrentPoseAnimation != null && CurrentCharacterIndex.Index != 0)
 		{
 			if(PercentTimeCompletion > 0.2f && CurrentPerformanceStat.last_score(3f/30f)/(3f/30f) < 0.2f)
@@ -276,6 +264,20 @@ public class NewGameManager : FakeMonoBehaviour
 			mManager.mCameraManager.set_camera_effects(0);
 			mManager.mInterfaceManager.enable_warning_text(false);
 			transition_to_DEATH();
+		}
+		
+		//finish
+		if(TimeRemaining <= 0)
+		{
+			CurrentPerformanceStat.Finished = true;
+			mManager.mCameraManager.set_camera_effects(0);
+			mManager.mInterfaceManager.enable_warning_text(false);
+			transition_to_CUTSCENE();
+			
+			//if we don't want fetus to have a cutscene use this
+			//if(CurrentPerformanceStat.Character.Index != 0)
+			//	transition_to_CUTSCENE();
+			//else transition_to_CHOICE();
 		}
 		
 		//if we don't want the music to play during the cutscenes and whatont...
