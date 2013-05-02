@@ -3,35 +3,37 @@
 -bad sentences have positive changes
 -overall too many positive changes i think.
 -feedback ideas, after pose changes, you get a blip indicating how well you ddi that pose in that time interval
-
+-maybe make it a little easier to get perfect performance (clamp min score at a larger number)
 
 ::TODO100::
-DONE-moved glow onto person
+-mini chars have body parts in wrong order???
 -indicators when body is off the screen
 	-make zigfu depth image only come up when there is a problem
+-in choice menu, text will change as you select it
+-do new layout for choice
+-intro calibration nonsense
+-end game
+	-scrolling performance charts in end game
+	-scrolling credits in end game
+	-other end game cutscenes
+
+
+
+DONE-make first three characters in color
+DONE-moved glow onto person
 DONE-effect particles look more lie a line
 DONE-font should be blue
--make first three characters in color
--in choice menu, text will change as you select it
 DONE-update names in selection screen (use names from text files)
 DONE-buy domain name
--death
+DONE-death
 	DONE-move warning to middle of screen..
 	-consider making it progressively easier to die
 	DONE-make harder to die
 	-give more advance warning 
 	-should model after rhythm game maybe
 DONE-birth pose for fetus (really please...)
--maybe make it a little easier to get perfect performance (clamp min score at a larger number)
--do new layout for choice
--business cards
--website
-
--scrolling performance charts in end game
--scrolling credits in end game
--other end game cutscenes
-
--intro calibration nonsense
+DONE-business cards
+DONE-website
 
 ::new shit to do::
 -foregrounds behind the puppet???

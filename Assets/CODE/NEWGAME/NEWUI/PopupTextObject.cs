@@ -50,6 +50,7 @@ public class PopupTextObject : FlatElementMultiBase {
 		}
 		
 		mText = new FlatElementText(ManagerManager.Manager.mNewRef.genericFont,120,aText,aDepth+1);
+		mText = new FlatElementText(ManagerManager.Manager.mNewRef.genericFont,100,aText,aDepth+1);
         mText.HardColor = new Color(0, 0, 0);
 		mElements.Add(new FlatElementMultiBase.ElementOffset(mBackground, new Vector3(0, 0, 0)));
 		mElements.Add(new FlatElementMultiBase.ElementOffset(mText, new Vector3(0, textOffset, 0)));

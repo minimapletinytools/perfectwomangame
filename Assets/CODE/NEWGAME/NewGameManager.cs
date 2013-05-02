@@ -227,9 +227,8 @@ public class NewGameManager : FakeMonoBehaviour
 			mManager.mTransparentBodyManager.set_target_pose(CurrentTargetPose);
             float grade = ProGrading.grade_pose(CurrentPose, CurrentTargetPose);
 			grade = ProGrading.grade_to_perfect(grade);
-			
-			
-			if(grade > 0.7f) //0 grade means no kinect was plugged in
+		
+			if(grade > 0.77f)
 			{
 				TimeRemaining = 0;
 			}
