@@ -277,10 +277,16 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 		{
 			mBBMiniMan.SoftPosition = mBBMiniManBasePosition;
 			mBBChoiceBox.SoftPosition = random_position();//mBBMiniManBasePosition;
+			mBBQuestionText.Text = "What will you be like at age " + mBBLastPerformanceGraph.Character.get_future_neighbor(0).Age;
 		}
 		else{
 			mBBMiniMan.SoftPosition = mBBChoiceBodies[aIndex].SoftPosition;
 			mBBChoiceBox.SoftPosition = mBBChoices[aIndex].SoftPosition;
+			var nChar = mBBLastPerformanceGraph.Character.get_future_neighbor(aIndex);
+			var nCharDiff = mManager.mCharacterBundleManager.get_character_helper().Characters[nChar.Index];
+			var diffPhrases = new string[]{"easy", "medium", "hard", "impossible"};
+			var perfectPhrases = new string[]{"bad", "good", "perfect", "PERFECT"};
+			mBBQuestionText.Text = "Will you be " + nChar.Description + " (" + diffPhrases[nCharDiff.Difficulty] + "/" + perfectPhrases[nCharDiff.Perfect] + ")";
 		}
 	}
 	//called by ChoiceHelper
@@ -431,7 +437,7 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 	{
 		PopupTextObject to = new PopupTextObject(aMsg,6);
 		to.HardPosition = random_position();
-		to.set_text_color(new Color(0.7f,0.7f,1f,1));
+		to.set_text_color(new Color(0.2f,0.2f,0.5f,1));
 		TimedEventDistributor.TimedEventChain chain = TED.add_event(
 			delegate(float aTime)
 			{
@@ -471,7 +477,6 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 		mElement.Add(mBBLastPerformanceGraph.PerformanceGraph);
 		
 		mBBQuestionText.Text = "What will you be like at age " + aChar.Character.get_future_neighbor(0).Age;
-		mBBQuestionText.PrimaryGameObject.name = "POOP";
 		
 		//PB
 		position_pb_character_icons(aChar.Character.Level);
