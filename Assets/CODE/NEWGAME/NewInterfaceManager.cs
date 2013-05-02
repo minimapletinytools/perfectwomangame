@@ -106,7 +106,7 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 		mBBScoreFrame = new FlatElementImage(mManager.mNewRef.bbScoreBackground,9);
 		mBBScoreText = new FlatElementText(mManager.mNewRef.genericFont,60,"0",10);
 		//mBBWarningText = new FlatElementText(mManager.mNewRef.genericFont,150,"WARNING",12);
-		mBBWarningText = new FlatElementText(mManager.mNewRef.genericFont,500,"WARNING",12);
+		mBBWarningText = new FlatElementText(mManager.mNewRef.genericFont,500,"WARNING",20);
 		mBBWarningText.HardColor = new Color(0.5f,0.5f,0.5f,0);
 		mBBText.HardPosition = random_position();
 		mBBScoreFrame.HardPosition = random_position();
