@@ -9,7 +9,7 @@
 -mini chars have body parts in wrong order???
 -indicators when body is off the screen
 	-make zigfu depth image only come up when there is a problem
--in choice menu, text will change as you select it
+
 -do new layout for choice
 -intro calibration nonsense
 -end game
@@ -18,7 +18,7 @@
 	-other end game cutscenes
 
 
-
+DONE-in choice menu, text will change as you select it
 DONE-make first three characters in color
 DONE-moved glow onto person
 DONE-effect particles look more lie a line

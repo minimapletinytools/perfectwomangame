@@ -82,7 +82,7 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 	int BB_NUM_CHOICES = 3;
 	List<NewChoiceObject> mBBChoices = new List<NewChoiceObject>();
 	List<FlatBodyObject> mBBChoiceBodies = new List<FlatBodyObject>();
-	FlatElementText mBBQuestionText;
+	ColorTextObject mBBQuestionText;
 	FlatBodyObject mBBMiniMan;
 	Vector3 mBBMiniManBasePosition;
 	FlatElementImage mBBChoiceBox;
@@ -135,8 +135,9 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 			mElement.Add(mBBChoiceBodies[i]);
 		}
 		
-		mBBQuestionText = new FlatElementText(newRef.genericFont,100,"",10);
+		mBBQuestionText = new ColorTextObject(10);
 		mBBQuestionText.HardPosition = mFlatCamera.get_point(0,0.75f);
+		mBBQuestionText.SoftInterpolation = 1;
 		mBBMiniMan = new FlatBodyObject(miniMan,20);
 		mBBMiniMan.HardScale = miniManScale;
 		mBBChoiceBox = new FlatElementImage(newRef.bbChoiceFrame,15);
@@ -277,7 +278,9 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 		{
 			mBBMiniMan.SoftPosition = mBBMiniManBasePosition;
 			mBBChoiceBox.SoftPosition = random_position();//mBBMiniManBasePosition;
-			mBBQuestionText.Text = "What will you be like at age " + mBBLastPerformanceGraph.Character.get_future_neighbor(0).Age;
+			mBBQuestionText.set_text(
+				new string[]{("What will you be like at age " + mBBLastPerformanceGraph.Character.get_future_neighbor(0).Age)},
+				new Color[]{new Color(0.5f,0.5f,0.5f,1)});
 		}
 		else{
 			mBBMiniMan.SoftPosition = mBBChoiceBodies[aIndex].SoftPosition;
@@ -286,7 +289,19 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 			var nCharDiff = mManager.mCharacterBundleManager.get_character_helper().Characters[nChar.Index];
 			var diffPhrases = new string[]{"easy", "medium", "hard", "impossible"};
 			var perfectPhrases = new string[]{"bad", "good", "perfect", "PERFECT"};
-			mBBQuestionText.Text = "Will you be " + nChar.Description + " (" + diffPhrases[nCharDiff.Difficulty] + "/" + perfectPhrases[nCharDiff.Perfect] + ")";
+			var perfectColors = new Color[]{new Color32(200,173,27,255),new Color32(240,220,130,255),new Color32(253,238,0,255),new Color32(255,126,0,255)};
+			var diffColors = new Color[]{new Color(0,0.8f,0,1), new Color(0.8f,0.8f,0,1), new Color(0.9f,0.4f,0,1), new Color(0.8f,0,0,1)};
+			mBBQuestionText.set_text(
+				new string[]{("Will you be " + nChar.Description + " ("), 
+					diffPhrases[nCharDiff.Difficulty], 
+					"/", 
+					perfectPhrases[nCharDiff.Perfect],
+					")"},
+				new Color[]{new Color(0.5f,0.5f,0.5f,1),
+					diffColors[nCharDiff.Difficulty]/2f,
+					new Color(0.5f,0.5f,0.5f,1),
+					perfectColors[nCharDiff.Perfect]/2f,
+					new Color(0.5f,0.5f,0.5f,1)});
 		}
 	}
 	//called by ChoiceHelper
@@ -476,7 +491,8 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 		mBBLastPerformanceGraph = aChar;
 		mElement.Add(mBBLastPerformanceGraph.PerformanceGraph);
 		
-		mBBQuestionText.Text = "What will you be like at age " + aChar.Character.get_future_neighbor(0).Age;
+		//TODO delete this gets set elsewhere now
+		//mBBQuestionText.Text = "What will you be like at age " + aChar.Character.get_future_neighbor(0).Age;
 		
 		//PB
 		position_pb_character_icons(aChar.Character.Level);

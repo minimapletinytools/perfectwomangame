@@ -52,6 +52,8 @@ public class FlatElementMultiBase : FlatElementBase
         foreach (ElementOffset e in mElements)
             e.Element.destroy();
         mElements.Clear();
+		try{GameObject.Destroy(PrimaryGameObject);} //probbaly don't need the try catch here
+		catch{}
     }
     public override int Depth
     {
