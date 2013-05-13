@@ -8,6 +8,7 @@ public class TestingSceneBehaviour : MonoBehaviour {
 	{
 		ManagerManager.Manager.mGameManager.set_testing();
 		ManagerManager.Manager.mTransitionCameraManager.mForceStart = true;
+		TransitionCameraManager.FADE_TIME = 0.01f;
 	}
 	
 	/*

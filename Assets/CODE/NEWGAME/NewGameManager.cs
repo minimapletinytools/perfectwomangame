@@ -142,8 +142,8 @@ public class NewGameManager : FakeMonoBehaviour
 				break;
 		}
 		
-		if(GS != GameState.TEST) //do not fade when we are testing
-			mManager.mTransitionCameraManager.fade_in_with_sound();
+		
+		mManager.mTransitionCameraManager.fade_in_with_sound();
 		
 		if(aCharacter.Name == "0-1") //in this very special case, we keep the bundle to load the death cutscene
 			return false;
