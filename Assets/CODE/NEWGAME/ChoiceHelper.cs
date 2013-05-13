@@ -4,8 +4,8 @@ using System.Linq;
 public class ChoiceHelper
 {
 	public const float SELECTION_THRESHOLD = 8;
-    public const float CHOOSING_PERCENTAGE_GROWTH_RATE = 1/4.5f;
-    public const float CHOOSING_PERCENTAGE_DECLINE_RATE = 1f;
+    public const float CHOOSING_PERCENTAGE_GROWTH_RATE = 1/6f;
+    public const float CHOOSING_PERCENTAGE_DECLINE_RATE = 0.7f;
 	
 	
     ProGrading.Pose[] mChoicePoses = new ProGrading.Pose[4] { null, null, null, null };

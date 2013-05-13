@@ -335,6 +335,8 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 					mManager.mCharacterBundleManager.get_mini_character(e),1);
 			mPBCharacterIcons[e.Index].set_name(e.ShortName);
 			mElement.Add(mPBCharacterIcons[e.Index]);
+			
+			
 		}
 		mElement.Add(mPB);
 		
@@ -452,7 +454,7 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 	{
 		PopupTextObject to = new PopupTextObject(aMsg,6);
 		to.HardPosition = random_position();
-		to.set_text_color(new Color(0.2f,0.2f,0.5f,1));
+		to.set_text_color(new Color(0.1f,0.1f,0.5f,1));
 		TimedEventDistributor.TimedEventChain chain = TED.add_event(
 			delegate(float aTime)
 			{

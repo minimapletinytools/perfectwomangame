@@ -106,10 +106,10 @@ public class ProjectionManager : FakeMonoBehaviour {
 
     public float get_waist(ZigInputJoint waist, ZigInputJoint L, ZigInputJoint R)
     {
-        if(!mManager.mZigManager.using_nite())
+        if(false && !mManager.mZigManager.using_nite()) //TODO some problems with this lockngi... Should default to below if that happens
             return -waist.Rotation.flat_rotation() + 90;    
         else
-            return get_relative(waist.Position, L.Position * 0.5f + R.Position * 0.5f); //TODO use this for OSX...
+            return get_relative(waist.Position, L.Position * 0.5f + R.Position * 0.5f);
     }
 
     public float get_relative(Vector3 A, Vector3 B)

@@ -6,18 +6,29 @@
 -maybe make it a little easier to get perfect performance (clamp min score at a larger number)
 
 ::TODO100::
--mini chars have body parts in wrong order???
--indicators when body is off the screen
+-silly stuff for thursday
+	-make the background in choosing solid
+	-make choosing sentence wrap
+	-make choosing sentence a better sentence
+-fix characters from lea's todo
+	-terrorist arm in wrong place
+	-sexy girl has no text in bubbles
+-text
+	-make font wrapping hyphenation stuff better
+	-remake font for windows so it has Cs
+	-see if you can get bold font
+-depth indicator
+	-intro calibration nonsense
+	-indicators when body is off the screen
 	-make zigfu depth image only come up when there is a problem
-
 -do new layout for choice
--intro calibration nonsense
 -end game
 	-scrolling performance charts in end game
 	-scrolling credits in end game
 	-other end game cutscenes
 
 
+IGNORE-mini chars have body parts in wrong order???
 DONE-in choice menu, text will change as you select it
 DONE-make first three characters in color
 DONE-moved glow onto person
