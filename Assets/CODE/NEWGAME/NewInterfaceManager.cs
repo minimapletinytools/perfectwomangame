@@ -187,7 +187,7 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 		mBB.SoftPosition = mFlatCamera.get_point(0, 0);
 		fade_bb_contents(false);
 		mBBMiniMan.SoftColor = new Color(1,0.3f,0.2f);
-        mBB.SoftColor = new Color(0.5f, 0.5f, 0.5f, 0.2f);
+        //mBB.SoftColor = new Color(0.5f, 0.5f, 0.5f, 0.2f);
 	}
 	
 	//make sure begin_new_character is called before this
@@ -287,16 +287,17 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 			mBBChoiceBox.SoftPosition = mBBChoices[aIndex].SoftPosition;
 			var nChar = mBBLastPerformanceGraph.Character.get_future_neighbor(aIndex);
 			var nCharDiff = mManager.mCharacterBundleManager.get_character_helper().Characters[nChar.Index];
-			var diffPhrases = new string[]{"easy", "medium", "hard", "impossible"};
-			var perfectPhrases = new string[]{"bad", "good", "perfect", "PERFECT"};
+			var diffPhrases = new string[]{" easy", " medium", " hard", " impossible"};
+			var perfectPhrases = new string[]{" horrible", " passable", " perfect", " PERFECT"};
 			var perfectColors = new Color[]{new Color32(200,173,27,255),new Color32(240,220,130,255),new Color32(253,238,0,255),new Color32(255,126,0,255)};
 			var diffColors = new Color[]{new Color(0,0.8f,0,1), new Color(0.8f,0.8f,0,1), new Color(0.9f,0.4f,0,1), new Color(0.8f,0,0,1)};
 			mBBQuestionText.set_text(
-				new string[]{("Will you be " + nChar.Description + " ("), 
+				//new string[]{("Will you be " + nChar.Description + "\nThat is a " can't do this because my multicolor font thing can't handle new line
+				new string[]{("That is a "), 
 					diffPhrases[nCharDiff.Difficulty], 
-					"/", 
+					Mathf.Abs(nCharDiff.Difficulty - nCharDiff.Perfect) > 1 ? " but" : " and", 
 					perfectPhrases[nCharDiff.Perfect],
-					")"},
+					" choice."},
 				new Color[]{new Color(0.5f,0.5f,0.5f,1),
 					diffColors[nCharDiff.Difficulty]/2f,
 					new Color(0.5f,0.5f,0.5f,1),

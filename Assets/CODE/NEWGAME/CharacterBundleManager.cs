@@ -170,6 +170,7 @@ public class CharacterBundleManager : FakeMonoBehaviour {
 			}
 			else
 			{
+				//Debug.Log ("no info found for " + txtName);
 				mCharacterHelper.Characters[e.Index].CharacterInfo = NUPD.CharacterInformation.default_character_info(e);
 			}
 		}

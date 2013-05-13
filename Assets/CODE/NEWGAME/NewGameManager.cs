@@ -351,17 +351,15 @@ public class NewGameManager : FakeMonoBehaviour
 
         NUPD.ChangeSet changes;
         
-        try
-        {
-			if(mManager.mCharacterBundleManager.get_character_stat(CurrentCharacterIndex).CharacterInfo.ChangeSet.Count>0)
-			{
-				//Debug.Log (mManager.mCharacterBundleManager.get_character_stat(CurrentCharacterIndex).CharacterInfo.ChangeSet[0].LowerThreshold);
-				//Debug.Log (mManager.mCharacterBundleManager.get_character_stat(CurrentCharacterIndex).CharacterInfo.ChangeSet[0].UpperThreshold);
-				//Debug.Log (CurrentPerformanceStat.Score);
-			}
-            changes = mManager.mCharacterBundleManager.get_character_stat(CurrentCharacterIndex).CharacterInfo.ChangeSet.Find(e => e.LowerThreshold <= CurrentPerformanceStat.Score && e.UpperThreshold >= CurrentPerformanceStat.Score);
-        }
-        catch
+		if(mManager.mCharacterBundleManager.get_character_stat(CurrentCharacterIndex).CharacterInfo.ChangeSet.Count>0)
+		{
+			//Debug.Log (mManager.mCharacterBundleManager.get_character_stat(CurrentCharacterIndex).CharacterInfo.ChangeSet[0].LowerThreshold);
+			//Debug.Log (mManager.mCharacterBundleManager.get_character_stat(CurrentCharacterIndex).CharacterInfo.ChangeSet[0].UpperThreshold);
+			//Debug.Log (CurrentPerformanceStat.Score);
+		}
+		
+        changes = mManager.mCharacterBundleManager.get_character_stat(CurrentCharacterIndex).CharacterInfo.ChangeSet.Find(e => e.LowerThreshold <= CurrentPerformanceStat.Score && e.UpperThreshold >= CurrentPerformanceStat.Score);
+        if(changes == null)
         {
             Debug.Log("could not find change in thershold with performance: " + CurrentPerformanceStat);
             changes = new NUPD.ChangeSet();

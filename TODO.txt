@@ -6,13 +6,6 @@
 -maybe make it a little easier to get perfect performance (clamp min score at a larger number)
 
 ::TODO100::
--silly stuff for thursday
-	-make the background in choosing solid
-	-make choosing sentence wrap
-	-make choosing sentence a better sentence
--fix characters from lea's todo
-	-terrorist arm in wrong place
-	-sexy girl has no text in bubbles
 -text
 	-make font wrapping hyphenation stuff better
 	-remake font for windows so it has Cs
@@ -27,7 +20,12 @@
 	-scrolling credits in end game
 	-other end game cutscenes
 
-
+DONE-silly stuff for thursday
+	DONE-make the background in choosing solid
+	DONE-make choosing sentence a better sentence
+DONE-fix characters from lea's todo
+	DONE-terrorist arm in wrong place
+	DONE-sexy girl has no text in bubbles
 IGNORE-mini chars have body parts in wrong order???
 DONE-in choice menu, text will change as you select it
 DONE-make first three characters in color

@@ -39,6 +39,7 @@ namespace NUPD
         {
             UpperThreshold = 1;
             LowerThreshold = 0;
+			PerformanceDescription = "";
             Changes = new List<ChangeSubSet>();
         }
 	}
