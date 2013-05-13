@@ -110,7 +110,7 @@ public class BackgroundManager  : FakeMonoBehaviour
         mForegroundElements.destroy();
 		
 		load_images(aCharacter,mBackgroundElements,"BG-",1);
-		load_images(aCharacter,mBackgroundElements,"FG-",1);
+		load_images(aCharacter,mForegroundElements,"FG-",1);
 
         set_background_layer(mBackgroundLayer);
         set_foreground_layer(mForegroundLayer);
