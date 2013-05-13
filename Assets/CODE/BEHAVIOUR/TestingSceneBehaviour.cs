@@ -3,7 +3,14 @@ using System.Collections;
 using System.IO;
 using System.Linq;
 public class TestingSceneBehaviour : MonoBehaviour {
-
+	
+	void Start()
+	{
+		ManagerManager.Manager.mGameManager.set_testing();
+		ManagerManager.Manager.mTransitionCameraManager.mForceStart = true;
+	}
+	
+	/*
     public string loadme = "0-1";
     string[] mFiles;
     int mIndex = 0;
@@ -45,4 +52,5 @@ public class TestingSceneBehaviour : MonoBehaviour {
         style.fontSize = 72;
         GUI.Box(new Rect(10, 10, 400, 75), mFiles[mIndex], style);
     }
+    */
 }

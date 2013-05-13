@@ -137,6 +137,12 @@ public struct CharacterIndex
 		if(Level == 9) return new CharacterIndex(-1);
 		return new CharacterIndex(Level +1,choiceIndex);
 	}
+	public CharacterIndex get_past_neighbor(int choiceIndex)
+	{
+		if(Level == 1) return new CharacterIndex(0);
+		if(Level == 0) return new CharacterIndex(-1);
+		return new CharacterIndex(Level-1,choiceIndex);
+	}
 	public CharacterIndex get_neighbor(int choiceIndex)
 	{
 		return new CharacterIndex(Level, choiceIndex);

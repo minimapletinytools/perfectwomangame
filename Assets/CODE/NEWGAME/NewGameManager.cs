@@ -4,7 +4,7 @@ using System.Linq;
 
 public enum GameState
 {
-	NONE,PREPLAY,PLAY,CUTSCENE,DEATH,CHOICE,TRANSITION,GRAVE
+	NONE,TEST, PREPLAY,PLAY,CUTSCENE,DEATH,CHOICE,TRANSITION,GRAVE
 }
 
 public class NewGameManager : FakeMonoBehaviour
@@ -18,7 +18,6 @@ public class NewGameManager : FakeMonoBehaviour
     }
 	public TimedEventDistributor TED { get; private set; }
 	
-	//TODO implement this or delete
 	public int CurrentLevel
     { get; private set; }
 	
@@ -52,6 +51,11 @@ public class NewGameManager : FakeMonoBehaviour
         }
     }
 	List<PerformanceStats> mPerformanceStats = new List<PerformanceStats>();
+	
+	public void set_testing()
+	{
+		GS = GameState.TEST;
+	}
 	
 	public override void Start()
 	{
@@ -90,10 +94,6 @@ public class NewGameManager : FakeMonoBehaviour
 			poses.Add(new KeyValuePair<CharacterIndex,ProGrading.Pose>(e,poseAnimation.get_pose(Random.Range(0,poseAnimation.poses.Count))));
 		}
 		mManager.mInterfaceManager.set_pb_character_icon_poses(poses);
-		
-		
-		
-		
 	}
 	
 	
@@ -142,7 +142,8 @@ public class NewGameManager : FakeMonoBehaviour
 				break;
 		}
 		
-		mManager.mTransitionCameraManager.fade_in_with_sound();
+		if(GS != GameState.TEST) //do not fade when we are testing
+			mManager.mTransitionCameraManager.fade_in_with_sound();
 		
 		if(aCharacter.Name == "0-1") //in this very special case, we keep the bundle to load the death cutscene
 			return false;
@@ -169,6 +170,8 @@ public class NewGameManager : FakeMonoBehaviour
 		}
 		else if(GS == GameState.CHOICE) 
 			update_CHOICE();
+		else if (GS == GameState.TEST)
+			update_TEST();
         
 		TED.update(Time.deltaTime);
 	}
@@ -188,6 +191,50 @@ public class NewGameManager : FakeMonoBehaviour
 	{ get; private set; }
 	
 	public float mLastGrade = 0.5f;
+	
+	public void update_TEST()
+	{
+		if(CurrentPoseAnimation != null)
+		{
+			CurrentTargetPose = CurrentPoseAnimation.get_pose((int)(Time.time/1f));
+			mManager.mTransparentBodyManager.set_target_pose(CurrentTargetPose);
+			float grade = ProGrading.grade_pose(CurrentPose, CurrentTargetPose);
+			grade = ProGrading.grade_to_perfect(grade);
+			mManager.mCameraManager.set_camera_effects(grade);
+		}
+		
+		
+		
+		if(Input.GetKeyDown(KeyCode.Alpha6))
+			mManager.mBackgroundManager.load_cutscene(0,CurrentCharacterLoader);
+		else if (Input.GetKeyDown(KeyCode.Alpha7))
+			mManager.mBackgroundManager.load_cutscene(1,CurrentCharacterLoader);	
+		else if ( Input.GetKeyDown(KeyCode.D))
+			mManager.mBackgroundManager.load_cutscene(4,DeathCharacter);
+		
+		int choice = -1;
+		if(Input.GetKey(KeyCode.Alpha1))
+		{
+			choice = 0;
+		}
+		else if(Input.GetKey(KeyCode.Alpha2))
+		{
+			choice = 1;
+		}
+		else if(Input.GetKey(KeyCode.Alpha3))
+		{
+			choice = 2;
+		}
+		bool shift = Input.GetKey(KeyCode.LeftShift);
+			
+		if(choice != -1)
+		{
+			if(shift)
+				mManager.mAssetLoader.new_load_character(CurrentPerformanceStat.Character.get_past_neighbor(choice).StringIdentifier,mManager.mCharacterBundleManager);
+			else
+				mManager.mAssetLoader.new_load_character(CurrentPerformanceStat.Character.get_future_neighbor(choice).StringIdentifier,mManager.mCharacterBundleManager);
+		}
+	}
 	
 	public void update_PLAY()
 	{
@@ -239,7 +286,8 @@ public class NewGameManager : FakeMonoBehaviour
 		//warning
 		if (CurrentPoseAnimation != null && CurrentCharacterIndex.Index != 0)
 		{
-			if(PercentTimeCompletion > 0.2f && CurrentPerformanceStat.last_score(3f/30f)/(3f/30f) < 0.2f)
+			//if(PercentTimeCompletion > 0.2f && CurrentPerformanceStat.last_score(3f/30f)/(3f/30f) < 0.2f)
+			if(PercentTimeCompletion > 0.2f && CurrentPerformanceStat.last_score(10f/30f)/(10f/30f) < 0.1f)
 				mManager.mInterfaceManager.enable_warning_text(true);
 			else 
 				mManager.mInterfaceManager.enable_warning_text(false);
@@ -452,12 +500,17 @@ public class NewGameManager : FakeMonoBehaviour
 	
 	public void transition_to_PLAY()
 	{
-		GS = GameState.PREPLAY;
+		if(GS != GameState.TEST)
+		{
+			GS = GameState.PREPLAY;
+			TED.add_one_shot_event(delegate(){GS = GameState.PLAY; },PREPLAY_TIME);
+		}
+		
 		//no target pose means we don't want a transparent body
 		if(CurrentTargetPose == null)
 			mManager.mTransparentBodyManager.transition_character_out();
 		mManager.mInterfaceManager.set_for_PLAY();
-		TED.add_one_shot_event(delegate(){ GS = GameState.PLAY; },PREPLAY_TIME);
+		
 	}
 	
 	public void transition_to_TRANSITION_play(CharacterIndex aNextCharacter)

@@ -16,6 +16,7 @@ public class TransitionCameraManager : FakeMonoBehaviour
 	public TimedEventDistributor TED { get; private set; }
 	
 	
+	public bool mForceStart = false;
     public FlatCameraManager mFlatCamera;
 	SunShafts mSunShafts;
 	AlternativeDepthViewer mADV = null;
@@ -149,7 +150,7 @@ public class TransitionCameraManager : FakeMonoBehaviour
 					*/
 				if((aTime > 5 && mManager.mZigManager.has_user() && mManager.mCharacterBundleManager.is_initial_loaded()) ||
 					Input.GetKeyDown(KeyCode.Alpha0) ||
-					false){
+					mForceStart){
 					go_to_fetus(0); 
 					return true;
 				}	
