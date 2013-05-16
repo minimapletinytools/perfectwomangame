@@ -282,6 +282,8 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 		{
 			//mBBChoices[i].set_actual_character(mManager.mCharacterBundleManager.get_mini_character(all[i]));
 			mBBChoices[i].Character = all[i];
+			mBBChoices[i].set_actual_character(all[i]);
+			mBBChoices[i].set_difficulty(mManager.mCharacterBundleManager.get_character_helper().Characters[all[i].Index].Difficulty);
 			//TODO set icons for choice
 			
 			//OLD when using mini char icons we took from PB

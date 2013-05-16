@@ -6,9 +6,11 @@ public class NewChoiceObject : FlatElementMultiBase {
 	public FlatElementText mText = null;
 	public DifficultyObject mPerfect;
 	public FlatElementImage mPerfectImage;
-	FlatElementMultiBase.ElementOffset mBodyElementOffset = null;
+	
     public MeterImageObject mMeter = null;
-	FlatBodyObject mBody = null;
+	//FlatElementMultiBase.ElementOffset mBodyElementOffset = null;
+	//FlatBodyObject mBody = null;
+	FlatElementImage mIcon = null;
 
     float mSide = 45;
     float mRightBot = -80;
@@ -25,7 +27,8 @@ public class NewChoiceObject : FlatElementMultiBase {
 	{
 		initialize(null, aDepth);
 	}
-    void initialize(CharacterLoader aActualChar, int aDepth)
+    //void initialize(CharacterLoader aActualChar, int aDepth)
+	void initialize(CharacterIndex? aIndex, int aDepth)
     {
 		var newRef = ManagerManager.Manager.mNewRef;
 		//TODO finish and reposition everything
@@ -33,6 +36,7 @@ public class NewChoiceObject : FlatElementMultiBase {
 		mText = new FlatElementText(newRef.genericFont,40,"",aDepth +1);
 		mPerfectImage = new FlatElementImage(null,aDepth +2);
         mPerfect = new DifficultyObject(ManagerManager.Manager.mNewRef.uiPerfectStar, aDepth);
+		mIcon = new FlatElementImage(null,aDepth +2);
         mMeter = new MeterImageObject(newRef.bbChoiceBox, MeterImageObject.FillStyle.DU, aDepth + 1);
         mMeter.Percentage = 0.0f;
 		set_perfectness(3);
@@ -43,18 +47,22 @@ public class NewChoiceObject : FlatElementMultiBase {
 		mElements.Add(new FlatElementMultiBase.ElementOffset(mText, new Vector3(0,20,0)));
 		mElements.Add(new FlatElementMultiBase.ElementOffset(mPerfect, new Vector3(-173,65,0)));
         mElements.Add(new FlatElementMultiBase.ElementOffset(mMeter, new Vector3(0,0,0)));
+		
+		mElements.Add(new FlatElementMultiBase.ElementOffset(mIcon, new Vector3(0,220,0)));
         
 		mText.SoftColor = new Color(0,0,0,1);
-		if(aActualChar != null)
-			set_actual_character(aActualChar);
+		if(aIndex != null)
+			set_actual_character(aIndex.Value);
 
         PrimaryGameObject = create_primary_from_elements();
 		Depth = aDepth;
     }
 	
 	
-	public void set_actual_character(CharacterLoader aActualChar)
+	//public void set_actual_character(CharacterLoader aActualChar)
+	public void set_actual_character(CharacterIndex aIndex)
 	{ 
+		/*
 		//remove the old one
 		if(mBodyElementOffset != null)
 		{
@@ -64,11 +72,13 @@ public class NewChoiceObject : FlatElementMultiBase {
 		//add the new one
 		mBody = new FlatBodyObject(aActualChar, Depth + 2);
 		mBodyElementOffset = new FlatElementMultiBase.ElementOffset(mBody, new Vector3(0,0,0));
-		mElements.Add(mBodyElementOffset);
+		mElements.Add(mBodyElementOffset);*/
 		
 		
+		mIcon.set_new_texture(ManagerManager.Manager.mCharacterBundleManager.get_image("BOX_" + aIndex.StringIdentifier).Image,null);
 		
-		Character = new CharacterIndex(aActualChar.Name);
+		
+		Character = aIndex;
 	}
 	
 	CharacterIndex mCharacterIndex = new CharacterIndex(-1);
@@ -82,6 +92,8 @@ public class NewChoiceObject : FlatElementMultiBase {
 			else mText.Text = "";
 		}
 	}
+	
+	/*
 	public FlatBodyObject take_body()
 	{
 		FlatBodyObject r = reposses_element(mBody) as FlatBodyObject;
@@ -104,13 +116,18 @@ public class NewChoiceObject : FlatElementMultiBase {
     {
         if (mBodyElementOffset != null)
             (mBodyElementOffset.Element as FlatBodyObject).set_target_pose(aPose);
-    }
+    }*/
 
     public void set_perfectness(int perfectness)
     {
         mPerfect.Difficulty = perfectness;
 		mPerfectImage.set_new_texture(ManagerManager.Manager.mNewRef.bbChoicePerfectIcons[perfectness]);
     }
+	
+	public void set_difficulty(int difficulty)
+	{
+		mIcon.SoftColor = CharacterIconObject.sDiffColorMapping[difficulty]/2;
+	}
 	
     public override Color SoftColor
     {
@@ -123,8 +140,10 @@ public class NewChoiceObject : FlatElementMultiBase {
 			
 			//this is also a stupid hack
 			Color bodyColor = new Color(0,0,0,0);
-			if(mBody!=null)
-				bodyColor = mBody.SoftColor;
+			//if(mBody!=null)
+			//	bodyColor = mBody.SoftColor;
+			if(mIcon != null)
+				bodyColor = mIcon.SoftColor;
 			
 			base.SoftColor = value;
             mPerfect.SoftColor = value;
@@ -134,8 +153,10 @@ public class NewChoiceObject : FlatElementMultiBase {
 				mText.SoftColor = new Color(0,0,0,1);
 			
 			//this is also a stupid hack
-			if(mBody!=null)
-				mBody.SoftColor = bodyColor;
+			//if(mBody!=null)
+			//	mBody.SoftColor = bodyColor;
+			if(mIcon != null)
+				mIcon.SoftColor = bodyColor;
         }
     }
 
