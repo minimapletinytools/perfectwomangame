@@ -14,13 +14,34 @@ public class CharacterBundleManager : FakeMonoBehaviour {
 		load_mini_characters();
 	}
 			
-	
 	public bool is_initial_loaded()
 	{
 		return mPosesLoaded && (mNumberCharactersLoading == 0);
 	}
 	
 	
+	
+	[System.Serializable]
+	public class ImageSizeData
+	{
+		public string Name {get; set;}
+		public Vector2 Size {get; set;}
+	}
+	public void load_interface_images(AssetBundle aBundle)
+	{
+		//TODO
+		List<ImageSizeData> index = new List<ImageSizeData>();
+        TextAsset cd = aBundle.Load("CD", typeof(TextAsset)) as TextAsset;
+        System.IO.MemoryStream stream = new System.IO.MemoryStream(cd.bytes);
+        System.Xml.Serialization.XmlSerializer xs = new System.Xml.Serialization.XmlSerializer(typeof(List<ImageSizeData>));
+        index = xs.Deserialize(stream) as List<ImageSizeData>;
+	}
+	
+	
+	
+	//----------
+	//mini char loading
+	//----------
 	Mutex mMiniCharLock;
 	CharacterLoader[] mMiniCharacters = new CharacterLoader[31];
 	int mNumberCharactersLoading = 0;
@@ -68,7 +89,9 @@ public class CharacterBundleManager : FakeMonoBehaviour {
 	}
 	
 
-    //scene bundle related
+	//----------
+	//scene bundle related
+	//----------
 	List<AssetBundle> mUnloadAtEnd = new List<AssetBundle>();
     public void scene_loaded_callback(AssetBundle aBundle, string aBundleName)
     {
@@ -97,6 +120,10 @@ public class CharacterBundleManager : FakeMonoBehaviour {
 	}
 	
 	
+	
+	//----------
+	//pose bundle related
+	//----------
 	bool mPosesLoaded = false;
 	Dictionary<string, ProGrading.Pose> mPoses = new Dictionary<string, ProGrading.Pose>();
 	CharacterHelper mCharacterHelper = new CharacterHelper();
