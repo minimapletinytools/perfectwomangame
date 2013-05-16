@@ -11,13 +11,15 @@ public class CharacterBundleManager : FakeMonoBehaviour {
 	{
 		//Debug.Log ("starting CBM");
 		mManager.mAssetLoader.new_load_poses("POSES",this);
+		mManager.mAssetLoader.new_load_interface_images("IMAGES",this);
 		load_mini_characters();
 	}
 			
 	public bool is_initial_loaded()
 	{
-		return mPosesLoaded && (mNumberCharactersLoading == 0);
+		return mPosesLoaded && (mNumberCharactersLoading == 0) && mImagesLoaded;
 	}
+	
 	
 	
 	
@@ -27,14 +29,31 @@ public class CharacterBundleManager : FakeMonoBehaviour {
 		public string Name {get; set;}
 		public Vector2 Size {get; set;}
 	}
-	public void load_interface_images(AssetBundle aBundle)
+	
+	public class ImageSizePair
 	{
-		//TODO
-		List<ImageSizeData> index = new List<ImageSizeData>();
-        TextAsset cd = aBundle.Load("CD", typeof(TextAsset)) as TextAsset;
+		public ImageSizeData Data {get; set;}
+		public Texture2D Image {get; set;}
+	}
+	AssetBundle ImageBundle {get; set;}
+	List<ImageSizeData> ImageIndex {get; set;}
+	bool mImagesLoaded = false;
+	public void interface_loaded_callback(AssetBundle aBundle)
+	{
+        TextAsset cd = aBundle.Load("INDEX", typeof(TextAsset)) as TextAsset;
         System.IO.MemoryStream stream = new System.IO.MemoryStream(cd.bytes);
         System.Xml.Serialization.XmlSerializer xs = new System.Xml.Serialization.XmlSerializer(typeof(List<ImageSizeData>));
-        index = xs.Deserialize(stream) as List<ImageSizeData>;
+        ImageIndex = xs.Deserialize(stream) as List<ImageSizeData>;
+		ImageBundle = aBundle;
+		mUnloadAtEnd.Add(ImageBundle);
+		mImagesLoaded = true;
+	}
+	public ImageSizePair get_image(string identifier)
+	{
+		ImageSizePair r = new ImageSizePair();
+		r.Image = ImageBundle.Load(identifier) as Texture2D;
+		r.Data = ImageIndex.Find(e => e.Name == identifier);
+		return r;
 	}
 	
 	
@@ -54,7 +73,7 @@ public class CharacterBundleManager : FakeMonoBehaviour {
 			
 			if(mManager.mAssetLoader.does_bundle_exist(index.StringIdentifier+"_mini"))
 			{
-					mNumberCharactersLoading++;
+				mNumberCharactersLoading++;
 				mManager.mAssetLoader.new_load_mini_characater(index.StringIdentifier, this);
 			}
 			else

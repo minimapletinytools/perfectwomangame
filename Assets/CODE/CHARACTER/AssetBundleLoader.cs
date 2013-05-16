@@ -60,4 +60,13 @@ public class AssetBundleLoader : FakeMonoBehaviour
         mRequestLists.Add(request, delegate(AssetBundle aBundle) { aManager.pose_bundle_loaded_callback(aBundle); });
     }
 	
+	public void new_load_interface_images(string aAssetBundle, CharacterBundleManager aManager)
+	{
+		string filename = "file://" + Application.dataPath + "/Resources/" + aAssetBundle + ".unity3d";
+        //Debug.Log("loading poses from " + filename);
+        WWW request = new WWW(filename);
+        request.threadPriority = ThreadPriority.High;
+        mRequestLists.Add(request, delegate(AssetBundle aBundle) { aManager.interface_loaded_callback(aBundle); });
+	}
+	
 }
