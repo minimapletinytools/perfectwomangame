@@ -5,6 +5,7 @@ public class NewChoiceObject : FlatElementMultiBase {
     public FlatElementImage mSquare;
 	public FlatElementText mText = null;
 	public DifficultyObject mPerfect;
+	public FlatElementImage mPerfectImage;
 	FlatElementMultiBase.ElementOffset mBodyElementOffset = null;
     public MeterImageObject mMeter = null;
 	FlatBodyObject mBody = null;
@@ -30,7 +31,7 @@ public class NewChoiceObject : FlatElementMultiBase {
 		//TODO finish and reposition everything
 		mSquare = new FlatElementImage(newRef.bbChoiceBox, aDepth);
 		mText = new FlatElementText(newRef.genericFont,40,"",aDepth +1);
-		
+		mPerfectImage = new FlatElementImage(null,aDepth +2);
         mPerfect = new DifficultyObject(ManagerManager.Manager.mNewRef.uiPerfectStar, aDepth);
         mMeter = new MeterImageObject(newRef.bbChoiceBox, MeterImageObject.FillStyle.DU, aDepth + 1);
         mMeter.Percentage = 0.0f;
@@ -38,6 +39,7 @@ public class NewChoiceObject : FlatElementMultiBase {
         
         //mBody.set_target_pose(aPose);
 		mElements.Add(new FlatElementMultiBase.ElementOffset(mSquare, new Vector3(0,0,0)));
+		mElements.Add(new FlatElementMultiBase.ElementOffset(mPerfectImage, new Vector3(-mSquare.BoundingBox.width/2,mSquare.BoundingBox.height/2,0)));
 		mElements.Add(new FlatElementMultiBase.ElementOffset(mText, new Vector3(0,20,0)));
 		mElements.Add(new FlatElementMultiBase.ElementOffset(mPerfect, new Vector3(-173,65,0)));
         mElements.Add(new FlatElementMultiBase.ElementOffset(mMeter, new Vector3(0,0,0)));
@@ -107,6 +109,7 @@ public class NewChoiceObject : FlatElementMultiBase {
     public void set_perfectness(int perfectness)
     {
         mPerfect.Difficulty = perfectness;
+		mPerfectImage.set_new_texture(ManagerManager.Manager.mNewRef.bbChoicePerfectIcons[perfectness]);
     }
 	
     public override Color SoftColor

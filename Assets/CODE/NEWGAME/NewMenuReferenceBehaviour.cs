@@ -26,6 +26,7 @@ public class NewMenuReferenceBehaviour : MonoBehaviour {
 	//choice
 	public Texture2D bbChoiceBox;
 	public Texture2D bbChoiceFrame;
+	public Texture2D[] bbChoicePerfectIcons;
 	
 	//pink bar
 	public Texture2D pbBackground;
@@ -42,6 +43,6 @@ public class NewMenuReferenceBehaviour : MonoBehaviour {
 	public AudioClip choiceMade; //played when selection is made
 	public AudioClip choiceMusic;
 	public AudioClip graveAngel;
-	//TODO mroe
+	//TODO more
 	
 }

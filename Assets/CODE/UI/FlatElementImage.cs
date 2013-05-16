@@ -42,4 +42,10 @@ public class FlatElementImage : FlatElementBase
             return new Rect(center.x - extents.x / 2.0f, center.y - extents.y / 2.0f, extents.x, extents.y);
         }
     }
+	
+	public void set_new_texture(Texture aTex, System.Nullable<Vector2> aSize = null)
+    {
+
+		mImage.set_new_texture(aTex,aSize);
+    }
 }
