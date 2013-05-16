@@ -3,9 +3,18 @@
 -bad sentences have positive changes
 -overall too many positive changes i think.
 -feedback ideas, after pose changes, you get a blip indicating how well you ddi that pose in that time interval
--maybe make it a little easier to get perfect performance (clamp min score at a larger number)
 
 ::TODO100::
+-redo colors on performance graph to match lea's (red->blue->gold)
+	-shrink transition zone because they get funky colors in between...
+-do new layout for choice
+	-why are there duplicate icons???
+	-swap out mini chars for icons instead.
+	-multiline text descriptions
+	-reposition everything to the left
+		-this means getting smaller choosing boxes...
+	-new blue background that fades tot ransparent (or opaque) behind the pink bar but in front of bg
+	-miniman??? where do you go now :(
 -text
 	-make font wrapping hyphenation stuff better
 	-remake font for windows so it has Cs
@@ -14,7 +23,6 @@
 	-intro calibration nonsense
 	-indicators when body is off the screen
 	-make zigfu depth image only come up when there is a problem
--do new layout for choice
 -end game
 	-scrolling performance charts in end game
 	-scrolling credits in end game

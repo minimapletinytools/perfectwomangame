@@ -5,13 +5,23 @@ public class CharacterIconObject : FlatElementMultiBase {
 	FlatElementImage mBackground;
 	DifficultyObject mDifficultyStars;
 	FlatElementMultiBase.ElementOffset mText = null;
-    public FlatBodyObject mBody = null;
+	FlatElementImage mIcon = null;
+    //public FlatBodyObject mBody = null;
 	float mBodyOffset = 0;
 	
-    public CharacterIconObject(CharacterLoader aIcon, int aDepth)
+    public CharacterIconObject(CharacterIndex aIndex, int aDepth)
     {
 		mBackground = new FlatElementImage(ManagerManager.Manager.mNewRef.pbCharacterIconBackground,aDepth);
 		mDifficultyStars = new DifficultyObject(ManagerManager.Manager.mNewRef.uiPerfectStar,aDepth+2);
+		mIcon = new FlatElementImage(null,aDepth+2);
+		if(aIndex.Index != -1)
+		{
+			var loaded = ManagerManager.Manager.mCharacterBundleManager.get_image("BOX_"+aIndex.StringIdentifier);
+			mIcon.set_new_texture(loaded.Image,null);//loaded.Data.Size);
+		}
+			
+		//TODO delete
+		/*
 		if(aIcon == null)
 		{
 			CharacterTextureBehaviour ctb = (GameObject.Instantiate(ManagerManager.Manager.mReferences.mMiniChar) as  GameObject).GetComponent<CharacterTextureBehaviour>();
@@ -20,15 +30,17 @@ public class CharacterIconObject : FlatElementMultiBase {
 		}
 		else
 			mBody =  new FlatBodyObject(aIcon,aDepth+3);
-		
 		mBody.HardShader = ManagerManager.Manager.mReferences.mMiniCharacterShader;
+		*/
 		
-		//TODO position
+		
+		
 		mBodyOffset = mDifficultyStars.mImageElements[0].BoundingBox.width/2 + 5;
 		float starOffset = mBackground.BoundingBox.width/2+5;
 		mElements.Add(new ElementOffset(mDifficultyStars, new Vector3(-starOffset,-70,0)));
 		mElements.Add(new ElementOffset(mBackground, new Vector3(mBodyOffset,0,0)));
-		mElements.Add(new ElementOffset(mBody, new Vector3(mBodyOffset,0,0)));
+		mElements.Add (new ElementOffset(mIcon, new Vector3(mBodyOffset,0,0)));
+		//mElements.Add(new ElementOffset(mBody, new Vector3(mBodyOffset,0,0)));
 		
 		
 		PrimaryGameObject = create_primary_from_elements();
@@ -53,6 +65,7 @@ public class CharacterIconObject : FlatElementMultiBase {
 			mElements.Add(mText);
 		}
 	}
+	/*
 	public FlatBodyObject take_body()
 	{
 		FlatBodyObject r = reposses_element(mBody) as FlatBodyObject;
@@ -74,7 +87,8 @@ public class CharacterIconObject : FlatElementMultiBase {
 	{
 		if(mBody != null)
 			mBody.set_target_pose(aPose);
-	}
+	}*/
+	
 	public void set_perfectness(int perfectness)
     {
         mDifficultyStars.Difficulty = perfectness;
@@ -90,10 +104,11 @@ public class CharacterIconObject : FlatElementMultiBase {
 	public static Color[] sDiffColorMapping = new Color[]{new Color(0,0.8f,0,1), new Color(0.8f,0.8f,0,1), new Color(0.9f,0.4f,0,1), new Color(0.8f,0,0,1)};
 	public void set_difficulty(int aDiff)
 	{
-		set_body_color(sDiffColorMapping[aDiff]);
+		set_icon_color(sDiffColorMapping[aDiff]/2f);
 	}
-	public void set_body_color(Color aColor)
+	public void set_icon_color(Color aColor)
 	{
-		mBody.SoftColor = aColor;
+		//mBody.SoftColor = aColor;
+		mIcon.SoftColor = aColor;	
 	}
 }

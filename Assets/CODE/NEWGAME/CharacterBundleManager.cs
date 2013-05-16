@@ -52,7 +52,7 @@ public class CharacterBundleManager : FakeMonoBehaviour {
 	{
 		ImageSizePair r = new ImageSizePair();
 		r.Image = ImageBundle.Load(identifier) as Texture2D;
-		r.Data = ImageIndex.Find(e => e.Name == identifier);
+		r.Data = ImageIndex.Find(e => e.Name == identifier); //TODO not finding size data
 		return r;
 	}
 	

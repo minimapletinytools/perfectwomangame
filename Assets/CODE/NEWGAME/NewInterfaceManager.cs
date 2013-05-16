@@ -89,6 +89,7 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 	
 	
 	
+	
 	//called by NewGameManager
 	public void setup_bb()
 	{
@@ -220,6 +221,8 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 		mBBWarningText.HardPosition = mFlatCamera.Center;//mBB.SoftPosition + new Vector3(150,bottomVOffset-40,0);
 		
 		//return bodies if needed
+		//OLD, we no longer do the mini char body borrowing thing
+		/*
 		foreach(NewChoiceObject e in mBBChoices)
 		{
 			if(e.Character.Index != -1)
@@ -227,7 +230,7 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 				mPBCharacterIcons[e.Character.Index].return_body(e.take_body());
 			}
 			e.Character = new CharacterIndex(-1);
-		}
+		}*/
 		
 		fade_bb_contents(true);
 		mBB.SoftColor = new Color(0.5f, 0.5f, 0.5f, 0.5f);
@@ -269,6 +272,7 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 		}
 	}
 	//called by ChoiceHelper
+	//this should really be called set_bb_choice_icons now
 	public void set_bb_choice_bodies(CharacterIndex aIndex)
 	{
 		CharacterIndex index = new CharacterIndex(aIndex.Level+1,0);
@@ -278,7 +282,10 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 		{
 			//mBBChoices[i].set_actual_character(mManager.mCharacterBundleManager.get_mini_character(all[i]));
 			mBBChoices[i].Character = all[i];
-			mBBChoices[i].return_body(mPBCharacterIcons[all[i].Index].take_body()); //make sure to return the body
+			//TODO set icons for choice
+			
+			//OLD when using mini char icons we took from PB
+			//mBBChoices[i].return_body(mPBCharacterIcons[all[i].Index].take_body()); //make sure to return the body
 		}
 	}
 	//this is the character that is curretnly being selected
@@ -343,8 +350,9 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 		
 		foreach(CharacterIndex e in CharacterIndex.sAllCharacters)
 		{
-			mPBCharacterIcons[e.Index] = new CharacterIconObject(
-					mManager.mCharacterBundleManager.get_mini_character(e),1);
+			//OLD
+			//mPBCharacterIcons[e.Index] = new CharacterIconObject(mManager.mCharacterBundleManager.get_mini_character(e),1);
+			mPBCharacterIcons[e.Index] = new CharacterIconObject(e,1);
 			mPBCharacterIcons[e.Index].set_name(e.ShortName);
 			mElement.Add(mPBCharacterIcons[e.Index]);
 			
@@ -357,11 +365,13 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 		position_pb_character_icons(0);
 	}
 	
+	//OLD no longer need to set icon poses
 	public void set_pb_character_icon_poses(List<KeyValuePair<CharacterIndex,ProGrading.Pose>> aChars)
 	{
+		
 		foreach(var e in aChars)
 		{
-			mPBCharacterIcons[e.Key.Index].mBody.set_target_pose(e.Value);
+			//mPBCharacterIcons[e.Key.Index].mBody.set_target_pose(e.Value);
 		}
 	}
 	
