@@ -150,11 +150,27 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 		mElement.Add(mBBQuestionText);
 		GameObject.Destroy(mMiniMan.gameObject);
 		
-		
-		
-		
 	}
 	
+	
+	//--------
+	//related to updating play
+	//--------
+	//called by NewGameManager
+	public void enable_warning_text(bool enable)
+	{
+		mBBWarningText.HardColor = (((int)(Time.time*8)) % 2 == 0) && enable ? new Color(0.7f,0.2f,0,0.5f) : new Color(0,0,0,0);
+	}
+	
+	//called by NewGameManager
+	public void update_bb_score(float aScore)
+	{
+		mBBScoreText.Text = ((int)aScore).ToString();
+	}
+	
+	
+	
+	//related to transitioning between PLAY and CHOOSING
 	//called by set_bb_small/full
 	void fade_bb_contents(bool small)
 	{
@@ -226,22 +242,17 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 		0);
 	}
 	
-	//called by NewGameManager
-	public void enable_warning_text(bool enable)
-	{
-		mBBWarningText.HardColor = (((int)(Time.time*8)) % 2 == 0) && enable ? new Color(0.7f,0.2f,0,0.5f) : new Color(0,0,0,0);
-	}
 	
-	//called by NewGameManager
-	public void update_bb_score(float aScore)
-	{
-		mBBScoreText.Text = ((int)aScore).ToString();
-	}
+	
+	//--------
+	//related to setting for CHOOSING
+	//--------
 	//called by NewGameManager
 	public void set_bb_decider_pose(ProGrading.Pose aPose)
 	{
 		mBBMiniMan.set_target_pose(aPose);
 	}
+	
 	//called by ChoiceHelper
 	public void set_bb_choice_poses(List<ProGrading.Pose> aPoses)
 	{
@@ -267,7 +278,7 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 		{
 			//mBBChoices[i].set_actual_character(mManager.mCharacterBundleManager.get_mini_character(all[i]));
 			mBBChoices[i].Character = all[i];
-			mBBChoices[i].return_body(take_character_icon(all[i]).take_body()); //make sure to return the body
+			mBBChoices[i].return_body(mPBCharacterIcons[all[i].Index].take_body()); //make sure to return the body
 		}
 	}
 	//this is the character that is curretnly being selected
@@ -393,12 +404,6 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 		}
 		
 	}
-	
-	CharacterIconObject take_character_icon(CharacterIndex aIndex)
-	{
-		return mPBCharacterIcons[aIndex.Index];
-	}
-	
 	
 	public void add_cutscene_particle_stream(CharacterIndex aTarget, PopupTextObject aPopup, float duration, bool aPositive)
 	{
@@ -724,7 +729,7 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 			int it = i;
 			PerformanceStats ps = aStats[i];
 			//reposition the assosciated character icon and performance graph
-			CharacterIconObject cio = take_character_icon(ps.Character);
+			CharacterIconObject cio = mPBCharacterIcons[ps.Character.Index];
 			PerformanceGraphObject pgo = ps.PerformanceGraph;
 			cio.HardPosition = new Vector3(cioXOffset,2000,0);
 			pgo.HardPosition = new Vector3(pgoXOffset,2000,0);
