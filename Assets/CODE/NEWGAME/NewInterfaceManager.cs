@@ -121,6 +121,7 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 		
 		
 		//BB choice nonsense
+		//TODO reposition further to the left need to make boxes smaller too...
 		var miniMan = ((GameObject)GameObject.Instantiate(refs.mMiniChar)).GetComponent<CharacterTextureBehaviour>();
 		Vector3 miniManScale = new Vector3(2,2,1);
 		float padding = 600;
@@ -221,7 +222,7 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 	{
 		float bottomVOffset = -50;
 		//mBB.SoftScale = new Vector3(1,1,1);
-		//mBB.SoftPosition = mBBBasePosition + new Vector3(0,aBBOffset,0);
+		mBB.SoftPosition = mBBBasePosition + new Vector3(0,aBBOffset,0);
 		mBBText.SoftPosition = mBB.SoftPosition + new Vector3(0,160,0);
 		mBBScoreFrame.SoftPosition = mBB.SoftPosition + new Vector3(-350,bottomVOffset,0);
 		mBBScoreText.SoftPosition = mBB.SoftPosition + new Vector3(-350,bottomVOffset-40,0);
@@ -252,7 +253,6 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 			},
 		0);
 	}
-	
 	
 	
 	//--------
@@ -706,7 +706,13 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 	{
 		float textTime = 5;
 		//clear away BB and PB
-		set_bb_for_play(3000);
+		var smallColor = new Color(1,1,1,0);
+		mBB.SoftColor = smallColor;
+		mBBText.SoftColor = smallColor;
+		mBBScoreFrame.SoftColor = smallColor;
+		mBBScoreText.SoftColor = smallColor;
+		aStats[0].PerformanceGraph.SoftColor = smallColor;
+		
 		position_pb_character_icons(0,-3000);
 		
 		
@@ -721,7 +727,7 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 		List<Vector3> ghostPositions = new List<Vector3>();
 		for(int i = 1; i < aStats.Count; i++)
 		{
-			
+			//TODO
 		}
 		
 		TimedEventDistributor.TimedEventChain chain;
@@ -751,8 +757,8 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 			//reposition the assosciated character icon and performance graph
 			CharacterIconObject cio = mPBCharacterIcons[ps.Character.Index];
 			PerformanceGraphObject pgo = ps.PerformanceGraph;
-			cio.HardPosition = new Vector3(cioXOffset,2000,0);
-			pgo.HardPosition = new Vector3(pgoXOffset,2000,0);
+			cio.HardPosition = new Vector3(cioXOffset,-2000,0);
+			pgo.HardPosition = new Vector3(pgoXOffset,-2000,0);
 			pgo.HardColor = new Color(0.5f,0.5f,0.5f,1);
 			
 			string[] perfectPhrase = {"awful","mediocre","good", "perfect"};
@@ -771,7 +777,13 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 					//move in stuff
 					cio.SoftPosition = new Vector3(cioXOffset,startingPosition - (it-1) * intervalSize,0);
 					pgo.SoftPosition = new Vector3(pgoXOffset,startingPosition - (it-1) * intervalSize,0);
-				} //TODO play 
+				
+					float netHeight = startingPosition - (it-1) * intervalSize + pgo.BoundingBox.height/2;
+					if(netHeight > mFlatCamera.Height -10) //start scrolling
+					{
+						//TODO
+					}
+				} 
 			).then(
 				delegate(float aTime)
 				{
@@ -796,11 +808,38 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 			2);
 		}
 		
+		//variables for credits animation..
+		float lastTime = 0;
+		FlatElementImage logo1 = null;
+		FlatElementImage logo2 = null;
+		List<FlatElementText> creditsText = new List<FlatElementText>();
+		float scrollSpeed = 300;
+		
 		//finish it off...
 		chain = chain.then_one_shot(
 			delegate()
 			{
-				add_timed_text_bubble("G A M E  O V E R",15,0.5f);
+				add_timed_text_bubble("G A M E  O V E R",99999,0.5f);
+			}
+		,0).then_one_shot(
+			delegate()
+			{
+				//TODO create credits text and nonsense
+			}
+		,0).then(
+			delegate(float aTime)
+			{
+				
+				//scroll contents down
+				foreach(var e in aStats)
+				{
+					mPBCharacterIcons[e.Character.Index].SoftPosition = mPBCharacterIcons[e.Character.Index].SoftPosition - new Vector3(0,scrollSpeed*(aTime-lastTime),0);
+					e.PerformanceGraph.SoftPosition = e.PerformanceGraph.SoftPosition - new Vector3(0,scrollSpeed*(aTime-lastTime),0);
+				}
+				lastTime = aTime;
+				if(Input.GetKeyDown(KeyCode.Alpha0))
+					return true;
+				return false;
 			}
 		,0).then_one_shot(
 			graveCompleteCb
