@@ -4,7 +4,8 @@ using System.Collections;
 public class PopupTextObject : FlatElementMultiBase {
     public FlatElementImage mBackground;
 	public FlatElementText mText;
-	int mSize = 0;
+	public int SplitNumber
+	{ get; set; }
 	
 	public string Text
 	{
@@ -22,12 +23,28 @@ public class PopupTextObject : FlatElementMultiBase {
 	}
 	string split_text(string text)
 	{
-		int splitCount = mSize == 0 ? 20 : 30;
+		
+		/* TODO
+		int splitCount = text.Length/SplitNumber;
+		string r = "";
+		for(int i = 0; i < splitCount+1; i++)
+		{
+			int splitIndex = SplitCount == 0 ? 0 : i*(text.Length)/SplitCount;
+			
+			r += text.Substring(splitIndex,);
+			if( text[splitIndex] != ' ' && text[splitIndex-1] != ' ')
+				r += "-";
+			r += "\n" + text.Substring(splitIndex);
+		}
+		return r;*/
+		
+		int splitCount = 20;
 		if(text.Length >= splitCount)
 		{
+			
 			int splitIndex = (text.Length+1)/2;
 			string r = text.Substring(0,splitIndex);
-			if( text[splitIndex] != ' ')
+			if( text[splitIndex] != ' ' && text[splitIndex-1] != ' ')
 				r += "-";
 			r += "\n" + text.Substring(splitIndex);
 			return r;
@@ -38,7 +55,7 @@ public class PopupTextObject : FlatElementMultiBase {
     public PopupTextObject(string aText, int aDepth)
     {
 		//TODO finish and position
-		
+		SplitNumber = 20;
 		mBackground = new FlatElementImage(random_bubble(0), aDepth);
 		
 		
