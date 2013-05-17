@@ -36,6 +36,11 @@ public class FlatCameraManager{
     {
         get { return Width / Camera.aspect; }
     }
+	
+	public Vector2 Size
+	{
+		get { return new Vector2(Width,Height);}
+	}
 
     
     public FlatCameraManager(Vector3 aCenter, float aDistance)

@@ -126,7 +126,7 @@ public class NewChoiceObject : FlatElementMultiBase {
 	
 	public void set_difficulty(int difficulty)
 	{
-		mIcon.SoftColor = CharacterIconObject.sDiffColorMapping[difficulty]/2;
+		mIcon.SoftColor = GameConstants.IconDifficultyColorsOverTwo[difficulty];
 	}
 	
     public override Color SoftColor
@@ -155,7 +155,7 @@ public class NewChoiceObject : FlatElementMultiBase {
 			//this is also a stupid hack
 			//if(mBody!=null)
 			//	mBody.SoftColor = bodyColor;
-			if(mIcon != null)
+			if(mIcon != null && value.a != 0)
 				mIcon.SoftColor = bodyColor;
         }
     }

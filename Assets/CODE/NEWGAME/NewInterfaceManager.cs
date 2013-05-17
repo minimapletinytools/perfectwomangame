@@ -78,10 +78,12 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 	FlatElementImage mBBScoreFrame;
 	FlatElementText mBBScoreText;
 	FlatElementText mBBWarningText = null;
+	
 	//CHOOSING
 	int BB_NUM_CHOICES = 3;
 	List<NewChoiceObject> mBBChoices = new List<NewChoiceObject>();
 	List<FlatBodyObject> mBBChoiceBodies = new List<FlatBodyObject>();
+	FlatElementImage mBBChoosingBackground;
 	ColorTextObject mBBQuestionText;
 	FlatBodyObject mBBMiniMan;
 	Vector3 mBBMiniManBasePosition;
@@ -136,6 +138,8 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 			mElement.Add(mBBChoiceBodies[i]);
 		}
 		
+		mBBChoosingBackground = new FlatElementImage(null,mFlatCamera.Size,0);
+		mBBChoosingBackground.HardPosition = mFlatCamera.Center;
 		mBBQuestionText = new ColorTextObject(10);
 		mBBQuestionText.HardPosition = mFlatCamera.get_point(0,0.75f);
 		mBBQuestionText.SoftInterpolation = 1;
@@ -146,6 +150,7 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 		mBBMiniMan.HardPosition = mBBMiniManBasePosition;
 		mBBChoiceBox.HardPosition = random_position();//mBBMiniMan.SoftPosition;
 		
+		mElement.Add(mBBChoosingBackground);
 		mElement.Add(mBBMiniMan);
 		mElement.Add(mBBChoiceBox);
 		mElement.Add(mBBQuestionText);
@@ -173,17 +178,19 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 	
 	//related to transitioning between PLAY and CHOOSING
 	//called by set_bb_small/full
-	void fade_bb_contents(bool small)
+	void fade_choosing_contents(bool small)
 	{
 		Color smallColor = small ? new Color(0.5f,0.5f,0.5f,1) : new Color(0.5f,0.5f,0.5f,0);
 		Color fullColor = !small ? new Color(0.5f,0.5f,0.5f,1) : new Color(0.5f,0.5f,0.5f,0);
 		//Color smallColor = small ? new Color(1,1,1,1) : new Color(1,1,1,0);
 		//Color fullColor = !small ? new Color(1,1,1,1) : new Color(1,1,1,0);
 	
+		/* new ui, we no longer need to hide BB contents
 		mBBText.SoftColor = smallColor;
 		mBBScoreFrame.SoftColor = smallColor;
 		mBBScoreText.SoftColor = smallColor;
 		mBBLastPerformanceGraph.PerformanceGraph.SoftColor = smallColor;
+		*/
 		
 		foreach(FlatBodyObject e in mBBChoiceBodies)
 			e.SoftColor = fullColor;
@@ -192,28 +199,29 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 		mBBMiniMan.SoftColor = fullColor;
 		mBBChoiceBox.SoftColor = fullColor;
 		mBBQuestionText.SoftColor = fullColor;
+		mBBChoosingBackground.SoftColor = fullColor*0.2f;
 	}
 	
 	//make sure choice contents are made first before calling this
 	//called by set_for_CHOICE()
-	public void set_bb_full_size()
+	public void set_bb_for_choosing()
 	{
-		Vector2 baseSize = new Vector2(mBB.BoundingBox.width,mBB.BoundingBox.height);
-		Vector2 desiredSize = new Vector2(mFlatCamera.Width+200,mFlatCamera.Height+200);
-		mBB.SoftScale = new Vector3(desiredSize.x/baseSize.x,desiredSize.y/baseSize.y,1);
-		mBB.SoftPosition = mFlatCamera.get_point(0, 0);
-		fade_bb_contents(false);
+		//Vector2 baseSize = new Vector2(mBB.BoundingBox.width,mBB.BoundingBox.height);
+		//Vector2 desiredSize = new Vector2(mFlatCamera.Width+200,mFlatCamera.Height+200);
+		//mBB.SoftScale = new Vector3(desiredSize.x/baseSize.x,desiredSize.y/baseSize.y,1);
+		//mBB.SoftPosition = mFlatCamera.get_point(0, 0);
+		fade_choosing_contents(false);
 		mBBMiniMan.SoftColor = new Color(1,0.3f,0.2f);
         //mBB.SoftColor = new Color(0.5f, 0.5f, 0.5f, 0.2f);
 	}
 	
 	//make sure begin_new_character is called before this
 	//called by set_for_PLAY()
-	void set_bb_small(float aBBOffset = 0)
+	void set_bb_for_play(float aBBOffset = 0)
 	{
 		float bottomVOffset = -50;
-		mBB.SoftScale = new Vector3(1,1,1);
-		mBB.SoftPosition = mBBBasePosition + new Vector3(0,aBBOffset,0);
+		//mBB.SoftScale = new Vector3(1,1,1);
+		//mBB.SoftPosition = mBBBasePosition + new Vector3(0,aBBOffset,0);
 		mBBText.SoftPosition = mBB.SoftPosition + new Vector3(0,160,0);
 		mBBScoreFrame.SoftPosition = mBB.SoftPosition + new Vector3(-350,bottomVOffset,0);
 		mBBScoreText.SoftPosition = mBB.SoftPosition + new Vector3(-350,bottomVOffset-40,0);
@@ -232,7 +240,7 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 			e.Character = new CharacterIndex(-1);
 		}*/
 		
-		fade_bb_contents(true);
+		fade_choosing_contents(true);
 		mBB.SoftColor = new Color(0.5f, 0.5f, 0.5f, 0.5f);
 		
 		//meter objects overrides soft color so we have to manually turn the meter off..
@@ -530,7 +538,7 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 	
 	public void set_for_PLAY()
 	{
-		set_bb_small();
+		set_bb_for_play();
 	}
 	
 	
@@ -557,12 +565,12 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 		
 		
 		//this slows the game down a lot...
-		set_bb_small(mPB.BoundingBox.height/2+205);
+		set_bb_for_play(mPB.BoundingBox.height/2+205);
 		position_pb_character_icons(mBBLastPerformanceGraph.Character.Level,mPB.BoundingBox.height/2+205);
 		
 		mLastCutsceneCompleteCb = delegate() {
 			//this slows the ame down a lot
-			set_bb_small();
+			set_bb_for_play();
 			position_pb_character_icons(mBBLastPerformanceGraph.Character.Level,0);
 			cutsceneCompleteCb();
 			mLastCutsceneCompleteCb = null;
@@ -635,7 +643,7 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 	public void set_for_CHOICE()
 	{
 		//TODO
-		set_bb_full_size();
+		set_bb_for_choosing();
 	}
 	
 	//returns amount of time this will take
@@ -698,7 +706,7 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 	{
 		float textTime = 5;
 		//clear away BB and PB
-		set_bb_small(3000);
+		set_bb_for_play(3000);
 		position_pb_character_icons(0,-3000);
 		
 		

@@ -101,10 +101,10 @@ public class CharacterIconObject : FlatElementMultiBase {
 		mBackground.SoftColor = aColor;
 	}
 	
-	public static Color[] sDiffColorMapping = new Color[]{new Color(0,0.8f,0,1), new Color(0.8f,0.8f,0,1), new Color(0.9f,0.4f,0,1), new Color(0.8f,0,0,1)};
+	
 	public void set_difficulty(int aDiff)
 	{
-		set_icon_color(sDiffColorMapping[aDiff]/2f);
+		set_icon_color(GameConstants.IconDifficultyColorsOverTwo[aDiff]);
 	}
 	public void set_icon_color(Color aColor)
 	{
