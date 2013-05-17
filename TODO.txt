@@ -5,6 +5,7 @@
 -feedback ideas, after pose changes, you get a blip indicating how well you ddi that pose in that time interval
 
 ::TODO100::
+DONE-do the constants..
 -redo colors on performance graph to match lea's (red->blue->gold)
 	-shrink transition zone because they get funky colors in between...
 -do new layout for choice
