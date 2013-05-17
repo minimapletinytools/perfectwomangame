@@ -424,7 +424,7 @@ public class NewGameManager : FakeMonoBehaviour
 		
 	}
 	
-	CharacterLoader DeathCharacter
+	public CharacterLoader DeathCharacter
 	{ get; set; }
 	
 	public void transition_to_DEATH()

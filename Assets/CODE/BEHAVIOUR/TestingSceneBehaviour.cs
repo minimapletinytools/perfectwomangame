@@ -1,14 +1,37 @@
 using UnityEngine;
-using System.Collections;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 public class TestingSceneBehaviour : MonoBehaviour {
 	
-	void Start()
+	Texture2D mImage = null;
+	CharacterIndex mLastCharacter = new CharacterIndex(-1);
+	public void Start()
 	{
 		ManagerManager.Manager.mGameManager.set_testing();
 		ManagerManager.Manager.mTransitionCameraManager.mForceStart = true;
 		TransitionCameraManager.FADE_TIME = 0.01f;
+		
+
+	}
+	
+	public void Update()
+	{
+		if(ManagerManager.Manager.mCharacterBundleManager.is_initial_loaded() && ManagerManager.Manager.mGameManager.DeathCharacter != null)
+		{
+			
+			if(mLastCharacter.Index != ManagerManager.Manager.mGameManager.CurrentCharacterIndex.Index)
+			{
+				mLastCharacter = ManagerManager.Manager.mGameManager.CurrentCharacterIndex;
+				mImage = ManagerManager.Manager.mCharacterBundleManager.get_image("BOX_"+mLastCharacter.StringIdentifier).Image;
+			}
+		}
+	}
+	
+	void OnGUI()
+	{
+		
+		GUI.Box(new Rect(0,0,128,128),mImage,new GUIStyle());
 	}
 	
 	/*
