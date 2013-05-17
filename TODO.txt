@@ -8,8 +8,8 @@
 -redo colors on performance graph to match lea's (red->blue->gold)
 	-shrink transition zone because they get funky colors in between...
 -do new layout for choice
-	-why are there duplicate icons???
-	-swap out mini chars for icons instead.
+	DONE-why are there duplicate icons???
+	DONE-swap out mini chars for icons instead.
 	-multiline text descriptions
 	-reposition everything to the left
 		-this means getting smaller choosing boxes...
