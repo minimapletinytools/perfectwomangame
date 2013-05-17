@@ -14,7 +14,7 @@ DONE-do the constants..
 	-multiline text descriptions
 	-reposition everything to the left
 		-this means getting smaller choosing boxes...
-	-new blue background that fades tot ransparent (or opaque) behind the pink bar but in front of bg
+	DONE-new blue background that fades tot ransparent (or opaque) behind the pink bar but in front of bg
 	-miniman??? where do you go now :(
 -text
 	-make font wrapping hyphenation stuff better

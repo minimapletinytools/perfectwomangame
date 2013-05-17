@@ -8,9 +8,11 @@ public class NewMenuReferenceBehaviour : MonoBehaviour {
 	public int genericFontTexWidth;
 	public Font genericFont;
 	
-	//configurator logos
+	//configurator
 	public Texture2D gameLabLogo;
 	public Texture2D filmAkademieLogo;
+	public Texture2D depthBorder;
+	
 	
 	//ui
 	public Texture2D uiPerfectStar;
