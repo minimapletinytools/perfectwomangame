@@ -45,10 +45,7 @@ public class FlatElementImage : FlatElementBase
 	
 	public void set_new_texture(Texture aTex, System.Nullable<Vector2> aSize = null)
     {
-		if(aTex != null)
-			PrimaryGameObject.name = "genImageObject_"+aTex.name;
-		else
-			PrimaryGameObject.name = "genImageObject";
+
 		mImage.set_new_texture(aTex,aSize);
     }
 }
