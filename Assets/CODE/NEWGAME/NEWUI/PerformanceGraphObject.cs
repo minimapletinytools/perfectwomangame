@@ -29,9 +29,9 @@ public class PerformanceGraphObject  : FlatElementMultiBase {
 		//red -> blue -> gold
 		Color colorInterp = new Color(1,1,1,1);
 		if(aScore < lb + ci)
-			colorInterp = Color.Lerp(new Color(1,0,0,1),new Color(0,0,1,1),Mathf.Clamp(aScore,lb-ci, lb+ci)/(ci*2));
+			colorInterp = Color.Lerp(new Color(1,0,0,1),new Color(0,0,1,1),(Mathf.Clamp(aScore,lb-ci, lb+ci)-(lb-ci))/(ci*2));
 		else
-			colorInterp = Color.Lerp(new Color(0,0,1,1),new Color(1,1,0,1),Mathf.Clamp(aScore,ub-ci, ub+ci)/(ci*2));
+			colorInterp = Color.Lerp(new Color(0,0,1,1),new Color(1,1,0,1),(Mathf.Clamp(aScore,ub-ci, ub+ci)-(ub-ci))/(ci*2));
 		
 		aScore = 0.06f + aScore * (0.71f-0.06f);
 		aTime = 0.016f + aTime * (0.986f-0.016f);

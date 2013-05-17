@@ -6,7 +6,7 @@
 
 ::TODO100::
 DONE-do the constants..
--redo colors on performance graph to match lea's (red->blue->gold)
+DONE-redo colors on performance graph to match lea's (red->blue->gold)
 	-shrink transition zone because they get funky colors in between...
 -do new layout for choice
 	DONE-why are there duplicate icons???
@@ -16,6 +16,7 @@ DONE-do the constants..
 		-this means getting smaller choosing boxes...
 	DONE-new blue background that fades tot ransparent (or opaque) behind the pink bar but in front of bg
 	-miniman??? where do you go now :(
+	-get rid of choosing box???
 -text
 	-make font wrapping hyphenation stuff better
 	-remake font for windows so it has Cs
