@@ -75,4 +75,18 @@ public class FlatElementText : FlatElementBase
 		base.set_color(setMe);
     }
 	
+	
+	public static string convert_to_multiline(int numberSplits, string aString)
+	{
+		//TODO
+		return aString;
+	}
+	
+	
+	public static string convert_to_multiline(int[] max_chars, string aString)
+	{
+		//TOOD
+		return aString;
+	}
+	
 }
