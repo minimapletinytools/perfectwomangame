@@ -704,7 +704,21 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 	
 	public void set_for_GRAVE(List<PerformanceStats> aStats, System.Action graveCompleteCb)
 	{
-		float textTime = 5;
+		//remove the grave
+		if(aStats.Last().Character.Age == 999)
+			aStats.RemoveAt(aStats.Count-1);
+		
+		//fake it for testing...
+		for(int i = 0; i < 8; i++)
+		{
+			if(aStats.Last().Character.Age < (new CharacterIndex(i,0)).Age)
+			{
+				aStats.Add(new PerformanceStats(new CharacterIndex(i,0)));
+			}
+		}
+		
+		
+		float textTime = 1;
 		//clear away BB and PB
 		var smallColor = new Color(1,1,1,0);
 		mBB.SoftColor = smallColor;
@@ -750,7 +764,7 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 		//make performance graphs come in one at a time from the bottom
 		//starting at one means skipping fetus
 		//going less than count means skipping grave
-		for(int i = 1; i < aStats.Count-1; i++)
+		for(int i = 1; i < aStats.Count; i++)
 		{
 			int it = i;
 			PerformanceStats ps = aStats[i];
@@ -778,16 +792,24 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 					cio.SoftPosition = new Vector3(cioXOffset,startingPosition - (it-1) * intervalSize,0);
 					pgo.SoftPosition = new Vector3(pgoXOffset,startingPosition - (it-1) * intervalSize,0);
 				
-					float netHeight = startingPosition - (it-1) * intervalSize + pgo.BoundingBox.height/2;
-					if(netHeight > mFlatCamera.Height -10) //start scrolling
+					float netHeight = (it) * intervalSize;
+					if(netHeight > mFlatCamera.Height - 10) //start scrolling
 					{
-						//TODO
+						Vector3 scroll = -new Vector3(0,intervalSize,0);
+						foreach(var e in aStats)
+						{
+							if(e.Character.Age <= ps.Character.Age)
+							{
+								mPBCharacterIcons[e.Character.Index].SoftPosition = mPBCharacterIcons[e.Character.Index].SoftPosition - scroll;
+								e.PerformanceGraph.SoftPosition = e.PerformanceGraph.SoftPosition - scroll;
+							}
+						}
 					}
 				} 
 			).then(
 				delegate(float aTime)
 				{
-					float interpolationTime = 1.5f;
+					float interpolationTime = 0.5f;
 					float displayScore = scoreIncrementor + (aTime/interpolationTime)*ps.AdjustedScore;
 					finalScoreText.Text = ""+(int)displayScore;
 					if(aTime >  interpolationTime)
@@ -798,14 +820,14 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 					return false;
 					
 				},
-			1.5f).then(
+			0).then(
 				delegate(float aTime)
 				{
 					//TODO render mini character with golry hoooooo sound
 					//mManager.mMusicManager.play_sound_effect("graveAngel");
 					return true;
 				},
-			2);
+			0);
 		}
 		
 		//variables for credits animation..
@@ -825,16 +847,32 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 			delegate()
 			{
 				//TODO create credits text and nonsense
+				int counter = 0;
+				foreach(string e in GameConstants.credits)
+				{
+					var text = new FlatElementText(mManager.mNewRef.genericFont,50,e,mPB.Depth +1);
+					text.HardColor = new Color(1,1,1,1);
+					text.HardPosition = mPB.SoftPosition + new Vector3(0,mFlatCamera.Height/2+100,0) + (new Vector3(0,50,0))*counter;
+					mManager.mDebugString = text.SoftPosition.ToString();
+					creditsText.Add(text);
+					mElement.Add(text);
+					counter++;
+				}
 			}
 		,0).then(
 			delegate(float aTime)
 			{
 				
 				//scroll contents down
+				Vector3 scroll = -new Vector3(0,scrollSpeed*(aTime-lastTime),0);
 				foreach(var e in aStats)
 				{
-					mPBCharacterIcons[e.Character.Index].SoftPosition = mPBCharacterIcons[e.Character.Index].SoftPosition - new Vector3(0,scrollSpeed*(aTime-lastTime),0);
-					e.PerformanceGraph.SoftPosition = e.PerformanceGraph.SoftPosition - new Vector3(0,scrollSpeed*(aTime-lastTime),0);
+					mPBCharacterIcons[e.Character.Index].SoftPosition = mPBCharacterIcons[e.Character.Index].SoftPosition + scroll;
+					e.PerformanceGraph.SoftPosition = e.PerformanceGraph.SoftPosition + scroll;
+				}
+				foreach(FlatElementText e in creditsText)
+				{
+					e.SoftPosition = e.SoftPosition + scroll;
 				}
 				lastTime = aTime;
 				if(Input.GetKeyDown(KeyCode.Alpha0))

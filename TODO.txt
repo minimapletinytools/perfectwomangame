@@ -5,6 +5,8 @@
 -feedback ideas, after pose changes, you get a blip indicating how well you ddi that pose in that time interval
 
 ::TODO100::
+-turn timing vars into constants
+-fetus icon shuold be white
 -do new layout for choice
 	DONE-why are there duplicate icons???
 	DONE-swap out mini chars for icons instead.
@@ -27,8 +29,8 @@
 	DONE-indicators when body is off the screen
 	DONE-make zigfu depth image only come up when there is a problem
 -end game
-	-scrolling performance charts in end game
-	-scrolling credits in end game
+	DONE-scrolling performance charts in end game
+	DONE-scrolling credits in end game
 	-other end game cutscenes
 DONE-do the constants..
 DONE-redo colors on performance graph to match lea's (red->blue->gold)

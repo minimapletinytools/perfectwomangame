@@ -5,8 +5,8 @@ using System.Collections.Generic;
 //this class also handles initialization camera nonsense
 public class TransitionCameraManager : FakeMonoBehaviour
 {
-	public static float FADE_TIME = 2.3f;
-	//static float FADE_TIME = 0.2f;
+	//public static float FADE_TIME = 2.3f;
+	public static float FADE_TIME = 0.2f;
 	static float MAX_FADE = 30;
 	
 	
