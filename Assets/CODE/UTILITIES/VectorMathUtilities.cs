@@ -14,4 +14,7 @@ public class VectorMathUtilities {
 		float lambda = Mathf.Clamp01(Vector3.Dot((p-A),(B-A))/(B-A).sqrMagnitude);
 		return (1-lambda)*A + lambda*B;
 	}
+	
+		
+	
 }
