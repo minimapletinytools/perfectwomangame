@@ -560,8 +560,10 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 		return;*/
 		
 		
-		
-		
+		float gPerformanceText = 5f;
+		float gCutsceneText = 6f;
+		float gPreParticle = 1.5f;
+		float gParticle = 3f;
 		
 		
 		//this slows the game down a lot...
@@ -580,7 +582,7 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 		
 		string[] perfectPhrase = {"awful","mediocre","good", "perfect"};
 		string[] performancePhrase = {"miserably","poorly","well", "excellently"};
-		float firstTextTime = 5f;
+
 		TimedEventDistributor.TimedEventChain chain = TED.add_event(
 			delegate(float aTime)
 			{
@@ -593,17 +595,13 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 				{
 					text = aChanges.PerformanceDescription.Replace("<P>",perfectPhrase[mBBLastPerformanceGraph.Stats.Perfect]);
 				}
-				add_timed_text_bubble(text,firstTextTime);
+				add_timed_text_bubble(text,gPerformanceText);
 				return true;
 			},
         0).then_one_shot( //dummy 
-			delegate(){},firstTextTime);
+			delegate(){},gPerformanceText);
 		
 		
-		float cutsceneTextTime = 6;
-
-
-
 		foreach(var e in aChanges.Changes)
 		{
 			//string changeMsg = Random.Range(0,3) == 0 ? PDStats.negative_sentences[(int)e][0] : PDStats.positive_sentences[(int)e][0];
@@ -614,7 +612,7 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 			chain = chain.then(
 				delegate(float aTime)
 				{
-					po = add_timed_text_bubble(changeMsg,cutsceneTextTime);
+					po = add_timed_text_bubble(changeMsg,gCutsceneText);
 					return true;
 				}
 			,0).then(
@@ -624,7 +622,7 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 					{
 						if(diffChanges[i] != 0){
                         	var cchar = new CharacterIndex(i);
-							add_cutscene_particle_stream(cchar,po,3f,changes.is_positive());
+							add_cutscene_particle_stream(cchar,po,gParticle,changes.is_positive());
 							int nDiff = Mathf.Clamp(mManager.mGameManager.get_character_difficulty(cchar) + diffChanges[i], 0, 3);
 							mManager.mGameManager.change_interface_pose(cchar,nDiff);
                         	mPBCharacterIcons[cchar.Index].set_difficulty(nDiff);
@@ -632,7 +630,7 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 					}
 					return true;
 				}
-			,1.5f).wait (cutsceneTextTime-1.5f);
+			,gPreParticle).wait (gCutsceneText-gPreParticle);
 		}
 		
 		chain = chain.then_one_shot(delegate(){mLastCutsceneCompleteCb();},END_CUTSCENE_DELAY_TIME);
@@ -649,18 +647,20 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 	//returns amount of time this will take
 	public TimedEventDistributor.TimedEventChain set_for_DEATH(CharacterIndex aChar)
 	{
+		float gTextTime = 5;
+		
 		TimedEventDistributor.TimedEventChain chain;
-		float textTime = 5;
+		
 		if(aChar.Level == 7)
 		{
 			//80
 			chain = TED.add_one_shot_event(
 				delegate()
 				{
-					add_timed_text_bubble("It's time for you to die a natural death",textTime);
+					add_timed_text_bubble("It's time for you to die a natural death",gTextTime);
 				},
 	        0).then_one_shot( //dummy 
-			delegate(){},textTime);
+			delegate(){},gTextTime);
 		}
 		else if (aChar.Level == 8)
 		{
@@ -668,34 +668,34 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 			chain = TED.add_one_shot_event(
 				delegate()
 				{
-					add_timed_text_bubble("Congragulations",textTime);
+					add_timed_text_bubble("Congragulations",gTextTime);
 				},
 	        0).then_one_shot(
 				delegate()
 				{
-					add_timed_text_bubble("Your life was may not have been perfect",textTime);
+					add_timed_text_bubble("Your life was may not have been perfect",gTextTime);
 				},
-			textTime).then_one_shot(
+			gTextTime).then_one_shot(
 				delegate()
 				{
-					add_timed_text_bubble("but you lived 100 years",textTime);
+					add_timed_text_bubble("but you lived 100 years",gTextTime);
 				},
-			textTime).then_one_shot( //dummy 
-				delegate(){},textTime);
+			gTextTime).then_one_shot( //dummy 
+				delegate(){},gTextTime);
 		}
 		else
 		{
 			chain = TED.add_one_shot_event(
 				delegate()
 				{
-					add_timed_text_bubble("You die at the age of " + aChar.Age,textTime);
+					add_timed_text_bubble("You die at the age of " + aChar.Age,gTextTime);
 				},
 	        1).then_one_shot(
 				delegate()
 				{
 					//TODO pink bar animations
 				}
-			,textTime).then_one_shot( //dummy 
+			,gTextTime).then_one_shot( //dummy 
 				delegate(){},0);
 		}
 		
@@ -704,6 +704,17 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 	
 	public void set_for_GRAVE(List<PerformanceStats> aStats, System.Action graveCompleteCb)
 	{
+		//timing vars
+		float gIntroText = 0.5f;
+		float gCharacterText = 0.5f;
+		float gPreGlory = 0f;
+		float gGlory = 0f;
+		float gPostGlory = 0f;
+		float gPreScoreCount = 0.5f;
+		float gScoreCount = 0.5f;
+		float gPostScoreCount = 0.5f;
+		float gRestart = 15;
+		
 		//remove the grave
 		if(aStats.Last().Character.Age == 999)
 			aStats.RemoveAt(aStats.Count-1);
@@ -718,7 +729,7 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 		}
 		
 		
-		float textTime = 1;
+		
 		//clear away BB and PB
 		var smallColor = new Color(1,1,1,0);
 		mBB.SoftColor = smallColor;
@@ -748,14 +759,14 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 		chain = TED.add_one_shot_event(
 			delegate()
 			{
-				add_timed_text_bubble("You rest here beneath the earth...",textTime,0.5f);
+				add_timed_text_bubble("You rest here beneath the earth...",gIntroText,0.5f);
 			},
-        textTime).then_one_shot( //wait a little bit to let the fading finish
+        gIntroText).then_one_shot( //wait a little bit to let the fading finish
 			delegate()
 			{
-				add_timed_text_bubble("Here is your life story:",textTime,0.5f);
+				add_timed_text_bubble("Here is your life story:",gIntroText,0.5f);
 			},
-		textTime).wait (textTime);
+		gIntroText).wait (gIntroText);
 		
 		float startingPosition = mFlatCamera.get_point(0,1).y - aStats[0].PerformanceGraph.BoundingBox.height/2f - 10;
 		float intervalSize = aStats[0].PerformanceGraph.BoundingBox.height + 5;
@@ -786,7 +797,7 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 					text += " life as a ";
 					text += ps.Character.FullName;
 					text += " " + performancePhrase[Mathf.Clamp((int)(Mathf.Sqrt(ps.Score)*4),0,3)];
-					add_timed_text_bubble(text,textTime,0.5f);
+					add_timed_text_bubble(text,gCharacterText,0.5f);
 				
 					//move in stuff
 					cio.SoftPosition = new Vector3(cioXOffset,startingPosition - (it-1) * intervalSize,0);
@@ -809,10 +820,9 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 			).then(
 				delegate(float aTime)
 				{
-					float interpolationTime = 0.5f;
-					float displayScore = scoreIncrementor + (aTime/interpolationTime)*ps.AdjustedScore;
+					float displayScore = scoreIncrementor + (aTime/gScoreCount)*ps.AdjustedScore;
 					finalScoreText.Text = ""+(int)displayScore;
-					if(aTime >  interpolationTime)
+					if(aTime >  gScoreCount)
 					{
 						scoreIncrementor += ps.AdjustedScore;
 						return true;
@@ -820,14 +830,14 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 					return false;
 					
 				},
-			0).then(
+			gPreScoreCount).then(
 				delegate(float aTime)
 				{
 					//TODO render mini character with golry hoooooo sound
 					//mManager.mMusicManager.play_sound_effect("graveAngel");
 					return true;
 				},
-			0);
+			gPostScoreCount);
 		}
 		
 		//variables for credits animation..
@@ -881,7 +891,7 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 			}
 		,0).then_one_shot(
 			graveCompleteCb
-		,15);
+		,gRestart);
 	}
 	
 	
