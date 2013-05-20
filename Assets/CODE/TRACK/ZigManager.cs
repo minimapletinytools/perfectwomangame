@@ -1,6 +1,6 @@
 using UnityEngine;
-using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 public class ZigManager : FakeMonoBehaviour {
 	GameObject mZigObject = null;
 	Zig mZig = null;
@@ -9,6 +9,7 @@ public class ZigManager : FakeMonoBehaviour {
     ZigInput mZigInput = null;
 	public AlternativeDepthViewer DepthView { get; private set; }
     public Dictionary<ZigJointId, ZigInputJoint> Joints{get; private set;}
+	ZigJointId[] ImportantJoints = new ZigJointId[]{ZigJointId.Head,ZigJointId.LeftHand,ZigJointId.RightHand};//,ZigJointId.LeftAnkle,ZigJointId.RightAnkle};
     public ZigManager(ManagerManager aManager) : base(aManager)
 	{
 		Joints = new Dictionary<ZigJointId, ZigInputJoint>()
@@ -65,6 +66,17 @@ public class ZigManager : FakeMonoBehaviour {
             if(container != null)
                 mZigInput = container.GetComponent<ZigInput>();
         }
+		
+		if(is_reader_connected() == 2 && !is_user_in_screen() )
+		{
+			DepthView.show_indicator(true);
+			mManager.mTransitionCameraManager.EnableDepthWarning = true;
+		}
+		else 
+		{
+			DepthView.show_indicator(false);
+			mManager.mTransitionCameraManager.EnableDepthWarning = false;
+		}
 	}
 	
 	public int is_reader_connected() //0 - not connected, 1 - trying to connect, 2 - connected
@@ -133,15 +145,46 @@ public class ZigManager : FakeMonoBehaviour {
 		//mManager.mDebugString = Joints[ZigJointId.LeftHand].Position.ToString();
     } 
 	
-	public UnityEngine.Rect get_user_bounds()
+	public UnityEngine.Bounds get_user_bounds()
 	{
 		
+		Bounds? r = null;
 		//TODO
 		foreach(var e in Joints)
 		{
-			//e.Value.Position
+			if(!r.HasValue)
+				r = e.Value.Position.to_bounds();
+			r = r.Value.union(e.Value.Position);
 		}
-		return new UnityEngine.Rect();
+		return r.Value;
+	}
+	
+	public bool is_user_centered()
+	{
+		//TODO
+		//ManagerManager.Manager.mDebugString = get_user_bounds().center.ToString();
+		
+		
+		return true;
+	}
+	
+	float badTimer = 0;
+	public bool is_user_in_screen()
+	{
+		
+		bool bad = false;
+		foreach(var e in Joints)
+		{
+			if(ImportantJoints.Contains(e.Key) && !e.Value.GoodPosition)
+			{
+				bad = true;
+			}
+		}
+		if(!bad)
+			badTimer = 1.5f;
+		else
+			badTimer -= Time.deltaTime;
+		return badTimer > 0;
 	}
 	
 }

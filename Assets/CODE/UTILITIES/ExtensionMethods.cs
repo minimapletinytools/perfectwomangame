@@ -57,4 +57,52 @@ public static class ExtensionMethods  {
 	        list[n] = value;  
 	    }  
 	}
+	
+	public static Rect expand(this Rect r, float exp)
+	{
+		r.x -= 	exp;
+		r.y -= exp;
+		r.width += 2*exp;
+		r.height += 2*exp;
+		return r;
+	}
+	
+	//----------
+	//bounds nonsense
+	//----------
+	public static Bounds to_bounds(this Vector3 p)
+	{
+		Bounds r = new Bounds();
+		r.center = p;
+		r.extents = new Vector3(0,0,0);
+		return r;
+	}
+	
+	public static Bounds union(this Bounds A, Vector3 p)
+	{
+		Bounds r = new Bounds(A.center,A.size);
+		r.Encapsulate(p);	
+		return r;
+	}
+	
+	public static Bounds union(this Bounds A, Bounds o)
+	{
+		Bounds r = new Bounds(A.center,A.size);
+		r.Encapsulate(o);
+		return r;
+	}
+	
+	
+	public static Bounds bounds_from_points(IEnumerable<Vector3> aPoints)
+	{
+		Bounds? r = null;
+		foreach(Vector3 e in aPoints)
+		{
+			if (r == null)
+				r = e.to_bounds();
+			else
+				r = r.Value.union(e);
+		}
+		return r.Value;
+	}
 }

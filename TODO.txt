@@ -5,9 +5,6 @@
 -feedback ideas, after pose changes, you get a blip indicating how well you ddi that pose in that time interval
 
 ::TODO100::
-DONE-do the constants..
-DONE-redo colors on performance graph to match lea's (red->blue->gold)
-	-shrink transition zone because they get funky colors in between...
 -do new layout for choice
 	DONE-why are there duplicate icons???
 	DONE-swap out mini chars for icons instead.
@@ -22,14 +19,20 @@ DONE-redo colors on performance graph to match lea's (red->blue->gold)
 	-remake font for windows so it has Cs
 	-see if you can get bold font
 -depth indicator
-	-intro calibration nonsense
-	-indicators when body is off the screen
-	-make zigfu depth image only come up when there is a problem
+	-make it work better???
+		-do the goodposition indicator thing
+		-maybe test for out of frame and covered separeately
+	-buy zigfu????
+	IGNORE-intro calibration nonsense
+	DONE-indicators when body is off the screen
+	DONE-make zigfu depth image only come up when there is a problem
 -end game
 	-scrolling performance charts in end game
 	-scrolling credits in end game
 	-other end game cutscenes
-
+DONE-do the constants..
+DONE-redo colors on performance graph to match lea's (red->blue->gold)
+	-shrink transition zone because they get funky colors in between...
 DONE-silly stuff for thursday
 	DONE-make the background in choosing solid
 	DONE-make choosing sentence a better sentence

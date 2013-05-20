@@ -117,6 +117,7 @@ public class AlternativeDepthViewer : MonoBehaviour {
     //Rect currentRect = new Rect(0, 0, Screen.width, Screen.height);
     public void set_full(bool full)
     {
+		//TODO Delete
         if (full)
         {
             targetRect = new Rect(0, 0, Screen.width, Screen.height);
@@ -126,6 +127,15 @@ public class AlternativeDepthViewer : MonoBehaviour {
             targetRect = new Rect(10, Screen.height - 120 - 10, 160, 120);
         }
     }
+	
+	public void show_indicator(bool show)
+	{
+		if(!show)
+		{
+			targetRect.x = -300;
+		}
+		else targetRect.x = 10;
+	}
     void Update()
     {
         //TODO tween depth image position
@@ -144,7 +154,7 @@ public class AlternativeDepthViewer : MonoBehaviour {
             //GUI.DrawTexture(new Rect(Screen.width - texture.width - 10, Screen.height - texture.height - 10, texture.width, texture.height), texture);
             GUI.DrawTexture(currentRect, DepthTexture);
 			if(ManagerManager.Manager.mNewRef.depthBorder != null) //luls delete this check
-				GUI.DrawTexture(currentRect,ManagerManager.Manager.mNewRef.depthBorder);
+				GUI.DrawTexture(currentRect.expand(4),ManagerManager.Manager.mNewRef.depthBorder);
         }
 		
 		var style = new GUIStyle();

@@ -19,9 +19,8 @@ public class TransitionCameraManager : FakeMonoBehaviour
 	public bool mForceStart = false;
     public FlatCameraManager mFlatCamera;
 	SunShafts mSunShafts;
-	AlternativeDepthViewer mADV = null;
 	
-	FlatElementImage mDepthImage;
+	
     HashSet<FlatElementBase> mElement = new HashSet<FlatElementBase>();
 	
 	//configuration nonsense
@@ -30,6 +29,10 @@ public class TransitionCameraManager : FakeMonoBehaviour
 	FlatElementImage mGLLogo;
 	FlatElementImage mFilmLogo;
 	FlatElementText mMessageText;
+	
+	//DepthWarning nonsense
+	FlatElementText mDepthWarningText;
+	FlatElementImage mDepthImage;
 	
 	
     public TransitionCameraManager(ManagerManager aManager)
@@ -48,6 +51,7 @@ public class TransitionCameraManager : FakeMonoBehaviour
 		mFlatCamera.fit_camera_to_screen(false);
 		
         SunShafts shafts = ((GameObject)GameObject.Instantiate(mManager.mReferences.mImageEffectsPrefabs)).GetComponent<SunShafts>();
+		
 		mSunShafts = mFlatCamera.Camera.gameObject.AddComponent<SunShafts>();
 		mSunShafts.maxRadius = shafts.maxRadius;
 		mSunShafts.radialBlurIterations = shafts.radialBlurIterations;
@@ -63,21 +67,44 @@ public class TransitionCameraManager : FakeMonoBehaviour
 		//???mSunShafts.sunTransform = shafts.sunTransform;
 		
 		
+		
 		//mDepthImage = new FlatElementImage(null,0); 
 		//mElement.Add(mDepthImage);
 		
 		start_configuration_display();
+		initialize_depth_warning();
 	}
-
+	
+	
+	public void initialize_depth_warning()
+	{
+		mDepthImage = new FlatElementImage(null,100);
+		mDepthWarningText = new FlatElementText(mManager.mNewRef.genericFont,40,"Make sure you are\n in frame and no body\n parts are covered",100);
+		mDepthWarningText.HardColor = new Color(1,1,1,0);	
+		mDepthWarningText.HardPosition = mFlatCamera.get_point(1,-1) + new Vector3(-600,120,0);
+		EnableDepthWarning = false;
+		
+		mElement.Add(mDepthImage);
+		mElement.Add(mDepthWarningText);
+	}
+	
+	public bool EnableDepthWarning{
+		//TODO DepthImage as well eventually...
+		set{
+			if(value){
+				mDepthWarningText.SoftColor = new Color(1,1,1,1);
+			} else {
+				mDepthWarningText.SoftColor = new Color(1,1,1,0);
+			}
+		}
+	}
+					
+	
+	
+	
     
     public override void Update()
     {
-		//w/e
-		//TODO do something with this.
-		if(mADV == null)
-			mADV = mManager.mZigManager.DepthView;
-		//mDepthImage.mImage.set_new_texture(mADV.DepthTexture,new Vector2(mFlatCamera.Width,mFlatCamera.Height));
-		
 		
 		mFlatCamera.update(Time.deltaTime);
 		foreach (FlatElementBase e in mElement)
