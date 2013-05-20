@@ -6,7 +6,7 @@
 
 ::TODO100::
 DONE-turn timing vars into constants
--fetus icon should be white
+DONE-fetus icon should be white
 -do new layout for choice
 	DONE-why are there duplicate icons???
 	DONE-swap out mini chars for icons instead.

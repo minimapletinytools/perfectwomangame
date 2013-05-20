@@ -396,6 +396,8 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 			mPBCharacterIcons[e.Character.Index].set_difficulty(e.Difficulty);
 		}
 		
+		//fetus
+		mPBCharacterIcons[0].set_difficulty(-1);
 		//top secret
 		mPBCharacterIcons[29].SoftColor = new Color(1,1,1,0);
 		mPBCharacterIcons[30].SoftColor = new Color(1,1,1,0);

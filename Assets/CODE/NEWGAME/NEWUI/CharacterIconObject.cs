@@ -104,7 +104,10 @@ public class CharacterIconObject : FlatElementMultiBase {
 	
 	public void set_difficulty(int aDiff)
 	{
-		set_icon_color(GameConstants.IconDifficultyColorsOverTwo[aDiff]);
+		if(aDiff == -1)
+			set_icon_color(new Color(0.25f,0.25f,0.25f,0.5f));
+		else
+			set_icon_color(GameConstants.IconDifficultyColorsOverTwo[aDiff]);
 	}
 	public void set_icon_color(Color aColor)
 	{
