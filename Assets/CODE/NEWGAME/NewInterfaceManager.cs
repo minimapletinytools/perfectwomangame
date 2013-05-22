@@ -123,7 +123,7 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 		//BB choice nonsense
 		//TODO reposition further to the left need to make boxes smaller too...
 		var miniMan = ((GameObject)GameObject.Instantiate(refs.mMiniChar)).GetComponent<CharacterTextureBehaviour>();
-		Vector3 miniManScale = new Vector3(2,2,1);
+		Vector3 miniManScale = (new Vector3(1,1,1))*1.5f;
 		float padding = 600;
 		float netWidth = (BB_NUM_CHOICES)*padding;
 		for(int i = 0; i < BB_NUM_CHOICES; i++)
@@ -133,7 +133,7 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 			float xOffset = netWidth/2 - padding*i;
 			mBBChoices[i].HardPosition = mFlatCamera.get_point(0, 0) + new Vector3(xOffset,0,0);
 			mBBChoiceBodies[i].HardShader = refs.mMiniCharacterShader;
-			mBBChoiceBodies[i].HardPosition = mFlatCamera.get_point(0, 0) + new Vector3(xOffset,-240,0);
+			mBBChoiceBodies[i].HardPosition = mFlatCamera.get_point(0, 0) + new Vector3(xOffset,-195,0);
 			mBBChoiceBodies[i].HardScale = miniManScale;
 			mElement.Add(mBBChoices[i]);
 			mElement.Add(mBBChoiceBodies[i]);

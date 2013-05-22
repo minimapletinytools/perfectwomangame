@@ -37,6 +37,7 @@ public class NewChoiceObject : FlatElementMultiBase {
 		mPerfectImage = new FlatElementImage(null,aDepth +2);
         mPerfect = new DifficultyObject(ManagerManager.Manager.mNewRef.uiPerfectStar, aDepth);
 		mIcon = new FlatElementImage(null,aDepth +2);
+		mIcon.HardScale = 0.9f*Vector3.one;
         mMeter = new MeterImageObject(newRef.bbChoiceBox, MeterImageObject.FillStyle.DU, aDepth + 1);
         mMeter.Percentage = 0.0f;
 		set_perfectness(3);
@@ -48,7 +49,7 @@ public class NewChoiceObject : FlatElementMultiBase {
 		mElements.Add(new FlatElementMultiBase.ElementOffset(mPerfect, new Vector3(-173,65,0)));
         mElements.Add(new FlatElementMultiBase.ElementOffset(mMeter, new Vector3(0,0,0)));
 		
-		mElements.Add(new FlatElementMultiBase.ElementOffset(mIcon, new Vector3(0,220,0)));
+		mElements.Add(new FlatElementMultiBase.ElementOffset(mIcon, new Vector3(0,175,0)));
         
 		mText.SoftColor = new Color(0,0,0,1);
 		if(aIndex != null)
