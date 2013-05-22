@@ -4,34 +4,46 @@
 -overall too many positive changes i think.
 -feedback ideas, after pose changes, you get a blip indicating how well you ddi that pose in that time interval
 
+
+::FOR THE MAY 31ST EMERGENCY BUILD::
+-fix choosing with the nwe smaller boxes
+-make sure choosing screen has full sentences
+-fix alignment of text in graveyard
+-disable debug chars in graveyard
+
 ::TODO100::
-DONE-turn timing vars into constants
-DONE-fetus icon should be white
+-sound effects
+-relational sentences for graveyard
+-full sentence in the choosing screen
+-end game cutscenes (angels)
+-background animations
 -do new layout for choice
-	DONE-why are there duplicate icons???
-	DONE-swap out mini chars for icons instead.
+	-miniman??? where do you go now :(
+	-get rid of choosing box???
 	-multiline text descriptions
 	-reposition everything to the left
 		-this means getting smaller choosing boxes...
+	DONE-why are there duplicate icons???
+	DONE-swap out mini chars for icons instead.
 	DONE-new blue background that fades tot ransparent (or opaque) behind the pink bar but in front of bg
-	-miniman??? where do you go now :(
-	-get rid of choosing box???
 -text
 	-make font wrapping hyphenation stuff better
 	-remake font for windows so it has Cs
 	-see if you can get bold font
--depth indicator
-	-make it work better???
-		-do the goodposition indicator thing
-		-maybe test for out of frame and covered separeately
-	-buy zigfu????
+-better depth indicator	
+	-buy zigfu	
+	-do a test to see what exactly good position is reporting. could be NITE/MS dependent
+	-maybe test for out of frame and covered separeately
+DONE-depth indicator
 	IGNORE-intro calibration nonsense
 	DONE-indicators when body is off the screen
 	DONE-make zigfu depth image only come up when there is a problem
--end game
+DONE-turn timing vars into constants
+DONE-fetus icon should be white
+DONE-end game
 	DONE-scrolling performance charts in end game
 	DONE-scrolling credits in end game
-	-other end game cutscenes
+	
 DONE-do the constants..
 DONE-redo colors on performance graph to match lea's (red->blue->gold)
 	-shrink transition zone because they get funky colors in between...
