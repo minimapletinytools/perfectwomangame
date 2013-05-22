@@ -5,8 +5,6 @@ using System.Collections.Generic;
 //this class also handles initialization camera nonsense
 public class TransitionCameraManager : FakeMonoBehaviour
 {
-	//public static float FADE_TIME = 2.3f;
-	public static float FADE_TIME = 0.2f;
 	static float MAX_FADE = 30;
 	
 	
@@ -230,7 +228,7 @@ public class TransitionCameraManager : FakeMonoBehaviour
 			
 		TED.add_one_shot_event(
 			delegate(){ 
-				float delay = FADE_TIME-mManager.mMusicManager.get_sound_clip("transitionOut").length;
+				float delay = GameConstants.fadingTime-mManager.mMusicManager.get_sound_clip("transitionOut").length;
 				if(delay < 0) delay = 0; 
 				TED.add_one_shot_event( //too bad we don't have awesome branching event chain
 					delegate(){ mManager.mMusicManager.play_sound_effect("transitionOut"); },
@@ -245,13 +243,13 @@ public class TransitionCameraManager : FakeMonoBehaviour
 	
     bool fade_in(float time)
 	{
-		float l = (time/FADE_TIME);
+		float l = (time/GameConstants.fadingTime);
 		mSunShafts.sunShaftIntensity = (1-l)*MAX_FADE + l*0;
 		return l>=1;
 	}
 	bool fade_out(float time)
 	{
-		float l = (time/FADE_TIME);
+		float l = (time/GameConstants.fadingTime);
 		mSunShafts.sunShaftIntensity = (1-l)*0 + l*MAX_FADE;
 		return l>=1;
 	}

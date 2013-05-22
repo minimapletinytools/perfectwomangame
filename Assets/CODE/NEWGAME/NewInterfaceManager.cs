@@ -701,13 +701,13 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 	public void set_for_GRAVE(List<PerformanceStats> aStats, System.Action graveCompleteCb)
 	{
 		//timing vars
-		float gIntroText = 0.5f;
-		float gCharacterText = 0.5f;
+		float gIntroText = 4.5f;
+		float gCharacterText = 4.5f;
 		float gPreGlory = 0f;
 		float gGlory = 0f;
 		float gPostGlory = 0f;
-		float gPreScoreCount = 0.5f;
-		float gScoreCount = 0.5f;
+		float gPreScoreCount = 2.5f;
+		float gScoreCount = 1.5f;
 		float gPostScoreCount = 0.5f;
 		float gRestart = 15;
 		
@@ -715,6 +715,7 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 		if(aStats.Last().Character.Age == 999)
 			aStats.RemoveAt(aStats.Count-1);
 		
+		/*
 		//fake it for testing...
 		for(int i = 0; i < 8; i++)
 		{
@@ -722,7 +723,7 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 			{
 				aStats.Add(new PerformanceStats(new CharacterIndex(i,0)));
 			}
-		}
+		}*/
 		
 		
 		
@@ -858,8 +859,7 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 				{
 					var text = new FlatElementText(mManager.mNewRef.genericFont,50,e,mPB.Depth +1);
 					text.HardColor = new Color(1,1,1,1);
-					text.HardPosition = mPB.SoftPosition + new Vector3(0,mFlatCamera.Height/2+100,0) + (new Vector3(0,50,0))*counter;
-					mManager.mDebugString = text.SoftPosition.ToString();
+					text.HardPosition = mPB.SoftPosition + new Vector3(0,mFlatCamera.Height/2+400,0) + (new Vector3(0,150,0))*counter;
 					creditsText.Add(text);
 					mElement.Add(text);
 					counter++;
