@@ -16,4 +16,7 @@ public static class GameConstants
 	
 	//grave stuff
 	public static string[] credits = {"Game Over","Perfect Woman","created by", "Lea Schoenfelder", "Peter Lu"};
+	
+	
+	public static float transitionToChoiceDelayTime = 0; //2;
 }

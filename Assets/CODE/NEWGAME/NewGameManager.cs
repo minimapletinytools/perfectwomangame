@@ -418,7 +418,7 @@ public class NewGameManager : FakeMonoBehaviour
 						else
 							transition_to_CHOICE(); 
 					}
-				,2);
+				,GameConstants.transitionToChoiceDelayTime);
 			}, changes
 		);
 		
