@@ -18,10 +18,10 @@
 -end game cutscenes (angels)
 -background animations
 -do new layout for choice
-	-miniman??? where do you go now :(
-	-get rid of choosing box???
 	-multiline text descriptions
-	-reposition everything to the left
+	DONE-miniman??? where do you go now :(
+	DONE-get rid of choosing box???
+	DONE-reposition everything to the left
 		-this means getting smaller choosing boxes...
 	DONE-why are there duplicate icons???
 	DONE-swap out mini chars for icons instead.

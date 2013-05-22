@@ -87,7 +87,6 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 	ColorTextObject mBBQuestionText;
 	FlatBodyObject mBBMiniMan;
 	Vector3 mBBMiniManBasePosition;
-	FlatElementImage mBBChoiceBox;
 	
 	
 	
@@ -126,11 +125,12 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 		Vector3 miniManScale = (new Vector3(1,1,1))*1.5f;
 		float padding = 400;
 		float netWidth = (BB_NUM_CHOICES)*padding;
+		float awkwardOffset = netWidth/2 - padding/1.35f;
 		for(int i = 0; i < BB_NUM_CHOICES; i++)
 		{
 			mBBChoices.Add(new NewChoiceObject(11));
 			mBBChoiceBodies.Add(new FlatBodyObject(miniMan,12));
-			float xOffset = netWidth/2 - padding*i - padding/2;
+			float xOffset = awkwardOffset - padding*i;
 			mBBChoices[i].HardPosition = mFlatCamera.get_point(0.5f, 0) + new Vector3(xOffset,0,0);
 			mBBChoiceBodies[i].HardShader = refs.mMiniCharacterShader;
 			mBBChoiceBodies[i].HardPosition = mFlatCamera.get_point(0.5f, 0) + new Vector3(xOffset,-195,0);
@@ -142,18 +142,16 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 		mBBChoosingBackground = new FlatElementImage(null,mFlatCamera.Size,0);
 		mBBChoosingBackground.HardPosition = mFlatCamera.Center;
 		mBBQuestionText = new ColorTextObject(10);
-		mBBQuestionText.HardPosition = mFlatCamera.get_point(0,0.75f);
+		mBBQuestionText.HardPosition = mFlatCamera.get_point(0.5f,0.75f) + new Vector3(awkwardOffset-padding,0,0);
 		mBBQuestionText.SoftInterpolation = 1;
 		mBBMiniMan = new FlatBodyObject(miniMan,20);
 		mBBMiniMan.HardScale = miniManScale;
-		mBBChoiceBox = new FlatElementImage(newRef.bbChoiceFrame,15);
-		mBBMiniManBasePosition = mFlatCamera.get_point(0, 0) + new Vector3(netWidth/2 - padding*3,0,0);
+		mBBMiniManBasePosition = mFlatCamera.get_point(0.5f, -0.7f) + new Vector3(awkwardOffset - padding,0,0);
 		mBBMiniMan.HardPosition = mBBMiniManBasePosition;
-		mBBChoiceBox.HardPosition = random_position();//mBBMiniMan.SoftPosition;
+		
 		
 		mElement.Add(mBBChoosingBackground);
 		mElement.Add(mBBMiniMan);
-		mElement.Add(mBBChoiceBox);
 		mElement.Add(mBBQuestionText);
 		GameObject.Destroy(mMiniMan.gameObject);
 		
@@ -198,7 +196,6 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 		foreach(NewChoiceObject e in mBBChoices)
 			e.SoftColor = fullColor;
 		mBBMiniMan.SoftColor = fullColor;
-		mBBChoiceBox.SoftColor = fullColor;
 		mBBQuestionText.SoftColor = fullColor;
 		mBBChoosingBackground.SoftColor = fullColor*0.2f;
 	}
@@ -305,14 +302,12 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 		if(aIndex == -1) //no choice
 		{
 			mBBMiniMan.SoftPosition = mBBMiniManBasePosition;
-			mBBChoiceBox.SoftPosition = random_position();//mBBMiniManBasePosition;
 			mBBQuestionText.set_text(
 				new string[]{("What will you be like at age " + mBBLastPerformanceGraph.Character.get_future_neighbor(0).Age)},
 				new Color[]{new Color(0.5f,0.5f,0.5f,1)});
 		}
 		else{
 			mBBMiniMan.SoftPosition = mBBChoiceBodies[aIndex].SoftPosition;
-			mBBChoiceBox.SoftPosition = mBBChoices[aIndex].SoftPosition;
 			var nChar = mBBLastPerformanceGraph.Character.get_future_neighbor(aIndex);
 			var nCharDiff = mManager.mCharacterBundleManager.get_character_helper().Characters[nChar.Index];
 			var diffPhrases = new string[]{" easy", " medium", " hard", " impossible"};
