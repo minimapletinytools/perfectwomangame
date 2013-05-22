@@ -579,7 +579,6 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 			cutsceneCompleteCb();
 			mLastCutsceneCompleteCb = null;
 			mLastCutsceneChain = null;
-			set_pb_character_icon_colors(mManager.mGameManager.CharacterHelper.Characters.Where(e=>e!=null).ToList());
 		};
 		
 		string[] perfectPhrase = {"awful","mediocre","good", "perfect"};

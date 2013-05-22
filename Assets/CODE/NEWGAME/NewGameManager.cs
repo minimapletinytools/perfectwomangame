@@ -383,7 +383,7 @@ public class NewGameManager : FakeMonoBehaviour
 				TED.add_one_shot_event(
 					delegate() 
 					{	 
-				
+						
 				        foreach (var e in changes.Changes)
 				        {
 				            var diffChanges = e.Changes;
@@ -397,6 +397,7 @@ public class NewGameManager : FakeMonoBehaviour
 								}
 				            }
 				        }
+						mManager.mInterfaceManager.set_pb_character_icon_colors(mManager.mGameManager.CharacterHelper.Characters.Where(e=>e!=null).ToList());
 						mManager.mMusicManager.fade_out();
 					}
 				,0).then_one_shot(
