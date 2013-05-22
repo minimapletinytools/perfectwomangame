@@ -43,7 +43,7 @@ public class NewGameManager : FakeMonoBehaviour
 	{ get { return CurrentPerformanceStat.Character; } }
 	
 	//actual game data
-    CharacterHelper CharacterHelper
+    public CharacterHelper CharacterHelper
     {
         get
         {
