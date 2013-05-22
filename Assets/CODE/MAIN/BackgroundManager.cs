@@ -66,27 +66,15 @@ public class BackgroundManager  : FakeMonoBehaviour
 			nameList.Add(name);
 		}
 		
-		for(int i = dataList.Count -1; i>=0; i--)
+		for(int i = dataList.Count-1; i>=0; i--)
 		{
 			Texture2D tex = aCharacter.Images.staticElements[nameList[i]];
 			//if(tex == null)
 				//throw new UnityException("data exists for " + data.Name + " but texture does not");
 			aMulti.add_image(tex,dataList[i].Offset,dataList[i].Size);
+				
+			//dataList[i].AnimationEffect
 		}
-		
-		/*first to last
-		for(int i = aBegin; i < 100; i++)
-		{
-			string name = aPrefix+i;
-			CharacterData.ImageSizeOffsetAnimationData data = aCharacter.Sizes.find_static_element(name);
-			if(data == null)
-				break;
-			Texture2D tex = aCharacter.Images.staticElements[name];
-			//if(tex == null)
-				//throw new UnityException("data exists for " + data.Name + " but texture does not");
-			aMulti.add_image(tex,data.Offset,data.Size);
-			//TODO effects
-		}*/
 	}
 	
 	
