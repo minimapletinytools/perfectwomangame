@@ -585,17 +585,27 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 				string text = "";
 				if(mBBLastPerformanceGraph.Character.Index == 0 || mBBLastPerformanceGraph.Character.Index == 29)
 				{
-					text = "Prepare to be Born"; //TODO put this in the text file..
+					//DELETE this has been moved to text files..
+					//text = "Prepare to be Born"; 
 				}
 				else
 				{
+					//TODO use color text here... In fact you should replace color text as yoru standard text object really...
 					text = aChanges.PerformanceDescription.Replace("<P>",perfectPhrase[mBBLastPerformanceGraph.Stats.Perfect]);
+					add_timed_text_bubble(text,gPerformanceText);
 				}
-				add_timed_text_bubble(text,gPerformanceText);
 				return true;
 			},
-        0).then_one_shot( //dummy 
-			delegate(){},gPerformanceText);
+        0).then( 
+			delegate(float aTime)
+			{
+				if(!(mBBLastPerformanceGraph.Character.Index == 0 || mBBLastPerformanceGraph.Character.Index == 29))
+					if(aTime > gPerformanceText)
+						return true;
+					else return false;
+				return true;
+			},
+		0);
 		
 		
 		foreach(var e in aChanges.Changes)
