@@ -751,6 +751,7 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 		//this is all a hack to get the score to show up right...
 		float scoreIncrementor = 0;
 		FlatElementText finalScoreText = new FlatElementText(mManager.mNewRef.genericFont,150,"",10);
+		//FlatElementImage perfectEngraving = new FlatElementImage(mManager.mNewRef
 		foreach (Renderer f in finalScoreText.PrimaryGameObject.GetComponentsInChildren<Renderer>())
                 f.gameObject.layer = 4;
 		finalScoreText.SoftPosition = mManager.mBackgroundManager.mBackgroundElements.mElements[0].Element.SoftPosition + new Vector3(0, -200, 0);

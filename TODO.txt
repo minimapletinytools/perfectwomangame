@@ -6,12 +6,47 @@
 
 
 ::FOR THE MAY 31ST EMERGENCY BUILD::
--fix choosing with the nwe smaller boxes
--make sure choosing screen has full sentences
+DONE-fix choosing with the nwe smaller boxes
 -fix alignment of text in graveyard
 -disable debug chars in graveyard
 
+::FOR THE MAY 31st SAFE BUILD::
+DONE-you are going to be born soon comes up twice
+IGONRE-remove stars from choosing 
+-depth wraning text
+	DONE-depth warning text not aligning properly on other computers??? I think it's because you are alignign to the left of the screen not the camera
+	-seems to come up at random times
+-icons
+	-distorted
+	-reload the icon images because lea changed their sizes (doubt it will make a diff)
+DONE-solid blue in selection
+-shrink font or enlarge bubbles or do better multiline text
+-perfectness multiplier in score??? 
+	-I think this is working
+	-although you should be the multiplier image next to the score image
+		-refere to storyboard!!!
+-selection
+	DONE-perfectness then difficulty in selection. 
+	DONE-1/2/3 to 1/2/3/4 match but/and
+	-full names on choosing lol
+DONE??-death seems to be broken again
+IGNORE/talk to Lea-updated 999, move perfectness labes on the grave somewhere else? (or maybe package them with the grave)
+	-addp erfect icons to 999
+-angels lol
+-switch hearts to dots in particles
+DONE-credits
+	DONE-change order of credits so it's normal and shows up in a clump
+	DONE-add GL/ FA logos
+-fix screen clearing on black bars
+DONE-make sure the game restarts
+
+
 ::TODO100::
+-font
+	-write your string splittnig function!!! cmon!!
+	-make your multi color font also compute y offset if possible
+IGNORE/FUNNY-uh stars flying in at grave???
+DONE-reposition credits text in grave...
 -sound effects
 -relational sentences for graveyard
 -full sentence in the choosing screen

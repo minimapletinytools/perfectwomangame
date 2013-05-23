@@ -20,7 +20,7 @@ public class CameraManager : FakeMonoBehaviour {
 		wipeCamera.clearFlags = CameraClearFlags.SolidColor;
 		wipeCamera.backgroundColor = new Color(0.05f,0.05f,0.06f);
 		//wipeCamera.backgroundColor = new Color(1,1,1);
-		wipeCamera.depth = -100;
+		wipeCamera.depth = -99;
 		
         ImageEffects = (GameObject)GameObject.Instantiate(mManager.mReferences.mImageEffectsPrefabs);
 

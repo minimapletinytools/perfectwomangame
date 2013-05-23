@@ -78,14 +78,15 @@ public class FlatElementText : FlatElementBase
 	
 	public static string convert_to_multiline(int numberSplits, string aString)
 	{
-		//TODO
+		
 		return aString;
 	}
 	
 	
 	public static string convert_to_multiline(int[] max_chars, string aString)
 	{
-		//TOOD
+		//var result = System.Text.Regex.Split(aString, "\r\n|\r|\n");
+		
 		return aString;
 	}
 	
