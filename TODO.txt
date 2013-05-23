@@ -20,8 +20,8 @@ DONE-do depth trick for cutscene particles...
 	-reload the icon images because lea changed their sizes (doubt it will make a diff)
 
 -shrink font or enlarge bubbles or do better multiline text
--perfectness multiplier in score??? 
-	-I think this is working
+DONE-perfectness multiplier in score??? 
+	DONE-I think this is working
 	DONE-although you should be the multiplier image next to the score image
 		-refere to storyboard!!!
 -selection

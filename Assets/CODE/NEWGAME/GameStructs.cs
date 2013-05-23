@@ -220,7 +220,7 @@ public class PerformanceStats
 	
 	public float AdjustedScore{
 		get{
-			return mTotalScore * Stats.Perfect * 100;
+			return mTotalScore * (1+Stats.Perfect) * 300;
 		}
 	}
 	
