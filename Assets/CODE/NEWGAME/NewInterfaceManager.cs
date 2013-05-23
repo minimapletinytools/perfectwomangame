@@ -197,7 +197,7 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 			e.SoftColor = fullColor;
 		mBBMiniMan.SoftColor = fullColor;
 		mBBQuestionText.SoftColor = fullColor;
-		mBBChoosingBackground.SoftColor = fullColor*0.2f;
+		mBBChoosingBackground.SoftColor = fullColor*(new Color(0.6f,0.6f,1))*1;//0.2f;
 	}
 	
 	//make sure choice contents are made first before calling this
@@ -349,7 +349,7 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 	public void setup_pb()
 	{
 		var newRef = mManager.mNewRef;
-		mPB = new FlatElementImage(newRef.pbBackground,0);
+		mPB = new FlatElementImage(newRef.pbBackground,1);
 		mPB.HardPosition = random_position();
 		mPB.SoftPosition = mBBBasePosition;
 		
