@@ -44,12 +44,12 @@ public class ChoiceHelper
 	public int update(NewInterfaceManager aInterface)
 	{
 		int minIndex = 0;
-        float minGrade = Mathf.Infinity;
+        float minGrade = 99999;
         for (int i = 0; i < 4; i++)
         {
             if (mChoicePoses[i] != null)
             {
-				float grade = 999999;
+				float grade = 9999999; //important that there are more 9s here than above!
 				if(CurrentPose != null && mChoicePoses[i] != null)
 					grade = ProGrading.grade_pose(CurrentPose, mChoicePoses[i]);
                 if (grade < minGrade)
