@@ -286,8 +286,7 @@ public class NewGameManager : FakeMonoBehaviour
 		//warning
 		if (CurrentPoseAnimation != null && CurrentCharacterIndex.Index != 0)
 		{
-			//if(PercentTimeCompletion > 0.2f && CurrentPerformanceStat.last_score(3f/30f)/(3f/30f) < 0.2f)
-			if(PercentTimeCompletion > 0.2f && CurrentPerformanceStat.last_score(10f/30f)/(10f/30f) < 0.1f)
+			if(PercentTimeCompletion > 0.2f && CurrentPerformanceStat.last_score(3f/30f)/(3f/30f) < 0.2f)
 				mManager.mInterfaceManager.enable_warning_text(true);
 			else 
 				mManager.mInterfaceManager.enable_warning_text(false);
