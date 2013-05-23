@@ -11,6 +11,7 @@ DONE-fix choosing with the nwe smaller boxes
 -disable debug chars in graveyard
 
 ::FOR THE MAY 31st SAFE BUILD::
+-why did character icons lose a perfectness star???
 DONE-you are going to be born soon comes up twice
 IGONRE-remove stars from choosing 
 -depth wraning text
@@ -23,7 +24,7 @@ DONE-solid blue in selection
 -shrink font or enlarge bubbles or do better multiline text
 -perfectness multiplier in score??? 
 	-I think this is working
-	-although you should be the multiplier image next to the score image
+	DONE-although you should be the multiplier image next to the score image
 		-refere to storyboard!!!
 -selection
 	DONE-perfectness then difficulty in selection. 
@@ -38,6 +39,7 @@ DONE-credits
 	DONE-change order of credits so it's normal and shows up in a clump
 	DONE-add GL/ FA logos
 -fix screen clearing on black bars
+	-HOW???
 DONE-make sure the game restarts
 
 

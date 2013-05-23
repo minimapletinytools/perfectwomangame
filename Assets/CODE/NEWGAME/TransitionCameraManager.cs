@@ -79,7 +79,7 @@ public class TransitionCameraManager : FakeMonoBehaviour
 		mDepthImage = new FlatElementImage(null,100);
 		mDepthWarningText = new FlatElementText(mManager.mNewRef.genericFont,40,"Make sure you are\n in frame and no body\n parts are covered",100);
 		mDepthWarningText.HardColor = new Color(1,1,1,0);	
-		mDepthWarningText.HardPosition = mFlatCamera.get_point_total(1,-1) + mFlatCamera.screen_pixels_to_camera_pixels(new Vector3(-300,80,0));
+		mDepthWarningText.HardPosition = mFlatCamera.get_point_total(1,-1) + mFlatCamera.screen_pixels_to_camera_pixels(new Vector3(-330,80,0));
 		EnableDepthWarning = false;
 		
 		mElement.Add(mDepthImage);
