@@ -59,7 +59,7 @@ public class CharacterIconObject : FlatElementMultiBase {
 		}
 		if(aName != "")
 		{
-			mText = new ElementOffset(new FlatElementText(ManagerManager.Manager.mNewRef.genericFont,30,"",Depth +2),new Vector3(mBodyOffset,-90,0));
+			mText = new ElementOffset(new FlatElementText(ManagerManager.Manager.mNewRef.genericFont,30,"",Depth +1),new Vector3(mBodyOffset,-90,0));
 			(mText.Element as FlatElementText).HardColor = new Color(0,0,0,1);
 			(mText.Element as FlatElementText).Text = aName;
 			mElements.Add(mText);

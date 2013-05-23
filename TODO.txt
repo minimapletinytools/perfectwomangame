@@ -11,6 +11,7 @@ DONE-fix choosing with the nwe smaller boxes
 -disable debug chars in graveyard
 
 ::FOR THE MAY 31st SAFE BUILD::
+DONE-do depth trick for cutscene particles...
 -depth wraning text
 	DONE-depth warning text not aligning properly on other computers??? I think it's because you are alignign to the left of the screen not the camera
 	-seems to come up at random times

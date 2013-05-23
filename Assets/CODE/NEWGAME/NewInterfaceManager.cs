@@ -240,10 +240,10 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 		mBBScoreText.SoftPosition = mBB.SoftPosition + new Vector3(-350,bottomVOffset-90,0);
 		mBBLastPerformanceGraph.PerformanceGraph.SoftPosition = mBB.SoftPosition + new Vector3(150,bottomVOffset,0);
 		mBBWarningText.HardPosition = mFlatCamera.Center;//mBB.SoftPosition + new Vector3(150,bottomVOffset-40,0);
-		mBBMultiplierImage.SoftPosition = mBB.SoftPosition + new Vector3(-200,bottomVOffset + 100,0);
+		mBBMultiplierImage.SoftPosition = mBB.SoftPosition + new Vector3(-170,bottomVOffset + 100,0);
 		
 		for(int i = 0; i < 4; i++)
-			mBBPerfectStars[i].SoftPosition = mBBScoreFrame.SoftPosition + new Vector3(mBBScoreFrame.BoundingBox.width/2f - 45 - i * mBBScoreFrame.BoundingBox.width/3f,130,0); //should be /4
+			mBBPerfectStars[i].SoftPosition = mBBScoreFrame.SoftPosition + new Vector3(mBBScoreFrame.BoundingBox.width/2f - 37 - i * mBBScoreFrame.BoundingBox.width/3f,130,0); //should be /4
 		
 		//return bodies if needed
 		//OLD, we no longer do the mini char body borrowing thing
@@ -461,20 +461,21 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 			duration);
 			add_timed_particle_stream(
                 mFlatCamera.get_point(0.40f,0),
-                mPBCharacterIcons[aTarget.Index].SoftPosition,
+                mPBCharacterIcons[aTarget.Index],
                 duration,
                 delay,
                 useColor);
 		}
 	}
 	
-	public void add_timed_particle_stream(Vector3 aPosition, Vector3 aTarget, float aDuration, float aDelay, Color aColor)
+	public void add_timed_particle_stream(Vector3 aPosition, CharacterIconObject aTarget, float aDuration, float aDelay, Color aColor)
 	{
 		ParticleStreamObject pso = null;
 		TED.add_one_shot_event(
 			delegate()
 			{
-				pso = new ParticleStreamObject(3,aTarget);
+				aTarget.Depth = mPB.Depth + 2;
+				pso = new ParticleStreamObject(mPB.Depth + 4,aTarget.SoftPosition); //6
                 pso.HardColor = aColor;
 				pso.HardPosition = aPosition;
 				mElement.Add(pso);
@@ -482,6 +483,7 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 		aDelay).then_one_shot(
 			delegate()
 			{
+				aTarget.Depth = mPB.Depth + 1;
 				mElement.Remove(pso);
 				pso.destroy();
 			},
@@ -526,7 +528,6 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 		mBBText.Text = aChar.Character.FullName;
 		if(aChar.Character.Index != 0)
 		{
-			Debug.Log ("setting for character " + aChar.Stats.Perfect);
 			mBBMultiplierImage.set_new_texture(mManager.mNewRef.bbScoreMultiplier[aChar.Stats.Perfect]);
 			for(int i = 0; i < 4; i++)
 				mBBPerfectStars[i].SoftColor = i <= aChar.Stats.Perfect ? new Color(0.5f,0.5f,0.5f,0.5f) : new Color(0.5f,0.5f,0.5f,0f);
