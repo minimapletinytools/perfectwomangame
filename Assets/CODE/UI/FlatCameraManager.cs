@@ -32,6 +32,7 @@ public class FlatCameraManager{
                 return Distance * Mathf.Tan(Camera.fov / 2.0f);
         }
     }
+	
     public float Height
     {
         get { return Width / Camera.aspect; }
@@ -120,6 +121,11 @@ public class FlatCameraManager{
         position.z = Center.z + Distance;
         Interpolator.TargetSpatialPosition = new SpatialPosition(position, Camera.transform.rotation);
     }
+	
+	public Vector3 screen_pixels_to_camera_pixels(Vector3 aVal)
+	{
+		return new Vector3(aVal.x * Width/(Camera.rect.width*Screen.width),aVal.y * Height/(Camera.rect.height*Screen.height),aVal.z);
+	}
 
     //other stuff
     //returns world point from coordinates relative to center of screen where screen is (-1,1)x(-1,1)
@@ -127,4 +133,11 @@ public class FlatCameraManager{
     {
         return Center + new Vector3(aX * Width / 2.0f, aY * Height / 2.0f, 0);
     }
+	
+	//this version measures from the entire screen. Not the visible portion
+	//TODO does not account for not centered camera, i.e. modify by Camera.rect.x/y
+	public Vector3 get_point_total(float aX, float aY)
+	{
+		return Center + new Vector3(aX * Width * (1/Camera.rect.width) / 2.0f, aY * Height * (1/Camera.rect.height) / 2.0f, 0);
+	}
 }
