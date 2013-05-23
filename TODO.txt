@@ -11,7 +11,7 @@ DONE-fix choosing with the nwe smaller boxes
 -disable debug chars in graveyard
 
 ::FOR THE MAY 31st SAFE BUILD::
--why did character icons lose a perfectness star???
+DONE-why did character icons lose a perfectness star???
 DONE-you are going to be born soon comes up twice
 IGONRE-remove stars from choosing 
 -depth wraning text

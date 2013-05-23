@@ -376,7 +376,7 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 		{
 			//OLD
 			//mPBCharacterIcons[e.Index] = new CharacterIconObject(mManager.mCharacterBundleManager.get_mini_character(e),1);
-			mPBCharacterIcons[e.Index] = new CharacterIconObject(e,1);
+			mPBCharacterIcons[e.Index] = new CharacterIconObject(e,mPB.Depth + 1);
 			mPBCharacterIcons[e.Index].set_name(e.ShortName);
 			mElement.Add(mPBCharacterIcons[e.Index]);
 		}
