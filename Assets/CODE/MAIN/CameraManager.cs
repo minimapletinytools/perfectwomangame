@@ -18,8 +18,9 @@ public class CameraManager : FakeMonoBehaviour {
     {
 		Camera wipeCamera = (new GameObject("genWipeCamera")).AddComponent<Camera>();
 		wipeCamera.clearFlags = CameraClearFlags.SolidColor;
-		wipeCamera.backgroundColor = new Color(0.05f,0.05f,0.06f);
+		//wipeCamera.backgroundColor = new Color(0.05f,0.05f,0.06f);
 		//wipeCamera.backgroundColor = new Color(1,1,1);
+		wipeCamera.backgroundColor = new Color(0,0,0);
 		wipeCamera.depth = -99;
 		
         ImageEffects = (GameObject)GameObject.Instantiate(mManager.mReferences.mImageEffectsPrefabs);

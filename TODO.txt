@@ -11,16 +11,13 @@ DONE-fix choosing with the nwe smaller boxes
 -disable debug chars in graveyard
 
 ::FOR THE MAY 31st SAFE BUILD::
-DONE-why did character icons lose a perfectness star???
-DONE-you are going to be born soon comes up twice
-IGONRE-remove stars from choosing 
 -depth wraning text
 	DONE-depth warning text not aligning properly on other computers??? I think it's because you are alignign to the left of the screen not the camera
 	-seems to come up at random times
 -icons
 	-distorted
 	-reload the icon images because lea changed their sizes (doubt it will make a diff)
-DONE-solid blue in selection
+
 -shrink font or enlarge bubbles or do better multiline text
 -perfectness multiplier in score??? 
 	-I think this is working
@@ -30,17 +27,24 @@ DONE-solid blue in selection
 	DONE-perfectness then difficulty in selection. 
 	DONE-1/2/3 to 1/2/3/4 match but/and
 	-full names on choosing lol
-DONE??-death seems to be broken again
-IGNORE/talk to Lea-updated 999, move perfectness labes on the grave somewhere else? (or maybe package them with the grave)
-	-addp erfect icons to 999
+
 -angels lol
 -switch hearts to dots in particles
+
+-fix screen clearing on black bars
+	-HOW???
+
+DONE-why did character icons lose a perfectness star???
+DONE-you are going to be born soon comes up twice
+IGONRE-remove stars from choosing 
+DONE-solid blue in selection
+DONE-make sure the game restarts
 DONE-credits
 	DONE-change order of credits so it's normal and shows up in a clump
 	DONE-add GL/ FA logos
--fix screen clearing on black bars
-	-HOW???
-DONE-make sure the game restarts
+DONE??-death seems to be broken again
+IGNORE/talk to Lea-updated 999, move perfectness labes on the grave somewhere else? (or maybe package them with the grave)
+	-addp erfect icons to 999
 
 
 ::TODO100::
