@@ -24,6 +24,7 @@ public class NewMenuReferenceBehaviour : MonoBehaviour {
 	public Texture2D bbGraphFrame;
 	public Texture2D bbGraphDot;
 	public Texture2D bbScoreBackground;
+	public Texture2D[] bbScoreMultiplier;
 	
 	//choice
 	public Texture2D bbChoiceBox;

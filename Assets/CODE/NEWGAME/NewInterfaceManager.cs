@@ -78,6 +78,8 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 	FlatElementImage mBBScoreFrame;
 	FlatElementText mBBScoreText;
 	FlatElementText mBBWarningText = null;
+	FlatElementImage mBBMultiplierImage;
+	FlatElementImage[] mBBPerfectStars;
 	
 	//CHOOSING
 	int BB_NUM_CHOICES = 3;
@@ -110,6 +112,7 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 		//mBBWarningText = new FlatElementText(mManager.mNewRef.genericFont,150,"WARNING",12);
 		mBBWarningText = new FlatElementText(mManager.mNewRef.genericFont,500,"WARNING",20);
 		mBBWarningText.HardColor = new Color(0.5f,0.5f,0.5f,0);
+		mBBMultiplierImage = new FlatElementImage(null,15);
 		mBBText.HardPosition = random_position();
 		mBBScoreFrame.HardPosition = random_position();
 		mBBScoreText.HardPosition = random_position();
@@ -117,6 +120,15 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 		mElement.Add(mBBScoreFrame);
 		mElement.Add(mBBScoreText);
 		mElement.Add(mBBWarningText);
+		mElement.Add(mBBMultiplierImage);
+		mBBPerfectStars = new FlatElementImage[4];
+		for(int i = 0; i < 4; i++)
+		{
+			mBBPerfectStars[i] = new FlatElementImage(mManager.mNewRef.uiPerfectStar,10);
+			mBBPerfectStars[i].SoftColor = new Color(0.5f,0.5f,0.5f,0);
+			mElement.Add(mBBPerfectStars[i]);
+		}
+		
 		
 		
 		//BB choice nonsense
@@ -148,6 +160,7 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 		mBBMiniMan.HardScale = miniManScale;
 		mBBMiniManBasePosition = mFlatCamera.get_point(0.5f, -0.7f) + new Vector3(awkwardOffset - padding,0,0);
 		mBBMiniMan.HardPosition = mBBMiniManBasePosition;
+		
 		
 		
 		mElement.Add(mBBChoosingBackground);
@@ -189,6 +202,8 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 		mBBScoreFrame.SoftColor = smallColor;
 		mBBScoreText.SoftColor = smallColor;
 		mBBLastPerformanceGraph.PerformanceGraph.SoftColor = smallColor;
+		mBBMultiplierImage
+		mBBPerfectStars
 		*/
 		
 		foreach(FlatBodyObject e in mBBChoiceBodies)
@@ -221,10 +236,14 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 		//mBB.SoftScale = new Vector3(1,1,1);
 		mBB.SoftPosition = mBBBasePosition + new Vector3(0,aBBOffset,0);
 		mBBText.SoftPosition = mBB.SoftPosition + new Vector3(0,160,0);
-		mBBScoreFrame.SoftPosition = mBB.SoftPosition + new Vector3(-350,bottomVOffset,0);
-		mBBScoreText.SoftPosition = mBB.SoftPosition + new Vector3(-350,bottomVOffset-40,0);
+		mBBScoreFrame.SoftPosition = mBB.SoftPosition + new Vector3(-350,bottomVOffset-50,0);
+		mBBScoreText.SoftPosition = mBB.SoftPosition + new Vector3(-350,bottomVOffset-90,0);
 		mBBLastPerformanceGraph.PerformanceGraph.SoftPosition = mBB.SoftPosition + new Vector3(150,bottomVOffset,0);
 		mBBWarningText.HardPosition = mFlatCamera.Center;//mBB.SoftPosition + new Vector3(150,bottomVOffset-40,0);
+		mBBMultiplierImage.SoftPosition = mBB.SoftPosition + new Vector3(-200,bottomVOffset + 100,0);
+		
+		for(int i = 0; i < 4; i++)
+			mBBPerfectStars[i].SoftPosition = mBBScoreFrame.SoftPosition + new Vector3(mBBScoreFrame.BoundingBox.width/2f - 45 - i * mBBScoreFrame.BoundingBox.width/3f,130,0); //should be /4
 		
 		//return bodies if needed
 		//OLD, we no longer do the mini char body borrowing thing
@@ -269,11 +288,11 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 			mBBChoiceBodies[i].set_target_pose(aPoses[i]);
 		}
 	}
-	public void set_bb_choice_perfectness(List<int> aDifficulties)
+	public void set_bb_choice_perfectness(List<int> aPerfect)
 	{
 		for(int i = 0; i < BB_NUM_CHOICES; i++)
 		{
-			mBBChoices[i].set_perfectness(aDifficulties[i]);
+			mBBChoices[i].set_perfectness(aPerfect[i]);
 		}
 	}
 	//called by ChoiceHelper
@@ -360,8 +379,6 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 			mPBCharacterIcons[e.Index] = new CharacterIconObject(e,1);
 			mPBCharacterIcons[e.Index].set_name(e.ShortName);
 			mElement.Add(mPBCharacterIcons[e.Index]);
-			
-			
 		}
 		mElement.Add(mPB);
 		
@@ -507,6 +524,13 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 	{
 		//BB
 		mBBText.Text = aChar.Character.FullName;
+		if(aChar.Character.Index != 0)
+		{
+			Debug.Log ("setting for character " + aChar.Stats.Perfect);
+			mBBMultiplierImage.set_new_texture(mManager.mNewRef.bbScoreMultiplier[aChar.Stats.Perfect]);
+			for(int i = 0; i < 4; i++)
+				mBBPerfectStars[i].SoftColor = i <= aChar.Stats.Perfect ? new Color(0.5f,0.5f,0.5f,0.5f) : new Color(0.5f,0.5f,0.5f,0f);
+		}
 		if(mBBLastPerformanceGraph != null) //fade out the old graph
 		{
 			mBBLastPerformanceGraph.PerformanceGraph.SoftColor = new Color(0.5f,0.5f,0.5f,0);
@@ -515,6 +539,7 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 		}
 		mBBLastPerformanceGraph = aChar;
 		mElement.Add(mBBLastPerformanceGraph.PerformanceGraph);
+		
 		
 		//TODO delete this gets set elsewhere now
 		//mBBQuestionText.Text = "What will you be like at age " + aChar.Character.get_future_neighbor(0).Age;
@@ -744,6 +769,9 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 		mBBScoreFrame.SoftColor = smallColor;
 		mBBScoreText.SoftColor = smallColor;
 		aStats[0].PerformanceGraph.SoftColor = smallColor;
+		mBBMultiplierImage.SoftColor = smallColor;
+		for(int i = 0; i < 4; i++)
+			mBBPerfectStars[i].SoftColor = smallColor;
 		
 		position_pb_character_icons(0,-3000);
 		

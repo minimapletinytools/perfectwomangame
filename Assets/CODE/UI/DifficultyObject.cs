@@ -1,6 +1,8 @@
 using UnityEngine;
 using System.Collections;
 
+
+//TODO rewrite this so it fades
 public class DifficultyObject : FlatElementMultiBase
 {
     int mDifficulty;
