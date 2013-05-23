@@ -852,7 +852,7 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 		FlatElementImage logo1 = null;
 		FlatElementImage logo2 = null;
 		List<FlatElementText> creditsText = new List<FlatElementText>();
-		float scrollSpeed = 300;
+		float scrollSpeed = 200;
 		
 		//finish it off...
 		chain = chain.then_one_shot(
@@ -865,15 +865,25 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 			{
 				//TODO create credits text and nonsense
 				int counter = 0;
-				foreach(string e in GameConstants.credits)
+				foreach(string e in GameConstants.credits.Reverse())
 				{
 					var text = new FlatElementText(mManager.mNewRef.genericFont,50,e,mPB.Depth +1);
 					text.HardColor = new Color(1,1,1,1);
-					text.HardPosition = mPB.SoftPosition + new Vector3(0,mFlatCamera.Height/2+400,0) + (new Vector3(0,150,0))*counter;
+					text.HardPosition = mPB.SoftPosition + new Vector3(0,mFlatCamera.Height/2+450,0) + (new Vector3(0,70,0))*counter;
 					creditsText.Add(text);
 					mElement.Add(text);
 					counter++;
 				}
+			
+				float logoStartHeight = mFlatCamera.Height/2+450 + 70*counter + 500;
+				logo1 = new FlatElementImage(mManager.mNewRef.gameLabLogo,mPB.Depth+1);
+				logo2 = new FlatElementImage(mManager.mNewRef.filmAkademieLogo,mPB.Depth+1);
+				logo1.HardPosition = mPB.SoftPosition + new Vector3(0,logoStartHeight,0);
+				logo2.HardPosition = mPB.SoftPosition + new Vector3(0,logoStartHeight + 700,0);
+			
+				mElement.Add(logo1);
+				mElement.Add(logo2);
+			
 			}
 		,0).then(
 			delegate(float aTime)
@@ -890,14 +900,20 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 				{
 					e.SoftPosition = e.SoftPosition + scroll;
 				}
+				logo1.SoftPosition = logo1.SoftPosition + scroll;
+				logo2.SoftPosition = logo2.SoftPosition + scroll;
+			
 				lastTime = aTime;
 				if(Input.GetKeyDown(KeyCode.Alpha0))
+					return true;
+			
+				if(aTime > gRestart)
 					return true;
 				return false;
 			}
 		,0).then_one_shot(
 			graveCompleteCb
-		,gRestart);
+		,0);
 	}
 	
 	
