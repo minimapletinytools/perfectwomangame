@@ -303,7 +303,7 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 		{
 			mBBMiniMan.SoftPosition = mBBMiniManBasePosition;
 			mBBQuestionText.set_text(
-				new string[]{("What will you be like at age " + mBBLastPerformanceGraph.Character.get_future_neighbor(0).Age)},
+				new string[]{("What will you be like at age " + mBBLastPerformanceGraph.Character.get_future_neighbor(0).Age) + "?"},
 				new Color[]{new Color(0.5f,0.5f,0.5f,1)});
 		}
 		else{
@@ -317,9 +317,9 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 			mBBQuestionText.set_text(
 				//new string[]{("Will you be " + nChar.Description + "\nThat is a " can't do this because my multicolor font thing can't handle new line
 				new string[]{("That is a "), 
-					diffPhrases[nCharDiff.Difficulty], 
-					Mathf.Abs(nCharDiff.Difficulty - nCharDiff.Perfect) > 1 ? " but" : " and", 
-					perfectPhrases[nCharDiff.Perfect],
+					perfectPhrases[nCharDiff.Perfect], 
+					Mathf.Abs(-nCharDiff.Difficulty - nCharDiff.Perfect) > 0 ? " but" : " and",
+					diffPhrases[nCharDiff.Difficulty],
 					" choice."},
 				new Color[]{new Color(0.5f,0.5f,0.5f,1),
 					diffColors[nCharDiff.Difficulty]/2f,
