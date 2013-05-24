@@ -20,10 +20,7 @@ public class ZigEngageSingleUser : MonoBehaviour {
 	void EngageUser(ZigTrackedUser user) {
 		if (null == engagedTrackedUser) {
             engagedTrackedUser = user;
-            foreach (GameObject go in EngagedUsers)
-            {
-                user.AddListener(go);
-            }
+            foreach (GameObject go in EngagedUsers) user.AddListener(go);
             SendMessage("UserEngaged", this, SendMessageOptions.DontRequireReceiver);
 		}
 	}

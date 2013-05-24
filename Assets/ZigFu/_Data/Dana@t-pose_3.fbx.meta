@@ -14,26 +14,26 @@ ModelImporter:
     bakeSimulation: 0
     splitAnimations: 1
     animationCompression: 1
-    animationRotationError: 0.500000
-    animationPositionError: 0.500000
-    animationScaleError: 0.500000
+    animationRotationError: .5
+    animationPositionError: .5
+    animationScaleError: .5
     animationWrapMode: 0
     clipAnimations: []
   meshes:
     lODScreenPercentages: []
-    globalScale: 0.010000
+    globalScale: .00999999978
     meshCompression: 0
     addColliders: 0
     swapUVChannels: 1
     generateSecondaryUV: 0
     useFileUnits: 1
-    meshOptimization: 4
-    secondaryUVAngleDistortion: 8.000000
+    optimizeMesh: 0
+    secondaryUVAngleDistortion: 8
     secondaryUVAreaDistortion: 15.000001
-    secondaryUVHardAngle: 88.000000
-    secondaryUVPackMargin: 4.000000
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
   tangentSpace:
-    normalSmoothAngle: 60.000000
+    normalSmoothAngle: 60
     splitTangentsAcrossUV: 1
     normalImportMode: 0
     tangentImportMode: 1

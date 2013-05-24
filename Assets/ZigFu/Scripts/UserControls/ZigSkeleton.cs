@@ -241,22 +241,15 @@ public class ZigSkeleton : MonoBehaviour
 
     void Zig_UpdateUser(ZigTrackedUser user)
     {
-        string o = "";
         UpdateRoot(user.Position);
         if (user.SkeletonTracked)
         {
             foreach (ZigInputJoint joint in user.Skeleton)
             {
-                if(joint.GoodPosition)
-                    o += " " + joint.Id.ToString();
-                if (joint.Id == ZigJointId.LeftFingertip)
-                    Debug.Log(joint.Position);
-                
                 if (joint.GoodPosition) UpdatePosition(joint.Id, joint.Position);
                 if (joint.GoodRotation) UpdateRotation(joint.Id, joint.Rotation);
             }
         }
-        //Debug.Log(o);
     }
 
 }

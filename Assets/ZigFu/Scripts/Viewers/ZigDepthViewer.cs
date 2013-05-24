@@ -35,8 +35,7 @@ public class ResolutionData
 public class ZigDepthViewer : MonoBehaviour {
     public Renderer target;
     public ZigResolution TextureSize = ZigResolution.QQVGA_160x120;
-    Color32 BackgroundColor = Color.white;
-    Color32 BaseColor = Color.gray;
+    public Color32 BaseColor = Color.yellow;
     public bool UseHistogram = true;
     Texture2D texture;
     ResolutionData textureSize;
@@ -90,13 +89,13 @@ public class ZigDepthViewer : MonoBehaviour {
             for (i = 1; i < depthHistogramMap.Length; i++) {
                 depthHistogramMap[i] += depthHistogramMap[i - 1];
             }
-            depthToColor[0] = BackgroundColor;
+            depthToColor[0] = Color.black;
             for (i = 1; i < depthHistogramMap.Length; i++) {
                 float intensity = (1.0f - (depthHistogramMap[i] / numOfPoints));
                 //depthHistogramMap[i] = intensity * 255;
-                depthToColor[i].r = (byte)(BackgroundColor.r * (1 - intensity) + (BaseColor.r * intensity));
-                depthToColor[i].g = (byte)(BackgroundColor.g * (1 - intensity) + (BaseColor.g * intensity));
-                depthToColor[i].b = (byte)(BackgroundColor.b * (1 - intensity) + (BaseColor.b * intensity));
+                depthToColor[i].r = (byte)(BaseColor.r * intensity);
+                depthToColor[i].g = (byte)(BaseColor.g * intensity);
+                depthToColor[i].b = (byte)(BaseColor.b * intensity);
                 depthToColor[i].a = 255;//(byte)(BaseColor.a * intensity);
             }
         }
@@ -123,55 +122,27 @@ public class ZigDepthViewer : MonoBehaviour {
 
     void Zig_Update(ZigInput input)
     {
-        
         if (UseHistogram) {
             UpdateHistogram(ZigInput.Depth);
         }
         else {
             //TODO: don't repeat this every frame
-            depthToColor[0] = BackgroundColor;
+            depthToColor[0] = Color.black;
             for (int i = 1; i < MaxDepth; i++) {
                 float intensity = 1.0f - (i/(float)MaxDepth);
                 //depthHistogramMap[i] = intensity * 255;
-                depthToColor[i].r = (byte)(BackgroundColor.r * (1 - intensity) + (BaseColor.r * intensity));
-                depthToColor[i].g = (byte)(BackgroundColor.g * (1 - intensity) + (BaseColor.g * intensity));
-                depthToColor[i].b = (byte)(BackgroundColor.b * (1 - intensity) + (BaseColor.b * intensity));
+                depthToColor[i].r = (byte)(BaseColor.r * intensity);
+                depthToColor[i].g = (byte)(BaseColor.g * intensity);
+                depthToColor[i].b = (byte)(BaseColor.b * intensity);
                 depthToColor[i].a = 255;//(byte)(BaseColor.a * intensity);
             }
         }
         UpdateTexture(ZigInput.Depth);
     }
 
-
-    Rect targetRect = new Rect(10, Screen.height - 120 - 10, 160, 120);
-    Rect currentRect = new Rect(0, 0, Screen.width, Screen.height);
-    public void set_full(bool full)
-    {
-        if (full)
-        {
-            targetRect = new Rect(0, 0, Screen.width, Screen.height);
-        }
-        else
-        {
-            targetRect = new Rect(10, Screen.height - 120 - 10, 160, 120);
-        }
-    }
-    void Update()
-    {
-        //TODO tween depth image position
-        float lambda = 0.1f;
-        currentRect.x = (1 - lambda) * currentRect.x + lambda * targetRect.x;
-        currentRect.y = (1 - lambda) * currentRect.y + lambda * targetRect.y;
-        currentRect.width = (1 - lambda) * currentRect.width + lambda * targetRect.width;
-        currentRect.height = (1 - lambda) * currentRect.height + lambda * targetRect.height;
-    }
-
-
     void OnGUI() {
-        GUI.depth = int.MinValue;
         if (null == target) {
-            //GUI.DrawTexture(new Rect(Screen.width - texture.width - 10, Screen.height - texture.height - 10, texture.width, texture.height), texture);
-            GUI.DrawTexture(currentRect, texture);
+            GUI.DrawTexture(new Rect(Screen.width - texture.width - 10, Screen.height - texture.height - 10, texture.width, texture.height), texture);
         }
     }
 }
