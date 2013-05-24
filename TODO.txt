@@ -8,32 +8,35 @@
 ::FOR THE MAY 31ST EMERGENCY BUILD::
 DONE-fix choosing with the nwe smaller boxes
 -fix alignment of text in graveyard
--disable debug chars in graveyard
+-disable debug chars in graveyardq
 
 ::FOR THE MAY 31st SAFE BUILD::
-DONE-do depth trick for cutscene particles...
+-background animations
 -depth wraning text
 	DONE-depth warning text not aligning properly on other computers??? I think it's because you are alignign to the left of the screen not the camera
 	-seems to come up at random times
--icons
+	DONE-buy zigfu
+-angels lol
+
+IGNORE-fix screen clearing on black bars
+	-HOW???
+DONE-remove stars...
+DONE-switch to umlaut schoenfelder/uh oh, does not work
+DONE-switch hearts to dots in particles
+DONE-icons
 	-distorted
 	-reload the icon images because lea changed their sizes (doubt it will make a diff)
-
--shrink font or enlarge bubbles or do better multiline text
+DONE-do depth trick for cutscene particles...
+DONE-shrink font or enlarge bubbles or do better multiline text
 DONE-perfectness multiplier in score??? 
 	DONE-I think this is working
 	DONE-although you should be the multiplier image next to the score image
 		-refere to storyboard!!!
--selection
+DONE-selection
 	DONE-perfectness then difficulty in selection. 
 	DONE-1/2/3 to 1/2/3/4 match but/and
-	-full names on choosing lol
+	DONE-full names on choosing lol
 
--angels lol
--switch hearts to dots in particles
-
--fix screen clearing on black bars
-	-HOW???
 
 DONE-why did character icons lose a perfectness star???
 DONE-you are going to be born soon comes up twice

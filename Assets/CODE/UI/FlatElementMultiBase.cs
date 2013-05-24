@@ -55,15 +55,19 @@ public class FlatElementMultiBase : FlatElementBase
 		try{GameObject.Destroy(PrimaryGameObject);} //probbaly don't need the try catch here
 		catch{}
     }
+	
     public override int Depth
     {
         get { return mDepth; }
         set
         {
-            mDepth = value;
-            int i = 0;
+			//loolololol
+            /*int i = 0;
             foreach (ElementOffset e in mElements)
-                e.Element.Depth = value + i++;
+			{
+                e.Element.Depth = value + i++;// + (e.Element.Depth - mDepth);
+			}*/
+			mDepth = value;
         }
     }
 	

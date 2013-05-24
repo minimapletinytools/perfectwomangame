@@ -126,7 +126,7 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 		{
 			mBBPerfectStars[i] = new FlatElementImage(mManager.mNewRef.uiPerfectStar,10);
 			mBBPerfectStars[i].SoftColor = new Color(0.5f,0.5f,0.5f,0);
-			mElement.Add(mBBPerfectStars[i]);
+			//mElement.Add(mBBPerfectStars[i]);
 		}
 		
 		
@@ -474,8 +474,8 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 		TED.add_one_shot_event(
 			delegate()
 			{
-				aTarget.Depth = mPB.Depth + 2;
-				pso = new ParticleStreamObject(mPB.Depth + 4,aTarget.SoftPosition); //6
+				aTarget.set_depth(mPB.Depth + 2);
+				pso = new ParticleStreamObject(mPB.Depth + 5,aTarget.SoftPosition); //6
                 pso.HardColor = aColor;
 				pso.HardPosition = aPosition;
 				mElement.Add(pso);
@@ -483,7 +483,7 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 		aDelay).then_one_shot(
 			delegate()
 			{
-				aTarget.Depth = mPB.Depth + 1;
+				aTarget.set_depth(mPB.Depth + 1);
 				mElement.Remove(pso);
 				pso.destroy();
 			},

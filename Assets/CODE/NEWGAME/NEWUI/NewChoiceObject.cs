@@ -46,7 +46,7 @@ public class NewChoiceObject : FlatElementMultiBase {
 		mElements.Add(new FlatElementMultiBase.ElementOffset(mSquare, new Vector3(0,0,0)));
 		mElements.Add(new FlatElementMultiBase.ElementOffset(mPerfectImage, new Vector3(-mSquare.BoundingBox.width/2,mSquare.BoundingBox.height/2,0)));
 		mElements.Add(new FlatElementMultiBase.ElementOffset(mText, new Vector3(0,20,0)));
-		mElements.Add(new FlatElementMultiBase.ElementOffset(mPerfect, new Vector3(-122,65,0)));
+		//mElements.Add(new FlatElementMultiBase.ElementOffset(mPerfect, new Vector3(-122,65,0)));
         mElements.Add(new FlatElementMultiBase.ElementOffset(mMeter, new Vector3(0,0,0)));
 		
 		mElements.Add(new FlatElementMultiBase.ElementOffset(mIcon, new Vector3(0,175,0)));
@@ -56,7 +56,7 @@ public class NewChoiceObject : FlatElementMultiBase {
 			set_actual_character(aIndex.Value);
 
         PrimaryGameObject = create_primary_from_elements();
-		Depth = aDepth;
+		Depth = aDepth; 
     }
 	
 	

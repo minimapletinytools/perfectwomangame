@@ -12,8 +12,8 @@ public class CharacterIconObject : FlatElementMultiBase {
     public CharacterIconObject(CharacterIndex aIndex, int aDepth)
     {
 		mBackground = new FlatElementImage(ManagerManager.Manager.mNewRef.pbCharacterIconBackground,aDepth);
-		mDifficultyStars = new DifficultyObject(ManagerManager.Manager.mNewRef.uiPerfectStar,aDepth+2);
-		mIcon = new FlatElementImage(null,aDepth+2);
+		mDifficultyStars = new DifficultyObject(ManagerManager.Manager.mNewRef.uiPerfectStar,aDepth+1);
+		mIcon = new FlatElementImage(null,aDepth+3);
 		if(aIndex.Index != -1)
 		{
 			var loaded = ManagerManager.Manager.mCharacterBundleManager.get_image("BOX_"+aIndex.StringIdentifier);
@@ -47,6 +47,14 @@ public class CharacterIconObject : FlatElementMultiBase {
 		Depth = aDepth;
 		
 		set_perfectness(0);
+	}
+	
+	public void set_depth(int aDepth)
+	{
+		foreach (ElementOffset e in mElements)
+		{
+            e.Element.Depth = aDepth + (e.Element.Depth - Depth);
+		}
 	}
 	public void set_name(string aName)
 	{
@@ -94,13 +102,10 @@ public class CharacterIconObject : FlatElementMultiBase {
         mDifficultyStars.Difficulty = perfectness;
     }
 	
-	
-	
 	public void set_background_color(Color aColor)
 	{
 		mBackground.SoftColor = aColor;
 	}
-	
 	
 	public void set_difficulty(int aDiff)
 	{
@@ -109,6 +114,7 @@ public class CharacterIconObject : FlatElementMultiBase {
 		else
 			set_icon_color(GameConstants.IconDifficultyColorsOverTwo[aDiff]);
 	}
+	
 	public void set_icon_color(Color aColor)
 	{
 		//mBody.SoftColor = aColor;
