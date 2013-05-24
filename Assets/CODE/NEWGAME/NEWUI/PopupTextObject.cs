@@ -24,20 +24,6 @@ public class PopupTextObject : FlatElementMultiBase {
 	string split_text(string text)
 	{
 		
-		/* TODO
-		int splitCount = text.Length/SplitNumber;
-		string r = "";
-		for(int i = 0; i < splitCount+1; i++)
-		{
-			int splitIndex = SplitCount == 0 ? 0 : i*(text.Length)/SplitCount;
-			
-			r += text.Substring(splitIndex,);
-			if( text[splitIndex] != ' ' && text[splitIndex-1] != ' ')
-				r += "-";
-			r += "\n" + text.Substring(splitIndex);
-		}
-		return r;*/
-		
 		int splitCount = 20;
 		if(text.Length >= splitCount)
 		{
@@ -60,10 +46,14 @@ public class PopupTextObject : FlatElementMultiBase {
 		
 		
 		float textOffset = 0;
-		if(need_split(aText))
+		if(aText.Length > 25  && aText.Length < 50)
 		{
 			textOffset = 25;
-			aText = split_text(aText);
+			aText = FlatElementText.convert_to_multiline(2,aText);
+		} else if (aText.Length >= 50)
+		{
+			textOffset = 50;
+			aText = FlatElementText.convert_to_multiline(3,aText);
 		}
 		
 		mText = new FlatElementText(ManagerManager.Manager.mNewRef.genericFont,120,aText,aDepth+1);

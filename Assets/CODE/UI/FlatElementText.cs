@@ -1,5 +1,6 @@
 using UnityEngine;
-using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 
 public class FlatElementText : FlatElementBase
 {
@@ -33,6 +34,7 @@ public class FlatElementText : FlatElementBase
 		mRenderer = PrimaryGameObject.renderer;
 		mMesh = PrimaryGameObject.GetComponent<TextMesh>();
 		mMesh.anchor = TextAnchor.MiddleCenter;
+		mMesh.alignment = TextAlignment.Center;
         Size = aSize;
         Text = aText;
 		
@@ -51,6 +53,7 @@ public class FlatElementText : FlatElementBase
         mMesh = textElement.AddComponent<TextMesh>();
         mMesh.font = aFont;
         mMesh.anchor = TextAnchor.MiddleCenter;
+		mMesh.alignment = TextAlignment.Center;
         Size = aSize;
         Text = aText;
 		mRenderer.material = mMesh.font.material;
@@ -78,16 +81,58 @@ public class FlatElementText : FlatElementBase
 	
 	public static string convert_to_multiline(int numberSplits, string aString)
 	{
-		
-		return aString;
+		int[] ideal = Enumerable.Repeat((aString.Length/numberSplits),numberSplits).ToArray();
+		return convert_to_multiline(ideal,aString);
 	}
 	
-	
-	public static string convert_to_multiline(int[] max_chars, string aString)
+	public static float grade_words(int ideal, string[] words)
 	{
-		//var result = System.Text.Regex.Split(aString, "\r\n|\r|\n");
+		return Mathf.Pow((ideal - (words.Sum(e => e.Length) + words.Length - 1)),2);
+	}
+	
+	public static int[] best_fit(int[] ideal, string[] words, out float aScore)
+	{
+		if(ideal.Length == 1)
+		{
+			aScore = grade_words(ideal[0],words);
+			return new int[]{words.Length};
+		}
+		float minScore = Mathf.Infinity;
+		int[] r = null;
+		for(int i = 0; i < words.Length; i++)
+		{
+			
+			float cScore = grade_words(ideal[0],words.Take(i).ToArray());
+			float oScore;
+			int[] answer = (best_fit(ideal.Skip(1).ToArray(), words.Skip(i).ToArray(),out oScore)).ToArray();
+			if(cScore + oScore < minScore)
+			{
+				minScore = cScore + oScore;
+				r = new int[]{i};
+				r = r.Concat(answer).ToArray();
+			}
+		}
+		aScore = minScore;
+		return r;
+	}
+	public static string convert_to_multiline(int[] ideal, string aString)
+	{
+		string[] process = aString.Split(new string[] { " " }, System.StringSplitOptions.None);
+		float dummy;
+		int[] split = best_fit (ideal,process,out dummy);
 		
-		return aString;
+		string r = "";
+		for(int i = 0; i < split.Length; i++)
+		{
+			if(split[i] > 0)
+			{
+				r += process.Take(split[i]).Aggregate((e,f) => e + " " + f);
+				if(i != split.Length -1)
+					r += "\n";
+				process = process.Skip(split[i]).ToArray();
+			}
+		}
+		return r;
 	}
 	
 }

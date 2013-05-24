@@ -47,6 +47,8 @@ public class ManagerManager : MonoBehaviour{
 	public NewMenuReferenceBehaviour mNewRef;
 
 	void Awake () {
+		
+		
 		gameObject.AddComponent<AudioListener>();
 		
         //Debug.Log("setting up managers");
