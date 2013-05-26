@@ -15,6 +15,8 @@ public class ChoiceHelper
     { get; set; }
 	int NextContendingChoice
     { get; set; }
+	int LastContendingChoice
+	{ get; set; }
 	public ProGrading.Pose CurrentPose
     { get; set; }
 	
@@ -91,6 +93,11 @@ public class ChoiceHelper
 		//else if(Input.GetKey(KeyCode.Alpha4))
 		//	NextContendingChoice = 3;
 		
+		if(NextContendingChoice != -1 && LastContendingChoice != NextContendingChoice)
+		{
+			ManagerManager.Manager.mMusicManager.play_sound_effect("choiceBlip");
+		}
+		
 		aInterface.set_bb_choice(NextContendingChoice);
 		
         for (int i = 0; i < 4; i++)
@@ -107,10 +114,12 @@ public class ChoiceHelper
             if (ChoosingPercentages[i] == 1)
             {
                 //choice is made!!!
+				LastContendingChoice = -1;
+				ManagerManager.Manager.mMusicManager.play_sound_effect("choiceMade");
 				return NextContendingChoice;
             }
         }
-		
+		LastContendingChoice = NextContendingChoice;
         
 		return -1;
 	}
