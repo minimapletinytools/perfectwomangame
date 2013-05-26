@@ -751,7 +751,7 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 		if(aStats.Last().Character.Age == 999)
 			aStats.RemoveAt(aStats.Count-1);
 		
-		/*
+		
 		//fake it for testing...
 		for(int i = 0; i < 8; i++)
 		{
@@ -759,7 +759,7 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 			{
 				aStats.Add(new PerformanceStats(new CharacterIndex(i,0)));
 			}
-		}*/
+		}
 		
 		
 		
@@ -783,13 +783,30 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 		//FlatElementImage perfectEngraving = new FlatElementImage(mManager.mNewRef
 		foreach (Renderer f in finalScoreText.PrimaryGameObject.GetComponentsInChildren<Renderer>())
                 f.gameObject.layer = 4;
-		finalScoreText.SoftPosition = mManager.mBackgroundManager.mBackgroundElements.mElements[0].Element.SoftPosition + new Vector3(0, -200, 0);
+		Vector3 graveCenter = mManager.mBackgroundManager.mBackgroundElements.mElements[0].Element.SoftPosition + new Vector3(0, -200, 0);;
+		finalScoreText.SoftPosition = graveCenter;
 		mElement.Add(finalScoreText);
 		
 		List<Vector3> ghostPositions = new List<Vector3>();
+		List<FlatElementImage> ghostElements = new List<FlatElementImage>();
 		for(int i = 1; i < aStats.Count; i++)
 		{
-			//TODO
+			Vector3 angelPosition = graveCenter + 
+				(new Vector3(
+				Mathf.Cos(Mathf.PI*((i-1)/(aStats.Count-2f))),
+				Mathf.Sin(Mathf.PI*((i-1)/(aStats.Count-2f))),
+				0)) *600;
+			ghostPositions.Add(angelPosition);
+			
+			var isp = (mManager.mCharacterBundleManager.get_image("ANGELS_"+aStats[i].Character.StringIdentifier));
+			var ge = new FlatElementImage(isp.Image,9);
+			ge.HardPosition = random_position();
+			ge.HardScale = new Vector3(2.5f,2.5f,1);
+			foreach (Renderer f in ge.PrimaryGameObject.GetComponentsInChildren<Renderer>())
+                f.gameObject.layer = 4;
+			//ge.HardColor = new Color(.5f,.5f,.5f,0);
+			ghostElements.Add(ge);
+			mElement.Add(ge);
 		}
 		
 		TimedEventDistributor.TimedEventChain chain;
@@ -828,6 +845,9 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 			chain = chain.then_one_shot(
 				delegate()
 				{
+				
+					ghostElements[ps.Character.Level-1].SoftPosition = ghostPositions[ps.Character.Level-1];
+					mManager.mMusicManager.play_sound_effect("graveAngel");	
 					//set the text
 					string text = "You lived your ";
 					text += perfectPhrase[ps.Stats.Perfect];
