@@ -33,7 +33,7 @@ public class NewChoiceObject : FlatElementMultiBase {
 		var newRef = ManagerManager.Manager.mNewRef;
 		//TODO finish and reposition everything
 		mSquare = new FlatElementImage(newRef.bbChoiceBox, aDepth);
-		mText = new FlatElementText(newRef.genericFont,30,"",aDepth +1);
+		mText = new FlatElementText(newRef.genericFont,55,"",aDepth +1);
 		mPerfectImage = new FlatElementImage(null,aDepth +2);
         mPerfect = new DifficultyObject(ManagerManager.Manager.mNewRef.uiPerfectStar, aDepth);
 		mIcon = new FlatElementImage(null,aDepth +2);
@@ -90,7 +90,7 @@ public class NewChoiceObject : FlatElementMultiBase {
 			mCharacterIndex = value;
 			if(mCharacterIndex.Index != -1)
 			{
-				mText.Text = FlatElementText.convert_to_multiline(2,mCharacterIndex.Description);
+				mText.Text = FlatElementText.convert_to_multiline(2,mCharacterIndex.ShortName);
 			}
 			else mText.Text = "";
 		}

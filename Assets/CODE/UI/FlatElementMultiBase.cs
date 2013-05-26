@@ -61,6 +61,7 @@ public class FlatElementMultiBase : FlatElementBase
         get { return mDepth; }
         set
         {
+			//TODO you need to change vereything else lol...
 			//loolololol
             /*int i = 0;
             foreach (ElementOffset e in mElements)

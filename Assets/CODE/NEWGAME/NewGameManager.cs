@@ -286,7 +286,7 @@ public class NewGameManager : FakeMonoBehaviour
 		//warning
 		if (CurrentPoseAnimation != null && CurrentCharacterIndex.Index != 0)
 		{
-			if(PercentTimeCompletion > 0.2f && CurrentPerformanceStat.last_score(3f/30f)/(3f/30f) < 0.2f)
+			if(PercentTimeCompletion > 0.2f && CurrentPerformanceStat.last_score(1.5f/30f)/(1.5f/30f) < 0.2f)
 				mManager.mInterfaceManager.enable_warning_text(true);
 			else 
 				mManager.mInterfaceManager.enable_warning_text(false);
@@ -300,7 +300,7 @@ public class NewGameManager : FakeMonoBehaviour
 			
 			if(PercentTimeCompletion > 0.35f)
 			{
-				if(CurrentPerformanceStat.last_score(7/30f)/(7/30f) < 0.2f)
+				if(CurrentPerformanceStat.last_score(7/30f)/(7/30f) < 0.17f)
 					die |= true;
 			}
 		}

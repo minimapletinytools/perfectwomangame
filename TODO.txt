@@ -3,21 +3,28 @@
 -bad sentences have positive changes
 -overall too many positive changes i think.
 -feedback ideas, after pose changes, you get a blip indicating how well you ddi that pose in that time interval
-
+-stuff should spin off the screen instead of fade away on death :)
 
 ::FOR THE MAY 31ST EMERGENCY BUILD::
-DONE-fix choosing with the nwe smaller boxes
+-mail cards to lea
 -fix alignment of text in graveyard
 -disable debug chars in graveyardq
 
 ::FOR THE MAY 31st SAFE BUILD::
 -background animations
--depth wraning text
+-make the angels not look like ass
+DONE lol-angels lol
+DONE-one word description in selection screen w/ larger font
+DONE-sound effects
+DONE-remove stars all together
+DONE-extend warning period
+DONE-make it harder to die
+
+DONE-fix choosing with the nwe smaller boxes
+IGNORE-depth wraning text
 	DONE-depth warning text not aligning properly on other computers??? I think it's because you are alignign to the left of the screen not the camera
 	-seems to come up at random times
 	DONE-buy zigfu
--angels lol
-
 IGNORE-fix screen clearing on black bars
 	-HOW???
 DONE-remove stars...
