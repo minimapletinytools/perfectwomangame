@@ -37,7 +37,7 @@ public class NewChoiceObject : FlatElementMultiBase {
 		mPerfectImage = new FlatElementImage(null,aDepth +2);
         mPerfect = new DifficultyObject(ManagerManager.Manager.mNewRef.uiPerfectStar, aDepth);
 		mIcon = new FlatElementImage(null,aDepth +2);
-		mIcon.HardScale = 1f*Vector3.one;
+		mIcon.HardScale = 1.15f*Vector3.one;
         mMeter = new MeterImageObject(newRef.bbChoiceBox, MeterImageObject.FillStyle.DU, aDepth + 1);
         mMeter.Percentage = 0.0f;
 		set_perfectness(3);

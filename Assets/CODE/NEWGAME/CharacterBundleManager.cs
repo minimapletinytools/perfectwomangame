@@ -210,6 +210,7 @@ public class CharacterBundleManager : FakeMonoBehaviour {
 					NUPD.CharacterInformationProcessor.process_character((aBundle.Load(txtName) as TextAsset).text);
 				
 				//kind of a hack.
+				//TODO uncomment this when you get new character packages in...
 				//CharacterIndex.INDEX_TO_SHORT_NAME[e.Index] = mCharacterHelper.Characters[e.Index].CharacterInfo.ShortName;
 				//CharacterIndex.INDEX_TO_FULL_NAME[e.Index] = mCharacterHelper.Characters[e.Index].CharacterInfo.LongName;
 				CharacterIndex.INDEX_TO_DESCRIPTION[e.Index] = mCharacterHelper.Characters[e.Index].CharacterInfo.Description;

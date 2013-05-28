@@ -36,7 +36,7 @@ public class NewMenuReferenceBehaviour : MonoBehaviour {
 	public Texture2D pbCharacterIconBackground;
 	
 	//grave
-	public Texture2D[] gravePerfectnessEngravings;
+	public Texture2D gravePerfectnessEngraving;
 	
 	//text
 	public Texture2D[] textSmallBubble;

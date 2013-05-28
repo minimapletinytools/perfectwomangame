@@ -24,6 +24,18 @@ public class FlatElementText : FlatElementBase
         get { return mMesh.text; }
         set { mMesh.text = value; }
     }
+	
+	public TextAlignment Alignment
+	{
+		get { return mMesh.alignment; }
+		set { mMesh.alignment = value; }
+	}
+	
+	public TextAnchor Anchor
+	{
+		get { return mMesh.anchor; }
+		set { mMesh.anchor = value; }
+	}
             
 	public FlatElementText(GameObject fontPrefab, int aSize, string aText, int aDepth)
 	{

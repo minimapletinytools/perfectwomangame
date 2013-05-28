@@ -114,6 +114,9 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 		mBBWarningText.HardColor = new Color(0.5f,0.5f,0.5f,0);
 		mBBMultiplierImage = new FlatElementImage(null,15);
 		mBBText.HardPosition = random_position();
+		mBBText.HardColor = new Color(0.5f,0,0,1);
+		mBBText.Alignment = TextAlignment.Left;
+		mBBText.Anchor = TextAnchor.MiddleLeft;
 		mBBScoreFrame.HardPosition = random_position();
 		mBBScoreText.HardPosition = random_position();
 		mElement.Add(mBBText);
@@ -204,6 +207,7 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 		mBBLastPerformanceGraph.PerformanceGraph.SoftColor = smallColor;
 		mBBMultiplierImage
 		mBBPerfectStars
+		//mBBTextshould revert to red here...
 		*/
 		
 		foreach(FlatBodyObject e in mBBChoiceBodies)
@@ -235,7 +239,7 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 		float bottomVOffset = -50;
 		//mBB.SoftScale = new Vector3(1,1,1);
 		mBB.SoftPosition = mBBBasePosition + new Vector3(0,aBBOffset,0);
-		mBBText.SoftPosition = mBB.SoftPosition + new Vector3(0,160,0);
+		mBBText.SoftPosition = mBB.SoftPosition + new Vector3(350,160,0);
 		mBBScoreFrame.SoftPosition = mBB.SoftPosition + new Vector3(-350,bottomVOffset-50,0);
 		mBBScoreText.SoftPosition = mBB.SoftPosition + new Vector3(-350,bottomVOffset-90,0);
 		mBBLastPerformanceGraph.PerformanceGraph.SoftPosition = mBB.SoftPosition + new Vector3(150,bottomVOffset,0);
@@ -474,8 +478,8 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 		TED.add_one_shot_event(
 			delegate()
 			{
-				aTarget.set_depth(mPB.Depth + 2);
-				pso = new ParticleStreamObject(mPB.Depth + 5,aTarget.SoftPosition); //6
+				aTarget.set_depth(mPB.Depth + 2); //adjust the depth so the stream shows over the right icons
+				pso = new ParticleStreamObject(mPB.Depth + 5,aTarget.SoftPosition);
                 pso.HardColor = aColor;
 				pso.HardPosition = aPosition;
 				mElement.Add(pso);
@@ -483,7 +487,7 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 		aDelay).then_one_shot(
 			delegate()
 			{
-				aTarget.set_depth(mPB.Depth + 1);
+				aTarget.set_depth(mPB.Depth + 1); //and then  reset it to what it should be
 				mElement.Remove(pso);
 				pso.destroy();
 			},
@@ -525,7 +529,7 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 	public void begin_new_character(PerformanceStats aChar)
 	{
 		//BB
-		mBBText.Text = aChar.Character.FullName;
+		mBBText.Text = FlatElementText.convert_to_multiline(aChar.Character.Description.Length > 20 ? 2 : 1 ,aChar.Character.Description);
 		if(aChar.Character.Index != 0)
 		{
 			mBBMultiplierImage.set_new_texture(mManager.mNewRef.bbScoreMultiplier[aChar.Stats.Perfect]);
@@ -780,12 +784,25 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 		//this is all a hack to get the score to show up right...
 		float scoreIncrementor = 0;
 		FlatElementText finalScoreText = new FlatElementText(mManager.mNewRef.genericFont,150,"",10);
-		//FlatElementImage perfectEngraving = new FlatElementImage(mManager.mNewRef
+		FlatElementImage perfectEngraving = new FlatElementImage(mManager.mNewRef.gravePerfectnessEngraving,10);
+		FlatElementText perfectPercent = new FlatElementText(mManager.mNewRef.genericFont,150,"",10);
+		perfectPercent.Text = ((int)(100*aStats.Sum(e=>e.Stats.Perfect+1)/(float)(aStats.Count*3))).ToString() + "%";
+		
+		//hack to put things into bg camera
 		foreach (Renderer f in finalScoreText.PrimaryGameObject.GetComponentsInChildren<Renderer>())
                 f.gameObject.layer = 4;
-		Vector3 graveCenter = mManager.mBackgroundManager.mBackgroundElements.mElements[0].Element.SoftPosition + new Vector3(0, -200, 0);;
-		finalScoreText.SoftPosition = graveCenter;
+		foreach (Renderer f in perfectEngraving.PrimaryGameObject.GetComponentsInChildren<Renderer>())
+                f.gameObject.layer = 4;
+		foreach (Renderer f in perfectPercent.PrimaryGameObject.GetComponentsInChildren<Renderer>())
+                f.gameObject.layer = 4;
+		
+		Vector3 graveCenter = mManager.mBackgroundManager.mBackgroundElements.mElements[0].Element.SoftPosition + new Vector3(0, 50, 0);;
+		finalScoreText.SoftPosition = graveCenter + new Vector3(-120,-250,0);
+		perfectEngraving.SoftPosition = graveCenter + new Vector3(0,250,0);
+		perfectPercent.SoftPosition = perfectEngraving.SoftPosition;
 		mElement.Add(finalScoreText);
+		mElement.Add(perfectEngraving);
+		mElement.Add(perfectPercent);
 		
 		List<Vector3> ghostPositions = new List<Vector3>();
 		List<FlatElementImage> ghostElements = new List<FlatElementImage>();

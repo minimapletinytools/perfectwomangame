@@ -8,7 +8,7 @@ public class CharacterHelper
 	
 	public CharacterHelper()
 	{
-		 int[] mPerfectness = new int[]{ 0, 
+		 int[] mPerfectness = new int[]{ 2, //should be 3
             2, 1, 0, 3, 
             2, 1, 0, 3, 
             2, 1, 0, 3, 
