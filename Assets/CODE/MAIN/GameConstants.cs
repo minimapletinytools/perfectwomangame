@@ -21,4 +21,9 @@ public static class GameConstants
 	
 	public static float fadingTime = 2.3f;
 	public static float transitionToChoiceDelayTime = 2; //2;
+
+
+    //colors
+    static Color uiPink = new Color(1, .8f, .8f, 1);
+    public static Color UiPink { get { return uiPink * 0.5f; } }
 }

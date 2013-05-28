@@ -115,7 +115,7 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 		mBBWarningText.HardColor = new Color(0.5f,0.5f,0.5f,0);
 		mBBMultiplierImage = new FlatElementImage(null,15);
 		mBBText.HardPosition = random_position();
-		mBBText.HardColor = new Color(0.5f,0,0,1);
+        mBBText.HardColor = GameConstants.UiPink;
 		mBBText.Alignment = TextAlignment.Left;
 		mBBText.Anchor = TextAnchor.MiddleLeft;
 		mBBScoreFrame.HardPosition = random_position();
@@ -350,7 +350,7 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 				new string[]{
                     //("That is a "),
 					perfectPhrases[nCharDiff.Perfect], 
-					Mathf.Abs((3-nCharDiff.Difficulty) - nCharDiff.Perfect) > 0 ? " but" : " and",
+					Mathf.Abs((3-nCharDiff.Difficulty) - nCharDiff.Perfect) > 1 ? " but" : " and",
 					diffPhrases[nCharDiff.Difficulty],
 					" choice."},
 				new Color[]{
@@ -808,7 +808,7 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 		
 		Vector3 graveCenter = mManager.mBackgroundManager.mBackgroundElements.mElements[0].Element.SoftPosition + new Vector3(0, 50, 0);;
 		finalScoreText.SoftPosition = graveCenter + new Vector3(-120,-250,0);
-		perfectEngraving.SoftPosition = graveCenter + new Vector3(0,250,0);
+		perfectEngraving.SoftPosition = graveCenter + new Vector3(35,250,0);
 		perfectPercent.SoftPosition = perfectEngraving.SoftPosition;
 		mElement.Add(finalScoreText);
 		mElement.Add(perfectEngraving);
@@ -827,7 +827,7 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 			
 			var isp = (mManager.mCharacterBundleManager.get_image("ANGELS_"+aStats[i].Character.StringIdentifier));
 			var ge = new FlatElementImage(isp.Image,9);
-			ge.HardPosition = random_position();
+			ge.HardPosition = random_position()*1.5f;
 			ge.HardScale = new Vector3(2.5f,2.5f,1);
 			foreach (Renderer f in ge.PrimaryGameObject.GetComponentsInChildren<Renderer>())
                 f.gameObject.layer = 4;

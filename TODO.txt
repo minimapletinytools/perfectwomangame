@@ -12,7 +12,10 @@
 
 ::FOR THE MAY 31st SAFE BUILD::
 -background animations
--make the angels not look like ass
+-16-2 angel is a dot
+-better functions for checknig if user is off screen (cuz they suck under windows)
+-possibly still dying too soon
+DONE-make the angels not look like ass
 DONE lol-angels lol
 DONE-one word description in selection screen w/ larger font
 DONE-sound effects
