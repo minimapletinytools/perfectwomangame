@@ -15,7 +15,8 @@ public static class GameConstants
 	
 	
 	//grave stuff
-	public static string[] credits = {"Perfect Woman","created by", "Lea Sch\u00F6enfelder", "Peter Lu"};
+	//public static string[] credits = {"Perfect Woman","created by", "Lea Sch\u00F6enfelder", "Peter Lu"};
+    public static string[] credits = { "Thanks: Benedikts","Haas, David Elliott,","Sabrina Winter, Eddo","Stern, Ingo Von","Staden, Andreas","Hykade" };
 	
 	
 	public static float fadingTime = 2.3f;

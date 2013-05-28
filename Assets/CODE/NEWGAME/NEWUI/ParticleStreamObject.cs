@@ -39,7 +39,7 @@ public class ParticleStreamObject  : FlatElementBase {
 	{
 		Vector3 targetDir = Target-aPos;
 		mParticleGameObject.transform.rotation = Quaternion.FromToRotation(Vector3.forward,targetDir); //particles come out in the positive Z axis by default...
-		mParticles.startLifetime = targetDir.magnitude / mParticles.startSpeed;
+		//mParticles.startLifetime = targetDir.magnitude / mParticles.startSpeed;
         //mParticles.time = targetDir.magnitude / mParticles.startSpeed;
 		base.set_position(aPos);
 	}

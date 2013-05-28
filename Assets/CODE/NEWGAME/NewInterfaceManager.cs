@@ -87,6 +87,7 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 	List<FlatBodyObject> mBBChoiceBodies = new List<FlatBodyObject>();
 	FlatElementImage mBBChoosingBackground;
 	ColorTextObject mBBQuestionText;
+    FlatElementText mBBQuestionTextPrefix;
 	FlatBodyObject mBBMiniMan;
 	Vector3 mBBMiniManBasePosition;
 	
@@ -157,8 +158,11 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 		mBBChoosingBackground = new FlatElementImage(null,mFlatCamera.Size,0);
 		mBBChoosingBackground.HardPosition = mFlatCamera.Center;
 		mBBQuestionText = new ColorTextObject(10);
-		mBBQuestionText.HardPosition = mFlatCamera.get_point(0.5f,0.75f) + new Vector3(awkwardOffset-padding,0,0);
+        mBBQuestionTextPrefix = new FlatElementText(newRef.genericFont, 100, "", 10);
+		mBBQuestionText.HardPosition = mFlatCamera.get_point(0.5f,0.75f) + new Vector3(awkwardOffset-padding,-75,0);
+        mBBQuestionTextPrefix.HardPosition = mFlatCamera.get_point(0.5f, 0.75f) + new Vector3(awkwardOffset - padding,75, 0);
 		mBBQuestionText.SoftInterpolation = 1;
+        mBBQuestionTextPrefix.SoftInterpolation = 1;
 		mBBMiniMan = new FlatBodyObject(miniMan,20);
 		mBBMiniMan.HardScale = miniManScale;
 		mBBMiniManBasePosition = mFlatCamera.get_point(0.5f, -0.7f) + new Vector3(awkwardOffset - padding,0,0);
@@ -169,6 +173,7 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 		mElement.Add(mBBChoosingBackground);
 		mElement.Add(mBBMiniMan);
 		mElement.Add(mBBQuestionText);
+        mElement.Add(mBBQuestionTextPrefix);
 		GameObject.Destroy(mMiniMan.gameObject);
 		
 	}
@@ -216,6 +221,7 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 			e.SoftColor = fullColor;
 		mBBMiniMan.SoftColor = fullColor;
 		mBBQuestionText.SoftColor = fullColor;
+        mBBQuestionTextPrefix.SoftColor = fullColor;
 		mBBChoosingBackground.SoftColor = fullColor*(new Color(0.6f,0.6f,1))*1;//0.2f;
 	}
 	
@@ -239,7 +245,7 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 		float bottomVOffset = -50;
 		//mBB.SoftScale = new Vector3(1,1,1);
 		mBB.SoftPosition = mBBBasePosition + new Vector3(0,aBBOffset,0);
-		mBBText.SoftPosition = mBB.SoftPosition + new Vector3(350,160,0);
+		mBBText.SoftPosition = mBB.SoftPosition + new Vector3(460,160,0);
 		mBBScoreFrame.SoftPosition = mBB.SoftPosition + new Vector3(-350,bottomVOffset-50,0);
 		mBBScoreText.SoftPosition = mBB.SoftPosition + new Vector3(-350,bottomVOffset-90,0);
 		mBBLastPerformanceGraph.PerformanceGraph.SoftPosition = mBB.SoftPosition + new Vector3(150,bottomVOffset,0);
@@ -325,8 +331,9 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 		if(aIndex == -1) //no choice
 		{
 			mBBMiniMan.SoftPosition = mBBMiniManBasePosition;
+            mBBQuestionTextPrefix.Text = "What will you be like";
 			mBBQuestionText.set_text(
-				new string[]{("What will you be like at age " + mBBLastPerformanceGraph.Character.get_future_neighbor(0).Age) + "?"},
+				new string[]{("at age " + mBBLastPerformanceGraph.Character.get_future_neighbor(0).Age) + "?"},
 				new Color[]{new Color(0.5f,0.5f,0.5f,1)});
 		}
 		else{
@@ -337,14 +344,17 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 			var perfectPhrases = new string[]{" horrible", " passable", " perfect", " PERFECT"};
 			var perfectColors = new Color[]{new Color32(200,173,27,255),new Color32(240,220,130,255),new Color32(253,238,0,255),new Color32(255,126,0,255)};
 			var diffColors = new Color[]{new Color(0,0.8f,0,1), new Color(0.8f,0.8f,0,1), new Color(0.9f,0.4f,0,1), new Color(0.8f,0,0,1)};
+            mBBQuestionTextPrefix.Text = "That is a";
 			mBBQuestionText.set_text(
 				//new string[]{("Will you be " + nChar.Description + "\nThat is a " can't do this because my multicolor font thing can't handle new line
-				new string[]{("That is a "), 
+				new string[]{
+                    //("That is a "),
 					perfectPhrases[nCharDiff.Perfect], 
-					Mathf.Abs(-nCharDiff.Difficulty - nCharDiff.Perfect) > 0 ? " but" : " and",
+					Mathf.Abs((3-nCharDiff.Difficulty) - nCharDiff.Perfect) > 0 ? " but" : " and",
 					diffPhrases[nCharDiff.Difficulty],
 					" choice."},
-				new Color[]{new Color(0.5f,0.5f,0.5f,1),
+				new Color[]{
+                    //new Color(0.5f,0.5f,0.5f,1),
 					diffColors[nCharDiff.Difficulty]/2f,
 					new Color(0.5f,0.5f,0.5f,1),
 					perfectColors[nCharDiff.Perfect]/2f,
