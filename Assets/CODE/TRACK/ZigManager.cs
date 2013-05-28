@@ -10,6 +10,7 @@ public class ZigManager : FakeMonoBehaviour {
 	public AlternativeDepthViewer DepthView { get; private set; }
     public Dictionary<ZigJointId, ZigInputJoint> Joints{get; private set;}
 	ZigJointId[] ImportantJoints = new ZigJointId[]{ZigJointId.Head,ZigJointId.LeftHand,ZigJointId.RightHand};//,ZigJointId.LeftAnkle,ZigJointId.RightAnkle};
+    public ZigTrackedUser LastTrackedUser { get; private set; }
     public ZigManager(ManagerManager aManager) : base(aManager)
 	{
 		Joints = new Dictionary<ZigJointId, ZigInputJoint>()
@@ -116,7 +117,7 @@ public class ZigManager : FakeMonoBehaviour {
 
 	void Zig_UpdateUser(ZigTrackedUser user)
     {
-		
+        LastTrackedUser = user;
         if (user.SkeletonTracked)
         {
 			string output = "";
@@ -173,6 +174,11 @@ public class ZigManager : FakeMonoBehaviour {
 	{
 		
 		bool bad = false;
+
+        if (LastTrackedUser != null)
+            if (LastTrackedUser.SkeletonTracked == false)
+                bad = true;
+
 		foreach(var e in Joints)
 		{
 			if(ImportantJoints.Contains(e.Key) && !e.Value.GoodPosition)
