@@ -221,7 +221,7 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 			e.SoftColor = fullColor;
 		mBBMiniMan.SoftColor = fullColor;
 		mBBQuestionText.SoftColor = fullColor;
-        mBBQuestionTextPrefix.SoftColor = fullColor;
+        mBBQuestionTextPrefix.SoftColor = fullColor*GameConstants.UiPink*2;
 		mBBChoosingBackground.SoftColor = fullColor*(new Color(0.6f,0.6f,1))*1;//0.2f;
 	}
 	
@@ -334,7 +334,7 @@ public class NewInterfaceManager : FakeMonoBehaviour {
             mBBQuestionTextPrefix.Text = "What will you be like";
 			mBBQuestionText.set_text(
 				new string[]{("at age " + mBBLastPerformanceGraph.Character.get_future_neighbor(0).Age) + "?"},
-				new Color[]{new Color(0.5f,0.5f,0.5f,1)});
+				new Color[]{GameConstants.UiPink});
 		}
 		else{
 			mBBMiniMan.SoftPosition = mBBChoiceBodies[aIndex].SoftPosition;
@@ -354,11 +354,11 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 					diffPhrases[nCharDiff.Difficulty],
 					" choice."},
 				new Color[]{
-                    //new Color(0.5f,0.5f,0.5f,1),
+                    //GameConstants.UiPink,
 					diffColors[nCharDiff.Difficulty]/2f,
-					new Color(0.5f,0.5f,0.5f,1),
+					GameConstants.UiPink,
 					perfectColors[nCharDiff.Perfect]/2f,
-					new Color(0.5f,0.5f,0.5f,1)});
+					GameConstants.UiPink});
 		}
 	}
 	//called by ChoiceHelper
@@ -767,13 +767,14 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 		
 		
 		//fake it for testing...
+		/*
 		for(int i = 0; i < 8; i++)
 		{
 			if(aStats.Last().Character.Age < (new CharacterIndex(i,0)).Age)
 			{
 				aStats.Add(new PerformanceStats(new CharacterIndex(i,0)));
 			}
-		}
+		}*/
 		
 		
 		
@@ -793,9 +794,10 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 		
 		//this is all a hack to get the score to show up right...
 		float scoreIncrementor = 0;
-		FlatElementText finalScoreText = new FlatElementText(mManager.mNewRef.genericFont,150,"",10);
+		FlatElementText finalScoreText = new FlatElementText(mManager.mNewRef.genericFont,100,"",10);
 		FlatElementImage perfectEngraving = new FlatElementImage(mManager.mNewRef.gravePerfectnessEngraving,10);
-		FlatElementText perfectPercent = new FlatElementText(mManager.mNewRef.genericFont,150,"",10);
+		
+		FlatElementText perfectPercent = new FlatElementText(mManager.mNewRef.genericFont,100,"",11);
 		perfectPercent.Text = ((int)(100*aStats.Sum(e=>e.Stats.Perfect+1)/(float)(aStats.Count*3))).ToString() + "%";
 		
 		//hack to put things into bg camera
