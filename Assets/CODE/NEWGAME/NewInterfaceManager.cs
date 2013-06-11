@@ -250,7 +250,7 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 		mBBScoreText.SoftPosition = mBB.SoftPosition + new Vector3(-350,bottomVOffset-90,0);
 		mBBLastPerformanceGraph.PerformanceGraph.SoftPosition = mBB.SoftPosition + new Vector3(150,bottomVOffset,0);
 		mBBWarningText.HardPosition = mFlatCamera.Center;//mBB.SoftPosition + new Vector3(150,bottomVOffset-40,0);
-		mBBMultiplierImage.SoftPosition = mBB.SoftPosition + new Vector3(-170,bottomVOffset + 100,0);
+		mBBMultiplierImage.SoftPosition = mBB.SoftPosition + new Vector3(-350,bottomVOffset + 170,0);
 		
 		for(int i = 0; i < 4; i++)
 			mBBPerfectStars[i].SoftPosition = mBBScoreFrame.SoftPosition + new Vector3(mBBScoreFrame.BoundingBox.width/2f - 37 - i * mBBScoreFrame.BoundingBox.width/3f,130,0); //should be /4
@@ -539,7 +539,7 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 	public void begin_new_character(PerformanceStats aChar)
 	{
 		//BB
-		mBBText.Text = FlatElementText.convert_to_multiline(aChar.Character.Description.Length > 20 ? 2 : 1 ,aChar.Character.Description);
+		mBBText.Text = FlatElementText.convert_to_multiline(aChar.Character.Description.Length > 20 ? 2 : 1 ,aChar.Character.Description + " (" + aChar.Character.Age.ToString() + ")");
 		if(aChar.Character.Index != 0)
 		{
 			mBBMultiplierImage.set_new_texture(mManager.mNewRef.bbScoreMultiplier[aChar.Stats.Perfect]);
@@ -598,9 +598,9 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 		
 		
 		float gPerformanceText = 5f;
-		float gCutsceneText = 6f;
+		float gCutsceneText = 5f;
 		float gPreParticle = 1.5f;
-		float gParticle = 3f;
+		float gParticle = 2f;
 		
 		
 		//this slows the game down a lot...
@@ -821,10 +821,10 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 		for(int i = 1; i < aStats.Count; i++)
 		{
 			Vector3 angelPosition = graveCenter + 
-				(new Vector3(
+				(aStats.Count > 2 ? new Vector3(
 				Mathf.Cos(Mathf.PI*((i-1)/(aStats.Count-2f))),
 				Mathf.Sin(Mathf.PI*((i-1)/(aStats.Count-2f))),
-				0)) *600;
+				0) : new Vector3(0,1,0)) *600;
 			ghostPositions.Add(angelPosition);
 			
 			var isp = (mManager.mCharacterBundleManager.get_image("ANGELS_"+aStats[i].Character.StringIdentifier));

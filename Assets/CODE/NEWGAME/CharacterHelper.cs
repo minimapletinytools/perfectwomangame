@@ -23,11 +23,16 @@ public class CharacterHelper
 		foreach(CharacterIndex e in CharacterIndex.sAllCharacters)
 		{
 			Characters[e.Index] = new CharacterStats(){Character = e};
-			Characters[e.Index].Difficulty = e.Index < 5 ? 0 : 1; //05 characters are easier
+			Characters[e.Index].Difficulty = 1;
 			Characters[e.Index].Perfect = mPerfectness[e.Index]; //TODO maybe just make this random lol?
+						
+			
+			//if(e.Index < 5) Characters[e.Index].Difficulty = 0;
+				
 		}
 	}
 	
+	//TODO delete
 	//this really does not belong here
 	public static List<List<string>> sCharacterSentencs = new List<List<string>>()
 	{

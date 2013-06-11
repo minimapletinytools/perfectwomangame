@@ -6,15 +6,30 @@
 -stuff should spin off the screen instead of fade away on death :)
 
 ::FOR THE MAY 31ST EMERGENCY BUILD::
--mail cards to lea
--fix alignment of text in graveyard
--disable debug chars in graveyardq
+
+
+
+-do new fetus scene with cutscene text...
+	-introduce green pose and performance graph
+	-explain cutscenes..
+
+-high score with picture capturing ;)
+-particle effects in performance graph
+
+-do not always divide the text for the blue bar character
+-add age to blue bar text
+-move badge to the space above the score
 
 ::FOR THE MAY 31st SAFE BUILD::
 -background animations
 -16-2 angel is a dot
 -better functions for checknig if user is off screen (cuz they suck under windows)
 -possibly still dying too soon
+
+
+IGNORE-fix alignment of text in graveyard
+DONE-mail cards to lea
+DONE-disable debug chars in graveyardq
 DONE-make the angels not look like ass
 DONE lol-angels lol
 DONE-one word description in selection screen w/ larger font

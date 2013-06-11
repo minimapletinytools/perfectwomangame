@@ -92,7 +92,6 @@ public class AlternativeDepthViewer : MonoBehaviour {
 
     void Zig_Update(ZigInput input)
     {
-        
         if (UseHistogram) {
             UpdateHistogram(ZigInput.Depth);
         }
