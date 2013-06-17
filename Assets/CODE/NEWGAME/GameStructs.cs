@@ -182,7 +182,7 @@ public struct CharacterIndex
 public class CharacterStats
 {
 	public CharacterIndex Character { get; set; }
-	public int Perfect { get; set; }
+	public int Perfect { get; set; } //TODO DELETE (I'm not actually going to delete this, but it's no longer needed)
 	public int Difficulty { get; set; }
 	public NUPD.CharacterInformation CharacterInfo { get; set; }
 	
@@ -220,7 +220,7 @@ public class PerformanceStats
 	
 	public float AdjustedScore{
 		get{
-			return mTotalScore * (1+Stats.Perfect) * 300;
+			return mTotalScore * 600;//mTotalScore * (1+Stats.Perfect) * 300;
 		}
 	}
 	

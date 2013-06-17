@@ -24,12 +24,12 @@ public class NewMenuReferenceBehaviour : MonoBehaviour {
 	public Texture2D bbGraphFrame;
 	public Texture2D bbGraphDot;
 	public Texture2D bbScoreBackground;
-	public Texture2D[] bbScoreMultiplier;
+	public Texture2D[] bbScoreMultiplier; //TODO rename with bbDifficultyImage
 	
 	//choice
 	public Texture2D bbChoiceBox;
 	public Texture2D bbChoiceFrame;
-	public Texture2D[] bbChoicePerfectIcons;
+	public Texture2D[] bbChoicePerfectIcons; //TODO DELETE remove this, no longer needed
 	
 	//pink bar
 	public Texture2D pbBackground;

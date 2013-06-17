@@ -1,31 +1,62 @@
-::FEEDBACK::
--die ways too easily
--bad sentences have positive changes
--overall too many positive changes i think.
--feedback ideas, after pose changes, you get a blip indicating how well you ddi that pose in that time interval
--stuff should spin off the screen instead of fade away on death :)
+::TODO X:: in order of importance
+DONE-remove perfectness D:
+-blue bar text in center of screen after choosing
+	-what is the most perfect woman at age __? during blue screen
+-cutscene text overflows sometmise (popup text object needs to be more discerning with multiline maybe)
+	-or possibly multiline needs to have a "max" character sort of thing that makes the heuristic got o infinity so it can never happen
+-skipping system
+	-stuff that needs to be skipped
+		-how
+			-maybe left hand wave to single skip
+			-right hand double wave to double skip
+		-cutscene
+			-popups
+				-needs to check if cutscene has been skipped so as not to trigger if it has been...
+				-change colors on single skip
+			-one gesture to skip all???
+		-grave
+			-skip all
+				-flys in all stuff in PB and begins scrolling
+				-goes to post grave
+		-post grave
+			-skip all does same as skip one
+			-skip one goes to next unlocked feature
 
-::FOR THE MAY 31ST EMERGENCY BUILD::
-
-
-
+-different ways to perform game based on age
+	-hold still, slowly moving, snapping, snap when pose is made, then go back in reverse
+-post grave
+	-do the high score thing
+	-teach how to skip cutscenes
+	-show unlocked things
+-fix performance evaluation----   
 -do new fetus scene with cutscene text...
 	-introduce green pose and performance graph
 	-explain cutscenes..
-
--high score with picture capturing ;)
+-grave connections
+-high score nonsense
+	-capture image from kinect
+	-de/serialize scores and png to file
+	-render in ending screen
 -particle effects in performance graph
-
--do not always divide the text for the blue bar character
--add age to blue bar text
--move badge to the space above the score
-
-::FOR THE MAY 31st SAFE BUILD::
--background animations
 -16-2 angel is a dot
+-background animations
 -better functions for checknig if user is off screen (cuz they suck under windows)
--possibly still dying too soon
 
+::TO CONSIDER
+-feedback ideas, after pose changes, you get a blip indicating how well you ddi that pose in that time interval
+-stuff should spin off the screen instead of fade away on death :)
+
+
+
+
+
+
+
+
+
+DONE-do not always divide the text for the blue bar character
+DONE-add age to blue bar text
+DONE-move badge to the space above the score
 
 IGNORE-fix alignment of text in graveyard
 DONE-mail cards to lea

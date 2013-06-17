@@ -516,6 +516,8 @@ public class NewGameManager : FakeMonoBehaviour
 		GS = GameState.TRANSITION;
 		mManager.mInterfaceManager.set_for_PLAY(); //this is just visual
 		TED.add_one_shot_event(
+			//TODO before this, till mInterfaceManager to explain what choice the user just made
+			//maybe play a sound "Too Easy" "Ok" "Hard" "That's Impossible!!"
 			delegate(){
 				mManager.mTransitionCameraManager.fade_out_with_sound(
 					delegate(){
@@ -525,14 +527,6 @@ public class NewGameManager : FakeMonoBehaviour
 			},
 		1);
 	}
-	
-	public void hack_choice(int choice, float time = -1)
-	{
-		//TODO
-	}
-
-
-
 
     public int get_character_difficulty(CharacterIndex aChar)
     {

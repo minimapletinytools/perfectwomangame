@@ -17,6 +17,16 @@ public class NewInterfaceManager : FakeMonoBehaviour {
     CharacterTextureBehaviour mMiniMan;
 	FlatBodyObject mCurrentBody = null;
 	
+	//skipping
+	bool DoSkipMultipleThisFrame
+	{get; set;}
+	public void SkipMultiple()
+	{ DoSkipMultipleThisFrame = true; }
+	bool DoSkipSingleThisFrame
+	{get; set;}
+	public void SkipSingle()
+	{ DoSkipSingleThisFrame = true; }
+	
 	public override void Start()
     {
 		TED = new TimedEventDistributor();
@@ -78,7 +88,7 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 	FlatElementImage mBBScoreFrame;
 	FlatElementText mBBScoreText;
 	FlatElementText mBBWarningText = null;
-	FlatElementImage mBBMultiplierImage;
+	FlatElementImage mBBMultiplierImage; //replace with difficulty image
 	FlatElementImage[] mBBPerfectStars;
 	
 	//CHOOSING
@@ -462,7 +472,6 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 			TED.add_one_shot_event(
 				delegate()
 				{
-					//TODO proper color setting routines
 					aPopup.set_background_color(useColor);
 					mPBCharacterIcons[aTarget.Index].set_background_color(useColor);
 				},
@@ -516,7 +525,9 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 			{
 				to.SoftPosition = mFlatCamera.get_point(0.40f,yRelOffset);
 				mElement.Add(to);
-				return true;
+				if(aTime > duration)
+					return true;
+				return false;
 			},
         0).then_one_shot(
 			delegate()
@@ -524,7 +535,7 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 				//to.SoftPosition = random_position();
 				to.SoftColor = new Color(1,1,1,0);
 			},
-		duration).then_one_shot(
+		0).then_one_shot(
 			delegate()
 			{
 				mElement.Remove(to);

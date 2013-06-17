@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+//TODO DELETE
+
 public class CharacterDifficulties
 {
     public class Difficulty
