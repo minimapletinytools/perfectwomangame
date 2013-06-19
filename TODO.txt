@@ -1,6 +1,6 @@
 ::TODO X:: in order of importance
 DONE-remove perfectness D:
--blue bar text in center of screen after choosing
+DONE-blue bar text in center of screen after choosing
 	-what is the most perfect woman at age __? during blue screen
 -cutscene text overflows sometmise (popup text object needs to be more discerning with multiline maybe)
 	-or possibly multiline needs to have a "max" character sort of thing that makes the heuristic got o infinity so it can never happen
@@ -41,6 +41,8 @@ DONE-remove perfectness D:
 -16-2 angel is a dot
 -background animations
 -better functions for checknig if user is off screen (cuz they suck under windows)
+
+-move choice made text into NewInterfaceManager and add color to the difficulty thing or use one of Lea's diff badge images
 
 ::TO CONSIDER
 -feedback ideas, after pose changes, you get a blip indicating how well you ddi that pose in that time interval
