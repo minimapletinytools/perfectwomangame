@@ -513,8 +513,14 @@ public class NewGameManager : FakeMonoBehaviour
 	
 	public void transition_to_TRANSITION_play(CharacterIndex aNextCharacter)
 	{
+		
+		float gDiffDisplayDur = 5f;
 		GS = GameState.TRANSITION;
+		
+		//TODO move this into NewInterfaceManager
 		mManager.mInterfaceManager.set_for_PLAY(); //this is just visual
+		var diffPhrases = new string[]{" easy", " medium", " hard", " impossible"};
+		mManager.mInterfaceManager.add_timed_text_bubble("This will be a " + diffPhrases[CharacterHelper.Characters[aNextCharacter.Index].Difficulty] + " life",gDiffDisplayDur);
 		TED.add_one_shot_event(
 			//TODO before this, till mInterfaceManager to explain what choice the user just made
 			//maybe play a sound "Too Easy" "Ok" "Hard" "That's Impossible!!"
@@ -525,7 +531,7 @@ public class NewGameManager : FakeMonoBehaviour
 					}
 				);
 			},
-		1);
+		gDiffDisplayDur);
 	}
 
     public int get_character_difficulty(CharacterIndex aChar)

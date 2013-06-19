@@ -359,14 +359,14 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 				//new string[]{("Will you be " + nChar.Description + "\nThat is a " can't do this because my multicolor font thing can't handle new line
 				new string[]{
                     //("That is a "),
-					perfectPhrases[nCharDiff.Perfect], 
-					Mathf.Abs((3-nCharDiff.Difficulty) - nCharDiff.Perfect) > 1 ? " but" : " and",
+					//perfectPhrases[nCharDiff.Perfect], 
+					//Mathf.Abs((3-nCharDiff.Difficulty) - nCharDiff.Perfect) > 1 ? " but" : " and",
 					diffPhrases[nCharDiff.Difficulty],
 					" choice."},
 				new Color[]{
                     //GameConstants.UiPink,
-					diffColors[nCharDiff.Difficulty]/2f,
-					GameConstants.UiPink,
+					//diffColors[nCharDiff.Difficulty]/2f,
+					//GameConstants.UiPink,
 					perfectColors[nCharDiff.Perfect]/2f,
 					GameConstants.UiPink});
 		}
@@ -553,7 +553,7 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 		mBBText.Text = FlatElementText.convert_to_multiline(aChar.Character.Description.Length > 20 ? 2 : 1 ,aChar.Character.Description + " (" + aChar.Character.Age.ToString() + ")");
 		if(aChar.Character.Index != 0)
 		{
-			mBBMultiplierImage.set_new_texture(mManager.mNewRef.bbScoreMultiplier[aChar.Stats.Perfect]);
+			mBBMultiplierImage.set_new_texture(mManager.mNewRef.bbScoreMultiplier[aChar.Stats.Difficulty]);
 			for(int i = 0; i < 4; i++)
 				mBBPerfectStars[i].SoftColor = i <= aChar.Stats.Perfect ? new Color(0.5f,0.5f,0.5f,0.5f) : new Color(0.5f,0.5f,0.5f,0f);
 		}
@@ -607,7 +607,7 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 			delegate(){cutsceneCompleteCb();},END_CUTSCENE_DELAY_TIME);
 		return;*/
 		
-		
+		float gStartCutsceneDelay = 2.5f;
 		float gPerformanceText = 5f;
 		float gCutsceneText = 5f;
 		float gPreParticle = 1.5f;
@@ -629,7 +629,6 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 		
 		string[] perfectPhrase = {"awful","mediocre","good", "perfect"};
 		string[] performancePhrase = {"miserably","poorly","well", "excellently"};
-
 		TimedEventDistributor.TimedEventChain chain = TED.add_event(
 			delegate(float aTime)
 			{
@@ -642,12 +641,13 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 				else
 				{
 					//TODO use color text here... In fact you should replace color text as yoru standard text object really...
-					text = aChanges.PerformanceDescription.Replace("<P>",perfectPhrase[mBBLastPerformanceGraph.Stats.Perfect]);
+					//text = aChanges.PerformanceDescription.Replace("<P>",perfectPhrase[mBBLastPerformanceGraph.Stats.Perfect]);
+					text = "You lived your life as a " + mBBLastPerformanceGraph.Character.ShortName + " " + performancePhrase[mBBLastPerformanceGraph.Stats.Difficulty];
 					add_timed_text_bubble(text,gPerformanceText);
 				}
 				return true;
 			},
-        0).then( 
+        gStartCutsceneDelay).then( 
 			delegate(float aTime)
 			{
 				if(!(mBBLastPerformanceGraph.Character.Index == 0 || mBBLastPerformanceGraph.Character.Index == 29))
@@ -881,7 +881,7 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 			pgo.HardColor = new Color(0.5f,0.5f,0.5f,1);
 			
 			string[] perfectPhrase = {"awful","mediocre","good", "perfect"};
-			string[] performancePhrase = {"miserably","poorly","well", "excellently"};
+			string[] performancePhrase = {"a disaster","bad","good", "perfect"};
 			chain = chain.then_one_shot(
 				delegate()
 				{
@@ -889,11 +889,10 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 					ghostElements[ps.Character.Level-1].SoftPosition = ghostPositions[ps.Character.Level-1];
 					mManager.mMusicManager.play_sound_effect("graveAngel");	
 					//set the text
-					string text = "You lived your ";
-					text += perfectPhrase[ps.Stats.Perfect];
-					text += " life as a ";
+					string text = "Your life as a ";
 					text += ps.Character.FullName;
-					text += " " + performancePhrase[Mathf.Clamp((int)(Mathf.Sqrt(ps.Score)*4),0,3)];
+					text += " was " + performancePhrase[Mathf.Clamp((int)(Mathf.Sqrt(ps.Score)*4),0,3)];
+					text += ".";
 					add_timed_text_bubble(text,gCharacterText,0.5f);
 				
 					//move in stuff

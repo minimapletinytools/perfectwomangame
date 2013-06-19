@@ -5,7 +5,7 @@ public class NewChoiceObject : FlatElementMultiBase {
     public FlatElementImage mSquare;
 	public FlatElementText mText = null;
 	//public DifficultyObject mPerfect;
-	//public FlatElementImage mPerfectImage;
+	public FlatElementImage mDiffImage;
 	
     public MeterImageObject mMeter = null;
 	//FlatElementMultiBase.ElementOffset mBodyElementOffset = null;
@@ -33,7 +33,7 @@ public class NewChoiceObject : FlatElementMultiBase {
 		var newRef = ManagerManager.Manager.mNewRef;
 		mSquare = new FlatElementImage(newRef.bbChoiceBox, aDepth);
 		mText = new FlatElementText(newRef.genericFont,45,"",aDepth +1);
-		//mPerfectImage = new FlatElementImage(null,aDepth +2);
+		mDiffImage = new FlatElementImage(null,aDepth +2);
         //mPerfect = new DifficultyObject(ManagerManager.Manager.mNewRef.uiPerfectStar, aDepth);
 		mIcon = new FlatElementImage(null,aDepth +2);
 		mIcon.HardScale = 1.15f*Vector3.one;
@@ -43,7 +43,7 @@ public class NewChoiceObject : FlatElementMultiBase {
         
         //mBody.set_target_pose(aPose);
 		mElements.Add(new FlatElementMultiBase.ElementOffset(mSquare, new Vector3(0,0,0)));
-		//mElements.Add(new FlatElementMultiBase.ElementOffset(mPerfectImage, new Vector3(-mSquare.BoundingBox.width/2,mSquare.BoundingBox.height/2,0)));
+		mElements.Add(new FlatElementMultiBase.ElementOffset(mDiffImage, new Vector3(-mSquare.BoundingBox.width/2,mSquare.BoundingBox.height/2,0)));
 		mElements.Add(new FlatElementMultiBase.ElementOffset(mText, new Vector3(0,20,0)));
 		//mElements.Add(new FlatElementMultiBase.ElementOffset(mPerfect, new Vector3(-122,65,0)));
         mElements.Add(new FlatElementMultiBase.ElementOffset(mMeter, new Vector3(0,0,0)));
@@ -129,6 +129,7 @@ public class NewChoiceObject : FlatElementMultiBase {
 	public void set_difficulty(int difficulty)
 	{
 		mIcon.SoftColor = GameConstants.IconDifficultyColorsOverTwo[difficulty];
+		mDiffImage.set_new_texture(ManagerManager.Manager.mNewRef.bbChoicePerfectIcons[difficulty]);
 	}
 	
     public override Color SoftColor
