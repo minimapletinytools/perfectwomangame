@@ -642,7 +642,7 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 				{
 					//TODO use color text here... In fact you should replace color text as yoru standard text object really...
 					//text = aChanges.PerformanceDescription.Replace("<P>",perfectPhrase[mBBLastPerformanceGraph.Stats.Perfect]);
-					text = "You lived your life as a " + mBBLastPerformanceGraph.Character.ShortName + " " + performancePhrase[mBBLastPerformanceGraph.Stats.Difficulty];
+					text = "You lived your life as a " + mBBLastPerformanceGraph.Character.ShortName + " " + performancePhrase[(int)Mathf.Clamp(mBBLastPerformanceGraph.Score*4,0,3)];
 					add_timed_text_bubble(text,gPerformanceText);
 				}
 				return true;

@@ -1,4 +1,6 @@
 ::TODO X:: in order of importance
+DONE-performance text is based off difficulty not performance, woops
+DONE-shows that is a ___ choice when switching to grave after dynig
 DONE-remove perfectness D:
 DONE-blue bar text in center of screen after choosing
 	-what is the most perfect woman at age __? during blue screen
