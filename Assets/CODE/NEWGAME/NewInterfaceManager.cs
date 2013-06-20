@@ -53,6 +53,13 @@ public class NewInterfaceManager : FakeMonoBehaviour {
     }
     public override void Update()
     {
+		
+		if(Input.GetKeyDown(KeyCode.Alpha0))
+			DoSkipMultipleThisFrame = true;
+		if(Input.GetKeyDown(KeyCode.Alpha9))
+			DoSkipSingleThisFrame = true;
+		
+		
         mFlatCamera.update(Time.deltaTime);
         if (mCurrentBody != null)
             mCurrentBody.match_body_to_projection(mManager.mProjectionManager);
@@ -62,10 +69,6 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 		TED.update(Time.deltaTime);
 		
 		
-		if(Input.GetKeyDown(KeyCode.Alpha0))
-			DoSkipMultipleThisFrame = true;
-		if(Input.GetKeyDown(KeyCode.Alpha9))
-			DoSkipSingleThisFrame = true;
 		//hacks
 		if(DoSkipMultipleThisFrame)
 		{
@@ -88,6 +91,9 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 			//grave skipping lul
 			DoSkipMultipleThisFrame = false;
 		}
+		
+		if(DoSkipSingleThisFrame)
+			DoSkipSingleThisFrame = false;
     }
     
     Vector3 random_position()
@@ -651,6 +657,7 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 		
 		string[] perfectPhrase = {"awful","mediocre","good", "perfect"};
 		string[] performancePhrase = {"miserably","poorly","well", "excellently"};
+		PopupTextObject introPo = null;
 		TimedEventDistributor.TimedEventChain chain = TED.add_event(
 			delegate(float aTime)
 			{
@@ -665,13 +672,15 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 					//TODO use color text here... In fact you should replace color text as yoru standard text object really...
 					//text = aChanges.PerformanceDescription.Replace("<P>",perfectPhrase[mBBLastPerformanceGraph.Stats.Perfect]);
 					text = "You lived your life as a " + mBBLastPerformanceGraph.Character.ShortName + ", " + performancePhrase[(int)Mathf.Clamp(mBBLastPerformanceGraph.Score*4,0,3)];
-					add_timed_text_bubble(text,gPerformanceText);
+					introPo = add_timed_text_bubble(text,gPerformanceText);
 				}
 				return true;
 			},
         gStartCutsceneDelay).then( 
 			delegate(float aTime)
 			{
+				if(introPo != null && introPo.IsDestroyed)
+					return true;
 				if(!(mBBLastPerformanceGraph.Character.Index == 0 || mBBLastPerformanceGraph.Character.Index == 29))
 					if(aTime > gPerformanceText)
 						return true;
@@ -691,25 +700,38 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 			chain = chain.then(
 				delegate(float aTime)
 				{
-					po = add_timed_text_bubble(changeMsg,gCutsceneText);
-					return true;
+					if(po == null)
+						po = add_timed_text_bubble(changeMsg,gCutsceneText);
+					if(po.IsDestroyed || aTime > gPreParticle)
+						return true;
+					return false;
 				}
 			,0).then(
 				delegate(float aTime)
 				{
-					for(int i = 0; i < diffChanges.Length; i++)
+					if(!po.IsDestroyed)
 					{
-						if(diffChanges[i] != 0){
-                        	var cchar = new CharacterIndex(i);
-							add_cutscene_particle_stream(cchar,po,gParticle,changes.is_positive());
-							int nDiff = Mathf.Clamp(mManager.mGameManager.get_character_difficulty(cchar) + diffChanges[i], 0, 3);
-							mManager.mGameManager.change_interface_pose(cchar,nDiff);
-                        	mPBCharacterIcons[cchar.Index].set_difficulty(nDiff);
+						for(int i = 0; i < diffChanges.Length; i++)
+						{
+							if(diffChanges[i] != 0){
+	                        	var cchar = new CharacterIndex(i);
+								add_cutscene_particle_stream(cchar,po,gParticle,changes.is_positive());
+								int nDiff = Mathf.Clamp(mManager.mGameManager.get_character_difficulty(cchar) + diffChanges[i], 0, 3);
+								mManager.mGameManager.change_interface_pose(cchar,nDiff);
+	                        	mPBCharacterIcons[cchar.Index].set_difficulty(nDiff);
+							}
 						}
 					}
 					return true;
 				}
-			,gPreParticle).wait (gCutsceneText-gPreParticle);
+			).then(
+				delegate(float aTime)
+				{
+					if(po.IsDestroyed || aTime > gCutsceneText-gPreParticle)
+						return true;
+					return false;
+				}
+			);
 		}
 		
 		chain = chain.then_one_shot(delegate(){mLastCutsceneCompleteCb();},END_CUTSCENE_DELAY_TIME);

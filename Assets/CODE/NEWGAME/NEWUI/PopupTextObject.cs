@@ -7,6 +7,15 @@ public class PopupTextObject : FlatElementMultiBase {
 	public int SplitNumber
 	{ get; set; }
 	
+	public bool IsDestroyed
+	{ get; private set; }
+	
+	public override void destroy()
+	{
+		IsDestroyed = true;
+		base.destroy();
+	}
+	
 	public string Text
 	{
 		get{
@@ -40,7 +49,8 @@ public class PopupTextObject : FlatElementMultiBase {
 	
     public PopupTextObject(string aText, int aDepth)
     {
-		//TODO finish and position
+		IsDestroyed = false;
+		
 		SplitNumber = 20;
 		mBackground = new FlatElementImage(random_bubble(0), aDepth);
 		
