@@ -8,8 +8,8 @@ public class ChoiceHelper
     public const float CHOOSING_PERCENTAGE_DECLINE_RATE = 0.7f;
 	
 	
-    ProGrading.Pose[] mChoicePoses = new ProGrading.Pose[4] { null, null, null, null };
-	ProGrading.Pose[] mPossibleChoicePoses;
+    Pose[] mChoicePoses = new Pose[4] { null, null, null, null };
+	Pose[] mPossibleChoicePoses;
 	
 	float[] ChoosingPercentages
     { get; set; }
@@ -17,7 +17,7 @@ public class ChoiceHelper
     { get; set; }
 	int LastContendingChoice
 	{ get; set; }
-	public ProGrading.Pose CurrentPose
+	public Pose CurrentPose
     { get; set; }
 	
 	public ChoiceHelper()
@@ -28,7 +28,7 @@ public class ChoiceHelper
 	
 	public void load_choice_poses()
 	{
-		mPossibleChoicePoses = new ProGrading.Pose[ManagerManager.Manager.mReferences.mPossiblePoses.Length];
+		mPossibleChoicePoses = new Pose[ManagerManager.Manager.mReferences.mPossiblePoses.Length];
         for (int i = 0; i < mPossibleChoicePoses.Length; i++)
         { mPossibleChoicePoses[i] = ProGrading.read_pose(ManagerManager.Manager.mReferences.mPossiblePoses[i]); }
 	}
@@ -136,10 +136,10 @@ public class ChoiceHelper
             array[i - 1] = tmp;
         }
     }
-    ProGrading.Pose[] get_random_possible_poses()
+    Pose[] get_random_possible_poses()
     {
-        ProGrading.Pose[] r = new ProGrading.Pose[4];
-        Shuffle<ProGrading.Pose>(mPossibleChoicePoses);
+        Pose[] r = new Pose[4];
+        Shuffle<Pose>(mPossibleChoicePoses);
         for (int i = 0; i < 4; i++)
             r[i] = mPossibleChoicePoses[i];
         return r;

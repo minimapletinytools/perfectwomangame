@@ -8,7 +8,7 @@ public class BodyManager : FakeMonoBehaviour {
     public int mMode = 0; // 0 - from kinect, 1 - from pose, -1 none
     int mLayer = 0;
     Vector3 mOffset;
-    public void set_target_pose(ProGrading.Pose aPose)
+    public void set_target_pose(Pose aPose)
     {
         mFlat.set_target_pose(aPose);
         //hack
@@ -104,10 +104,10 @@ public class BodyManager : FakeMonoBehaviour {
     {
         if (aManual)
         {
-            ProGrading.Pose p = new ProGrading.Pose();
+            Pose p = new Pose();
             foreach (KeyValuePair<ZigJointId, GameObject> e in mFlat.mParts)
             {
-                ProGrading.PoseElement pe = new ProGrading.PoseElement();
+                PoseElement pe = new PoseElement();
                 pe.joint = e.Key;
                 pe.angle = e.Value.transform.rotation.eulerAngles.z;
                 p.mElements.Add(pe);

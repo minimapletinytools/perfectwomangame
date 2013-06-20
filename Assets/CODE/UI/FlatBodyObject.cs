@@ -13,7 +13,7 @@ public class FlatBodyObject : FlatElementBase
                 r = i;
         return r;
     }
-    public ProGrading.Pose mTargetPose = null;
+    public Pose mTargetPose = null;
     public Dictionary<ZigJointId, GameObject> mParts = new Dictionary<ZigJointId, GameObject>();
     Vector3 mOffset = Vector3.zero;
     public bool UseDepth { get; set; }
@@ -74,7 +74,7 @@ public class FlatBodyObject : FlatElementBase
         mParts[ZigJointId.Waist].transform.rotation = Quaternion.AngleAxis(aManager.mWaist.current, Vector3.forward);
     }
 
-    public void set_target_pose(ProGrading.Pose aPose)
+    public void set_target_pose(Pose aPose)
     {
         mTargetPose = aPose;
     }
@@ -83,7 +83,7 @@ public class FlatBodyObject : FlatElementBase
     {
         if (mTargetPose != null)
         {
-            foreach (ProGrading.PoseElement e in mTargetPose.mElements)
+            foreach (PoseElement e in mTargetPose.mElements)
             {
                 mParts[e.joint].transform.rotation = Quaternion.Slerp(mParts[e.joint].transform.rotation, Quaternion.AngleAxis(e.angle, Vector3.forward), 0.1f);
             }

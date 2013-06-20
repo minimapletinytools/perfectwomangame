@@ -161,8 +161,8 @@ public class ProjectionManager : FakeMonoBehaviour {
 	public override void Update () {
         if (mManager.mZigManager.has_user())
         {
-			ProGrading.Pose targetPose = mManager.mGameManager.CurrentTargetPose;
-			ProGrading.Pose currentPose = mManager.mGameManager.CurrentPose; //this may have one frame of lag but oh well
+			Pose targetPose = mManager.mGameManager.CurrentTargetPose;
+			Pose currentPose = mManager.mGameManager.CurrentPose; //this may have one frame of lag but oh well
 			
             foreach (KeyValuePair<ZigJointId,Stupid> e in mImportant)
             {

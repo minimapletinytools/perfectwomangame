@@ -86,22 +86,22 @@ public class NewGameManager : FakeMonoBehaviour
 		
 		
 		//TODO put this in its own function
-		List<KeyValuePair<CharacterIndex,ProGrading.Pose>> poses = new List<KeyValuePair<CharacterIndex, ProGrading.Pose>>();
+		List<KeyValuePair<CharacterIndex,Pose>> poses = new List<KeyValuePair<CharacterIndex, Pose>>();
 		foreach(CharacterIndex e in CharacterIndex.sAllCharacters)
 		{
 			//poses.Add(new KeyValuePair<CharacterIndex,ProGrading.Pose>(e,mManager.mCharacterBundleManager.get_pose(e,mCharacterHelper.Characters[e.Index].Difficulty).get_pose(0)));
 			var poseAnimation = mManager.mCharacterBundleManager.get_pose(e,CharacterHelper.Characters[e.Index].Difficulty);
-			poses.Add(new KeyValuePair<CharacterIndex,ProGrading.Pose>(e,poseAnimation.get_pose(Random.Range(0,poseAnimation.poses.Count))));
+			poses.Add(new KeyValuePair<CharacterIndex,Pose>(e,poseAnimation.get_pose(Random.Range(0,poseAnimation.poses.Count))));
 		}
 		mManager.mInterfaceManager.set_pb_character_icon_poses(poses);
 	}
-	
 	
 	public void set_time_for_PLAY(float aTime)
 	{
 		TimeRemaining = aTime;
 		TimeTotal = aTime;
 	}
+	
 	public bool character_changed_listener(CharacterLoader aCharacter)
 	{
 		//at this point, we can assume both body manager, music and background managers have been set accordingly
@@ -183,9 +183,9 @@ public class NewGameManager : FakeMonoBehaviour
 	public float PercentTimeCompletion
 	{ get { return 1-TimeRemaining/TimeTotal; } }
 	
-	public ProGrading.Pose CurrentPose
+	public Pose CurrentPose
 	{ get; private set; }
-	public ProGrading.Pose CurrentTargetPose
+	public Pose CurrentTargetPose
     { get; private set; }
 	public PoseAnimation CurrentPoseAnimation
 	{ get; private set; }
@@ -549,9 +549,9 @@ public class NewGameManager : FakeMonoBehaviour
 	
 	public void change_interface_pose(CharacterIndex aChar,  int aDiff)
 	{
-		List<KeyValuePair<CharacterIndex,ProGrading.Pose>> poses = new List<KeyValuePair<CharacterIndex, ProGrading.Pose>>();
+		List<KeyValuePair<CharacterIndex,Pose>> poses = new List<KeyValuePair<CharacterIndex, Pose>>();
 		var poseAnimation = mManager.mCharacterBundleManager.get_pose(aChar,aDiff);
-		poses.Add(new KeyValuePair<CharacterIndex,ProGrading.Pose>(aChar,poseAnimation.get_pose(Random.Range(0,poseAnimation.poses.Count))));
+		poses.Add(new KeyValuePair<CharacterIndex,Pose>(aChar,poseAnimation.get_pose(Random.Range(0,poseAnimation.poses.Count))));
 		mManager.mInterfaceManager.set_pb_character_icon_poses(poses);
 	}
 }

@@ -25,7 +25,7 @@ public class ChoiceObjectPair : FlatElementMultiBase {
         PrimaryGameObject = create_primary_from_elements();
     }
 
-    public ChoiceObjectPair(Texture2D aLeftTex, CharacterTextureBehaviour aChar, ProGrading.Pose aPose, int aDepth)
+    public ChoiceObjectPair(Texture2D aLeftTex, CharacterTextureBehaviour aChar, Pose aPose, int aDepth)
     {
         mSquare = new FlatElementImage(aLeftTex, aDepth);
         mDifficultyStars = new DifficultyObject(ManagerManager.Manager.mNewRef.uiPerfectStar, aDepth);
@@ -46,7 +46,7 @@ public class ChoiceObjectPair : FlatElementMultiBase {
         PrimaryGameObject = create_primary_from_elements();
     }
 
-    public void set_pose(ProGrading.Pose aPose)
+    public void set_pose(Pose aPose)
     {
         if (mBody != null)
             mBody.set_target_pose(aPose);

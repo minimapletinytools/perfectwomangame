@@ -295,13 +295,13 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 	//related to setting for CHOOSING
 	//--------
 	//called by NewGameManager
-	public void set_bb_decider_pose(ProGrading.Pose aPose)
+	public void set_bb_decider_pose(Pose aPose)
 	{
 		mBBMiniMan.set_target_pose(aPose);
 	}
 	
 	//called by ChoiceHelper
-	public void set_bb_choice_poses(List<ProGrading.Pose> aPoses)
+	public void set_bb_choice_poses(List<Pose> aPoses)
 	{
 		for(int i = 0; i < BB_NUM_CHOICES; i++)
 		{
@@ -412,7 +412,7 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 	}
 	
 	//OLD no longer need to set icon poses
-	public void set_pb_character_icon_poses(List<KeyValuePair<CharacterIndex,ProGrading.Pose>> aChars)
+	public void set_pb_character_icon_poses(List<KeyValuePair<CharacterIndex,Pose>> aChars)
 	{
 		
 		foreach(var e in aChars)

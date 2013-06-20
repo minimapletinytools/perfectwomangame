@@ -144,7 +144,7 @@ public class CharacterBundleManager : FakeMonoBehaviour {
 	//pose bundle related
 	//----------
 	bool mPosesLoaded = false;
-	Dictionary<string, ProGrading.Pose> mPoses = new Dictionary<string, ProGrading.Pose>();
+	Dictionary<string, Pose> mPoses = new Dictionary<string, Pose>();
 	CharacterHelper mCharacterHelper = new CharacterHelper();
 	public string construct_pose_string(CharacterIndex aIndex, int aDiff, int aStage)
 	{
