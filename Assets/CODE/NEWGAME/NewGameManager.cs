@@ -236,6 +236,7 @@ public class NewGameManager : FakeMonoBehaviour
 		}
 	}
 	
+	
 	public void update_PLAY()
 	{
 		TimeRemaining -= Time.deltaTime;

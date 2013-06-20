@@ -1,4 +1,6 @@
 ::TODO X:: in order of importance
+-skipping removes pop up text bubbles but it also needs to skip the delay that is set up elsewhere.. you should incorporate popuptext bubble into the chain maybe...
+-angel storage place can sometimes be seen during the grave
 DONE-performance text is based off difficulty not performance, woops
 DONE-shows that is a ___ choice when switching to grave after dynig
 DONE-remove perfectness D:

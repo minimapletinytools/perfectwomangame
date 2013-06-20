@@ -29,6 +29,8 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 	
 	public override void Start()
     {
+		DoSkipSingleThisFrame = false;
+		DoSkipMultipleThisFrame = false;
 		TED = new TimedEventDistributor();
         mFlatCamera = new FlatCameraManager(new Vector3(10000, 0, 0), 10);
 		mFlatCamera.fit_camera_to_screen();
@@ -60,8 +62,12 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 		TED.update(Time.deltaTime);
 		
 		
+		if(Input.GetKeyDown(KeyCode.Alpha0))
+			DoSkipMultipleThisFrame = true;
+		if(Input.GetKeyDown(KeyCode.Alpha9))
+			DoSkipSingleThisFrame = true;
 		//hacks
-		if(Input.GetKeyDown(KeyCode.Alpha0) )
+		if(DoSkipMultipleThisFrame)
 		{
 			if(mLastCutsceneCompleteCb != null && mLastCutsceneChain != null)
 			{
@@ -70,6 +76,17 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 				mLastCutsceneChain = null;
 				mLastCutsceneCompleteCb = null;
 			}
+			
+			if(mGraveChain != null && mGraveCompleteCb != null)
+			{
+				TED.remove_event(mGraveChain);
+				mGraveCompleteCb(true);
+				mGraveChain = null;
+				mGraveCompleteCb = null;
+			}
+			
+			//grave skipping lul
+			DoSkipMultipleThisFrame = false;
 		}
     }
     
@@ -527,6 +544,11 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 				mElement.Add(to);
 				if(aTime > duration)
 					return true;
+				if(DoSkipSingleThisFrame)
+				{
+					DoSkipSingleThisFrame = false;
+					return true;
+				}
 				return false;
 			},
         0).then_one_shot(
@@ -642,7 +664,7 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 				{
 					//TODO use color text here... In fact you should replace color text as yoru standard text object really...
 					//text = aChanges.PerformanceDescription.Replace("<P>",perfectPhrase[mBBLastPerformanceGraph.Stats.Perfect]);
-					text = "You lived your life as a " + mBBLastPerformanceGraph.Character.ShortName + " " + performancePhrase[(int)Mathf.Clamp(mBBLastPerformanceGraph.Score*4,0,3)];
+					text = "You lived your life as a " + mBBLastPerformanceGraph.Character.ShortName + ", " + performancePhrase[(int)Mathf.Clamp(mBBLastPerformanceGraph.Score*4,0,3)];
 					add_timed_text_bubble(text,gPerformanceText);
 				}
 				return true;
@@ -759,6 +781,9 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 		return chain;
 	}
 	
+	//delegates needed for skipping cleanly
+	QuTimer mGraveChain = null;
+	System.Action<bool> mGraveCompleteCb = null;
 	public void set_for_GRAVE(List<PerformanceStats> aStats, System.Action graveCompleteCb)
 	{
 		//timing vars
@@ -778,14 +803,14 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 		
 		
 		//fake it for testing...
-		/*
+		
 		for(int i = 0; i < 8; i++)
 		{
 			if(aStats.Last().Character.Age < (new CharacterIndex(i,0)).Age)
 			{
 				aStats.Add(new PerformanceStats(new CharacterIndex(i,0)));
 			}
-		}*/
+		}
 		
 		
 		
@@ -850,6 +875,7 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 		}
 		
 		TimedEventDistributor.TimedEventChain chain;
+		
 		chain = TED.add_one_shot_event(
 			delegate()
 			{
@@ -883,6 +909,8 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 			string[] perfectPhrase = {"awful","mediocre","good", "perfect"};
 			string[] performancePhrase = {"a disaster","bad","good", "perfect"};
 			chain = chain.then_one_shot(
+				
+				//TODO add soft skipping in here
 				delegate()
 				{
 				
@@ -916,25 +944,28 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 			).then(
 				delegate(float aTime)
 				{
-					float displayScore = scoreIncrementor + (aTime/gScoreCount)*ps.AdjustedScore;
-					finalScoreText.Text = ""+(int)displayScore;
-					if(aTime >  gScoreCount)
+					if(aTime <= gScoreCount)
+					{
+						float displayScore = scoreIncrementor + (aTime/gScoreCount)*ps.AdjustedScore;
+						finalScoreText.Text = ""+(int)displayScore;
+					}
+					if(aTime >  gScoreCount + gPostScoreCount)
 					{
 						scoreIncrementor += ps.AdjustedScore;
 						return true;
 					}
+					if(DoSkipSingleThisFrame)
+						return true;
+					if(DoSkipMultipleThisFrame)
+					{
+						return true;
+						//TODO
+					}
 					return false;
-					
 				},
-			gPreScoreCount).then(
-				delegate(float aTime)
-				{
-					//TODO render mini character with golry hoooooo sound
-					//mManager.mMusicManager.play_sound_effect("graveAngel");
-					return true;
-				},
-			gPostScoreCount);
+			gPreScoreCount);
 		}
+		
 		
 		//variables for credits animation..
 		float lastTime = 0;
@@ -942,68 +973,108 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 		FlatElementImage logo2 = null;
 		List<FlatElementText> creditsText = new List<FlatElementText>();
 		float scrollSpeed = 200;
+			
 		
-		//finish it off...
+		
+		System.Action set_all_GRAVE_positions =  delegate()
+		{
+			for(int i = 1; i < aStats.Count; i++)
+			{
+				int it = i;
+				PerformanceStats ps = aStats[i];
+				CharacterIconObject cio = mPBCharacterIcons[ps.Character.Index];
+				PerformanceGraphObject pgo = ps.PerformanceGraph;
+				
+				//angels
+				ghostElements[ps.Character.Level-1].SoftPosition = ghostPositions[ps.Character.Level-1];
+				
+				//right side elements
+				cio.SoftPosition = new Vector3(cioXOffset,startingPosition - (it-1) * intervalSize,0);
+				pgo.SoftPosition = new Vector3(pgoXOffset,startingPosition - (it-1) * intervalSize,0);
+			}
+		};
+		
+		mGraveCompleteCb = delegate( bool aSetPositions)
+		{
+			if(aSetPositions)
+			{
+				set_all_GRAVE_positions();
+			}
+			
+			TED.add_one_shot_event(
+				delegate()
+				{
+					add_timed_text_bubble("G A M E  O V E R",99999,0.5f);
+				}
+			,0).then_one_shot(
+				delegate()
+				{
+					//TODO create credits text and nonsense
+					int counter = 0;
+					foreach(string e in GameConstants.credits.Reverse())
+					{
+						var text = new FlatElementText(mManager.mNewRef.genericFont,50,e,mPB.Depth +1);
+						text.HardColor = new Color(1,1,1,1);
+						text.HardPosition = mPB.SoftPosition + new Vector3(0,mFlatCamera.Height/2+450,0) + (new Vector3(0,70,0))*counter;
+						creditsText.Add(text);
+						mElement.Add(text);
+						counter++;
+					}
+				
+					float logoStartHeight = mFlatCamera.Height/2+450 + 70*counter + 500;
+					logo1 = new FlatElementImage(mManager.mNewRef.gameLabLogo,mPB.Depth+1);
+					logo2 = new FlatElementImage(mManager.mNewRef.filmAkademieLogo,mPB.Depth+1);
+					logo1.HardPosition = mPB.SoftPosition + new Vector3(0,logoStartHeight,0);
+					logo2.HardPosition = mPB.SoftPosition + new Vector3(0,logoStartHeight + 700,0);
+				
+					mElement.Add(logo1);
+					mElement.Add(logo2);
+				
+				}
+			,0).then(
+				delegate(float aTime)
+				{
+					
+					//scroll contents down
+					Vector3 scroll = -new Vector3(0,scrollSpeed*(aTime-lastTime),0);
+					foreach(var e in aStats)
+					{
+						mPBCharacterIcons[e.Character.Index].SoftPosition = mPBCharacterIcons[e.Character.Index].SoftPosition + scroll;
+						e.PerformanceGraph.SoftPosition = e.PerformanceGraph.SoftPosition + scroll;
+					}
+					foreach(FlatElementText e in creditsText)
+					{
+						e.SoftPosition = e.SoftPosition + scroll;
+					}
+					logo1.SoftPosition = logo1.SoftPosition + scroll;
+					logo2.SoftPosition = logo2.SoftPosition + scroll;
+				
+					lastTime = aTime;
+					if(Input.GetKeyDown(KeyCode.Alpha0))
+						return true;
+				
+					if(aTime > gRestart)
+						return true;
+					return false;
+				}
+			,0).then_one_shot(
+				graveCompleteCb
+			,0);
+		};
+		
 		chain = chain.then_one_shot(
 			delegate()
 			{
-				add_timed_text_bubble("G A M E  O V E R",99999,0.5f);
+				mGraveCompleteCb(false);
+				mGraveCompleteCb = null;
+				mGraveChain = null;
 			}
-		,0).then_one_shot(
-			delegate()
-			{
-				//TODO create credits text and nonsense
-				int counter = 0;
-				foreach(string e in GameConstants.credits.Reverse())
-				{
-					var text = new FlatElementText(mManager.mNewRef.genericFont,50,e,mPB.Depth +1);
-					text.HardColor = new Color(1,1,1,1);
-					text.HardPosition = mPB.SoftPosition + new Vector3(0,mFlatCamera.Height/2+450,0) + (new Vector3(0,70,0))*counter;
-					creditsText.Add(text);
-					mElement.Add(text);
-					counter++;
-				}
-			
-				float logoStartHeight = mFlatCamera.Height/2+450 + 70*counter + 500;
-				logo1 = new FlatElementImage(mManager.mNewRef.gameLabLogo,mPB.Depth+1);
-				logo2 = new FlatElementImage(mManager.mNewRef.filmAkademieLogo,mPB.Depth+1);
-				logo1.HardPosition = mPB.SoftPosition + new Vector3(0,logoStartHeight,0);
-				logo2.HardPosition = mPB.SoftPosition + new Vector3(0,logoStartHeight + 700,0);
-			
-				mElement.Add(logo1);
-				mElement.Add(logo2);
-			
-			}
-		,0).then(
-			delegate(float aTime)
-			{
-				
-				//scroll contents down
-				Vector3 scroll = -new Vector3(0,scrollSpeed*(aTime-lastTime),0);
-				foreach(var e in aStats)
-				{
-					mPBCharacterIcons[e.Character.Index].SoftPosition = mPBCharacterIcons[e.Character.Index].SoftPosition + scroll;
-					e.PerformanceGraph.SoftPosition = e.PerformanceGraph.SoftPosition + scroll;
-				}
-				foreach(FlatElementText e in creditsText)
-				{
-					e.SoftPosition = e.SoftPosition + scroll;
-				}
-				logo1.SoftPosition = logo1.SoftPosition + scroll;
-				logo2.SoftPosition = logo2.SoftPosition + scroll;
-			
-				lastTime = aTime;
-				if(Input.GetKeyDown(KeyCode.Alpha0))
-					return true;
-			
-				if(aTime > gRestart)
-					return true;
-				return false;
-			}
-		,0).then_one_shot(
-			graveCompleteCb
-		,0);
+		);
+		
+		mGraveChain = TED.LastEventKeyAdded;
+		
 	}
+	
 	
 	
 	
