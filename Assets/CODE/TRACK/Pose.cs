@@ -23,6 +23,22 @@ public class Pose
                 return e;
         throw new UnityException("can't find ZigJointId " + id + " in Pose");
     }
+	
+	public static Pose interpolate(Pose A, Pose B, float lambda)
+	{
+		Pose r  = new Pose();
+		foreach(PoseElement e in A.mElements)
+		{
+			PoseElement pe = new PoseElement();
+			pe.joint = e.joint;
+			pe.important = e.important;
+			pe.weight = e.weight;
+			pe.angle = (1-lambda) * e.angle +  (lambda)* B.find_element(e.joint).angle;
+			r.mElements.Add(pe);
+		}
+		
+		return r;
+	}
 }
 
 public class PoseAnimation
