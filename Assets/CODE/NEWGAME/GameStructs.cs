@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System;
 using System.Linq;
 
-public struct CharacterIndex
+public struct CharacterIndex : IEquatable<CharacterIndex>
 {
 	public const int NUMBER_AGES = 10;
 	public const int NUMBER_CHARACTERS = 31;
@@ -61,6 +61,8 @@ public struct CharacterIndex
 		"In your mother's womb"
 	};
 	
+	public static CharacterIndex sGrave = new CharacterIndex(30);
+	public static CharacterIndex sFetus = new CharacterIndex(0);
 	
 	public static CharacterIndex RandomCharacter{
 		get{
@@ -176,6 +178,28 @@ public struct CharacterIndex
 					break;
 			Index = 4*(i-1) + Convert.ToInt32(split[1]);
 		}
+	}
+	
+	public bool Equals(CharacterIndex other) 
+	{
+		if (this.Index == other.Index)
+			return true;
+		else 
+			return false;
+	}
+	
+	public override bool Equals(object obj)
+	{
+	 	return false;
+  	}   
+	
+	public static bool operator ==(CharacterIndex a, CharacterIndex b)
+	{
+		return a.Equals(b);
+	}
+	public static bool operator !=(CharacterIndex a, CharacterIndex b)
+	{
+		return !a.Equals(b);
 	}
 }
 
