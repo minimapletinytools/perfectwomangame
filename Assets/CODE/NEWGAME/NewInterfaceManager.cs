@@ -548,6 +548,11 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 			{
 				to.SoftPosition = mFlatCamera.get_point(0.40f,yRelOffset);
 				mElement.Add(to);
+				return true;
+			},
+        0).then(
+			delegate(float aTime)
+			{
 				if(aTime > duration)
 					return true;
 				if(DoSkipSingleThisFrame)
@@ -557,7 +562,7 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 				}
 				return false;
 			},
-        0).then_one_shot(
+		0).then_one_shot(
 			delegate()
 			{
 				//to.SoftPosition = random_position();
@@ -703,7 +708,9 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 					if(po == null)
 						po = add_timed_text_bubble(changeMsg,gCutsceneText);
 					if(po.IsDestroyed || aTime > gPreParticle)
+					{
 						return true;
+					}
 					return false;
 				}
 			,0).then(
@@ -724,14 +731,16 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 					}
 					return true;
 				}
-			).then(
+			,0).then(
 				delegate(float aTime)
 				{
 					if(po.IsDestroyed || aTime > gCutsceneText-gPreParticle)
+					{	
 						return true;
+					}
 					return false;
 				}
-			);
+			,0);
 		}
 		
 		chain = chain.then_one_shot(delegate(){mLastCutsceneCompleteCb();},END_CUTSCENE_DELAY_TIME);
