@@ -130,7 +130,23 @@ public struct CharacterIndex : IEquatable<CharacterIndex>
 		}
 	}
 	
-	public string Description{get{return  Index == -1 ? "none" : INDEX_TO_DESCRIPTION[Index];}}
+	public string Description
+	{
+		get{
+			if(Index == -1) return "none";
+			string r = INDEX_TO_DESCRIPTION[Index];
+			r = r.Replace("<A> ","");
+			r = r.Replace("<A>","");
+			return r;
+		}
+	}
+	public bool IsDescriptionAdjective
+	{
+		get{
+			if(Index == -1) return false;
+			return INDEX_TO_DESCRIPTION[Index].Contains("<A>");
+		}
+	}
 	public string ShortName{get{return Index == -1 ? "none" : INDEX_TO_SHORT_NAME[Index];}}
 	public string FullName{get{return  Index == -1 ? "none" : INDEX_TO_FULL_NAME[Index];}}
 	

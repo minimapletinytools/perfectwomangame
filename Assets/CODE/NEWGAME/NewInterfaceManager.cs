@@ -676,7 +676,10 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 				{
 					//TODO use color text here... In fact you should replace color text as yoru standard text object really...
 					//text = aChanges.PerformanceDescription.Replace("<P>",perfectPhrase[mBBLastPerformanceGraph.Stats.Perfect]);
-					text = "You lived your life as a " + mBBLastPerformanceGraph.Character.ShortName + ", " + performancePhrase[(int)Mathf.Clamp(mBBLastPerformanceGraph.Score*4,0,3)];
+					if(mBBLastPerformanceGraph.Character.IsDescriptionAdjective)
+						text = "You lived your life " + mBBLastPerformanceGraph.Character.Description + ", " + performancePhrase[(int)Mathf.Clamp(mBBLastPerformanceGraph.Score*4,0,3)];
+					else
+						text = "You lived your life as a " + mBBLastPerformanceGraph.Character.Description + ", " + performancePhrase[(int)Mathf.Clamp(mBBLastPerformanceGraph.Score*4,0,3)];
 					introPo = add_timed_text_bubble(text,gPerformanceText);
 				}
 				return true;
@@ -834,7 +837,7 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 		
 		
 		//fake it for testing...
-		
+		/*
 		for(int i = 0; i < 8; i++)
 		{
 			if(aStats.Last().Character.Age < (new CharacterIndex(i,0)).Age)
@@ -842,7 +845,7 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 				aStats.Add(new PerformanceStats(new CharacterIndex(i,0)));
 			}
 		}
-		
+		*/
 		
 		
 		//clear away BB and PB

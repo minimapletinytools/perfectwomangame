@@ -49,6 +49,7 @@ namespace NUPD
 		public string ShortName {get; set;}
 		public string LongName {get; set;} //TODO delete this
 		public string Description {get; set;}
+		public bool IsDescriptionAdjective {get;set;}
 		public CharacterIndex Index {get; set;}
 		public List<ChangeSet> ChangeSet {get; set;}
 		
@@ -56,6 +57,7 @@ namespace NUPD
 		{
 			ShortName = "";
 			Description = "";
+			IsDescriptionAdjective = false;
 			Index = new CharacterIndex(-1);
 			ChangeSet = new List<ChangeSet>();
 		}
@@ -115,7 +117,14 @@ namespace NUPD
 						ci.ShortName = sp.Skip(1).Aggregate((s1,s2)=>s1+" "+s2);
 				} else if(first == "NDESC"){
 					if(sp.Length > 1)
+					{
 						ci.Description = sp.Skip(1).Aggregate((s1,s2)=>s1+" "+s2);
+						if(ci.Description.Contains("<A>"))
+							ci.IsDescriptionAdjective = true;
+						//we will actually do this processing in CharacterIndex instead
+						//ci.Description = ci.Description.Replace("<A> ", ""); 
+						//ci.Description = ci.Description.Replace("<A>", ""); 
+					}
 				} else if(first == "INDEX"){
 					try{ //TODO delete trycatch
 						ci.Index = new CharacterIndex(System.Convert.ToInt32(sp[1] ));

@@ -1,6 +1,8 @@
 ::TODO X:: in order of importance
--skipping removes pop up text bubbles but it also needs to skip the delay that is set up elsewhere.. you should incorporate popuptext bubble into the chain maybe...
+-move score to center of grave
+-check positions on drummer and oktober fest girl
 -angel storage place can sometimes be seen during the grave
+DONE/YUCK-skipping removes pop up text bubbles but it also needs to skip the delay that is set up elsewhere.. you should incorporate popuptext bubble into the chain maybe...
 DONE-performance text is based off difficulty not performance, woops
 DONE-shows that is a ___ choice when switching to grave after dynig
 DONE-remove perfectness D:
@@ -15,8 +17,7 @@ DONE-blue bar text in center of screen after choosing
 			-right hand double wave to double skip
 		-cutscene
 			-popups
-				-needs to check if cutscene has been skipped so as not to trigger if it has been...
-				-change colors on single skip
+				-change diff colors on single skip
 			-one gesture to skip all???
 		-grave
 			-skip all

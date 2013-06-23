@@ -518,11 +518,22 @@ public class NewGameManager : FakeMonoBehaviour
 		float gDiffDisplayDur = 5f;
 		GS = GameState.TRANSITION;
 		
+		
+		
+
+
+
+
+
 		//TODO move this into NewInterfaceManager
 		mManager.mInterfaceManager.set_for_PLAY(); //this is just visual
-		var diffPhrases = new string[]{" easy", " medium", " hard", " impossible"};
+		var diffPhrases = new string[]{	"That's an easy choice. You should be able to manage that!", 
+										"You made a normal choice. Show how good you are!", 
+										"That's a hard one. Show your skills!", 
+										"You made an extreme choice? Let's see if you survive!"
+		};
 		if(aNextCharacter != CharacterIndex.sGrave)
-			mManager.mInterfaceManager.add_timed_text_bubble("This will be a " + diffPhrases[CharacterHelper.Characters[aNextCharacter.Index].Difficulty] + " life", gDiffDisplayDur);
+			mManager.mInterfaceManager.add_timed_text_bubble(diffPhrases[CharacterHelper.Characters[aNextCharacter.Index].Difficulty], gDiffDisplayDur);
 		TED.add_one_shot_event(
 			//TODO before this, till mInterfaceManager to explain what choice the user just made
 			//maybe play a sound "Too Easy" "Ok" "Hard" "That's Impossible!!"
