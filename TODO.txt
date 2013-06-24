@@ -1,15 +1,6 @@
 ::TODO X:: in order of importance
--move score to center of grave
+
 -check positions on drummer and oktober fest girl
--angel storage place can sometimes be seen during the grave
-DONE/YUCK-skipping removes pop up text bubbles but it also needs to skip the delay that is set up elsewhere.. you should incorporate popuptext bubble into the chain maybe...
-DONE-performance text is based off difficulty not performance, woops
-DONE-shows that is a ___ choice when switching to grave after dynig
-DONE-remove perfectness D:
-DONE-blue bar text in center of screen after choosing
-	-what is the most perfect woman at age __? during blue screen
--cutscene text overflows sometmise (popup text object needs to be more discerning with multiline maybe)
-	-or possibly multiline needs to have a "max" character sort of thing that makes the heuristic got o infinity so it can never happen
 -skipping system
 	-stuff that needs to be skipped
 		-how
@@ -46,20 +37,21 @@ DONE-blue bar text in center of screen after choosing
 -16-2 angel is a dot
 -background animations
 -better functions for checknig if user is off screen (cuz they suck under windows)
-
 -move choice made text into NewInterfaceManager and add color to the difficulty thing or use one of Lea's diff badge images
+DONE/YUCK-skipping removes pop up text bubbles but it also needs to skip the delay that is set up elsewhere.. you should incorporate popuptext bubble into the chain maybe...
+DONE-performance text is based off difficulty not performance, woops
+DONE-shows that is a ___ choice when switching to grave after dynig
+DONE-remove perfectness D:
+DONE-blue bar text in center of screen after choosing
+	-what is the most perfect woman at age __? during blue screen
+DONE/W/E-cutscene text overflows sometmise (popup text object needs to be more discerning with multiline maybe)
+	-or possibly multiline needs to have a "max" character sort of thing that makes the heuristic got o infinity so it can never happen
+DONE-move score to center of grave
+DONE-angel storage place can sometimes be seen during the grave
 
 ::TO CONSIDER
 -feedback ideas, after pose changes, you get a blip indicating how well you ddi that pose in that time interval
 -stuff should spin off the screen instead of fade away on death :)
-
-
-
-
-
-
-
-
 
 DONE-do not always divide the text for the blue bar character
 DONE-add age to blue bar text

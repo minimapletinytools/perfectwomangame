@@ -868,7 +868,8 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 		FlatElementImage perfectEngraving = new FlatElementImage(mManager.mNewRef.gravePerfectnessEngraving,10);
 		
 		FlatElementText perfectPercent = new FlatElementText(mManager.mNewRef.genericFont,100,"",11);
-		perfectPercent.Text = ((int)(100*aStats.Sum(e=>e.Stats.Perfect+1)/(float)(aStats.Count*3))).ToString() + "%";
+		//perfectPercent.Text = ((int)(100*aStats.Sum(e=>e.Stats.Perfect+1)/(float)(aStats.Count*3))).ToString() + "%";
+		perfectPercent.Text = aStats.Last().Character.Age.ToString();
 		
 		//hack to put things into bg camera
 		foreach (Renderer f in finalScoreText.PrimaryGameObject.GetComponentsInChildren<Renderer>())
@@ -878,8 +879,8 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 		foreach (Renderer f in perfectPercent.PrimaryGameObject.GetComponentsInChildren<Renderer>())
                 f.gameObject.layer = 4;
 		
-		Vector3 graveCenter = mManager.mBackgroundManager.mBackgroundElements.mElements[0].Element.SoftPosition + new Vector3(0, 50, 0);;
-		finalScoreText.SoftPosition = graveCenter + new Vector3(-120,-250,0);
+		Vector3 graveCenter = mManager.mBackgroundManager.mBackgroundElements.mElements[0].Element.SoftPosition + new Vector3(0, 50, 0);
+		finalScoreText.SoftPosition = graveCenter + new Vector3(0,-250,0);
 		perfectEngraving.SoftPosition = graveCenter + new Vector3(35,250,0);
 		perfectPercent.SoftPosition = perfectEngraving.SoftPosition;
 		mElement.Add(finalScoreText);
@@ -899,7 +900,7 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 			
 			var isp = (mManager.mCharacterBundleManager.get_image("ANGELS_"+aStats[i].Character.StringIdentifier));
 			var ge = new FlatElementImage(isp.Image,9);
-			ge.HardPosition = random_position()*1.5f;
+			ge.HardPosition = random_position()*3f;
 			ge.HardScale = new Vector3(2.5f,2.5f,1);
 			foreach (Renderer f in ge.PrimaryGameObject.GetComponentsInChildren<Renderer>())
                 f.gameObject.layer = 4;
@@ -942,6 +943,8 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 			
 			string[] perfectPhrase = {"awful","mediocre","good", "perfect"};
 			string[] performancePhrase = {"a disaster","bad","good", "perfect"};
+			
+			PopupTextObject po = null;
 			chain = chain.then_one_shot(
 				
 				//TODO add soft skipping in here
@@ -955,7 +958,7 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 					text += ps.Character.FullName;
 					text += " was " + performancePhrase[Mathf.Clamp((int)(Mathf.Sqrt(ps.Score)*4),0,3)];
 					text += ".";
-					add_timed_text_bubble(text,gCharacterText,0.5f);
+					po = add_timed_text_bubble(text,gCharacterText,0.5f);
 				
 					//move in stuff
 					cio.SoftPosition = new Vector3(cioXOffset,startingPosition - (it-1) * intervalSize,0);
@@ -978,26 +981,20 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 			).then(
 				delegate(float aTime)
 				{
+					aTime -= gPreScoreCount;
 					if(aTime <= gScoreCount)
 					{
 						float displayScore = scoreIncrementor + (aTime/gScoreCount)*ps.AdjustedScore;
 						finalScoreText.Text = ""+(int)displayScore;
 					}
-					if(aTime >  gScoreCount + gPostScoreCount)
+					if(po.IsDestroyed || aTime >  gScoreCount + gPostScoreCount)
 					{
 						scoreIncrementor += ps.AdjustedScore;
 						return true;
 					}
-					if(DoSkipSingleThisFrame)
-						return true;
-					if(DoSkipMultipleThisFrame)
-					{
-						return true;
-						//TODO
-					}
 					return false;
 				},
-			gPreScoreCount);
+			0);
 		}
 		
 		
