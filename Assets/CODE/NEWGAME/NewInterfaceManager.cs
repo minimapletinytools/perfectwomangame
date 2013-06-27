@@ -373,9 +373,9 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 			mBBMiniMan.SoftPosition = mBBChoiceBodies[aIndex].SoftPosition;
 			var nChar = mBBLastPerformanceGraph.Character.get_future_neighbor(aIndex);
 			var nCharDiff = mManager.mCharacterBundleManager.get_character_helper().Characters[nChar.Index];
-			var diffPhrases = new string[]{" easy", " medium", " hard", " impossible"};
-			var perfectPhrases = new string[]{" horrible", " passable", " perfect", " PERFECT"};
-			var perfectColors = new Color[]{new Color32(200,173,27,255),new Color32(240,220,130,255),new Color32(253,238,0,255),new Color32(255,126,0,255)};
+			var diffPhrases = new string[]{" easy", " normal", " hard", " extreme"};
+			//var perfectPhrases = new string[]{" horrible", " passable", " perfect", " PERFECT"};
+			//var perfectColors = new Color[]{new Color32(200,173,27,255),new Color32(240,220,130,255),new Color32(253,238,0,255),new Color32(255,126,0,255)};
 			var diffColors = new Color[]{new Color(0,0.8f,0,1), new Color(0.8f,0.8f,0,1), new Color(0.9f,0.4f,0,1), new Color(0.8f,0,0,1)};
             mBBQuestionTextPrefix.Text = "That is a";
 			mBBQuestionText.set_text(
@@ -661,7 +661,7 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 		};
 		
 		string[] perfectPhrase = {"awful","mediocre","good", "perfect"};
-		string[] performancePhrase = {"miserably","poorly","well", "excellently"};
+		string[] performancePhrase = {"horribly","poorly","well", "excellently"};
 		PopupTextObject introPo = null;
 		TimedEventDistributor.TimedEventChain chain = TED.add_event(
 			delegate(float aTime)

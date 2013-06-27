@@ -63,11 +63,11 @@ public class PopupTextObject : FlatElementMultiBase {
 		
 		
 		float textOffset = 0;
-		if(aText.Length > 25  && aText.Length < 50)
+		if(aText.Length > 25  && aText.Length < 40)
 		{
 			textOffset = 25;
 			aText = FlatElementText.convert_to_multiline(2,aText);
-		} else if (aText.Length >= 50)
+		} else if (aText.Length >= 40)
 		{
 			textOffset = 50;
 			aText = FlatElementText.convert_to_multiline(3,aText);

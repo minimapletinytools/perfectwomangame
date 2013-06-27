@@ -38,6 +38,7 @@
 -background animations
 -better functions for checknig if user is off screen (cuz they suck under windows)
 -move choice made text into NewInterfaceManager and add color to the difficulty thing or use one of Lea's diff badge images
+
 DONE/YUCK-skipping removes pop up text bubbles but it also needs to skip the delay that is set up elsewhere.. you should incorporate popuptext bubble into the chain maybe...
 DONE-performance text is based off difficulty not performance, woops
 DONE-shows that is a ___ choice when switching to grave after dynig
