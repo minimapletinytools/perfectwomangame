@@ -1,5 +1,5 @@
 ::TODO X:: in order of importance
-
+-warning text should be centered over character and red
 -check positions on drummer and oktober fest girl
 -skipping system
 	-stuff that needs to be skipped
