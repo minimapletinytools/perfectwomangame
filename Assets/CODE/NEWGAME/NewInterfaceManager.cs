@@ -388,9 +388,9 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 					" choice."},
 				new Color[]{
                     //GameConstants.UiPink,
-					//diffColors[nCharDiff.Difficulty]/2f,
+					diffColors[nCharDiff.Difficulty]/2f,
 					//GameConstants.UiPink,
-					perfectColors[nCharDiff.Perfect]/2f,
+					//perfectColors[nCharDiff.Perfect]/2f,
 					GameConstants.UiPink});
 		}
 	}
@@ -865,8 +865,7 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 		//this is all a hack to get the score to show up right...
 		float scoreIncrementor = 0;
 		FlatElementText finalScoreText = new FlatElementText(mManager.mNewRef.genericFont,100,"",10);
-		FlatElementImage perfectEngraving = new FlatElementImage(mManager.mNewRef.gravePerfectnessEngraving,10);
-		
+		//FlatElementImage perfectEngraving = new FlatElementImage(mManager.mNewRef.gravePerfectnessEngraving,10);
 		FlatElementText perfectPercent = new FlatElementText(mManager.mNewRef.genericFont,100,"",11);
 		//perfectPercent.Text = ((int)(100*aStats.Sum(e=>e.Stats.Perfect+1)/(float)(aStats.Count*3))).ToString() + "%";
 		perfectPercent.Text = aStats.Last().Character.Age.ToString();
@@ -874,17 +873,16 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 		//hack to put things into bg camera
 		foreach (Renderer f in finalScoreText.PrimaryGameObject.GetComponentsInChildren<Renderer>())
                 f.gameObject.layer = 4;
-		foreach (Renderer f in perfectEngraving.PrimaryGameObject.GetComponentsInChildren<Renderer>())
-                f.gameObject.layer = 4;
 		foreach (Renderer f in perfectPercent.PrimaryGameObject.GetComponentsInChildren<Renderer>())
                 f.gameObject.layer = 4;
+		//foreach (Renderer f in perfectEngraving.PrimaryGameObject.GetComponentsInChildren<Renderer>()) f.gameObject.layer = 4;
 		
 		Vector3 graveCenter = mManager.mBackgroundManager.mBackgroundElements.mElements[0].Element.SoftPosition + new Vector3(0, 50, 0);
 		finalScoreText.SoftPosition = graveCenter + new Vector3(0,-250,0);
-		perfectEngraving.SoftPosition = graveCenter + new Vector3(35,250,0);
-		perfectPercent.SoftPosition = perfectEngraving.SoftPosition;
+		//perfectEngraving.SoftPosition = graveCenter + new Vector3(35,250,0);
+		perfectPercent.SoftPosition = graveCenter + new Vector3(24,180,0);
 		mElement.Add(finalScoreText);
-		mElement.Add(perfectEngraving);
+		//mElement.Add(perfectEngraving);
 		mElement.Add(perfectPercent);
 		
 		List<Vector3> ghostPositions = new List<Vector3>();

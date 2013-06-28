@@ -37,6 +37,7 @@ public class CameraManager : FakeMonoBehaviour {
         TransparentBodyCamera.depth = 3;
         TransparentBodyCamera.clearFlags = CameraClearFlags.Depth;
         TransparentBodyCameraEdgeEffect = TransparentBodyCamera.gameObject.AddComponent<EdgeDetectEffect>();
+		TransparentBodyCameraEdgeEffect.enabled = false;
         mManager.mTransparentBodyManager.set_layer(2);
 
         BackgroundCamera = (new GameObject("genBackgroundCamera")).AddComponent<Camera>();
