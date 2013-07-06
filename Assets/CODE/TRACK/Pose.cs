@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 
-//TODO move Pose and PoseElement into there
+
 [System.Serializable]
 public class PoseElement
 {
@@ -45,4 +45,77 @@ public class PoseAnimation
 {
 	public List<Pose> poses = new List<Pose>();
 	public Pose get_pose(int index){ return poses[index % poses.Count]; }
+}
+
+public class PerformanceType
+{
+	public enum PType
+	{
+		STATIC,
+		SLOW,
+		SWITCH,
+		SLOWSWITCH
+	}
+	
+	public PType PT
+	{ get; set; }
+	public float BPM
+	{ get; set; }
+	protected PoseAnimation PA
+	{ get; set; }
+	
+	public PerformanceType(PoseAnimation aAnim, CharacterIndex aIndex)
+	{
+		PA = aAnim;
+		if(aIndex.Level == 0 || aIndex.Level == 1 || aIndex.Level == 7 )
+			PT = PType.STATIC;
+		if(aIndex.Level == 2 || aIndex.Level == 6 )
+			PT = PType.SLOW;
+		if(aIndex.Level == 3 || aIndex.Level == 5 )
+			PT = PType.SWITCH;
+		if(aIndex.Level == 4)
+			PT = PType.SLOWSWITCH;
+			
+	}
+	public PerformanceType(PoseAnimation aAnim, PType aType)
+	{
+		PA = aAnim;
+		PT = aType;
+		
+	}
+	public virtual Pose get_pose(float aTime)
+	{
+		
+		if(PT == PType.STATIC)
+		{
+			if(PA != null && PA.poses.Count != 0)
+				return PA.get_pose(0);
+			return null;
+		}
+		else if(PT == PType.SWITCH)
+		{
+			//want to change once per beat???
+			float changeTime = 5;
+			int rIndex = ((int)(aTime/changeTime));
+			return PA.get_pose(rIndex);
+		}
+		else if(PT == PType.SLOW)
+		{
+			//want to change once per beat???
+			float changeTime = 5;
+			int rIndex = ((int)(aTime/changeTime));
+			float lambda = (aTime-(rIndex*changeTime))/changeTime;
+			return Pose.interpolate(PA.get_pose(rIndex),PA.get_pose(rIndex + 1),lambda);
+		}
+		else if(PT == PType.SLOWSWITCH)
+		{
+			//make sure there are an odd # of poses
+			//want to change once per beat???
+			float changeTime = 5;
+			int rIndex = ((int)(aTime/changeTime))*2;
+			float lambda = (aTime-(rIndex*changeTime))/changeTime;
+			return Pose.interpolate(PA.get_pose(rIndex),PA.get_pose(rIndex + 1),lambda);
+		}
+		return null;
+	}
 }

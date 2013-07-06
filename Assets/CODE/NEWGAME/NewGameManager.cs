@@ -187,7 +187,7 @@ public class NewGameManager : FakeMonoBehaviour
 	{ get; private set; }
 	public Pose CurrentTargetPose
     { get; private set; }
-	public PoseAnimation CurrentPoseAnimation
+	public PerformanceType CurrentPoseAnimation
 	{ get; private set; }
 	
 	public float mLastGrade = 0.5f;
@@ -196,7 +196,7 @@ public class NewGameManager : FakeMonoBehaviour
 	{
 		if(CurrentPoseAnimation != null)
 		{
-			CurrentTargetPose = CurrentPoseAnimation.get_pose((int)(Time.time/1f));
+			CurrentTargetPose = CurrentPoseAnimation.get_pose(Time.time);
 			mManager.mTransparentBodyManager.set_target_pose(CurrentTargetPose);
 			float grade = ProGrading.grade_pose(CurrentPose, CurrentTargetPose);
 			grade = ProGrading.grade_to_perfect(grade);
@@ -252,7 +252,7 @@ public class NewGameManager : FakeMonoBehaviour
 		//this basically means we aren't 0 or 100 or 999
 		if (CurrentPoseAnimation != null && CurrentCharacterIndex.Index != 0)
         {
-			CurrentTargetPose = CurrentPoseAnimation.get_pose((int)(Time.time/6f));
+			CurrentTargetPose = CurrentPoseAnimation.get_pose(Time.time);
 			mManager.mTransparentBodyManager.set_target_pose(CurrentTargetPose);
 			
             float grade = ProGrading.grade_pose(CurrentPose, CurrentTargetPose);
@@ -491,7 +491,7 @@ public class NewGameManager : FakeMonoBehaviour
 		}
 		else
 		{
-			CurrentPoseAnimation = mManager.mCharacterBundleManager.get_pose(CurrentCharacterIndex,CurrentPerformanceStat.Stats.Difficulty);
+			CurrentPoseAnimation = new PerformanceType(mManager.mCharacterBundleManager.get_pose(CurrentCharacterIndex,CurrentPerformanceStat.Stats.Difficulty),CurrentCharacterIndex);
 			CurrentTargetPose = CurrentPoseAnimation.get_pose(0);
 			//mManager.mTransparentBodyManager.set_target_pose(CurrentTargetPose);
 		}
