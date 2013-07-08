@@ -1,21 +1,26 @@
 ::TODO X:: in order of importance
+DONE-reindex characters in charinfos...
+DONE-new birth pose...
+DONE-score is all messed up in grave
+DONE-names are not being displayed in grave
 
+
+-update film akademie logo in credits
 -check positions on drummer and oktober fest girl
-
-
-
+-do a full playtest fml..
 -post grave
 	-do the high score thing
 	-teach how to skip cutscenes
 	-show unlocked things
-
 -do new fetus scene with cutscene text...
 	-introduce green pose and performance graph
 	-explain cutscenes..
 -grave connections
 -high score nonsense 
 	-capture image from kinect
-	-de/serialize scores and png to file
+	-saveeee
+		-de/serialize scores and png to file
+		
 	-render in ending screen
 -particle effects in performance graph
 -16-2 angel is a dot
@@ -23,6 +28,7 @@
 -better functions for checknig if user is off screen (cuz they suck under windows)
 -move choice made text into NewInterfaceManager and add color to the difficulty thing or use one of Lea's diff badge images
 -unlockables
+	-some sort of save system nonsense, see highscore..
 	DONE-reindex your characters
 
 -skipping system

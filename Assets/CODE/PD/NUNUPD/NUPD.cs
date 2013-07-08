@@ -141,7 +141,7 @@ namespace NUPD
 					}
 				} else if(first == "INDEX"){
 					//TODO index should be two numbers now
-					ci.Index = CharacterIndex.INDEX_TO_CHARACTER[System.Convert.ToInt32(sp[1])];
+					ci.Index = new CharacterIndex(System.Convert.ToInt32(sp[1]),System.Convert.ToInt32(sp[2]));//CharacterIndex.INDEX_TO_CHARACTER[System.Convert.ToInt32(sp[1])];
 				} else if(first == "CHANGE"){
 					operatingChangeSet = new ChangeSet();
 					operatingChangeSet.Changes = new List<ChangeSubSet>();

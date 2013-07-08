@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections;
 
+//TODO DELETE
 public class PDCharacters
 {
     public static PDCharacterStats[] characters = new PDCharacterStats[]

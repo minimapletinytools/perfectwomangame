@@ -955,9 +955,14 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 				
 					ghostElements[ps.Character.LevelIndex-1].SoftPosition = ghostPositions[ps.Character.LevelIndex-1];
 					mManager.mMusicManager.play_sound_effect("graveAngel");	
-					//set the text
-					string text = "Your life as a ";
-					text += ps.Character.FullName;
+				
+					string text = "";
+					//set the textt
+					if(ps.Character.IsDescriptionAdjective)
+						text += "Your life " + ps.Character.Description;
+					else
+						text += "Your life as a " + ps.Character.Description;
+					
 					text += " was " + performancePhrase[Mathf.Clamp((int)(Mathf.Sqrt(ps.Score)*4),0,3)];
 					text += ".";
 					po = add_timed_text_bubble(text,gCharacterText,0.5f);
@@ -984,7 +989,7 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 				delegate(float aTime)
 				{
 					aTime -= gPreScoreCount;
-					if(aTime <= gScoreCount)
+					if(aTime > 0)
 					{
 						float displayScore = scoreIncrementor + (aTime/gScoreCount)*ps.AdjustedScore;
 						finalScoreText.Text = ""+(int)displayScore;
