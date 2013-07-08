@@ -14,7 +14,7 @@ public class CharacterIconObject : FlatElementMultiBase {
 		mBackground = new FlatElementImage(ManagerManager.Manager.mNewRef.pbCharacterIconBackground,aDepth);
 		mDifficultyStars = new DifficultyObject(ManagerManager.Manager.mNewRef.uiPerfectStar,aDepth+1);
 		mIcon = new FlatElementImage(null,aDepth+3);
-		if(aIndex.Index != -1)
+		if(aIndex.LevelIndex != -1)
 		{
 			var loaded = ManagerManager.Manager.mCharacterBundleManager.get_image("BOX_"+aIndex.StringIdentifier);
 			mIcon.set_new_texture(loaded.Image,null);//loaded.Data.Size);

@@ -5,7 +5,7 @@ using System.Linq;
 public class TestingSceneBehaviour : MonoBehaviour {
 	
 	Texture2D mImage = null;
-	CharacterIndex mLastCharacter = new CharacterIndex(-1);
+	CharacterIndex mLastCharacter = new CharacterIndex(-1,0);
 	public void Start()
 	{
 		ManagerManager.Manager.mGameManager.set_testing();
@@ -20,7 +20,7 @@ public class TestingSceneBehaviour : MonoBehaviour {
 		if(ManagerManager.Manager.mCharacterBundleManager.is_initial_loaded() && ManagerManager.Manager.mGameManager.DeathCharacter != null)
 		{
 			
-			if(mLastCharacter.Index != ManagerManager.Manager.mGameManager.CurrentCharacterIndex.Index)
+			if(mLastCharacter != ManagerManager.Manager.mGameManager.CurrentCharacterIndex)
 			{
 				mLastCharacter = ManagerManager.Manager.mGameManager.CurrentCharacterIndex;
 				mImage = ManagerManager.Manager.mCharacterBundleManager.get_image("BOX_"+mLastCharacter.StringIdentifier).Image;

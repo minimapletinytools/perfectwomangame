@@ -3,32 +3,21 @@ using System.Collections.Generic;
 
 public class CharacterHelper 
 {
-	public CharacterStats[] Characters
+	
+	public CharIndexContainerCharacterStats Characters
 	{ get; private set; }
 	
 	public CharacterHelper()
 	{
-		 int[] mPerfectness = new int[]{ 2, //should be 3
-            2, 1, 0, 3, 
-            2, 1, 0, 3, 
-            2, 1, 0, 3, 
-            2, 1, 0, 3,
-            2, 1, 0, 3, 
-            2, 1, 0, 3, 
-            2, 1, 0, 3, 0, 0 };
+		 int[] mPerfectness = new int[]{ 
+            2, 1, 0, 3, 0};
 		
-		Characters = new CharacterStats[CharacterIndex.NUMBER_CHARACTERS];
-		for(int i = 0; i < Characters.Length; i++)
-			Characters[i] = null;
+		Characters = new CharIndexContainerCharacterStats();
 		foreach(CharacterIndex e in CharacterIndex.sAllCharacters)
 		{
-			Characters[e.Index] = new CharacterStats(){Character = e};
-			Characters[e.Index].Difficulty = 1;
-			Characters[e.Index].Perfect = mPerfectness[e.Index]; //TODO maybe just make this random lol?
-						
-			
-			//if(e.Index < 5) Characters[e.Index].Difficulty = 0;
-				
+			Characters[e] = new CharacterStats(){Character = e};
+			Characters[e].Difficulty = 1;
+			//Characters[e].Perfect = mPerfectness[e.Choice]; //TODO delete lul no perfect anymore..
 		}
 	}
 	

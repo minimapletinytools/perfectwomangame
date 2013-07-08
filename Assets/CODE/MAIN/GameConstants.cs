@@ -13,6 +13,9 @@ public static class GameConstants
 	public static Color ChoosingTextColor { get {return new Color(0,0,0); } } //TODO
 	
 	
+	//game stuff
+	public static float maxGradeNorm = 16;
+	public static float minGradeNorm = 2;
 	
 	//grave stuff
 	//public static string[] credits = {"Perfect Woman","created by", "Lea Sch\u00F6enfelder", "Peter Lu"};
@@ -26,4 +29,57 @@ public static class GameConstants
     //colors
     static Color uiPink = new Color(1, .8f, .8f, 1);
     public static Color UiPink { get { return uiPink * 0.5f; } }
+	
+	
+	//characters
+	//oddly enough, these are not constant :)
+	//NOTE these get set in CharacterBundleManager, not the ideal way to do it but it works
+	public static CharIndexContainerString INDEX_TO_SHORT_NAME = new CharIndexContainerString()
+	{
+		Contents = new string[][]{
+			new string[]{""},
+			new string[]{"","","","","","","",""},
+			new string[]{"","","","","","","",""},
+			new string[]{"","","","","","","",""},
+			new string[]{"","","","","","","",""},
+			new string[]{"","","","","","","",""},
+			new string[]{"","","","","","","",""},
+			new string[]{"","","","","","","",""},
+			new string[]{"","","","","","","",""},
+			new string[]{"",},
+			new string[]{"",}
+		}
+	};
+	public static CharIndexContainerString INDEX_TO_FULL_NAME = new CharIndexContainerString()
+	{
+		Contents = new string[][]{
+			new string[]{""},
+			new string[]{"","","","","","","",""},
+			new string[]{"","","","","","","",""},
+			new string[]{"","","","","","","",""},
+			new string[]{"","","","","","","",""},
+			new string[]{"","","","","","","",""},
+			new string[]{"","","","","","","",""},
+			new string[]{"","","","","","","",""},
+			new string[]{"","","","","","","",""},
+			new string[]{"",},
+			new string[]{"",}
+		}
+	};
+	public static CharIndexContainerString INDEX_TO_DESCRIPTION = new CharIndexContainerString()
+	{
+		Contents = new string[][]{
+			new string[]{""},
+			new string[]{"","","","","","","",""},
+			new string[]{"","","","","","","",""},
+			new string[]{"","","","","","","",""},
+			new string[]{"","","","","","","",""},
+			new string[]{"","","","","","","",""},
+			new string[]{"","","","","","","",""},
+			new string[]{"","","","","","","",""},
+			new string[]{"","","","","","","",""},
+			new string[]{"",},
+			new string[]{"",}
+		}
+	};
 }

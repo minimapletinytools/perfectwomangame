@@ -1,4 +1,5 @@
 using UnityEngine;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -8,23 +9,33 @@ using System.Linq;
 
 namespace NUPD
 {
-	
 	public class ChangeSubSet
 	{
 		
 		public string Description {get; set;} 
-		public int[] Changes {get; set;}
+		public CharIndexContainerInt Changes {get; set;}
 
         public ChangeSubSet()
         {
             Description = "";
-            Changes = new int[CharacterIndex.NUMBER_CHARACTERS];
-
-        }
+            Changes = new CharIndexContainerInt(){ Contents = new int[][]{
+				new int[]{0},
+				new int[]{0,0,0,0,0,0,0},
+				new int[]{0,0,0,0,0,0,0},
+				new int[]{0,0,0,0,0,0,0},
+				new int[]{0,0,0,0,0,0,0},
+				new int[]{0,0,0,0,0,0,0},
+				new int[]{0,0,0,0,0,0,0},
+				new int[]{0,0,0,0,0,0,0},
+				new int[]{0,0,0,0,0,0,0},
+				new int[]{0},
+				new int[]{0}
+			}};
+		}
 
         public bool is_positive()
         {
-            return Changes.Where(e => e < 0).Count() == 0;
+            return Changes.to_array().Where(e => e < 0).Count() == 0;
         }
 	}
 	
@@ -58,7 +69,7 @@ namespace NUPD
 			ShortName = "";
 			Description = "";
 			IsDescriptionAdjective = false;
-			Index = new CharacterIndex(-1);
+			Index = new CharacterIndex(-1,0);
 			ChangeSet = new List<ChangeSet>();
 		}
 		
@@ -86,7 +97,8 @@ namespace NUPD
 			
 			ChangeSet operatingChangeSet = null;
 			ChangeSubSet operatingChangeSubSet = null;
-			int changeSubsetIndexCounter = 0;
+			int changeSubsetLevelIndexCounter = 0;
+			
 			foreach(string e in process)
 			{
 				string[] sp = System.Text.RegularExpressions.Regex.Split(e, @"\s*,\s*|\s\s*").Where(f=>f!="" && f != " ").ToArray();
@@ -105,10 +117,12 @@ namespace NUPD
 						
 					} else if(lastState == "CDESC") {
 						//Debug.Log (sp.Aggregate((s1,s2)=>s1+"|"+s2+"|"));
+						int changeSubsetChoiceIndexCounter = 0;
 						foreach(string f in sp){
-							operatingChangeSubSet.Changes[changeSubsetIndexCounter] = (System.Convert.ToInt32(f));
-							changeSubsetIndexCounter++;
+							operatingChangeSubSet.Changes[changeSubsetLevelIndexCounter,changeSubsetChoiceIndexCounter] = (System.Convert.ToInt32(f));
+							changeSubsetChoiceIndexCounter++;
 						}
+						changeSubsetLevelIndexCounter++;
 					}
 				}
 				
@@ -126,11 +140,8 @@ namespace NUPD
 						//ci.Description = ci.Description.Replace("<A>", ""); 
 					}
 				} else if(first == "INDEX"){
-					try{ //TODO delete trycatch
-						ci.Index = new CharacterIndex(System.Convert.ToInt32(sp[1] ));
-					}catch{
-						ci.Index = new CharacterIndex(-1);
-					}
+					//TODO index should be two numbers now
+					ci.Index = CharacterIndex.INDEX_TO_CHARACTER[System.Convert.ToInt32(sp[1])];
 				} else if(first == "CHANGE"){
 					operatingChangeSet = new ChangeSet();
 					operatingChangeSet.Changes = new List<ChangeSubSet>();
@@ -139,7 +150,7 @@ namespace NUPD
 					ci.ChangeSet.Add(operatingChangeSet);
 				} else if(first == "CDESC")
 				{
-					changeSubsetIndexCounter = 0;
+					changeSubsetLevelIndexCounter = 0;
 					operatingChangeSubSet = new ChangeSubSet();
 					if(sp.Length > 1)
 						operatingChangeSubSet.Description = sp.Skip(1).Aggregate((s1,s2)=>s1+" "+s2);

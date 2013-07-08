@@ -67,13 +67,13 @@ public class PerformanceType
 	public PerformanceType(PoseAnimation aAnim, CharacterIndex aIndex)
 	{
 		PA = aAnim;
-		if(aIndex.Level == 0 || aIndex.Level == 1 || aIndex.Level == 7 )
+		if(aIndex.LevelIndex == 0 || aIndex.LevelIndex == 1 || aIndex.LevelIndex == 7 )
 			PT = PType.STATIC;
-		if(aIndex.Level == 2 || aIndex.Level == 6 )
+		if(aIndex.LevelIndex == 2 || aIndex.LevelIndex == 6 )
 			PT = PType.SLOW;
-		if(aIndex.Level == 3 || aIndex.Level == 5 )
+		if(aIndex.LevelIndex == 3 || aIndex.LevelIndex == 5 )
 			PT = PType.SWITCH;
-		if(aIndex.Level == 4)
+		if(aIndex.LevelIndex == 4)
 			PT = PType.SLOWSWITCH;
 			
 	}

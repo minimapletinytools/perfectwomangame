@@ -62,7 +62,7 @@ public class CharacterBundleManager : FakeMonoBehaviour {
 	//mini char loading
 	//----------
 	Mutex mMiniCharLock;
-	CharacterLoader[] mMiniCharacters = new CharacterLoader[31];
+	CharIndexContainerCharacterLoader mMiniCharacters = new CharIndexContainerCharacterLoader();
 	int mNumberCharactersLoading = 0;
 	//mini bundle related
 	public void load_mini_characters()
@@ -77,12 +77,12 @@ public class CharacterBundleManager : FakeMonoBehaviour {
 				mManager.mAssetLoader.new_load_mini_characater(index.StringIdentifier, this);
 			}
 			else
-				mMiniCharacters[index.Index] = null;
+				mMiniCharacters[index] = null;
 		}
     }
 	public void mini_loaded_callback(AssetBundle aBundle, string aBundleName)
 	{
-		int index = (new CharacterIndex(aBundleName)).Index;
+		CharacterIndex index = (new CharacterIndex(aBundleName));
 		using(mMiniCharLock)
 		{
 			mMiniCharacters[index] = new CharacterLoader();
@@ -94,16 +94,16 @@ public class CharacterBundleManager : FakeMonoBehaviour {
 	public CharacterLoader get_mini_character(CharacterIndex aIndex)
 	{
 		using(mMiniCharLock)
-			return mMiniCharacters[aIndex.Index];
+			return mMiniCharacters[aIndex];
 		/*
-		if(mMiniCharacters[aIndex.Index] == null)
+		if(mMiniCharacters[aIndex] == null)
 		{
 			CharacterTextureBehaviour ctb = (GameObject.Instantiate(mManager.mMenuReferences.miniMan) as  GameObject).GetComponent<CharacterTextureBehaviour>();
 			return new FlatBodyObject(ctb,aDepth);
 			GameObject.Destroy(ctb.gameObject);
 		}
 		else
-			return new FlatBodyObject(mMiniCharacters[aIndex.Index],aDepth);
+			return new FlatBodyObject(mMiniCharacters[aIndex],aDepth);
 			*/
 	}
 	
@@ -162,7 +162,7 @@ public class CharacterBundleManager : FakeMonoBehaviour {
     }
     public CharacterStats get_character_stat(CharacterIndex aChar)
     {
-        return mCharacterHelper.Characters[aChar.Index];
+        return mCharacterHelper.Characters[aChar];
     }
 	public PoseAnimation get_pose(CharacterIndex aIndex, int aDiff)
 	{
@@ -183,13 +183,8 @@ public class CharacterBundleManager : FakeMonoBehaviour {
 		}
 		else if(aIndex.Choice > 0)
 		{
-			CharacterIndex fallback = new CharacterIndex(aIndex.Level,aIndex.Choice-1);
+			CharacterIndex fallback = new CharacterIndex(aIndex.LevelIndex,aIndex.Choice-1);
 			return get_pose(fallback,aDiff);
-		}
-		else if(aIndex.Level > 4) //TODO DELETE, this is a total hack because we don't have enough poses
-		{
-			CharacterIndex fallback = new CharacterIndex(Random.Range(1,5),0);
-			return get_pose(fallback, aDiff);
 		}
 		else
 		{
@@ -206,19 +201,19 @@ public class CharacterBundleManager : FakeMonoBehaviour {
 			if(aBundle.Contains(txtName))
 			{
 				//Debug.Log ("loaded character info " + txtName);
-				mCharacterHelper.Characters[e.Index].CharacterInfo = 
+				mCharacterHelper.Characters[e].CharacterInfo = 
 					NUPD.CharacterInformationProcessor.process_character((aBundle.Load(txtName) as TextAsset).text);
 				
 				//kind of a hack.
 				//TODO uncomment this when you get new character packages in...
-				CharacterIndex.INDEX_TO_SHORT_NAME[e.Index] = mCharacterHelper.Characters[e.Index].CharacterInfo.ShortName;
-				//CharacterIndex.INDEX_TO_FULL_NAME[e.Index] = mCharacterHelper.Characters[e.Index].CharacterInfo.LongName;
-				CharacterIndex.INDEX_TO_DESCRIPTION[e.Index] = mCharacterHelper.Characters[e.Index].CharacterInfo.Description;
+				GameConstants.INDEX_TO_SHORT_NAME[e] = mCharacterHelper.Characters[e].CharacterInfo.ShortName;
+				//GameConstants.INDEX_TO_FULL_NAME[e] = mCharacterHelper.Characters[e].CharacterInfo.LongName;
+				GameConstants.INDEX_TO_DESCRIPTION[e] = mCharacterHelper.Characters[e].CharacterInfo.Description;
 			}
 			else
 			{
 				//Debug.Log ("no info found for " + txtName);
-				mCharacterHelper.Characters[e.Index].CharacterInfo = NUPD.CharacterInformation.default_character_info(e);
+				mCharacterHelper.Characters[e].CharacterInfo = NUPD.CharacterInformation.default_character_info(e);
 			}
 		}
 		

@@ -1,5 +1,5 @@
 ::TODO X:: in order of importance
--warning text should be centered over character and red
+
 -check positions on drummer and oktober fest girl
 
 
@@ -8,7 +8,7 @@
 	-do the high score thing
 	-teach how to skip cutscenes
 	-show unlocked things
--fix performance evaluation----   
+
 -do new fetus scene with cutscene text...
 	-introduce green pose and performance graph
 	-explain cutscenes..
@@ -23,8 +23,7 @@
 -better functions for checknig if user is off screen (cuz they suck under windows)
 -move choice made text into NewInterfaceManager and add color to the difficulty thing or use one of Lea's diff badge images
 -unlockables
-	-reindex your characters
-	-
+	DONE-reindex your characters
 
 -skipping system
 	-add skip gestures
@@ -44,6 +43,9 @@
 		-post grave
 			-skip all does same as skip one
 			-skip one goes to next unlocked feature
+
+DONE-fix performance evaluation----   
+DONE-warning text should be centered over character and red
 DONE-different ways to perform game based on age
 	-hold still, slowly moving, snapping, snap when pose is made, then go back in reverse
 DONE/YUCK-skipping removes pop up text bubbles but it also needs to skip the delay that is set up elsewhere.. you should incorporate popuptext bubble into the chain maybe...

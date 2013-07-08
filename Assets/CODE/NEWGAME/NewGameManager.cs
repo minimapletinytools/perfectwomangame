@@ -82,7 +82,7 @@ public class NewGameManager : FakeMonoBehaviour
 		
 		mManager.mInterfaceManager.setup_bb();
 		mManager.mInterfaceManager.setup_pb();
-		mManager.mInterfaceManager.set_pb_character_icon_colors(CharacterHelper.Characters.Where(e=>e!=null).ToList());
+		mManager.mInterfaceManager.set_pb_character_icon_colors(CharacterHelper.Characters);
 		
 		
 		//TODO put this in its own function
@@ -90,7 +90,7 @@ public class NewGameManager : FakeMonoBehaviour
 		foreach(CharacterIndex e in CharacterIndex.sAllCharacters)
 		{
 			//poses.Add(new KeyValuePair<CharacterIndex,ProGrading.Pose>(e,mManager.mCharacterBundleManager.get_pose(e,mCharacterHelper.Characters[e.Index].Difficulty).get_pose(0)));
-			var poseAnimation = mManager.mCharacterBundleManager.get_pose(e,CharacterHelper.Characters[e.Index].Difficulty);
+			var poseAnimation = mManager.mCharacterBundleManager.get_pose(e,CharacterHelper.Characters[e].Difficulty);
 			poses.Add(new KeyValuePair<CharacterIndex,Pose>(e,poseAnimation.get_pose(Random.Range(0,poseAnimation.poses.Count))));
 		}
 		mManager.mInterfaceManager.set_pb_character_icon_poses(poses);
@@ -111,7 +111,7 @@ public class NewGameManager : FakeMonoBehaviour
 		//set new character data
 		CharacterIndex newCharIndex = new CharacterIndex(aCharacter.Name);
 		mPerformanceStats.Add(new PerformanceStats(newCharIndex));
-		CurrentPerformanceStat.Stats = CharacterHelper.Characters[newCharIndex.Index];
+		CurrentPerformanceStat.Stats = CharacterHelper.Characters[newCharIndex];
 		mManager.mInterfaceManager.begin_new_character(CurrentPerformanceStat);
 		
 		//TODO
@@ -250,7 +250,7 @@ public class NewGameManager : FakeMonoBehaviour
 		
 		
 		//this basically means we aren't 0 or 100 or 999
-		if (CurrentPoseAnimation != null && CurrentCharacterIndex.Index != 0)
+		if (CurrentPoseAnimation != null && CurrentCharacterIndex.LevelIndex != 0)
         {
 			CurrentTargetPose = CurrentPoseAnimation.get_pose(Time.time);
 			mManager.mTransparentBodyManager.set_target_pose(CurrentTargetPose);
@@ -269,7 +269,7 @@ public class NewGameManager : FakeMonoBehaviour
 			//update score
 			mManager.mInterfaceManager.update_bb_score(TotalScore);	
         }
-		else if(CurrentCharacterIndex.Index == 0 && true) 
+		else if(CurrentCharacterIndex.LevelIndex == 0 && true) 
 		{
 			//pose is loaded in initializer
 			mManager.mTransparentBodyManager.set_target_pose(CurrentTargetPose);
@@ -285,7 +285,7 @@ public class NewGameManager : FakeMonoBehaviour
 			CurrentPerformanceStat.update_score(PercentTimeCompletion,0.5f);
 		
 		//warning
-		if (CurrentPoseAnimation != null && CurrentCharacterIndex.Index != 0)
+		if (CurrentPoseAnimation != null && CurrentCharacterIndex.LevelIndex != 0)
 		{
 			if(PercentTimeCompletion > 0.2f && CurrentPerformanceStat.last_score(1.5f/30f)/(1.5f/30f) < 0.2f)
 				mManager.mInterfaceManager.enable_warning_text(true);
@@ -296,7 +296,7 @@ public class NewGameManager : FakeMonoBehaviour
 		//early death
 		bool die = false;
 		die |= Input.GetKeyDown(KeyCode.D);
-		if (CurrentPoseAnimation != null && mManager.mZigManager.has_user() && CurrentCharacterIndex.Index != 0)
+		if (CurrentPoseAnimation != null && mManager.mZigManager.has_user() && CurrentCharacterIndex.LevelIndex != 0)
 		{
 			
 			if(PercentTimeCompletion > 0.35f)
@@ -386,24 +386,26 @@ public class NewGameManager : FakeMonoBehaviour
 						
 				        foreach (var e in changes.Changes)
 				        {
-				            var diffChanges = e.Changes;
+				            CharIndexContainerInt diffChanges = e.Changes;
 				            string changeMsg = e.Description;
-				            for(int i = 0; i < diffChanges.Length; i++){
-				                var cchar = new CharacterIndex(i);
-								if(diffChanges[i] != 0)
+						
+							foreach(CharacterIndex cchar in CharacterIndex.sAllCharacters)
+							{
+								if(diffChanges[cchar] != 0)
 								{
-				                	int nDiff = mManager.mGameManager.change_character_difficulty(cchar, diffChanges[i]);
+							
+				                	int nDiff = mManager.mGameManager.change_character_difficulty(cchar, diffChanges[cchar]);
 									change_interface_pose(cchar,nDiff);
 								}
-				            }
+							}
 				        }
-						mManager.mInterfaceManager.set_pb_character_icon_colors(mManager.mGameManager.CharacterHelper.Characters.Where(e=>e!=null).ToList());
+						mManager.mInterfaceManager.set_pb_character_icon_colors(mManager.mGameManager.CharacterHelper.Characters);
 						mManager.mMusicManager.fade_out();
 					}
 				,0).then_one_shot(
 					delegate() 
 					{	 
-						if(CurrentPerformanceStat.Character.Level > 6) //if age 85 or greater
+						if(CurrentPerformanceStat.Character.LevelIndex > 6) //if age 85 or greater
 						{
 							//TODO conditions to get to age 100
 							if(false)
@@ -473,8 +475,8 @@ public class NewGameManager : FakeMonoBehaviour
 		mChoiceHelper.shuffle_and_set_choice_poses(mManager.mInterfaceManager);
 		//TODO these bottom two functions should be absoredb by ChoiceHelper
 		//lol this is a dumb hack to not choose the missing character
-		var chars = new CharacterIndex(CurrentPerformanceStat.Character.Level+1,3).Neighbors;
-		var perfs = chars.Select(e=>CharacterHelper.Characters[e.Index].Perfect).ToList();
+		var chars = new CharacterIndex(CurrentPerformanceStat.Character.LevelIndex+1,3).Neighbors;
+		var perfs = chars.Select(e=>CharacterHelper.Characters[e].Perfect).ToList();
 		mManager.mInterfaceManager.set_bb_choice_perfectness(perfs);
 		mManager.mInterfaceManager.set_bb_choice_bodies(CurrentCharacterIndex);
 		mManager.mMusicManager.fade_in_choice_music();
@@ -533,7 +535,7 @@ public class NewGameManager : FakeMonoBehaviour
 										"You made an extreme choice? Let's see if you survive!"
 		};
 		if(aNextCharacter != CharacterIndex.sGrave)
-			mManager.mInterfaceManager.add_timed_text_bubble(diffPhrases[CharacterHelper.Characters[aNextCharacter.Index].Difficulty], gDiffDisplayDur);
+			mManager.mInterfaceManager.add_timed_text_bubble(diffPhrases[CharacterHelper.Characters[aNextCharacter].Difficulty], gDiffDisplayDur);
 		TED.add_one_shot_event(
 			//TODO before this, till mInterfaceManager to explain what choice the user just made
 			//maybe play a sound "Too Easy" "Ok" "Hard" "That's Impossible!!"
@@ -549,14 +551,14 @@ public class NewGameManager : FakeMonoBehaviour
 
     public int get_character_difficulty(CharacterIndex aChar)
     {
-        return CharacterHelper.Characters[aChar.Index].Difficulty;
+        return CharacterHelper.Characters[aChar].Difficulty;
     }
 	
 	public int change_character_difficulty(CharacterIndex aChar,  int aChange)
 	{
         //TODO if aChange is +/- 9 do something special instead
-		CharacterHelper.Characters[aChar.Index].Difficulty = Mathf.Clamp(CharacterHelper.Characters[aChar.Index].Difficulty + aChange,0,3);
-		return CharacterHelper.Characters[aChar.Index].Difficulty;
+		CharacterHelper.Characters[aChar].Difficulty = Mathf.Clamp(CharacterHelper.Characters[aChar].Difficulty + aChange,0,3);
+		return CharacterHelper.Characters[aChar].Difficulty;
 	}
 	
 	public void change_interface_pose(CharacterIndex aChar,  int aDiff)

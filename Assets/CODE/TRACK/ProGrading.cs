@@ -23,7 +23,10 @@ public class ProGrading {
 
     public static float grade_to_perfect(float aGrade)
     {
-        return Mathf.Clamp((16 - aGrade) / 16f, 0, 1);
+		//0 is bad 1 is perfect
+		float maxgn = GameConstants.maxGradeNorm;
+		float mingn = GameConstants.minGradeNorm;
+        return Mathf.Clamp((maxgn - aGrade - mingn) / (maxgn-mingn), 0, 1);
     }
 	
 	public static float grade_joint(Pose A, Pose B, ZigJointId aJoint)

@@ -81,13 +81,13 @@ public class NewChoiceObject : FlatElementMultiBase {
 		Character = aIndex;
 	}
 	
-	CharacterIndex mCharacterIndex = new CharacterIndex(-1);
+	CharacterIndex mCharacterIndex = new CharacterIndex(-1,0);
 	public CharacterIndex Character
 	{ 
 		get{return mCharacterIndex;} 
 		set{
 			mCharacterIndex = value;
-			if(mCharacterIndex.Index != -1)
+			if(mCharacterIndex.LevelIndex != -1)
 			{
 				mText.Text = FlatElementText.convert_to_multiline(2,mCharacterIndex.ShortName);
 			}

@@ -144,7 +144,7 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 		mBBScoreFrame = new FlatElementImage(mManager.mNewRef.bbScoreBackground,9);
 		mBBScoreText = new FlatElementText(mManager.mNewRef.genericFont,60,"0",10);
 		//mBBWarningText = new FlatElementText(mManager.mNewRef.genericFont,150,"WARNING",12);
-		mBBWarningText = new FlatElementText(mManager.mNewRef.genericFont,500,"WARNING",20);
+		mBBWarningText = new FlatElementText(mManager.mNewRef.genericFont,400,"WARNING",20);
 		mBBWarningText.HardColor = new Color(0.5f,0.5f,0.5f,0);
 		mBBMultiplierImage = new FlatElementImage(null,15);
 		mBBText.HardPosition = random_position();
@@ -218,7 +218,7 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 	//called by NewGameManager
 	public void enable_warning_text(bool enable)
 	{
-		mBBWarningText.HardColor = (((int)(Time.time*8)) % 2 == 0) && enable ? new Color(0.7f,0.2f,0,0.5f) : new Color(0,0,0,0);
+		mBBWarningText.HardColor = (((int)(Time.time*8)) % 2 == 0) && enable ? new Color(0.75f,0.05f,0.0f,0.5f) : new Color(0,0,0,0);
 	}
 	
 	//called by NewGameManager
@@ -282,7 +282,7 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 		mBBScoreFrame.SoftPosition = mBB.SoftPosition + new Vector3(-350,bottomVOffset-50,0);
 		mBBScoreText.SoftPosition = mBB.SoftPosition + new Vector3(-350,bottomVOffset-90,0);
 		mBBLastPerformanceGraph.PerformanceGraph.SoftPosition = mBB.SoftPosition + new Vector3(150,bottomVOffset,0);
-		mBBWarningText.HardPosition = mFlatCamera.Center;//mBB.SoftPosition + new Vector3(150,bottomVOffset-40,0);
+		mBBWarningText.HardPosition = mFlatCamera.get_point(0.45f,0);//mBB.SoftPosition + new Vector3(150,bottomVOffset-40,0);
 		mBBMultiplierImage.SoftPosition = mBB.SoftPosition + new Vector3(-350,bottomVOffset + 170,0);
 		
 		for(int i = 0; i < 4; i++)
@@ -342,7 +342,7 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 	//this should really be called set_bb_choice_icons now
 	public void set_bb_choice_bodies(CharacterIndex aIndex)
 	{
-		CharacterIndex index = new CharacterIndex(aIndex.Level+1,0);
+		CharacterIndex index = new CharacterIndex(aIndex.LevelIndex+1,0);
 		var all = index.NeighborsAndSelf;
 		all.Add(index);
 		for(int i = 0; i < 3; i++)
@@ -350,7 +350,7 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 			//mBBChoices[i].set_actual_character(mManager.mCharacterBundleManager.get_mini_character(all[i]));
 			mBBChoices[i].Character = all[i];
 			mBBChoices[i].set_actual_character(all[i]);
-			mBBChoices[i].set_difficulty(mManager.mCharacterBundleManager.get_character_helper().Characters[all[i].Index].Difficulty);
+			mBBChoices[i].set_difficulty(mManager.mCharacterBundleManager.get_character_helper().Characters[all[i]].Difficulty);
 			//TODO set icons for choice
 			
 			//OLD when using mini char icons we took from PB
@@ -372,7 +372,7 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 		else{
 			mBBMiniMan.SoftPosition = mBBChoiceBodies[aIndex].SoftPosition;
 			var nChar = mBBLastPerformanceGraph.Character.get_future_neighbor(aIndex);
-			var nCharDiff = mManager.mCharacterBundleManager.get_character_helper().Characters[nChar.Index];
+			var nCharDiff = mManager.mCharacterBundleManager.get_character_helper().Characters[nChar];
 			var diffPhrases = new string[]{" easy", " normal", " hard", " extreme"};
 			//var perfectPhrases = new string[]{" horrible", " passable", " perfect", " PERFECT"};
 			//var perfectColors = new Color[]{new Color32(200,173,27,255),new Color32(240,220,130,255),new Color32(253,238,0,255),new Color32(255,126,0,255)};
@@ -409,7 +409,7 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 	
 	//PINK BAR
 	FlatElementImage mPB;
-	CharacterIconObject[] mPBCharacterIcons = new CharacterIconObject[31];
+	CharIndexContainerCharacterIconObject mPBCharacterIcons = new CharIndexContainerCharacterIconObject();
 	
 	//called by NewGameManager
 	public void setup_pb()
@@ -423,13 +423,14 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 		{
 			//OLD
 			//mPBCharacterIcons[e.Index] = new CharacterIconObject(mManager.mCharacterBundleManager.get_mini_character(e),1);
-			mPBCharacterIcons[e.Index] = new CharacterIconObject(e,mPB.Depth + 1);
-			mPBCharacterIcons[e.Index].set_name(e.ShortName);
-			mElement.Add(mPBCharacterIcons[e.Index]);
+			mPBCharacterIcons[e] = new CharacterIconObject(e,mPB.Depth + 1);
+			mPBCharacterIcons[e].set_name(e.ShortName);
+			mElement.Add(mPBCharacterIcons[e]);
 		}
 		mElement.Add(mPB);
 		
-		set_pb_character_icon_colors(new List<CharacterStats>());
+		//TODO DELETE
+		//set_pb_character_icon_colors(new CharIndexContainerCharacterIconObject());
 		
 		position_pb_character_icons(0);
 	}
@@ -446,20 +447,24 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 	
 	
 	
-	public void set_pb_character_icon_colors(List<CharacterStats> aChars)
+	public void set_pb_character_icon_colors(CharIndexContainerCharacterStats aChars)
 	{
-		foreach(CharacterStats e in aChars)
+		foreach(CharacterStats e in aChars.to_array())
 		{
 			//mPBCharacterIcons[e.Character.Index].set_background_color(Color.Lerp(new Color(0.5f,0.5f,0.5f), new Color32(255,200,0,255), e.Perfect/3f));
-			mPBCharacterIcons[e.Character.Index].set_perfectness(e.Perfect);
-			mPBCharacterIcons[e.Character.Index].set_difficulty(e.Difficulty);
+			//probably don't need tho second check but w/e
+			if(e != null && mPBCharacterIcons[e.Character] != null)
+			{
+				mPBCharacterIcons[e.Character].set_perfectness(e.Perfect);
+				mPBCharacterIcons[e.Character].set_difficulty(e.Difficulty);
+			}
 		}
 		
 		//fetus
-		mPBCharacterIcons[0].set_difficulty(-1);
+		mPBCharacterIcons[CharacterIndex.sFetus].set_difficulty(-1);
 		//top secret
-		mPBCharacterIcons[29].SoftColor = new Color(1,1,1,0);
-		mPBCharacterIcons[30].SoftColor = new Color(1,1,1,0);
+		mPBCharacterIcons[CharacterIndex.sGrave].SoftColor = new Color(1,1,1,0);
+		mPBCharacterIcons[CharacterIndex.sOneHundred].SoftColor = new Color(1,1,1,0);
 	}
 	//characters == LEVEL will be behind the BB
 	void position_pb_character_icons(int splitLevel, float vOffset = 0)
@@ -475,13 +480,13 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 			Vector3 position = Vector3.zero;
 			float netWidth = (e.NumberInRow - 1)*padding;
 			position.x = netWidth/2f - padding*e.Choice;
-			int indexOffset = (splitLevel - e.Level);
+			int indexOffset = (splitLevel - e.LevelIndex);
 			position.y = hPadding*indexOffset + vOffset; 
 			if(indexOffset > 0) //past characters
 				position.y += splitHeight/2;
 			else if (indexOffset < 0) //future characters
 				position.y -= splitHeight/2;
-			mPBCharacterIcons[e.Index].SoftPosition = baseOffset + position;
+			mPBCharacterIcons[e].SoftPosition = baseOffset + position;
 		}
 		
 	}
@@ -490,24 +495,24 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 	{
 		float delay = 0;
 		Color useColor = (!aPositive) ? new Color(0.1f,0.7f,0.2f) : new Color(0.7f,0,0);
-		if(mPBCharacterIcons[aTarget.Index] != null)
+		if(mPBCharacterIcons[aTarget] != null)
 		{
 			TED.add_one_shot_event(
 				delegate()
 				{
 					aPopup.set_background_color(useColor);
-					mPBCharacterIcons[aTarget.Index].set_background_color(useColor);
+					mPBCharacterIcons[aTarget].set_background_color(useColor);
 				},
 			delay).then_one_shot(
 				delegate()
 				{
 					aPopup.set_background_color(new Color(0.5f,0.5f,0.5f));
-					mPBCharacterIcons[aTarget.Index].set_background_color(new Color(0.5f,0.5f,0.5f));
+					mPBCharacterIcons[aTarget].set_background_color(new Color(0.5f,0.5f,0.5f));
 				},
 			duration);
 			add_timed_particle_stream(
                 mFlatCamera.get_point(0.40f,0),
-                mPBCharacterIcons[aTarget.Index],
+                mPBCharacterIcons[aTarget],
                 duration,
                 delay,
                 useColor);
@@ -584,7 +589,7 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 	{
 		//BB
 		mBBText.Text = FlatElementText.convert_to_multiline(aChar.Character.Description.Length > 20 ? 2 : 1 ,aChar.Character.Description + " (" + aChar.Character.Age.ToString() + ")");
-		if(aChar.Character.Index != 0)
+		if(aChar.Character.LevelIndex != 0)
 		{
 			mBBMultiplierImage.set_new_texture(mManager.mNewRef.bbScoreMultiplier[aChar.Stats.Difficulty]);
 			for(int i = 0; i < 4; i++)
@@ -604,15 +609,15 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 		//mBBQuestionText.Text = "What will you be like at age " + aChar.Character.get_future_neighbor(0).Age;
 		
 		//PB
-		position_pb_character_icons(aChar.Character.Level);
+		position_pb_character_icons(aChar.Character.LevelIndex);
 		//disable the other characters no that we have made a choice
 		foreach(CharacterIndex e in aChar.Character.Neighbors)
 		{
-			if(mPBCharacterIcons[e.Index] != null)
-				mPBCharacterIcons[e.Index].Enabled = false;
-			//mPBCharacterIcons[e.Index].destroy();
-			//mElement.Remove(mPBCharacterIcons[e.Index]);
-			//mPBCharacterIcons[e.Index]=null;
+			if(mPBCharacterIcons[e] != null)
+				mPBCharacterIcons[e].Enabled = false;
+			//mPBCharacterIcons[e].destroy();
+			//mElement.Remove(mPBCharacterIcons[e]);
+			//mPBCharacterIcons[e]=null;
 		}
 	}
 	
@@ -649,12 +654,12 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 		
 		//this slows the game down a lot...
 		set_bb_for_play(mPB.BoundingBox.height/2+205);
-		position_pb_character_icons(mBBLastPerformanceGraph.Character.Level,mPB.BoundingBox.height/2+205);
+		position_pb_character_icons(mBBLastPerformanceGraph.Character.LevelIndex,mPB.BoundingBox.height/2+205);
 		
 		mLastCutsceneCompleteCb = delegate() {
 			//this slows the ame down a lot
 			set_bb_for_play();
-			position_pb_character_icons(mBBLastPerformanceGraph.Character.Level,0);
+			position_pb_character_icons(mBBLastPerformanceGraph.Character.LevelIndex,0);
 			cutsceneCompleteCb();
 			mLastCutsceneCompleteCb = null;
 			mLastCutsceneChain = null;
@@ -667,7 +672,7 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 			delegate(float aTime)
 			{
 				string text = "";
-				if(mBBLastPerformanceGraph.Character.Index == 0 || mBBLastPerformanceGraph.Character.Index == 29)
+				if(mBBLastPerformanceGraph.Character == CharacterIndex.sFetus)
 				{
 					//DELETE this has been moved to text files..
 					//text = "Prepare to be Born"; 
@@ -689,7 +694,7 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 			{
 				if(introPo != null && introPo.IsDestroyed)
 					return true;
-				if(!(mBBLastPerformanceGraph.Character.Index == 0 || mBBLastPerformanceGraph.Character.Index == 29))
+				if(!(mBBLastPerformanceGraph.Character == CharacterIndex.sFetus))
 					if(aTime > gPerformanceText)
 						return true;
 					else return false;
@@ -721,14 +726,13 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 				{
 					if(!po.IsDestroyed)
 					{
-						for(int i = 0; i < diffChanges.Length; i++)
+						foreach(CharacterIndex cchar in CharacterIndex.sAllCharacters)
 						{
-							if(diffChanges[i] != 0){
-	                        	var cchar = new CharacterIndex(i);
+							if(diffChanges[cchar] != 0){
 								add_cutscene_particle_stream(cchar,po,gParticle,changes.is_positive());
-								int nDiff = Mathf.Clamp(mManager.mGameManager.get_character_difficulty(cchar) + diffChanges[i], 0, 3);
+								int nDiff = Mathf.Clamp(mManager.mGameManager.get_character_difficulty(cchar) + diffChanges[cchar], 0, 3);
 								mManager.mGameManager.change_interface_pose(cchar,nDiff);
-	                        	mPBCharacterIcons[cchar.Index].set_difficulty(nDiff);
+	                        	mPBCharacterIcons[cchar].set_difficulty(nDiff);
 							}
 						}
 					}
@@ -764,7 +768,7 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 		
 		TimedEventDistributor.TimedEventChain chain;
 		
-		if(aChar.Level == 7)
+		if(aChar.LevelIndex == 7)
 		{
 			//80
 			chain = TED.add_one_shot_event(
@@ -775,7 +779,7 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 	        0).then_one_shot( //dummy 
 			delegate(){},gTextTime);
 		}
-		else if (aChar.Level == 8)
+		else if (aChar.LevelIndex == 8)
 		{
 			//100!!!
 			chain = TED.add_one_shot_event(
@@ -933,7 +937,7 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 			int it = i;
 			PerformanceStats ps = aStats[i];
 			//reposition the assosciated character icon and performance graph
-			CharacterIconObject cio = mPBCharacterIcons[ps.Character.Index];
+			CharacterIconObject cio = mPBCharacterIcons[ps.Character];
 			PerformanceGraphObject pgo = ps.PerformanceGraph;
 			cio.HardPosition = new Vector3(cioXOffset,-2000,0);
 			pgo.HardPosition = new Vector3(pgoXOffset,-2000,0);
@@ -949,7 +953,7 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 				delegate()
 				{
 				
-					ghostElements[ps.Character.Level-1].SoftPosition = ghostPositions[ps.Character.Level-1];
+					ghostElements[ps.Character.LevelIndex-1].SoftPosition = ghostPositions[ps.Character.LevelIndex-1];
 					mManager.mMusicManager.play_sound_effect("graveAngel");	
 					//set the text
 					string text = "Your life as a ";
@@ -970,7 +974,7 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 						{
 							if(e.Character.Age <= ps.Character.Age)
 							{
-								mPBCharacterIcons[e.Character.Index].SoftPosition = mPBCharacterIcons[e.Character.Index].SoftPosition - scroll;
+								mPBCharacterIcons[e.Character].SoftPosition = mPBCharacterIcons[e.Character].SoftPosition - scroll;
 								e.PerformanceGraph.SoftPosition = e.PerformanceGraph.SoftPosition - scroll;
 							}
 						}
@@ -1011,11 +1015,11 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 			{
 				int it = i;
 				PerformanceStats ps = aStats[i];
-				CharacterIconObject cio = mPBCharacterIcons[ps.Character.Index];
+				CharacterIconObject cio = mPBCharacterIcons[ps.Character];
 				PerformanceGraphObject pgo = ps.PerformanceGraph;
 				
 				//angels
-				ghostElements[ps.Character.Level-1].SoftPosition = ghostPositions[ps.Character.Level-1];
+				ghostElements[ps.Character.LevelIndex-1].SoftPosition = ghostPositions[ps.Character.LevelIndex-1];
 				
 				//right side elements
 				cio.SoftPosition = new Vector3(cioXOffset,startingPosition - (it-1) * intervalSize,0);
@@ -1068,7 +1072,7 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 					Vector3 scroll = -new Vector3(0,scrollSpeed*(aTime-lastTime),0);
 					foreach(var e in aStats)
 					{
-						mPBCharacterIcons[e.Character.Index].SoftPosition = mPBCharacterIcons[e.Character.Index].SoftPosition + scroll;
+						mPBCharacterIcons[e.Character].SoftPosition = mPBCharacterIcons[e.Character].SoftPosition + scroll;
 						e.PerformanceGraph.SoftPosition = e.PerformanceGraph.SoftPosition + scroll;
 					}
 					foreach(FlatElementText e in creditsText)
