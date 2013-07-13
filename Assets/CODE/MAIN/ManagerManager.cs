@@ -48,7 +48,7 @@ public class ManagerManager : MonoBehaviour{
 
 	void Awake () {
 		
-		
+		Screen.showCursor = false;
 		gameObject.AddComponent<AudioListener>();
 		
         //Debug.Log("setting up managers");
