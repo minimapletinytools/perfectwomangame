@@ -1,3 +1,11 @@
+::CONNECTION FORMAT::
+-CONNECTION <LEVEL,CHOICE> <+/-> <SENTENCE>
+	-eg. for 85-1 (or whatever wise old grandma is)
+	-CONNECTION 2 2 + being a responsible sister at 16 made being wise easy
+		-only displayed if 85-1 is easy/med
+	-CONNECTION 4 1 - being in a shallow relation really tarnished your life experiences
+		-only displayed if 85-1 was hard/impossible
+
 ::TODO X:: in order of importance
 DONE-reindex characters in charinfos...
 DONE-new birth pose...
@@ -5,32 +13,42 @@ DONE-score is all messed up in grave
 DONE-names are not being displayed in grave
 
 
--update film akademie logo in credits
--check positions on drummer and oktober fest girl
+DONE-get lea grave connection format
+-Screen.showCursor = false;
+-performance evaluation sentence grammer is wrong (coma at end, capitalization, no period at end of sentence)
+DONE???-get rid of the startup window
+-aspect ratio getting distorted??? whyyy
+-fix artifacts on the left and right
+-stop playing video games
+-particle effects in performance graph
+-particles in play (as performance feedback)
+-something is wrong with the 34 characters
+DONE-snapping and smooth should be switched
+-consider doig all smooth
+DONE-update film akademie logo in credits
+DONE-update drummer and oktober fest girl
 -do a full playtest fml..
 -post grave
-	-do the high score thing
 	-teach how to skip cutscenes
 	-show unlocked things
 -do new fetus scene with cutscene text...
 	-introduce green pose and performance graph
 	-explain cutscenes..
+	-confirmation that you matched the green pose
 -grave connections
 -high score nonsense 
 	-capture image from kinect
 	-saveeee
 		-de/serialize scores and png to file
-		
 	-render in ending screen
--particle effects in performance graph
--16-2 angel is a dot
+-16-2 angel is a dot (update it)
 -background animations
 -better functions for checknig if user is off screen (cuz they suck under windows)
 -move choice made text into NewInterfaceManager and add color to the difficulty thing or use one of Lea's diff badge images
 -unlockables
 	-some sort of save system nonsense, see highscore..
 	DONE-reindex your characters
-
+-add insta perform well button lul
 -skipping system
 	-add skip gestures
 	-skip on during graveyard (or did I do that already??)
