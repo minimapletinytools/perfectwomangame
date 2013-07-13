@@ -192,6 +192,7 @@ public class NewGameManager : FakeMonoBehaviour
 	
 	public float mLastGrade = 0.5f;
 	
+	public int mLastDiff = 0;
 	public void update_TEST()
 	{
 		if(CurrentPoseAnimation != null)
@@ -212,6 +213,11 @@ public class NewGameManager : FakeMonoBehaviour
 		else if ( Input.GetKeyDown(KeyCode.D))
 			mManager.mBackgroundManager.load_cutscene(4,DeathCharacter);
 		
+		if(Input.GetKeyDown(KeyCode.Alpha8))
+		{
+			CurrentPoseAnimation = new PerformanceType(mManager.mCharacterBundleManager.get_pose(CurrentCharacterIndex,(++mLastDiff)%4), new CharacterIndex(2,0)); //forces it to be switch
+		}
+		
 		int choice = -1;
 		if(Input.GetKey(KeyCode.Alpha1))
 		{
@@ -226,7 +232,7 @@ public class NewGameManager : FakeMonoBehaviour
 			choice = 2;
 		}
 		bool shift = Input.GetKey(KeyCode.LeftShift);
-			
+		
 		if(choice != -1)
 		{
 			if(shift)
@@ -493,7 +499,8 @@ public class NewGameManager : FakeMonoBehaviour
 		}
 		else
 		{
-			CurrentPoseAnimation = new PerformanceType(mManager.mCharacterBundleManager.get_pose(CurrentCharacterIndex,CurrentPerformanceStat.Stats.Difficulty),CurrentCharacterIndex);
+			int diff = CurrentPerformanceStat.Stats.Difficulty;
+			CurrentPoseAnimation = new PerformanceType(mManager.mCharacterBundleManager.get_pose(CurrentCharacterIndex,diff),CurrentCharacterIndex);
 			CurrentTargetPose = CurrentPoseAnimation.get_pose(0);
 			//mManager.mTransparentBodyManager.set_target_pose(CurrentTargetPose);
 		}
