@@ -11,23 +11,27 @@ DONE-reindex characters in charinfos...
 DONE-new birth pose...
 DONE-score is all messed up in grave
 DONE-names are not being displayed in grave
-
-
 DONE-get lea grave connection format
--Screen.showCursor = false;
--performance evaluation sentence grammer is wrong (coma at end, capitalization, no period at end of sentence)
 DONE???-get rid of the startup window
--aspect ratio getting distorted??? whyyy
--fix artifacts on the left and right
--stop playing video games
--particle effects in performance graph
--particles in play (as performance feedback)
--something is wrong with the 34 characters
 DONE-snapping and smooth should be switched
--consider doig all smooth
 DONE-update film akademie logo in credits
 DONE-update drummer and oktober fest girl
+DONE-16-2 angel is a dot (update it)
+DONE-Screen.showCursor = false;
+DONE-performance evaluation sentence grammer is wrong (coma at end, capitalization, no period at end of sentence)
+
+
+-something is wrong with the 34 characters
+-aspect ratio getting distorted??? whyyy
+-fix artifacts on the left and right
+
+
+
+
+
 -do a full playtest fml..
+-stop playing video games
+
 -post grave
 	-teach how to skip cutscenes
 	-show unlocked things
@@ -41,7 +45,10 @@ DONE-update drummer and oktober fest girl
 	-saveeee
 		-de/serialize scores and png to file
 	-render in ending screen
--16-2 angel is a dot (update it)
+-particle effects in performance graph
+-particles in play (as performance feedback)
+
+-consider doing all smooth
 -background animations
 -better functions for checknig if user is off screen (cuz they suck under windows)
 -move choice made text into NewInterfaceManager and add color to the difficulty thing or use one of Lea's diff badge images
