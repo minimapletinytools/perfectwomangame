@@ -681,10 +681,11 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 				{
 					//TODO use color text here... In fact you should replace color text as yoru standard text object really...
 					//text = aChanges.PerformanceDescription.Replace("<P>",perfectPhrase[mBBLastPerformanceGraph.Stats.Perfect]);
+					string noCapsDescription = mBBLastPerformanceGraph.Character.Description.ToLower();
 					if(mBBLastPerformanceGraph.Character.IsDescriptionAdjective)
-						text = "You lived your life " + mBBLastPerformanceGraph.Character.Description + ", " + performancePhrase[(int)Mathf.Clamp(mBBLastPerformanceGraph.Score*4,0,3)];
+						text = "You lived your life " + noCapsDescription + " " + performancePhrase[(int)Mathf.Clamp(mBBLastPerformanceGraph.Score*4,0,3)] + ".";
 					else
-						text = "You lived your life as a " + mBBLastPerformanceGraph.Character.Description + ", " + performancePhrase[(int)Mathf.Clamp(mBBLastPerformanceGraph.Score*4,0,3)];
+						text = "You lived your life as a " + noCapsDescription + " " + performancePhrase[(int)Mathf.Clamp(mBBLastPerformanceGraph.Score*4,0,3)] + ".";
 					introPo = add_timed_text_bubble(text,gPerformanceText);
 				}
 				return true;
