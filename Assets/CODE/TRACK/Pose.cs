@@ -70,9 +70,9 @@ public class PerformanceType
 		if(aIndex.LevelIndex == 0 || aIndex.LevelIndex == 1 || aIndex.LevelIndex == 7 )
 			PT = PType.STATIC;
 		if(aIndex.LevelIndex == 2 || aIndex.LevelIndex == 6 )
-			PT = PType.SLOW;
-		if(aIndex.LevelIndex == 3 || aIndex.LevelIndex == 5 )
 			PT = PType.SWITCH;
+		if(aIndex.LevelIndex == 3 || aIndex.LevelIndex == 5 )
+			PT = PType.SLOW;
 		if(aIndex.LevelIndex == 4)
 			PT = PType.SLOWSWITCH;
 			
