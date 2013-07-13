@@ -37,6 +37,7 @@ public class NewMenuReferenceBehaviour : MonoBehaviour {
 	
 	//grave
 	public Texture2D gravePerfectnessEngraving;
+	public Texture2D filmAkademieLogoGrave;
 	
 	//text
 	public Texture2D[] textSmallBubble;

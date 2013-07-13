@@ -1061,7 +1061,7 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 				
 					float logoStartHeight = mFlatCamera.Height/2+450 + 70*counter + 500;
 					logo1 = new FlatElementImage(mManager.mNewRef.gameLabLogo,mPB.Depth+1);
-					logo2 = new FlatElementImage(mManager.mNewRef.filmAkademieLogo,mPB.Depth+1);
+					logo2 = new FlatElementImage(mManager.mNewRef.filmAkademieLogoGrave,mPB.Depth+1);
 					logo1.HardPosition = mPB.SoftPosition + new Vector3(0,logoStartHeight,0);
 					logo2.HardPosition = mPB.SoftPosition + new Vector3(0,logoStartHeight + 700,0);
 				
@@ -1112,12 +1112,6 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 		mGraveChain = TED.LastEventKeyAdded;
 		
 	}
-	
-	
-	
-	
-	//GLORY
-	public void add_glory_character(){}
 	
 	
 	
