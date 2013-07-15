@@ -112,9 +112,9 @@ public class PerformanceType
 			//make sure there are an odd # of poses
 			//want to change once per beat???
 			float changeTime = 5;
-			int rIndex = ((int)(aTime/changeTime))*2;
+			int rIndex = ((int)(aTime/changeTime));
 			float lambda = (aTime-(rIndex*changeTime))/changeTime;
-			return Pose.interpolate(PA.get_pose(rIndex),PA.get_pose(rIndex + 1),lambda);
+			return Pose.interpolate(PA.get_pose(rIndex*2),PA.get_pose(rIndex*2 + 1),lambda);
 		}
 		return null;
 	}

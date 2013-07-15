@@ -215,7 +215,9 @@ public class NewGameManager : FakeMonoBehaviour
 		
 		if(Input.GetKeyDown(KeyCode.Alpha8))
 		{
-			CurrentPoseAnimation = new PerformanceType(mManager.mCharacterBundleManager.get_pose(CurrentCharacterIndex,(++mLastDiff)%4), new CharacterIndex(2,0)); //forces it to be switch
+			ManagerManager.Manager.mDebugString = "set to diff " + ((++mLastDiff)%4);
+			CurrentPoseAnimation = new PerformanceType(mManager.mCharacterBundleManager.get_pose(CurrentCharacterIndex,mLastDiff%4), new CharacterIndex(2,0)); //forces it to be switch
+			
 		}
 		
 		int choice = -1;
