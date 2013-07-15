@@ -21,7 +21,7 @@ DONE-Screen.showCursor = false;
 DONE-performance evaluation sentence grammer is wrong (coma at end, capitalization, no period at end of sentence)
 
 
--something is wrong with the 34 characters
+DONE-something is wrong with the 34 characters
 -aspect ratio getting distorted??? whyyy
 -fix artifacts on the left and right
 
