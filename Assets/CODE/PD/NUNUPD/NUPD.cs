@@ -45,6 +45,7 @@ namespace NUPD
 		public float LowerThreshold {get; set;}
 		public string PerformanceDescription {get; set;}
 		public List<ChangeSubSet> Changes {get; set;}
+		
 
         public ChangeSet()
         {
@@ -52,6 +53,7 @@ namespace NUPD
             LowerThreshold = 0;
 			PerformanceDescription = "";
             Changes = new List<ChangeSubSet>();
+			
         }
 	}
 	
@@ -63,6 +65,8 @@ namespace NUPD
 		public bool IsDescriptionAdjective {get;set;}
 		public CharacterIndex Index {get; set;}
 		public List<ChangeSet> ChangeSet {get; set;}
+		public CharIndexContainerString HardConnections{get; set;}
+		public CharIndexContainerString EasyConnections{get; set;}
 		
 		public CharacterInformation()
 		{
@@ -71,6 +75,8 @@ namespace NUPD
 			IsDescriptionAdjective = false;
 			Index = new CharacterIndex(-1,0);
 			ChangeSet = new List<ChangeSet>();
+			HardConnections = new CharIndexContainerString();
+			EasyConnections = new CharIndexContainerString();
 		}
 		
 		public static CharacterInformation default_character_info(CharacterIndex aIndex)
@@ -155,6 +161,13 @@ namespace NUPD
 					if(sp.Length > 1)
 						operatingChangeSubSet.Description = sp.Skip(1).Aggregate((s1,s2)=>s1+" "+s2);
 					operatingChangeSet.Changes.Add(operatingChangeSubSet);
+				} else if(first == "CONNECTION"){
+					CharacterIndex conind = new CharacterIndex(System.Convert.ToInt32(sp[1]),System.Convert.ToInt32(sp[2]));
+					bool easy = sp[3] == "+" ? false : true;
+					if(easy)
+						ci.EasyConnections[conind] = sp.Skip(4).Aggregate((s1,s2)=>s1+" "+s2);
+					else
+						ci.HardConnections[conind] = sp.Skip(4).Aggregate((s1,s2)=>s1+" "+s2);
 				}
 				
 				if(keywords.Contains(first))
