@@ -26,9 +26,6 @@ DONE-performance evaluation sentence grammer is wrong (coma at end, capitalizati
 -fix artifacts on the left and right
 
 
-
-
-
 -do a full playtest fml..
 -stop playing video games
 
@@ -57,6 +54,7 @@ DONE-performance evaluation sentence grammer is wrong (coma at end, capitalizati
 	DONE-reindex your characters
 -add insta perform well button lul
 -skipping system
+	-better plan, disallow skipping during particle effects and maybe queue the skip over...
 	-add skip gestures
 	-skip on during graveyard (or did I do that already??)
 	-notes
