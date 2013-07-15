@@ -123,6 +123,15 @@ public class CharIndexContainerString
 			Contents[x][y] = value;
 		}
 	}
+	public List<string> to_list()
+	{
+		List<String> r = new List<String>();
+		foreach(String[] e in Contents)
+			foreach(String f in e)
+				if(f != null && f != "")
+					r.Add(f);
+		return r;
+	}
 }
 	
 

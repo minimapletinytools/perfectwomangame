@@ -820,6 +820,7 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 		return chain;
 	}
 	
+	
 	//delegates needed for skipping cleanly
 	QuTimer mGraveChain = null;
 	System.Action<bool> mGraveCompleteCb = null;
@@ -1003,6 +1004,35 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 					return false;
 				},
 			0);
+			
+			//TODO grave connections
+			CharIndexContainerString connections;
+			bool wasHard = ps.Stats.Difficulty > 1;
+			if(wasHard)
+				connections = mManager.mCharacterBundleManager.get_character_stat(ps.Character).CharacterInfo.HardConnections;
+			else
+				connections = mManager.mCharacterBundleManager.get_character_stat(ps.Character).CharacterInfo.EasyConnections;
+			CharIndexContainerString realConnections = new CharIndexContainerString();
+			for(int j = 1; j < aStats.Count; j++)
+			{
+				if(connections[aStats[j].Character] != null && connections[aStats[j].Character] != "")
+					realConnections[aStats[j].Character] = connections[aStats[j].Character];
+			}
+			
+			/*
+			chain = chain.then_one_shot (
+				delegate(float aTime)
+				{
+					
+				//	add_cutscene_particle_stream(
+				},
+			0).then(
+				delegate(float aTime)
+				{
+					//TODO soft skipping lul
+					return aTime > 10;
+				}
+			);*/
 		}
 		
 		
