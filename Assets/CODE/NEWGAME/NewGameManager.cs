@@ -266,6 +266,9 @@ public class NewGameManager : FakeMonoBehaviour
             float grade = ProGrading.grade_pose(CurrentPose, CurrentTargetPose);
 			grade = ProGrading.grade_to_perfect(grade);
 			
+			if(Input.GetKey(KeyCode.A))
+				grade = 1;
+			
 			float newGrade = mLastGrade*0.95f + grade*0.05f;
 			if(newGrade < mLastGrade)
 				mLastGrade = Mathf.Max(newGrade,mLastGrade - Time.deltaTime/6f);
@@ -359,6 +362,7 @@ public class NewGameManager : FakeMonoBehaviour
 
         NUPD.ChangeSet changes;
         
+		//debugging changes can DELETE
 		if(mManager.mCharacterBundleManager.get_character_stat(CurrentCharacterIndex).CharacterInfo.ChangeSet.Count>0)
 		{
 			//Debug.Log (mManager.mCharacterBundleManager.get_character_stat(CurrentCharacterIndex).CharacterInfo.ChangeSet[0].LowerThreshold);
@@ -366,6 +370,7 @@ public class NewGameManager : FakeMonoBehaviour
 			//Debug.Log (CurrentPerformanceStat.Score);
 		}
 		
+		//find the correct changeset based on performance
         changes = mManager.mCharacterBundleManager.get_character_stat(CurrentCharacterIndex).CharacterInfo.ChangeSet.Find(e => e.LowerThreshold <= CurrentPerformanceStat.Score && e.UpperThreshold >= CurrentPerformanceStat.Score);
         if(changes == null)
         {
@@ -374,11 +379,17 @@ public class NewGameManager : FakeMonoBehaviour
             changes.Changes.Add(new NUPD.ChangeSubSet() { Description = "No changes available!!" });
         }
 		
+		//audio
+		if(changes.Audio != "")
+		{
+			
+		}
+		
 		
 		//visuals
 		mManager.mBodyManager.transition_character_out();
 		mManager.mTransparentBodyManager.transition_character_out();
-		
+
 		if(CurrentPerformanceStat.Score < 0.5f && CurrentCharacterLoader.has_cutscene(1))
 			mManager.mBackgroundManager.load_cutscene(1,CurrentCharacterLoader);
 		else
