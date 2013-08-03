@@ -16,7 +16,7 @@ public class FlatElementBase {
                 e.Key.update(aDeltaTime);
                 if (e.Key.isExpired())
                 {
-                    if (e.Value(aElement,aDeltaTime))
+                    if (e.Value(aElement,e.Key.getTimeSinceStart()))
                         removal.AddLast(e);
 
                 }
@@ -104,8 +104,8 @@ public class FlatElementBase {
         set { mCurrentScale = mTargetScale = value; }
     }
 
-    Quaternion mCurrentRotation;
-    Quaternion mTargetRotation;
+    Quaternion mCurrentRotation = Quaternion.identity;
+    Quaternion mTargetRotation = Quaternion.identity;
     public Quaternion mLocalRotation = Quaternion.identity;
     public virtual float SoftFlatRotation
     {
@@ -274,7 +274,7 @@ public class FlatElementBase {
     {
         set_position(mCurrentPosition + mLocalPosition);// + new Vector3(0,0,Depth));
         set_scale(mBaseScale.component_multiply(mCurrentScale).component_multiply(mLocalScale));
-        set_rotation(mLocalRotation*mCurrentRotation);
+        set_rotation(mCurrentRotation*mLocalRotation);
         set_color(mCurrentColor + mLocalColor);
     }
 
