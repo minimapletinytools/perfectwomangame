@@ -44,6 +44,7 @@ namespace NUPD
 		public float UpperThreshold {get; set;}
 		public float LowerThreshold {get; set;}
 		public string PerformanceDescription {get; set;}
+		public string Audio {get; set;}
 		public List<ChangeSubSet> Changes {get; set;}
 		
 
@@ -52,6 +53,7 @@ namespace NUPD
             UpperThreshold = 1;
             LowerThreshold = 0;
 			PerformanceDescription = "";
+			Audio = "";
             Changes = new List<ChangeSubSet>();
 			
         }
@@ -168,6 +170,8 @@ namespace NUPD
 						ci.EasyConnections[conind] = sp.Skip(4).Aggregate((s1,s2)=>s1+" "+s2);
 					else
 						ci.HardConnections[conind] = sp.Skip(4).Aggregate((s1,s2)=>s1+" "+s2);
+				} else if(first == "AUDIO"){
+					operatingChangeSet.Audio = sp.Skip(1).Aggregate((s1,s2)=>s1+" "+s2);
 				}
 				
 				if(keywords.Contains(first))
