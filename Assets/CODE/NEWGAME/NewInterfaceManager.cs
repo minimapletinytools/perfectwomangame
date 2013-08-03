@@ -883,7 +883,7 @@ public class NewInterfaceManager : FakeMonoBehaviour {
                 f.gameObject.layer = 4;
 		//foreach (Renderer f in perfectEngraving.PrimaryGameObject.GetComponentsInChildren<Renderer>()) f.gameObject.layer = 4;
 		
-		Vector3 graveCenter = mManager.mBackgroundManager.mBackgroundElements.mElements[0].Element.SoftPosition + new Vector3(0, 50, 0);
+		Vector3 graveCenter = mManager.mBackgroundManager.mBackgroundElements[0].SoftPosition + new Vector3(0, 50, 0);
 		finalScoreText.SoftPosition = graveCenter + new Vector3(0,-250,0);
 		//perfectEngraving.SoftPosition = graveCenter + new Vector3(35,250,0);
 		perfectPercent.SoftPosition = graveCenter + new Vector3(24,180,0);

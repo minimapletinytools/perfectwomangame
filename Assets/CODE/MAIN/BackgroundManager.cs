@@ -6,8 +6,11 @@ public class BackgroundManager  : FakeMonoBehaviour
     public int mBackgroundLayer = 0; //should not be private TODO
     int mForegroundLayer = 0;
     FlatElementImage mBackground;
-    public FlatElementMultiImage mBackgroundElements;
-    FlatElementMultiImage mForegroundElements;
+	
+	static int sBackgroundStartingDepth = 5;
+	static int sForegroundStartingDepth = 100;
+	public List<FlatElementImage> mBackgroundElements;
+    public List<FlatElementImage> mForegroundElements;
     
     public BackgroundManager(ManagerManager aManager) : base(aManager) { }
 
@@ -17,15 +20,17 @@ public class BackgroundManager  : FakeMonoBehaviour
         mBackground = new FlatElementImage(null, 0);
         mBackground.HardPosition = Vector3.zero;
 
-        mBackgroundElements = new FlatElementMultiImage(5);
-        mForegroundElements = new FlatElementMultiImage(100);
+        mBackgroundElements = new List<FlatElementImage>();
+        mForegroundElements = new List<FlatElementImage>();
 	}
 	
     public override void Update()
     {
         mBackground.update(Time.deltaTime);
-        mBackgroundElements.update(Time.deltaTime);
-        mForegroundElements.update(Time.deltaTime);
+		foreach(FlatElementImage e in mBackgroundElements)
+       		e.update(Time.deltaTime);
+		foreach(FlatElementImage e in mForegroundElements)
+       		e.update(Time.deltaTime);
 	}
 
     public void set_background_layer(int aLayer)
@@ -36,22 +41,22 @@ public class BackgroundManager  : FakeMonoBehaviour
             f.gameObject.layer = mBackgroundLayer;
 
 
-        foreach( FlatElementMultiBase.ElementOffset e in mBackgroundElements.mElements)
-            foreach(Renderer f in e.Element.PrimaryGameObject.GetComponentsInChildren<Renderer>())
+        foreach( FlatElementImage e in mBackgroundElements)
+            foreach(Renderer f in e.PrimaryGameObject.GetComponentsInChildren<Renderer>())
                 f.gameObject.layer = mBackgroundLayer;
     }
 
     public void set_foreground_layer(int aLayer)
     {
         mForegroundLayer = aLayer;
-        foreach (FlatElementMultiBase.ElementOffset e in mForegroundElements.mElements)
-            foreach (Renderer f in e.Element.PrimaryGameObject.GetComponentsInChildren<Renderer>())
+        foreach (FlatElementImage e in mForegroundElements)
+            foreach (Renderer f in e.PrimaryGameObject.GetComponentsInChildren<Renderer>())
                 f.gameObject.layer = mForegroundLayer;
     }
 	
 	
 	
-	public void load_images(CharacterLoader aCharacter, FlatElementMultiImage aMulti, string aPrefix, int aBegin = 0)
+	public void load_images(CharacterLoader aCharacter, List<FlatElementImage> aImages, int startingDepth, string aPrefix, int aBegin = 0)
 	{
 		//last to first stupid hack..
 		List<CharacterData.ImageSizeOffsetAnimationData> dataList = new List<CharacterData.ImageSizeOffsetAnimationData>();
@@ -71,7 +76,19 @@ public class BackgroundManager  : FakeMonoBehaviour
 			Texture2D tex = aCharacter.Images.staticElements[nameList[i]];
 			//if(tex == null)
 				//throw new UnityException("data exists for " + data.Name + " but texture does not");
-			aMulti.add_image(tex,dataList[i].Offset,dataList[i].Size);
+			var img = new FlatElementImage(tex,dataList[i].Size,startingDepth + aImages.Count);
+			img.HardPosition = dataList[i].Offset;
+			aImages.Add(img);
+			
+			/*float beginAngle = Random.value*30-15;
+			aMulti.Events.add_event(
+				delegate(FlatElementBase aElement, float aTime)
+				{
+					aElement.mLocalRotation = Quaternion.AngleAxis(Random.value*300,Vector3.forward);
+					//img.Element.mLocalRotation = Quaternion.AngleAxis(Random.value*300,Vector3.forward);
+					return false;
+				}
+			,0);*/
 				
 			//dataList[i].AnimationEffect
 		}
@@ -81,24 +98,30 @@ public class BackgroundManager  : FakeMonoBehaviour
 	//note aCharacter need not be the same as teh original character (use this or death)
 	public void load_cutscene(int aNum, CharacterLoader aCharacter)
 	{
-		foreach(FlatElementMultiBase.ElementOffset e in mBackgroundElements.mElements)
-			e.Element.SoftColor = new Color(1,1,1,0);
-		foreach(FlatElementMultiBase.ElementOffset e in mForegroundElements.mElements)
-			e.Element.SoftColor = new Color(1,1,1,0);
+		foreach (FlatElementImage e in mForegroundElements)
+			e.SoftColor = new Color(1,1,1,0);
+		foreach (FlatElementImage e in mBackgroundElements)
+			e.SoftColor = new Color(1,1,1,0);
 		
 		string prefix = "CUTSCENE"+aNum+"_";
-		load_images(aCharacter,mForegroundElements,prefix);
+		load_images(aCharacter,mForegroundElements,sForegroundStartingDepth,prefix);
 		set_foreground_layer(mForegroundLayer);
 	}
 	
     public void character_changed_listener(CharacterLoader aCharacter)
     {
-        mBackground.mImage.set_new_texture(aCharacter.Images.background1,aCharacter.Sizes.mBackSize);
-        mBackgroundElements.destroy();
-        mForegroundElements.destroy();
 		
-		load_images(aCharacter,mBackgroundElements,"BG-",1);
-		load_images(aCharacter,mForegroundElements,"FG-",1);
+		foreach (FlatElementImage e in mForegroundElements)
+			e.destroy();
+		foreach (FlatElementImage e in mBackgroundElements)
+			e.destroy ();
+		mForegroundElements.Clear();
+		mBackgroundElements.Clear();
+		
+        mBackground.mImage.set_new_texture(aCharacter.Images.background1,aCharacter.Sizes.mBackSize);
+		
+		load_images(aCharacter,mBackgroundElements,sBackgroundStartingDepth,"BG-",1);
+		load_images(aCharacter,mForegroundElements,sForegroundStartingDepth,"FG-",1);
 
         set_background_layer(mBackgroundLayer);
         set_foreground_layer(mForegroundLayer);
