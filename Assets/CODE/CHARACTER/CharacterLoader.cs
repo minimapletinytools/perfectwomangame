@@ -47,6 +47,18 @@ public class CharacterLoader {
 		
 		Images.background1 = aBundle.Load("BACKGROUND", typeof(Texture2D)) as Texture2D;
         Images.backgroundMusic = aBundle.Load("AUDIO", typeof(AudioClip)) as AudioClip; //optional
+		
+		for(int i = 0; i < 10; i++)
+		{
+			AudioClip clip = aBundle.Load("CSAUDIO_" + i, typeof(AudioClip)) as AudioClip;
+			if(clip != null)
+				Images.cutsceneMusic.Add(clip);
+			else 
+			{
+				Debug.Log("loaded " + i + " cutscene songs");
+				break;
+			}
+		}
 
         TextAsset cd = aBundle.Load("CD", typeof(TextAsset)) as TextAsset;
         System.IO.MemoryStream stream = new System.IO.MemoryStream(cd.bytes);

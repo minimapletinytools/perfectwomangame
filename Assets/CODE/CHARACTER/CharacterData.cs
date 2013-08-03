@@ -35,6 +35,7 @@ public static class CharacterData {
     public class CharacterDataImages
     {
         public AudioClip backgroundMusic;
+		public List<AudioClip> cutsceneMusic = new List<AudioClip>();
 
         public Texture2D head;
         public Texture2D leftLowerArm;
