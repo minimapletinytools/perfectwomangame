@@ -23,19 +23,20 @@ DONE-Screen.showCursor = false;
 DONE-performance evaluation sentence grammer is wrong (coma at end, capitalization, no period at end of sentence)
 DONE-something is wrong with the 34 characters
 DONE-dancer poses seem to be messed up
-
--end stats lul
--fix the loop around problem when interpolating poses
--put in new music!!! with cutscene separate songs!!
+DONE-fix the loop around problem when interpolating poses
 NOPE-text for fetus is wrong
+DONE-add insta perform well button lul
+DONE-leukemia girl head rotates in pose. Probably need to do better interpolation.. (so it goes in the right direction)
+
+-put in new music!!! with cutscene separate songs!!
+-end stats lul
 -adoptive mother name and description too long
 -do the "loading" birth sorta thing for the fetus
 -check lea's documents for grave stuff
+-consider doing graded slow (change speeds up as you get further)
+-partikuls!!!
 -aspect ratio getting distorted??? whyyy
 -fix artifacts on the left and right
--leukemia girl head rotates in pose. Probably need to do better interpolation.. (so it goes in the right direction)
--consider doing graded slow (change speeds up as you get further)
--add insta perform well button lul
 
 DONE-remove glow lul or tone it down...
 DONE-stop playing video games
