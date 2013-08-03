@@ -252,7 +252,7 @@ public class FlatElementBase {
 			Vector3 desiredPosition = (1 - SoftInterpolation) * mCurrentPosition + SoftInterpolation * mTargetPosition;
 			float desiredPositionDistance = (desiredPosition-mCurrentPosition).magnitude;
 			if(desiredPositionDistance > 0)
-				mCurrentPosition += (desiredPosition-mCurrentPosition)/desiredPositionDistance * Mathf.Min(PositionInterpolationLimit,desiredPositionDistance);
+				mCurrentPosition += (desiredPosition-mCurrentPosition)	/desiredPositionDistance * Mathf.Min(PositionInterpolationLimit,desiredPositionDistance);
 				*/
 			
 			mCurrentPosition = (1 - SoftInterpolation) * mCurrentPosition + SoftInterpolation * mTargetPosition;

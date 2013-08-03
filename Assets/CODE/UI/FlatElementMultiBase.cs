@@ -149,7 +149,7 @@ public class FlatElementMultiBase : FlatElementBase
         set { 
             base.SoftFlatRotation = value;
             foreach (ElementOffset e in mElements)
-                e.Element.SoftFlatRotation = e.Rotation.flat_rotation()*value;
+                e.Element.SoftFlatRotation = e.Rotation.flat_rotation() * value;
         }
     }
     public override float HardFlatRotation
@@ -209,8 +209,6 @@ public class FlatElementMultiBase : FlatElementBase
 
     public override void update_parameters(float aDeltaTime)
     {
-        
-        
         foreach (ElementOffset e in mElements)
         {
             e.Element.update_parameters(aDeltaTime);
@@ -222,6 +220,7 @@ public class FlatElementMultiBase : FlatElementBase
             e.Element.mLocalRotation = mLocalRotation;
             e.Element.mLocalScale = mLocalScale;
         }
+		Events.update(aDeltaTime, this);
         foreach (ElementOffset e in mElements) //this is even more hacky... poo poo 
             e.Element.Events.update(aDeltaTime, e.Element); 
     }
