@@ -80,15 +80,13 @@ public class BackgroundManager  : FakeMonoBehaviour
 			img.HardPosition = dataList[i].Offset;
 			aImages.Add(img);
 			
-			/*float beginAngle = Random.value*30-15;
-			aMulti.Events.add_event(
-				delegate(FlatElementBase aElement, float aTime)
-				{
-					aElement.mLocalRotation = Quaternion.AngleAxis(Random.value*300,Vector3.forward);
-					//img.Element.mLocalRotation = Quaternion.AngleAxis(Random.value*300,Vector3.forward);
-					return false;
-				}
-			,0);*/
+			var fx = AnimationEffects.get_effect(dataList[i].AnimationEffect);
+			if(fx != null)
+			{
+				img.Events.add_event(
+					fx
+				,0);
+			}
 				
 			//dataList[i].AnimationEffect
 		}
