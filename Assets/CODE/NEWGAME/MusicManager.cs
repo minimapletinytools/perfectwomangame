@@ -4,6 +4,7 @@ using System.Collections.Generic;
 public class MusicManager : FakeMonoBehaviour
 {
 	static float FADE_TIME = 5;
+	static float QUICK_FADE_TIME = 0.3f; //for music to cutscene music
 	static float CHOICE_FADE_TIME = 2;
 	AudioSource mMusicSource;
 	AudioSource mChoiceSource;
@@ -57,30 +58,61 @@ public class MusicManager : FakeMonoBehaviour
 			throw new UnityException("sound " + aSound + " not found");
 	}
 	
-	public void fade_out()
+	public void fade_out(float aFadeTime = -1)
 	{
+		if(aFadeTime == -1)
+			aFadeTime = FADE_TIME;
 		TED.add_event(
 			delegate(float time)
 			{
-				float l = time/FADE_TIME;
+				float l = time/aFadeTime;
 				mMusicSource.volume = 1-l;
 				return l > 1;
 			}
 		);
 	}
 	
-	public void fade_in()
+	public void fade_in(float aFadeTime = -1)
 	{
+		if(aFadeTime == -1)
+			aFadeTime = FADE_TIME;
 		TED.add_event(
 			delegate(float time)
 			{
-				float l = time/FADE_TIME;
+				float l = time/aFadeTime;
 				mMusicSource.volume = l;
 				return l > 1;
 			}
 		);
 	}
 	
+	public void fade_in_cutscene_music(AudioClip aClip)
+	{
+		//fade out game music
+		TED.add_event(
+			delegate(float time)
+			{
+				float l = time/QUICK_FADE_TIME;
+				mMusicSource.volume = 1-l;
+				return l > 1;
+			}
+		).then_one_shot( //switch to cutscene music
+			delegate()
+			{
+				mMusicSource.clip = aClip;
+				mMusicSource.volume = 0;
+				mMusicSource.loop = false;
+				mMusicSource.Play();
+			}
+		).then( //fade it in
+			delegate(float time)
+			{
+				float l = time/QUICK_FADE_TIME;
+				mChoiceSource.volume = l;
+				return l > 1;
+			}
+		);
+	}
 	
 	public void fade_in_choice_music()
 	{

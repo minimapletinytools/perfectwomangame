@@ -98,7 +98,7 @@ namespace NUPD
 	{
 		public static CharacterInformation process_character(string aChar)
 		{
-			string[] keywords = new string[]{"NAME", "NDESC", "INDEX", "CHANGE", "CDESC"};
+			string[] keywords = new string[]{"NAME", "NDESC", "INDEX", "CHANGE", "CDESC", "CONNECTION", "AUDIO"};
 			CharacterInformation ci = new CharacterInformation();
 			string[] process = aChar.Split(new string[] { "\r\n", "\n" }, System.StringSplitOptions.None);
 			string lastState = "";

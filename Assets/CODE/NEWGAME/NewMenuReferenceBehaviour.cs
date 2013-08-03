@@ -45,6 +45,7 @@ public class NewMenuReferenceBehaviour : MonoBehaviour {
 	//audio
 	public AudioClip transitionIn;
 	public AudioClip transitionOut;
+	public AudioClip transitionCutscene; //played when transitioning from PLAY to CUTSCENE
 	public AudioClip choiceBlip; //played when your selection changes
 	public AudioClip choiceMade; //played when selection is made
 	public AudioClip choiceMusic;

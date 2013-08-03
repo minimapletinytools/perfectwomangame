@@ -33,7 +33,7 @@ public class Pose
 			pe.joint = e.joint;
 			pe.important = e.important;
 			pe.weight = e.weight;
-			pe.angle = (1-lambda) * e.angle +  (lambda)* B.find_element(e.joint).angle;
+			pe.angle = VectorMathUtilities.MathHelper.interpolate_degrees(e.angle,B.find_element(e.joint).angle,lambda);
 			r.mElements.Add(pe);
 		}
 		
@@ -67,6 +67,9 @@ public class PerformanceType
 	public PerformanceType(PoseAnimation aAnim, CharacterIndex aIndex)
 	{
 		PA = aAnim;
+		
+		PT = PType.SLOW;
+		/*
 		if(aIndex.LevelIndex == 0 || aIndex.LevelIndex == 1 || aIndex.LevelIndex == 7 )
 			PT = PType.STATIC;
 		if(aIndex.LevelIndex == 2 || aIndex.LevelIndex == 6 )
@@ -74,7 +77,7 @@ public class PerformanceType
 		if(aIndex.LevelIndex == 3 || aIndex.LevelIndex == 5 )
 			PT = PType.SLOW;
 		if(aIndex.LevelIndex == 4)
-			PT = PType.SLOWSWITCH;
+			PT = PType.SLOWSWITCH;*/
 			
 	}
 	public PerformanceType(PoseAnimation aAnim, PType aType)
@@ -85,7 +88,7 @@ public class PerformanceType
 	}
 	public virtual Pose get_pose(float aTime)
 	{
-		
+		float changeTime = 5;
 		if(PT == PType.STATIC)
 		{
 			if(PA != null && PA.poses.Count != 0)
@@ -95,14 +98,14 @@ public class PerformanceType
 		else if(PT == PType.SWITCH)
 		{
 			//want to change once per beat???
-			float changeTime = 5;
+			
 			int rIndex = ((int)(aTime/changeTime));
 			return PA.get_pose(rIndex);
 		}
 		else if(PT == PType.SLOW)
 		{
 			//want to change once per beat???
-			float changeTime = 5;
+			
 			int rIndex = ((int)(aTime/changeTime));
 			float lambda = (aTime-(rIndex*changeTime))/changeTime;
 			return Pose.interpolate(PA.get_pose(rIndex),PA.get_pose(rIndex + 1),lambda);
@@ -111,7 +114,7 @@ public class PerformanceType
 		{
 			//make sure there are an odd # of poses
 			//want to change once per beat???
-			float changeTime = 5;
+			
 			int rIndex = ((int)(aTime/changeTime));
 			float lambda = (aTime-(rIndex*changeTime))/changeTime;
 			return Pose.interpolate(PA.get_pose(rIndex*2),PA.get_pose(rIndex*2 + 1),lambda);

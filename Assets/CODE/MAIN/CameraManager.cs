@@ -81,7 +81,7 @@ public class CameraManager : FakeMonoBehaviour {
 	}
 	
 	
-	public static float MAX_BLOOM_INTENSITY = 6;
+	public static float MAX_BLOOM_INTENSITY = 4;
 	public float mBloomIntensity = 0;
     public void set_camera_effects(float perfect, bool hard = false)
     {
