@@ -1,6 +1,6 @@
 Shader "Custom/TransparentBodyShader" {
 	Properties {
-		_Color ("Main Color", Color) = (1,1,1,1)
+		_Color ("Main Color", Color) = (0,0.317,.898,.8)
 		_MainTex ("Base (RGB)", 2D) = "white" {}
 	}
 	SubShader {
@@ -34,7 +34,7 @@ Shader "Custom/TransparentBodyShader" {
 			{
 				
 				
-				o.Albedo = half3(0.0,1.0,0.0);
+				o.Albedo = half3(0,0.317,.898); //TODO shoulsd read from _Color
 				
 				float2 screenUV = IN.screenPos.xy / IN.screenPos.w;
 				
