@@ -247,7 +247,8 @@ public class NewGameManager : FakeMonoBehaviour
 	
 	public void update_PLAY()
 	{
-		TimeRemaining -= Time.deltaTime;
+		
+		TimeRemaining -= Input.GetKey(KeyCode.O) ? Time.deltaTime * 5 : Time.deltaTime;
 		
 		mManager.mInterfaceManager.update_bb_score(TotalScore);
 		
@@ -275,7 +276,9 @@ public class NewGameManager : FakeMonoBehaviour
 			else mLastGrade = newGrade;
 			grade = mLastGrade;
 			
-			CurrentPerformanceStat.update_score(PercentTimeCompletion,grade);			
+			if(TimeRemaining > 0) //insurance, something funny could happen if music runs slightly longer than it should.
+				CurrentPerformanceStat.update_score(PercentTimeCompletion,grade);			
+			
 			mManager.mCameraManager.set_camera_effects(grade);
 			//update score
 			mManager.mInterfaceManager.update_bb_score(TotalScore);	
@@ -325,6 +328,7 @@ public class NewGameManager : FakeMonoBehaviour
 		}
 		
 		//finish
+		//TODO needs to check for music finish as well
 		if(TimeRemaining <= 0)
 		{
 			CurrentPerformanceStat.Finished = true;
