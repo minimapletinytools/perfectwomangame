@@ -327,9 +327,9 @@ public class NewGameManager : FakeMonoBehaviour
 			transition_to_DEATH();
 		}
 		
-		//finish
-		//TODO needs to check for music finish as well
-		if(TimeRemaining <= 0)
+		//make sure music is finished too!
+		if((TimeRemaining <= 0 && !mManager.mMusicManager.IsMusicSourcePlaying) ||
+			TimeRemaining < -4) //but don't wait too long
 		{
 			CurrentPerformanceStat.Finished = true;
 			mManager.mCameraManager.set_camera_effects(0);
@@ -364,7 +364,7 @@ public class NewGameManager : FakeMonoBehaviour
 	{
 		GS = GameState.CUTSCENE;
 
-        NUPD.ChangeSet changes;
+        NUPD.ChangeSet changes = null;
         
 		//debugging changes can DELETE
 		if(mManager.mCharacterBundleManager.get_character_stat(CurrentCharacterIndex).CharacterInfo.ChangeSet.Count>0)
@@ -375,7 +375,17 @@ public class NewGameManager : FakeMonoBehaviour
 		}
 		
 		//find the correct changeset based on performance
-        changes = mManager.mCharacterBundleManager.get_character_stat(CurrentCharacterIndex).CharacterInfo.ChangeSet.Find(e => e.LowerThreshold <= CurrentPerformanceStat.Score && e.UpperThreshold >= CurrentPerformanceStat.Score);
+		var changeSet = mManager.mCharacterBundleManager.get_character_stat(CurrentCharacterIndex).CharacterInfo.ChangeSet;
+		int changeIndex = -1;
+		for(int i=0; i < changeSet.Count; i++)
+		{
+			if(changeSet[i].LowerThreshold <= CurrentPerformanceStat.Score && changeSet[i].UpperThreshold >= CurrentPerformanceStat.Score)
+			{
+				changeIndex = i;
+				changes = changeSet[i];
+			}
+		}
+		
         if(changes == null)
         {
             Debug.Log("could not find change in thershold with performance: " + CurrentPerformanceStat);
@@ -384,9 +394,12 @@ public class NewGameManager : FakeMonoBehaviour
         }
 		
 		//audio
-		if(changes.Audio != "")
+		if(changes.Audio != "" && changeIndex != -1)
 		{
-			
+			if(CurrentCharacterLoader.Images.cutsceneMusic.Count > changeIndex)
+				mManager.mMusicManager.play_cutscene_music(CurrentCharacterLoader.Images.cutsceneMusic[changeIndex]);
+			else 
+				Debug.Log("ERROR no music found for change index " + changeIndex + " only " + CurrentCharacterLoader.Images.cutsceneMusic.Count + " sounds");
 		}
 		
 		

@@ -7,11 +7,13 @@ public class MusicManager : FakeMonoBehaviour
 	static float QUICK_FADE_TIME = 0.3f; //for music to cutscene music
 	static float CHOICE_FADE_TIME = 2;
 	
-	bool mCheckForMusicFinish = false;
 	AudioSource mMusicSource;
 	AudioSource mCutsceneSource; //TODO use me
 	AudioSource mChoiceSource;
 	AudioSource mFadingSource;
+	
+	public bool IsMusicSourcePlaying
+	{ get { return mMusicSource.isPlaying; } }
 	
 	
 	Dictionary<string,AudioClip> mSoundEffects  = new Dictionary<string, AudioClip>();
@@ -35,18 +37,12 @@ public class MusicManager : FakeMonoBehaviour
 		mSoundEffects["choiceBlip"] = mManager.mNewRef.choiceBlip;
 		mSoundEffects["choiceMade"] = mManager.mNewRef.choiceMade;
 		mSoundEffects["choiceMusic"] = mManager.mNewRef.choiceMusic;
-		mSoundEffects["graveAngel"] = mManager.mNewRef.graveAngel;
-		
+		mSoundEffects["graveAngel"] = mManager.mNewRef.graveAngel;	
 	}
 	
 	public override void Update()
 	{
 		TED.update(Time.deltaTime);
-		if(mCheckForMusicFinish && !mMusicSource.isPlaying)
-		{
-			mCheckForMusicFinish = false;
-			//TODO
-		}
 	}
 	
 	public AudioClip get_sound_clip(string aSound)
@@ -124,6 +120,15 @@ public class MusicManager : FakeMonoBehaviour
 		);
 	}
 	
+	public void play_cutscene_music(AudioClip aClip)
+	{
+		mCutsceneSource.clip = aClip;
+		mCutsceneSource.loop = false;
+		mCutsceneSource.volume = 1;
+		mCutsceneSource.Play();
+	}
+	
+	
 	public void fade_in_choice_music()
 	{
 		mChoiceSource.clip = get_sound_clip("choiceMusic");
@@ -161,7 +166,6 @@ public class MusicManager : FakeMonoBehaviour
 	//but not fading out the music from the last character
 	public void character_changed_listener(CharacterLoader aCharacter)
 	{
-		mCheckForMusicFinish = true;
 		mMusicSource.clip = aCharacter.Images.backgroundMusic;
 		mMusicSource.volume = 0;
 		mMusicSource.loop = false;

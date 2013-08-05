@@ -37,6 +37,7 @@ DONE-leukemia girl head rotates in pose. Probably need to do better interpolatio
 -partikuls!!!
 -aspect ratio getting distorted??? whyyy
 -fix artifacts on the left and right
+-quick perform well button should update graphics too!!! lul no
 
 DONE-remove glow lul or tone it down...
 DONE-stop playing video games
