@@ -65,16 +65,20 @@ public class PopupTextObject : FlatElementMultiBase {
 		float textOffset = 0;
 		if(aText.Length > 25  && aText.Length < 40)
 		{
-			textOffset = 25;
+			textOffset = 15;
 			aText = FlatElementText.convert_to_multiline(2,aText);
-		} else if (aText.Length >= 40)
+		} else if (aText.Length >= 40 && aText.Length < 55)
 		{
-			textOffset = 50;
+			textOffset = 30;
 			aText = FlatElementText.convert_to_multiline(3,aText);
+		} else if (aText.Length >= 55)
+		{
+			textOffset = 45;
+			aText = FlatElementText.convert_to_multiline(4,aText);
 		}
 		
-		mText = new FlatElementText(ManagerManager.Manager.mNewRef.genericFont,120,aText,aDepth+1);
-		mText = new FlatElementText(ManagerManager.Manager.mNewRef.genericFont,100,aText,aDepth+1);
+		
+		mText = new FlatElementText(ManagerManager.Manager.mNewRef.genericFont,100,aText.ToUpper(),aDepth+1);
         mText.HardColor = new Color(0, 0, 0);
 		mElements.Add(new FlatElementMultiBase.ElementOffset(mBackground, new Vector3(0, 0, 0)));
 		mElements.Add(new FlatElementMultiBase.ElementOffset(mText, new Vector3(0, textOffset, 0)));
@@ -88,12 +92,24 @@ public class PopupTextObject : FlatElementMultiBase {
 		//TODO size
 		return ManagerManager.Manager.mNewRef.textSmallBubble[Random.Range(0,ManagerManager.Manager.mNewRef.textSmallBubble.Length)];
 	}
-    public void set_text_color(Color aColor)
+    public void set_text_color(Color aColor,bool hard = false)
     {
-        mText.SoftColor = aColor;
+		if(!hard)
+			mText.SoftColor = aColor;	
+		else mText.HardColor = aColor;	
     }
-	public void set_background_color(Color aColor)
+	//hack
+	public void fade_out()
 	{
-		mBackground.SoftColor = aColor;	
+		Color c = mText.SoftColor;
+		c.a = 0;
+		SoftColor = new Color(1,1,1,0);
+		mText.SoftColor = c;
+	}
+	public void set_background_color(Color aColor, bool hard = false)
+	{
+		if(!hard)
+			mBackground.SoftColor = aColor;	
+		else mBackground.HardColor = aColor;	
 	}
 }
