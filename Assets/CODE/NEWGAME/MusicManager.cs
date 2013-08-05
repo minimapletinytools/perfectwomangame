@@ -6,7 +6,10 @@ public class MusicManager : FakeMonoBehaviour
 	static float FADE_TIME = 5;
 	static float QUICK_FADE_TIME = 0.3f; //for music to cutscene music
 	static float CHOICE_FADE_TIME = 2;
+	
+	bool mCheckForMusicFinish = false;
 	AudioSource mMusicSource;
+	AudioSource mCutsceneSource; //TODO use me
 	AudioSource mChoiceSource;
 	AudioSource mFadingSource;
 	
@@ -23,6 +26,7 @@ public class MusicManager : FakeMonoBehaviour
 	public override void Start()
 	{
 		mMusicSource = mManager.gameObject.AddComponent<AudioSource>();
+		mCutsceneSource = mManager.gameObject.AddComponent<AudioSource>();
 		mFadingSource = mManager.gameObject.AddComponent<AudioSource>();
 		mChoiceSource = mManager.gameObject.AddComponent<AudioSource>();
 		
@@ -38,6 +42,11 @@ public class MusicManager : FakeMonoBehaviour
 	public override void Update()
 	{
 		TED.update(Time.deltaTime);
+		if(mCheckForMusicFinish && !mMusicSource.isPlaying)
+		{
+			mCheckForMusicFinish = false;
+			//TODO
+		}
 	}
 	
 	public AudioClip get_sound_clip(string aSound)
@@ -86,6 +95,7 @@ public class MusicManager : FakeMonoBehaviour
 		);
 	}
 	
+	//TODO delete
 	public void fade_in_cutscene_music(AudioClip aClip)
 	{
 		//fade out game music
@@ -151,9 +161,10 @@ public class MusicManager : FakeMonoBehaviour
 	//but not fading out the music from the last character
 	public void character_changed_listener(CharacterLoader aCharacter)
 	{
+		mCheckForMusicFinish = true;
 		mMusicSource.clip = aCharacter.Images.backgroundMusic;
 		mMusicSource.volume = 0;
-		mMusicSource.loop = true;
+		mMusicSource.loop = false;
 		mMusicSource.Play();
 		fade_in();
 	}
