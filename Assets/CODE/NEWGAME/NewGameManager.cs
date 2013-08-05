@@ -165,7 +165,7 @@ public class NewGameManager : FakeMonoBehaviour
 			update_PLAY();
 			if(Input.GetKeyDown(KeyCode.Alpha0))
 			{
-				TimeRemaining = 0;
+				TimeRemaining = -5; //0;
 			}
 		}
 		else if(GS == GameState.CHOICE) 
@@ -394,7 +394,7 @@ public class NewGameManager : FakeMonoBehaviour
         }
 		
 		//audio
-		if(changes.Audio != "" && changeIndex != -1)
+		if(changeIndex != -1)
 		{
 			if(CurrentCharacterLoader.Images.cutsceneMusic.Count > changeIndex)
 				mManager.mMusicManager.play_cutscene_music(CurrentCharacterLoader.Images.cutsceneMusic[changeIndex]);
