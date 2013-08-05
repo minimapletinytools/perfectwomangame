@@ -1,5 +1,3 @@
-
-
 ::CONNECTION FORMAT::
 -CONNECTION <LEVEL,CHOICE> <+/-> <SENTENCE>
 	-eg. for 85-1 (or whatever wise old grandma is)
@@ -28,6 +26,25 @@ NOPE-text for fetus is wrong
 DONE-add insta perform well button lul
 DONE-leukemia girl head rotates in pose. Probably need to do better interpolation.. (so it goes in the right direction)
 
+DONE-change shadow to (0, 81, 229) @ 80% alpha
+DONE-change easy green to 28,182,71
+DONE-green yellow orange red change to 28,182,71 | 255,168,0 | 234,84,2 | 255,0,0
+DONE-particle stream hard cuts on color changes
+DONE-up to four lines
+DONE-word bubbles all capitals
+DONE-fade word bubble text out to the same color it is (as oppose to white)
+DONE/can't do kerning-depth picture depth left binding, slightly > vertical kerning
+DONE-update score image from blue bar (file/ui/stages)
+DONE-choice screen font should be red and not pink
+DONE-either turn off choosing figure or make it fade instead of fly around. 
+-blue bar font alignment magic
+DONE-fade out to red
+DONE-fade in cut out bubble
+DONE-font color should be red
+-do non cheater fading on the choosing guy
+
+-don't do duration hack  look for "//TODO Hack don't modify timing here" in NIM
+-fix 05-2 music
 -put in new music!!! with cutscene separate songs!!
 -end stats lul
 -adoptive mother name and description too long

@@ -328,8 +328,8 @@ public class NewGameManager : FakeMonoBehaviour
 		}
 		
 		//make sure music is finished too!
-		if((TimeRemaining <= 0 && !mManager.mMusicManager.IsMusicSourcePlaying) ||
-			TimeRemaining < -4) //but don't wait too long
+		//if((TimeRemaining <= 0 && !mManager.mMusicManager.IsMusicSourcePlaying) || TimeRemaining < -4) //but don't wait too long
+		if(TimeRemaining <= 0)
 		{
 			CurrentPerformanceStat.Finished = true;
 			mManager.mCameraManager.set_camera_effects(0);
@@ -397,7 +397,10 @@ public class NewGameManager : FakeMonoBehaviour
 		if(changeIndex != -1)
 		{
 			if(CurrentCharacterLoader.Images.cutsceneMusic.Count > changeIndex)
-				mManager.mMusicManager.play_cutscene_music(CurrentCharacterLoader.Images.cutsceneMusic[changeIndex]);
+			{
+				mManager.mMusicManager.fade_in_cutscene_music(CurrentCharacterLoader.Images.cutsceneMusic[changeIndex]);
+				//mManager.mMusicManager.play_cutscene_music(CurrentCharacterLoader.Images.cutsceneMusic[changeIndex]);
+			}
 			else 
 				Debug.Log("ERROR no music found for change index " + changeIndex + " only " + CurrentCharacterLoader.Images.cutsceneMusic.Count + " sounds");
 		}

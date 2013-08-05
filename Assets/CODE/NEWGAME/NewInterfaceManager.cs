@@ -148,7 +148,7 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 		mBBWarningText.HardColor = new Color(0.5f,0.5f,0.5f,0);
 		mBBMultiplierImage = new FlatElementImage(null,15);
 		mBBText.HardPosition = random_position();
-        mBBText.HardColor = GameConstants.UiPink;
+        mBBText.HardColor = GameConstants.UiRed;
 		mBBText.Alignment = TextAlignment.Left;
 		mBBText.Anchor = TextAnchor.MiddleLeft;
 		mBBScoreFrame.HardPosition = random_position();
@@ -254,7 +254,7 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 			e.SoftColor = fullColor;
 		mBBMiniMan.SoftColor = fullColor;
 		mBBQuestionText.SoftColor = fullColor;
-        mBBQuestionTextPrefix.SoftColor = fullColor*GameConstants.UiPink*2;
+        mBBQuestionTextPrefix.SoftColor = fullColor*GameConstants.UiRed*2;
 		mBBChoosingBackground.SoftColor = fullColor*(new Color(0.6f,0.6f,1))*1;//0.2f;
 	}
 	
@@ -267,7 +267,7 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 		//mBB.SoftScale = new Vector3(desiredSize.x/baseSize.x,desiredSize.y/baseSize.y,1);
 		//mBB.SoftPosition = mFlatCamera.get_point(0, 0);
 		fade_choosing_contents(false);
-		mBBMiniMan.SoftColor = new Color(1,0.3f,0.2f);
+		mBBMiniMan.SoftColor = GameConstants.UiMiniMan;
         //mBB.SoftColor = new Color(0.5f, 0.5f, 0.5f, 0.2f);
 	}
 	
@@ -363,13 +363,15 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 	{
 		if(aIndex == -1) //no choice
 		{
+			mBBMiniMan.SoftColor = GameConstants.UiRedTransparent;
 			mBBMiniMan.SoftPosition = mBBMiniManBasePosition;
             mBBQuestionTextPrefix.Text = "What will you be like";
 			mBBQuestionText.set_text(
 				new string[]{("at age " + mBBLastPerformanceGraph.Character.get_future_neighbor(0).Age) + "?"},
-				new Color[]{GameConstants.UiPink});
+				new Color[]{GameConstants.UiRed});
 		}
 		else{
+			mBBMiniMan.SoftColor = GameConstants.UiMiniMan;
 			mBBMiniMan.SoftPosition = mBBChoiceBodies[aIndex].SoftPosition;
 			var nChar = mBBLastPerformanceGraph.Character.get_future_neighbor(aIndex);
 			var nCharDiff = mManager.mCharacterBundleManager.get_character_helper().Characters[nChar];
@@ -494,19 +496,23 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 	public void add_cutscene_particle_stream(CharacterIndex aTarget, PopupTextObject aPopup, float duration, bool aPositive)
 	{
 		float delay = 0;
-		Color useColor = (!aPositive) ? new Color(0.1f,0.7f,0.2f) : new Color(0.7f,0,0);
+		Color useColor = (!aPositive) ? GameConstants.ParticleStreamEasy : GameConstants.ParticleStreamHard;
 		if(mPBCharacterIcons[aTarget] != null)
 		{
 			TED.add_one_shot_event(
 				delegate()
 				{
-					aPopup.set_background_color(useColor);
+					if(aPositive)
+						aPopup.set_text_color(GameConstants.UiWhite,true);
+					aPopup.set_background_color(useColor,true);
 					mPBCharacterIcons[aTarget].set_background_color(useColor);
 				},
 			delay).then_one_shot(
 				delegate()
 				{
-					aPopup.set_background_color(new Color(0.5f,0.5f,0.5f));
+					if(aPositive)
+						aPopup.set_text_color(GameConstants.UiRed,true);
+					aPopup.set_background_color(new Color(0.5f,0.5f,0.5f),true);
 					mPBCharacterIcons[aTarget].set_background_color(new Color(0.5f,0.5f,0.5f));
 				},
 			duration);
@@ -525,10 +531,11 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 		TED.add_one_shot_event(
 			delegate()
 			{
-				aTarget.set_depth(mPB.Depth + 2); //adjust the depth so the stream shows over the right icons
-				pso = new ParticleStreamObject(mPB.Depth + 5,aTarget.SoftPosition);
+				aTarget.set_depth(mPB.Depth + 5); //adjust the depth so the stream shows over the right icons
+				pso = new ParticleStreamObject(mPB.Depth + 7,aPosition);
                 pso.HardColor = aColor;
-				pso.HardPosition = aPosition;
+				pso.HardPosition = aTarget.SoftPosition;
+				pso.update(0);
 				mElement.Add(pso);
 			},
 		aDelay).then_one_shot(
@@ -545,20 +552,25 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 	//TODO get rid ofthe stupid yreloffset parameter...
 	public PopupTextObject add_timed_text_bubble(string aMsg, float duration, float yRelOffset = 0)
 	{
-		PopupTextObject to = new PopupTextObject(aMsg,6);
+		duration = duration -1; //TODO Hack don't modify timing here
+		PopupTextObject to = new PopupTextObject(aMsg,8);
 		to.HardPosition = random_position();
-		to.set_text_color(new Color(0.1f,0.1f,0.5f,1));
+		to.HardColor = GameConstants.UiWhiteTransparent;
+		to.SoftColor = GameConstants.UiWhite;
+		to.set_text_color(GameConstants.UiWhiteTransparent,true);
+		to.set_text_color(GameConstants.UiRed);
 		TimedEventDistributor.TimedEventChain chain = TED.add_event(
 			delegate(float aTime)
 			{
-				to.SoftPosition = mFlatCamera.get_point(0.40f,yRelOffset);
+				//to.SoftPosition = mFlatCamera.get_point(0.40f,yRelOffset); //fly in
+				to.HardPosition = mFlatCamera.get_point(0.40f,yRelOffset); //cut in
 				mElement.Add(to);
 				return true;
 			},
         0).then(
 			delegate(float aTime)
 			{
-				if(aTime > duration)
+				if(aTime > duration) 
 					return true;
 				if(DoSkipSingleThisFrame)
 				{
@@ -570,14 +582,18 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 		0).then_one_shot(
 			delegate()
 			{
-				//to.SoftPosition = random_position();
-				to.SoftColor = new Color(1,1,1,0);
+				//cutout
+				mElement.Remove(to);
+				to.destroy();
+				
+				//to.fade_out();  fade out
 			},
 		0).then_one_shot(
 			delegate()
 			{
-				mElement.Remove(to);
-				to.destroy();
+				//fadeout
+				//mElement.Remove(to);
+				//to.destroy();
 			},
 		2);
 		return to;
