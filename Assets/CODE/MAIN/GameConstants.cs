@@ -12,7 +12,9 @@ public static class GameConstants
 	public static Color PopupTextColor { get {return new Color(0,0,0); } } //TODO
 	public static Color ChoosingTextColor { get {return new Color(0,0,0); } } //TODO
 	
+	//static Color particleStreamEasy = new Color32(28,182,71,255);
 	public static Color ParticleStreamEasy { get { return new Color32(28,182,71,255); } }
+	//static Color particleStreamHard = new Color32(255,0,0,255);
 	public static Color ParticleStreamHard { get { return new Color32(255,0,0,255); } }
 	
 	//game stuff

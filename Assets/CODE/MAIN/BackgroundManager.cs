@@ -81,6 +81,7 @@ public class BackgroundManager  : FakeMonoBehaviour
 			aImages.Add(img);
 			
 			var fx = AnimationEffects.get_effect(dataList[i].AnimationEffect);
+			fx = null; //TODO
 			if(fx != null)
 			{
 				img.Events.add_event(

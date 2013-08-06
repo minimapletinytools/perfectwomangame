@@ -58,6 +58,7 @@ public class CharacterIconObject : FlatElementMultiBase {
 		{
             e.Element.Depth = aDepth + (e.Element.Depth - Depth);
 		}
+		Depth = aDepth;
 	}
 	public void set_name(string aName)
 	{

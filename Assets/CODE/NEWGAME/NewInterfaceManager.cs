@@ -390,10 +390,11 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 					" choice."},
 				new Color[]{
                     //GameConstants.UiPink,
-					diffColors[nCharDiff.Difficulty]/2f,
+					//diffColors[nCharDiff.Difficulty]/2f,
+					GameConstants.UiRed,
 					//GameConstants.UiPink,
 					//perfectColors[nCharDiff.Perfect]/2f,
-					GameConstants.UiPink});
+					GameConstants.UiRed});
 		}
 	}
 	//called by ChoiceHelper

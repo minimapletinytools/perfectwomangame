@@ -37,10 +37,24 @@ DONE/can't do kerning-depth picture depth left binding, slightly > vertical kern
 DONE-update score image from blue bar (file/ui/stages)
 DONE-choice screen font should be red and not pink
 DONE-either turn off choosing figure or make it fade instead of fly around. 
--blue bar font alignment magic
 DONE-fade out to red
 DONE-fade in cut out bubble
 DONE-font color should be red
+DONE-Color and opacity of selection filling: Color: 0, 81, 229, Filling opacity: 80%. No color changing.
+DONE-layers on cutscene particle streams
+
+-depth picture, move font closer to image. fix that weird negative indentation issue. font size 48??
+-fade to red (are you serious lea???)
+-completely redo particle streams lul...
+	-bubble green is wrong shade of green (I think you need to divide by 2)
+	-colored boxes around white
+		-is it okay if they are static?
+	-make boxes not change colors or make a backgronud box that is red/green
+	-put mored ots in particle stream
+	-text bubble for changing cutscene stuff should start in their correct color
+
+-use image instead of text for title
+-blue bar font alignment magic
 -do non cheater fading on the choosing guy
 
 -don't do duration hack  look for "//TODO Hack don't modify timing here" in NIM
