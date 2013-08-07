@@ -24,6 +24,7 @@ public class TransitionCameraManager : FakeMonoBehaviour
 	//configuration nonsense
 	FlatElementText mPWLogo;
 	FlatElementText mPWCredits;
+	FlatElementImage mPWLogoImage;
 	FlatElementImage mGLLogo;
 	FlatElementImage mFilmLogo;
 	FlatElementText mMessageText;
@@ -45,7 +46,7 @@ public class TransitionCameraManager : FakeMonoBehaviour
 		mFlatCamera = new FlatCameraManager(new Vector3(10000, 10000, 0), 10);
 		mFlatCamera.Camera.depth = 101; //we want this on top always
 		mFlatCamera.Camera.clearFlags = CameraClearFlags.SolidColor;
-		mFlatCamera.Camera.backgroundColor = new Color(0.05f,0.05f,0.06f);
+		mFlatCamera.Camera.backgroundColor = new Color32(37,37,37,255);
 		mFlatCamera.fit_camera_to_screen(false);
 		
         SunShafts shafts = ((GameObject)GameObject.Instantiate(mManager.mReferences.mImageEffectsPrefabs)).GetComponent<SunShafts>();
@@ -80,7 +81,7 @@ public class TransitionCameraManager : FakeMonoBehaviour
 		mDepthWarningText = new FlatElementText(mManager.mNewRef.genericFont,40,"Make sure you are\n in frame and no body\n parts are covered",100);
 		mDepthWarningText.HardColor = new Color(1,1,1,0);	
 		mDepthWarningText.HardPosition = mFlatCamera.get_point_total(1,-1) + mFlatCamera.screen_pixels_to_camera_pixels(new Vector3(-330,80,0));
-		mDepthWarningText.Alignment = TextAlignment.Left;
+		//mDepthWarningText.Alignment = TextAlignment.Left;
 		EnableDepthWarning = false;
 		
 		mElement.Add(mDepthImage);
@@ -126,23 +127,28 @@ public class TransitionCameraManager : FakeMonoBehaviour
 		TED.add_event(fade_in,0);
 		
 		NewMenuReferenceBehaviour refs = mManager.mNewRef;
-		mPWLogo = new FlatElementText(refs.genericFont,130,"P e r f e c t  W o m a n",1);
-		mPWLogo.HardPosition = mFlatCamera.Center + new Vector3(0,250,0);
-		//S c h ö n f e l d e r
-		mPWCredits =  new FlatElementText(refs.genericFont,60,"A  G a m e  b y  P e t e r  L u  a n d  L e a  S c h \u00F6 e n f e l d e r",1);
-		mPWCredits.HardPosition = mFlatCamera.Center + new Vector3(0,0,0);
+		//mPWLogo = new FlatElementText(refs.genericFont,130,"P e r f e c t  W o m a n",1);
+		//mPWLogo.HardPosition = mFlatCamera.Center + new Vector3(0,250,0);
+		//mPWCredits =  new FlatElementText(refs.genericFont,60,"A  G a m e  b y  P e t e r  L u  a n d  L e a  S c h \u00F6 e n f e l d e r",1);
+		//mPWCredits.HardPosition = mFlatCamera.Center + new Vector3(0,0,0);
+		//mElement.Add(mPWLogo);
+		//mElement.Add(mPWCredits);
+		
+		
+		
+		//logos
+		mPWLogoImage = new FlatElementImage(refs.perfectWomanLogo,1);
+		mGLLogo = new FlatElementImage(refs.gameLabLogo,1);
+		mFilmLogo = new FlatElementImage(refs.filmAkademieLogo,1);
+		mPWLogoImage.HardPosition = mFlatCamera.Center + new Vector3(0,200,0);
+		mGLLogo.HardPosition = mFlatCamera.get_point(0,-0.5f) + new Vector3(mGLLogo.BoundingBox.width/2 + 50,0,0);
+		mFilmLogo.HardPosition = mFlatCamera.get_point(0,-0.5f) - new Vector3(mFilmLogo.BoundingBox.width/2 + 50,0,0);
+		
 		
 		mMessageText = new FlatElementText(refs.genericFont,60,"",1);
 		mMessageText.HardPosition = mFlatCamera.Center + new Vector3(0,400,0);
 		
-		//TODO GL and FA logo
-		mGLLogo = new FlatElementImage(refs.gameLabLogo,1);
-		mFilmLogo = new FlatElementImage(refs.filmAkademieLogo,1);
-		mGLLogo.HardPosition = mFlatCamera.get_point(0,-0.5f) + new Vector3(mGLLogo.BoundingBox.width/2 + 50,0,0);
-		mFilmLogo.HardPosition = mFlatCamera.get_point(0,-0.5f) - new Vector3(mFilmLogo.BoundingBox.width/2 + 50,0,0);
-		
-		mElement.Add(mPWLogo);
-		mElement.Add(mPWCredits);
+		mElement.Add (mPWLogoImage);
 		mElement.Add(mGLLogo);
 		mElement.Add(mFilmLogo);
 		mElement.Add(mMessageText);
@@ -195,8 +201,9 @@ public class TransitionCameraManager : FakeMonoBehaviour
 	public void destroy_configuration_display()
 	{
 		//we assume things have faded already so we can just destroy
-		mPWLogo.destroy();
-		mPWCredits.destroy();
+		//mPWLogo.destroy();
+		//mPWCredits.destroy();
+		mPWLogoImage.destroy();
 		mGLLogo.destroy();
 		mFilmLogo.destroy();
 		mFlatCamera.Camera.clearFlags = CameraClearFlags.Depth;
