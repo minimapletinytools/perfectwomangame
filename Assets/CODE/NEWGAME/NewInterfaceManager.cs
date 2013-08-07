@@ -506,15 +506,15 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 				{
 					if(aPositive)
 						aPopup.set_text_color(GameConstants.UiWhite,true);
-					aPopup.set_background_color(useColor,true);
-					mPBCharacterIcons[aTarget].set_background_color(useColor);
+					aPopup.set_background_color(useColor/2f,true);
+					mPBCharacterIcons[aTarget].set_background_color(useColor/2f);
 				},
 			delay).then_one_shot(
 				delegate()
 				{
 					if(aPositive)
 						aPopup.set_text_color(GameConstants.UiRed,true);
-					aPopup.set_background_color(new Color(0.5f,0.5f,0.5f),true);
+					aPopup.set_background_color(GameConstants.UiPopupBubble,true);
 					mPBCharacterIcons[aTarget].set_background_color(new Color(0.5f,0.5f,0.5f));
 				},
 			duration);
@@ -560,6 +560,8 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 		to.SoftColor = GameConstants.UiWhite;
 		to.set_text_color(GameConstants.UiWhiteTransparent,true);
 		to.set_text_color(GameConstants.UiRed);
+		to.set_background_color(GameConstants.UiWhiteTransparent,true);
+		to.set_background_color(GameConstants.UiPopupBubble);
 		TimedEventDistributor.TimedEventChain chain = TED.add_event(
 			delegate(float aTime)
 			{

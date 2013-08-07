@@ -9,8 +9,9 @@ public static class GameConstants
 	public static Color[] IconDifficultyColorsOverTwo { get{ return IconDifficultyColors.Select(e=> e/2f).ToArray();}}
 	
 	
-	public static Color PopupTextColor { get {return new Color(0,0,0); } } //TODO
 	public static Color ChoosingTextColor { get {return new Color(0,0,0); } } //TODO
+	
+	
 	
 	//static Color particleStreamEasy = new Color32(28,182,71,255);
 	public static Color ParticleStreamEasy { get { return new Color32(28,182,71,255); } }
@@ -41,6 +42,7 @@ public static class GameConstants
 	public static Color UiWhiteTransparent{get {return new Color(uiWhite.r,uiWhite.g,uiWhite.b,0)/2f; }}
 	
 	public static Color UiMiniMan{get {return new Color(1,0.3f,0.2f); }}
+	public static Color UiPopupBubble{get { return new Color(0.4f,0.4f,0.4f,0.4f); } }
 	
 	
 	//characters
