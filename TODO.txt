@@ -42,9 +42,14 @@ DONE-fade in cut out bubble
 DONE-font color should be red
 DONE-Color and opacity of selection filling: Color: 0, 81, 229, Filling opacity: 80%. No color changing.
 DONE-layers on cutscene particle streams
+IGNORE-depth picture, move font closer to image. fix that weird negative indentation issue. font size 48??
+IGNORE-fade to red (are you serious lea???)
+DONE-score font should be red
+DONE-use image instead of text for title
+IGNORE-put in new music!!! with cutscene separate songs!!
 
--depth picture, move font closer to image. fix that weird negative indentation issue. font size 48??
--fade to red (are you serious lea???)
+-add pause in pop up text bubbles
+-two line character icon names
 -completely redo particle streams lul...
 	-bubble green is wrong shade of green (I think you need to divide by 2)
 	-colored boxes around white
@@ -53,13 +58,13 @@ DONE-layers on cutscene particle streams
 	-put mored ots in particle stream
 	-text bubble for changing cutscene stuff should start in their correct color
 
--use image instead of text for title
+
 -blue bar font alignment magic
 -do non cheater fading on the choosing guy
 
 -don't do duration hack  look for "//TODO Hack don't modify timing here" in NIM
 -fix 05-2 music
--put in new music!!! with cutscene separate songs!!
+
 -end stats lul
 -adoptive mother name and description too long
 -do the "loading" birth sorta thing for the fetus

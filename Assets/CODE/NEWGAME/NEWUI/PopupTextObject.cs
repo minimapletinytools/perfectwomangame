@@ -103,7 +103,7 @@ public class PopupTextObject : FlatElementMultiBase {
 	{
 		Color c = mText.SoftColor;
 		c.a = 0;
-		SoftColor = new Color(1,1,1,0);
+		SoftColor = new Color(0.5f,0.5f,0.5f,0);
 		mText.SoftColor = c;
 	}
 	public void set_background_color(Color aColor, bool hard = false)
@@ -112,4 +112,13 @@ public class PopupTextObject : FlatElementMultiBase {
 			mBackground.SoftColor = aColor;	
 		else mBackground.HardColor = aColor;	
 	}
+	
+	public override Color SoftColor
+    {
+        get { return base.SoftColor; }
+        set { 
+            base.SoftColor = value;
+			//TODO make fading work right
+        }
+    }
 }

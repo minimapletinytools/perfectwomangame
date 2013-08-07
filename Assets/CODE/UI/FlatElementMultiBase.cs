@@ -230,7 +230,7 @@ public class FlatElementMultiBase : FlatElementBase
     public virtual void set_color(Color aColor)
     {
 		foreach (ElementOffset e in mElements)
-			e.Element.set_color((aColor*e.Element.HardColor)*2);
+			e.Element.set_color((aColor*e.Element.HardColor)*2); 
     }
     
 

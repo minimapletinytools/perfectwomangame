@@ -148,11 +148,12 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 		mBBWarningText.HardColor = new Color(0.5f,0.5f,0.5f,0);
 		mBBMultiplierImage = new FlatElementImage(null,15);
 		mBBText.HardPosition = random_position();
-        mBBText.HardColor = GameConstants.UiRed;
+        mBBText.HardColor = GameConstants.UiPink;
 		mBBText.Alignment = TextAlignment.Left;
 		mBBText.Anchor = TextAnchor.MiddleLeft;
 		mBBScoreFrame.HardPosition = random_position();
 		mBBScoreText.HardPosition = random_position();
+		mBBScoreText.HardColor = GameConstants.UiRed;
 		mElement.Add(mBBText);
 		mElement.Add(mBBScoreFrame);
 		mElement.Add(mBBScoreText);
@@ -553,7 +554,6 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 	//TODO get rid ofthe stupid yreloffset parameter...
 	public PopupTextObject add_timed_text_bubble(string aMsg, float duration, float yRelOffset = 0)
 	{
-		duration = duration -1; //TODO Hack don't modify timing here
 		PopupTextObject to = new PopupTextObject(aMsg,8);
 		to.HardPosition = random_position();
 		to.HardColor = GameConstants.UiWhiteTransparent;
@@ -563,8 +563,8 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 		TimedEventDistributor.TimedEventChain chain = TED.add_event(
 			delegate(float aTime)
 			{
-				//to.SoftPosition = mFlatCamera.get_point(0.40f,yRelOffset); //fly in
-				to.HardPosition = mFlatCamera.get_point(0.40f,yRelOffset); //cut in
+				to.SoftPosition = mFlatCamera.get_point(0.40f,yRelOffset); //fly in
+				//to.HardPosition = mFlatCamera.get_point(0.40f,yRelOffset); //cut in
 				mElement.Add(to);
 				return true;
 			},
@@ -584,17 +584,18 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 			delegate()
 			{
 				//cutout
-				mElement.Remove(to);
-				to.destroy();
+				//mElement.Remove(to);
+				//to.destroy();
 				
-				//to.fade_out();  fade out
+				//fadeout
+				to.fade_out();  
 			},
 		0).then_one_shot(
 			delegate()
 			{
 				//fadeout
-				//mElement.Remove(to);
-				//to.destroy();
+				mElement.Remove(to);
+				to.destroy();
 			},
 		2);
 		return to;
