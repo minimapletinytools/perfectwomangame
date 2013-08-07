@@ -47,8 +47,9 @@ IGNORE-fade to red (are you serious lea???)
 DONE-score font should be red
 DONE-use image instead of text for title
 IGNORE-put in new music!!! with cutscene separate songs!!
+DONE/IGNORE-don't do duration hack  look for "//TODO Hack don't modify timing here" in NIM
+IGNORE-add pause in pop up text bubbles
 
--add pause in pop up text bubbles
 -two line character icon names
 -completely redo particle streams lul...
 	-bubble green is wrong shade of green (I think you need to divide by 2)
@@ -62,7 +63,7 @@ IGNORE-put in new music!!! with cutscene separate songs!!
 -blue bar font alignment magic
 -do non cheater fading on the choosing guy
 
--don't do duration hack  look for "//TODO Hack don't modify timing here" in NIM
+
 -fix 05-2 music
 
 -end stats lul
@@ -72,9 +73,9 @@ IGNORE-put in new music!!! with cutscene separate songs!!
 -consider doing graded slow (change speeds up as you get further)
 -partikuls!!!
 -aspect ratio getting distorted??? whyyy
--fix artifacts on the left and right
--quick perform well button should update graphics too!!! lul no
+-fix artifacts on the left and right...???
 
+IGNORE-quick perform well button should update graphics too!!! lul no
 DONE-remove glow lul or tone it down...
 DONE-stop playing video games
 IGNORE-do a full playtest fml..
