@@ -85,12 +85,23 @@ public class PopupTextObject : FlatElementMultiBase {
         PrimaryGameObject = create_primary_from_elements();
 		
 		Depth = aDepth;
+		
+		if(aText.Length > 80)
+			set_font_size(80);
+		if(aText.Length > 100)
+			set_font_size(70);
+		if(aText.Length > 120)
+			set_font_size(60);
     }
 	
 	Texture2D random_bubble(int size)
 	{
 		//TODO size
 		return ManagerManager.Manager.mNewRef.textSmallBubble[Random.Range(0,ManagerManager.Manager.mNewRef.textSmallBubble.Length)];
+	}
+	public void set_font_size(int aSize)
+	{
+		mText.Size = aSize;
 	}
     public void set_text_color(Color aColor,bool hard = false)
     {

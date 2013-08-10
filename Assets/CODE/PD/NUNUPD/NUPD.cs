@@ -119,6 +119,7 @@ namespace NUPD
 				
 				if(!keywords.Contains(first))
 				{
+				
 					if(lastState == "CHANGE") {
 						operatingChangeSet.LowerThreshold = (float)System.Convert.ToDouble(sp[0]);
 						operatingChangeSet.UpperThreshold = (float)System.Convert.ToDouble(sp[1]);

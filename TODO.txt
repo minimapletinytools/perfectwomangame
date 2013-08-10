@@ -49,7 +49,9 @@ DONE-use image instead of text for title
 IGNORE-put in new music!!! with cutscene separate songs!!
 DONE/IGNORE-don't do duration hack  look for "//TODO Hack don't modify timing here" in NIM
 IGNORE-add pause in pop up text bubbles
+DONE-fix 05-2 music
 
+-put angels into grave
 -two line character icon names
 -completely redo particle streams lul...
 	-bubble green is wrong shade of green (I think you need to divide by 2)
@@ -58,13 +60,8 @@ IGNORE-add pause in pop up text bubbles
 	-make boxes not change colors or make a backgronud box that is red/green
 	-put mored ots in particle stream
 	-text bubble for changing cutscene stuff should start in their correct color
-
-
 -blue bar font alignment magic
 -do non cheater fading on the choosing guy
-
-
--fix 05-2 music
 
 -end stats lul
 -adoptive mother name and description too long

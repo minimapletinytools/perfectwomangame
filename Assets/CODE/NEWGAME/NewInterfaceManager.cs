@@ -530,6 +530,8 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 	public void add_timed_particle_stream(Vector3 aPosition, CharacterIconObject aTarget, float aDuration, float aDelay, Color aColor)
 	{
 		ParticleStreamObject pso = null;
+		
+		//TODO fancy crap to decide depth offset..
 		TED.add_one_shot_event(
 			delegate()
 			{
@@ -863,7 +865,7 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 		
 		
 		//fake it for testing...
-		/*
+		
 		for(int i = 0; i < 8; i++)
 		{
 			if(aStats.Last().Character.Age < (new CharacterIndex(i,0)).Age)
@@ -871,7 +873,7 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 				aStats.Add(new PerformanceStats(new CharacterIndex(i,0)));
 			}
 		}
-		*/
+		
 		
 		
 		//clear away BB and PB
@@ -938,12 +940,12 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 		chain = TED.add_one_shot_event(
 			delegate()
 			{
-				add_timed_text_bubble("You rest here beneath the earth...",gIntroText,0.5f);
+				add_timed_text_bubble("You rest here beneath the earth...",gIntroText,0.4f);
 			},
         gIntroText).then_one_shot( //wait a little bit to let the fading finish
 			delegate()
 			{
-				add_timed_text_bubble("Here is your life story:",gIntroText,0.5f);
+				add_timed_text_bubble("Here is your life story:",gIntroText,0.4f);
 			},
 		gIntroText).wait (gIntroText);
 		
@@ -987,7 +989,7 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 					
 					text += " was " + performancePhrase[Mathf.Clamp((int)(Mathf.Sqrt(ps.Score)*4),0,3)];
 					text += ".";
-					po = add_timed_text_bubble(text,gCharacterText,0.5f);
+					po = add_timed_text_bubble(text,gCharacterText,0.4f);
 				
 					//move in stuff
 					cio.SoftPosition = new Vector3(cioXOffset,startingPosition - (it-1) * intervalSize,0);
@@ -1025,6 +1027,16 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 				},
 			0);
 			
+			
+			
+			
+			
+			
+			float gConnectionText = 8f;
+			float gPreParticle = 2f;
+			float gParticle = 4f;
+			
+			
 			//TODO grave connections
 			CharIndexContainerString connections;
 			bool wasHard = ps.Stats.Difficulty > 1;
@@ -1032,27 +1044,53 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 				connections = mManager.mCharacterBundleManager.get_character_stat(ps.Character).CharacterInfo.HardConnections;
 			else
 				connections = mManager.mCharacterBundleManager.get_character_stat(ps.Character).CharacterInfo.EasyConnections;
-			CharIndexContainerString realConnections = new CharIndexContainerString();
+			
+			
+			//for each connection, check if it is relevent to the currently looping character
 			for(int j = 1; j < aStats.Count; j++)
 			{
-				if(connections[aStats[j].Character] != null && connections[aStats[j].Character] != "")
-					realConnections[aStats[j].Character] = connections[aStats[j].Character];
-			}
-			
-			/*
-			chain = chain.then_one_shot (
-				delegate(float aTime)
+				var targetCharacter = aStats[j].Character;
+				var targetConnection = connections[targetCharacter];
+				//TODO eventually check if character was easy/hard
+				if(targetConnection != null && targetConnection != "")
 				{
 					
-				//	add_cutscene_particle_stream(
-				},
-			0).then(
-				delegate(float aTime)
-				{
-					//TODO soft skipping lul
-					return aTime > 10;
+					PopupTextObject npo = null;
+					chain = chain.then (
+						delegate(float aTime)
+						{
+							if(npo == null)
+							{
+								npo = add_timed_text_bubble(targetConnection,gConnectionText);
+							}
+							if(npo.IsDestroyed || aTime > gPreParticle)
+							{
+								return true;
+							}
+							return false;
+						},
+					0).then(
+						delegate(float aTime)
+						{
+							if(!npo.IsDestroyed)
+							{
+								add_cutscene_particle_stream(ps.Character,npo,gParticle,!wasHard);
+								add_cutscene_particle_stream(targetCharacter,npo,gParticle,!wasHard);
+							}
+							return true;
+						}
+					).then(
+						delegate(float aTime)
+						{
+							if(npo.IsDestroyed || aTime > gConnectionText-gPreParticle)
+							{	
+								return true;
+							}
+							return false;
+						}
+					,0);
 				}
-			);*/
+			}
 		}
 		
 		
@@ -1093,7 +1131,7 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 			TED.add_one_shot_event(
 				delegate()
 				{
-					add_timed_text_bubble("G A M E  O V E R",99999,0.5f);
+					add_timed_text_bubble("G A M E  O V E R",99999,0.4f);
 				}
 			,0).then_one_shot(
 				delegate()

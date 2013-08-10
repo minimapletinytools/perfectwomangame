@@ -129,7 +129,10 @@ public class CharIndexContainerString
 		foreach(String[] e in Contents)
 			foreach(String f in e)
 				if(f != null && f != "")
+				{
+					Debug.Log (f);
 					r.Add(f);
+				}
 		return r;
 	}
 }
