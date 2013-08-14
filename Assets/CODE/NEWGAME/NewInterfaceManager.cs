@@ -506,8 +506,8 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 				{
 					if(aPositive)
 						aPopup.set_text_color(GameConstants.UiWhite,true);
-					aPopup.set_background_color(useColor/2f,true);
-					mPBCharacterIcons[aTarget].set_background_color(useColor/2f);
+					aPopup.set_background_color(useColor,true);
+					mPBCharacterIcons[aTarget].set_background_color(useColor);
 				},
 			delay).then_one_shot(
 				delegate()
@@ -865,14 +865,14 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 		
 		
 		//fake it for testing...
-		
+		/*
 		for(int i = 0; i < 8; i++)
 		{
 			if(aStats.Last().Character.Age < (new CharacterIndex(i,0)).Age)
 			{
 				aStats.Add(new PerformanceStats(new CharacterIndex(i,0)));
 			}
-		}
+		}*/
 		
 		
 		
@@ -980,6 +980,8 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 					ghostElements[ps.Character.LevelIndex-1].SoftPosition = ghostPositions[ps.Character.LevelIndex-1];
 					mManager.mMusicManager.play_sound_effect("graveAngel");	
 				
+				
+					//CAN DELETE
 					string text = "";
 					//set the textt
 					if(ps.Character.IsDescriptionAdjective)
@@ -989,6 +991,8 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 					
 					text += " was " + performancePhrase[Mathf.Clamp((int)(Mathf.Sqrt(ps.Score)*4),0,3)];
 					text += ".";
+			
+					text = ps.Character.Description;
 					po = add_timed_text_bubble(text,gCharacterText,0.4f);
 				
 					//move in stuff
@@ -1049,46 +1053,57 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 			//for each connection, check if it is relevent to the currently looping character
 			for(int j = 1; j < aStats.Count; j++)
 			{
-				var targetCharacter = aStats[j].Character;
-				var targetConnection = connections[targetCharacter];
+				var targetCharacter = aStats[j].Character;				//charcter we are connecting to
+				var targetConnection = connections[targetCharacter];	//message
 				//TODO eventually check if character was easy/hard
 				if(targetConnection != null && targetConnection != "")
 				{
 					
-					PopupTextObject npo = null;
-					chain = chain.then (
-						delegate(float aTime)
-						{
-							if(npo == null)
+					if(aStats[j].CutsceneChangeSet != null) //TODO this should never happen
+						Debug.Log("accum change for " + aStats[j].Character.StringIdentifier + " is " + aStats[j].CutsceneChangeSet.accumulative_changes()[ps.Character]);
+					/* TODO Check if it's appropriate
+					int accumChange = 0;
+					if(aStats[j].CutsceneChangeSet != null) //TODO this should never happen
+						accumChange = aStats[j].CutsceneChangeSet.accumulative_changes()[ps.Character];
+					if( (wasHard && accumChange > 0) ||
+						(!wasHard && accumChange < 0))*/
+					if(true)
+					{
+						PopupTextObject npo = null;
+						chain = chain.then (
+							delegate(float aTime)
 							{
-								npo = add_timed_text_bubble(targetConnection,gConnectionText);
-							}
-							if(npo.IsDestroyed || aTime > gPreParticle)
+								if(npo == null)
+								{
+									npo = add_timed_text_bubble(targetConnection,gConnectionText);
+								}
+								if(npo.IsDestroyed || aTime > gPreParticle)
+								{
+									return true;
+								}
+								return false;
+							},
+						0).then(
+							delegate(float aTime)
 							{
+								if(!npo.IsDestroyed)
+								{
+									add_cutscene_particle_stream(ps.Character,npo,gParticle,!wasHard);
+									add_cutscene_particle_stream(targetCharacter,npo,gParticle,!wasHard);
+								}
 								return true;
 							}
-							return false;
-						},
-					0).then(
-						delegate(float aTime)
-						{
-							if(!npo.IsDestroyed)
+						).then(
+							delegate(float aTime)
 							{
-								add_cutscene_particle_stream(ps.Character,npo,gParticle,!wasHard);
-								add_cutscene_particle_stream(targetCharacter,npo,gParticle,!wasHard);
+								if(npo.IsDestroyed || aTime > gConnectionText-gPreParticle)
+								{	
+									return true;
+								}
+								return false;
 							}
-							return true;
-						}
-					).then(
-						delegate(float aTime)
-						{
-							if(npo.IsDestroyed || aTime > gConnectionText-gPreParticle)
-							{	
-								return true;
-							}
-							return false;
-						}
-					,0);
+						,0);
+					}
 				}
 			}
 		}
