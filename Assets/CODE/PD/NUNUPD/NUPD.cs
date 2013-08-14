@@ -46,10 +46,11 @@ namespace NUPD
 		public string PerformanceDescription {get; set;}
 		public string Audio {get; set;} //TODO delete
 		public List<ChangeSubSet> Changes {get; set;}
-		
+		public int Index {get; set;}
 
         public ChangeSet()
         {
+			Index = -1;
             UpperThreshold = 1;
             LowerThreshold = 0;
 			PerformanceDescription = "";
@@ -57,6 +58,18 @@ namespace NUPD
             Changes = new List<ChangeSubSet>();
 			
         }
+		
+		public CharIndexContainerInt accumulative_changes()
+		{
+			CharIndexContainerInt r = new CharIndexContainerInt();
+			if(Changes.Count > 0)
+				r = Changes[0].Changes;
+			for(int i = 1; i < Changes.Count; i++)
+			{
+				r = r.sum(Changes[i].Changes);
+			}
+			return r;
+		}
 	}
 	
 	public class CharacterInformation
@@ -69,6 +82,7 @@ namespace NUPD
 		public List<ChangeSet> ChangeSet {get; set;}
 		public CharIndexContainerString HardConnections{get; set;}
 		public CharIndexContainerString EasyConnections{get; set;}
+		public Color CharacterOutlineColor {get; set;}
 		
 		public CharacterInformation()
 		{
@@ -79,6 +93,7 @@ namespace NUPD
 			ChangeSet = new List<ChangeSet>();
 			HardConnections = new CharIndexContainerString();
 			EasyConnections = new CharIndexContainerString();
+			CharacterOutlineColor = GameConstants.TransparentBodyDefaultColor;
 		}
 		
 		public static CharacterInformation default_character_info(CharacterIndex aIndex)
@@ -98,7 +113,7 @@ namespace NUPD
 	{
 		public static CharacterInformation process_character(string aChar)
 		{
-			string[] keywords = new string[]{"NAME", "NDESC", "INDEX", "CHANGE", "CDESC", "CONNECTION", "AUDIO"};
+			string[] keywords = new string[]{"NAME", "NDESC", "INDEX", "CHANGE", "CDESC", "CONNECTION", "AUDIO","COLOR"};
 			CharacterInformation ci = new CharacterInformation();
 			string[] process = aChar.Split(new string[] { "\r\n", "\n" }, System.StringSplitOptions.None);
 			string lastState = "";
@@ -153,7 +168,7 @@ namespace NUPD
 					ci.Index = new CharacterIndex(System.Convert.ToInt32(sp[1]),System.Convert.ToInt32(sp[2]));//CharacterIndex.INDEX_TO_CHARACTER[System.Convert.ToInt32(sp[1])];
 				} else if(first == "CHANGE"){
 					operatingChangeSet = new ChangeSet();
-					operatingChangeSet.Changes = new List<ChangeSubSet>();
+					operatingChangeSet.Index = ci.ChangeSet.Count;
 					if(sp.Length > 1)
 						operatingChangeSet.PerformanceDescription = sp.Skip(1).Aggregate((s1,s2)=>s1+" "+s2);
 					ci.ChangeSet.Add(operatingChangeSet);
@@ -166,13 +181,16 @@ namespace NUPD
 					operatingChangeSet.Changes.Add(operatingChangeSubSet);
 				} else if(first == "CONNECTION"){
 					CharacterIndex conind = new CharacterIndex(System.Convert.ToInt32(sp[1]),System.Convert.ToInt32(sp[2]));
-					bool easy = sp[3] == "+" ? false : true;
+					bool easy = sp[3] == "+" ? true : false;
 					if(easy)
 						ci.EasyConnections[conind] = sp.Skip(4).Aggregate((s1,s2)=>s1+" "+s2);
 					else
 						ci.HardConnections[conind] = sp.Skip(4).Aggregate((s1,s2)=>s1+" "+s2);
 				} else if(first == "AUDIO"){ //TODO delete
 					operatingChangeSet.Audio = sp.Skip(1).Aggregate((s1,s2)=>s1+" "+s2);
+				} else if (first == "COLOR"){
+					ci.CharacterOutlineColor = 
+						new Color32(System.Convert.ToInt32(sp[1]),System.Convert.ToInt32(sp[2]),System.Convert.ToInt32(sp[3]),System.Convert.ToInt32(sp[4]));
 				}
 				
 				if(keywords.Contains(first))
