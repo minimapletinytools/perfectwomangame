@@ -47,6 +47,16 @@ public class CharIndexContainerInt
 				r.Add(f);
 		return r.ToArray();
 	}
+	
+	public CharIndexContainerInt sum(CharIndexContainerInt o)
+	{
+		CharIndexContainerInt r = new CharIndexContainerInt();
+		foreach(CharacterIndex e in CharacterIndex.sAllCharacters)
+		{
+			r[e] = this[e] + o[e];
+		}
+		return r;
+	}
 }
 
 public class CharIndexContainerCharacterLoader

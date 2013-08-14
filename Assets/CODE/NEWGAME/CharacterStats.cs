@@ -57,6 +57,24 @@ public class PerformanceStats
 	public CharacterStats Stats
 	{ get; set; }
 	
+	public NUPD.ChangeSet CutsceneChangeSet
+	{ 
+		get
+		{
+			NUPD.ChangeSet r = null;
+			var changeSet = Stats.CharacterInfo.ChangeSet;
+			for(int i=0; i < changeSet.Count; i++)
+			{
+				if(changeSet[i].LowerThreshold <= Score && changeSet[i].UpperThreshold >= Score)
+				{
+					r = changeSet[i];
+					break;
+				}
+			}	
+			return r;
+		}
+	}
+	
 	public PerformanceStats(CharacterIndex aChar)
 	{
 		

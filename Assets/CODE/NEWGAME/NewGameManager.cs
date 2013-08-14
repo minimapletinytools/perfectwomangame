@@ -364,34 +364,15 @@ public class NewGameManager : FakeMonoBehaviour
 	{
 		GS = GameState.CUTSCENE;
 
-        NUPD.ChangeSet changes = null;
-        
-		//debugging changes can DELETE
-		if(mManager.mCharacterBundleManager.get_character_stat(CurrentCharacterIndex).CharacterInfo.ChangeSet.Count>0)
-		{
-			//Debug.Log (mManager.mCharacterBundleManager.get_character_stat(CurrentCharacterIndex).CharacterInfo.ChangeSet[0].LowerThreshold);
-			//Debug.Log (mManager.mCharacterBundleManager.get_character_stat(CurrentCharacterIndex).CharacterInfo.ChangeSet[0].UpperThreshold);
-			//Debug.Log (CurrentPerformanceStat.Score);
-		}
-		
-		//find the correct changeset based on performance
-		var changeSet = mManager.mCharacterBundleManager.get_character_stat(CurrentCharacterIndex).CharacterInfo.ChangeSet;
+        NUPD.ChangeSet changes = CurrentPerformanceStat.CutsceneChangeSet;
 		int changeIndex = -1;
-		for(int i=0; i < changeSet.Count; i++)
-		{
-			if(changeSet[i].LowerThreshold <= CurrentPerformanceStat.Score && changeSet[i].UpperThreshold >= CurrentPerformanceStat.Score)
-			{
-				changeIndex = i;
-				changes = changeSet[i];
-			}
-		}
 		
         if(changes == null)
         {
             Debug.Log("could not find change in thershold with performance: " + CurrentPerformanceStat);
             changes = new NUPD.ChangeSet();
             changes.Changes.Add(new NUPD.ChangeSubSet() { Description = "No changes available!!" });
-        }
+        } else changeIndex = changes.Index;
 		
 		//audio
 		if(changeIndex != -1)
@@ -560,11 +541,6 @@ public class NewGameManager : FakeMonoBehaviour
 		float gDiffDisplayDur = 5f;
 		GS = GameState.TRANSITION;
 		
-		
-		
-
-
-
 
 
 		//TODO move this into NewInterfaceManager
