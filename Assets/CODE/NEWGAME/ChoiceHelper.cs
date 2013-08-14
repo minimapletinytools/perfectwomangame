@@ -47,7 +47,7 @@ public class ChoiceHelper
 	{
 		int minIndex = 0;
         float minGrade = 99999;
-        for (int i = 0; i < 4; i++)
+        for (int i = 0; i < 3; i++) //TODO need sto be 4 eventually....
         {
             if (mChoicePoses[i] != null)
             {

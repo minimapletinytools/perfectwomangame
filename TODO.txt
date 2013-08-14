@@ -1,3 +1,5 @@
+
+
 ::CONNECTION FORMAT::
 -CONNECTION <LEVEL,CHOICE> <+/-> <SENTENCE>
 	-eg. for 85-1 (or whatever wise old grandma is)
@@ -50,9 +52,20 @@ IGNORE-put in new music!!! with cutscene separate songs!!
 DONE/IGNORE-don't do duration hack  look for "//TODO Hack don't modify timing here" in NIM
 IGNORE-add pause in pop up text bubbles
 DONE-fix 05-2 music
+DONE/ISH-popup text bubble colors all wrong again
+DONE-one line word limit is too long
+DONE-remove performance evaluation
 
--put angels into grave
+-put check in so sentences make sense
+-make cutscene bubbles come in as the appropriate color and don't fill in character icons
+-green particlse and bubbles still not the same color
 -two line character icon names
+-set window settings so lea can record the screen
+-grnave stone font color should be 102,101,101
+-allow variable shadow color
+-script particles like Since the correlation sentences are mostly very long, I would recommend that we cut them in the middle. That could look like this: It sais: "Because all you did is study to become a successful professor…" (Particle effects come only from the professor box) "… it was hard to become wise and experienced as an old lady." (Particle effects to old lady are added.)
+-put angels into grave
+
 -completely redo particle streams lul...
 	-bubble green is wrong shade of green (I think you need to divide by 2)
 	-colored boxes around white
@@ -63,7 +76,7 @@ DONE-fix 05-2 music
 -blue bar font alignment magic
 -do non cheater fading on the choosing guy
 
--end stats lul
+DONE-end stats lul
 -adoptive mother name and description too long
 -do the "loading" birth sorta thing for the fetus
 -check lea's documents for grave stuff
