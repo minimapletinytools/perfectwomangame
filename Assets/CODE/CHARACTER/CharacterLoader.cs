@@ -6,6 +6,7 @@ public class CharacterLoader {
     public bool Done { get; private set; }
     public CharacterData.CharacterDataImages Images { get; private set; }
     public CharacterData.CharacterDataSizes Sizes { get; private set; }
+	public CharacterIndex Character {get{return new CharacterIndex(Name);}}
     public string Name { get; private set; }
     public CharacterLoader()
     {

@@ -1,6 +1,6 @@
 Shader "Custom/TransparentBodyShader" {
 	Properties {
-		_Color ("Main Color", Color) = (0,0.317,.898,.8)
+		_Color ("Main Color", Color) = (0,0.317,.898,1)
 		_MainTex ("Base (RGB)", 2D) = "white" {}
 	}
 	SubShader {
@@ -30,24 +30,21 @@ Shader "Custom/TransparentBodyShader" {
 
 		void surf (Input IN, inout SurfaceOutput o) {
 			half4 c = tex2D (_MainTex, IN.uv_MainTex);
+			o.Albedo = _Color.rgb;
+			o.Alpha = 0;
 			if(c.a != 0)
 			{
 				
 				
-				o.Albedo = half3(0,0.317,.898); //TODO shoulsd read from _Color
 				
 				float2 screenUV = IN.screenPos.xy / IN.screenPos.w;
 				
 				//if(((int)(screenUV.x*100 + screenUV.y*100) % 2 == 0))
 				{
-					o.Alpha = min(min(1,c.a),_Color.a); //use to be .75
+					//o.Alpha = min(c.a,_Color.a);
+					o.Alpha = _Color.a;
 				
 				}
-			}
-			else
-			{
-				o.Albedo = c.rgb;
-				o.Alpha = c.a;
 			}
 		}
 		ENDCG

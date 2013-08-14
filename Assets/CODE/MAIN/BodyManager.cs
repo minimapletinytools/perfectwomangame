@@ -76,8 +76,9 @@ public class BodyManager : FakeMonoBehaviour {
 				mFlat.SoftColor = new Color(0.5f, 0.5f, 0.5f, 0.5f);
 			else if (mMode == 1)
 			{
-				mFlat.SoftColor = new Color(0.5f, 0.5f, 0.5f, 0.35f);
+				//mFlat.SoftColor = new Color(0.5f, 0.5f, 0.5f, 0.35f);
 				mFlat.HardShader = mManager.mReferences.mTransparentCharacaterShader;
+				mFlat.HardColor = mManager.mCharacterBundleManager.get_character_stat(aCharacter.Character).CharacterInfo.CharacterOutlineColor;
 			}
 			
             mFlat.update(0);
