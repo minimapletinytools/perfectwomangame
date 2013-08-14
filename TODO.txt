@@ -56,7 +56,8 @@ DONE/ISH-popup text bubble colors all wrong again
 DONE-one line word limit is too long
 DONE-remove performance evaluation
 
--put check in so sentences make sense
+DONE-put check in so sentences make sense
+-text bubble depth should be above blue bar
 -make cutscene bubbles come in as the appropriate color and don't fill in character icons
 -green particlse and bubbles still not the same color
 -two line character icon names
@@ -65,6 +66,7 @@ DONE-remove performance evaluation
 -allow variable shadow color
 -script particles like Since the correlation sentences are mostly very long, I would recommend that we cut them in the middle. That could look like this: It sais: "Because all you did is study to become a successful professor…" (Particle effects come only from the professor box) "… it was hard to become wise and experienced as an old lady." (Particle effects to old lady are added.)
 -put angels into grave
+-choice confirmation soft skip/hard skip doesn't actually speed things up
 
 -completely redo particle streams lul...
 	-bubble green is wrong shade of green (I think you need to divide by 2)

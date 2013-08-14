@@ -9,8 +9,6 @@ public enum GameState
 
 public class NewGameManager : FakeMonoBehaviour
 {
-	
-	const float PREPLAY_TIME = 2;
 		
     public NewGameManager(ManagerManager aManager)
         : base(aManager) 
@@ -525,7 +523,7 @@ public class NewGameManager : FakeMonoBehaviour
 		if(GS != GameState.TEST)
 		{
 			GS = GameState.PREPLAY;
-			TED.add_one_shot_event(delegate(){GS = GameState.PLAY; },PREPLAY_TIME);
+			TED.add_one_shot_event(delegate(){GS = GameState.PLAY; },GameConstants.preplayTime);
 		}
 		
 		//no target pose means we don't want a transparent body
@@ -550,9 +548,16 @@ public class NewGameManager : FakeMonoBehaviour
 										"That's a hard one. Show your skills!", 
 										"You made an extreme choice? Let's see if you survive!"
 		};
+		PopupTextObject po = null;
 		if(aNextCharacter != CharacterIndex.sGrave)
-			mManager.mInterfaceManager.add_timed_text_bubble(diffPhrases[CharacterHelper.Characters[aNextCharacter].Difficulty], gDiffDisplayDur);
-		TED.add_one_shot_event(
+			po = mManager.mInterfaceManager.add_timed_text_bubble(diffPhrases[CharacterHelper.Characters[aNextCharacter].Difficulty], gDiffDisplayDur);
+		TED.add_event(
+			delegate(float aTime){
+				if(aTime > gDiffDisplayDur || (po == null) || po.IsDestroyed) //TODO this skipping isn't working for some reason w/e
+					return true;
+				return false;
+			}
+		).then_one_shot(
 			//TODO before this, till mInterfaceManager to explain what choice the user just made
 			//maybe play a sound "Too Easy" "Ok" "Hard" "That's Impossible!!"
 			delegate(){
@@ -561,8 +566,8 @@ public class NewGameManager : FakeMonoBehaviour
 						mManager.mAssetLoader.new_load_character(aNextCharacter.StringIdentifier,mManager.mCharacterBundleManager);
 					}
 				);
-			},
-		gDiffDisplayDur);
+			}
+		);
 	}
 
     public int get_character_difficulty(CharacterIndex aChar)

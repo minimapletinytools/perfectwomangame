@@ -27,10 +27,12 @@ public static class GameConstants
     public static string[] credits = { "Thanks: Benedikts","Haas, David Elliott,","Sabrina Winter, Eddo","Stern, Ingo Von","Staden, Andreas","Hykade" };
 	
 	
-	//public static float fadingTime = 0.1f;
-	public static float fadingTime = 2.3;
-	//public static float transitionToChoiceDelayTime = 0.1f;
-	public static float transitionToChoiceDelayTime = 2;
+	public static float preplayTime = 0.1f;
+	public static float fadingTime = 0.1f;
+	public static float transitionToChoiceDelayTime = 0.1f;
+	//public static float preplayTime = 2f;
+	//public static float fadingTime = 2.3;
+	//public static float transitionToChoiceDelayTime = 2;
 
 
     //colors
@@ -46,7 +48,10 @@ public static class GameConstants
 	public static Color UiMiniMan{get {return new Color(1,0.3f,0.2f); }}
 	public static Color UiPopupBubble{get { return new Color(0.4f,0.4f,0.4f,0.4f); } }
 	
-	public static Color TransparentBodyDefaultColor {get {return new Color(0,0.317,.898,1);}}
+	public static Color uiGraveText = new Color32(102,101,101,255);
+	public static Color UiGraveText {get{return uiGraveText*0.5f;}}
+	
+	public static Color TransparentBodyDefaultColor {get {return new Color(0,0.317f,.898f,1);}}
 	
 	
 	//characters

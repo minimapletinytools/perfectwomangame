@@ -556,7 +556,7 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 	//TODO get rid ofthe stupid yreloffset parameter...
 	public PopupTextObject add_timed_text_bubble(string aMsg, float duration, float yRelOffset = 0)
 	{
-		PopupTextObject to = new PopupTextObject(aMsg,8);
+		PopupTextObject to = new PopupTextObject(aMsg,30);
 		to.HardPosition = random_position();
 		to.HardColor = GameConstants.UiWhiteTransparent;
 		to.SoftColor = GameConstants.UiWhite;
@@ -893,6 +893,7 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 		//this is all a hack to get the score to show up right...
 		float scoreIncrementor = 0;
 		FlatElementText finalScoreText = new FlatElementText(mManager.mNewRef.genericFont,100,"",10);
+		finalScoreText.HardColor = (GameConstants.UiGraveText);
 		//FlatElementImage perfectEngraving = new FlatElementImage(mManager.mNewRef.gravePerfectnessEngraving,10);
 		FlatElementText perfectPercent = new FlatElementText(mManager.mNewRef.genericFont,100,"",11);
 		//perfectPercent.Text = ((int)(100*aStats.Sum(e=>e.Stats.Perfect+1)/(float)(aStats.Count*3))).ToString() + "%";
@@ -1059,15 +1060,19 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 				if(targetConnection != null && targetConnection != "")
 				{
 					
-					if(aStats[j].CutsceneChangeSet != null) //TODO this should never happen
-						Debug.Log("accum change for " + aStats[j].Character.StringIdentifier + " is " + aStats[j].CutsceneChangeSet.accumulative_changes()[ps.Character]);
-					/* TODO Check if it's appropriate
 					int accumChange = 0;
-					if(aStats[j].CutsceneChangeSet != null) //TODO this should never happen
+					if(aStats[j].CutsceneChangeSet != null) //TODO this check should never fail
+					{
+						Debug.Log("accum change for " + aStats[j].Character.StringIdentifier + " is " + aStats[j].CutsceneChangeSet.accumulative_changes()[ps.Character]);
 						accumChange = aStats[j].CutsceneChangeSet.accumulative_changes()[ps.Character];
+					}
+					else
+					{
+						Debug.Log ("null cutscene change for " + aStats[j].Character.StringIdentifier + " " + aStats[j].CutsceneChangeSet);
+					}
 					if( (wasHard && accumChange > 0) ||
-						(!wasHard && accumChange < 0))*/
-					if(true)
+						(!wasHard && accumChange < 0))
+					//if(true)
 					{
 						PopupTextObject npo = null;
 						chain = chain.then (

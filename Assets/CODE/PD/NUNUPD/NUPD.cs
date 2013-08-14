@@ -190,7 +190,7 @@ namespace NUPD
 					operatingChangeSet.Audio = sp.Skip(1).Aggregate((s1,s2)=>s1+" "+s2);
 				} else if (first == "COLOR"){
 					ci.CharacterOutlineColor = 
-						new Color32(System.Convert.ToInt32(sp[1]),System.Convert.ToInt32(sp[2]),System.Convert.ToInt32(sp[3]),System.Convert.ToInt32(sp[4]));
+						new Color32((byte)System.Convert.ToInt32(sp[1]),(byte)System.Convert.ToInt32(sp[2]),(byte)System.Convert.ToInt32(sp[3]),(byte)System.Convert.ToInt32(sp[4]));
 				}
 				
 				if(keywords.Contains(first))
