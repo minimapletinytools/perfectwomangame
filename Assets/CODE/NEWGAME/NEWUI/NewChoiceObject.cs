@@ -89,7 +89,7 @@ public class NewChoiceObject : FlatElementMultiBase {
 			mCharacterIndex = value;
 			if(mCharacterIndex.LevelIndex != -1)
 			{
-				mText.Text = FlatElementText.convert_to_multiline(2,mCharacterIndex.ShortName);
+				mText.Text = FlatElementText.convert_to_multiline(2,mCharacterIndex.ShortName.ToUpper());
 			}
 			else mText.Text = "";
 		}

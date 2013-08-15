@@ -42,7 +42,7 @@ public class CharacterIconObject : FlatElementMultiBase {
 		mBodyOffset = 0;
 		//mElements.Add(new ElementOffset(mDifficultyStars, new Vector3(-starOffset,-70,0)));
 		mElements.Add(new ElementOffset(mBackground, new Vector3(mBodyOffset,0,0)));
-		mElements.Add (new ElementOffset(mIcon, new Vector3(mBodyOffset,0,0)));
+		mElements.Add (new ElementOffset(mIcon, new Vector3(mBodyOffset,20,0)));
 		//mElements.Add(new ElementOffset(mBody, new Vector3(mBodyOffset,0,0)));
 		
 		
@@ -71,9 +71,16 @@ public class CharacterIconObject : FlatElementMultiBase {
 		}
 		if(aName != "")
 		{
+			aName = aName.ToUpper();
 			mText = new ElementOffset(new FlatElementText(ManagerManager.Manager.mNewRef.genericFont,30,"",Depth +1),new Vector3(mBodyOffset,-90,0));
 			(mText.Element as FlatElementText).HardColor = new Color(0,0,0,1);
-			(mText.Element as FlatElementText).Text = aName;
+			if(aName.Length > 9 && aName.Contains(" "))
+			{
+				(mText.Element as FlatElementText).Text = FlatElementText.convert_to_multiline(2,aName);
+				mText.Position = mText.Position + new Vector3(0,15,0);
+			}
+			else
+				(mText.Element as FlatElementText).Text = aName;
 			mElements.Add(mText);
 		}
 	}

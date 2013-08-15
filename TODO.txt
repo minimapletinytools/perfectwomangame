@@ -1,73 +1,12 @@
 
 
-::CONNECTION FORMAT::
--CONNECTION <LEVEL,CHOICE> <+/-> <SENTENCE>
-	-eg. for 85-1 (or whatever wise old grandma is)
-	-CONNECTION 2 2 + being a responsible sister at 16 made being wise easy
-		-only displayed if 85-1 is easy/med
-	-CONNECTION 4 1 - being in a shallow relation really tarnished your life experiences
-		-only displayed if 85-1 was hard/impossible
-
 ::TODO X:: in order of importance
-DONE-reindex characters in charinfos...
-DONE-new birth pose...
-DONE-score is all messed up in grave
-DONE-names are not being displayed in grave
-DONE-get lea grave connection format
-DONE???-get rid of the startup window
-DONE-snapping and smooth should be switched
-DONE-update film akademie logo in credits
-DONE-update drummer and oktober fest girl
-DONE-16-2 angel is a dot (update it)
-DONE-Screen.showCursor = false;
-DONE-performance evaluation sentence grammer is wrong (coma at end, capitalization, no period at end of sentence)
-DONE-something is wrong with the 34 characters
-DONE-dancer poses seem to be messed up
-DONE-fix the loop around problem when interpolating poses
-NOPE-text for fetus is wrong
-DONE-add insta perform well button lul
-DONE-leukemia girl head rotates in pose. Probably need to do better interpolation.. (so it goes in the right direction)
 
-DONE-change shadow to (0, 81, 229) @ 80% alpha
-DONE-change easy green to 28,182,71
-DONE-green yellow orange red change to 28,182,71 | 255,168,0 | 234,84,2 | 255,0,0
-DONE-particle stream hard cuts on color changes
-DONE-up to four lines
-DONE-word bubbles all capitals
-DONE-fade word bubble text out to the same color it is (as oppose to white)
-DONE/can't do kerning-depth picture depth left binding, slightly > vertical kerning
-DONE-update score image from blue bar (file/ui/stages)
-DONE-choice screen font should be red and not pink
-DONE-either turn off choosing figure or make it fade instead of fly around. 
-DONE-fade out to red
-DONE-fade in cut out bubble
-DONE-font color should be red
-DONE-Color and opacity of selection filling: Color: 0, 81, 229, Filling opacity: 80%. No color changing.
-DONE-layers on cutscene particle streams
-IGNORE-depth picture, move font closer to image. fix that weird negative indentation issue. font size 48??
-IGNORE-fade to red (are you serious lea???)
-DONE-score font should be red
-DONE-use image instead of text for title
-IGNORE-put in new music!!! with cutscene separate songs!!
-DONE/IGNORE-don't do duration hack  look for "//TODO Hack don't modify timing here" in NIM
-IGNORE-add pause in pop up text bubbles
-DONE-fix 05-2 music
-DONE/ISH-popup text bubble colors all wrong again
-DONE-one line word limit is too long
-DONE-remove performance evaluation
 
-DONE-put check in so sentences make sense
--text bubble depth should be above blue bar
--make cutscene bubbles come in as the appropriate color and don't fill in character icons
--green particlse and bubbles still not the same color
--two line character icon names
--set window settings so lea can record the screen
--grnave stone font color should be 102,101,101
--allow variable shadow color
--script particles like Since the correlation sentences are mostly very long, I would recommend that we cut them in the middle. That could look like this: It sais: "Because all you did is study to become a successful professor…" (Particle effects come only from the professor box) "… it was hard to become wise and experienced as an old lady." (Particle effects to old lady are added.)
+
+
 -put angels into grave
 -choice confirmation soft skip/hard skip doesn't actually speed things up
-
 -completely redo particle streams lul...
 	-bubble green is wrong shade of green (I think you need to divide by 2)
 	-colored boxes around white
@@ -77,9 +16,10 @@ DONE-put check in so sentences make sense
 	-text bubble for changing cutscene stuff should start in their correct color
 -blue bar font alignment magic
 -do non cheater fading on the choosing guy
-
-DONE-end stats lul
--adoptive mother name and description too long
+-script particles like Since the correlation sentences are mostly very long, I would recommend that we cut them in the middle. That could look like this: It sais: "Because all you did is study to become a successful professor…" (Particle effects come only from the professor box) "… it was hard to become wise and experienced as an old lady." (Particle effects to old lady are added.)
+-popup
+	-make cutscene bubbles come in as the appropriate color and don't fill in character icons
+	-green particlse and bubbles still not the same color
 -do the "loading" birth sorta thing for the fetus
 -check lea's documents for grave stuff
 -consider doing graded slow (change speeds up as you get further)
@@ -87,12 +27,6 @@ DONE-end stats lul
 -aspect ratio getting distorted??? whyyy
 -fix artifacts on the left and right...???
 
-IGNORE-quick perform well button should update graphics too!!! lul no
-DONE-remove glow lul or tone it down...
-DONE-stop playing video games
-IGNORE-do a full playtest fml..
-DONE-slow poses only!!
-DONE-consider doing all smooth
 
 -post grave
 	-teach how to skip cutscenes
@@ -137,6 +71,66 @@ DONE-consider doing all smooth
 			-skip all does same as skip one
 			-skip one goes to next unlocked feature
 
+
+IGNORE-quick perform well button should update graphics too!!! lul no
+DONE-remove glow lul or tone it down...
+DONE-stop playing video games
+IGNORE-do a full playtest fml..
+DONE-slow poses only!!
+DONE-consider doing all smooth
+DONE-reindex characters in charinfos...
+DONE-new birth pose...
+DONE-score is all messed up in grave
+DONE-names are not being displayed in grave
+DONE-get lea grave connection format
+DONE???-get rid of the startup window
+DONE-snapping and smooth should be switched
+DONE-update film akademie logo in credits
+DONE-update drummer and oktober fest girl
+DONE-16-2 angel is a dot (update it)
+DONE-Screen.showCursor = false;
+DONE-performance evaluation sentence grammer is wrong (coma at end, capitalization, no period at end of sentence)
+DONE-something is wrong with the 34 characters
+DONE-dancer poses seem to be messed up
+DONE-fix the loop around problem when interpolating poses
+NOPE-text for fetus is wrong
+DONE-add insta perform well button lul
+DONE-leukemia girl head rotates in pose. Probably need to do better interpolation.. (so it goes in the right direction)
+DONE-change shadow to (0, 81, 229) @ 80% alpha
+DONE-change easy green to 28,182,71
+DONE-green yellow orange red change to 28,182,71 | 255,168,0 | 234,84,2 | 255,0,0
+DONE-particle stream hard cuts on color changes
+DONE-up to four lines
+DONE-word bubbles all capitals
+DONE-fade word bubble text out to the same color it is (as oppose to white)
+DONE/can't do kerning-depth picture depth left binding, slightly > vertical kerning
+DONE-update score image from blue bar (file/ui/stages)
+DONE-choice screen font should be red and not pink
+DONE-either turn off choosing figure or make it fade instead of fly around. 
+DONE-fade out to red
+DONE-fade in cut out bubble
+DONE-font color should be red
+DONE-Color and opacity of selection filling: Color: 0, 81, 229, Filling opacity: 80%. No color changing.
+DONE-layers on cutscene particle streams
+IGNORE-depth picture, move font closer to image. fix that weird negative indentation issue. font size 48??
+IGNORE-fade to red (are you serious lea???)
+DONE-score font should be red
+DONE-use image instead of text for title
+IGNORE-put in new music!!! with cutscene separate songs!!
+DONE/IGNORE-don't do duration hack  look for "//TODO Hack don't modify timing here" in NIM
+IGNORE-add pause in pop up text bubbles
+DONE-fix 05-2 music
+DONE/ISH-popup text bubble colors all wrong again
+DONE-one line word limit is too long
+DONE-remove performance evaluation
+DONE-set window settings so lea can record the screen
+DONE-put check in so sentences make sense
+DONE-text bubble depth should be above blue bar
+DONE-grnave stone font color should be 102,101,101
+DONE-allow variable shadow color
+DONE-end stats lul
+DONE-adoptive mother name and descriptiontion too long
+DONE-two line character icon names
 DONE-fix performance evaluation----   
 DONE-warning text should be centered over character and red
 DONE-different ways to perform game based on age
@@ -151,6 +145,16 @@ DONE/W/E-cutscene text overflows sometmise (popup text object needs to be more d
 	-or possibly multiline needs to have a "max" character sort of thing that makes the heuristic got o infinity so it can never happen
 DONE-move score to center of grave
 DONE-angel storage place can sometimes be seen during the grave
+
+
+
+::CONNECTION FORMAT::
+-CONNECTION <LEVEL,CHOICE> <+/-> <SENTENCE>
+	-eg. for 85-1 (or whatever wise old grandma is)
+	-CONNECTION 2 2 + being a responsible sister at 16 made being wise easy
+		-only displayed if 85-1 is easy/med
+	-CONNECTION 4 1 - being in a shallow relation really tarnished your life experiences
+		-only displayed if 85-1 was hard/impossible
 
 ::TO CONSIDER
 -feedback ideas, after pose changes, you get a blip indicating how well you ddi that pose in that time interval
