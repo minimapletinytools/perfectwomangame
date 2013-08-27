@@ -1,18 +1,25 @@
-
-
 ::TODO X:: in order of importance
+-redo pose recording thing
+-look over timings
+-do normal fading
+-tell lea what symbol to use to break the sentences
+-make characetrs come in faster in grave
+-second chance when dying
+-flash screen red and play siren
+-make sure evaluation sentence is the one in the char info file
+-make suer rest of code (grave) supports more than 2 groupings form performance..
+-redo change groupings and send email to lea explaining it
+-redo set_target_pose in bodymanager seriously...
 
-
-
-
+-redo end cutscenes
 -put angels into grave
 -choice confirmation soft skip/hard skip doesn't actually speed things up
 -completely redo particle streams lul...
 	-bubble green is wrong shade of green (I think you need to divide by 2)
 	-colored boxes around white
 		-is it okay if they are static?
-	-make boxes not change colors or make a backgronud box that is red/green
-	-put mored ots in particle stream
+	DONE-make boxes not change colors or make a backgronud box that is red/green
+	-put mored ots in particle streamseam
 	-text bubble for changing cutscene stuff should start in their correct color
 -blue bar font alignment magic
 -do non cheater fading on the choosing guy

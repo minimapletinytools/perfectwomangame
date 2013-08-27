@@ -191,8 +191,13 @@ public class NewGameManager : FakeMonoBehaviour
 	public float mLastGrade = 0.5f;
 	
 	public int mLastDiff = 0;
+	public int mLastWrite = 0;
 	public void update_TEST()
 	{
+		//if we are annoyed by the pose..
+		if(Input.GetKeyDown(KeyCode.Alpha9))
+			CurrentPoseAnimation = null;
+		
 		if(CurrentPoseAnimation != null)
 		{
 			CurrentTargetPose = CurrentPoseAnimation.get_pose(Time.time);
@@ -202,13 +207,29 @@ public class NewGameManager : FakeMonoBehaviour
 			mManager.mCameraManager.set_camera_effects(grade);
 		}
 		
+		mManager.mBodyManager.keyboard_update();
+		
+		if(Input.GetKeyDown(KeyCode.Space))
+		{
+			string folderPrefix = "";
+			string output = "";
+			if(ManagerManager.Manager.mZigManager.is_reader_connected() != 2){
+				output = CurrentCharacterIndex.StringIdentifier + "_man_" + mLastWrite;
+				mManager.mBodyManager.write_pose(folderPrefix + output + ".txt",true);
+			} else {
+				output = CurrentCharacterIndex.StringIdentifier + "_kinect_" + mLastWrite;
+				mManager.mBodyManager.write_pose(folderPrefix + output + ".txt",false);
+			}
+			mManager.take_screenshot(folderPrefix + output+".png",mManager.mCameraManager.MainBodyCamera);
+			mLastWrite++;		
+		}
 		
 		
-		if(Input.GetKeyDown(KeyCode.Alpha6))
+		if(Input.GetKeyDown(KeyCode.Alpha5))
 			mManager.mBackgroundManager.load_cutscene(0,CurrentCharacterLoader);
-		else if (Input.GetKeyDown(KeyCode.Alpha7))
+		else if (Input.GetKeyDown(KeyCode.Alpha6))
 			mManager.mBackgroundManager.load_cutscene(1,CurrentCharacterLoader);	
-		else if ( Input.GetKeyDown(KeyCode.D))
+		else if ( Input.GetKeyDown(KeyCode.Alpha7))
 			mManager.mBackgroundManager.load_cutscene(4,DeathCharacter);
 		
 		if(Input.GetKeyDown(KeyCode.Alpha8))
@@ -219,15 +240,15 @@ public class NewGameManager : FakeMonoBehaviour
 		}
 		
 		int choice = -1;
-		if(Input.GetKey(KeyCode.Alpha1))
+		if(Input.GetKeyDown(KeyCode.Alpha1))
 		{
 			choice = 0;
 		}
-		else if(Input.GetKey(KeyCode.Alpha2))
+		else if(Input.GetKeyDown(KeyCode.Alpha2))
 		{
 			choice = 1;
 		}
-		else if(Input.GetKey(KeyCode.Alpha3))
+		else if(Input.GetKeyDown(KeyCode.Alpha3))
 		{
 			choice = 2;
 		}

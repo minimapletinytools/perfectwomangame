@@ -126,7 +126,9 @@ public class CharacterBundleManager : FakeMonoBehaviour {
 			mManager.mBodyManager.character_changed_listener(loader);
 			mManager.mTransparentBodyManager.character_changed_listener(loader);
 			//TODO set to actual pose that we want
-			mManager.mTransparentBodyManager.set_target_pose(mManager.mReferences.mCheapPose.to_pose());
+			mManager.mTransparentBodyManager.set_target_pose(mManager.mReferences.mCheapPose.to_pose(),true);
+			if(mManager.mZigManager.is_reader_connected() != 2)
+				mManager.mBodyManager.set_target_pose(mManager.mReferences.mCheapPose.to_pose(),true);
 		}
 		else{
 			mManager.mBodyManager.destroy_character();

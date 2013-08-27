@@ -27,12 +27,12 @@ public static class GameConstants
     public static string[] credits = { "Thanks: Benedikts","Haas, David Elliott,","Sabrina Winter, Eddo","Stern, Ingo Von","Staden, Andreas","Hykade" };
 	
 	
-	public static float preplayTime = 0.1f;
-	public static float fadingTime = 0.1f;
-	public static float transitionToChoiceDelayTime = 0.1f;
-	//public static float preplayTime = 2f;
-	//public static float fadingTime = 2.3;
-	//public static float transitionToChoiceDelayTime = 2;
+	//public static float preplayTime = 0.1f;
+	//public static float fadingTime = 0.1f;
+	//public static float transitionToChoiceDelayTime = 0.1f;
+	public static float preplayTime = 2f;
+	public static float fadingTime = 2.3f;
+	public static float transitionToChoiceDelayTime = 2;
 
 
     //colors

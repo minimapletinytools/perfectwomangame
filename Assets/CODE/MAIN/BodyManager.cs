@@ -8,10 +8,18 @@ public class BodyManager : FakeMonoBehaviour {
     public int mMode = 0; // 0 - from kinect, 1 - from pose, -1 none
     int mLayer = 0;
     Vector3 mOffset;
-    public void set_target_pose(Pose aPose)
+    public void set_target_pose(Pose aPose, bool hard = false)
     {
-        mFlat.set_target_pose(aPose);
-        //hack
+        mFlat.set_target_pose(aPose, hard);
+        //hack because the hard parameter above does not seem to work...
+		if(hard)
+		{
+			for (int i = 0; i < 100; i++)
+            {
+                mFlat.update_parameters(100);
+            }
+		}
+		//hack hack
         if (((ManagerManager.Manager.mRecordMode) && mMode == 1))
         {
             for (int i = 0; i < 100; i++)
@@ -136,20 +144,74 @@ public class BodyManager : FakeMonoBehaviour {
             }
             else if (mMode == 0)
             {
-				
-				//TODO do I need this??
-                //if (ManagerManager.Manager.mGameManager.Started)
-                {
-                    mFlat.match_body_location_to_projection(mManager.mZigManager);
-                }
-                mFlat.match_body_to_projection(mManager.mProjectionManager);
-				mFlat.update_parameters(Time.deltaTime);
-                mFlat.set();
+				//only update if kinect is pulgged in
+				if(ManagerManager.Manager.mZigManager.is_reader_connected() != 2)
+				{
+					//TODO do I need this??
+	                //if (ManagerManager.Manager.mGameManager.Started)
+	                {
+	                    mFlat.match_body_location_to_projection(mManager.mZigManager);
+	                }
+	                mFlat.match_body_to_projection(mManager.mProjectionManager);
+					mFlat.update_parameters(Time.deltaTime);
+	                mFlat.set();
+				}
             }
         }
         
 	}
-
+	
+	public void keyboard_update()
+	{
+		if(mFlat != null){
+			//US
+			/*var keyBindings = new[]{
+				new { k = ZigJointId.Neck, u = KeyCode.T, d = KeyCode.Y },
+				new { k = ZigJointId.Torso, u = KeyCode.G, d = KeyCode.H },
+				new { k = ZigJointId.Waist, u = KeyCode.B, d = KeyCode.N },
+				new { k = ZigJointId.LeftShoulder, u = KeyCode.E, d = KeyCode.R },
+				new { k = ZigJointId.RightShoulder, u = KeyCode.U, d = KeyCode.I },
+				new { k = ZigJointId.LeftElbow, u = KeyCode.Q, d = KeyCode.W },
+				new { k = ZigJointId.RightElbow, u = KeyCode.O, d = KeyCode.P },
+				new { k = ZigJointId.LeftHip, u = KeyCode.C, d = KeyCode.V },
+				new { k = ZigJointId.RightHip, u = KeyCode.M, d = KeyCode.Comma },
+				new { k = ZigJointId.LeftKnee, u = KeyCode.Z, d = KeyCode.X },
+				new { k = ZigJointId.RightKnee, u = KeyCode.Period, d = KeyCode.Slash }
+			};*/
+			//GERMAN
+			var keyBindings = new[]{
+				new { k = ZigJointId.Neck, u = KeyCode.T, d = KeyCode.Z },
+				new { k = ZigJointId.Torso, u = KeyCode.G, d = KeyCode.H },
+				new { k = ZigJointId.Waist, u = KeyCode.B, d = KeyCode.N },
+				new { k = ZigJointId.LeftShoulder, u = KeyCode.E, d = KeyCode.R },
+				new { k = ZigJointId.RightShoulder, u = KeyCode.U, d = KeyCode.I },
+				new { k = ZigJointId.LeftElbow, u = KeyCode.Q, d = KeyCode.W },
+				new { k = ZigJointId.RightElbow, u = KeyCode.O, d = KeyCode.P },
+				new { k = ZigJointId.LeftHip, u = KeyCode.C, d = KeyCode.V },
+				new { k = ZigJointId.RightHip, u = KeyCode.M, d = KeyCode.Comma },
+				new { k = ZigJointId.LeftKnee, u = KeyCode.Y, d = KeyCode.X },
+				new { k = ZigJointId.RightKnee, u = KeyCode.Period, d = KeyCode.Minus }
+			};
+			Pose p = new Pose();
+		    foreach (KeyValuePair<ZigJointId, GameObject> e in mFlat.mParts)
+		    {
+		        PoseElement pe = new PoseElement();
+		        pe.joint = e.Key;
+		        pe.angle = e.Value.transform.rotation.eulerAngles.z;
+		        p.mElements.Add(pe);
+		    }
+			foreach(var e in keyBindings)
+			{
+				if(Input.GetKey(e.u))
+					p.find_element(e.k).angle += 1;
+				else if(Input.GetKey(e.d))
+					p.find_element(e.k).angle -= 1;
+			}
+			
+			
+			mFlat.set_target_pose(p,true);
+		}
+	}
 
     public static ZigJointId get_parent(ZigJointId joint)
     {

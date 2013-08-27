@@ -121,7 +121,7 @@ public class ManagerManager : MonoBehaviour{
 		
         if (Input.GetKeyDown(KeyCode.Escape))
             Application.Quit();
-        if (Input.GetKeyDown(KeyCode.R))
+        if (Input.GetKeyDown(KeyCode.Backspace))
         {
             restart_game();
         }
@@ -170,7 +170,7 @@ public class ManagerManager : MonoBehaviour{
     public static string sImageFolderPrefix = "";
     public static string ScreenShotName { get { return sScreenShotPrefix + sScreenShotNumber; } }
     
-    void take_screenshot(string filename, Camera cam)
+    public void take_screenshot(string filename, Camera cam)
     {
         
         int resWidth = 800;
@@ -196,6 +196,7 @@ public class ManagerManager : MonoBehaviour{
     }
     void LateUpdate()
     {
+		/*
         if (Input.GetKeyDown(KeyCode.Space))
         {
             Camera cam = mCameraManager.MainBodyCamera;
@@ -213,7 +214,7 @@ public class ManagerManager : MonoBehaviour{
                 mTransparentBodyManager.write_pose(sFolderPrefix + ScreenShotName + "_m.txt", true);
             }
             sScreenShotNumber++;
-        }
+        }*/
     }
 	
 	public string mDebugString = "WORK IN PROGRESS";

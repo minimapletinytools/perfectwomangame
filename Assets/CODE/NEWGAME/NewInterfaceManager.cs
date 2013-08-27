@@ -495,27 +495,38 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 		
 	}
 	
+	
+	public void set_popup_color_for_cutscene_particles(PopupTextObject aPopup, bool aPositive)
+	{
+		Color useColor = (!aPositive) ? GameConstants.ParticleStreamEasy : GameConstants.ParticleStreamHard;
+		if(aPositive)
+			aPopup.set_text_color(GameConstants.UiWhite,true);
+		aPopup.set_background_color(useColor,true);
+	}
 	public void add_cutscene_particle_stream(CharacterIndex aTarget, PopupTextObject aPopup, float duration, bool aPositive)
 	{
 		float delay = 0;
 		Color useColor = (!aPositive) ? GameConstants.ParticleStreamEasy : GameConstants.ParticleStreamHard;
+		
 		if(mPBCharacterIcons[aTarget] != null)
 		{
 			TED.add_one_shot_event(
 				delegate()
 				{
-					if(aPositive)
-						aPopup.set_text_color(GameConstants.UiWhite,true);
-					aPopup.set_background_color(useColor,true);
-					mPBCharacterIcons[aTarget].set_background_color(useColor);
+					//if(aPositive)
+					//	aPopup.set_text_color(GameConstants.UiWhite,true);
+					//aPopup.set_background_color(useColor,true);
+				
+					//mPBCharacterIcons[aTarget].set_background_color(useColor);
 				},
 			delay).then_one_shot(
 				delegate()
 				{
-					if(aPositive)
-						aPopup.set_text_color(GameConstants.UiRed,true);
-					aPopup.set_background_color(GameConstants.UiPopupBubble,true);
-					mPBCharacterIcons[aTarget].set_background_color(new Color(0.5f,0.5f,0.5f));
+					//if(aPositive)
+					//	aPopup.set_text_color(GameConstants.UiRed,true);
+					//aPopup.set_background_color(GameConstants.UiPopupBubble,true);
+				
+					//mPBCharacterIcons[aTarget].set_background_color(new Color(0.5f,0.5f,0.5f));
 				},
 			duration);
 			add_timed_particle_stream(
@@ -535,8 +546,8 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 		TED.add_one_shot_event(
 			delegate()
 			{
-				aTarget.set_depth(mPB.Depth + 5); //adjust the depth so the stream shows over the right icons
-				pso = new ParticleStreamObject(mPB.Depth + 7,aPosition);
+				//aTarget.set_depth(mPB.Depth + 7); //adjust the depth so the stream shows over the right icons
+				pso = new ParticleStreamObject(mPB.Depth + 7,aPosition); // use to be 9??
                 pso.HardColor = aColor;
 				pso.HardPosition = aTarget.SoftPosition;
 				pso.update(0);
@@ -545,7 +556,7 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 		aDelay).then_one_shot(
 			delegate()
 			{
-				aTarget.set_depth(mPB.Depth + 1); //and then  reset it to what it should be
+				//aTarget.set_depth(mPB.Depth + 1); //and then  reset it to what it should be
 				mElement.Remove(pso);
 				pso.destroy();
 			},
@@ -737,7 +748,17 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 				delegate(float aTime)
 				{
 					if(po == null)
+					{
 						po = add_timed_text_bubble(changeMsg,gCutsceneText);
+					
+						//dumb stuff I need to make sure there was actually a change
+						foreach(CharacterIndex cchar in CharacterIndex.sAllCharacters)
+							if(diffChanges[cchar] != 0)
+							{
+								set_popup_color_for_cutscene_particles(po,changes.is_positive());
+								break;
+							}
+					}
 					if(po.IsDestroyed || aTime > gPreParticle)
 					{
 						return true;
@@ -896,6 +917,7 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 		finalScoreText.HardColor = (GameConstants.UiGraveText);
 		//FlatElementImage perfectEngraving = new FlatElementImage(mManager.mNewRef.gravePerfectnessEngraving,10);
 		FlatElementText perfectPercent = new FlatElementText(mManager.mNewRef.genericFont,100,"",11);
+		perfectPercent.HardColor = (GameConstants.UiGraveText);
 		//perfectPercent.Text = ((int)(100*aStats.Sum(e=>e.Stats.Perfect+1)/(float)(aStats.Count*3))).ToString() + "%";
 		perfectPercent.Text = aStats.Last().Character.Age.ToString();
 		
@@ -1081,6 +1103,7 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 								if(npo == null)
 								{
 									npo = add_timed_text_bubble(targetConnection,gConnectionText);
+									set_popup_color_for_cutscene_particles(npo,!wasHard);
 								}
 								if(npo.IsDestroyed || aTime > gPreParticle)
 								{

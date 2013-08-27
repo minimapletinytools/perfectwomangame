@@ -5,6 +5,19 @@ using System.IO;
 using System.IO.Compression;
 public class BuildScripts
 {
+	[MenuItem("Custom/build/TESTING_OSX")]
+    static void build_testing_osx()
+    {
+		string[] scenes = {"Assets/SCENES/testing_scene.unity"};
+ 
+		string buildDir = "/Users/user/Desktop/unitybuilds/lea/" + System.DateTime.Now.ToString("MMMdhmm") +"_testing_osx.app";
+		System.IO.Directory.CreateDirectory(buildDir);
+		BuildPipeline.BuildPlayer(scenes , buildDir, BuildTarget.StandaloneOSXIntel, BuildOptions.None);
+		
+		string resourceDstPath = buildDir + "/Contents/Resources";
+		DirectoryCopy(Application.dataPath + "/Resources", resourceDstPath,false);
+    }
+	
     [MenuItem("Custom/build/OSX")]
     static void build_osx()
     {

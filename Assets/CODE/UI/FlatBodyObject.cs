@@ -74,22 +74,29 @@ public class FlatBodyObject : FlatElementBase
         mParts[ZigJointId.Waist].transform.rotation = Quaternion.AngleAxis(aManager.mWaist.current, Vector3.forward);
     }
 
-    public void set_target_pose(Pose aPose)
+    public void set_target_pose(Pose aPose, bool hard = false)
     {
         mTargetPose = aPose;
+		if(hard)
+			update_parameters_impl(0,1);
     }
-
+	
+	
     public override void update_parameters(float aDeltaTime)
     {
-        if (mTargetPose != null)
+       update_parameters_impl(aDeltaTime);
+    }
+	public void update_parameters_impl(float aDeltaTime, float interp = 0.1f)
+	{
+		if (mTargetPose != null)
         {
             foreach (PoseElement e in mTargetPose.mElements)
             {
-                mParts[e.joint].transform.rotation = Quaternion.Slerp(mParts[e.joint].transform.rotation, Quaternion.AngleAxis(e.angle, Vector3.forward), 0.1f);
+                mParts[e.joint].transform.rotation = Quaternion.Slerp(mParts[e.joint].transform.rotation, Quaternion.AngleAxis(e.angle, Vector3.forward), interp);
             }
         }
         base.update_parameters(aDeltaTime);
-    }
+	}
 
     public override void destroy()
     {

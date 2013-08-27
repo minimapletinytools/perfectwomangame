@@ -39,6 +39,7 @@ public class Pose
 		
 		return r;
 	}
+	//TODO copy operation
 }
 
 public class PoseAnimation
