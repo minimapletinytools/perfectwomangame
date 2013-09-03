@@ -714,12 +714,12 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 				{
 					//TODO use color text here... In fact you should replace color text as yoru standard text object really...
 					//text = aChanges.PerformanceDescription.Replace("<P>",perfectPhrase[mBBLastPerformanceGraph.Stats.Perfect]);
-					string noCapsDescription = mBBLastPerformanceGraph.Character.Description.ToLower();
+					/*string noCapsDescription = mBBLastPerformanceGraph.Character.Description.ToLower();
 					if(mBBLastPerformanceGraph.Character.IsDescriptionAdjective)
 						text = "You lived your life " + noCapsDescription + " " + performancePhrase[(int)Mathf.Clamp(mBBLastPerformanceGraph.Score*4,0,3)] + ".";
 					else
-						text = "You lived your life as a " + noCapsDescription + " " + performancePhrase[(int)Mathf.Clamp(mBBLastPerformanceGraph.Score*4,0,3)] + ".";
-					introPo = add_timed_text_bubble(text,gPerformanceText);
+						text = "You lived your life as a " + noCapsDescription + " " + performancePhrase[(int)Mathf.Clamp(mBBLastPerformanceGraph.Score*4,0,3)] + ".";*/
+					introPo = add_timed_text_bubble(aChanges.PerformanceDescription.ToUpper(),gPerformanceText);
 				}
 				return true;
 			},
@@ -875,9 +875,9 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 		float gPreGlory = 0f;
 		float gGlory = 0f;
 		float gPostGlory = 0f;
-		float gPreScoreCount = 2.5f;
-		float gScoreCount = 1.5f;
-		float gPostScoreCount = 0.5f;
+		float gPreScoreCount = 0.2f;
+		float gScoreCount = 1f;
+		float gPostScoreCount = 1f;
 		float gRestart = 15;
 		
 		//remove the grave
@@ -891,7 +891,10 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 		{
 			if(aStats.Last().Character.Age < (new CharacterIndex(i,0)).Age)
 			{
-				aStats.Add(new PerformanceStats(new CharacterIndex(i,0)));
+				PerformanceStats stat = new PerformanceStats(new CharacterIndex(i,Random.Range(0,3)));
+				stat.update_score(0,Random.value);
+				stat.update_score(1,Random.value);
+				aStats.Add(stat);
 			}
 		}*/
 		
@@ -917,9 +920,10 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 		finalScoreText.HardColor = (GameConstants.UiGraveText);
 		//FlatElementImage perfectEngraving = new FlatElementImage(mManager.mNewRef.gravePerfectnessEngraving,10);
 		FlatElementText perfectPercent = new FlatElementText(mManager.mNewRef.genericFont,100,"",11);
+		float ageIncrementer = 0;
 		perfectPercent.HardColor = (GameConstants.UiGraveText);
 		//perfectPercent.Text = ((int)(100*aStats.Sum(e=>e.Stats.Perfect+1)/(float)(aStats.Count*3))).ToString() + "%";
-		perfectPercent.Text = aStats.Last().Character.Age.ToString();
+		perfectPercent.Text = "0";//aStats.Last().Character.Age.ToString();
 		
 		//hack to put things into bg camera
 		foreach (Renderer f in finalScoreText.PrimaryGameObject.GetComponentsInChildren<Renderer>())
@@ -990,10 +994,11 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 			pgo.HardPosition = new Vector3(pgoXOffset,-2000,0);
 			pgo.HardColor = new Color(0.5f,0.5f,0.5f,1);
 			
-			string[] perfectPhrase = {"awful","mediocre","good", "perfect"};
-			string[] performancePhrase = {"a disaster","bad","good", "perfect"};
+			//CAN DELETE
+			//string[] perfectPhrase = {"awful","mediocre","good", "perfect"};
+			//string[] performancePhrase = {"a disaster","bad","good", "perfect"};
+			//PopupTextObject po = null;
 			
-			PopupTextObject po = null;
 			chain = chain.then_one_shot(
 				
 				//TODO add soft skipping in here
@@ -1004,6 +1009,7 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 					mManager.mMusicManager.play_sound_effect("graveAngel");	
 				
 				
+					/*
 					//CAN DELETE
 					string text = "";
 					//set the textt
@@ -1014,9 +1020,8 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 					
 					text += " was " + performancePhrase[Mathf.Clamp((int)(Mathf.Sqrt(ps.Score)*4),0,3)];
 					text += ".";
-			
 					text = ps.Character.Description;
-					po = add_timed_text_bubble(text,gCharacterText,0.4f);
+					po = add_timed_text_bubble(text,gCharacterText,0.4f);*/
 				
 					//move in stuff
 					cio.SoftPosition = new Vector3(cioXOffset,startingPosition - (it-1) * intervalSize,0);
@@ -1043,11 +1048,16 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 					if(aTime > 0)
 					{
 						float displayScore = scoreIncrementor + (aTime/gScoreCount)*ps.AdjustedScore;
+						float displayAge = ageIncrementer + (aTime/gScoreCount)*(ps.Character.Age-ageIncrementer);
 						finalScoreText.Text = ""+(int)displayScore;
+						perfectPercent.Text = ""+(int)displayAge;
 					}
-					if(po.IsDestroyed || aTime >  gScoreCount + gPostScoreCount)
+					//CAN DELETE
+					//if(po.IsDestroyed || aTime >  gScoreCount + gPostScoreCount)
+					if(aTime >  gScoreCount + gPostScoreCount)
 					{
 						scoreIncrementor += ps.AdjustedScore;
+						ageIncrementer += (ps.Character.Age - ageIncrementer);
 						return true;
 					}
 					return false;
@@ -1059,9 +1069,10 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 			
 			
 			
-			float gConnectionText = 8f;
-			float gPreParticle = 2f;
-			float gParticle = 4f;
+			float gFirstConnectionText = 3.5f;
+			float gConnectionText = 4f;
+			float gPreParticle = 1f;
+			float gParticle = 2f;
 			
 			
 			//TODO grave connections
@@ -1085,24 +1096,39 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 					int accumChange = 0;
 					if(aStats[j].CutsceneChangeSet != null) //TODO this check should never fail
 					{
-						Debug.Log("accum change for " + aStats[j].Character.StringIdentifier + " is " + aStats[j].CutsceneChangeSet.accumulative_changes()[ps.Character]);
+						//Debug.Log("accum change for " + aStats[j].Character.StringIdentifier + " is " + aStats[j].CutsceneChangeSet.accumulative_changes()[ps.Character]);
 						accumChange = aStats[j].CutsceneChangeSet.accumulative_changes()[ps.Character];
 					}
 					else
 					{
-						Debug.Log ("null cutscene change for " + aStats[j].Character.StringIdentifier + " " + aStats[j].CutsceneChangeSet);
+						//Debug.Log ("null cutscene change for " + aStats[j].Character.StringIdentifier + " " + aStats[j].CutsceneChangeSet);
 					}
 					if( (wasHard && accumChange > 0) ||
 						(!wasHard && accumChange < 0))
-					//if(true)
 					{
+						string [] conText = targetConnection.Replace("<S>","@").Split('@');
 						PopupTextObject npo = null;
+						if(conText.Length == 2){
+							chain = chain.then (
+							delegate(float aTime)
+							{
+								if(npo == null)
+								{
+									npo = add_timed_text_bubble(conText[0],gFirstConnectionText);
+								}
+								if(npo.IsDestroyed)
+								{
+									return true;
+								}
+								return false;
+							},0);
+						}
 						chain = chain.then (
 							delegate(float aTime)
 							{
 								if(npo == null)
 								{
-									npo = add_timed_text_bubble(targetConnection,gConnectionText);
+									npo = add_timed_text_bubble(conText[conText.Length-1],gConnectionText);
 									set_popup_color_for_cutscene_particles(npo,!wasHard);
 								}
 								if(npo.IsDestroyed || aTime > gPreParticle)
