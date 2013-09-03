@@ -15,7 +15,9 @@ public class ManagerManager : MonoBehaviour{
     }
 
     //debug nonsense
+	//TODO DELET
     public bool mRecordMode = false;
+	
     //constants
     public static int MANIPULATOR_LAYER = 8;
 	

@@ -137,7 +137,7 @@ public class BodyManager : FakeMonoBehaviour {
         if (mFlat != null)
         {
             //if were not in record mode for the tranpsarent one
-            if (!((ManagerManager.Manager.mRecordMode) && mMode == 1))
+            if ( mMode == 1)
             {
                 mFlat.update_parameters(Time.deltaTime);
                 mFlat.set();
@@ -145,7 +145,7 @@ public class BodyManager : FakeMonoBehaviour {
             else if (mMode == 0)
             {
 				//only update if kinect is pulgged in
-				if(ManagerManager.Manager.mZigManager.is_reader_connected() != 2)
+				if(ManagerManager.Manager.mZigManager.is_reader_connected() == 2)
 				{
 					//TODO do I need this??
 	                //if (ManagerManager.Manager.mGameManager.Started)
