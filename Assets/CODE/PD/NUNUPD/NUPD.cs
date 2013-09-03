@@ -118,7 +118,8 @@ namespace NUPD
 			string[] process = aChar.Split(new string[] { "\r\n", "\n" }, System.StringSplitOptions.None);
 			string lastState = "";
 			
-			ChangeSet operatingChangeSet = null;
+			List<ChangeSet> operatingChangeSetList = new List<ChangeSet>();
+			//ChangeSet operatingChangeSet = null; TODO DELETE
 			ChangeSubSet operatingChangeSubSet = null;
 			int changeSubsetLevelIndexCounter = 0;
 			
@@ -136,8 +137,12 @@ namespace NUPD
 				{
 				
 					if(lastState == "CHANGE") {
-						operatingChangeSet.LowerThreshold = (float)System.Convert.ToDouble(sp[0]);
-						operatingChangeSet.UpperThreshold = (float)System.Convert.ToDouble(sp[1]);
+						//TODO DELETE
+						//operatingChangeSet.LowerThreshold = (float)System.Convert.ToDouble(sp[0]);
+						//operatingChangeSet.UpperThreshold = (float)System.Convert.ToDouble(sp[1]);
+						
+						operatingChangeSetList.Last().LowerThreshold = (float)System.Convert.ToDouble(sp[0]);
+						operatingChangeSetList.Last().UpperThreshold = (float)System.Convert.ToDouble(sp[1]);
 						
 					} else if(lastState == "CDESC") {
 						//Debug.Log (sp.Aggregate((s1,s2)=>s1+"|"+s2+"|"));
@@ -148,6 +153,13 @@ namespace NUPD
 						}
 						changeSubsetLevelIndexCounter++;
 					}
+				}
+				
+				if(first != "CHANGE"  && lastState == "CDESC")
+				{
+					foreach(ChangeSet f in operatingChangeSetList)
+						ci.ChangeSet.Add(f);
+					operatingChangeSetList.Clear();
 				}
 				
 				if(first == "NAME"){
@@ -167,18 +179,26 @@ namespace NUPD
 					//TODO index should be two numbers now
 					ci.Index = new CharacterIndex(System.Convert.ToInt32(sp[1]),System.Convert.ToInt32(sp[2]));//CharacterIndex.INDEX_TO_CHARACTER[System.Convert.ToInt32(sp[1])];
 				} else if(first == "CHANGE"){
-					operatingChangeSet = new ChangeSet();
-					operatingChangeSet.Index = ci.ChangeSet.Count;
+					//TODO DELETE
+					//operatingChangeSet = new ChangeSet();
+					//operatingChangeSet.Index = ci.ChangeSet.Count;
+					operatingChangeSetList.Add(new ChangeSet());
+					operatingChangeSetList.Last().Index = ci.ChangeSet.Count;
 					if(sp.Length > 1)
-						operatingChangeSet.PerformanceDescription = sp.Skip(1).Aggregate((s1,s2)=>s1+" "+s2);
-					ci.ChangeSet.Add(operatingChangeSet);
+						//operatingChangeSet.PerformanceDescription = sp.Skip(1).Aggregate((s1,s2)=>s1+" "+s2);
+						operatingChangeSetList.Last().PerformanceDescription = sp.Skip(1).Aggregate((s1,s2)=>s1+" "+s2);
+					//ci.ChangeSet.Add(operatingChangeSet);
 				} else if(first == "CDESC")
 				{
 					changeSubsetLevelIndexCounter = 0;
 					operatingChangeSubSet = new ChangeSubSet();
 					if(sp.Length > 1)
 						operatingChangeSubSet.Description = sp.Skip(1).Aggregate((s1,s2)=>s1+" "+s2);
-					operatingChangeSet.Changes.Add(operatingChangeSubSet);
+					//NOTE by doing things this way, all change subsets will be references to each other!!
+					foreach(ChangeSet f in operatingChangeSetList)
+						f.Changes.Add(operatingChangeSubSet);
+					//TODO DELETE
+					//operatingChangeSet.Changes.Add(operatingChangeSubSet);
 				} else if(first == "CONNECTION"){
 					CharacterIndex conind = new CharacterIndex(System.Convert.ToInt32(sp[1]),System.Convert.ToInt32(sp[2]));
 					bool easy = sp[3] == "+" ? true : false;
@@ -186,8 +206,6 @@ namespace NUPD
 						ci.EasyConnections[conind] = sp.Skip(4).Aggregate((s1,s2)=>s1+" "+s2);
 					else
 						ci.HardConnections[conind] = sp.Skip(4).Aggregate((s1,s2)=>s1+" "+s2);
-				} else if(first == "AUDIO"){ //TODO delete
-					operatingChangeSet.Audio = sp.Skip(1).Aggregate((s1,s2)=>s1+" "+s2);
 				} else if (first == "COLOR"){
 					ci.CharacterOutlineColor = 
 						new Color32((byte)System.Convert.ToInt32(sp[1]),(byte)System.Convert.ToInt32(sp[2]),(byte)System.Convert.ToInt32(sp[3]),(byte)System.Convert.ToInt32(sp[4]));
@@ -196,6 +214,12 @@ namespace NUPD
 				if(keywords.Contains(first))
 					lastState = first;
 			}
+		
+			//in case we have some changes that did not get added
+			foreach(ChangeSet f in operatingChangeSetList)
+				ci.ChangeSet.Add(f);
+			operatingChangeSetList.Clear();
+			
 			return ci;
 		}
 	}
