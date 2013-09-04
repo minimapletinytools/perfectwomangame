@@ -153,9 +153,7 @@ namespace NUPD
 						}
 						changeSubsetLevelIndexCounter++;
 					}
-				}
-				
-				if(first != "CHANGE"  && lastState == "CDESC")
+				} else if((lastState == "CDESC" && first != "CDESC")) //we are finished with our chain of cdescs, start a new group
 				{
 					foreach(ChangeSet f in operatingChangeSetList)
 						ci.ChangeSet.Add(f);
@@ -183,7 +181,7 @@ namespace NUPD
 					//operatingChangeSet = new ChangeSet();
 					//operatingChangeSet.Index = ci.ChangeSet.Count;
 					operatingChangeSetList.Add(new ChangeSet());
-					operatingChangeSetList.Last().Index = ci.ChangeSet.Count;
+					operatingChangeSetList.Last().Index = ci.ChangeSet.Count + operatingChangeSetList.Count;
 					if(sp.Length > 1)
 						//operatingChangeSet.PerformanceDescription = sp.Skip(1).Aggregate((s1,s2)=>s1+" "+s2);
 						operatingChangeSetList.Last().PerformanceDescription = sp.Skip(1).Aggregate((s1,s2)=>s1+" "+s2);
