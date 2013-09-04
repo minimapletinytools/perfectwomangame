@@ -150,12 +150,12 @@ public class BodyManager : FakeMonoBehaviour {
 					//TODO do I need this??
 	                //if (ManagerManager.Manager.mGameManager.Started)
 	                {
-	                    mFlat.match_body_location_to_projection(mManager.mZigManager);
+	                    //mFlat.match_body_location_to_projection(mManager.mZigManager);
 	                }
 	                mFlat.match_body_to_projection(mManager.mProjectionManager);
-					mFlat.update_parameters(Time.deltaTime);
-	                mFlat.set();
 				}
+				mFlat.update_parameters(Time.deltaTime);
+	            mFlat.set();
             }
         }
         
