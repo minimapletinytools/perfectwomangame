@@ -125,7 +125,7 @@ public class BodyManager : FakeMonoBehaviour {
         }
         else
         {
-            if (mManager.mZigManager.has_user())
+            //if (mManager.mZigManager.has_user())
             {
                 ProGrading.write_pose_to_file(ProGrading.snap_pose(mManager),aFilename);
             }
