@@ -11,7 +11,7 @@ public class PopupTextObject : FlatElementMultiBase {
 	public bool IsDestroyed
 	{ 	get{
 			//kinda hacky but it's fine
-			return mDestroyed | (SoftColor == new Color(1,1,1,0));	
+			return mDestroyed | (SoftColor == new Color(0.5f,0.5f,0.5f,0));
 		}
 		private set{
 			mDestroyed = value;

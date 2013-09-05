@@ -1,29 +1,45 @@
 ::TODO X:: in order of importance
--redo pose recording thing
--look over timings
--do normal fading
--tell lea what symbol to use to break the sentences
--make characetrs come in faster in grave
--second chance when dying
--flash screen red and play siren
--make sure evaluation sentence is the one in the char info file
--make suer rest of code (grave) supports more than 2 groupings form performance..
--redo change groupings and send email to lea explaining it
--redo set_target_pose in bodymanager seriously...
+-return vars to release not debug
+DONE???-poses not being written in kniect mode
+DONE-don't fade out the blue after choosing
+DONE-before cutscene, say "you turn 5"
 
--redo end cutscenes
+-do new fetus scene with cutscene text...
+	-introduce green pose and performance graph
+	-explain cutscenes..
+	-confirmation that you matched the green pose
+-dying
+	-flash screen red and play siren
+	-die, (look at storyboard)
+	-BAD PERFORMANCE
+	-play sound
+	-spin/fly out characters
+-just text changes in bubble, first sentence, first particle, second sentence, second particle.
+-check the grading thing 
+
+IGNORE-look over timings
+
+-do normal fading
+-grave
+	DONE-make characetrs come in faster in grave,
+		-char/score/char/score
+	DONE-no evaluation sentences
+	-switch to smaller performance graphs
+
+
+-backspace breaking stuff in testing scene maybe??
+
 -put angels into grave
--choice confirmation soft skip/hard skip doesn't actually speed things up
 -completely redo particle streams lul...
+	-check depth on particle stream
 	-bubble green is wrong shade of green (I think you need to divide by 2)
 	-colored boxes around white
 		-is it okay if they are static?
 	DONE-make boxes not change colors or make a backgronud box that is red/green
-	-put mored ots in particle streamseam
-	-text bubble for changing cutscene stuff should start in their correct color
+	DONE-put mored ots in particle streamseam
+	DONE-text bubble for changing cutscene stuff should start in their correct color
 -blue bar font alignment magic
 -do non cheater fading on the choosing guy
--script particles like Since the correlation sentences are mostly very long, I would recommend that we cut them in the middle. That could look like this: It sais: "Because all you did is study to become a successful professor…" (Particle effects come only from the professor box) "… it was hard to become wise and experienced as an old lady." (Particle effects to old lady are added.)
 -popup
 	-make cutscene bubbles come in as the appropriate color and don't fill in character icons
 	-green particlse and bubbles still not the same color
@@ -31,17 +47,14 @@
 -check lea's documents for grave stuff
 -consider doing graded slow (change speeds up as you get further)
 -partikuls!!!
--aspect ratio getting distorted??? whyyy
 -fix artifacts on the left and right...???
-
-
+-project character to ground for mor edynamic movement
+-skipping
+	-soft skipping at grave doesn't actually speed things up
+	DONE!!!-choice confirmation soft skip/hard skip doesn't actually speed things up
 -post grave
 	-teach how to skip cutscenes
 	-show unlocked things
--do new fetus scene with cutscene text...
-	-introduce green pose and performance graph
-	-explain cutscenes..
-	-confirmation that you matched the green pose
 -grave connections
 -high score nonsense 
 	-capture image from kinect
@@ -77,6 +90,20 @@
 		-post grave
 			-skip all does same as skip one
 			-skip one goes to next unlocked feature
+
+
+DONE-change groupings
+	-redo change groupings to allow multiple sentences
+	-make suer rest of code (grave) supports more tan 2 groupings form performance..
+DONE-redo end cutscenes
+DONE-make sure evaluation sentence is the one in the char info file and not generated
+IGNORE-redo set_target_pose in bodymanager seriously...
+DONE-redo pose recording thing
+DONE??-implement sentence splitting with the <S>
+DONE-tell lea what symbol to use to break the sentences
+DONE-redo change groupings and send email to lea explaining it
+IGNORE-script particles like Since the correlation sentences are mostly very long, I would recommend that we cut them in the middle. That could look like this: It sais: "Because all you did is study to become a successful professor…" (Particle effects come only from the professor box) "… it was hard to become wise and experienced as an old lady." (Particle effects to old lady are added.)
+IGNORE-aspect ratio getting distorted??? whyyy
 
 
 IGNORE-quick perform well button should update graphics too!!! lul no

@@ -118,6 +118,7 @@ namespace NUPD
 			string[] process = aChar.Split(new string[] { "\r\n", "\n" }, System.StringSplitOptions.None);
 			string lastState = "";
 			
+			
 			List<ChangeSet> operatingChangeSetList = new List<ChangeSet>();
 			//ChangeSet operatingChangeSet = null; TODO DELETE
 			ChangeSubSet operatingChangeSubSet = null;
@@ -163,6 +164,7 @@ namespace NUPD
 				if(first == "NAME"){
 					if(sp.Length > 1)
 						ci.ShortName = sp.Skip(1).Aggregate((s1,s2)=>s1+" "+s2);
+					//Debug.Log(ci.ShortName);
 				} else if(first == "NDESC"){
 					if(sp.Length > 1)
 					{

@@ -24,15 +24,15 @@ public static class GameConstants
 	
 	//grave stuff
 	//public static string[] credits = {"Perfect Woman","created by", "Lea Sch\u00F6enfelder", "Peter Lu"};
-    public static string[] credits = { "Thanks: Benedikts","Haas, David Elliott,","Sabrina Winter, Eddo","Stern, Ingo Von","Staden, Andreas","Hykade" };
+    public static string[] credits = { "Thanks: Benedikts","Haas, David Elliott,","Sabrina Winter, Eddo","Stern, Ingo Von","Staden, Andreas","Hykade, Alex", "Rickett" };
 	
 	
-	//public static float preplayTime = 0.1f;
-	//public static float fadingTime = 0.1f;
-	//public static float transitionToChoiceDelayTime = 0.1f;
-	public static float preplayTime = 2f;
-	public static float fadingTime = 2.3f;
-	public static float transitionToChoiceDelayTime = 2;
+	public static float preplayTime = 0.1f;
+	public static float fadingTime = 0.1f;
+	public static float transitionToChoiceDelayTime = 0.1f;
+	//public static float preplayTime = 2f;
+	//public static float fadingTime = 2.3f;
+	//public static float transitionToChoiceDelayTime = 1.2f;
 
 
     //colors
