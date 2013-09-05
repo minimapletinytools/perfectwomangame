@@ -402,7 +402,9 @@ public class NewGameManager : FakeMonoBehaviour
 				//mManager.mMusicManager.play_cutscene_music(CurrentCharacterLoader.Images.cutsceneMusic[changeIndex]);
 			}
 			else 
-				Debug.Log("ERROR no music found for change index " + changeIndex + " only " + CurrentCharacterLoader.Images.cutsceneMusic.Count + " sounds");
+			{
+				//Debug.Log("ERROR no music found for change index " + changeIndex + " only " + CurrentCharacterLoader.Images.cutsceneMusic.Count + " sounds");
+			}
 		}
 		
 		
@@ -416,13 +418,19 @@ public class NewGameManager : FakeMonoBehaviour
 			mManager.mBackgroundManager.load_cutscene(0,CurrentCharacterLoader);
 		
 		
+		
+	
+		
+		float gAgeDisplayDur = 4f;
+		
 		mManager.mInterfaceManager.set_for_CUTSCENE(
 			delegate() 
 			{ 
+				PopupTextObject po = null;
 				TED.add_one_shot_event(
 					delegate() 
 					{	 
-						
+						//apply all the diff changes again (in case we skipped and tehy werent applied duringcutscene)
 				        foreach (var e in changes.Changes)
 				        {
 				            CharIndexContainerInt diffChanges = e.Changes;
@@ -442,9 +450,25 @@ public class NewGameManager : FakeMonoBehaviour
 						mManager.mMusicManager.fade_out();
 					}
 				,0).then_one_shot(
+					delegate()
+					{
+						//TODO eventually check for age 100 conditions
+						if(CurrentCharacterIndex.LevelIndex != 8) 
+							po = mManager.mInterfaceManager.add_timed_text_bubble("You turn " + CurrentCharacterIndex.get_future_neighbor(0).Age, gAgeDisplayDur);
+					}
+				,0).then(
+					delegate(float aTime) 
+					{
+						if(aTime > gAgeDisplayDur || (po == null) || po.IsDestroyed) //TODO this skipping isn't working for some reason w/e
+						{
+							return true;
+						}
+						return false;
+					}
+				,0).then_one_shot(
 					delegate() 
 					{	 
-						if(CurrentPerformanceStat.Character.LevelIndex > 6) //if age 85 or greater
+						if(CurrentPerformanceStat.Character.LevelIndex > 6) //if age 85 or greater ?????? TODO whats going on here
 						{
 							//TODO conditions to get to age 100
 							if(false)
@@ -461,7 +485,8 @@ public class NewGameManager : FakeMonoBehaviour
 							transition_to_CHOICE(); 
 					}
 				,GameConstants.transitionToChoiceDelayTime);
-			}, changes
+			}, 
+			changes
 		);
 		
 	}
@@ -471,10 +496,25 @@ public class NewGameManager : FakeMonoBehaviour
 	
 	public void transition_to_DEATH()
 	{
-		GS = GameState.DEATH;	
-		
 		//mark time of death 
 		CurrentPerformanceStat.DeathTime = PercentTimeCompletion;
+		GS = GameState.DEATH;	
+		
+		//BAD PERFOMANCE
+		
+		if(mPerformanceStats.Find(e => e.DeathTime != -1) == null)
+		{
+			//NEXT TIME YOU PERFORM THAT BAD YOU MIGHT DIE
+			//tranisiton to choice (no cutscene)
+			return;
+		}
+		
+		
+		
+		
+		
+		
+		
 		
 		//set the cutscene
 		mManager.mMusicManager.fade_out();
@@ -509,7 +549,6 @@ public class NewGameManager : FakeMonoBehaviour
 	public void transition_to_CHOICE()
 	{
         //TODO update difficulties in NIM charactericons here in case the user skipped the cutscenes and the diffs did not get updated
-
 		GS = GameState.CHOICE;
 		mChoiceHelper.shuffle_and_set_choice_poses(mManager.mInterfaceManager);
 		//TODO these bottom two functions should be absoredb by ChoiceHelper
@@ -563,7 +602,7 @@ public class NewGameManager : FakeMonoBehaviour
 
 
 		//TODO move this into NewInterfaceManager
-		mManager.mInterfaceManager.set_for_PLAY(); //this is just visual
+		mManager.mInterfaceManager.fade_choosing_contents(true);
 		var diffPhrases = new string[]{	"That's an easy choice. You should be able to manage that!", 
 										"You made a normal choice. Show how good you are!", 
 										"That's a hard one. Show your skills!", 
@@ -575,7 +614,10 @@ public class NewGameManager : FakeMonoBehaviour
 		TED.add_event(
 			delegate(float aTime){
 				if(aTime > gDiffDisplayDur || (po == null) || po.IsDestroyed) //TODO this skipping isn't working for some reason w/e
+				{
+				
 					return true;
+				}
 				return false;
 			}
 		).then_one_shot(
