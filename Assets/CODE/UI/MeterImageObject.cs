@@ -26,6 +26,7 @@ public class MeterImageObject : FlatElementBase
     public ImageGameObjectUtility mImage;
     public MeterImageObject(Texture2D aTex, FillStyle aStyle, int aDepth)
     {
+		SoftColor = new Color(0.5f,0.5f,0.5f,1);
         Style = aStyle;
         mImage = new ImageGameObjectUtility(aTex);
         PrimaryGameObject = mImage.ParentObject;
@@ -45,7 +46,7 @@ public class MeterImageObject : FlatElementBase
 		//TODO the right way to do this is to use SoftColor to cache the desired color
 		//and actually set it over here blending against the meter color.
         //SoftColor = (new Color(0.5f, 0, 0, 0.2f))*mCurrentPercentage + (new Color(0,0,0.5f,0.2f))*(1-mCurrentPercentage); //hack
-		SoftColor =  new Color32(0/2, 81/2, 229/2,(int)(.8*255/2f));
+		//base.SoftColor =  new Color32(0/2, 81/2, 229/2,(int)(.8*255/2f));
         if (Style == FillStyle.DU)
         {
             Material m = PrimaryGameObject.GetComponentInChildren<Renderer>().material;
@@ -70,4 +71,11 @@ public class MeterImageObject : FlatElementBase
         if (Style == FillStyle.DU)
             PrimaryGameObject.transform.position = aPos + new Vector3(0,-(1-mPercentage)*mImage.BaseDimension.y/2f,0);
     }
+	
+	public override Color SoftColor
+	{
+		set{
+			base.SoftColor = new Color32(0/2, 81/2, 229/2,(int)(.8*255/2f))*value*2;
+		}
+	}
 }

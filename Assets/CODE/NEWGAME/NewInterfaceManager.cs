@@ -232,7 +232,7 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 	
 	//related to transitioning between PLAY and CHOOSING
 	//called by set_bb_small/full
-	void fade_choosing_contents(bool small)
+	public void fade_choosing_contents(bool small)
 	{
 		Color smallColor = small ? new Color(0.5f,0.5f,0.5f,1) : new Color(0.5f,0.5f,0.5f,0);
 		Color fullColor = !small ? new Color(0.5f,0.5f,0.5f,1) : new Color(0.5f,0.5f,0.5f,0);
@@ -254,9 +254,12 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 		foreach(NewChoiceObject e in mBBChoices)
 			e.SoftColor = fullColor;
 		mBBMiniMan.SoftColor = fullColor;
+		foreach(var e in mBBChoices)
+			e.SoftColor = fullColor;
 		mBBQuestionText.SoftColor = fullColor;
         mBBQuestionTextPrefix.SoftColor = fullColor*GameConstants.UiRed*2;
-		mBBChoosingBackground.SoftColor = fullColor*(new Color(0.6f,0.6f,1))*1;//0.2f;
+		
+		//mBBChoosingBackground.SoftColor = fullColor*(new Color(0.6f,0.6f,1))*1;//0.2f;
 	}
 	
 	//make sure choice contents are made first before calling this
@@ -270,6 +273,9 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 		fade_choosing_contents(false);
 		mBBMiniMan.SoftColor = GameConstants.UiMiniMan;
         //mBB.SoftColor = new Color(0.5f, 0.5f, 0.5f, 0.2f);
+		
+		Color fullColor = new Color(0.5f,0.5f,0.5f,1);
+		mBBChoosingBackground.SoftColor = fullColor*(new Color(0.6f,0.6f,1))*1;//0.2f;
 	}
 	
 	//make sure begin_new_character is called before this
@@ -302,16 +308,20 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 		}*/
 		
 		fade_choosing_contents(true);
-		mBB.SoftColor = new Color(0.5f, 0.5f, 0.5f, 0.5f);
+		Color fullColor = new Color(0.5f,0.5f,0.5f,0);
+		mBBChoosingBackground.SoftColor = fullColor*(new Color(0.6f,0.6f,1))*1;//0.2f;
+		//DELETE mBB.SoftColor = new Color(0.5f, 0.5f, 0.5f, 0.5f);
+		
 		
 		//meter objects overrides soft color so we have to manually turn the meter off..
+		/* CAN DELETE
 		TED.add_event(
 			delegate(float aTime){
 				foreach(NewChoiceObject e in mBBChoices)
 					e.Percentage = Mathf.Clamp01(e.Percentage * (1-aTime) + 0 * aTime);
 				return (aTime >= 1);
 			},
-		0);
+		0);*/
 	}
 	
 	
@@ -894,6 +904,7 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 				PerformanceStats stat = new PerformanceStats(new CharacterIndex(i,Random.Range(0,3)));
 				stat.update_score(0,Random.value);
 				stat.update_score(1,Random.value);
+				stat.Stats = mManager.mGameManager.CharacterHelper.Characters[stat.Character];
 				aStats.Add(stat);
 			}
 		}*/
@@ -1118,6 +1129,7 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 								}
 								if(npo.IsDestroyed)
 								{
+									npo = null;
 									return true;
 								}
 								return false;
