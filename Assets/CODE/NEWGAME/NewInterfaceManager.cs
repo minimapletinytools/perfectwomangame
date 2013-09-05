@@ -626,6 +626,20 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 		return to;
 	}
 	
+	public System.Func<float,bool> skippable_text_bubble_event(string aText, float displayDur)
+	{
+		System.Func<float,bool> skip_del = null;
+		PopupTextObject po = null;
+		return delegate(float aTime){
+			if(po == null)
+			{
+				po = add_timed_text_bubble(aText,displayDur);
+				skip_del = PopupTextObject.skip(displayDur,po);
+			}
+			return skip_del(aTime);
+		};
+	}
+	
 	//this gets called during CHOOSE so BB should be full sized
 	//this gets called by NewGameManager
 	public void begin_new_character(PerformanceStats aChar)
@@ -818,7 +832,7 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 	//returns amount of time this will take
 	public TimedEventDistributor.TimedEventChain set_for_DEATH(CharacterIndex aChar)
 	{
-		float gTextTime = 5;
+		float gTextTime = 7;
 		
 		TimedEventDistributor.TimedEventChain chain;
 		

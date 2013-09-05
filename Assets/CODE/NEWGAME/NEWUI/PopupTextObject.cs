@@ -132,4 +132,16 @@ public class PopupTextObject : FlatElementMultiBase {
 			//TODO make fading work right
         }
     }
+	
+	
+	public static System.Func<float,bool> skip(float displayDur, PopupTextObject po)
+	{
+		return delegate(float aTime){
+			if(aTime > displayDur || po == null || po.IsDestroyed)
+			{
+				return true;
+			}
+			return false;
+		};
+	}
 }

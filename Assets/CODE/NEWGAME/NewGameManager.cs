@@ -417,122 +417,124 @@ public class NewGameManager : FakeMonoBehaviour
 		else
 			mManager.mBackgroundManager.load_cutscene(0,CurrentCharacterLoader);
 		
-		
-		
-	
-		
-		float gAgeDisplayDur = 4f;
-		
 		mManager.mInterfaceManager.set_for_CUTSCENE(
-			delegate() 
-			{ 
-				PopupTextObject po = null;
-				TED.add_one_shot_event(
-					delegate() 
-					{	 
-						//apply all the diff changes again (in case we skipped and tehy werent applied duringcutscene)
-				        foreach (var e in changes.Changes)
-				        {
-				            CharIndexContainerInt diffChanges = e.Changes;
-				            string changeMsg = e.Description;
-						
-							foreach(CharacterIndex cchar in CharacterIndex.sAllCharacters)
-							{
-								if(diffChanges[cchar] != 0)
-								{
-							
-				                	int nDiff = mManager.mGameManager.change_character_difficulty(cchar, diffChanges[cchar]);
-									change_interface_pose(cchar,nDiff);
-								}
-							}
-				        }
-						mManager.mInterfaceManager.set_pb_character_icon_colors(mManager.mGameManager.CharacterHelper.Characters);
-						mManager.mMusicManager.fade_out();
-					}
-				,0).then_one_shot(
-					delegate()
-					{
-						//TODO eventually check for age 100 conditions
-						if(CurrentCharacterIndex.LevelIndex != 8) 
-							po = mManager.mInterfaceManager.add_timed_text_bubble("You turn " + CurrentCharacterIndex.get_future_neighbor(0).Age, gAgeDisplayDur);
-					}
-				,0).then(
-					delegate(float aTime) 
-					{
-						if(aTime > gAgeDisplayDur || (po == null) || po.IsDestroyed) //TODO this skipping isn't working for some reason w/e
-						{
-							return true;
-						}
-						return false;
-					}
-				,0).then_one_shot(
-					delegate() 
-					{	 
-						if(CurrentPerformanceStat.Character.LevelIndex > 6) //if age 85 or greater ?????? TODO whats going on here
-						{
-							//TODO conditions to get to age 100
-							if(false)
-							{
-								transition_to_TRANSITION_play(new CharacterIndex("100"));
-							}
-							else
-							{
-								transition_to_TRANSITION_play(new CharacterIndex("999"));
-								//transition_to_DEATH();
-							}
-						}
-						else
-							transition_to_CHOICE(); 
-					}
-				,GameConstants.transitionToChoiceDelayTime);
-			}, 
+			delegate(){CUTSCENE_finished(changes);}, 
 			changes
 		);
 		
 	}
+	
+	public void CUTSCENE_finished(NUPD.ChangeSet changes = null)
+	{
+		float gAgeDisplayDur = 4f;
+		TED.add_one_shot_event(
+			delegate() 
+			{	 
+				//apply all the diff changes again (in case we skipped and tehy werent applied duringcutscene)
+				if(changes != null){
+			        foreach (var e in changes.Changes)
+			        {
+			            CharIndexContainerInt diffChanges = e.Changes;
+			            string changeMsg = e.Description;
+					
+						foreach(CharacterIndex cchar in CharacterIndex.sAllCharacters)
+						{
+							if(diffChanges[cchar] != 0)
+							{
+						
+			                	int nDiff = mManager.mGameManager.change_character_difficulty(cchar, diffChanges[cchar]);
+								change_interface_pose(cchar,nDiff);
+							}
+						}
+			        }
+					mManager.mInterfaceManager.set_pb_character_icon_colors(mManager.mGameManager.CharacterHelper.Characters);
+				}
+				mManager.mMusicManager.fade_out();
+			}
+		,0).then(
+			
+			CurrentCharacterIndex.LevelIndex != 8 //TODO
+			?
+			mManager.mInterfaceManager.skippable_text_bubble_event("You turn " + CurrentCharacterIndex.get_future_neighbor(0).Age,gAgeDisplayDur)
+			:
+			delegate(float aTime){return true;}
+		,0).then_one_shot(
+			delegate() 
+			{	 
+				if(CurrentPerformanceStat.Character.LevelIndex > 6) //if age 85 or greater ?????? TODO whats going on here
+				{
+					//TODO conditions to get to age 100
+					if(false)
+					{
+						transition_to_TRANSITION_play(new CharacterIndex("100"));
+					}
+					else
+					{
+						transition_to_TRANSITION_play(new CharacterIndex("999"));
+						//transition_to_DEATH();
+					}
+				}
+				else
+					transition_to_CHOICE(); 
+			}
+		,GameConstants.transitionToChoiceDelayTime);
+			
+	}
+	
 	
 	public CharacterLoader DeathCharacter
 	{ get; set; }
 	
 	public void transition_to_DEATH()
 	{
-		//mark time of death 
-		CurrentPerformanceStat.DeathTime = PercentTimeCompletion;
-		GS = GameState.DEATH;	
+		float gTextDisplayDur = 5;
+		GS = GameState.CUTSCENE; //not really
 		
-		//BAD PERFOMANCE
+		//BAD PERFORMANCE
+		var chain = TED.add_event(
+			mManager.mInterfaceManager.skippable_text_bubble_event("BAD PERFORMANCE", gTextDisplayDur)
+		);
 		
-		if(mPerformanceStats.Find(e => e.DeathTime != -1) == null)
+		//NEXT TIME YOU PERFORM THAT BAD YOU MIGHT DIE
+		if(mPerformanceStats.Find(e => e.DeathTime != -1) == null) //if we haven't died previously
 		{
-			//NEXT TIME YOU PERFORM THAT BAD YOU MIGHT DIE
-			//tranisiton to choice (no cutscene)
+			CurrentPerformanceStat.DeathTime = PercentTimeCompletion;
+			chain = chain.then(
+				mManager.mInterfaceManager.skippable_text_bubble_event("NEXT TIME YOU PERFORM THAT BAD YOU MIGHT DIE", gTextDisplayDur)
+			).then_one_shot(
+				delegate(){
+					CUTSCENE_finished();
+				}
+			);
 			return;
 		}
 		
+		CurrentPerformanceStat.DeathTime = PercentTimeCompletion;
+		GS = GameState.DEATH;	
 		
-		
-		
-		
-		
-		
-		
-		//set the cutscene
-		mManager.mMusicManager.fade_out();
-		mManager.mBodyManager.transition_character_out();
-		mManager.mTransparentBodyManager.transition_character_out();
-		
-		if(CurrentCharacterLoader.has_cutscene(4))
-			mManager.mBackgroundManager.load_cutscene(4,CurrentCharacterLoader);
-		else
-			mManager.mBackgroundManager.load_cutscene(4,DeathCharacter);
-		
-		mManager.mInterfaceManager.set_for_DEATH(CurrentPerformanceStat.Character)
-			.then_one_shot(
-				delegate()
-				{
-					transition_to_TRANSITION_play(new CharacterIndex("999"));
-				}
-			,0);
+		chain = chain.then_one_shot(
+			delegate(){
+				
+				mManager.mInterfaceManager.set_for_DEATH(CurrentPerformanceStat.Character)
+					.then_one_shot(
+						delegate()
+						{
+							mManager.mMusicManager.fade_out();
+							mManager.mBodyManager.transition_character_out();
+							mManager.mTransparentBodyManager.transition_character_out();
+							if(CurrentCharacterLoader.has_cutscene(4))
+								mManager.mBackgroundManager.load_cutscene(4,CurrentCharacterLoader);
+							else
+								mManager.mBackgroundManager.load_cutscene(4,DeathCharacter);
+						}
+					,1).then_one_shot(
+						delegate()
+						{
+							transition_to_TRANSITION_play(new CharacterIndex("999"));
+						}
+					,4);
+			}
+		);
 	}
 	
 	public void transition_to_GRAVE()
@@ -608,18 +610,12 @@ public class NewGameManager : FakeMonoBehaviour
 										"That's a hard one. Show your skills!", 
 										"You made an extreme choice? Let's see if you survive!"
 		};
-		PopupTextObject po = null;
-		if(aNextCharacter != CharacterIndex.sGrave)
-			po = mManager.mInterfaceManager.add_timed_text_bubble(diffPhrases[CharacterHelper.Characters[aNextCharacter].Difficulty], gDiffDisplayDur);
 		TED.add_event(
-			delegate(float aTime){
-				if(aTime > gDiffDisplayDur || (po == null) || po.IsDestroyed) //TODO this skipping isn't working for some reason w/e
-				{
-				
-					return true;
-				}
-				return false;
-			}
+			aNextCharacter != CharacterIndex.sGrave 
+			?
+			mManager.mInterfaceManager.skippable_text_bubble_event(diffPhrases[CharacterHelper.Characters[aNextCharacter].Difficulty],gDiffDisplayDur)
+			:
+			delegate(float aTime){return true;}
 		).then_one_shot(
 			//TODO before this, till mInterfaceManager to explain what choice the user just made
 			//maybe play a sound "Too Easy" "Ok" "Hard" "That's Impossible!!"
