@@ -910,7 +910,7 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 		
 		
 		//fake it for testing...
-		/*
+		Random.seed = 24;
 		for(int i = 0; i < 8; i++)
 		{
 			if(aStats.Last().Character.Age < (new CharacterIndex(i,0)).Age)
@@ -921,7 +921,7 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 				stat.Stats = mManager.mGameManager.CharacterHelper.Characters[stat.Character];
 				aStats.Add(stat);
 			}
-		}*/
+		}
 		
 		
 		
@@ -1096,8 +1096,8 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 			
 			float gFirstConnectionText = 3.5f;
 			float gConnectionText = 4f;
-			float gPreParticle = 1f;
-			float gParticle = 2f;
+			float gPreParticle = 1.5f;
+			float gParticle = 5f;
 			
 			
 			//TODO grave connections
@@ -1139,50 +1139,46 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 							{
 								if(npo == null)
 								{
-									npo = add_timed_text_bubble(conText[0],gFirstConnectionText);
+									npo = add_timed_text_bubble(conText[0],gFirstConnectionText + gConnectionText);
+									set_popup_color_for_cutscene_particles(npo,!wasHard);
 								}
-								if(npo.IsDestroyed)
+								if(npo.IsDestroyed || aTime > gPreParticle) 
+								{
+									return true;
+								}
+								return false;
+							},0);
+						} else {
+							//TODO
+							Debug.Log("Peter was too lazy to implement optional splitting. Connection text MUST be split");
+							Debug.Log ("TNHOEUONSTUHNST");
+						}
+						
+						chain = chain.then_one_shot(
+							delegate()
+							{
+								if(npo != null)
+									add_cutscene_particle_stream(ps.Character,npo,gParticle,!wasHard);
+							}
+						).then_one_shot(
+							delegate()
+							{
+								if(npo != null)
+								{
+									npo.Text =  conText[conText.Length -1];
+									add_cutscene_particle_stream(targetCharacter,npo,gParticle-(gFirstConnectionText-gPreParticle),!wasHard);
+								}
+							},
+						gFirstConnectionText-gPreParticle).then (
+							delegate(float aTime){
+								if(npo.IsDestroyed || aTime > gConnectionText)
 								{
 									npo = null;
 									return true;
 								}
 								return false;
-							},0);
-						}
-						chain = chain.then (
-							delegate(float aTime)
-							{
-								if(npo == null)
-								{
-									npo = add_timed_text_bubble(conText[conText.Length-1],gConnectionText);
-									set_popup_color_for_cutscene_particles(npo,!wasHard);
-								}
-								if(npo.IsDestroyed || aTime > gPreParticle)
-								{
-									return true;
-								}
-								return false;
-							},
-						0).then(
-							delegate(float aTime)
-							{
-								if(!npo.IsDestroyed)
-								{
-									add_cutscene_particle_stream(ps.Character,npo,gParticle,!wasHard);
-									add_cutscene_particle_stream(targetCharacter,npo,gParticle,!wasHard);
-								}
-								return true;
 							}
-						).then(
-							delegate(float aTime)
-							{
-								if(npo.IsDestroyed || aTime > gConnectionText-gPreParticle)
-								{	
-									return true;
-								}
-								return false;
-							}
-						,0);
+						);
 					}
 				}
 			}
