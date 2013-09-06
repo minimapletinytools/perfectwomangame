@@ -120,9 +120,21 @@ public class NewGameManager : FakeMonoBehaviour
 				//set_time_for_PLAY(30f);
 				set_time_for_PLAY(999999f);
 				setup_next_poses(true);
-				CurrentTargetPose = mManager.mReferences.mCheapPose.to_pose();
-				mManager.mTransparentBodyManager.set_target_pose(CurrentTargetPose);
 				transition_to_PLAY();
+				float gTextDisplayDur = 3;
+				CurrentTargetPose = null;
+				TED.add_event(
+					mManager.mInterfaceManager.skippable_text_bubble_event("TRY AND MAKE YOUR FIRST MOVEMENTS", gTextDisplayDur),
+				1).then(
+					mManager.mInterfaceManager.skippable_text_bubble_event("MATCH THE POSE BEHIND YOU", gTextDisplayDur),
+				1).then_one_shot(
+					delegate(){
+						CurrentTargetPose = mManager.mReferences.mCheapPose.to_pose();
+						mManager.mTransparentBodyManager.set_target_pose(CurrentTargetPose);
+						mManager.mTransparentBodyManager.mFlat.SoftColor = 
+							mManager.mCharacterBundleManager.get_character_stat(CurrentCharacterIndex).CharacterInfo.CharacterOutlineColor;
+					},
+				1);
 				break;
 			case "100":
 				set_time_for_PLAY(30f);
@@ -302,16 +314,15 @@ public class NewGameManager : FakeMonoBehaviour
 			//update score
 			mManager.mInterfaceManager.update_bb_score(TotalScore);	
         }
-		else if(CurrentCharacterIndex.LevelIndex == 0 && true) 
+		else if(CurrentCharacterIndex.LevelIndex == 0 && true) //fetus
 		{
-			//pose is loaded in initializer
-			mManager.mTransparentBodyManager.set_target_pose(CurrentTargetPose);
-            float grade = ProGrading.grade_pose(CurrentPose, CurrentTargetPose);
-			grade = ProGrading.grade_to_perfect(grade);
-		
-			if(grade > 0.77f)
-			{
-				TimeRemaining = 0;
+			if(CurrentTargetPose != null){
+				mManager.mTransparentBodyManager.set_target_pose(CurrentTargetPose);
+	            float grade = ProGrading.grade_pose(CurrentPose, CurrentTargetPose);
+				grade = ProGrading.grade_to_perfect(grade);
+			
+				if(grade > 0.77f)
+					TimeRemaining = 0;
 			}
 		}
 		else
@@ -331,7 +342,6 @@ public class NewGameManager : FakeMonoBehaviour
 		die |= Input.GetKeyDown(KeyCode.D);
 		if (CurrentPoseAnimation != null && mManager.mZigManager.has_user() && CurrentCharacterIndex.LevelIndex != 0)
 		{
-			
 			if(PercentTimeCompletion > 0.35f)
 			{
 				if(CurrentPerformanceStat.last_score(7/30f)/(7/30f) < 0.17f)
