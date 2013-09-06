@@ -4,6 +4,7 @@ using System.Collections;
 public class PopupTextObject : FlatElementMultiBase {
     public FlatElementImage mBackground;
 	public FlatElementText mText;
+	public FlatElementMultiBase.ElementOffset mTextOffset;
 	public int SplitNumber
 	{ get; set; }
 	
@@ -30,7 +31,31 @@ public class PopupTextObject : FlatElementMultiBase {
 			return mText.Text;
 		}
 		set{
-			mText.Text = value;
+			string aText = value;
+			SplitNumber = 20;
+			float textOffset = 0;
+			if(aText.Length > 20  && aText.Length < 40)
+			{
+				textOffset = 15;
+				aText = FlatElementText.convert_to_multiline(2,aText);
+			} else if (aText.Length >= 40 && aText.Length < 55)
+			{
+				textOffset = 30;
+				aText = FlatElementText.convert_to_multiline(3,aText);
+			} else if (aText.Length >= 55)
+			{
+				textOffset = 45;
+				aText = FlatElementText.convert_to_multiline(4,aText);
+			}
+			mText.Text = aText.ToUpper();
+			mTextOffset.Position = new Vector3(0,textOffset,0);
+			
+			if(aText.Length > 80)
+				set_font_size(80);
+			if(aText.Length > 100)
+				set_font_size(70);
+			if(aText.Length > 120)
+				set_font_size(60);
 		}
 	}
 	
@@ -58,40 +83,20 @@ public class PopupTextObject : FlatElementMultiBase {
     public PopupTextObject(string aText, int aDepth)
     {
 		
-		SplitNumber = 20;
+		
 		mBackground = new FlatElementImage(random_bubble(0), aDepth);
 		
 		
-		float textOffset = 0;
-		if(aText.Length > 20  && aText.Length < 40)
-		{
-			textOffset = 15;
-			aText = FlatElementText.convert_to_multiline(2,aText);
-		} else if (aText.Length >= 40 && aText.Length < 55)
-		{
-			textOffset = 30;
-			aText = FlatElementText.convert_to_multiline(3,aText);
-		} else if (aText.Length >= 55)
-		{
-			textOffset = 45;
-			aText = FlatElementText.convert_to_multiline(4,aText);
-		}
 		
-		
-		mText = new FlatElementText(ManagerManager.Manager.mNewRef.genericFont,100,aText.ToUpper(),aDepth+1);
+		mText = new FlatElementText(ManagerManager.Manager.mNewRef.genericFont,100,"",aDepth+1);
         mText.HardColor = new Color(0, 0, 0);
 		mElements.Add(new FlatElementMultiBase.ElementOffset(mBackground, new Vector3(0, 0, 0)));
-		mElements.Add(new FlatElementMultiBase.ElementOffset(mText, new Vector3(0, textOffset, 0)));
+		mTextOffset = new FlatElementMultiBase.ElementOffset(mText, new Vector3(0, 0, 0));
+		mElements.Add(mTextOffset);
+		Text = aText;
         PrimaryGameObject = create_primary_from_elements();
 		
 		Depth = aDepth;
-		
-		if(aText.Length > 80)
-			set_font_size(80);
-		if(aText.Length > 100)
-			set_font_size(70);
-		if(aText.Length > 120)
-			set_font_size(60);
     }
 	
 	Texture2D random_bubble(int size)
