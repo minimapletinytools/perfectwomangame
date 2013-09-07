@@ -32,7 +32,7 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 		DoSkipSingleThisFrame = false;
 		DoSkipMultipleThisFrame = false;
 		TED = new TimedEventDistributor();
-        mFlatCamera = new FlatCameraManager(new Vector3(10000, 0, 0), 10);
+        mFlatCamera = new FlatCameraManager(new Vector3(50000, 10000, 0), 10);
 		mFlatCamera.fit_camera_to_screen();
         mMiniMan = ((GameObject)GameObject.Instantiate(ManagerManager.Manager.mReferences.mMiniChar)).GetComponent<CharacterTextureBehaviour>();        
 		
@@ -910,7 +910,8 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 		
 		
 		//fake it for testing...
-		Random.seed = 24;
+		
+		Random.seed = 23344;
 		for(int i = 0; i < 8; i++)
 		{
 			if(aStats.Last().Character.Age < (new CharacterIndex(i,0)).Age)
@@ -948,7 +949,8 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 		float ageIncrementer = 0;
 		perfectPercent.HardColor = (GameConstants.UiGraveText);
 		//perfectPercent.Text = ((int)(100*aStats.Sum(e=>e.Stats.Perfect+1)/(float)(aStats.Count*3))).ToString() + "%";
-		perfectPercent.Text = "0";//aStats.Last().Character.Age.ToString();
+		//TODO why this no work??
+		perfectPercent.Text = aStats.Last().Character.Age.ToString();
 		
 		//hack to put things into bg camera
 		foreach (Renderer f in finalScoreText.PrimaryGameObject.GetComponentsInChildren<Renderer>())
@@ -989,17 +991,11 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 		
 		TimedEventDistributor.TimedEventChain chain;
 		
-		chain = TED.add_one_shot_event(
-			delegate()
-			{
-				add_timed_text_bubble("You rest here beneath the earth...",gIntroText,0.4f);
-			},
-        gIntroText).then_one_shot( //wait a little bit to let the fading finish
-			delegate()
-			{
-				add_timed_text_bubble("Here is your life story:",gIntroText,0.4f);
-			},
-		gIntroText).wait (gIntroText);
+		chain = TED.add_event(
+			skippable_text_bubble_event("YOU REST HERE BENEATH THE EARTH...",gIntroText)
+		).then( //wait a little bit to let the fading finish
+			skippable_text_bubble_event("HERE IS YOUR LIFE STORY",gIntroText)
+		);
 		
 		float startingPosition = mFlatCamera.get_point(0,1).y - aStats[0].PerformanceGraph.BoundingBox.height/2f - 10;
 		float intervalSize = aStats[0].PerformanceGraph.BoundingBox.height + 5;
@@ -1075,7 +1071,8 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 						float displayScore = scoreIncrementor + (aTime/gScoreCount)*ps.AdjustedScore;
 						float displayAge = ageIncrementer + (aTime/gScoreCount)*(ps.Character.Age-ageIncrementer);
 						finalScoreText.Text = ""+(int)displayScore;
-						perfectPercent.Text = ""+(int)displayAge;
+						//TODO why this no work??
+						//perfectPercent.Text = ""+(int)displayAge;
 					}
 					//CAN DELETE
 					//if(po.IsDestroyed || aTime >  gScoreCount + gPostScoreCount)
@@ -1088,9 +1085,16 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 					return false;
 				},
 			0);
-			
-			
-			
+		}
+		
+		//CONNECTIONS
+		for(int i = 1; i < aStats.Count; i++)
+		{
+			int it = i;
+			PerformanceStats ps = aStats[i];
+			//reposition the assosciated character icon and performance graph
+			CharacterIconObject cio = mPBCharacterIcons[ps.Character];
+			PerformanceGraphObject pgo = ps.PerformanceGraph;
 			
 			
 			
@@ -1121,12 +1125,12 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 					int accumChange = 0;
 					if(aStats[j].CutsceneChangeSet != null) //TODO this check should never fail
 					{
-						//Debug.Log("accum change for " + aStats[j].Character.StringIdentifier + " is " + aStats[j].CutsceneChangeSet.accumulative_changes()[ps.Character]);
+						Debug.Log("accum change for " + aStats[j].Character.StringIdentifier + " is " + aStats[j].CutsceneChangeSet.accumulative_changes()[ps.Character]);
 						accumChange = aStats[j].CutsceneChangeSet.accumulative_changes()[ps.Character];
 					}
 					else
 					{
-						//Debug.Log ("null cutscene change for " + aStats[j].Character.StringIdentifier + " " + aStats[j].CutsceneChangeSet);
+						Debug.Log ("null cutscene change for " + aStats[j].Character.StringIdentifier + " " + aStats[j].CutsceneChangeSet);
 					}
 					if( (wasHard && accumChange > 0) ||
 						(!wasHard && accumChange < 0))
@@ -1140,7 +1144,7 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 								if(npo == null)
 								{
 									npo = add_timed_text_bubble(conText[0],gFirstConnectionText + gConnectionText);
-									set_popup_color_for_cutscene_particles(npo,!wasHard);
+									set_popup_color_for_cutscene_particles(npo,wasHard);
 								}
 								if(npo.IsDestroyed || aTime > gPreParticle) 
 								{
@@ -1158,7 +1162,7 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 							delegate()
 							{
 								if(npo != null)
-									add_cutscene_particle_stream(ps.Character,npo,gParticle,!wasHard);
+									add_cutscene_particle_stream(ps.Character,npo,gParticle,wasHard);
 							}
 						).then_one_shot(
 							delegate()
@@ -1166,7 +1170,7 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 								if(npo != null)
 								{
 									npo.Text =  conText[conText.Length -1];
-									add_cutscene_particle_stream(targetCharacter,npo,gParticle-(gFirstConnectionText-gPreParticle),!wasHard);
+									add_cutscene_particle_stream(targetCharacter,npo,gParticle-(gFirstConnectionText-gPreParticle),wasHard);
 								}
 							},
 						gFirstConnectionText-gPreParticle).then (
@@ -1183,6 +1187,7 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 				}
 			}
 		}
+			
 		
 		
 		//variables for credits animation..

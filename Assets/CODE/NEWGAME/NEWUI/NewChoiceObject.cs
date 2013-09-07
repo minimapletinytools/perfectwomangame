@@ -32,7 +32,7 @@ public class NewChoiceObject : FlatElementMultiBase {
     {
 		var newRef = ManagerManager.Manager.mNewRef;
 		mSquare = new FlatElementImage(newRef.bbChoiceBox, aDepth);
-		mText = new FlatElementText(newRef.genericFont,45,"",aDepth +1);
+		mText = new FlatElementText(newRef.genericFont,45,"",aDepth +2);
 		mDiffImage = new FlatElementImage(null,aDepth +2);
         //mPerfect = new DifficultyObject(ManagerManager.Manager.mNewRef.uiPerfectStar, aDepth);
 		mIcon = new FlatElementImage(null,aDepth +2);

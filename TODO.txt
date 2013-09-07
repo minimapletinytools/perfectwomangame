@@ -3,21 +3,35 @@
 DONE???-poses not being written in kniect mode
 DONE-don't fade out the blue after choosing
 DONE-before cutscene, say "you turn 5"
+DONE-just text changes in bubble, first sentence, first particle, second sentence, second particle.
+IGNORE-look over timings
+
+DONE-fade in shadow before "match the pose behind you"
+	DONE??-add a buffer time so players have to hold the shadow pose for a while before it works
+DONE-name in choice boxes in front of text right now
+-do new performance graphs
+	DONE/IGNORE(this is a freebee)-remove scroling from end
+DONE-play lose cutscene on first death I guess... (before bad performance)
+-play death cutscene on death before bad performance I guess
+-put some graphic indicating you died early in the performance graph so it doesn't look silly??
+-make connection appear only after whole life has appeared on screen
+-why are all correlations the same color?? Make sure that they are playing enough correlations...
+-make a pose testing folder where lea can dump her poses that she wants to test...
 
 -do new fetus scene with cutscene text...
-	-introduce green pose and performance graph
-	-explain cutscenes..
+	DONE-introduce green pose and performance graph
+	DONE-explain cutscenes..
 	-confirmation that you matched the green pose
 -dying
 	-flash screen red and play siren
 	-die, (look at storyboard)
-	-BAD PERFORMANCE
+	DONE-BAD PERFORMANCE
 	-play sound
 	-spin/fly out characters
--just text changes in bubble, first sentence, first particle, second sentence, second particle.
+
 -check the grading thing 
 
-IGNORE-look over timings
+
 
 -do normal fading
 -grave
@@ -49,9 +63,7 @@ IGNORE-look over timings
 -partikuls!!!
 -fix artifacts on the left and right...???
 -project character to ground for mor edynamic movement
--skipping
-	-soft skipping at grave doesn't actually speed things up
-	DONE!!!-choice confirmation soft skip/hard skip doesn't actually speed things up
+
 -post grave
 	-teach how to skip cutscenes
 	-show unlocked things
@@ -91,7 +103,9 @@ IGNORE-look over timings
 			-skip all does same as skip one
 			-skip one goes to next unlocked feature
 
-
+DONE-skipping
+	DONE-soft skipping at grave doesn't actually speed things up
+	DONE!!!-choice confirmation soft skip/hard skip doesn't actually speed things up
 DONE-change groupings
 	-redo change groupings to allow multiple sentences
 	-make suer rest of code (grave) supports more tan 2 groupings form performance..

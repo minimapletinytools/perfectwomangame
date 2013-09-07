@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 
 public enum GameState
 {
@@ -121,12 +122,10 @@ public class NewGameManager : FakeMonoBehaviour
 				set_time_for_PLAY(999999f);
 				setup_next_poses(true);
 				transition_to_PLAY();
-				float gTextDisplayDur = 3;
+				float gTextDisplayDur = 4;
 				CurrentTargetPose = null;
 				TED.add_event(
 					mManager.mInterfaceManager.skippable_text_bubble_event("TRY AND MAKE YOUR FIRST MOVEMENTS", gTextDisplayDur),
-				1).then(
-					mManager.mInterfaceManager.skippable_text_bubble_event("MATCH THE POSE BEHIND YOU", gTextDisplayDur),
 				1).then_one_shot(
 					delegate(){
 						CurrentTargetPose = mManager.mReferences.mCheapPose.to_pose();
@@ -134,7 +133,9 @@ public class NewGameManager : FakeMonoBehaviour
 						mManager.mTransparentBodyManager.mFlat.SoftColor = 
 							mManager.mCharacterBundleManager.get_character_stat(CurrentCharacterIndex).CharacterInfo.CharacterOutlineColor;
 					},
-				1);
+				1).then(
+					mManager.mInterfaceManager.skippable_text_bubble_event("MATCH THE POSE BEHIND YOU", gTextDisplayDur),
+				1.5f);
 				break;
 			case "100":
 				set_time_for_PLAY(30f);
@@ -204,6 +205,7 @@ public class NewGameManager : FakeMonoBehaviour
 	
 	public int mLastDiff = 0;
 	public int mLastWrite = 0;
+	public int mLastCutscene = 0;
 	public void update_TEST()
 	{
 		//if we are annoyed by the pose..
@@ -238,18 +240,25 @@ public class NewGameManager : FakeMonoBehaviour
 		
 		
 		if(Input.GetKeyDown(KeyCode.Alpha5))
-			mManager.mBackgroundManager.load_cutscene(0,CurrentCharacterLoader);
-		else if (Input.GetKeyDown(KeyCode.Alpha6))
-			mManager.mBackgroundManager.load_cutscene(1,CurrentCharacterLoader);	
-		else if ( Input.GetKeyDown(KeyCode.Alpha7))
-			mManager.mBackgroundManager.load_cutscene(4,DeathCharacter);
+		{
+			mManager.mBackgroundManager.load_cutscene(0,mLastCutscene);
+			ManagerManager.Manager.mDebugString = "loaded cutscene " + mLastCutscene-1;
+			mLastCutscene = mLastCutscene % 2;//5;
+			//mManager.mBackgroundManager.load_cutscene(4,DeathCharacter);
+		}
+		
+		if(Input.GetKeyDown(KeyCode.Alpha6))
+		{
+			//TODO scour folder for poses
+		}
+			
 		
 		if(Input.GetKeyDown(KeyCode.Alpha8))
 		{
 			ManagerManager.Manager.mDebugString = "set to diff " + ((++mLastDiff)%4);
 			CurrentPoseAnimation = new PerformanceType(mManager.mCharacterBundleManager.get_pose(CurrentCharacterIndex,mLastDiff%4), new CharacterIndex(2,0)); //forces it to be switch
-			
 		}
+		
 		
 		int choice = -1;
 		if(Input.GetKeyDown(KeyCode.Alpha1))
@@ -320,9 +329,17 @@ public class NewGameManager : FakeMonoBehaviour
 				mManager.mTransparentBodyManager.set_target_pose(CurrentTargetPose);
 	            float grade = ProGrading.grade_pose(CurrentPose, CurrentTargetPose);
 				grade = ProGrading.grade_to_perfect(grade);
-			
-				if(grade > 0.77f)
+				
+				//this is a total hack, but we don't use mTotalScore for the fetus anyways
+				FieldInfo scoreProp = typeof(PerformanceStats).GetField("mTotalScore",BindingFlags.NonPublic | BindingFlags.Instance);
+				float oldGrade = (float)scoreProp.GetValue(CurrentPerformanceStat);
+				float newGrade = oldGrade*0.93f + grade*0.07f;
+				scoreProp.SetValue(CurrentPerformanceStat,newGrade);
+				if(newGrade > 0.83f)
+				{
+					scoreProp.SetValue(CurrentPerformanceStat,0);
 					TimeRemaining = 0;
+				}
 			}
 		}
 		else
@@ -340,7 +357,8 @@ public class NewGameManager : FakeMonoBehaviour
 		//early death
 		bool die = false;
 		die |= Input.GetKeyDown(KeyCode.D);
-		if (CurrentPoseAnimation != null && mManager.mZigManager.has_user() && CurrentCharacterIndex.LevelIndex != 0)
+		//if (CurrentPoseAnimation != null && mManager.mZigManager.has_user() && CurrentCharacterIndex.LevelIndex != 0)
+		if (CurrentPoseAnimation != null && mManager.mZigManager.is_reader_connected() == 2 && CurrentCharacterIndex.LevelIndex != 0)
 		{
 			if(PercentTimeCompletion > 0.35f)
 			{
@@ -394,6 +412,19 @@ public class NewGameManager : FakeMonoBehaviour
 		GS = GameState.CUTSCENE;
 
         NUPD.ChangeSet changes = CurrentPerformanceStat.CutsceneChangeSet;
+		
+		load_CUTSCENE(changes);
+		
+		mManager.mInterfaceManager.set_for_CUTSCENE(
+			delegate(){CUTSCENE_finished(changes);}, 
+			changes
+		);
+		
+	}
+	
+	//pass in CurrentPerformanceStat.CutsceneChangeSet;
+	public void load_CUTSCENE(NUPD.ChangeSet changes)
+	{
 		int changeIndex = -1;
 		
         if(changes == null)
@@ -426,12 +457,6 @@ public class NewGameManager : FakeMonoBehaviour
 			mManager.mBackgroundManager.load_cutscene(1,CurrentCharacterLoader);
 		else
 			mManager.mBackgroundManager.load_cutscene(0,CurrentCharacterLoader);
-		
-		mManager.mInterfaceManager.set_for_CUTSCENE(
-			delegate(){CUTSCENE_finished(changes);}, 
-			changes
-		);
-		
 	}
 	
 	public void CUTSCENE_finished(NUPD.ChangeSet changes = null)
@@ -500,49 +525,66 @@ public class NewGameManager : FakeMonoBehaviour
 		float gTextDisplayDur = 5;
 		GS = GameState.CUTSCENE; //not really
 		
+		bool firstDeath = mPerformanceStats.Find(e => e.DeathTime != -1) == null;
+		
+		
+		var chain = TED.add_one_shot_event(delegate(){});
+		
+		if(firstDeath)
+		{
+			load_CUTSCENE(CurrentPerformanceStat.CutsceneChangeSet);
+		}
+		else
+		{
+			chain = chain.then_one_shot(
+				delegate()
+				{
+					mManager.mMusicManager.fade_out();
+					mManager.mBodyManager.transition_character_out();
+					mManager.mTransparentBodyManager.transition_character_out();
+					if(CurrentCharacterLoader.has_cutscene(4))
+						mManager.mBackgroundManager.load_cutscene(4,CurrentCharacterLoader);
+					else
+						mManager.mBackgroundManager.load_cutscene(4,DeathCharacter);
+				}
+			);
+		}
+		
 		//BAD PERFORMANCE
-		var chain = TED.add_event(
+		chain = chain.then(
 			mManager.mInterfaceManager.skippable_text_bubble_event("BAD PERFORMANCE", gTextDisplayDur)
-		);
+		,2);
 		
 		//NEXT TIME YOU PERFORM THAT BAD YOU MIGHT DIE
-		if(mPerformanceStats.Find(e => e.DeathTime != -1) == null) //if we haven't died previously
+		if(firstDeath) //if we haven't died previously
 		{
 			CurrentPerformanceStat.DeathTime = PercentTimeCompletion;
 			chain = chain.then(
 				mManager.mInterfaceManager.skippable_text_bubble_event("NEXT TIME YOU PERFORM THAT BAD YOU MIGHT DIE", gTextDisplayDur)
 			).then_one_shot(
 				delegate(){
-					CUTSCENE_finished();
+					mManager.mInterfaceManager.set_for_CUTSCENE(
+						delegate(){CUTSCENE_finished(CurrentPerformanceStat.CutsceneChangeSet);}, 
+						CurrentPerformanceStat.CutsceneChangeSet
+					);
 				}
 			);
 			return;
-		}
+		} else CurrentPerformanceStat.DeathTime = PercentTimeCompletion;
 		
-		CurrentPerformanceStat.DeathTime = PercentTimeCompletion;
+		//actual death
 		GS = GameState.DEATH;	
 		
 		chain = chain.then_one_shot(
 			delegate(){
 				
 				mManager.mInterfaceManager.set_for_DEATH(CurrentPerformanceStat.Character)
-					.then_one_shot(
-						delegate()
-						{
-							mManager.mMusicManager.fade_out();
-							mManager.mBodyManager.transition_character_out();
-							mManager.mTransparentBodyManager.transition_character_out();
-							if(CurrentCharacterLoader.has_cutscene(4))
-								mManager.mBackgroundManager.load_cutscene(4,CurrentCharacterLoader);
-							else
-								mManager.mBackgroundManager.load_cutscene(4,DeathCharacter);
-						}
-					,1).then_one_shot(
+				.then_one_shot(
 						delegate()
 						{
 							transition_to_TRANSITION_play(new CharacterIndex("999"));
 						}
-					,4);
+				,0);
 			}
 		);
 	}
