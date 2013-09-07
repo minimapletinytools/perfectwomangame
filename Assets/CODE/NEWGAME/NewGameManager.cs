@@ -241,8 +241,8 @@ public class NewGameManager : FakeMonoBehaviour
 		
 		if(Input.GetKeyDown(KeyCode.Alpha5))
 		{
-			mManager.mBackgroundManager.load_cutscene(0,mLastCutscene);
-			ManagerManager.Manager.mDebugString = "loaded cutscene " + mLastCutscene-1;
+			mManager.mBackgroundManager.load_cutscene(mLastCutscene,CurrentCharacterLoader);
+			ManagerManager.Manager.mDebugString = "loaded cutscene " + mLastCutscene;
 			mLastCutscene = mLastCutscene % 2;//5;
 			//mManager.mBackgroundManager.load_cutscene(4,DeathCharacter);
 		}
@@ -337,6 +337,8 @@ public class NewGameManager : FakeMonoBehaviour
 				scoreProp.SetValue(CurrentPerformanceStat,newGrade);
 				if(newGrade > 0.83f)
 				{
+					//this may or may not work depending on which update gets called first
+					mManager.mInterfaceManager.SkipSingle();
 					scoreProp.SetValue(CurrentPerformanceStat,0);
 					TimeRemaining = 0;
 				}
@@ -353,6 +355,29 @@ public class NewGameManager : FakeMonoBehaviour
 			else 
 				mManager.mInterfaceManager.enable_warning_text(false);
 		}
+		
+		//make sure music is finished too!
+		//if((TimeRemaining <= 0 && !mManager.mMusicManager.IsMusicSourcePlaying) || TimeRemaining < -4) //but don't wait too long
+		if(TimeRemaining <= 0)
+		{
+			CurrentPerformanceStat.Finished = true;
+			mManager.mCameraManager.set_camera_effects(0);
+			mManager.mInterfaceManager.enable_warning_text(false);
+			transition_to_CUTSCENE();
+			
+			//if we don't want fetus to have a cutscene use this
+			//if(CurrentPerformanceStat.Character.Index != 0)
+			//	transition_to_CUTSCENE();
+			//else transition_to_CHOICE();
+			
+			return;
+		}
+		
+		//if we don't want the music to play during the cutscenes and whatont...
+		//if(GS != GameState.PLAY)
+		//	mManager.mMusicManager.fade_out();
+		
+		
 		
 		//early death
 		bool die = false;
@@ -373,25 +398,6 @@ public class NewGameManager : FakeMonoBehaviour
 			mManager.mInterfaceManager.enable_warning_text(false);
 			transition_to_DEATH();
 		}
-		
-		//make sure music is finished too!
-		//if((TimeRemaining <= 0 && !mManager.mMusicManager.IsMusicSourcePlaying) || TimeRemaining < -4) //but don't wait too long
-		if(TimeRemaining <= 0)
-		{
-			CurrentPerformanceStat.Finished = true;
-			mManager.mCameraManager.set_camera_effects(0);
-			mManager.mInterfaceManager.enable_warning_text(false);
-			transition_to_CUTSCENE();
-			
-			//if we don't want fetus to have a cutscene use this
-			//if(CurrentPerformanceStat.Character.Index != 0)
-			//	transition_to_CUTSCENE();
-			//else transition_to_CHOICE();
-		}
-		
-		//if we don't want the music to play during the cutscenes and whatont...
-		//if(GS != GameState.PLAY)
-		//	mManager.mMusicManager.fade_out();
 			
 	}
 	
@@ -425,6 +431,7 @@ public class NewGameManager : FakeMonoBehaviour
 	//pass in CurrentPerformanceStat.CutsceneChangeSet;
 	public void load_CUTSCENE(NUPD.ChangeSet changes)
 	{
+		Debug.Log ("Loading cutscene");
 		int changeIndex = -1;
 		
         if(changes == null)
@@ -522,20 +529,23 @@ public class NewGameManager : FakeMonoBehaviour
 	
 	public void transition_to_DEATH()
 	{
+		Debug.Log ("death");
 		float gTextDisplayDur = 5;
-		GS = GameState.CUTSCENE; //not really
 		
-		bool firstDeath = mPerformanceStats.Find(e => e.DeathTime != -1) == null;
-		
+		bool firstDeath = mPerformanceStats.Where(e => e.DeathTime != -1).Count() < GameConstants.numberRetries;
+		CurrentPerformanceStat.DeathTime = PercentTimeCompletion;
 		
 		var chain = TED.add_one_shot_event(delegate(){});
 		
 		if(firstDeath)
 		{
+			GS = GameState.CUTSCENE;
 			load_CUTSCENE(CurrentPerformanceStat.CutsceneChangeSet);
 		}
 		else
 		{
+			
+			GS = GameState.DEATH;
 			chain = chain.then_one_shot(
 				delegate()
 				{
@@ -558,8 +568,10 @@ public class NewGameManager : FakeMonoBehaviour
 		//NEXT TIME YOU PERFORM THAT BAD YOU MIGHT DIE
 		if(firstDeath) //if we haven't died previously
 		{
-			CurrentPerformanceStat.DeathTime = PercentTimeCompletion;
 			chain = chain.then(
+				CurrentLevel == 7 ?
+				mManager.mInterfaceManager.skippable_text_bubble_event("BUT IT'S OK BECAUSE YOU ARE ALREADY OLD", gTextDisplayDur)
+				:
 				mManager.mInterfaceManager.skippable_text_bubble_event("NEXT TIME YOU PERFORM THAT BAD YOU MIGHT DIE", gTextDisplayDur)
 			).then_one_shot(
 				delegate(){
@@ -570,10 +582,8 @@ public class NewGameManager : FakeMonoBehaviour
 				}
 			);
 			return;
-		} else CurrentPerformanceStat.DeathTime = PercentTimeCompletion;
-		
-		//actual death
-		GS = GameState.DEATH;	
+		}
+			
 		
 		chain = chain.then_one_shot(
 			delegate(){

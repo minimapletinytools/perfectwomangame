@@ -9,30 +9,34 @@ IGNORE-look over timings
 DONE-fade in shadow before "match the pose behind you"
 	DONE??-add a buffer time so players have to hold the shadow pose for a while before it works
 DONE-name in choice boxes in front of text right now
--do new performance graphs
-	DONE/IGNORE(this is a freebee)-remove scroling from end
 DONE-play lose cutscene on first death I guess... (before bad performance)
--play death cutscene on death before bad performance I guess
--put some graphic indicating you died early in the performance graph so it doesn't look silly??
--make connection appear only after whole life has appeared on screen
--why are all correlations the same color?? Make sure that they are playing enough correlations...
--make a pose testing folder where lea can dump her poses that she wants to test...
+DONE-make connection appear only after whole life has appeared on screen
+DONE-play death cutscene on death before bad performance I guess
+DONE-do new performance graphs
+	DONE/IGNORE(this is a freebee)-remove scroling from end
+DONE-fix the word bubbles flying over the other camera problem....
+DONE-should not do "Next time you might die" for last age group	
+DONE??-why are all correlations the same color?? Make sure that they are playing enough correlations...
 
+-put some graphic indicating you died early in the performance raph so it doesn't look silly??
+-make a pose testing folder where lea can dump her poses that she wants to test...
 -do new fetus scene with cutscene text...
 	DONE-introduce green pose and performance graph
 	DONE-explain cutscenes..
-	-confirmation that you matched the green pose
+	IGNORE/DONE-confirmation that you matched the green pose
 -dying
 	-flash screen red and play siren
 	-die, (look at storyboard)
 	DONE-BAD PERFORMANCE
 	-play sound
 	-spin/fly out characters
-
 -check the grading thing 
 
+-fetus "match the pose" thingy can't play after cutscene is triggered...
 
 
+
+-16-3 still hsa agreen dot on her arm
 -do normal fading
 -grave
 	DONE-make characetrs come in faster in grave,
