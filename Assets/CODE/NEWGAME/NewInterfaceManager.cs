@@ -910,7 +910,7 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 		
 		
 		//fake it for testing...
-		
+		/*
 		Random.seed = 23344;
 		for(int i = 0; i < 8; i++)
 		{
@@ -922,7 +922,7 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 				stat.Stats = mManager.mGameManager.CharacterHelper.Characters[stat.Character];
 				aStats.Add(stat);
 			}
-		}
+		}*/
 		
 		
 		
@@ -960,9 +960,9 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 		//foreach (Renderer f in perfectEngraving.PrimaryGameObject.GetComponentsInChildren<Renderer>()) f.gameObject.layer = 4;
 		
 		Vector3 graveCenter = mManager.mBackgroundManager.mBackgroundElements[0].SoftPosition + new Vector3(0, 50, 0);
-		finalScoreText.SoftPosition = graveCenter + new Vector3(0,-250,0);
+		finalScoreText.HardPosition = graveCenter + new Vector3(0,-250,0);
 		//perfectEngraving.SoftPosition = graveCenter + new Vector3(35,250,0);
-		perfectPercent.SoftPosition = graveCenter + new Vector3(24,180,0);
+		perfectPercent.HardPosition = graveCenter + new Vector3(24,180,0);
 		mElement.Add(finalScoreText);
 		//mElement.Add(perfectEngraving);
 		mElement.Add(perfectPercent);
@@ -998,9 +998,9 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 		);
 		
 		float startingPosition = mFlatCamera.get_point(0,1).y - aStats[0].PerformanceGraph.BoundingBox.height/2f - 10;
-		float intervalSize = aStats[0].PerformanceGraph.BoundingBox.height + 5;
+		float intervalSize = aStats[0].PerformanceGraph.BoundingBox.height - 40;
 		float cioXOffset = mBB.SoftPosition.x + 370;
-		float pgoXOffset = mBB.SoftPosition.x - 145;
+		float pgoXOffset = mBB.SoftPosition.x - 130;
 		//make performance graphs come in one at a time from the bottom
 		//starting at one means skipping fetus
 		//going less than count means skipping grave
@@ -1014,6 +1014,7 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 			cio.HardPosition = new Vector3(cioXOffset,-2000,0);
 			pgo.HardPosition = new Vector3(pgoXOffset,-2000,0);
 			pgo.HardColor = new Color(0.5f,0.5f,0.5f,1);
+			pgo.mForeground.set_new_texture(mManager.mNewRef.bbGraphGraveFrame);
 			
 			//CAN DELETE
 			//string[] perfectPhrase = {"awful","mediocre","good", "perfect"};
@@ -1046,7 +1047,7 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 				
 					//move in stuff
 					cio.SoftPosition = new Vector3(cioXOffset,startingPosition - (it-1) * intervalSize,0);
-					pgo.SoftPosition = new Vector3(pgoXOffset,startingPosition - (it-1) * intervalSize,0);
+					pgo.SoftPosition = new Vector3(pgoXOffset,startingPosition - (it-1) * intervalSize + 28,0);
 				
 					float netHeight = (it) * intervalSize;
 					if(netHeight > mFlatCamera.Height - 10) //start scrolling
@@ -1118,11 +1119,9 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 			{
 				var targetCharacter = aStats[j].Character;				//charcter we are connecting to
 				var targetConnection = connections[targetCharacter];	//message
-				//TODO eventually check if character was easy/hard
 				if(targetConnection != null && targetConnection != "")
 				{
-					
-					int accumChange = 0;
+					int accumChange = 0; //accum change is targetCharacters effect on the current character
 					if(aStats[j].CutsceneChangeSet != null) //TODO this check should never fail
 					{
 						Debug.Log("accum change for " + aStats[j].Character.StringIdentifier + " is " + aStats[j].CutsceneChangeSet.accumulative_changes()[ps.Character]);
@@ -1132,8 +1131,8 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 					{
 						Debug.Log ("null cutscene change for " + aStats[j].Character.StringIdentifier + " " + aStats[j].CutsceneChangeSet);
 					}
-					if( (wasHard && accumChange > 0) ||
-						(!wasHard && accumChange < 0))
+					if( (wasHard && accumChange > 0) || //if was hard and effect was positive (i.e. hard)
+						(!wasHard && accumChange < 0)) //if was easy and effect was negative (i.e. easy)
 					{
 						string [] conText = targetConnection.Replace("<S>","@").Split('@');
 						PopupTextObject npo = null;
@@ -1162,7 +1161,7 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 							delegate()
 							{
 								if(npo != null)
-									add_cutscene_particle_stream(ps.Character,npo,gParticle,wasHard);
+									add_cutscene_particle_stream(targetCharacter,npo,gParticle-(gFirstConnectionText-gPreParticle),wasHard);
 							}
 						).then_one_shot(
 							delegate()
@@ -1170,7 +1169,7 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 								if(npo != null)
 								{
 									npo.Text =  conText[conText.Length -1];
-									add_cutscene_particle_stream(targetCharacter,npo,gParticle-(gFirstConnectionText-gPreParticle),wasHard);
+									add_cutscene_particle_stream(ps.Character,npo,gParticle,wasHard);
 								}
 							},
 						gFirstConnectionText-gPreParticle).then (

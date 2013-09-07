@@ -23,6 +23,7 @@ public class NewMenuReferenceBehaviour : MonoBehaviour {
 	public Texture2D bbBackground;
 	public Texture2D bbGraphBackground;
 	public Texture2D bbGraphFrame;
+	public Texture2D bbGraphGraveFrame;
 	public Texture2D bbGraphDot;
 	public Texture2D bbScoreBackground;
 	public Texture2D[] bbScoreMultiplier; //TODO rename with bbDifficultyImage
