@@ -83,6 +83,15 @@ public class ProGrading {
         p.mElements.Add(waist);
         return p;
     }
+	//TODO should probably put this somewhere else..
+	public static Pose from_file(string path)
+	{
+		Pose p = new Pose();
+		System.IO.FileStream stream = new System.IO.FileStream(path,System.IO.FileMode.Open);
+        System.Xml.Serialization.XmlSerializer xs = new System.Xml.Serialization.XmlSerializer(typeof(Pose));
+        p = (Pose)xs.Deserialize(stream);
+        return p;
+	}
     public static Pose read_pose(TextAsset aText)
     {
         Pose p = new Pose();

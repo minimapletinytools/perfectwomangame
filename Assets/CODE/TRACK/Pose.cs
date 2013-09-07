@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic;
-
+using System.IO;
+using System.Linq;
 
 [System.Serializable]
 public class PoseElement
@@ -46,6 +47,18 @@ public class PoseAnimation
 {
 	public List<Pose> poses = new List<Pose>();
 	public Pose get_pose(int index){ return poses[index % poses.Count]; }
+	
+	public static PoseAnimation load_from_folder(string aFolder)
+	{
+		PoseAnimation r = new PoseAnimation();
+		Debug.Log(Directory.GetFiles(aFolder).Where(e => Path.GetExtension(e) == ".txt").Count());
+		foreach(string e in Directory.GetFiles(aFolder).Where(e => Path.GetExtension(e) == ".txt"))
+		{
+			//string text = (new StreamReader(e)).ReadToEnd();
+			r.poses.Add(ProGrading.from_file(e));
+		}
+		return r;
+	}
 }
 
 public class PerformanceType

@@ -122,20 +122,22 @@ public class NewGameManager : FakeMonoBehaviour
 				set_time_for_PLAY(999999f);
 				setup_next_poses(true);
 				transition_to_PLAY();
-				float gTextDisplayDur = 4;
-				CurrentTargetPose = null;
-				TED.add_event(
-					mManager.mInterfaceManager.skippable_text_bubble_event("TRY AND MAKE YOUR FIRST MOVEMENTS", gTextDisplayDur),
-				1).then_one_shot(
-					delegate(){
-						CurrentTargetPose = mManager.mReferences.mCheapPose.to_pose();
-						mManager.mTransparentBodyManager.set_target_pose(CurrentTargetPose);
-						mManager.mTransparentBodyManager.mFlat.SoftColor = 
-							mManager.mCharacterBundleManager.get_character_stat(CurrentCharacterIndex).CharacterInfo.CharacterOutlineColor;
-					},
-				1).then(
-					mManager.mInterfaceManager.skippable_text_bubble_event("MATCH THE POSE BEHIND YOU", gTextDisplayDur),
-				1.5f);
+				if(GS != GameState.TEST){
+					float gTextDisplayDur = 4;
+					CurrentTargetPose = null;
+					TED.add_event(
+						mManager.mInterfaceManager.skippable_text_bubble_event("TRY AND MAKE YOUR FIRST MOVEMENTS", gTextDisplayDur),
+					1).then_one_shot(
+						delegate(){
+							CurrentTargetPose = mManager.mReferences.mCheapPose.to_pose();
+							mManager.mTransparentBodyManager.set_target_pose(CurrentTargetPose);
+							mManager.mTransparentBodyManager.mFlat.SoftColor = 
+								mManager.mCharacterBundleManager.get_character_stat(CurrentCharacterIndex).CharacterInfo.CharacterOutlineColor;
+						},
+					1).then(
+						mManager.mInterfaceManager.skippable_text_bubble_event("MATCH THE POSE BEHIND YOU", gTextDisplayDur),
+					1.5f);
+				}
 				break;
 			case "100":
 				set_time_for_PLAY(30f);
@@ -206,6 +208,7 @@ public class NewGameManager : FakeMonoBehaviour
 	public int mLastDiff = 0;
 	public int mLastWrite = 0;
 	public int mLastCutscene = 0;
+	public int mLastPoseFolder = 0;
 	public void update_TEST()
 	{
 		//if we are annoyed by the pose..
@@ -243,13 +246,16 @@ public class NewGameManager : FakeMonoBehaviour
 		{
 			mManager.mBackgroundManager.load_cutscene(mLastCutscene,CurrentCharacterLoader);
 			ManagerManager.Manager.mDebugString = "loaded cutscene " + mLastCutscene;
-			mLastCutscene = mLastCutscene % 2;//5;
+			mLastCutscene = (mLastCutscene+1) % 2;//5;
 			//mManager.mBackgroundManager.load_cutscene(4,DeathCharacter);
 		}
 		
 		if(Input.GetKeyDown(KeyCode.Alpha6))
 		{
-			//TODO scour folder for poses
+			string[] dirs = System.IO.Directory.GetDirectories("POSETEST");
+			CurrentPoseAnimation = new PerformanceType(PoseAnimation.load_from_folder(dirs[mLastPoseFolder% dirs.Length]),new CharacterIndex(2,0));
+			ManagerManager.Manager.mDebugString = "pose folder: " + dirs[mLastPoseFolder% dirs.Length];
+			mLastPoseFolder++;
 		}
 			
 		
