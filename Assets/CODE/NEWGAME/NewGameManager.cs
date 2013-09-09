@@ -209,6 +209,8 @@ public class NewGameManager : FakeMonoBehaviour
 	public int mLastWrite = 0;
 	public int mLastCutscene = 0;
 	public int mLastPoseFolder = 0;
+	public PerformanceType.PType mLastPoseMode = PerformanceType.PType.SLOW;
+	public float mLastPoseSpeed = 5;
 	public void update_TEST()
 	{
 		//if we are annoyed by the pose..
@@ -256,7 +258,24 @@ public class NewGameManager : FakeMonoBehaviour
 			CurrentPoseAnimation = new PerformanceType(PoseAnimation.load_from_folder(dirs[mLastPoseFolder% dirs.Length]),new CharacterIndex(2,0));
 			ManagerManager.Manager.mDebugString = "pose folder: " + dirs[mLastPoseFolder% dirs.Length];
 			mLastPoseFolder++;
+			
+			CurrentPoseAnimation.PT = mLastPoseMode;
+			CurrentPoseAnimation.ChangeTime = mLastPoseSpeed;
 		}
+		
+		if(Input.GetKeyDown(KeyCode.A))
+		{
+			mLastPoseMode = (PerformanceType.PType)(((int)mLastPoseMode + 1)%(int)PerformanceType.PType.COUNT);
+			ManagerManager.Manager.mDebugString = "pose mode is: " + mLastPoseMode.ToString();
+			CurrentPoseAnimation.PT = mLastPoseMode;
+		}
+		if(Input.GetKey(KeyCode.S))
+		{
+			mLastPoseSpeed = (mLastPoseSpeed + Time.deltaTime*2.5f)%10;
+			ManagerManager.Manager.mDebugString = "pose time is: " + mLastPoseSpeed;
+			CurrentPoseAnimation.ChangeTime = mLastPoseSpeed;
+		}
+		
 			
 		
 		if(Input.GetKeyDown(KeyCode.Alpha8))
@@ -264,6 +283,7 @@ public class NewGameManager : FakeMonoBehaviour
 			ManagerManager.Manager.mDebugString = "set to diff " + ((++mLastDiff)%4);
 			CurrentPoseAnimation = new PerformanceType(mManager.mCharacterBundleManager.get_pose(CurrentCharacterIndex,mLastDiff%4), new CharacterIndex(2,0)); //forces it to be switch
 		}
+		
 		
 		
 		int choice = -1;

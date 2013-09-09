@@ -68,12 +68,15 @@ public class PerformanceType
 		STATIC,
 		SLOW,
 		SWITCH,
-		SLOWSWITCH
+		SLOWSWITCH,
+		COUNT = 4
 	}
 	
 	public PType PT
 	{ get; set; }
-	public float BPM
+	public float BPM //TODO or DELETE
+	{ get; set; }
+	public float ChangeTime
 	{ get; set; }
 	protected PoseAnimation PA
 	{ get; set; }
@@ -83,6 +86,8 @@ public class PerformanceType
 		PA = aAnim;
 		
 		PT = PType.SLOW;
+		
+		ChangeTime = 5;
 		/*
 		if(aIndex.LevelIndex == 0 || aIndex.LevelIndex == 1 || aIndex.LevelIndex == 7 )
 			PT = PType.STATIC;
@@ -102,7 +107,7 @@ public class PerformanceType
 	}
 	public virtual Pose get_pose(float aTime)
 	{
-		float changeTime = 5;
+		float changeTime = ChangeTime;
 		if(PT == PType.STATIC)
 		{
 			if(PA != null && PA.poses.Count != 0)
