@@ -60,6 +60,10 @@ public class CharacterLoader {
 				break;
 			}
 		}
+		
+		Images.deathMusic = aBundle.Load("CSAUDIO_4", typeof(AudioClip)) as AudioClip;
+		if(Images.deathMusic == null)
+			Debug.Log("no death music for " + Character.StringIdentifier);
 
         TextAsset cd = aBundle.Load("CD", typeof(TextAsset)) as TextAsset;
         System.IO.MemoryStream stream = new System.IO.MemoryStream(cd.bytes);

@@ -470,21 +470,19 @@ public class NewGameManager : FakeMonoBehaviour
 		//TODO change index is no longe relevant
 		if(changeIndex != -1)
 		{
-			foreach(var e in CurrentCharacterLoader.Images.cutsceneMusic)
-				Debug.Log (e.name);
 			//if(CurrentCharacterLoader.Images.cutsceneMusic.Count > changeIndex)
 			if(CurrentCharacterLoader.Images.cutsceneMusic.Count > 1)
 			{
 				//mManager.mMusicManager.fade_in_cutscene_music(CurrentCharacterLoader.Images.cutsceneMusic[changeIndex]);
 				//mManager.mMusicManager.play_cutscene_music(CurrentCharacterLoader.Images.cutsceneMusic[changeIndex]);
 				mManager.mMusicManager.play_sound_effect(changes.UpperThreshold <= 0.5 ? "cutBad" : "cutGood");
-				//mManager.mMusicManager.play_cutscene_music(CurrentCharacterLoader.Images.cutsceneMusic[changes.UpperThreshold <= 0.5 ? 0 : 1]);
-				mManager.mMusicManager.fade_in_cutscene_music(CurrentCharacterLoader.Images.cutsceneMusic[changes.UpperThreshold <= 0.5 ? 0 : 1]);
+				mManager.mMusicManager.play_cutscene_music(CurrentCharacterLoader.Images.cutsceneMusic[changes.UpperThreshold <= 0.5 ? 0 : 1]);
+				//mManager.mMusicManager.fade_in_cutscene_music(CurrentCharacterLoader.Images.cutsceneMusic[changes.UpperThreshold <= 0.5 ? 0 : 1]);
 			}
 			else 
 			{
 				//Debug.Log("ERROR no music found for change index " + changeIndex + " only " + CurrentCharacterLoader.Images.cutsceneMusic.Count + " sounds");
-				Debug.Log ("No music for this characetr");
+				Debug.Log ("No cutscene music for " + CurrentCharacterIndex.StringIdentifier);
 			}
 		}
 		
@@ -586,6 +584,7 @@ public class NewGameManager : FakeMonoBehaviour
 					mManager.mBodyManager.transition_character_out();
 					mManager.mTransparentBodyManager.transition_character_out();
 					mManager.mMusicManager.play_sound_effect("cutDie");
+					mManager.mMusicManager.play_cutscene_music(CurrentCharacterLoader.Images.deathMusic);
 					if(CurrentCharacterLoader.has_cutscene(4))
 						mManager.mBackgroundManager.load_cutscene(4,CurrentCharacterLoader);
 					else
