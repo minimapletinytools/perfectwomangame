@@ -85,9 +85,9 @@ public class PerformanceType
 	{
 		PA = aAnim;
 		
-		PT = PType.SLOW;
+		PT = PType.SWITCH;
 		
-		ChangeTime = 5;
+		ChangeTime = 4;
 		/*
 		if(aIndex.LevelIndex == 0 || aIndex.LevelIndex == 1 || aIndex.LevelIndex == 7 )
 			PT = PType.STATIC;
@@ -97,6 +97,7 @@ public class PerformanceType
 			PT = PType.SLOW;
 		if(aIndex.LevelIndex == 4)
 			PT = PType.SLOWSWITCH;*/
+		
 			
 	}
 	public PerformanceType(PoseAnimation aAnim, PType aType)

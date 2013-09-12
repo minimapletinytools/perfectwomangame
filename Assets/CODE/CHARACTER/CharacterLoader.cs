@@ -56,7 +56,7 @@ public class CharacterLoader {
 				Images.cutsceneMusic.Add(clip);
 			else 
 			{
-				//Debug.Log("loaded " + i + " cutscene songs");
+				Debug.Log("loaded " + i + " cutscene songs");
 				break;
 			}
 		}

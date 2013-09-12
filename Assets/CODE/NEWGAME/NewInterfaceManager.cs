@@ -910,7 +910,7 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 		
 		
 		//fake it for testing...
-		/*
+		
 		Random.seed = 23344;
 		for(int i = 0; i < 8; i++)
 		{
@@ -922,7 +922,7 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 				stat.Stats = mManager.mGameManager.CharacterHelper.Characters[stat.Character];
 				aStats.Add(stat);
 			}
-		}*/
+		}
 		
 		
 		
@@ -971,11 +971,15 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 		List<FlatElementImage> ghostElements = new List<FlatElementImage>();
 		for(int i = 1; i < aStats.Count; i++)
 		{
-			Vector3 angelPosition = graveCenter + 
-				(aStats.Count > 2 ? new Vector3(
+			Vector3 angelPosition = graveCenter + new Vector3(0,100,0) +
+				(aStats.Count > 2
+				? 
+				new Vector3(
 				Mathf.Cos(Mathf.PI*((i-1)/(aStats.Count-2f))),
-				Mathf.Sin(Mathf.PI*((i-1)/(aStats.Count-2f))),
-				0) : new Vector3(0,1,0)) *600;
+				1.2f*Mathf.Sin(Mathf.PI*((i-1)/(aStats.Count-2f))),
+				0) 
+				: 
+				new Vector3(0,1,0)) *600;
 			ghostPositions.Add(angelPosition);
 			
 			var isp = (mManager.mCharacterBundleManager.get_image("ANGELS_"+aStats[i].Character.StringIdentifier));
@@ -1028,7 +1032,7 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 				{
 				
 					ghostElements[ps.Character.LevelIndex-1].SoftPosition = ghostPositions[ps.Character.LevelIndex-1];
-					mManager.mMusicManager.play_sound_effect("graveAngel");	
+					//mManager.mMusicManager.play_sound_effect("graveAngel",0.3f);	
 				
 				
 					/*
@@ -1161,7 +1165,7 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 							delegate()
 							{
 								if(npo != null)
-									add_cutscene_particle_stream(targetCharacter,npo,gParticle-(gFirstConnectionText-gPreParticle),wasHard);
+									add_cutscene_particle_stream(targetCharacter,npo,gParticle,wasHard);
 							}
 						).then_one_shot(
 							delegate()
@@ -1169,7 +1173,7 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 								if(npo != null)
 								{
 									npo.Text =  conText[conText.Length -1];
-									add_cutscene_particle_stream(ps.Character,npo,gParticle,wasHard);
+									add_cutscene_particle_stream(ps.Character,npo,gParticle-(gFirstConnectionText-gPreParticle),wasHard);
 								}
 							},
 						gFirstConnectionText-gPreParticle).then (

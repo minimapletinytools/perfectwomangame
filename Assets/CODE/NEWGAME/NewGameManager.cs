@@ -127,14 +127,14 @@ public class NewGameManager : FakeMonoBehaviour
 					CurrentTargetPose = null;
 					TED.add_event(
 						mManager.mInterfaceManager.skippable_text_bubble_event("TRY AND MAKE YOUR FIRST MOVEMENTS", gTextDisplayDur),
-					1).then_one_shot(
+					3).then_one_shot(
 						delegate(){
 							CurrentTargetPose = mManager.mReferences.mCheapPose.to_pose();
 							mManager.mTransparentBodyManager.set_target_pose(CurrentTargetPose);
 							mManager.mTransparentBodyManager.mFlat.SoftColor = 
 								mManager.mCharacterBundleManager.get_character_stat(CurrentCharacterIndex).CharacterInfo.CharacterOutlineColor;
 						},
-					1).then(
+					0).then(
 						mManager.mInterfaceManager.skippable_text_bubble_event("MATCH THE POSE BEHIND YOU", gTextDisplayDur),
 					1.5f);
 				}
@@ -457,7 +457,6 @@ public class NewGameManager : FakeMonoBehaviour
 	//pass in CurrentPerformanceStat.CutsceneChangeSet;
 	public void load_CUTSCENE(NUPD.ChangeSet changes)
 	{
-		Debug.Log ("Loading cutscene");
 		int changeIndex = -1;
 		
         if(changes == null)
@@ -468,16 +467,24 @@ public class NewGameManager : FakeMonoBehaviour
         } else changeIndex = changes.Index;
 		
 		//audio
+		//TODO change index is no longe relevant
 		if(changeIndex != -1)
 		{
-			if(CurrentCharacterLoader.Images.cutsceneMusic.Count > changeIndex)
+			foreach(var e in CurrentCharacterLoader.Images.cutsceneMusic)
+				Debug.Log (e.name);
+			//if(CurrentCharacterLoader.Images.cutsceneMusic.Count > changeIndex)
+			if(CurrentCharacterLoader.Images.cutsceneMusic.Count > 1)
 			{
-				mManager.mMusicManager.fade_in_cutscene_music(CurrentCharacterLoader.Images.cutsceneMusic[changeIndex]);
+				//mManager.mMusicManager.fade_in_cutscene_music(CurrentCharacterLoader.Images.cutsceneMusic[changeIndex]);
 				//mManager.mMusicManager.play_cutscene_music(CurrentCharacterLoader.Images.cutsceneMusic[changeIndex]);
+				mManager.mMusicManager.play_sound_effect(changes.UpperThreshold <= 0.5 ? "cutBad" : "cutGood");
+				//mManager.mMusicManager.play_cutscene_music(CurrentCharacterLoader.Images.cutsceneMusic[changes.UpperThreshold <= 0.5 ? 0 : 1]);
+				mManager.mMusicManager.fade_in_cutscene_music(CurrentCharacterLoader.Images.cutsceneMusic[changes.UpperThreshold <= 0.5 ? 0 : 1]);
 			}
 			else 
 			{
 				//Debug.Log("ERROR no music found for change index " + changeIndex + " only " + CurrentCharacterLoader.Images.cutsceneMusic.Count + " sounds");
+				Debug.Log ("No music for this characetr");
 			}
 		}
 		
@@ -555,7 +562,6 @@ public class NewGameManager : FakeMonoBehaviour
 	
 	public void transition_to_DEATH()
 	{
-		Debug.Log ("death");
 		float gTextDisplayDur = 5;
 		
 		bool firstDeath = mPerformanceStats.Where(e => e.DeathTime != -1).Count() < GameConstants.numberRetries;
@@ -566,6 +572,7 @@ public class NewGameManager : FakeMonoBehaviour
 		if(firstDeath)
 		{
 			GS = GameState.CUTSCENE;
+			mManager.mMusicManager.play_sound_effect("cutBad");
 			load_CUTSCENE(CurrentPerformanceStat.CutsceneChangeSet);
 		}
 		else
@@ -578,6 +585,7 @@ public class NewGameManager : FakeMonoBehaviour
 					mManager.mMusicManager.fade_out();
 					mManager.mBodyManager.transition_character_out();
 					mManager.mTransparentBodyManager.transition_character_out();
+					mManager.mMusicManager.play_sound_effect("cutDie");
 					if(CurrentCharacterLoader.has_cutscene(4))
 						mManager.mBackgroundManager.load_cutscene(4,CurrentCharacterLoader);
 					else
@@ -663,6 +671,17 @@ public class NewGameManager : FakeMonoBehaviour
 		{
 			int diff = CurrentPerformanceStat.Stats.Difficulty;
 			CurrentPoseAnimation = new PerformanceType(mManager.mCharacterBundleManager.get_pose(CurrentCharacterIndex,diff),CurrentCharacterIndex);
+			
+			//kind fast eh?
+			if(diff == 0)
+				CurrentPoseAnimation.ChangeTime = 2;
+			else if(diff == 1)
+				CurrentPoseAnimation.ChangeTime = 2;
+			else if(diff == 2)
+				CurrentPoseAnimation.ChangeTime = 1;
+			else if(diff == 3)
+				CurrentPoseAnimation.ChangeTime = 0.5f;
+			
 			CurrentTargetPose = CurrentPoseAnimation.get_pose(0);
 			//mManager.mTransparentBodyManager.set_target_pose(CurrentTargetPose);
 		}

@@ -154,7 +154,7 @@ public class CharacterBundleManager : FakeMonoBehaviour {
 		r += aIndex.StringIdentifier;
 		r += "_";
 		r += (new string[] {"a","b","c","d"})[aDiff];
-		r += "-";
+		r += "_";
 		r += aStage;
 		return r;
 	}
