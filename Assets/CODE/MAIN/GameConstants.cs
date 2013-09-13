@@ -27,17 +27,18 @@ public static class GameConstants
     public static string[] credits = { "Thanks: Benedikts","Haas, David Elliott,","Sabrina Winter, Eddo","Stern, Ingo Von","Staden, Andreas","Hykade, Alex", "Rickett" };
 	
 	
+	/*
 	public static int numberRetries = 0;
 	public static float preplayTime = 0.1f;
 	public static float fadingTime = 0.1f;
 	public static float transitionToChoiceDelayTime = 0.1f;
+	*/
 	
-	/*
 	public static int numberRetries = 1;
 	public static float preplayTime = 2f;
 	public static float fadingTime = 2.3f;
 	public static float transitionToChoiceDelayTime = 1.2f;
-	 */
+	
 
     //colors
     static Color uiPink = new Color(1, .8f, .8f, 1);

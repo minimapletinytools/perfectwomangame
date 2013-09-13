@@ -59,7 +59,8 @@ public class ManagerManager : MonoBehaviour{
 		mNewRef = GetComponent<NewMenuReferenceBehaviour>();
         
         Manager = this;
-
+		
+		mMusicManager = new MusicManager(this);
         mEventManager = new EventManager(this);
         mInputManager = new InputManager(this);
 		mZigManager = new ZigManager(this);
@@ -75,7 +76,7 @@ public class ManagerManager : MonoBehaviour{
         mGameManager = new NewGameManager(this);
 		mTransitionCameraManager = new TransitionCameraManager(this);
 		mCharacterBundleManager = new CharacterBundleManager(this);
-		mMusicManager = new MusicManager(this);
+		
 		
 		if(mStartDelegates != null) 
 			mStartDelegates();

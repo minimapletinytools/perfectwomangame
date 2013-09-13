@@ -72,6 +72,8 @@ public class TransitionCameraManager : FakeMonoBehaviour
 		
 		start_configuration_display();
 		initialize_depth_warning();
+		
+		
 	}
 	
 	
@@ -211,6 +213,7 @@ public class TransitionCameraManager : FakeMonoBehaviour
 	
 	public bool go_to_fetus(float time)
 	{
+		mManager.mMusicManager.fade_out_extra_music();
 		//TODO if user is not roughly in the center of the screen, return false
 		fade_out_with_sound(
 			delegate()

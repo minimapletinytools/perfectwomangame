@@ -435,7 +435,7 @@ public class NewGameManager : FakeMonoBehaviour
 		int choice = mChoiceHelper.update(mManager.mInterfaceManager);
 		if(choice != -1)
 		{
-			mManager.mMusicManager.fade_out_choice_music();
+			mManager.mMusicManager.fade_out_extra_music();
 			transition_to_TRANSITION_play(CurrentPerformanceStat.Character.get_future_neighbor(choice));
 		}
 	}
@@ -654,7 +654,7 @@ public class NewGameManager : FakeMonoBehaviour
 		var perfs = chars.Select(e=>CharacterHelper.Characters[e].Perfect).ToList();
 		mManager.mInterfaceManager.set_bb_choice_perfectness(perfs);
 		mManager.mInterfaceManager.set_bb_choice_bodies(CurrentCharacterIndex);
-		mManager.mMusicManager.fade_in_choice_music();
+		mManager.mMusicManager.fade_in_extra_music("choiceMusic");
 		mManager.mInterfaceManager.set_for_CHOICE();	
 	}
 	

@@ -52,6 +52,9 @@ public class MusicManager : FakeMonoBehaviour
 		{
 			mSoundEffects[e.Name] = e.GetValue(mManager.mNewRef) as AudioClip;
 		}
+		
+		//start screen music, probbaly shouldn't go here...
+		mManager.mMusicManager.fade_in_extra_music("startMusic");
 	}
 	
 	public override void Update()
@@ -129,7 +132,7 @@ public class MusicManager : FakeMonoBehaviour
 			delegate(float time)
 			{
 				float l = time/QUICK_FADE_TIME;
-				mChoiceSource.volume = (l)*MAX_MUSIC_VOLUME;
+				mMusicSource.volume = (l)*MAX_MUSIC_VOLUME;
 				return l > 1;
 			}
 		);
@@ -140,17 +143,17 @@ public class MusicManager : FakeMonoBehaviour
 		Debug.Log ("playnig cutscene music " + aClip);
 		
 		mMusicSource.Stop();
-		mCutsceneSource.clip = aClip;
-		mCutsceneSource.loop = false;
-		mCutsceneSource.volume = 1;
-		mCutsceneSource.Play();
+		mMusicSource.clip = aClip;
+		mMusicSource.loop = false;
+		mMusicSource.volume = 1;
+		mMusicSource.Play();
 	}
 	
 	
-	public void fade_in_choice_music()
+	public void fade_in_extra_music(string aMusic)
 	{
 		mChoiceSource.clip = get_sound_clip("choiceMusic");
-		mChoiceSource.volume = 0;
+		mChoiceSource.volume = 0.01f;
 		mChoiceSource.loop = true;
 		mChoiceSource.Play();
 		
@@ -163,7 +166,7 @@ public class MusicManager : FakeMonoBehaviour
 			}
 		);
 	}
-	public void fade_out_choice_music()
+	public void fade_out_extra_music()
 	{
 		TED.add_event(
 			delegate(float time)

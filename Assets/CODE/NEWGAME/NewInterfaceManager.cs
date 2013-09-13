@@ -910,7 +910,7 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 		
 		
 		//fake it for testing...
-		
+		/*
 		Random.seed = 23344;
 		for(int i = 0; i < 8; i++)
 		{
@@ -923,7 +923,7 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 				aStats.Add(stat);
 			}
 		}
-		
+		*/
 		
 		
 		//clear away BB and PB
@@ -1230,7 +1230,9 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 			TED.add_one_shot_event(
 				delegate()
 				{
-					add_timed_text_bubble("G A M E  O V E R",99999,0.4f);
+					add_timed_text_bubble("G A M E  O V E R",99999,0);
+					mManager.mMusicManager.fade_in_extra_music("creditsMusic");
+					mManager.mMusicManager.fade_out();
 				}
 			,0).then_one_shot(
 				delegate()

@@ -57,4 +57,8 @@ public class NewMenuReferenceBehaviour : MonoBehaviour {
 	public AudioClip cutDie;
 	//TODO more
 	
+	//music
+	public AudioClip startMusic;
+	public AudioClip creditsMusic;
+	
 }
