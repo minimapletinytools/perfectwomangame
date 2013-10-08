@@ -361,7 +361,7 @@ public class NewGameManager : FakeMonoBehaviour
 				float oldGrade = (float)scoreProp.GetValue(CurrentPerformanceStat);
 				float newGrade = oldGrade*0.93f + grade*0.07f;
 				scoreProp.SetValue(CurrentPerformanceStat,newGrade);
-				if(newGrade > 0.83f)
+				if(newGrade > 0.76f)
 				{
 					//this may or may not work depending on which update gets called first
 					mManager.mInterfaceManager.SkipSingle();
