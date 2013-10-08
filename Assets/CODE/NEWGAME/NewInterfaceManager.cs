@@ -734,7 +734,7 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 					//DELETE this has been moved to text files..
 					//text = "Prepare to be Born"; 
 				}
-				else
+				else if(mBBLastPerformanceGraph.DeathTime == -1) //if we did not die this time
 				{
 					//TODO use color text here... In fact you should replace color text as yoru standard text object really...
 					//text = aChanges.PerformanceDescription.Replace("<P>",perfectPhrase[mBBLastPerformanceGraph.Stats.Perfect]);

@@ -526,7 +526,7 @@ public class NewGameManager : FakeMonoBehaviour
 			}
 		,0).then(
 			
-			CurrentCharacterIndex.LevelIndex != 8 //TODO
+			CurrentCharacterIndex.LevelIndex < 7 //TODO
 			?
 			mManager.mInterfaceManager.skippable_text_bubble_event("You turn " + CurrentCharacterIndex.get_future_neighbor(0).Age,gAgeDisplayDur)
 			:
