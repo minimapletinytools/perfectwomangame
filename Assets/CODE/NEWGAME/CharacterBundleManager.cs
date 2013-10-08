@@ -183,10 +183,16 @@ public class CharacterBundleManager : FakeMonoBehaviour {
 			}
 			return r;
 		}
-		else if(aIndex.Choice > 0)
+		/*else if(aIndex.Choice > 0)
 		{
 			Debug.Log ("grabbed fallback for " + construct_pose_string(aIndex,aDiff,1));
 			CharacterIndex fallback = new CharacterIndex(aIndex.LevelIndex,aIndex.Choice-1);
+			return get_pose(fallback,aDiff);
+		}*/
+		else if(aIndex.LevelIndex > 1)
+		{
+			Debug.Log ("grabbed fallback for " + construct_pose_string(aIndex,aDiff,1));
+			CharacterIndex fallback = new CharacterIndex(aIndex.LevelIndex-1,aIndex.Choice);
 			return get_pose(fallback,aDiff);
 		}
 		else
