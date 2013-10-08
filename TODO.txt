@@ -59,12 +59,14 @@
 ::TODO XI::
 -email david and talk to eddo about rights
 -email sarita
+-see if you can do a loading screen...
 -do some testing on kinect overheating issue...
 -"poses" easier/harder is bad wording
 -consider making harder/easier for first set of choices random
 -sometimes credits at end do not scroll
 -fix the dot issue in performance graph
--adjust performance graph colors...
+	-does not seem to happen on OSX under editor... great.. could be ogl buggy artifact?
+DONE-adjust performance graph colors...
 -still says foetus
 -microsoft kinect GoodPosition does not work. Need better way to determine if player is out of frame
 	-in addition, do not contort the figure if something bad happens.
