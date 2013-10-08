@@ -189,7 +189,7 @@ public class MusicManager : FakeMonoBehaviour
 	{
 		mMusicSource.clip = aCharacter.Images.backgroundMusic;
 		mMusicSource.volume = 0;
-		mMusicSource.loop = false;
+		mMusicSource.loop = true;
 		mMusicSource.Play();
 		fade_in();
 	}
