@@ -1,5 +1,102 @@
+::CONVERTING TO MONOGAME::
+-figure out if it's reasonable to expect monogame support on xbox one
+-redo input capturing functions
+-rendering
+	-rewrite flat image class nonsense
+	-redo camera components
+		-viewports
+	-rewrite shaders
+-rewrite zigfu nonsense (you'd have to do this anyways)
+-asset bundle redo
+	-rewrite asset bundle loading functions.
+	-index file generator (equivalent to asset bundle except in text file format)
+-performance graph rendering probably needs to be redone
+
+::IDEAS::
+-actress, cosplayer, scientist/engineer, athlete
+-broad collumn categories: stereotypical, traditionally male roles, controverisal roles, etc..
+-unlock stories
+	-requirement -> stories after ending -> unlock!!
+	-e.g. being a wise grandma made you understand how much worse your life could have been -> unlocks child labourer
+	-e.g. doing well as a sexy teenager at 16 and a wise grandma made you understand the true nature of sex and age -> grandma porn star
+	-spending so much time at the computer as an engineer revealed that you could be a professional video gamer -> unlockes video gamer
+	-sharing your life experience with your friends made you realize the power of technology -> unlocks engineer
+	-some cheeky story about how you unlock the skip command :).
+	-some cheeky story about how you unlock challenge mode
+	-etc.
+-challenge mode 
+	-lets you choose characters/difficulties and perform for character specific high score!!!
+
+::NEW INTERFACE ****::
+
+::INPUT::
+-use more forgiving grading for show?L?
+-young girls getting very excited
+-at least one person not understanding choosing
+-beach mom I've only seen as "easy"
+-shoulder over hair on belly dance teacher
+-angry age 60 almost always hard/xtreme
+-only younger girls went for minister and fundraiser
+-xtream minister can be beat without doing too much
+-john romero barely looked at our game :)
+-"poses" easier/harder is bad wording
+-some connections make more sense than others...
+-people read/laugh out loud at writing :)
+-more than one woman said "glad this game is made"
+-everyone goes for angry woman hehe...
+-there's that little dot in the performance graph...
+-lots of family's playing the game.
+-some people still don't get the color/difficulty thing.
+-kinect overheating?? the old one would randomly crash after a while... happened once on the new kinect too but never again, artifact??
+-all extreme at age 65 is possible and quite frequent. I like this from a gameplay perspective but not necessarily from a conceptual standpoint.
+-redo colors on performance graph please
+-almost no one chose sexy
+-still says foetus
+-people (possibly ironically) comment on how the text is judging them
+-in general players do have reactions to bad performance
+-prayer xtreme is beatable on first try...
+-sometimes credits at end do not scroll
+-graph should be more visually apparent if performance was good or bad (just looks like a squiggly line...)
+	-I think more smoohtnig can help this out and better colors...
+		-maybe add some grading grace during pose changes
+-there was one boy who tried to restart the game on the laptop (and crashed it) and then played the game for only one age not doing so well (went for gang leader) and wos totally unwilling to make the full poses. A little girl was watching and was super excited to play after him and then convinced a really nice lady playng afterwards to go for all the hard choices causing her to lose :).
+-most people lose princess on first try
+-consider making harder/easier for first set of choices random
+
+::CREDITS::
+
+
 ::TODO X:: in order of importance
--return vars to release not debug
+-microsoft kinect GoodPosition does not work. Need better way to determine if player is out of frame
+	-in addition, do not contort the figure if something bad happens.
+		-:(((
+	-pressing key should toggle between 3 states, no warning ever, only warning on bad kinect input, always show warning
+-particals
+-switch to 16x8
+-email david and talk to eddo about rights
+-email sarita
+-restart the game if no one is playing after 30 seconds
+
+
+-turn pose warning back on
+DONE-turn off pose warning
+-too much time between premature death and choice
+-make sure you turn flipping off in ggfiles lol
+-there is a bug in sctore counting
+
+DONE-delete recording scene
+
+DONE-premature death should not give performance evals
+DONE-start screen music still wrong
+DONE-terrorist arm
+IGNORE/DONE-return vars to release not debug
+DONE-remake fetus
+DONE-turn off "you turn 100"
+DONE-start screen music is wrong
+DONE-music is not looping
+DONE-score counting should pause longer
+
+DONE-do new pose style
 DONE???-poses not being written in kniect mode
 DONE-don't fade out the blue after choosing
 DONE-before cutscene, say "you turn 5"
@@ -17,9 +114,11 @@ DONE-do new performance graphs
 DONE-fix the word bubbles flying over the other camera problem....
 DONE-should not do "Next time you might die" for last age group	
 DONE??-why are all correlations the same color?? Make sure that they are playing enough correlations...
+DONE-make a pose testing folder where lea can dump her poses that she wants to test...
 
 -put some graphic indicating you died early in the performance raph so it doesn't look silly??
--make a pose testing folder where lea can dump her poses that she wants to test...
+-lea wants "you turn five" to appear on the blue background...
+
 -do new fetus scene with cutscene text...
 	DONE-introduce green pose and performance graph
 	DONE-explain cutscenes..
@@ -38,18 +137,14 @@ DONE??-why are all correlations the same color?? Make sure that they are playing
 
 -16-3 still hsa agreen dot on her arm
 -do normal fading
--grave
-	DONE-make characetrs come in faster in grave,
-		-char/score/char/score
-	DONE-no evaluation sentences
-	-switch to smaller performance graphs
+
 
 
 -backspace breaking stuff in testing scene maybe??
 
 -put angels into grave
 -completely redo particle streams lul...
-	-check depth on particle stream
+	DONE-check depth on particle stream
 	-bubble green is wrong shade of green (I think you need to divide by 2)
 	-colored boxes around white
 		-is it okay if they are static?
@@ -107,6 +202,12 @@ DONE??-why are all correlations the same color?? Make sure that they are playing
 			-skip all does same as skip one
 			-skip one goes to next unlocked feature
 
+
+DONE-grave
+	DONE-make characetrs come in faster in grave,
+		-char/score/char/score
+	DONE-no evaluation sentences
+	DONE-switch to smaller performance graphs
 DONE-skipping
 	DONE-soft skipping at grave doesn't actually speed things up
 	DONE!!!-choice confirmation soft skip/hard skip doesn't actually speed things up
