@@ -106,7 +106,9 @@ public class ProjectionManager : FakeMonoBehaviour {
 
     public float get_waist(ZigInputJoint waist, ZigInputJoint L, ZigInputJoint R)
     {
+		
         if(false && !mManager.mZigManager.using_nite()) //TODO some problems with this lockngi... Should default to below if that happens
+		//if(!mManager.mZigManager.using_nite())
             return -waist.Rotation.flat_rotation() + 90;    
         else
             return get_relative(waist.Position, L.Position * 0.5f + R.Position * 0.5f);
@@ -166,7 +168,7 @@ public class ProjectionManager : FakeMonoBehaviour {
 			
             foreach (KeyValuePair<ZigJointId,Stupid> e in mImportant)
             {
-                if (e.Key != ZigJointId.None)
+                if (e.Key != ZigJointId.None && e.Key != ZigJointId.Waist)
                 {
                     ZigJointId parentJoint = BodyManager.get_parent(e.Key);
                     try
@@ -194,13 +196,14 @@ public class ProjectionManager : FakeMonoBehaviour {
 				
 				float waistAngle = get_waist(mManager.mZigManager.Joints[ZigJointId.Torso], mManager.mZigManager.Joints[ZigJointId.LeftKnee], mManager.mZigManager.Joints[ZigJointId.RightKnee]);
 				//waist smoothing angle hack
+				/*
 				if(!mManager.mZigManager.using_nite() && targetPose != null)
 				{
 					float interp = Mathf.Clamp01(
 						(ProGrading.grade_joint(currentPose,targetPose,ZigJointId.LeftHip) + 
 						ProGrading.grade_joint(currentPose,targetPose,ZigJointId.RightHip))/100f);
 					waistAngle = targetPose.find_element(ZigJointId.Waist).angle * (1-interp) + waistAngle * interp;
-				}
+				}*/
 				mWaist.change(waistAngle,mSmoothing);
 				
                 //mWaist.snap_change(get_waist(mManager.mZigManager.Joints[ZigJointId.Waist], mManager.mZigManager.Joints[ZigJointId.LeftKnee], mManager.mZigManager.Joints[ZigJointId.RightKnee]), mManager.mTransparentBodyManager.mTargetPose.find_element(ZigJointId.Waist).angle, mSmoothing);
