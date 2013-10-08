@@ -899,10 +899,10 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 		float gPreGlory = 0f;
 		float gGlory = 0f;
 		float gPostGlory = 0f;
-		float gPreScoreCount = 0.2f;
-		float gScoreCount = 1f;
+		float gPreScoreCount = 0.5f;
+		float gScoreCount = 0.7f;
 		float gPostScoreCount = 1f;
-		float gRestart = 15;
+		float gRestart = 45;
 		
 		//remove the grave
 		if(aStats.Last().Character.Age == 999)
@@ -1198,7 +1198,7 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 		FlatElementImage logo1 = null;
 		FlatElementImage logo2 = null;
 		List<FlatElementText> creditsText = new List<FlatElementText>();
-		float scrollSpeed = 200;
+		float scrollSpeed = 75;
 			
 		
 		
