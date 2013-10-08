@@ -58,8 +58,13 @@ public class ZigManager : FakeMonoBehaviour {
         
 	}
 	
+	
+	bool forceshow = false;
 	public override void Update () 
 	{
+		
+		if(Input.GetKeyDown(KeyCode.K))
+			forceshow = !forceshow;
 		
         if (mZigInput == null)
         {
@@ -68,7 +73,7 @@ public class ZigManager : FakeMonoBehaviour {
                 mZigInput = container.GetComponent<ZigInput>();
         }
 		
-		if(is_reader_connected() == 2 && !is_user_in_screen() )
+		if(forceshow || (is_reader_connected() == 2 && !is_user_in_screen()))
 		{
 			DepthView.show_indicator(true);
 			mManager.mTransitionCameraManager.EnableDepthWarning = true;
@@ -174,9 +179,10 @@ public class ZigManager : FakeMonoBehaviour {
 	{
 		
 		bool bad = false;
-
+		
+		
         if (LastTrackedUser != null)
-            if (LastTrackedUser.SkeletonTracked == false)
+            if (LastTrackedUser.SkeletonTracked == false || LastTrackedUser.PositionTracked == false)
                 bad = true;
 
 		foreach(var e in Joints)
