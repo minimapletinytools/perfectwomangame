@@ -152,7 +152,7 @@ public class MusicManager : FakeMonoBehaviour
 	
 	public void fade_in_extra_music(string aMusic)
 	{
-		mChoiceSource.clip = get_sound_clip("choiceMusic");
+		mChoiceSource.clip = get_sound_clip(aMusic);
 		mChoiceSource.volume = 0.01f;
 		mChoiceSource.loop = true;
 		mChoiceSource.Play();
