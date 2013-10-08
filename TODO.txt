@@ -75,10 +75,11 @@
 -restart the game if no one is playing after 30 seconds
 -too much time between premature death and choice
 -there is a bug in sctore counting
--delete pdtest
+
 -graph should be more visually apparent if performance was good or bad (just looks like a squiggly line...)
 	-I think more smoohtnig can help this out and better colors...
 		-maybe add some grading grace during pose changes
+DONE-delete pdtest
 
 ::TODO X:: in order of importance
 
