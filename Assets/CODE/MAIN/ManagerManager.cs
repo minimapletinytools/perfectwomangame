@@ -220,7 +220,7 @@ public class ManagerManager : MonoBehaviour{
         }*/
     }
 	
-	public string mDebugString = "WORK IN PROGRESS";
+	public string mDebugString = "";//"WORK IN PROGRESS";
 	void OnGUI()
     {
         GUI.depth = int.MinValue;
