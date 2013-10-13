@@ -1,3 +1,66 @@
+::NEW INTERFACE ****::
+
+::TODO XI::
+-delete PDCharacterStats
+	-delete other useless files..
+-see if you can do a loading screen...
+-do some testing on kinect overheating issue...
+-consider making harder/easier for first set of choices random
+	-lul, need to hardcode this...
+-fix the dot issue in performance graph
+	-does not seem to happen on OSX under editor... great.. could be ogl buggy artifact?
+-microsoft kinect GoodPosition does not work. Need better way to determine if player is out of frame
+	-in addition, do not contort the figure if something bad happens.
+		-:(((
+	DONE-pressing key should toggle between 3 states, no warning ever, only warning on bad kinect input, always show warning
+-restart the game if no one is playing after 30 seconds
+	-maybe black out the screne before you restart so people don't see the artifacts
+
+-particals
+-switch to 16x9
+-too much time between premature death and choice
+-there is a bug in sctore counting
+-graph should be more visually apparent if performance was good or bad (just looks like a squiggly line...)
+	-I think more smoohtnig can help this out and better colors...
+		-maybe add some grading grace during pose changes
+DONE-email david and talk to eddo about rights
+DONE-email sarita
+DONE-delete pdtest
+DONE-"poses" easier/harder is bad wording
+IGNORE-sometimes credits at end do not scroll
+	-???? uggg
+DONE-adjust performance graph colors...
+DONE-still says foetus
+
+
+
+::SAVING, SCORE, UNLOCKING, NETWORKING, ETC...::
+-saved data
+	-unlocked characters
+	-unlocked features
+	-unlockd achievements
+	-local high scores
+	-playthroughs
+	-playtime
+	-other...
+-networked 
+	-????
+	-share interface
+	-global high scores for challenge mode??
+-menu
+	-if first plathrough, start game automatically
+	-challenge mode
+	-start game
+	-delete saves
+	-high scores...
+	-network features...
+	-other stuff...
+-unlock structure
+	-when choosing, see which characters are unlocked and only allow choosing for those characters...
+	-choosing should support N characters evenly spaced out...
+		-or maybe it's better to retain spacing and do balkced out boxes for unavail characters.
+
+
 ::CONVERTING TO MONOGAME::
 -figure out if it's reasonable to expect monogame support on xbox one
 -redo input capturing functions
@@ -27,7 +90,7 @@
 -challenge mode 
 	-lets you choose characters/difficulties and perform for character specific high score!!!
 
-::NEW INTERFACE ****::
+
 
 ::INDIECADE FEEDBACK::
 -most people lose princess on first try
@@ -56,50 +119,7 @@
 -prayer xtreme is beatable on first try...
 
 
-::SAVING, SCORE, UNLOCKING, NETWORKING, ETC...::
--saved data
-	-unlocked characters
-	-unlocked features
-	-unlockd achievements
-	-local high scores
--networked 
-	-share interface
-	-global high scores for challenge mode??
-
--shared data
-
-::TODO XI::
--email david and talk to eddo about rights
--email sarita
--see if you can do a loading screen...
--do some testing on kinect overheating issue...
--consider making harder/easier for first set of choices random
-	-lul, need to hardcode this...
--fix the dot issue in performance graph
-	-does not seem to happen on OSX under editor... great.. could be ogl buggy artifact?
--microsoft kinect GoodPosition does not work. Need better way to determine if player is out of frame
-	-in addition, do not contort the figure if something bad happens.
-		-:(((
-	DONE-pressing key should toggle between 3 states, no warning ever, only warning on bad kinect input, always show warning
--restart the game if no one is playing after 30 seconds
-	-maybe black out the screne before you restart so people don't see the artifacts
-
--particals
--switch to 16x9
--too much time between premature death and choice
--there is a bug in sctore counting
--graph should be more visually apparent if performance was good or bad (just looks like a squiggly line...)
-	-I think more smoohtnig can help this out and better colors...
-		-maybe add some grading grace during pose changes
-DONE-delete pdtest
-DONE-"poses" easier/harder is bad wording
-IGNORE-sometimes credits at end do not scroll
-	-???? uggg
-DONE-adjust performance graph colors...
-DONE-still says foetus
-
 ::TODO X:: in order of importance
-
 DONE-make sure you turn flipping off in ggfiles lol
 DONE-turn pose warning back on
 DONE-turn off pose warning
