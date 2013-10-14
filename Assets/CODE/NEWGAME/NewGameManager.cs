@@ -15,41 +15,48 @@ public class NewGameManager : FakeMonoBehaviour
         : base(aManager) 
     {
     }
+	
 	public TimedEventDistributor TED { get; private set; }
 	
-	public int CurrentLevel
-    { get; private set; }
+	public CharacterHelper CharacterHelper
+    { get{return mManager.mCharacterBundleManager.get_character_helper();} }
 	
-	public CharacterLoader CurrentCharacterLoader
-	{ get; private set; }
+	
 	
 	public GameState GS
 	{ get; private set; }
-	
-	public float TotalScore{ 
-		get{
-			//TODO you can probably come up with something better that this can't you???
-			//TODO you could also keep track of the score separetly...
-			//W/E
-			return mPerformanceStats.Sum(delegate (PerformanceStats e) { return e.AdjustedScore; });
-		}
-	}
-	
+	public int CurrentLevel
+    { get; private set; }
+	public CharacterLoader CurrentCharacterLoader
+	{ get; private set; }
 	public PerformanceStats CurrentPerformanceStat
 	{ get { return mPerformanceStats[mPerformanceStats.Count-1]; } }
-	
 	public CharacterIndex CurrentCharacterIndex
 	{ get { return CurrentPerformanceStat.Character; } }
 	
-	//actual game data
-    public CharacterHelper CharacterHelper
-    {
-        get
-        {
-            return mManager.mCharacterBundleManager.get_character_helper();
-        }
-    }
+	public float TimeRemaining
+	{ get; private set; }
+	public float TimeTotal
+	{ get; private set; }
+	public float PercentTimeCompletion
+	{ get { return 1-TimeRemaining/TimeTotal; } }
+	
+	public float TotalScore
+	{ get{ return mPerformanceStats.Sum(delegate (PerformanceStats e) { return e.AdjustedScore; }); } }
+	
+	public Pose CurrentPose
+	{ get; set; }
+	public Pose CurrentTargetPose
+    { get; set; }
+	public PerformanceType CurrentPoseAnimation
+	{ get; set; }
+	
+	public float mLastGrade = 0.5f;
 	List<PerformanceStats> mPerformanceStats = new List<PerformanceStats>();
+	
+	ModeTesting mModeTesting;
+	ModeChallenge mModeChallenge;
+	ModeNormalPlay mModeNormalPlay;
 	
 	public void set_testing()
 	{
@@ -61,17 +68,11 @@ public class NewGameManager : FakeMonoBehaviour
 		CurrentCharacterLoader = null;
 		GS = GameState.NONE;
 		TED = new TimedEventDistributor();
-		
-		//TODO initialize game state
-			//start in on loading screen
-			//interfaceManager -> loading screen ...
-		
-		//TODO buffer grave
-		
-		//initialize game data
-		//initialize_fetus();
-		
 		mChoiceHelper = new ChoiceHelper();
+		
+		mModeTesting = new ModeTesting(this);
+		mModeChallenge = new ModeChallenge(this);
+		mModeNormalPlay = new ModeNormalPlay(this);
 	
 	}
 	
@@ -184,131 +185,12 @@ public class NewGameManager : FakeMonoBehaviour
 		else if(GS == GameState.CHOICE) 
 			update_CHOICE();
 		else if (GS == GameState.TEST)
-			update_TEST();
+			mModeChallenge.update();
         
 		TED.update(Time.deltaTime);
 	}
 	
-	public float TimeRemaining
-	{ get; private set; }
-	public float TimeTotal
-	{ get; private set; }
-	public float PercentTimeCompletion
-	{ get { return 1-TimeRemaining/TimeTotal; } }
-	
-	public Pose CurrentPose
-	{ get; private set; }
-	public Pose CurrentTargetPose
-    { get; private set; }
-	public PerformanceType CurrentPoseAnimation
-	{ get; private set; }
-	
-	public float mLastGrade = 0.5f;
-	
-	public int mLastDiff = 0;
-	public int mLastWrite = 0;
-	public int mLastCutscene = 0;
-	public int mLastPoseFolder = 0;
-	public PerformanceType.PType mLastPoseMode = PerformanceType.PType.SLOW;
-	public float mLastPoseSpeed = 5;
-	public void update_TEST()
-	{
-		//if we are annoyed by the pose..
-		if(Input.GetKeyDown(KeyCode.Alpha9))
-			CurrentPoseAnimation = null;
-		
-		if(CurrentPoseAnimation != null)
-		{
-			CurrentTargetPose = CurrentPoseAnimation.get_pose(Time.time);
-			mManager.mTransparentBodyManager.set_target_pose(CurrentTargetPose);
-			float grade = ProGrading.grade_pose(CurrentPose, CurrentTargetPose);
-			grade = ProGrading.grade_to_perfect(grade);
-			mManager.mCameraManager.set_camera_effects(grade);
-		}
-		
-		mManager.mBodyManager.keyboard_update();
-		
-		if(Input.GetKeyDown(KeyCode.Space))
-		{
-			string folderPrefix = "";
-			string output = "";
-			if(ManagerManager.Manager.mZigManager.is_reader_connected() != 2){
-				output = CurrentCharacterIndex.StringIdentifier + "_man_" + mLastWrite;
-				mManager.mBodyManager.write_pose(folderPrefix + output + ".txt",true);
-			} else {
-				output = CurrentCharacterIndex.StringIdentifier + "_kinect_" + mLastWrite;
-				mManager.mBodyManager.write_pose(folderPrefix + output + ".txt",false);
-			}
-			mManager.take_screenshot(folderPrefix + output+".png",mManager.mCameraManager.MainBodyCamera);
-			mLastWrite++;		
-		}
-		
-		
-		if(Input.GetKeyDown(KeyCode.Alpha5))
-		{
-			mManager.mBackgroundManager.load_cutscene(mLastCutscene,CurrentCharacterLoader);
-			ManagerManager.Manager.mDebugString = "loaded cutscene " + mLastCutscene;
-			mLastCutscene = (mLastCutscene+1) % 2;//5;
-			//mManager.mBackgroundManager.load_cutscene(4,DeathCharacter);
-		}
-		
-		if(Input.GetKeyDown(KeyCode.Alpha6))
-		{
-			string[] dirs = System.IO.Directory.GetDirectories("POSETEST");
-			CurrentPoseAnimation = new PerformanceType(PoseAnimation.load_from_folder(dirs[mLastPoseFolder% dirs.Length]),new CharacterIndex(2,0));
-			ManagerManager.Manager.mDebugString = "pose folder: " + dirs[mLastPoseFolder% dirs.Length];
-			mLastPoseFolder++;
-			
-			CurrentPoseAnimation.PT = mLastPoseMode;
-			CurrentPoseAnimation.ChangeTime = mLastPoseSpeed;
-		}
-		
-		if(Input.GetKeyDown(KeyCode.A))
-		{
-			mLastPoseMode = (PerformanceType.PType)(((int)mLastPoseMode + 1)%(int)PerformanceType.PType.COUNT);
-			ManagerManager.Manager.mDebugString = "pose mode is: " + mLastPoseMode.ToString();
-			CurrentPoseAnimation.PT = mLastPoseMode;
-		}
-		if(Input.GetKey(KeyCode.S))
-		{
-			mLastPoseSpeed = (mLastPoseSpeed + Time.deltaTime*2.5f)%10;
-			ManagerManager.Manager.mDebugString = "pose time is: " + mLastPoseSpeed;
-			CurrentPoseAnimation.ChangeTime = mLastPoseSpeed;
-		}
-		
-			
-		
-		if(Input.GetKeyDown(KeyCode.Alpha8))
-		{
-			ManagerManager.Manager.mDebugString = "set to diff " + ((++mLastDiff)%4);
-			CurrentPoseAnimation = new PerformanceType(mManager.mCharacterBundleManager.get_pose(CurrentCharacterIndex,mLastDiff%4), new CharacterIndex(2,0)); //forces it to be switch
-		}
-		
-		
-		
-		int choice = -1;
-		if(Input.GetKeyDown(KeyCode.Alpha1))
-		{
-			choice = 0;
-		}
-		else if(Input.GetKeyDown(KeyCode.Alpha2))
-		{
-			choice = 1;
-		}
-		else if(Input.GetKeyDown(KeyCode.Alpha3))
-		{
-			choice = 2;
-		}
-		bool shift = Input.GetKey(KeyCode.LeftShift);
-		
-		if(choice != -1)
-		{
-			if(shift)
-				mManager.mAssetLoader.new_load_character(CurrentPerformanceStat.Character.get_past_neighbor(choice).StringIdentifier,mManager.mCharacterBundleManager);
-			else
-				mManager.mAssetLoader.new_load_character(CurrentPerformanceStat.Character.get_future_neighbor(choice).StringIdentifier,mManager.mCharacterBundleManager);
-		}
-	}
+
 	
 	
 	public void update_PLAY()
