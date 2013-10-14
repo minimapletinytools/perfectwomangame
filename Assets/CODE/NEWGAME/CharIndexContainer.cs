@@ -3,13 +3,14 @@ using System.Collections.Generic;
 using System;
 using System.Linq;
 
+[Serializable()]
 public class CharIndexContainerInt
 {
 	public int[][] Contents 
 	{get; set;}
 	public CharIndexContainerInt()
 	{
-		int ageCount = 10;
+		int ageCount = GameConstants.numberAges;
 		Contents = new int[ageCount][];
 		for(int i = 0; i < ageCount; i++)
 		{
@@ -65,7 +66,7 @@ public class CharIndexContainerCharacterLoader
 	{get; set;}
 	public CharIndexContainerCharacterLoader()
 	{
-		int ageCount = 10;
+		int ageCount = GameConstants.numberAges;
 		Contents = new CharacterLoader[ageCount][];
 		for(int i = 0; i < ageCount; i++)
 		{
@@ -104,7 +105,7 @@ public class CharIndexContainerString
 	{get; set;}
 	public CharIndexContainerString()
 	{
-		int ageCount = 10;
+		int ageCount = GameConstants.numberAges;
 		Contents = new String[ageCount][];
 		for(int i = 0; i < ageCount; i++)
 		{
@@ -156,7 +157,7 @@ public class CharIndexContainerCharacterStats
 	{get; set;}
 	public CharIndexContainerCharacterStats()
 	{
-		int ageCount = 10;
+		int ageCount = GameConstants.numberAges;
 		Contents = new CharacterStats[ageCount][];
 		for(int i = 0; i < ageCount; i++)
 		{
@@ -205,7 +206,7 @@ public class CharIndexContainerCharacterIconObject
 	{get; set;}
 	public CharIndexContainerCharacterIconObject()
 	{
-		int ageCount = 10;
+		int ageCount = GameConstants.numberAges;
 		Contents = new CharacterIconObject[ageCount][];
 		for(int i = 0; i < ageCount; i++)
 		{
