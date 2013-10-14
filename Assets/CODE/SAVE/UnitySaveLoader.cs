@@ -47,4 +47,10 @@ public class UnitySaveLoader
         byte[] bytes = aImage.EncodeToPNG();
 		File.WriteAllBytes("Assets/Resources/"+aFilename,bytes);
 	}
+	
+	public void clean_image(string aFilename)
+	{
+		File.Delete("Assets/Resources/"+aFilename);
+	}
+		
 }

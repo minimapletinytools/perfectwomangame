@@ -37,7 +37,7 @@ DONE-still says foetus
 ::SAVING, SCORE, UNLOCKING, NETWORKING, ETC...::
 -saved data
 	-unlocked characters
-	-unlocked features
+	-unlocked features (skip, super skip, ???)
 	-unlockd achievements
 	-local high scores
 	-playthroughs
