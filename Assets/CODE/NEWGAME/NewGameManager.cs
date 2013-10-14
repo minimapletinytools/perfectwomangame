@@ -5,7 +5,7 @@ using System.Reflection;
 
 public enum GameState
 {
-	NONE,TEST, PREPLAY,PLAY,CUTSCENE,DEATH,CHOICE,TRANSITION,GRAVE
+	NONE,MENU,TEST,PREPLAY,PLAY,CUTSCENE,DEATH,CHOICE,TRANSITION,GRAVE
 }
 
 public class NewGameManager : FakeMonoBehaviour
@@ -314,7 +314,7 @@ public class NewGameManager : FakeMonoBehaviour
 	{
 		mManager.mInterfaceManager.set_bb_decider_pose(CurrentPose);
 		mChoiceHelper.CurrentPose = CurrentPose;
-		int choice = mChoiceHelper.update(mManager.mInterfaceManager);
+		int choice = mChoiceHelper.update(new SetPlayChoice(mManager.mInterfaceManager));
 		if(choice != -1)
 		{
 			mManager.mMusicManager.fade_out_extra_music();

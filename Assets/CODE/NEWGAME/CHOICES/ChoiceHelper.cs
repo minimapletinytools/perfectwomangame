@@ -43,7 +43,7 @@ public class ChoiceHelper
 	}
 	
 	//returns choice
-	public int update(NewInterfaceManager aInterface)
+	public int update(SetChoiceInterface aInterface)
 	{
 		int minIndex = 0;
         float minGrade = 99999;
@@ -98,7 +98,7 @@ public class ChoiceHelper
 			ManagerManager.Manager.mMusicManager.play_sound_effect("choiceBlip");
 		}
 		
-		aInterface.set_bb_choice(NextContendingChoice);
+		aInterface.set_choice(NextContendingChoice);
 		
         for (int i = 0; i < 4; i++)
         {
@@ -110,7 +110,7 @@ public class ChoiceHelper
             {
                 ChoosingPercentages[i] = Mathf.Clamp01(ChoosingPercentages[i] - CHOOSING_PERCENTAGE_DECLINE_RATE * Time.deltaTime);
             }
-			aInterface.set_bb_choice_percentages(i,ChoosingPercentages[i]);
+			aInterface.set_choice_percentages(i,ChoosingPercentages[i]);
             if (ChoosingPercentages[i] == 1)
             {
                 //choice is made!!!
