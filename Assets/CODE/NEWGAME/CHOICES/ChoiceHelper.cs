@@ -8,7 +8,7 @@ public class ChoiceHelper
     public const float CHOOSING_PERCENTAGE_DECLINE_RATE = 0.7f;
 	
 	
-    Pose[] mChoicePoses = new Pose[4] { null, null, null, null };
+    Pose[] mChoicePoses = null;
 	Pose[] mPossibleChoicePoses;
 	
 	float[] ChoosingPercentages
@@ -23,9 +23,9 @@ public class ChoiceHelper
 	public ChoiceHelper()
 	{
 		load_choice_poses();
-		ChoosingPercentages = new float[4]{0,0,0,0};
 	}
 	
+	//
 	public void load_choice_poses()
 	{
 		mPossibleChoicePoses = new Pose[ManagerManager.Manager.mReferences.mPossiblePoses.Length];
@@ -33,11 +33,11 @@ public class ChoiceHelper
         { mPossibleChoicePoses[i] = ProGrading.read_pose(ManagerManager.Manager.mReferences.mPossiblePoses[i]); }
 	}
 	
-	public void shuffle_and_set_choice_poses(NewInterfaceManager aInterface)
+	public void shuffle_and_set_choice_poses(int aCount, NewInterfaceManager aInterface)
 	{
 		//reset the choosing percentages from last round
-		ChoosingPercentages = new float[4]{0,0,0,0};
-		mChoicePoses = get_random_possible_poses();
+		mChoicePoses = get_random_possible_poses(aCount);
+		ChoosingPercentages = new float[aCount];
 		aInterface.set_bb_choice_poses(mChoicePoses.ToList());
 		
 	}
@@ -45,9 +45,12 @@ public class ChoiceHelper
 	//returns choice
 	public int update(SetChoiceInterface aInterface)
 	{
+		if(mChoicePoses == null || mChoicePoses.Length == 0)
+			throw new UnityException("problem with choice poses");
+		
 		int minIndex = 0;
         float minGrade = 99999;
-        for (int i = 0; i < 3; i++) //TODO need sto be 4 eventually....
+        for (int i = 0; i < mChoicePoses.Length; i++) //TODO need sto be 4 eventually....
         {
             if (mChoicePoses[i] != null)
             {
@@ -100,7 +103,7 @@ public class ChoiceHelper
 		
 		aInterface.set_choice(NextContendingChoice);
 		
-        for (int i = 0; i < 4; i++)
+        for (int i = 0; i < mChoicePoses.Length; i++)
         {
             if (NextContendingChoice == i)
             {
@@ -136,11 +139,11 @@ public class ChoiceHelper
             array[i - 1] = tmp;
         }
     }
-    Pose[] get_random_possible_poses()
+    Pose[] get_random_possible_poses(int number)
     {
-        Pose[] r = new Pose[4];
+        Pose[] r = new Pose[number];
         Shuffle<Pose>(mPossibleChoicePoses);
-        for (int i = 0; i < 4; i++)
+        for (int i = 0; i < number; i++)
             r[i] = mPossibleChoicePoses[i];
         return r;
     }

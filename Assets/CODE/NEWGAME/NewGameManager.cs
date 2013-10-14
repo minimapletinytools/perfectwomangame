@@ -529,7 +529,7 @@ public class NewGameManager : FakeMonoBehaviour
 	{
         //TODO update difficulties in NIM charactericons here in case the user skipped the cutscenes and the diffs did not get updated
 		GS = GameState.CHOICE;
-		mChoiceHelper.shuffle_and_set_choice_poses(mManager.mInterfaceManager);
+		mChoiceHelper.shuffle_and_set_choice_poses(3,mManager.mInterfaceManager); //TODO evnetually 4 or more..
 		//TODO these bottom two functions should be absoredb by ChoiceHelper
 		//lol this is a dumb hack to not choose the missing character
 		var chars = new CharacterIndex(CurrentPerformanceStat.Character.LevelIndex+1,3).Neighbors;
