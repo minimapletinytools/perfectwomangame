@@ -336,49 +336,6 @@ public class NewGameManager : FakeMonoBehaviour
 		
 	}
 	
-	//pass in CurrentPerformanceStat.CutsceneChangeSet;
-	public void load_CUTSCENE(NUPD.ChangeSet changes)
-	{
-		int changeIndex = -1;
-		
-        if(changes == null)
-        {
-            Debug.Log("could not find change in thershold with performance: " + CurrentPerformanceStat);
-            changes = new NUPD.ChangeSet();
-            changes.Changes.Add(new NUPD.ChangeSubSet() { Description = "No changes available!!" });
-        } else changeIndex = changes.Index;
-		
-		//audio
-		//TODO change index is no longe relevant
-		if(changeIndex != -1)
-		{
-			//if(CurrentCharacterLoader.Images.cutsceneMusic.Count > changeIndex)
-			if(CurrentCharacterLoader.Images.cutsceneMusic.Count > 1)
-			{
-				//mManager.mMusicManager.fade_in_cutscene_music(CurrentCharacterLoader.Images.cutsceneMusic[changeIndex]);
-				//mManager.mMusicManager.play_cutscene_music(CurrentCharacterLoader.Images.cutsceneMusic[changeIndex]);
-				mManager.mMusicManager.play_sound_effect(changes.UpperThreshold <= 0.5 ? "cutBad" : "cutGood");
-				mManager.mMusicManager.play_cutscene_music(CurrentCharacterLoader.Images.cutsceneMusic[changes.UpperThreshold <= 0.5 ? 0 : 1]);
-				//mManager.mMusicManager.fade_in_cutscene_music(CurrentCharacterLoader.Images.cutsceneMusic[changes.UpperThreshold <= 0.5 ? 0 : 1]);
-			}
-			else 
-			{
-				//Debug.Log("ERROR no music found for change index " + changeIndex + " only " + CurrentCharacterLoader.Images.cutsceneMusic.Count + " sounds");
-				Debug.Log ("No cutscene music for " + CurrentCharacterIndex.StringIdentifier);
-			}
-		}
-		
-		
-		//visuals
-		mManager.mBodyManager.transition_character_out();
-		mManager.mTransparentBodyManager.transition_character_out();
-
-		if(CurrentPerformanceStat.Score < 0.5f && CurrentCharacterLoader.has_cutscene(1))
-			mManager.mBackgroundManager.load_cutscene(1,CurrentCharacterLoader);
-		else
-			mManager.mBackgroundManager.load_cutscene(0,CurrentCharacterLoader);
-	}
-	
 	public void CUTSCENE_finished(NUPD.ChangeSet changes = null)
 	{
 		float gAgeDisplayDur = 4f;
@@ -540,6 +497,7 @@ public class NewGameManager : FakeMonoBehaviour
 		mManager.mInterfaceManager.set_for_CHOICE();	
 	}
 	
+	//this is used by playq
 	//make sure the next character is set before callincg this
 	public void setup_next_poses(bool setNull = false)
 	{
@@ -616,7 +574,53 @@ public class NewGameManager : FakeMonoBehaviour
 			}
 		);
 	}
+	
+	
+	
+	//this function updates music and background and removes characters
+	//pass in CurrentPerformanceStat.CutsceneChangeSet;
+	public void load_CUTSCENE(NUPD.ChangeSet changes)
+	{
+		int changeIndex = -1;
+		
+        if(changes == null)
+        {
+            Debug.Log("could not find change in thershold with performance: " + CurrentPerformanceStat);
+            changes = new NUPD.ChangeSet();
+            changes.Changes.Add(new NUPD.ChangeSubSet() { Description = "No changes available!!" });
+        } else changeIndex = changes.Index;
+		
+		//audio
+		//TODO change index is no longe relevant
+		if(changeIndex != -1)
+		{
+			//if(CurrentCharacterLoader.Images.cutsceneMusic.Count > changeIndex)
+			if(CurrentCharacterLoader.Images.cutsceneMusic.Count > 1)
+			{
+				//mManager.mMusicManager.fade_in_cutscene_music(CurrentCharacterLoader.Images.cutsceneMusic[changeIndex]);
+				//mManager.mMusicManager.play_cutscene_music(CurrentCharacterLoader.Images.cutsceneMusic[changeIndex]);
+				mManager.mMusicManager.play_sound_effect(changes.UpperThreshold <= 0.5 ? "cutBad" : "cutGood");
+				mManager.mMusicManager.play_cutscene_music(CurrentCharacterLoader.Images.cutsceneMusic[changes.UpperThreshold <= 0.5 ? 0 : 1]);
+				//mManager.mMusicManager.fade_in_cutscene_music(CurrentCharacterLoader.Images.cutsceneMusic[changes.UpperThreshold <= 0.5 ? 0 : 1]);
+			}
+			else 
+			{
+				//Debug.Log("ERROR no music found for change index " + changeIndex + " only " + CurrentCharacterLoader.Images.cutsceneMusic.Count + " sounds");
+				Debug.Log ("No cutscene music for " + CurrentCharacterIndex.StringIdentifier);
+			}
+		}
+		
+		//visuals
+		mManager.mBodyManager.transition_character_out();
+		mManager.mTransparentBodyManager.transition_character_out();
 
+		if(CurrentPerformanceStat.Score < 0.5f && CurrentCharacterLoader.has_cutscene(1))
+			mManager.mBackgroundManager.load_cutscene(1,CurrentCharacterLoader);
+		else
+			mManager.mBackgroundManager.load_cutscene(0,CurrentCharacterLoader);
+	}
+	
+	
     public int get_character_difficulty(CharacterIndex aChar)
     {
         return CharacterHelper.Characters[aChar].Difficulty;
