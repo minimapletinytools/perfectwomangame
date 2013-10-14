@@ -629,6 +629,7 @@ public class NewGameManager : FakeMonoBehaviour
 		return CharacterHelper.Characters[aChar].Difficulty;
 	}
 	
+	//TODO DELETE
 	public void change_interface_pose(CharacterIndex aChar,  int aDiff)
 	{
 		List<KeyValuePair<CharacterIndex,Pose>> poses = new List<KeyValuePair<CharacterIndex, Pose>>();

@@ -449,10 +449,10 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 		position_pb_character_icons(0);
 	}
 	
+	//TODO DELETE
 	//OLD no longer need to set icon poses
 	public void set_pb_character_icon_poses(List<KeyValuePair<CharacterIndex,Pose>> aChars)
 	{
-		
 		foreach(var e in aChars)
 		{
 			//mPBCharacterIcons[e.Key.Index].mBody.set_target_pose(e.Value);
@@ -799,7 +799,7 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 							if(diffChanges[cchar] != 0){
 								add_cutscene_particle_stream(cchar,po,gParticle,changes.is_positive());
 								int nDiff = Mathf.Clamp(mManager.mGameManager.get_character_difficulty(cchar) + diffChanges[cchar], 0, 3);
-								mManager.mGameManager.change_interface_pose(cchar,nDiff);
+								//TODO DELETE mManager.mGameManager.change_interface_pose(cchar,nDiff);
 	                        	mPBCharacterIcons[cchar].set_difficulty(nDiff);
 							}
 						}
