@@ -29,12 +29,12 @@ public static class GameConstants
 	//public static string[] credits = {"Perfect Woman","created by", "Lea Sch\u00F6enfelder", "Peter Lu"};
     public static string[] credits = { 
 		"Thanks:", "David Elliott","Sabrina Winter", "Eddo Stern", 
-		"Ingo Von Staden", "Andreas Hykade", "Alex Rickett"," ",
+		"Ingo Von Staden", "Andreas Hykade", "Alex Rickett","Steven Amrhein", " ",
 		
 		"Musicians:", "Dirk Handreke", "Frank Simper", "Ingo Feuker", "David Hill", 
-		"Lukas Nowok", "Luigi Maria Rapisarda", "Jonas Schwall", "Steffen Thumm"," ",
+		"Lukas Nowok", "Luigi Maria Rapisarda", "Jonas Schwall", "Steffen Thumm","Aliah Darke", " ",
 		
-		"Lea Schoenfelder","Peter Lu", "Benedkits Haas"
+		"Lea Schoenfelder","Peter Lu", "Benedikts Haas"
 	};
 	
 	

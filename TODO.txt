@@ -1,6 +1,54 @@
+Required hardware: 
+Kinect
+at least 10 feet of space
+Big screen (TV or projector) so you can read smaller text when standing 10 feet away from screen
+
+Play game:
+Install Zigfu plugin: zigfu.com
+Plug in Kinect
+Open Perfect PERFECTWOMAN_IGF_MAC_10-15
+
+
+Required hardware: 
+Kinect
+at least 10 feet of space
+Big screen (TV or projector) so you can read smaller text when standing 10 feet away from screen
+
+Play game:
+Install Zigfu plugin: zigfu.com
+If using Kinect for Windows (as oppose to the xbox 360 one) please install Kinect for Windows runtime drivers: http://www.microsoft.com/en-us/download/details.aspx?id=36997
+Plug in Kinect
+Open PERFECTWOMAN_IGF_WIN_10-15 > PW.exe
+
+
+::PWGAME DSECRIPTION::
+Perfect Woman is game inspired by the ubiquitous personality questionnaires featured in women’s magazines and the female roles they define. There are so many such roles emphasizing aspects of family, career, experience, sex and more. But these can not possibly characterize the depth and complexity of a woman's life. Perfect Woman uses these stereotypes as building blocks for you to be your OWN perfect woman.
+
+The game is structured into progressive levels, each one representing a different stage in a woman's life. Starting at the child stage, players must post in front of a Kinect to mimic various poses that appear on screen. The better a player is able to hold the pose, the more "perfect" their rating for that level.
+
+Perfect Woman features a branching decision tree which serves to create a narrative of the character's life. Past choices may make future choices more difficult. It's not always possible to be perfect at every stage in life, and that's perfectly fine.
+
 ::NEW INTERFACE ****::
 
 ::TODO XI::
+-upload new builds
+-talk to steven about video..
+-website
+	-new backgrounds
+	-or ask steven how to modify stuff ourselves
+		-add indiecade to articles
+		-add new exhibitions and articles
+		-add steven to credits
+		-add game lab and film akademie to credits
+		-schonfelder with umlauts
+		-Teut Weidemann, Marc Lutz, Annika Bauer, Marius Winter to credits
+	-update description
+	-fix benedikts name credits
+	-change the little icon to the one lea
+	
+-get rid of pink bar or cover it...
+	-make sure you turn off paricle effects
+-does music freeze during transition????
 -delete PDCharacterStats
 	-delete other useless files..
 -see if you can do a loading screen...
