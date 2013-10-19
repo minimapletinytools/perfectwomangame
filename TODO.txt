@@ -31,13 +31,18 @@ Perfect Woman features a branching decision tree which serves to create a narrat
 ::NEW INTERFACE ****::
 
 ::TODO XI::
--upload new builds
--talk to steven about video..
+-email sarita
+-remind lea to d ostoryboards for video for steven
+DONE-upload new builds
+DONE-talk to steven about video..
 -website
 	-new backgrounds
 	-or ask steven how to modify stuff ourselves
-		-add indiecade to articles
-		-add new exhibitions and articles
+		-new shows
+			-add indiecade to articles
+			-REPUBLICA, RIJEKA/CROATIA: http://republika.io/en/home
+			-WHAT'S YOUR SPIEL?, NEW YORK: http://deutscheshaus.as.nyu.edu/object/dh.event.WhatsYourSpiel091713
+			-SPIELSALON, KASSEL/GERMANY: http://spielsalonkassel.com
 		-add steven to credits
 		-add game lab and film akademie to credits
 		-schonfelder with umlauts
@@ -46,8 +51,10 @@ Perfect Woman features a branching decision tree which serves to create a narrat
 	-fix benedikts name credits
 	-change the little icon to the one lea
 	
+
 -get rid of pink bar or cover it...
 	-make sure you turn off paricle effects
+-green word bubble problem...
 -does music freeze during transition????
 -delete PDCharacterStats
 	-delete other useless files..
