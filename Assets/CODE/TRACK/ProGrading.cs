@@ -41,6 +41,28 @@ public class ProGrading {
 		return diff;
 	}
 	
+	public Dictionary<ZigJointId,float> advanced_grade_pose(Pose A, Pose B)
+	{
+		Dictionary<ZigJointId,float> r = new Dictionary<ZigJointId, float>();
+		
+		float weightsum = 0;
+        float gradesum = 0;
+        string output = "";
+		foreach (PoseElement e in A.mElements)
+            weightsum += B.find_element(e.joint).weight;
+        foreach (PoseElement e in A.mElements)
+        {
+            PoseElement bPose = B.find_element(e.joint);
+            float target = bPose.angle;
+            float actual = e.angle;
+            float diff = target - actual;
+            while (diff > 180) diff -= 360;
+            while(diff < -180) diff += 360;
+            r[e.joint] = diff * diff * bPose.weight; ///weightSum;
+        }
+        return r;
+	}
+	
     public static float grade_pose(Pose A, Pose B) //weight is taken from Pose B, B is traget
     {
         float weightsum = 0;
