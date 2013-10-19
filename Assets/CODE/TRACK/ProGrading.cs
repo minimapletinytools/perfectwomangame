@@ -41,7 +41,7 @@ public class ProGrading {
 		return diff;
 	}
 	
-	public Dictionary<ZigJointId,float> advanced_grade_pose(Pose A, Pose B)
+	public static Dictionary<ZigJointId,float> advanced_grade_pose(Pose A, Pose B)
 	{
 		Dictionary<ZigJointId,float> r = new Dictionary<ZigJointId, float>();
 		

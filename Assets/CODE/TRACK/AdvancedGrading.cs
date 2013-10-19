@@ -21,7 +21,7 @@ public class AdvancedGrading
 		//TODO make global??
 		float lambda = 0.9f;
 		//TODO
-		var newScore = ProGrading.advanced_grade_pose(CurrentPose, CurrentTargetPose);
+		Dictionary<ZigJointId,float> newScore = null;//ProGrading.advanced_grade_pose(CurrentPose, CurrentTargetPose);
 		mCurrentScore = new Dictionary<ZigJointId, float>(newScore);
 		foreach(KeyValuePair<ZigJointId,float> e in newScore)
 		{
