@@ -8,6 +8,7 @@ public class BodyManager : FakeMonoBehaviour {
     public int mMode = 0; // 0 - from kinect, 1 - from pose, -1 none
     int mLayer = 0;
     Vector3 mOffset;
+	
     public void set_target_pose(Pose aPose, bool hard = false)
     {
         mFlat.set_target_pose(aPose, hard);
@@ -131,6 +132,20 @@ public class BodyManager : FakeMonoBehaviour {
             }
         }
     }
+	
+	
+	ParticleSystem mParticles;
+	public void create_particle_system()
+	{
+		mParticles = (new GameObject("genParticles")).AddComponent<ParticleSystem>();
+		//mParticles.
+	}
+	
+	//rating between [0,1]
+	public void particle_explosion(float rating)
+	{
+		
+	}
 
     public override void Update()
     {
