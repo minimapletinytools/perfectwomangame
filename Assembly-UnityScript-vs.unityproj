@@ -5,11 +5,11 @@
 	<Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
 	<ProductVersion>10.0.20506</ProductVersion>
 	<SchemaVersion>2.0</SchemaVersion>
-	<ProjectGuid>{9BFCE54C-7466-1F92-4101-FD349B429C6F}</ProjectGuid>
+	<ProjectGuid>{A042A54D-D468-3E9E-1483-DBB129B9B910}</ProjectGuid>
 	<OutputType>Library</OutputType>
 	<AppDesignerFolder>Properties</AppDesignerFolder>
 	<RootNamespace></RootNamespace>
-	<AssemblyName>Assembly-UnityScript-Editor-firstpass</AssemblyName>
+	<AssemblyName>Assembly-UnityScript</AssemblyName>
 	<TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
 	<FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -44,14 +44,7 @@
 	</Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\Standard Assets\Editor\Image Effects\AntialiasingAsPostEffectEditor.js" />
-     <Compile Include="Assets\Standard Assets\Editor\Image Effects\BloomAndLensFlaresEditor.js" />
-     <Compile Include="Assets\Standard Assets\Editor\Image Effects\ColorCorrectionCurvesEditor.js" />
-     <Compile Include="Assets\Standard Assets\Editor\Image Effects\DepthOfField34Editor.js" />
-     <Compile Include="Assets\Standard Assets\Editor\Image Effects\EdgeDetectEffectNormalsEditor.js" />
-     <Compile Include="Assets\Standard Assets\Editor\Image Effects\SunShaftsEditor.js" />
-     <Compile Include="Assets\Standard Assets\Editor\Image Effects\TiltShiftEditor.js" />
-     <Compile Include="Assets\Standard Assets\Editor\Image Effects\TonemappingEditor.js" />
+     <Compile Include="Assets\Small particle pack\TimedObjectDestructor.js" />
      <None Include="Assets\Standard Assets\Image Effects (Pro Only)\_Sources\Shaders\_BloomAndFlares\BlendOneOne.shader" />
      <None Include="Assets\Standard Assets\Image Effects (Pro Only)\_Sources\Shaders\NoiseEffectShaderRGB.shader" />
      <None Include="Assets\Standard Assets\Image Effects (Pro Only)\_Sources\Shaders\_DepthOfField\SeparableWeightedBlurDof34.shader" />
@@ -163,9 +156,6 @@
  </Reference>
  <Reference Include="Assets\ZigFu\Scripts\_Internal\ZDK">
  <HintPath>Assets\ZigFu\Scripts\_Internal\ZDK.dll</HintPath>
- </Reference>
- <Reference Include="\Applications\Unity\Unity.app\Contents\Frameworks\Managed\UnityEditor.Graphs">
- <HintPath>\Applications\Unity\Unity.app\Contents\Frameworks\Managed\UnityEditor.Graphs.dll</HintPath>
  </Reference>
   </ItemGroup>
   <ItemGroup>

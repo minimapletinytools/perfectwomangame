@@ -32,26 +32,29 @@ Perfect Woman features a branching decision tree which serves to create a narrat
 
 ::TODO XI::
 -email sarita
--remind lea to d ostoryboards for video for steven
-DONE-upload new builds
-DONE-talk to steven about video..
+DONE-remind lea to d ostoryboards for video for steven
+-particals
 -website
-	-new backgrounds
+	DONE-new backgrounds
+	DONE-fix benedikts name credits
+	-add game lab and film akademie to credits
 	-or ask steven how to modify stuff ourselves
-		-new shows
+		DONE-new shows
 			-add indiecade to articles
 			-REPUBLICA, RIJEKA/CROATIA: http://republika.io/en/home
 			-WHAT'S YOUR SPIEL?, NEW YORK: http://deutscheshaus.as.nyu.edu/object/dh.event.WhatsYourSpiel091713
 			-SPIELSALON, KASSEL/GERMANY: http://spielsalonkassel.com
-		-add steven to credits
-		-add game lab and film akademie to credits
-		-schonfelder with umlauts
-		-Teut Weidemann, Marc Lutz, Annika Bauer, Marius Winter to credits
-	-update description
-	-fix benedikts name credits
-	-change the little icon to the one lea
+		DONE-add steven to credits
+		DONE-schonfelder with umlauts
+		DONE-Teut Weidemann, Marc Lutz, Annika Bauer, Marius Winter to credits
+	DONE-update description
+	DONE-change the little icon to the one lea
 	
 
+
+-buy the following particle effects
+	-https://www.assetstore.unity3d.com/#/content/4150
+	-https://www.assetstore.unity3d.com/#/content/7710
 -get rid of pink bar or cover it...
 	-make sure you turn off paricle effects
 -green word bubble problem...
@@ -71,13 +74,16 @@ DONE-talk to steven about video..
 -restart the game if no one is playing after 30 seconds
 	-maybe black out the screne before you restart so people don't see the artifacts
 
--particals
+
 -switch to 16x9
 -too much time between premature death and choice
 -there is a bug in sctore counting
 -graph should be more visually apparent if performance was good or bad (just looks like a squiggly line...)
 	-I think more smoohtnig can help this out and better colors...
 		-maybe add some grading grace during pose changes
+
+DONE-upload new builds
+DONE-talk to steven about video..	
 DONE-email david and talk to eddo about rights
 DONE-email sarita
 DONE-delete pdtest
