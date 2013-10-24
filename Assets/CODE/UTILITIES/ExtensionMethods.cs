@@ -2,6 +2,8 @@ using UnityEngine;
 using System.Collections.Generic;
 
 public static class ExtensionMethods  {
+	
+	//Vector stuff
 	public static Vector3 component_multiply(this Vector3 aVec, Vector3 scaleVec)
     {
         return new Vector3(aVec.x*scaleVec.x,aVec.y*scaleVec.y,aVec.z*scaleVec.z);
@@ -15,6 +17,11 @@ public static class ExtensionMethods  {
 		if(aTrans.parent == null)
 			return aTrans.localScale;
 		return aTrans.localScale.component_multiply(global_scale(aTrans.parent));
+	}
+	
+	public static Vector2 project_to_vector2(this Vector3 aVec)
+	{
+		return new Vector2(aVec.x,aVec.y);
 	}
 
 	
