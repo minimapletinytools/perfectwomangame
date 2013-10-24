@@ -18,6 +18,7 @@ public class CachedFlatParticles
 		if(has_particle())
 		{
 			r = mParticles[mParticles.Count - 1];
+			r.Enabled = true;
 			mParticles.RemoveAt(mParticles.Count - 1);
 		}
 		return r;
@@ -25,6 +26,7 @@ public class CachedFlatParticles
 	
 	public void return_particle(FlatElementBase aParticle)
 	{
+		aParticle.Enabled = false;
 		mParticles.Add(aParticle);
 	}
 }
@@ -51,6 +53,9 @@ public class SparkleStarFlashParticle
 		}
 	}
 	
+	public void create_cached_particles()
+	{
+	}
 	
 	
 	public void emit_rectangle(float grade, Rect position)
@@ -75,17 +80,16 @@ public class SparkleStarFlashParticle
 				f.gameObject.layer = ManagerManager.Manager.mBackgroundManager.mBackgroundLayer;
 			cache.return_particle(newPart);
 		}
-		mEmitter.add_particle(cache.take_particle(),position,Random.insideUnitCircle*500,1);
+		mEmitter.add_particle(cache.take_particle(),position,Random.insideUnitCircle*500,1,"gold");
 	}
 	
 	public void update(float aDelta)
 	{
-		foreach(FlatElementBase e in mEmitter.update(aDelta))
+		foreach(var e in mEmitter.update(aDelta))
 		{
-			e.destroy();
+			//e.destroy();
 			//TODO need to identify the type name and put them in the right place
-			//e.Enabled = false;
-			//mCachedParticles.Add(e.
+			mCachedParticles[e.id].return_particle(e.element);
 		}
 	}
 	
@@ -131,8 +135,9 @@ public class SparkleStarFlashParticle
 //this doesn't actually use anything from flat other than position...
 public class FlatParticleEmitter : FlatElementBase
 {
-	class FlatSubParticle
+	public class FlatSubParticle
 	{
+		public string id;
 		public Vector3 pos;
 		public Vector3 vel;
 		public QuTimer timer;
@@ -150,28 +155,27 @@ public class FlatParticleEmitter : FlatElementBase
 	public void initialize_defaults()
 	{
 		Gravity = new Vector3(0,0,0);
-		
 		UseColor = true;
 		StartColor = new Color(1,1,1,1);
 		EndColor = new Color(1,1,1,1);
 	}
 	
-	public void add_texture_particle(Texture2D aImage, Vector2 aSize, Vector3 aPos, Vector3 aVel, float aLifetime)
+	public void add_texture_particle(Texture2D aImage, Vector2 aSize, Vector3 aPos, Vector3 aVel, float aLifetime,string aId)
 	{
 		FlatElementImage image = new FlatElementImage(aImage,aSize,0); //TODO depth
-		add_particle(image,aPos,aVel,aLifetime);
+		add_particle(image,aPos,aVel,aLifetime,aId);
 	}
 	
-	public void add_particle(FlatElementBase aParticle, Vector3 aPos, Vector3 aVel, float aLifetime)
+	public void add_particle(FlatElementBase aParticle, Vector3 aPos, Vector3 aVel, float aLifetime, string aId)
 	{
 		FlatSubParticle addMe = new FlatSubParticle();
+		addMe.id = aId;
 		addMe.pos = aPos;
 		addMe.vel = aVel;
 		addMe.element = aParticle;
 		addMe.timer = new QuTimer(0,aLifetime);
 		mParticles.AddLast(addMe);
 	}
-	
 	
 	Vector3 Gravity {get; set;}
 	
@@ -180,12 +184,12 @@ public class FlatParticleEmitter : FlatElementBase
 	public Color EndColor {get; set;}
 	
 	
-	public List<FlatElementBase> update(float aDelta)
+	public List<FlatSubParticle> update(float aDelta)
 	{
 		//TODO color and other stuff... 
 		//TODO gravity
 		
-		List<FlatElementBase> removed = new List<FlatElementBase>();
+		List<FlatSubParticle> removed = new List<FlatSubParticle>();
 		LinkedListNode<FlatSubParticle> starting = mParticles.First;
 		while(starting != null)
 		{
@@ -198,7 +202,7 @@ public class FlatParticleEmitter : FlatElementBase
 			if(e.timer.isExpired())
 			{
 				mParticles.Remove(operating);
-				removed.Add(operating.Value.element);
+				removed.Add(operating.Value);
 			}
 			
 			//update the element
