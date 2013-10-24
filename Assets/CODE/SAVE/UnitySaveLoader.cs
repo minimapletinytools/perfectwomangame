@@ -8,17 +8,18 @@ public class UnitySaveLoader
 	
 	
 	//do we want to use a serialized struct instead???
-	public void read_text_saves()
+	public string read_text_saves()
 	{
 		
+		string words = "";
 		if(File.Exists("save.txt"))
 		{
 			using(StreamReader reader = new StreamReader("save.txt"))
 			{
-				string words = reader.ReadToEnd();
+				words = reader.ReadToEnd();
 			}
 		}
-		
+		return words;
 	}
 	
 	public void write_text_save(string aText)
