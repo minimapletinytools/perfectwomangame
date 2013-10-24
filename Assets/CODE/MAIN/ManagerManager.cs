@@ -37,7 +37,6 @@ public class ManagerManager : MonoBehaviour{
     public BodyManager mTransparentBodyManager;
     public BackgroundManager mBackgroundManager;
     public CameraManager mCameraManager;
-    public ParticleManager mParticleManager;
     public AssetBundleLoader mAssetLoader;
     public NewGameManager mGameManager;
 	public TransitionCameraManager mTransitionCameraManager;
@@ -71,7 +70,6 @@ public class ManagerManager : MonoBehaviour{
 		mTransparentBodyManager.mMode = 1; //nasty
         mBackgroundManager = new BackgroundManager(this);
         mCameraManager = new CameraManager(this);
-        mParticleManager = new ParticleManager(this);
         mAssetLoader = new AssetBundleLoader(this);
         mGameManager = new NewGameManager(this);
 		mTransitionCameraManager = new TransitionCameraManager(this);
@@ -151,7 +149,6 @@ public class ManagerManager : MonoBehaviour{
         mTransparentBodyManager = null;
         mBackgroundManager = null;
         mCameraManager = null;
-        mParticleManager = null;
         mAssetLoader = null;
         mGameManager = null;
 		mTransitionCameraManager = null;
