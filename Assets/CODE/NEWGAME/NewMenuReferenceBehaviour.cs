@@ -14,10 +14,15 @@ public class NewMenuReferenceBehaviour : MonoBehaviour {
 	public Texture2D filmAkademieLogo;
 	public Texture2D depthBorder;
 	
-	
 	//ui
 	public Texture2D uiPerfectStar;
 	public GameObject uiParticlePrefab;
+	
+	//partices
+	public Texture2D partGold;
+	public Texture2D partSilver;
+	public Texture2D partGlow;
+	public Texture2D partRed;
 	
 	//blue bar
 	public Texture2D bbBackground;

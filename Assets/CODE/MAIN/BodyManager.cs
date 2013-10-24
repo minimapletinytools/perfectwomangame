@@ -121,7 +121,7 @@ public class BodyManager : FakeMonoBehaviour {
                 pe.joint = e.Key;
                 pe.angle = e.Value.transform.rotation.eulerAngles.z;
                 p.mElements.Add(pe);
-            }
+            }	
             ProGrading.write_pose_to_file(p, aFilename);
         }
         else

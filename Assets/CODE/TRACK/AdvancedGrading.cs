@@ -5,9 +5,7 @@ using System.Linq;
 //this class contains info on per-joint grade
 public class AdvancedGrading
 {
-	float mLastWeightSum = 1;
 	Dictionary<ZigJointId,float> mLastScore = null;
-	float mCurrentWeightSum = 1;
 	Dictionary<ZigJointId,float> mCurrentScore = null;
 	
 	public AdvancedGrading()
@@ -30,11 +28,22 @@ public class AdvancedGrading
 		mLastScore = newScore;
 	}
 	
+	public float joint_aggregate_score(ZigJointId[] aJoints)
+	{
+		float r = 0;
+		foreach(ZigJointId e in aJoints)
+		{
+			r += mCurrentScore[e];	
+		}
+		return r*mCurrentScore.Count/aJoints.Length;
+	}
+	
 	public float CurrentScore
 	{
 		get{
 			return mCurrentScore.Aggregate((e,f) => new KeyValuePair<ZigJointId,float>(e.Key,e.Value + f.Value)).Value;
 		}
 	}
+	
 		
 }

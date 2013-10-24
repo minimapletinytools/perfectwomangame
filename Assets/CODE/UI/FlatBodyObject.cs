@@ -52,6 +52,21 @@ public class FlatBodyObject : FlatElementBase
             Depth = aDepth;
     }
 	
+	public Vector3 get_body_part_position(ZigJointId aJoint)
+	{
+		return mParts[aJoint].transform.position;
+	}
+	
+	public Bounds get_body_bounds()
+	{
+		Bounds r = mParts[ZigJointId.Torso].transform.position.to_bounds();
+		foreach(var e in mParts.Values)
+		{
+			r = r.union(e.transform.position);
+		}
+		return r;
+	}
+	
 
     public void match_body_location_to_projection(ZigManager aManager)
     {
