@@ -181,7 +181,7 @@ public class NewGameManager : FakeMonoBehaviour
 		
 		mParticles.update(Time.deltaTime);
 	
-		if(Input.GetKeyDown(KeyCode.A))
+		if(Input.GetKeyDown(KeyCode.P))
 		{
 			mParticles.create_particles();
 		}
@@ -216,7 +216,10 @@ public class NewGameManager : FakeMonoBehaviour
 		
 		if(CurrentPose != null) //this should never happen but just in case
 		{
-			mManager.mBodyManager.set_target_pose(CurrentPose);
+			if(!Input.GetKey(KeyCode.A))
+				mManager.mBodyManager.set_target_pose(CurrentPose);
+			else 
+				mManager.mBodyManager.set_target_pose(CurrentTargetPose);
 		}
 		
 		
@@ -230,7 +233,9 @@ public class NewGameManager : FakeMonoBehaviour
 			grade = ProGrading.grade_to_perfect(grade);
 			
 			if(Input.GetKey(KeyCode.A))
+			{
 				grade = 1;
+			}
 			
 			float newGrade = mLastGrade*0.95f + grade*0.05f;
 			if(newGrade < mLastGrade)

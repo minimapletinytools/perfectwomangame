@@ -80,6 +80,14 @@ public class FlatBodyObject : FlatElementBase
         if (Mathf.Abs(position.x) < 10) position.x = 0; //fake snapping, TODO this should probbaly be in grading manager if anywhere...
         SoftPosition = position / 1.5f + mOffset;
     }
+	
+	public void match_body_to_body(FlatBodyObject aTarget)
+	{
+		foreach (var e in aTarget.mParts)
+		{
+            mParts[e.Key].transform.rotation = e.Value.transform.rotation;//Quaternion.Slerp(mParts[e.Key].transform.rotation,e.Value.transform.rotation,0.2f);
+        }
+	}
     public void match_body_to_projection(ProjectionManager aManager)
     {
         foreach (KeyValuePair<ZigJointId, ProjectionManager.Stupid> e in aManager.mImportant)
@@ -120,6 +128,8 @@ public class FlatBodyObject : FlatElementBase
         foreach (GameObject e in mParts.Values)
             GameObject.Destroy(e);
         mParts.Clear();
+		
+		GameObject.Destroy(PrimaryGameObject);
     }
 
 

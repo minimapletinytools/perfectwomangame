@@ -151,6 +151,8 @@ public class BodyManager : FakeMonoBehaviour {
     {
         if (mFlat != null)
         {
+			
+			/* TODO DELETE we set the pose elsewhere now
             //if were not in record mode for the tranpsarent one
             if ( mMode == 1)
             {
@@ -159,6 +161,7 @@ public class BodyManager : FakeMonoBehaviour {
             }
             else if (mMode == 0)
             {
+				
 				//only update if kinect is pulgged in
 				if(ManagerManager.Manager.mZigManager.is_reader_connected() == 2)
 				{
@@ -167,11 +170,18 @@ public class BodyManager : FakeMonoBehaviour {
 	                {
 	                    //mFlat.match_body_location_to_projection(mManager.mZigManager);
 	                }
-	                mFlat.match_body_to_projection(mManager.mProjectionManager);
+					
+					
+					if(!Input.GetKey(KeyCode.A))//hack 
+	                	mFlat.match_body_to_projection(mManager.mProjectionManager);
 				}
 				mFlat.update_parameters(Time.deltaTime);
 	            mFlat.set();
             }
+			*/
+			
+			mFlat.update_parameters(Time.deltaTime);
+	            mFlat.set();
         }
         
 	}
