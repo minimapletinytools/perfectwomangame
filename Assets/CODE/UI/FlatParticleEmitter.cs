@@ -27,9 +27,6 @@ public class CachedFlatParticles
 	{
 		mParticles.Add(aParticle);
 	}
-	
-	
-
 }
 
 public class SparkleStarFlashParticle
@@ -41,6 +38,13 @@ public class SparkleStarFlashParticle
 	
 	public SparkleStarFlashParticle()
 	{
+		mEmitter = new FlatParticleEmitter()
+		{
+			UseColor = true,
+			StartColor = new Color(1,1,1,1),
+			EndColor = new Color(1,1,1,0)
+		};
+		
 		foreach(string e in mParticleTypes)
 		{
 			mCachedParticles[e] = new CachedFlatParticles();
@@ -56,21 +60,33 @@ public class SparkleStarFlashParticle
 	
 	public void emit_point(float grade, Vector3 position)
 	{
-		
+		for(int i = 0; i < 100*grade; i++)
+			create_particle("gold",position);
 	}
 	
 	public void create_particle(string aType, Vector3 position)
 	{
+		//TODO diff particle types
 		var cache = mCachedParticles[aType];
 		if(!cache.has_particle())
 		{
-			cache.return_particle(new FlatElementImage(get_color_texture(new Color(1,0,0,1)),position.project_to_vector2(),0));
+			var newPart = new FlatElementImage(get_color_texture(new Color(1,0,0,1)),new Vector2(50,50),1000);
+			foreach (Renderer f in newPart.PrimaryGameObject.GetComponentsInChildren<Renderer>())	
+				f.gameObject.layer = ManagerManager.Manager.mBackgroundManager.mBackgroundLayer;
+			cache.return_particle(newPart);
 		}
+		mEmitter.add_particle(cache.take_particle(),position,Random.insideUnitCircle*500,1);
 	}
 	
 	public void update(float aDelta)
 	{
-		mEmitter.update(aDelta);
+		foreach(FlatElementBase e in mEmitter.update(aDelta))
+		{
+			e.destroy();
+			//TODO need to identify the type name and put them in the right place
+			//e.Enabled = false;
+			//mCachedParticles.Add(e.
+		}
 	}
 	
 	
@@ -153,21 +169,23 @@ public class FlatParticleEmitter : FlatElementBase
 		addMe.vel = aVel;
 		addMe.element = aParticle;
 		addMe.timer = new QuTimer(0,aLifetime);
+		mParticles.AddLast(addMe);
 	}
 	
 	
 	Vector3 Gravity {get; set;}
 	
-	bool UseColor {get; set;}
-	Color StartColor {get; set;}
-	Color EndColor {get; set;}
+	public bool UseColor {get; set;}
+	public Color StartColor {get; set;}
+	public Color EndColor {get; set;}
 	
 	
-	public void update(float aDelta)
+	public List<FlatElementBase> update(float aDelta)
 	{
 		//TODO color and other stuff... 
 		//TODO gravity
 		
+		List<FlatElementBase> removed = new List<FlatElementBase>();
 		LinkedListNode<FlatSubParticle> starting = mParticles.First;
 		while(starting != null)
 		{
@@ -178,15 +196,18 @@ public class FlatParticleEmitter : FlatElementBase
 			e.timer.update(aDelta);
 			starting = starting.Next;
 			if(e.timer.isExpired())
+			{
 				mParticles.Remove(operating);
+				removed.Add(operating.Value.element);
+			}
 			
 			//update the element
 			e.element.HardPosition = e.pos;
 			if(UseColor)
 				e.element.HardColor = StartColor*(1-e.timer.getLinear()) + EndColor*e.timer.getLinear();
 			
-			//pretty sure I don't need to do this..
-			//e.element.update(aDelta);
+			e.element.update(aDelta);
 		}
+		return removed;
 	}
 }

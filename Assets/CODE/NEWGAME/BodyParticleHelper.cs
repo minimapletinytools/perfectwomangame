@@ -36,7 +36,8 @@ public class BodyParticleHelper
 		
 		foreach(var e in sJointGroups)
 		{
-			float score = grade.joint_aggregate_score(e.Value);
+			//float score = grade.joint_aggregate_score(e.Value);
+			float score = 1;
 			mParticles.emit_point(score,activeBody.mFlat.get_body_part_position(e.Key));
 		}
 		

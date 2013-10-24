@@ -176,6 +176,17 @@ public class NewGameManager : FakeMonoBehaviour
 		
 		if(GS == GameState.PLAY)
 		{
+			
+			
+		
+		mParticles.update(Time.deltaTime);
+	
+		if(Input.GetKeyDown(KeyCode.A))
+		{
+			mParticles.create_particles();
+		}
+			
+			
 			update_PLAY();
 			if(Input.GetKeyDown(KeyCode.Alpha0))
 			{
@@ -190,11 +201,14 @@ public class NewGameManager : FakeMonoBehaviour
 		TED.update(Time.deltaTime);
 	}
 	
-
+	
+	
+	BodyParticleHelper mParticles = new BodyParticleHelper();
 	
 	
 	public void update_PLAY()
 	{
+		
 		
 		TimeRemaining -= Input.GetKey(KeyCode.O) ? Time.deltaTime * 5 : Time.deltaTime;
 		
