@@ -135,7 +135,11 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 		
 		mBB = new FlatElementImage(mManager.mNewRef.bbBackground,8);
 		mBB.HardPosition = random_position();
-		mBBBasePosition = mFlatCamera.get_point(-0.5f, 0); 
+		
+		//TODO change back
+		//mBBBasePosition = mFlatCamera.get_point(-0.5f, 0); 
+		mBBBasePosition = mFlatCamera.get_point(-10, 0); 
+		
 		mBB.SoftPosition = mBBBasePosition;
 		mElement.Add(mBB);
 		
@@ -515,6 +519,9 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 	}
 	public void add_cutscene_particle_stream(CharacterIndex aTarget, PopupTextObject aPopup, float duration, bool aPositive)
 	{
+		//TODO put back
+		return; 
+		
 		float delay = 0;
 		Color useColor = (!aPositive) ? GameConstants.ParticleStreamEasy : GameConstants.ParticleStreamHard;
 		
