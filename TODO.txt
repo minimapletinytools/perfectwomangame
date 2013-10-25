@@ -31,10 +31,13 @@ Perfect Woman features a branching decision tree which serves to create a narrat
 ::NEW INTERFACE ****::
 
 ::TODO XI::
--need two triangle prefab
--email sarita
+-make sure you did not break testing scene with your new bodymanager changes
+-make sure you keep calling update on particles during cutscene
+-add hands & feet to meta data for characters
+	-it wouldn't be the end of the world if you had to do this procedurally...
+DONE-need two triangle prefab
+DONE-email sarita
 DONE-remind lea to d ostoryboards for video for steven
--particals
 -website
 	DONE-new backgrounds
 	DONE-fix benedikts name credits

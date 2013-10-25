@@ -170,33 +170,23 @@ public class NewGameManager : FakeMonoBehaviour
     public override void Update()
     {
 		//if(mManager.mZigManager.has_user())
-		{
         	CurrentPose = ProGrading.snap_pose(mManager); 
-		}
-		
-		if(GS == GameState.PLAY)
-		{
-			
-			
 		
 		mParticles.update(Time.deltaTime);
+		
+		if(GS == GameState.PLAY)
+		{		
+			if(Input.GetKeyDown(KeyCode.P))
+				mParticles.create_particles();
 	
-		if(Input.GetKeyDown(KeyCode.P))
-		{
-			mParticles.create_particles();
-		}
-			
-			
 			update_PLAY();
 			if(Input.GetKeyDown(KeyCode.Alpha0))
-			{
 				TimeRemaining = -5; //0;
-			}
 		}
 		else if(GS == GameState.CHOICE) 
 			update_CHOICE();
 		else if (GS == GameState.TEST)
-			mModeChallenge.update();
+			mModeTesting.update();
         
 		TED.update(Time.deltaTime);
 	}
@@ -228,6 +218,11 @@ public class NewGameManager : FakeMonoBehaviour
         {
 			CurrentTargetPose = CurrentPoseAnimation.get_pose(Time.time);
 			mManager.mTransparentBodyManager.set_target_pose(CurrentTargetPose);
+			
+			if(PercentTimeCompletion > 0.01f && CurrentPoseAnimation.does_pose_change(Time.time,Time.deltaTime))
+			{
+				mParticles.create_particles();
+			}
 			
             float grade = ProGrading.grade_pose(CurrentPose, CurrentTargetPose);
 			grade = ProGrading.grade_to_perfect(grade);

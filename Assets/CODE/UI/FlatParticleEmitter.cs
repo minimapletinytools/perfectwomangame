@@ -75,7 +75,7 @@ public class SparkleStarFlashParticle
 		var cache = mCachedParticles[aType];
 		if(!cache.has_particle())
 		{
-			var newPart = new FlatElementImage(get_color_texture(new Color(1,0,0,1)),new Vector2(50,50),1000);
+			var newPart = new FlatElementImage(get_color_texture(new Color(1,0.8f,0,1)),new Vector2(50,50),1000);
 			foreach (Renderer f in newPart.PrimaryGameObject.GetComponentsInChildren<Renderer>())	
 				f.gameObject.layer = ManagerManager.Manager.mBackgroundManager.mBackgroundLayer;
 			cache.return_particle(newPart);
@@ -186,9 +186,6 @@ public class FlatParticleEmitter : FlatElementBase
 	
 	public List<FlatSubParticle> update(float aDelta)
 	{
-		//TODO color and other stuff... 
-		//TODO gravity
-		
 		List<FlatSubParticle> removed = new List<FlatSubParticle>();
 		LinkedListNode<FlatSubParticle> starting = mParticles.First;
 		while(starting != null)

@@ -106,6 +106,15 @@ public class PerformanceType
 		PT = aType;
 		
 	}
+	
+	//TODO this function may need to change if you change get_pose...
+	//really get pose should cache the last returned pose...
+	public bool does_pose_change(float aTime, float aDelta)
+	{
+		float changeTime = ChangeTime;
+		return ((int)(aTime/changeTime)) != ((int)((aTime-aDelta)/changeTime));
+	}
+	
 	public virtual Pose get_pose(float aTime)
 	{
 		float changeTime = ChangeTime;
