@@ -33,6 +33,7 @@ public class ModeNormalPlay
 	List<PerformanceStats> mPerformanceStats = new List<PerformanceStats>();
 	BodyParticleHelper mParticles = new BodyParticleHelper();
 	ChoiceHelper mChoiceHelper;
+	public NewInterfaceManager mInterfaceManager = null;
 	
 	public ModeNormalPlay(NewGameManager aNgm)
 	{
@@ -42,6 +43,9 @@ public class ModeNormalPlay
 		GS = NormalPlayGameState.NONE;
 		TED = new TimedEventDistributor();
 		mChoiceHelper = new ChoiceHelper();
+		
+		mInterfaceManager = new NewInterfaceManager(mManager);
+		mInterfaceManager.Start();
 	}
 	
 	
@@ -50,9 +54,9 @@ public class ModeNormalPlay
 	{
 		mManager.mAssetLoader.new_load_character("0-1",mManager.mCharacterBundleManager);
 		
-		mManager.mInterfaceManager.setup_bb();
-		mManager.mInterfaceManager.setup_pb();
-		mManager.mInterfaceManager.set_pb_character_icon_colors(NGM.CharacterHelper.Characters);
+		mInterfaceManager.setup_bb();
+		mInterfaceManager.setup_pb();
+		mInterfaceManager.set_pb_character_icon_colors(NGM.CharacterHelper.Characters);
 		
 		
 		//TODO put this in its own function
@@ -63,7 +67,7 @@ public class ModeNormalPlay
 			var poseAnimation = mManager.mCharacterBundleManager.get_pose(e,NGM.CharacterHelper.Characters[e].Difficulty);
 			poses.Add(new KeyValuePair<CharacterIndex,Pose>(e,poseAnimation.get_pose(Random.Range(0,poseAnimation.poses.Count))));
 		}
-		mManager.mInterfaceManager.set_pb_character_icon_poses(poses);
+		mInterfaceManager.set_pb_character_icon_poses(poses);
 	}
 	
 	public void set_time_for_PLAY(float aTime)
@@ -77,7 +81,7 @@ public class ModeNormalPlay
 		
 		mPerformanceStats.Add(new PerformanceStats(NGM.CurrentCharacterIndex));
 		CurrentPerformanceStat.Stats = NGM.CharacterHelper.Characters[NGM.CurrentCharacterIndex];
-		mManager.mInterfaceManager.begin_new_character(CurrentPerformanceStat);
+		mInterfaceManager.begin_new_character(CurrentPerformanceStat);
 		
 		switch(NGM.CurrentCharacterLoader.Name)
 		{
@@ -89,7 +93,7 @@ public class ModeNormalPlay
 				float gTextDisplayDur = 4;
 				NGM.CurrentTargetPose = null;
 				TED.add_event(
-					mManager.mInterfaceManager.skippable_text_bubble_event("TRY AND MAKE YOUR FIRST MOVEMENTS", gTextDisplayDur),
+					mInterfaceManager.skippable_text_bubble_event("TRY AND MAKE YOUR FIRST MOVEMENTS", gTextDisplayDur),
 				3).then_one_shot(
 					delegate(){
 						NGM.CurrentTargetPose = mManager.mReferences.mCheapPose.to_pose();
@@ -98,7 +102,7 @@ public class ModeNormalPlay
 							mManager.mCharacterBundleManager.get_character_stat(NGM.CurrentCharacterIndex).CharacterInfo.CharacterOutlineColor;
 					},
 				0).then(
-					mManager.mInterfaceManager.skippable_text_bubble_event("MATCH THE POSE BEHIND YOU", gTextDisplayDur),
+					mInterfaceManager.skippable_text_bubble_event("MATCH THE POSE BEHIND YOU", gTextDisplayDur),
 				1.5f);
 				break;
 			case "100":
@@ -121,6 +125,8 @@ public class ModeNormalPlay
 	
 	public void update()
 	{
+		mInterfaceManager.Update();
+		
 		if(GS == NormalPlayGameState.PLAY)
 		{		
 			if(Input.GetKeyDown(KeyCode.P))
@@ -135,6 +141,8 @@ public class ModeNormalPlay
 		
 		mParticles.update(Time.deltaTime);
 		TED.update(Time.deltaTime);
+		
+		
 	}
 	
 	
@@ -145,7 +153,7 @@ public class ModeNormalPlay
 		
 		TimeRemaining -= Input.GetKey(KeyCode.O) ? Time.deltaTime * 5 : Time.deltaTime;
 		
-		mManager.mInterfaceManager.update_bb_score(TotalScore);
+		mInterfaceManager.update_bb_score(TotalScore);
 		
 		if(NGM.CurrentPose != null) //this should never happen but just in case
 		{
@@ -186,7 +194,7 @@ public class ModeNormalPlay
 			
 			mManager.mCameraManager.set_camera_effects(grade);
 			//update score
-			mManager.mInterfaceManager.update_bb_score(TotalScore);	
+			mInterfaceManager.update_bb_score(TotalScore);	
         }
 		else if(NGM.CurrentCharacterIndex.LevelIndex == 0 && true) //fetus
 		{
@@ -203,7 +211,7 @@ public class ModeNormalPlay
 				if(newGrade > 0.76f)
 				{
 					//this may or may not work depending on which update gets called first
-					mManager.mInterfaceManager.SkipSingle();
+					mInterfaceManager.SkipSingle();
 					scoreProp.SetValue(CurrentPerformanceStat,0);
 					TimeRemaining = 0;
 				}
@@ -216,9 +224,9 @@ public class ModeNormalPlay
 		if (NGM.CurrentPoseAnimation != null && NGM.CurrentCharacterIndex.LevelIndex != 0)
 		{
 			if(PercentTimeCompletion > 0.2f && CurrentPerformanceStat.last_score(1.5f/30f)/(1.5f/30f) < 0.2f)
-				mManager.mInterfaceManager.enable_warning_text(true);
+				mInterfaceManager.enable_warning_text(true);
 			else 
-				mManager.mInterfaceManager.enable_warning_text(false);
+				mInterfaceManager.enable_warning_text(false);
 		}
 		
 		//make sure music is finished too!
@@ -227,7 +235,7 @@ public class ModeNormalPlay
 		{
 			CurrentPerformanceStat.Finished = true;
 			mManager.mCameraManager.set_camera_effects(0);
-			mManager.mInterfaceManager.enable_warning_text(false);
+			mInterfaceManager.enable_warning_text(false);
 			transition_to_CUTSCENE();
 			
 			//if we don't want fetus to have a cutscene use this
@@ -260,7 +268,7 @@ public class ModeNormalPlay
 		{
 			CurrentPerformanceStat.Finished = true;
 			mManager.mCameraManager.set_camera_effects(0);
-			mManager.mInterfaceManager.enable_warning_text(false);
+			mInterfaceManager.enable_warning_text(false);
 			transition_to_DEATH();
 		}
 			
@@ -269,9 +277,9 @@ public class ModeNormalPlay
 	
 	public void update_CHOICE()
 	{
-		mManager.mInterfaceManager.set_bb_decider_pose(NGM.CurrentPose);
+		mInterfaceManager.set_bb_decider_pose(NGM.CurrentPose);
 		mChoiceHelper.CurrentPose = NGM.CurrentPose;
-		int choice = mChoiceHelper.update(new SetPlayChoice(mManager.mInterfaceManager));
+		int choice = mChoiceHelper.update(new SetPlayChoice(mInterfaceManager));
 		if(choice != -1)
 		{
 			mManager.mMusicManager.fade_out_extra_music();
@@ -286,7 +294,7 @@ public class ModeNormalPlay
 		
 		load_CUTSCENE(changes);
 		
-		mManager.mInterfaceManager.set_for_CUTSCENE(
+		mInterfaceManager.set_for_CUTSCENE(
 			delegate(){CUTSCENE_finished(changes);}, 
 			changes
 		);
@@ -316,7 +324,7 @@ public class ModeNormalPlay
 							}
 						}
 			        }
-					mManager.mInterfaceManager.set_pb_character_icon_colors(mManager.mGameManager.CharacterHelper.Characters);
+					mInterfaceManager.set_pb_character_icon_colors(mManager.mGameManager.CharacterHelper.Characters);
 				}
 				mManager.mMusicManager.fade_out();
 			}
@@ -324,7 +332,7 @@ public class ModeNormalPlay
 			
 			NGM.CurrentCharacterIndex.LevelIndex < 7 //TODO
 			?
-			mManager.mInterfaceManager.skippable_text_bubble_event("You turn " + NGM.CurrentCharacterIndex.get_future_neighbor(0).Age,gAgeDisplayDur)
+			mInterfaceManager.skippable_text_bubble_event("You turn " + NGM.CurrentCharacterIndex.get_future_neighbor(0).Age,gAgeDisplayDur)
 			:
 			delegate(float aTime){return true;}
 		,0).then_one_shot(
@@ -388,7 +396,7 @@ public class ModeNormalPlay
 		
 		//BAD PERFORMANCE
 		chain = chain.then(
-			mManager.mInterfaceManager.skippable_text_bubble_event("BAD PERFORMANCE", gTextDisplayDur)
+			mInterfaceManager.skippable_text_bubble_event("BAD PERFORMANCE", gTextDisplayDur)
 		,2);
 		
 		//NEXT TIME YOU PERFORM THAT BAD YOU MIGHT DIE
@@ -396,12 +404,12 @@ public class ModeNormalPlay
 		{
 			chain = chain.then(
 				NGM.CurrentLevel == 7 ?
-				mManager.mInterfaceManager.skippable_text_bubble_event("BUT IT'S OK BECAUSE YOU ARE ALREADY OLD", gTextDisplayDur)
+				mInterfaceManager.skippable_text_bubble_event("BUT IT'S OK BECAUSE YOU ARE ALREADY OLD", gTextDisplayDur)
 				:
-				mManager.mInterfaceManager.skippable_text_bubble_event("NEXT TIME YOU PERFORM THAT BAD YOU MIGHT DIE", gTextDisplayDur)
+				mInterfaceManager.skippable_text_bubble_event("NEXT TIME YOU PERFORM THAT BAD YOU MIGHT DIE", gTextDisplayDur)
 			).then_one_shot(
 				delegate(){
-					mManager.mInterfaceManager.set_for_CUTSCENE(
+					mInterfaceManager.set_for_CUTSCENE(
 						delegate(){CUTSCENE_finished(CurrentPerformanceStat.CutsceneChangeSet);}, 
 						CurrentPerformanceStat.CutsceneChangeSet
 					);
@@ -414,7 +422,7 @@ public class ModeNormalPlay
 		chain = chain.then_one_shot(
 			delegate(){
 				
-				mManager.mInterfaceManager.set_for_DEATH(CurrentPerformanceStat.Character)
+				mInterfaceManager.set_for_DEATH(CurrentPerformanceStat.Character)
 				.then_one_shot(
 						delegate()
 						{
@@ -428,7 +436,7 @@ public class ModeNormalPlay
 	public void transition_to_GRAVE()
 	{
 		GS = NormalPlayGameState.GRAVE;
-		mManager.mInterfaceManager.set_for_GRAVE(mPerformanceStats, 
+		mInterfaceManager.set_for_GRAVE(mPerformanceStats, 
 			delegate()
 			{
 				mManager.mTransitionCameraManager.fade_out_with_sound(mManager.restart_game);
@@ -440,15 +448,15 @@ public class ModeNormalPlay
 	{
         //TODO update difficulties in NIM charactericons here in case the user skipped the cutscenes and the diffs did not get updated
 		GS = NormalPlayGameState.CHOICE;
-		mChoiceHelper.shuffle_and_set_choice_poses(3,mManager.mInterfaceManager); //TODO evnetually 4 or more..
+		mChoiceHelper.shuffle_and_set_choice_poses(3,mInterfaceManager); //TODO evnetually 4 or more..
 		//TODO these bottom two functions should be absoredb by ChoiceHelper
 		//lol this is a dumb hack to not choose the missing character
 		var chars = new CharacterIndex(CurrentPerformanceStat.Character.LevelIndex+1,3).Neighbors;
 		var perfs = chars.Select(e=>NGM.CharacterHelper.Characters[e].Perfect).ToList();
-		mManager.mInterfaceManager.set_bb_choice_perfectness(perfs);
-		mManager.mInterfaceManager.set_bb_choice_bodies(NGM.CurrentCharacterIndex);
+		mInterfaceManager.set_bb_choice_perfectness(perfs);
+		mInterfaceManager.set_bb_choice_bodies(NGM.CurrentCharacterIndex);
 		mManager.mMusicManager.fade_in_extra_music("choiceMusic");
-		mManager.mInterfaceManager.set_for_CHOICE();	
+		mInterfaceManager.set_for_CHOICE();	
 	}
 	
 	
@@ -461,7 +469,7 @@ public class ModeNormalPlay
 		//no target pose means we don't want a transparent body
 		if(NGM.CurrentTargetPose == null)
 			mManager.mTransparentBodyManager.transition_character_out();
-		mManager.mInterfaceManager.set_for_PLAY();
+		mInterfaceManager.set_for_PLAY();
 		
 	}
 	
@@ -474,7 +482,7 @@ public class ModeNormalPlay
 
 
 		//TODO move this into NewInterfaceManager
-		mManager.mInterfaceManager.fade_choosing_contents(true);
+		mInterfaceManager.fade_choosing_contents(true);
 		var diffPhrases = new string[]{	"That's an easy choice. You should be able to manage that!", 
 										"You made a normal choice. Show how good you are!", 
 										"That's a hard one. Show your skills!", 
@@ -483,7 +491,7 @@ public class ModeNormalPlay
 		TED.add_event(
 			aNextCharacter != CharacterIndex.sGrave 
 			?
-			mManager.mInterfaceManager.skippable_text_bubble_event(diffPhrases[NGM.CharacterHelper.Characters[aNextCharacter].Difficulty],gDiffDisplayDur)
+			mInterfaceManager.skippable_text_bubble_event(diffPhrases[NGM.CharacterHelper.Characters[aNextCharacter].Difficulty],gDiffDisplayDur)
 			:
 			delegate(float aTime){return true;}
 		).then_one_shot(
@@ -581,6 +589,6 @@ public class ModeNormalPlay
 		List<KeyValuePair<CharacterIndex,Pose>> poses = new List<KeyValuePair<CharacterIndex, Pose>>();
 		var poseAnimation = mManager.mCharacterBundleManager.get_pose(aChar,aDiff);
 		poses.Add(new KeyValuePair<CharacterIndex,Pose>(aChar,poseAnimation.get_pose(Random.Range(0,poseAnimation.poses.Count))));
-		mManager.mInterfaceManager.set_pb_character_icon_poses(poses);
+		mInterfaceManager.set_pb_character_icon_poses(poses);
 	}
 }

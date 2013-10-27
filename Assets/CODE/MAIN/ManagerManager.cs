@@ -32,7 +32,6 @@ public class ManagerManager : MonoBehaviour{
     public InputManager mInputManager;
     public ZigManager mZigManager;
 	public ProjectionManager mProjectionManager;
-    public NewInterfaceManager mInterfaceManager;
     public BodyManager mBodyManager;
     public BodyManager mTransparentBodyManager;
     public BackgroundManager mBackgroundManager;
@@ -64,7 +63,6 @@ public class ManagerManager : MonoBehaviour{
         mInputManager = new InputManager(this);
 		mZigManager = new ZigManager(this);
 		mProjectionManager = new ProjectionManager(this);
-        mInterfaceManager = new NewInterfaceManager(this);
         mBodyManager = new BodyManager(this);
         mTransparentBodyManager = new BodyManager(this);
 		mTransparentBodyManager.mMode = 1; //nasty
@@ -144,7 +142,6 @@ public class ManagerManager : MonoBehaviour{
         mInputManager = null;
 		mZigManager = null;
 		mProjectionManager = null;
-        mInterfaceManager = null;
         mBodyManager = null;
         mTransparentBodyManager = null;
         mBackgroundManager = null;

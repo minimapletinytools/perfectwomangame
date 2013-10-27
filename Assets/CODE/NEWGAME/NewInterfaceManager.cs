@@ -2,12 +2,15 @@ using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
 
-public class NewInterfaceManager : FakeMonoBehaviour {
+public class NewInterfaceManager {
 	static float END_CUTSCENE_DELAY_TIME = 1;
 	
 	
-	
-    public NewInterfaceManager(ManagerManager aManager) : base(aManager) { }
+	ManagerManager mManager;
+    public NewInterfaceManager(ManagerManager aManager)
+	{
+		mManager = aManager;
+	}
 
 	public TimedEventDistributor TED { get; private set; }
     public FlatCameraManager mFlatCamera;
@@ -27,7 +30,7 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 	public void SkipSingle()
 	{ DoSkipSingleThisFrame = true; }
 	
-	public override void Start()
+	public void Start()
     {
 		DoSkipSingleThisFrame = false;
 		DoSkipMultipleThisFrame = false;
@@ -51,7 +54,7 @@ public class NewInterfaceManager : FakeMonoBehaviour {
 		text.SoftScale = new ector3(0.5f,0.5f,0.5f);
 		mElement.Add (text);*/
     }
-    public override void Update()
+    public void Update()
     {
 		
 		if(Input.GetKeyDown(KeyCode.Alpha0))
