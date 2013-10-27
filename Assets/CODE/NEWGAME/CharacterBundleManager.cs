@@ -119,6 +119,7 @@ public class CharacterBundleManager : FakeMonoBehaviour {
         CharacterLoader loader = new CharacterLoader();
         loader.complete_load_character(aBundle,aBundleName);
 	
+		//TODO potentially want to move this to NewGameManager
 		//here we assume the game wants the new character to be loaded so we load it
 		//set new character in the two body managers and in background manager
 		mManager.mBackgroundManager.character_changed_listener(loader);
@@ -135,6 +136,7 @@ public class CharacterBundleManager : FakeMonoBehaviour {
 			mManager.mTransparentBodyManager.destroy_character();
 		}
 		mManager.mMusicManager.character_changed_listener(loader);
+		
 		if(mManager.mGameManager.character_changed_listener(loader))
 			aBundle.Unload(false);
 		else mUnloadAtEnd.Add(aBundle);

@@ -212,7 +212,7 @@ public class FlatBodyObject : FlatElementBase
 		relations.Add(new KeyValuePair<ZigJointId, ZigJointId>(ZigJointId.RightHand, ZigJointId.RightElbow));
 		relations.Add(new KeyValuePair<ZigJointId, ZigJointId>(ZigJointId.LeftFoot, ZigJointId.LeftKnee));
 		relations.Add(new KeyValuePair<ZigJointId, ZigJointId>(ZigJointId.RightFoot, ZigJointId.RightKnee));
-		 */
+		 */ 
 
         foreach (KeyValuePair<ZigJointId, ZigJointId> e in relations)
         {

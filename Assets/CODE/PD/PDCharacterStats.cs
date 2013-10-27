@@ -10,6 +10,7 @@ public class PDCharacterStats
         public Adjustment(float al, float ar, float am) { l = al; r = ar; m = am; }
         public Adjustment(float ar) { l = 0; r = ar; m = 0; }
     }
+	
     Dictionary<PDStats.Stats, float> mDifficultyValues = new Dictionary<PDStats.Stats, float>()
     {
         {PDStats.Stats.EDUCATION,0},

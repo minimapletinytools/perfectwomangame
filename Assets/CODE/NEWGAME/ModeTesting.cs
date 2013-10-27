@@ -121,9 +121,9 @@ public class ModeTesting
 		if(choice != -1)
 		{
 			if(shift)
-				mManager.mAssetLoader.new_load_character(NGM.CurrentPerformanceStat.Character.get_past_neighbor(choice).StringIdentifier,mManager.mCharacterBundleManager);
+				mManager.mAssetLoader.new_load_character(NGM.CurrentCharacterIndex.get_past_neighbor(choice).StringIdentifier,mManager.mCharacterBundleManager);
 			else
-				mManager.mAssetLoader.new_load_character(NGM.CurrentPerformanceStat.Character.get_future_neighbor(choice).StringIdentifier,mManager.mCharacterBundleManager);
+				mManager.mAssetLoader.new_load_character(NGM.CurrentCharacterIndex.get_future_neighbor(choice).StringIdentifier,mManager.mCharacterBundleManager);
 		}
 	}
 }
