@@ -218,7 +218,7 @@ public class TransitionCameraManager : FakeMonoBehaviour
 		fade_out_with_sound(
 			delegate()
 			{
-				mManager.mGameManager.initialize_fetus();
+				mManager.mGameManager.start_game();
 				destroy_configuration_display();
 			}
 		);
