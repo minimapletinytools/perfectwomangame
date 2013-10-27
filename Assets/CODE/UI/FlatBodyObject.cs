@@ -13,6 +13,7 @@ public class FlatBodyObject : FlatElementBase
                 r = i;
         return r;
     }
+	
     public Pose mTargetPose = null;
     public Dictionary<ZigJointId, GameObject> mParts = new Dictionary<ZigJointId, GameObject>();
     Vector3 mOffset = Vector3.zero;
@@ -158,6 +159,14 @@ public class FlatBodyObject : FlatElementBase
         yield return null;
         GameObject waist = create_object(ZigJointId.Waist, aImages.waist, aSizes.mLimbSizes[10], aSizes.mMountingPositions[10]);
         yield return null;
+		
+		
+		GameObject leftHand = create_extremety(ZigJointId.LeftHand);
+		GameObject rightHand = create_extremety(ZigJointId.RightHand);
+		GameObject leftFoot = create_extremety(ZigJointId.LeftFoot);
+		GameObject rightFoot = create_extremety(ZigJointId.RightFoot);
+		
+		
 
         //order things
         Dictionary<ZigJointId, GameObject> jointObject = new Dictionary<ZigJointId, GameObject>();
@@ -173,6 +182,11 @@ public class FlatBodyObject : FlatElementBase
         jointObject[ZigJointId.RightHip] = rightUpperLeg;
         jointObject[ZigJointId.LeftKnee] = leftLowerLeg;
         jointObject[ZigJointId.RightKnee] = rightLowerLeg;
+		
+		jointObject[ZigJointId.LeftHand] = leftHand;
+		jointObject[ZigJointId.RightHand] = rightHand;
+		jointObject[ZigJointId.LeftFoot] = leftFoot;
+		jointObject[ZigJointId.RightFoot] = rightFoot;
 
         //these two are special
         torso.transform.position = waist.transform.position;
@@ -191,6 +205,14 @@ public class FlatBodyObject : FlatElementBase
         relations.Add(new KeyValuePair<ZigJointId, ZigJointId>(ZigJointId.LeftKnee, ZigJointId.LeftHip));
         relations.Add(new KeyValuePair<ZigJointId, ZigJointId>(ZigJointId.RightKnee, ZigJointId.RightHip));
         relations.Add(new KeyValuePair<ZigJointId, ZigJointId>(ZigJointId.Neck, ZigJointId.Torso));
+		
+		
+		/* TODO
+		relations.Add(new KeyValuePair<ZigJointId, ZigJointId>(ZigJointId.LeftHand, ZigJointId.LeftElbow));
+		relations.Add(new KeyValuePair<ZigJointId, ZigJointId>(ZigJointId.RightHand, ZigJointId.RightElbow));
+		relations.Add(new KeyValuePair<ZigJointId, ZigJointId>(ZigJointId.LeftFoot, ZigJointId.LeftKnee));
+		relations.Add(new KeyValuePair<ZigJointId, ZigJointId>(ZigJointId.RightFoot, ZigJointId.RightKnee));
+		 */
 
         foreach (KeyValuePair<ZigJointId, ZigJointId> e in relations)
         {
@@ -302,7 +324,8 @@ public class FlatBodyObject : FlatElementBase
         relations.Add(new KeyValuePair<ZigJointId, ZigJointId>(ZigJointId.LeftKnee, ZigJointId.LeftHip));
         relations.Add(new KeyValuePair<ZigJointId, ZigJointId>(ZigJointId.RightKnee, ZigJointId.RightHip));
         relations.Add(new KeyValuePair<ZigJointId, ZigJointId>(ZigJointId.Neck, ZigJointId.Torso));
-
+		
+		
         foreach (KeyValuePair<ZigJointId, ZigJointId> e in relations)
         {
             jointObject[e.Key].transform.parent = jointObject[e.Value].transform;
@@ -359,7 +382,8 @@ public class FlatBodyObject : FlatElementBase
         //GameObject sphere = GameObject.CreatePrimitive(PrimitiveType.Sphere);
         //sphere.transform.localScale = Vector3.one * 0.2f;
         //sphere.transform.parent = parent.transform;
-        GameObject kid = GameObject.CreatePrimitive(PrimitiveType.Plane);
+        GameObject kid = (GameObject)GameObject.Instantiate(ManagerManager.Manager.mReferences.mPlanePrefab);
+		//GameObject kid = (GameObject)GameObject.CreatePrimitive(PrimitiveType.Plane); //TODO use prefab instead
         kid.renderer.material = new Material(ManagerManager.Manager.mReferences.mDefaultCharacterShader);
         kid.renderer.material.mainTexture = aTex;
         kid.transform.rotation = Quaternion.AngleAxis(90, Vector3.right) * kid.transform.rotation;
@@ -371,7 +395,12 @@ public class FlatBodyObject : FlatElementBase
         mParts[aId] = parent;
         return parent;
     }
-
+	
+	
+	public GameObject create_extremety(ZigJointId aId)
+	{
+		return new GameObject("genExtremety");
+	}
 
 
     
@@ -381,10 +410,12 @@ public class FlatBodyObject : FlatElementBase
     //utilities for positioning
     Vector3 get_offset_of_plane(Transform aGo)
     {
-        Transform plane = aGo.FindChild("Plane");
+		//NOTE this assumes plane is last child which it is...
+        Transform plane = aGo.transform.GetChild(aGo.childCount-1).transform;
         if (plane != null)
             return plane.position - aGo.transform.position;
-        throw new UnityException("no plane child exsits");
+		return Vector3.zero; //used for extremities
+        //throw new UnityException("no plane child exsits");
     }
     static bool is_same_color(Color32 c1, Color32 c2)
     {
