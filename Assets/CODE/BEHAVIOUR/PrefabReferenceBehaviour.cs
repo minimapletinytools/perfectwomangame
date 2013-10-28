@@ -4,7 +4,8 @@ using System.Collections;
 public class PrefabReferenceBehaviour : MonoBehaviour {
 
 	public GameObject mMiniChar;
-	public TextAsset mCheapPose;
+	public TextAsset mCheapPose; //this is birth pose
+	public TextAsset mDefaultPose;
 	
 	//shaders/materials
 	public Shader mDefaultCharacterShader;

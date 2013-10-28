@@ -2,6 +2,7 @@ using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
 public class ZigManager : FakeMonoBehaviour {
+	
 	GameObject mZigObject = null;
 	Zig mZig = null;
 	ZigEngageSingleUser mZigEngageSingleUser = null;
@@ -84,6 +85,7 @@ public class ZigManager : FakeMonoBehaviour {
 			DepthView.show_indicator(false);
 			mManager.mTransitionCameraManager.EnableDepthWarning = false;
 		}
+		
 	}
 	
 	public int is_reader_connected() //0 - not connected, 1 - trying to connect, 2 - connected

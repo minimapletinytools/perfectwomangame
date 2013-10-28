@@ -42,6 +42,8 @@ public class NewGameManager : FakeMonoBehaviour
 	
 	public CharacterLoader DeathCharacter //hack to store fetus death
 	{ get; set; }
+	
+	QuTimer mIdleTimer = new QuTimer(0,30);
 
 	
 	ModeTesting mModeTesting;
@@ -96,13 +98,23 @@ public class NewGameManager : FakeMonoBehaviour
 	
     public override void Update()
     {
-		//if(mManager.mZigManager.has_user())
+		if(mManager.mZigManager.has_user())
         	CurrentPose = ProGrading.snap_pose(mManager); 
+		else CurrentPose = mManager.mReferences.mDefaultPose.to_pose();
+		
+		
 		if(GS == GameState.NORMAL)
 			mModeNormalPlay.update();
 		else if (GS == GameState.TEST)
 			mModeTesting.update();
         
+		
+		//reader connected and no user
+		if(!mManager.mZigManager.has_user() && mManager.mZigManager.is_reader_connected() == 2)
+			mIdleTimer.update(Time.deltaTime);
+		else mIdleTimer.reset();
+		if(mIdleTimer.isExpired())
+			mManager.restart_game();
 		
 	}
 	
