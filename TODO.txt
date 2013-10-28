@@ -31,10 +31,63 @@ Perfect Woman features a branching decision tree which serves to create a narrat
 ::NEW INTERFACE ****::
 
 ::TODO XI::
--make sure you did not break testing scene with your new bodymanager changes
--make sure you keep calling update on particles during cutscene
+-new game plan
+	-set up meta Manager
+		-unlock
+			-game_finished(performances)
+				-returns new unlocked stuff
+			-get unlocked ()
+				-for loading the game
+		-high scores
+			-take_screenshot and record score()
+		-achievment
+			-update
+				-does whatevre needs to be done for unlocking
+					-overriding camera that says achievement unlocked lul.
+		-save game
+			-save game()
+				-call at end of game
+			-load_game
+				-call at begining...
+				
+-delete gamemanager and interface manager
+DONE-NIM should be owned by NormalPlayManager
+-buy the following particle effects
+	-https://www.assetstore.unity3d.com/#/content/4150
+	-https://www.assetstore.unity3d.com/#/content/7710
+DONE-get rid of pink bar or cover it...
+	-make sure you turn off paricle effects
+-green word bubble problem...
+-does music freeze during transition????
+-see if you can do a loading screen...
+DONE-delete PDCharacterStats
+	-delete other useless files..
+DONE???-do some testing on kinect overheating issue...
+-consider making harder/easier for first set of choices random
+	-lul, need to hardcode this...
+-fix the dot issue in performance graph
+	-does not seem to happen on OSX under editor... great.. could be ogl buggy artifact?
+-microsoft kinect GoodPosition does not work. Need better way to determine if player is out of frame
+	DONE-in addition, do not contort the figure if something bad happens.
+		-:(((
+	DONE-pressing key should toggle between 3 states, no warning ever, only warning on bad kinect input, always show warning
+-restart the game if no one is playing after 30 seconds
+	-test me
+	IGNORE-maybe black out the screne before you restart so people don't see the artifacts
+
+
+-switch to 16x9
+-too much time between premature death and choice
+-there is a bug in sctore counting
+-graph should be more visually apparent if performance was good or bad (just looks like a squiggly line...)
+	-I think more smoohtnig can help this out and better colors...
+		-maybe add some grading grace during pose changes
+
 -add hands & feet to meta data for characters
 	-it wouldn't be the end of the world if you had to do this procedurally...
+DONE-put in reading for limb extremeties
+DONE-make sure you did not break testing scene with your new bodymanager changes
+DONE-make sure you keep calling update on particles during cutscene
 DONE-need two triangle prefab
 DONE-email sarita
 DONE-remind lea to d ostoryboards for video for steven
@@ -56,35 +109,6 @@ DONE-remind lea to d ostoryboards for video for steven
 	
 
 
--buy the following particle effects
-	-https://www.assetstore.unity3d.com/#/content/4150
-	-https://www.assetstore.unity3d.com/#/content/7710
--get rid of pink bar or cover it...
-	-make sure you turn off paricle effects
--green word bubble problem...
--does music freeze during transition????
--delete PDCharacterStats
-	-delete other useless files..
--see if you can do a loading screen...
--do some testing on kinect overheating issue...
--consider making harder/easier for first set of choices random
-	-lul, need to hardcode this...
--fix the dot issue in performance graph
-	-does not seem to happen on OSX under editor... great.. could be ogl buggy artifact?
--microsoft kinect GoodPosition does not work. Need better way to determine if player is out of frame
-	-in addition, do not contort the figure if something bad happens.
-		-:(((
-	DONE-pressing key should toggle between 3 states, no warning ever, only warning on bad kinect input, always show warning
--restart the game if no one is playing after 30 seconds
-	-maybe black out the screne before you restart so people don't see the artifacts
-
-
--switch to 16x9
--too much time between premature death and choice
--there is a bug in sctore counting
--graph should be more visually apparent if performance was good or bad (just looks like a squiggly line...)
-	-I think more smoohtnig can help this out and better colors...
-		-maybe add some grading grace during pose changes
 
 DONE-upload new builds
 DONE-talk to steven about video..	
