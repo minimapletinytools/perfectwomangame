@@ -1,4 +1,7 @@
-Required hardware: 
+::UNLOCK REQUIREMENTS::
+-
+
+::Required hardware::
 Kinect
 at least 10 feet of space
 Big screen (TV or projector) so you can read smaller text when standing 10 feet away from screen
@@ -8,7 +11,7 @@ Install Zigfu plugin: zigfu.com
 Plug in Kinect
 Open Perfect PERFECTWOMAN_IGF_MAC_10-15
 
-
+ 
 Required hardware: 
 Kinect
 at least 10 feet of space
@@ -31,6 +34,8 @@ Perfect Woman features a branching decision tree which serves to create a narrat
 ::NEW INTERFACE ****::
 
 ::TODO XI::
+-remove pose weight from POSE
+-age 5 should really be age like... 12
 -new game plan
 	-set up meta Manager
 		-unlock
@@ -49,20 +54,18 @@ Perfect Woman features a branching decision tree which serves to create a narrat
 				-call at end of game
 			-load_game
 				-call at begining...
-				
+
 -delete gamemanager and interface manager
-DONE-NIM should be owned by NormalPlayManager
+
 -buy the following particle effects
 	-https://www.assetstore.unity3d.com/#/content/4150
 	-https://www.assetstore.unity3d.com/#/content/7710
-DONE-get rid of pink bar or cover it...
+
 	-make sure you turn off paricle effects
 -green word bubble problem...
 -does music freeze during transition????
 -see if you can do a loading screen...
-DONE-delete PDCharacterStats
-	-delete other useless files..
-DONE???-do some testing on kinect overheating issue...
+
 -consider making harder/easier for first set of choices random
 	-lul, need to hardcode this...
 -fix the dot issue in performance graph
@@ -85,6 +88,12 @@ DONE???-do some testing on kinect overheating issue...
 
 -add hands & feet to meta data for characters
 	-it wouldn't be the end of the world if you had to do this procedurally...
+
+DONE-NIM should be owned by NormalPlayManager
+DONE-get rid of pink bar or cover it...
+DONE-delete PDCharacterStats
+	-delete other useless files..
+DONE???-do some testing on kinect overheating issue...
 DONE-put in reading for limb extremeties
 DONE-make sure you did not break testing scene with your new bodymanager changes
 DONE-make sure you keep calling update on particles during cutscene
