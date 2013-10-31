@@ -43,8 +43,9 @@ public class SparkleStarFlashParticle
 		mEmitter = new FlatParticleEmitter()
 		{
 			UseColor = true,
-			StartColor = new Color(1,1,1,1),
-			EndColor = new Color(1,1,1,0)
+			StartColor = new Color(1,1,1,0.65f),
+			EndColor = new Color(1,1,1,0),
+			Gravity = new Vector3(0,-100,0)
 		};
 		
 		foreach(string e in mParticleTypes)
@@ -65,8 +66,13 @@ public class SparkleStarFlashParticle
 	
 	public void emit_point(float grade, Vector3 position)
 	{
-		for(int i = 0; i < 100*grade; i++)
-			create_particle("gold",position);
+		
+		if(grade > 0.8f)
+			for(int i = 0; i < 10*grade; i++)
+				create_particle("gold",position);
+		if(grade > 0.5f)
+			for(int i = 0; i < 40*grade; i++)
+				create_particle("silver",position);
 	}
 	
 	public void create_particle(string aType, Vector3 position)
@@ -75,12 +81,18 @@ public class SparkleStarFlashParticle
 		var cache = mCachedParticles[aType];
 		if(!cache.has_particle())
 		{
-			var newPart = new FlatElementImage(get_color_texture(new Color(1,0.8f,0,1)),new Vector2(50,50),1000);
+			Texture2D tex = null;
+			if(aType == "gold")
+				tex = ManagerManager.Manager.mNewRef.partGold;
+			if(aType == "silver")
+				tex = ManagerManager.Manager.mNewRef.partSilver;
+			var newPart = new FlatElementImage(tex,new Vector2(50,50),1000);
 			foreach (Renderer f in newPart.PrimaryGameObject.GetComponentsInChildren<Renderer>())	
 				f.gameObject.layer = ManagerManager.Manager.mBackgroundManager.mBackgroundLayer;
 			cache.return_particle(newPart);
 		}
-		mEmitter.add_particle(cache.take_particle(),position,Random.insideUnitCircle*500,1,"gold");
+		var part = mEmitter.add_particle(cache.take_particle(),position,Random.insideUnitCircle*1000,0.7f,aType);
+		
 	}
 	
 	public void update(float aDelta)
@@ -166,7 +178,7 @@ public class FlatParticleEmitter : FlatElementBase
 		add_particle(image,aPos,aVel,aLifetime,aId);
 	}
 	
-	public void add_particle(FlatElementBase aParticle, Vector3 aPos, Vector3 aVel, float aLifetime, string aId)
+	public FlatSubParticle add_particle(FlatElementBase aParticle, Vector3 aPos, Vector3 aVel, float aLifetime, string aId)
 	{
 		FlatSubParticle addMe = new FlatSubParticle();
 		addMe.id = aId;
@@ -175,9 +187,10 @@ public class FlatParticleEmitter : FlatElementBase
 		addMe.element = aParticle;
 		addMe.timer = new QuTimer(0,aLifetime);
 		mParticles.AddLast(addMe);
+		return addMe;
 	}
 	
-	Vector3 Gravity {get; set;}
+	public Vector3 Gravity {get; set;}
 	
 	public bool UseColor {get; set;}
 	public Color StartColor {get; set;}

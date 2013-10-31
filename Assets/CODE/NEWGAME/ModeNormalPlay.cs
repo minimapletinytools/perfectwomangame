@@ -35,6 +35,8 @@ public class ModeNormalPlay
 	ChoiceHelper mChoiceHelper;
 	public NewInterfaceManager mInterfaceManager = null;
 	
+	AdvancedGrading mGrading = new AdvancedGrading();
+	
 	public ModeNormalPlay(NewGameManager aNgm)
 	{
 		NGM = aNgm;
@@ -130,7 +132,7 @@ public class ModeNormalPlay
 		if(GS == NormalPlayGameState.PLAY)
 		{		
 			if(Input.GetKeyDown(KeyCode.P))
-				mParticles.create_particles();
+				mParticles.create_particles(mGrading);
 	
 			update_PLAY();
 			if(Input.GetKeyDown(KeyCode.Alpha0))
@@ -172,8 +174,9 @@ public class ModeNormalPlay
 			
 			if(PercentTimeCompletion > 0.01f && NGM.CurrentPoseAnimation.does_pose_change(Time.time,Time.deltaTime))
 			{
-				mParticles.create_particles();
+				mParticles.create_particles(mGrading);
 			}
+			
 			
             float grade = ProGrading.grade_pose(NGM.CurrentPose, NGM.CurrentTargetPose);
 			grade = ProGrading.grade_to_perfect(grade);
@@ -181,7 +184,10 @@ public class ModeNormalPlay
 			if(Input.GetKey(KeyCode.A))
 			{
 				grade = 1;
+				mGrading.fake_update(0);
 			}
+			else
+				mGrading.update(NGM);
 			
 			float newGrade = mLastGrade*0.95f + grade*0.05f;
 			if(newGrade < mLastGrade)

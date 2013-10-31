@@ -45,11 +45,11 @@ public class ProGrading {
 	{
 		Dictionary<ZigJointId,float> r = new Dictionary<ZigJointId, float>();
 		
-		float weightsum = 0;
+		float weightSum = 0;
         float gradesum = 0;
         string output = "";
 		foreach (PoseElement e in A.mElements)
-            weightsum += B.find_element(e.joint).weight;
+            weightSum += B.find_element(e.joint).weight;
         foreach (PoseElement e in A.mElements)
         {
             PoseElement bPose = B.find_element(e.joint);
@@ -58,7 +58,7 @@ public class ProGrading {
             float diff = target - actual;
             while (diff > 180) diff -= 360;
             while(diff < -180) diff += 360;
-            r[e.joint] = diff * diff * bPose.weight; ///weightSum;
+            r[e.joint] = diff;
         }
         return r;
 	}
