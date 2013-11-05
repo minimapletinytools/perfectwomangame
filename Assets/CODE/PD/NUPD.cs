@@ -83,6 +83,8 @@ namespace NUPD
 		public CharIndexContainerString HardConnections{get; set;}
 		public CharIndexContainerString EasyConnections{get; set;}
 		public Color CharacterOutlineColor {get; set;}
+		public float BPM {get; set;}
+		public float BPMOFFSET {get; set;}
 		
 		public CharacterInformation()
 		{
@@ -209,6 +211,10 @@ namespace NUPD
 				} else if (first == "COLOR"){
 					ci.CharacterOutlineColor = 
 						new Color32((byte)System.Convert.ToInt32(sp[1]),(byte)System.Convert.ToInt32(sp[2]),(byte)System.Convert.ToInt32(sp[3]),(byte)System.Convert.ToInt32(sp[4]));
+				} else if (first == "BPM"){
+					ci.BPM = (float)System.Convert.ToDouble(sp[1]);
+					if(sp.Length > 2)
+						ci.BPMOFFSET = (float)System.Convert.ToDouble(sp[2]);
 				}
 				
 				if(keywords.Contains(first))
