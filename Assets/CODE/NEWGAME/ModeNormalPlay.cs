@@ -178,16 +178,9 @@ public class ModeNormalPlay
 			}
 			
 			
-            float grade = ProGrading.grade_pose(NGM.CurrentPose, NGM.CurrentTargetPose);
+            float grade = ProGrading.grade_pose(mManager.mBodyManager.get_current_pose(),NGM.CurrentTargetPose);
 			grade = ProGrading.grade_to_perfect(grade);
-			
-			if(Input.GetKey(KeyCode.A))
-			{
-				grade = 1;
-				mGrading.fake_update(0);
-			}
-			else
-				mGrading.update(NGM);
+			mGrading.update(mManager.mBodyManager.get_current_pose(),NGM.CurrentTargetPose);
 			
 			float newGrade = mLastGrade*0.95f + grade*0.05f;
 			if(newGrade < mLastGrade)
@@ -206,7 +199,7 @@ public class ModeNormalPlay
 		{
 			if(NGM.CurrentTargetPose != null){
 				mManager.mTransparentBodyManager.set_target_pose(NGM.CurrentTargetPose);
-	            float grade = ProGrading.grade_pose(NGM.CurrentPose, NGM.CurrentTargetPose);
+	            float grade = ProGrading.grade_pose(mManager.mBodyManager.get_current_pose(),NGM.CurrentTargetPose);
 				grade = ProGrading.grade_to_perfect(grade);
 				
 				//this is a total hack, but we don't use mTotalScore for the fetus anyways

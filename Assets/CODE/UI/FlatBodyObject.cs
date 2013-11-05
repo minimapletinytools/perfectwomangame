@@ -411,7 +411,15 @@ public class FlatBodyObject : FlatElementBase
     Vector3 get_offset_of_plane(Transform aGo)
     {
 		//NOTE this assumes plane is last child which it is...
-        Transform plane = aGo.transform.GetChild(aGo.childCount-1).transform;
+        Transform plane = null;
+		for(int i = 0; i < aGo.childCount; i++)
+		{
+			if(aGo.GetChild(i).gameObject.GetComponent<MeshFilter>() != null)
+			{
+				plane = aGo.GetChild(i);
+				break;
+			}
+		}
         if (plane != null)
             return plane.position - aGo.transform.position;
 		return Vector3.zero; //used for extremities

@@ -15,12 +15,12 @@ public class AdvancedGrading
 		
 	}
 	
-	public void update(NewGameManager aGame)
+	public void update(Pose aCurrent, Pose aTarget)
 	{
 		
 		//TODO make global??
 		float lambda = GRADE_INTERP;
-		Dictionary<ZigJointId,float> newScore = ProGrading.advanced_grade_pose(aGame.CurrentPose, aGame.CurrentTargetPose);
+		Dictionary<ZigJointId,float> newScore = ProGrading.advanced_grade_pose(aCurrent, aTarget);
 		if(mCurrentScore == null)
 			mCurrentScore = newScore;
 		mLastScore = mCurrentScore;

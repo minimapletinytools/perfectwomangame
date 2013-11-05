@@ -33,7 +33,20 @@ public class BodyManager : FakeMonoBehaviour {
         }
 
     }
-
+	
+	public Pose get_current_pose()
+	{
+		Pose p = new Pose();
+        foreach (KeyValuePair<ZigJointId, GameObject> e in mFlat.mParts)
+        {
+            PoseElement pe = new PoseElement();
+            pe.joint = e.Key;
+            pe.angle = e.Value.transform.rotation.eulerAngles.z;
+            p.mElements.Add(pe);
+        }	
+        return p;
+	}
+	
     public void set_layer(int layer)
     {
         mLayer = layer;
@@ -114,15 +127,7 @@ public class BodyManager : FakeMonoBehaviour {
     {
         if (aManual)
         {
-            Pose p = new Pose();
-            foreach (KeyValuePair<ZigJointId, GameObject> e in mFlat.mParts)
-            {
-                PoseElement pe = new PoseElement();
-                pe.joint = e.Key;
-                pe.angle = e.Value.transform.rotation.eulerAngles.z;
-                p.mElements.Add(pe);
-            }	
-            ProGrading.write_pose_to_file(p, aFilename);
+            ProGrading.write_pose_to_file(get_current_pose(), aFilename);
         }
         else
         {
