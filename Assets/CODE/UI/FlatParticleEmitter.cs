@@ -86,7 +86,7 @@ public class SparkleStarFlashParticle
 				tex = ManagerManager.Manager.mNewRef.partGold;
 			if(aType == "silver")
 				tex = ManagerManager.Manager.mNewRef.partSilver;
-			var newPart = new FlatElementImage(tex,new Vector2(50,50),1000);
+			var newPart = new FlatElementImage(tex,new Vector2(60,60),1000);
 			foreach (Renderer f in newPart.PrimaryGameObject.GetComponentsInChildren<Renderer>())	
 				f.gameObject.layer = ManagerManager.Manager.mBackgroundManager.mBackgroundLayer;
 			cache.return_particle(newPart);
