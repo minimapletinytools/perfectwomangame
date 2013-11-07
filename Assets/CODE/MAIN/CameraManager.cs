@@ -10,7 +10,8 @@ public class CameraManager : FakeMonoBehaviour {
     public EdgeDetectEffect TransparentBodyCameraEdgeEffect { get; private set; }
     public Camera BackgroundCamera { get; private set; } //layer 3
     public Camera ForegroundCamera { get; private set; } //layer 4
-
+	
+	
     GameObject ImageEffects { get; set; }
 
     public Camera[] AllCameras { get { return new Camera[] { MainBodyCamera,TransparentBodyCamera,BackgroundCamera,ForegroundCamera};} }
