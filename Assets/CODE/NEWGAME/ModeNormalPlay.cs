@@ -451,11 +451,20 @@ public class ModeNormalPlay
 		//TODO these bottom two functions should be absoredb by ChoiceHelper
 		//lol this is a dumb hack to not choose the missing character
 		var chars = new CharacterIndex(CurrentPerformanceStat.Character.LevelIndex+1,3).Neighbors;
+		
+		//TODO DELETE no longer have perfect
 		var perfs = chars.Select(e=>NGM.CharacterHelper.Characters[e].Perfect).ToList();
 		mInterfaceManager.set_bb_choice_perfectness(perfs);
+		
+		
+		//TODO only show unlocked BB Stuff
+		//mManager.mMetaManager.UnlockManager.is_unlocked()
+		//TODO tell interfacemanager how many choices we want
 		mInterfaceManager.set_bb_choice_bodies(NGM.CurrentCharacterIndex);
+		
+		mInterfaceManager.set_bb_for_choosing();	
+		
 		mManager.mMusicManager.fade_in_extra_music("choiceMusic");
-		mInterfaceManager.set_for_CHOICE();	
 	}
 	
 	

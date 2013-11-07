@@ -70,4 +70,9 @@ public class UnlockManager
 				}
 		}
 	}
+	
+	public int is_unlocked(CharacterIndex aIndex)
+	{
+		return mUnlocked.unlockedCharacters[aIndex];
+	}
 }

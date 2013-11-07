@@ -9,7 +9,7 @@ public class ChoiceHelper
 	
 	
     Pose[] mChoicePoses = null;
-	Pose[] mPossibleChoicePoses;
+	Pose[] mPossibleChoicePoses; //we randomly choose poses from here to populate mChoicePoses
 	
 	float[] ChoosingPercentages
     { get; set; }
@@ -22,11 +22,11 @@ public class ChoiceHelper
 	
 	public ChoiceHelper()
 	{
-		load_choice_poses();
+		load_possible_choice_poses();
 	}
 	
 	//
-	public void load_choice_poses()
+	public void load_possible_choice_poses()
 	{
 		mPossibleChoicePoses = new Pose[ManagerManager.Manager.mReferences.mPossiblePoses.Length];
         for (int i = 0; i < mPossibleChoicePoses.Length; i++)

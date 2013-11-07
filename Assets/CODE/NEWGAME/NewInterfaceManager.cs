@@ -833,11 +833,6 @@ public class NewInterfaceManager {
 		mLastCutsceneChain = TED.LastEventKeyAdded;
 	}
 	
-	public void set_for_CHOICE()
-	{
-		//TODO
-		set_bb_for_choosing();
-	}
 	
 	//returns amount of time this will take
 	public TimedEventDistributor.TimedEventChain set_for_DEATH(CharacterIndex aChar)
