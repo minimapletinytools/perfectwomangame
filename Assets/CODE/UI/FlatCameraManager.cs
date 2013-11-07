@@ -6,7 +6,17 @@ public class FlatCameraManager{
     public Camera Camera{ get; private set; }
     public CameraInterpolator Interpolator
     { get; private set; }
-
+	
+	public float CameraDepth
+	{
+		get{
+			return Camera.depth;
+		}
+		set{
+			Camera.depth = value;
+		}
+	}
+	
     public Vector3 Center
     {
         get;
