@@ -136,7 +136,7 @@ public class FlatBodyObject : FlatElementBase
 
     public IEnumerable<FlatBodyObject> load_sequential(CharacterData.CharacterDataImages aImages, CharacterData.CharacterDataSizes aSizes)
     {
-        //TODOgit 
+        
         GameObject head = create_object(ZigJointId.Neck, aImages.head, aSizes.mLimbSizes[0], aSizes.mMountingPositions[0]);
         yield return null;
         GameObject leftLowerArm = create_object(ZigJointId.LeftElbow, aImages.leftLowerArm, aSizes.mLimbSizes[1], aSizes.mMountingPositions[1]);
@@ -207,16 +207,20 @@ public class FlatBodyObject : FlatElementBase
         relations.Add(new KeyValuePair<ZigJointId, ZigJointId>(ZigJointId.Neck, ZigJointId.Torso));
 		
 		
-		/* TODO
+		
 		relations.Add(new KeyValuePair<ZigJointId, ZigJointId>(ZigJointId.LeftHand, ZigJointId.LeftElbow));
 		relations.Add(new KeyValuePair<ZigJointId, ZigJointId>(ZigJointId.RightHand, ZigJointId.RightElbow));
 		relations.Add(new KeyValuePair<ZigJointId, ZigJointId>(ZigJointId.LeftFoot, ZigJointId.LeftKnee));
 		relations.Add(new KeyValuePair<ZigJointId, ZigJointId>(ZigJointId.RightFoot, ZigJointId.RightKnee));
-		 */ 
+		 
 
         foreach (KeyValuePair<ZigJointId, ZigJointId> e in relations)
         {
+			
             jointObject[e.Key].transform.parent = jointObject[e.Value].transform;
+			
+			
+			try{
             jointObject[e.Key].transform.position =
                 jointObject[e.Value].transform.position
                 + get_offset_of_plane(jointObject[e.Value].transform)
@@ -224,6 +228,13 @@ public class FlatBodyObject : FlatElementBase
                 + get_Z_offset(e.Key) 
                 - get_Z_offset(e.Value);
 			//jointObject[e.Key].GetComponentInChildren<Renderer>().material.renderQueue = (int)(get_Z_offset(e.Key).z*(10));
+			}
+			catch
+			{
+				//this should only happen for missing hand dots right now
+				//put the hand on the elbow
+				jointObject[e.Key].transform.position = jointObject[e.Value].transform.position;
+			}
 
         }
 
@@ -266,6 +277,7 @@ public class FlatBodyObject : FlatElementBase
 
 
     //useful
+	//NOTE this does not support extremeties
     void create_body(CharacterTextureBehaviour aChar)
     {
         GameObject torso = create_object(ZigJointId.Torso, aChar.torso, aChar.atTorso);
@@ -399,7 +411,8 @@ public class FlatBodyObject : FlatElementBase
 	
 	public GameObject create_extremety(ZigJointId aId)
 	{
-		return new GameObject("genExtremety");
+		mParts[aId] = new GameObject("genExtremety");
+		return mParts[aId];
 	}
 
 

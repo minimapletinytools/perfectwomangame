@@ -39,10 +39,16 @@ public class BodyManager : FakeMonoBehaviour {
 		Pose p = new Pose();
         foreach (KeyValuePair<ZigJointId, GameObject> e in mFlat.mParts)
         {
-            PoseElement pe = new PoseElement();
-            pe.joint = e.Key;
-            pe.angle = e.Value.transform.rotation.eulerAngles.z;
-            p.mElements.Add(pe);
+			if( e.Key != ZigJointId.LeftHand &&
+				e.Key != ZigJointId.RightHand &&
+				e.Key != ZigJointId.LeftFoot &&
+				e.Key != ZigJointId.RightFoot )
+			{
+	            PoseElement pe = new PoseElement();
+	            pe.joint = e.Key;
+	            pe.angle = e.Value.transform.rotation.eulerAngles.z;
+	            p.mElements.Add(pe);
+			}
         }	
         return p;
 	}
