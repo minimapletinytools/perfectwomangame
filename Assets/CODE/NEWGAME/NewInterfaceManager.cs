@@ -369,7 +369,7 @@ public class NewInterfaceManager {
 			mBBChoices[i].Character = all[i];
 			mBBChoices[i].set_actual_character(all[i]);
 			mBBChoices[i].set_difficulty(mManager.mCharacterBundleManager.get_character_helper().Characters[all[i]].Difficulty);
-			//TODO set icons for choice
+
 			
 			//OLD when using mini char icons we took from PB
 			//mBBChoices[i].return_body(mPBCharacterIcons[all[i].Index].take_body()); //make sure to return the body
@@ -417,10 +417,7 @@ public class NewInterfaceManager {
 	}
 	//called by ChoiceHelper
 	public void set_bb_choice_percentages(int aIndex, float aPercent)
-	{
-		//int index = aIndex == 3 ? 2 : aIndex; //TODO delete this
-		if(aIndex == 3) return; //TODO delete this
-		
+	{	
 		int index = aIndex;
 		mBBChoices[index].Percentage = aPercent;
 	}
@@ -1242,7 +1239,6 @@ public class NewInterfaceManager {
 			,0).then_one_shot(
 				delegate()
 				{
-					//TODO create credits text and nonsense
 					int counter = 0;
 					foreach(string e in GameConstants.credits.Reverse())
 					{
