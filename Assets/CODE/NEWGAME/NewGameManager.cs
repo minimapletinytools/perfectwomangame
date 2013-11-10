@@ -6,7 +6,7 @@ public class NewGameManager : FakeMonoBehaviour
 {
 	public enum GameState
 	{
-		NONE,MENU,NORMAL,CHALLENGE,TEST
+		NONE,MENU,NORMAL,CHALLENGE,TEST,SIMIAN
 	}
 
 		
@@ -49,6 +49,7 @@ public class NewGameManager : FakeMonoBehaviour
 	ModeTesting mModeTesting;
 	ModeChallenge mModeChallenge;
 	ModeNormalPlay mModeNormalPlay;
+	ModePerfectSimian mModeSimian;
 	
 	public void set_testing()
 	{
@@ -65,13 +66,24 @@ public class NewGameManager : FakeMonoBehaviour
 		mModeTesting = new ModeTesting(this);
 		mModeChallenge = new ModeChallenge(this);
 		mModeNormalPlay = new ModeNormalPlay(this);
+		mModeSimian = new ModePerfectSimian(this);
 	
 	}
 	
 	public void start_game()
 	{
-		GS = GameState.NORMAL;
-		mModeNormalPlay.initialize_fetus();
+		
+		if(mManager.mSimianMode)
+		{
+			Debug.Log("simian mode hehe");
+			GS = GameState.SIMIAN;
+			mModeSimian.initialize();
+		}
+		else
+		{
+			GS = GameState.NORMAL;
+			mModeNormalPlay.initialize_fetus();
+		}
 	}
 	
 	public bool character_changed_listener(CharacterLoader aCharacter)
@@ -83,6 +95,8 @@ public class NewGameManager : FakeMonoBehaviour
 		
 		if(GS == GameState.NORMAL)
 			mModeNormalPlay.character_loaded();
+		else if(GS == GameState.SIMIAN)
+			mModeSimian.character_loaded();
 		//TODO testing, challenge
 		
 		if(aCharacter.Name == "0-1") //in this very special case, we keep the bundle to load the death cutscene
@@ -107,15 +121,19 @@ public class NewGameManager : FakeMonoBehaviour
 			mModeNormalPlay.update();
 		else if (GS == GameState.TEST)
 			mModeTesting.update();
+		else if(GS == GameState.SIMIAN)
+			mModeSimian.update();
         
 		
-		//reader connected and no user
-		if(!mManager.mZigManager.has_user() && mManager.mZigManager.is_reader_connected() == 2)
-			mIdleTimer.update(Time.deltaTime);
-		else mIdleTimer.reset();
-		if(mIdleTimer.isExpired())
-			mManager.restart_game();
-		
+		if(GS != GameState.SIMIAN)
+		{
+			//reader connected and no user
+			if(!mManager.mZigManager.has_user() && mManager.mZigManager.is_reader_connected() == 2)
+				mIdleTimer.update(Time.deltaTime);
+			else mIdleTimer.reset();
+			if(mIdleTimer.isExpired())
+				mManager.restart_game();
+		}
 	}
 	
 	
