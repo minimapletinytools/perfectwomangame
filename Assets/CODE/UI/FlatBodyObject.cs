@@ -68,6 +68,25 @@ public class FlatBodyObject : FlatElementBase
 		return r;
 	}
 	
+	public Pose get_pose()
+	{
+		Pose p = new Pose();
+        foreach (KeyValuePair<ZigJointId, GameObject> e in mParts)
+        {
+			if( e.Key != ZigJointId.LeftHand &&
+				e.Key != ZigJointId.RightHand &&
+				e.Key != ZigJointId.LeftAnkle &&
+				e.Key != ZigJointId.RightAnkle )
+			{
+	            PoseElement pe = new PoseElement();
+	            pe.joint = e.Key;
+	            pe.angle = e.Value.transform.rotation.eulerAngles.z;
+	            p.mElements.Add(pe);
+			}
+        }	
+        return p;
+	}
+	
 
     public void match_body_location_to_projection(ZigManager aManager)
     {
@@ -163,8 +182,8 @@ public class FlatBodyObject : FlatElementBase
 		
 		GameObject leftHand = create_extremety(ZigJointId.LeftHand);
 		GameObject rightHand = create_extremety(ZigJointId.RightHand);
-		GameObject leftFoot = create_extremety(ZigJointId.LeftFoot);
-		GameObject rightFoot = create_extremety(ZigJointId.RightFoot);
+		GameObject leftAnkle = create_extremety(ZigJointId.LeftAnkle);
+		GameObject rightAnkle = create_extremety(ZigJointId.RightAnkle);
 		
 		
 
@@ -185,8 +204,8 @@ public class FlatBodyObject : FlatElementBase
 		
 		jointObject[ZigJointId.LeftHand] = leftHand;
 		jointObject[ZigJointId.RightHand] = rightHand;
-		jointObject[ZigJointId.LeftFoot] = leftFoot;
-		jointObject[ZigJointId.RightFoot] = rightFoot;
+		jointObject[ZigJointId.LeftAnkle] = leftAnkle;
+		jointObject[ZigJointId.RightAnkle] = rightAnkle;
 
         //these two are special
         torso.transform.position = waist.transform.position;
@@ -210,8 +229,8 @@ public class FlatBodyObject : FlatElementBase
 		
 		relations.Add(new KeyValuePair<ZigJointId, ZigJointId>(ZigJointId.LeftHand, ZigJointId.LeftElbow));
 		relations.Add(new KeyValuePair<ZigJointId, ZigJointId>(ZigJointId.RightHand, ZigJointId.RightElbow));
-		relations.Add(new KeyValuePair<ZigJointId, ZigJointId>(ZigJointId.LeftFoot, ZigJointId.LeftKnee));
-		relations.Add(new KeyValuePair<ZigJointId, ZigJointId>(ZigJointId.RightFoot, ZigJointId.RightKnee));
+		relations.Add(new KeyValuePair<ZigJointId, ZigJointId>(ZigJointId.LeftAnkle, ZigJointId.LeftKnee));
+		relations.Add(new KeyValuePair<ZigJointId, ZigJointId>(ZigJointId.RightAnkle, ZigJointId.RightKnee));
 		 
 
         foreach (KeyValuePair<ZigJointId, ZigJointId> e in relations)

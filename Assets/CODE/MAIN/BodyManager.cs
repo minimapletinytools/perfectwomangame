@@ -34,23 +34,10 @@ public class BodyManager : FakeMonoBehaviour {
 
     }
 	
+	
 	public Pose get_current_pose()
 	{
-		Pose p = new Pose();
-        foreach (KeyValuePair<ZigJointId, GameObject> e in mFlat.mParts)
-        {
-			if( e.Key != ZigJointId.LeftHand &&
-				e.Key != ZigJointId.RightHand &&
-				e.Key != ZigJointId.LeftFoot &&
-				e.Key != ZigJointId.RightFoot )
-			{
-	            PoseElement pe = new PoseElement();
-	            pe.joint = e.Key;
-	            pe.angle = e.Value.transform.rotation.eulerAngles.z;
-	            p.mElements.Add(pe);
-			}
-        }	
-        return p;
+		return mFlat.get_pose();
 	}
 	
     public void set_layer(int layer)

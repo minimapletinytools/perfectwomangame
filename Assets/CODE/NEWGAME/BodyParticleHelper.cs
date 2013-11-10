@@ -8,8 +8,8 @@ public class BodyParticleHelper
 	{
 		{ZigJointId.LeftHand,new ZigJointId[]{ZigJointId.LeftElbow,ZigJointId.LeftShoulder,ZigJointId.Torso}},
 		{ZigJointId.RightHand,new ZigJointId[]{ZigJointId.RightElbow,ZigJointId.RightShoulder,ZigJointId.Torso}},
-		{ZigJointId.LeftFoot,new ZigJointId[]{ZigJointId.LeftKnee,ZigJointId.LeftHip,ZigJointId.Waist}},
-		{ZigJointId.RightFoot,new ZigJointId[]{ZigJointId.RightKnee,ZigJointId.RightHip,ZigJointId.Waist}},
+		{ZigJointId.LeftAnkle,new ZigJointId[]{ZigJointId.LeftKnee,ZigJointId.LeftHip,ZigJointId.Waist}},
+		{ZigJointId.RightAnkle,new ZigJointId[]{ZigJointId.RightKnee,ZigJointId.RightHip,ZigJointId.Waist}},
 	};
 	
 	SparkleStarFlashParticle mParticles;
