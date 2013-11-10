@@ -1,28 +1,13 @@
-::UNLOCK REQUIREMENTS::
--
-
-::Required hardware::
+::INSTALLATION::
 Kinect
 at least 10 feet of space
 Big screen (TV or projector) so you can read smaller text when standing 10 feet away from screen
 
 Play game:
-Install Zigfu plugin: zigfu.com
-Plug in Kinect
-Open Perfect PERFECTWOMAN_IGF_MAC_10-15
-
- 
-Required hardware: 
-Kinect
-at least 10 feet of space
-Big screen (TV or projector) so you can read smaller text when standing 10 feet away from screen
-
-Play game:
-Install Zigfu plugin: zigfu.com
-If using Kinect for Windows (as oppose to the xbox 360 one) please install Kinect for Windows runtime drivers: http://www.microsoft.com/en-us/download/details.aspx?id=36997
-Plug in Kinect
-Open PERFECTWOMAN_IGF_WIN_10-15 > PW.exe
-
+-Install Zigfu plugin: zigfu.com
+-If on Windows and using Kinect for Windows (as oppose to the xbox 360 one) please install Kinect for Windows runtime drivers: http://www.microsoft.com/en-us/download/details.aspx?id=36997
+-Plug in Kinect
+-Open Perfect PERFECTWOMAN_IGF_MAC_10-15 (mac) or PERFECTWOMAN_IGF_WIN_10-15 > PW.exe (win)
 
 ::PWGAME DSECRIPTION::
 Perfect Woman is game inspired by the ubiquitous personality questionnaires featured in women’s magazines and the female roles they define. There are so many such roles emphasizing aspects of family, career, experience, sex and more. But these can not possibly characterize the depth and complexity of a woman's life. Perfect Woman uses these stereotypes as building blocks for you to be your OWN perfect woman.
@@ -31,27 +16,55 @@ The game is structured into progressive levels, each one representing a differen
 
 Perfect Woman features a branching decision tree which serves to create a narrative of the character's life. Past choices may make future choices more difficult. It's not always possible to be perfect at every stage in life, and that's perfectly finxqe.
 
-::NEW INTERFACE ****::
+::SOUND LIST::
+-generic
+		-FADE_IN
+		-FADE_OUT
+		-SWIPE_1/2/3/4 
+			-could be just one swiping sound, or could be different one depending on direction
+		-BUBBLE_APPEAR/DISSAPEAR
+			-do we really need this?
+		-ACHIEVEMENT_UNLOCKED
+	-play:
+		-per character CHANGE_1/2/3/4 (bad, ok, good, perfect) plays on target pose change
+			-based on how well you matched the pose
+		-COMPLETED_1/2/3/4 (bad, ok, good, perfect) 
+			-honestly just bad/perfect is enough here I think
+	-cutscene:
+		-changes (red/green bubbles)
+			-GOOD_CHANGES
+			-BAD_CHANGES 
+	-sunset:
+		-TODO design this...
+	-choosing:
+		-CHOICE_CHANGED
+		-CHOICE_CONFIRMED
+	-grave:
+		-SCORE_PER_CHARACTER_SUMMARY
+			-this is when it goes through each character and updates the score
+		-unlocking
+			-CHARACTER/FEATURE_UNLOCKED 
+				-TODO design this...
+
+
 
 ::TODO XI::
+-email chris charla
 -intro screeen
 	-give lea format for start screen
 	-silhouette for locked chars
 	-darker silhoutte for unlocked
 	-color for played characters
 	-be able to move all characters in start screen :D
--think about sunset scene and give lea some transition options	
--make lea a list of sounds
--do unlock stuff for choosing
+-PERFECT SIMIAN
+	
 -continous particles
 -try playing particles a fraction of a second before the pose changes
 -why is looping music pausing???? :((((
 -remove pose weight from POSE
 -age 5 should really be age like... 12
--start unlocking
 
-DONE-give lea a BPM format
-DONE/UGLY-solid dots
+
 
 -new game plan
 	-set up meta Manager
@@ -71,13 +84,8 @@ DONE/UGLY-solid dots
 				-call at end of game
 			-load_game
 				-call at begining...
--delete gamemanager and interface manager
 
-DONE-holding A in fetus scene should go to next stage but it does not
-IGNORE-buy the following particle effects
-	-https://www.assetstore.unity3d.com/#/content/4150
-	-https://www.assetstore.unity3d.com/#/content/7710
-	-make sure you turn off paricle effects
+
 
 -green word bubble problem...
 -does music freeze during transition????
@@ -102,8 +110,22 @@ IGNORE-buy the following particle effects
 	-I think more smoohtnig can help this out and better colors...
 		-maybe add some grading grace during pose changes
 
--add hands & feet to meta data for characters
+DONE-add hands & feet to meta data for characters
 	-it wouldn't be the end of the world if you had to do this procedurally...
+
+DONE-delete gamemanager and interface manager
+DONE-make lea a list of sounds
+DONE-holding A in fetus scene should go to next stage but it does not
+IGNORE-buy the following particle effects
+	-https://www.assetstore.unity3d.com/#/content/4150
+	-https://www.assetstore.unity3d.com/#/content/7710
+	-make sure you turn off paricle effects
+
+DONE-do unlock stuff for choosing
+DONE-start unlocking
+DONE-think about sunset scene and give lea some transition options	
+DONE-give lea a BPM format
+DONE/UGLY-solid dots
 
 DONE-NIM should be owned by NormalPlayManager
 DONE-get rid of pink bar or cover it...
