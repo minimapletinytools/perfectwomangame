@@ -17,6 +17,7 @@ public class ManagerManager : MonoBehaviour{
     //debug nonsense
 	//TODO DELET
     public bool mRecordMode = false;
+	public bool mSimianMode = false;
 	
     //constants
     public static int MANIPULATOR_LAYER = 8;
@@ -156,7 +157,7 @@ public class ManagerManager : MonoBehaviour{
 		Manager = null;
 		System.GC.Collect();
 		
-        Application.LoadLevel("kinect_test");
+        Application.LoadLevel(Application.loadedLevel);
     }
 
     //Screenshot nonsense
