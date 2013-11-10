@@ -15,6 +15,7 @@ public class SunsetManager
 	
 	
 	
+	
 	public void initialize()
 	{
 	}
@@ -27,4 +28,8 @@ public class SunsetManager
 		
 		TED.update(Time.deltaTime);
 	}
+	
+	FlatElementImage mBackground = null;
+	FlatElementImage mSun = null;
+	List<FlatElementImage> mCharacters = new List<FlatElementImage>();
 }
