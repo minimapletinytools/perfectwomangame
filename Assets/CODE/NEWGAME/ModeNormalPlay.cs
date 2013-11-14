@@ -580,16 +580,18 @@ public class ModeNormalPlay
 		{
 			int diff = CurrentPerformanceStat.Stats.Difficulty;
 			NGM.CurrentPoseAnimation = new PerformanceType(mManager.mCharacterBundleManager.get_pose(NGM.CurrentCharacterIndex,diff),NGM.CurrentCharacterIndex);
+			NGM.CurrentPoseAnimation.BPM = NGM.CharacterHelper.Characters[NGM.CurrentCharacterIndex].CharacterInfo.BPM;
+			NGM.CurrentPoseAnimation.Offset = NGM.CharacterHelper.Characters[NGM.CurrentCharacterIndex].CharacterInfo.BPMOFFSET;
 			
 			//kind fast eh?
 			if(diff == 0)
-				NGM.CurrentPoseAnimation.ChangeTime = 2;
+				NGM.CurrentPoseAnimation.set_change_time(4);
 			else if(diff == 1)
-				NGM.CurrentPoseAnimation.ChangeTime = 2;
+				NGM.CurrentPoseAnimation.set_change_time(2);
 			else if(diff == 2)
-				NGM.CurrentPoseAnimation.ChangeTime = 1;
+				NGM.CurrentPoseAnimation.set_change_time(1);
 			else if(diff == 3)
-				NGM.CurrentPoseAnimation.ChangeTime = 0.5f;
+				NGM.CurrentPoseAnimation.set_change_time(0.5f);
 			
 			NGM.CurrentTargetPose = NGM.CurrentPoseAnimation.get_pose(0);
 			//mManager.mTransparentBodyManager.set_target_pose(CurrentTargetPose);

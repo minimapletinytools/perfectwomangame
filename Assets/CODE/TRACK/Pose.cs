@@ -78,16 +78,19 @@ public class PerformanceType
 	{ get; set; }
 	public float ChangeTime
 	{ get; set; }
+	public float Offset 
+	{ get; set; }
 	protected PoseAnimation PA
 	{ get; set; }
 	
 	public PerformanceType(PoseAnimation aAnim, CharacterIndex aIndex)
 	{
 		PA = aAnim;
-		
 		PT = PType.SWITCH;
-		
+		Offset = 0;
+		BPM = 0;
 		ChangeTime = 4;
+		
 		/*
 		if(aIndex.LevelIndex == 0 || aIndex.LevelIndex == 1 || aIndex.LevelIndex == 7 )
 			PT = PType.STATIC;
@@ -104,18 +107,34 @@ public class PerformanceType
 	{
 		PA = aAnim;
 		PT = aType;
+		Offset = 0;
+		BPM = 0;
+		ChangeTime = 4;
 		
+	}
+	
+	
+	public void set_change_time(float aTarget)
+	{
+		if(BPM == 0)
+			ChangeTime = aTarget;
+		else
+		{
+			ChangeTime = Mathf.RoundToInt((aTarget/(BPM/60.0f))) * (BPM/60.0f);
+		}
 	}
 	
 	//TODO this function may need to change if you change get_pose...
 	//really get pose should cache the last returned pose...
 	public bool does_pose_change(float aTime, float aDelta)
 	{
+		aTime = aTime - Offset;
 		float changeTime = ChangeTime;
 		return ((int)(aTime/changeTime)) != ((int)((aTime-aDelta)/changeTime));
 	}
 	public bool does_pose_change_precoginitive(float aTime, float aDelta, float aPrecognition)
 	{
+		aTime = aTime - Offset;
 		aTime = aTime + aPrecognition;
 		float changeTime = ChangeTime;
 		return ((int)(aTime/changeTime)) != ((int)((aTime-aDelta)/changeTime));
@@ -123,6 +142,7 @@ public class PerformanceType
 	
 	public virtual Pose get_pose(float aTime)
 	{
+		aTime = aTime - Offset;
 		float changeTime = ChangeTime;
 		if(PT == PType.STATIC)
 		{
