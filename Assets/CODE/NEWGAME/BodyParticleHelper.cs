@@ -26,7 +26,8 @@ public class BodyParticleHelper
 		mParticles.update(aDelta);
 	}
 	
-	public void create_particles(AdvancedGrading aGrade)
+	
+	public void create_particles(AdvancedGrading aGrade, bool continuous = false)
 	{
 		ManagerManager man = ManagerManager.Manager;
 		NewGameManager ngm = man.mGameManager;
@@ -37,7 +38,11 @@ public class BodyParticleHelper
 		{
 			float score = ProGrading.grade_to_perfect(aGrade.joint_aggregate_score(e.Value));
 			output[e.Key] = score;
-			mParticles.emit_point(score,activeBody.mFlat.get_body_part_position(e.Key));
+			if(!continuous)
+				mParticles.emit_point(score,activeBody.mFlat.get_body_part_position(e.Key));
+			else
+				mParticles.emit_continuous(score,activeBody.mFlat.get_body_part_position(e.Key));
+			
 		}
 		
 		string s = "";

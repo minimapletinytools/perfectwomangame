@@ -172,10 +172,14 @@ public class ModeNormalPlay
 			NGM.CurrentTargetPose = NGM.CurrentPoseAnimation.get_pose(Time.time);
 			mManager.mTransparentBodyManager.set_target_pose(NGM.CurrentTargetPose);
 			
-			if(PercentTimeCompletion > 0.01f && NGM.CurrentPoseAnimation.does_pose_change(Time.time,Time.deltaTime))
+			if(PercentTimeCompletion > 0.01f)
 			{
-				mParticles.create_particles(mGrading);
+				mParticles.create_particles(mGrading,true);
+				if(NGM.CurrentPoseAnimation.does_pose_change_precoginitive(Time.time,Time.deltaTime,0.07f))
+					mParticles.create_particles(mGrading);
 			}
+			
+			
 			
 			
             float grade = ProGrading.grade_pose(mManager.mBodyManager.get_current_pose(),NGM.CurrentTargetPose);

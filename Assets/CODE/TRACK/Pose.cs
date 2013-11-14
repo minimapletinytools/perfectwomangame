@@ -114,6 +114,12 @@ public class PerformanceType
 		float changeTime = ChangeTime;
 		return ((int)(aTime/changeTime)) != ((int)((aTime-aDelta)/changeTime));
 	}
+	public bool does_pose_change_precoginitive(float aTime, float aDelta, float aPrecognition)
+	{
+		aTime = aTime + aPrecognition;
+		float changeTime = ChangeTime;
+		return ((int)(aTime/changeTime)) != ((int)((aTime-aDelta)/changeTime));
+	}
 	
 	public virtual Pose get_pose(float aTime)
 	{

@@ -35,12 +35,21 @@ public class SparkleStarFlashParticle
 {
 	
 	FlatParticleEmitter mEmitter;
+	FlatParticleEmitter mEmitter2;
 	Dictionary<string, CachedFlatParticles> mCachedParticles = new Dictionary<string, CachedFlatParticles>();
 	public string[] mParticleTypes = new string[]{"gold","silver","glow","red"};
 	
 	public SparkleStarFlashParticle()
 	{
 		mEmitter = new FlatParticleEmitter()
+		{
+			UseColor = true,
+			StartColor = new Color(1,1,1,0.65f),
+			EndColor = new Color(1,1,1,0),
+			Gravity = new Vector3(0,-100,0)
+		};
+		
+		mEmitter2 = new FlatParticleEmitter()
 		{
 			UseColor = true,
 			StartColor = new Color(1,1,1,0.65f),
@@ -66,13 +75,26 @@ public class SparkleStarFlashParticle
 	
 	public void emit_point(float grade, Vector3 position)
 	{
+		float ag = grade*grade;
 		
 		if(grade > 0.8f)
-			for(int i = 0; i < 10*grade; i++)
+			for(int i = 0; i < 10*ag; i++)
 				create_particle("gold",position);
+		/*
 		if(grade > 0.5f)
-			for(int i = 0; i < 40*grade; i++)
+			for(int i = 0; i < 40*ag; i++)
 				create_particle("silver",position);
+				*/
+	}
+	
+	public void emit_continuous(float grade, Vector3 position)
+	{
+		float ag = grade*grade;
+		
+		if(grade > 0.5f)
+			for(int i = 0; i < 40*ag; i++)
+				if(Random.value < 0.02f)
+					create_particle("silver",position);
 	}
 	
 	public void create_particle(string aType, Vector3 position)
@@ -87,11 +109,17 @@ public class SparkleStarFlashParticle
 			if(aType == "silver")
 				tex = ManagerManager.Manager.mNewRef.partSilver;
 			var newPart = new FlatElementImage(tex,new Vector2(60,60),1000);
+			if(aType == "silver")
+			{
+				newPart.HardScale = 0.5f*(new Vector3(1,1,1));
+			}
 			foreach (Renderer f in newPart.PrimaryGameObject.GetComponentsInChildren<Renderer>())	
 				f.gameObject.layer = ManagerManager.Manager.mBackgroundManager.mBackgroundLayer;
 			cache.return_particle(newPart);
 		}
 		var part = mEmitter.add_particle(cache.take_particle(),position,Random.insideUnitCircle*1000,0.7f,aType);
+		if(aType == "silver")
+			part.timer = new QuTimer(0,0.2f);
 		
 	}
 	
