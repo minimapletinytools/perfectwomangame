@@ -59,8 +59,13 @@ DONE-email chris charla
 	-be able to move all characters in start screen :D
 -PERFECT SIMIAN
 -turn miniman into asset bundle for consistency
+	-make the bundle in ggfiles
+	-use mini_loaded_callback and asign it to a new character such as 0-1
+	-delete CharacterBehaviour nonsense in FlatElementImage
+DONE-make a way to start and skip fetus...
+-grading sholud be based on interpolated target position, not true target position.
 -particles
-	-make them look awesome 1
+	DONE-make them look awesome 1
 	-make them look awesome 2
 	DONE-continous particles
 	DONE-try playing particles a fraction of a second before the pose changes
