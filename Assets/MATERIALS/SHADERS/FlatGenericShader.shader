@@ -8,11 +8,12 @@ Category {
 	Tags { "Queue"="Transparent +100" "IgnoreProjector"="True" "RenderType"="Transparent" }
 	//Blend SrcAlpha OneMinusSrcAlpha
 	Blend SrcAlpha OneMinusSrcAlpha
+	//Blend One Zero
 	AlphaTest Greater .01
-	ColorMask RGB
+	ColorMask RGBA
 	Cull Off Lighting Off ZWrite Off Fog { Color (0,0,0,0) }
 	BindChannels {
-		Bind "Color", color
+		Bind "Color", color //do I really need this color nonsense???
 		Bind "Vertex", vertex
 		Bind "TexCoord", texcoord
 	}
@@ -57,7 +58,8 @@ Category {
 
 			half4 frag (v2f i) : COLOR
 			{
-				return 2.0f * i.color * _TintColor * tex2D(_MainTex, i.texcoord);
+				float4 c = 2.0f * i.color * _TintColor * tex2D(_MainTex, i.texcoord);
+				return c;
 			}
 			ENDCG 
 		}

@@ -38,6 +38,9 @@ public class ModeNormalPlay
 	public SunsetManager mSunsetManager = null;
 	public ChoosingManager mChoosingManager = null;
 	
+	public FlatCameraManager mFlatCamera;
+    HashSet<FlatElementBase> mElement = new HashSet<FlatElementBase>();
+	
 	AdvancedGrading mGrading = new AdvancedGrading();
 	
 	public ModeNormalPlay(NewGameManager aNgm)
@@ -51,12 +54,23 @@ public class ModeNormalPlay
 		
 		mInterfaceManager = new NewInterfaceManager(mManager);
 		mInterfaceManager.initialize();
+		//mInterfaceManager.mFlatCamera.set_render_texture_mode(true);
+		
 		mSunsetManager = new SunsetManager(mManager);
 		mSunsetManager.initialize();
 		mSunsetManager.mFlatCamera.set_render_texture_mode(true);
+		
 		mChoosingManager = new ChoosingManager(mManager);
 		mChoosingManager.initialize();
 		mChoosingManager.mFlatCamera.set_render_texture_mode(true);
+		
+		mFlatCamera = new FlatCameraManager(new Vector3(-2334,3545,0),10);
+		mFlatCamera.Camera.depth = 1000;
+		mFlatCamera.fit_camera_to_screen();
+		
+		/*FlatElementImage img = new FlatElementImage(mInterfaceManager.mFlatCamera.RT,0);
+		img.HardPosition = mFlatCamera.Center;
+		mElement.Add(img);*/
 	}
 	
 	
@@ -141,6 +155,18 @@ public class ModeNormalPlay
 		mInterfaceManager.Update();
 		mSunsetManager.update();
 		mChoosingManager.update();
+		
+		/*
+		RenderTexture.active = mInterfaceManager.mFlatCamera.RT;
+		mInterfaceManager.mFlatCamera.Camera.backgroundColor = new Color(1,1,1,0);
+		mInterfaceManager.mFlatCamera.Camera.clearFlags = CameraClearFlags.SolidColor;
+		mInterfaceManager.mFlatCamera.Camera.DoClear();
+		mInterfaceManager.mFlatCamera.Camera.Render();
+		RenderTexture.active = null;*/
+		
+		mFlatCamera.update(Time.deltaTime);
+        foreach (FlatElementBase e in mElement)
+            e.update(Time.deltaTime);     
 		
 		if(GS == NormalPlayGameState.PLAY)
 		{		

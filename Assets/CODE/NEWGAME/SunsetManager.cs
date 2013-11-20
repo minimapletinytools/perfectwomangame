@@ -16,7 +16,7 @@ public class SunsetManager
 	public void initialize()
 	{
 		TED = new TimedEventDistributor();
-		mFlatCamera = new FlatCameraManager(new Vector3(100000, -30000, 0), 10);
+		mFlatCamera = new FlatCameraManager(new Vector3(10000, -3000, 0), 10);
 		mFlatCamera.fit_camera_to_screen();
 	}
 	

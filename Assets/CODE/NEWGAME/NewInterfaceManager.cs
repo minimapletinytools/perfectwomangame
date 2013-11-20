@@ -553,9 +553,19 @@ public class NewInterfaceManager {
 			aPopup.set_text_color(GameConstants.UiWhite,true);
 		aPopup.set_background_color(useColor,true);
 	}
+	
+	
+	public void add_cutscene_particle_stream_new(CharacterIndex aTarget, PopupTextObject aPopup, float duration, bool aPositive)
+	{
+		//pop little guys up from bottom
+		//do a little bing with badges displaying new difficulty with sound effects
+		//move little guys back down
+	}
+	
+	//TODO delete and replace with above func.
 	public void add_cutscene_particle_stream(CharacterIndex aTarget, PopupTextObject aPopup, float duration, bool aPositive)
 	{
-		//TODO put back
+		add_cutscene_particle_stream_new(aTarget,aPopup,duration,aPositive);
 		return; 
 		
 		float delay = 0;
@@ -631,7 +641,7 @@ public class NewInterfaceManager {
 		TimedEventDistributor.TimedEventChain chain = TED.add_event(
 			delegate(float aTime)
 			{
-				to.SoftPosition = mFlatCamera.get_point(0.40f,yRelOffset); //fly in
+				to.SoftPosition = mFlatCamera.get_point(0,yRelOffset); //fly in
 				//to.HardPosition = mFlatCamera.get_point(0.40f,yRelOffset); //cut in
 				mElement.Add(to);
 				return true;

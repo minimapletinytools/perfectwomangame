@@ -4,6 +4,9 @@ using System.Linq;
 
 public static class GameConstants
 {
+	public static int CONTENT_WIDTH = 2880;
+	public static int CONTENT_HEIGHT = 1800;
+
 	
 	
 	public static int numberAges = 10; //fetus, 5, 16, 27, 34, 45, 60, 85, 100, DEAD
