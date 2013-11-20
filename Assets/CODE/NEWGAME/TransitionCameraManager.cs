@@ -121,9 +121,57 @@ public class TransitionCameraManager : FakeMonoBehaviour
 	}
 	
 	
+	public void start_screen_loaded_callback(AssetBundle aBundle, string aBundleName)
+	{
+		NewMenuReferenceBehaviour refs = mManager.mNewRef;
+		
+		TED.add_event(fade_in,0);
+		
+		CharacterLoader loader = new CharacterLoader();
+        loader.complete_load_character(aBundle,aBundleName);
+		mManager.mBackgroundManager.character_changed_listener(loader);
+		mManager.mMusicManager.character_changed_listener(loader);
+		
+		//TODO draw silhouette of locked characters
+		//TODO enable unlocked characters in background manager
+		
+		mMessageText = new FlatElementText(refs.genericFont,60,"",1);
+		mMessageText.HardPosition = mFlatCamera.Center + new Vector3(0,400,0);
+		mElement.Add(mMessageText);
+		int dState = 0; //0-started, 1-kinect not found
+		TED.add_event(
+			delegate(float aTime){
+			
+				/*
+				if(!mManager.mZigManager.is_reader_connected())
+					dState = 1;
+				else if(mManager.mZigManager.has_user() && false) //TODO test if user is in frame
+					dState = 4;
+				else if(mManager.mZigManager.has_user()) //TODO test if user is found
+					dState = 3;
+				else
+					dState = 2;
+					*/
+				if((aTime > 5 && mManager.mZigManager.has_user() && mManager.mCharacterBundleManager.is_initial_loaded()) ||
+					Input.GetKeyDown(KeyCode.Alpha0) || Input.GetKeyDown(KeyCode.Alpha9) ||
+					mForceStart){
+					go_to_fetus(0); 
+					return true;
+				}	
+				if(dState == 1)
+					mMessageText.Text = "Kinect not found";
+				else if(dState == 2)
+					mMessageText.Text = "Center yourself in the screen";
+				else
+					mMessageText.Text = "";
+				return false;
+			}
+		);
+	}
 	
 	public void start_configuration_display()
 	{
+		
 		
 		//fade in
 		TED.add_event(fade_in,0);
@@ -135,8 +183,6 @@ public class TransitionCameraManager : FakeMonoBehaviour
 		//mPWCredits.HardPosition = mFlatCamera.Center + new Vector3(0,0,0);
 		//mElement.Add(mPWLogo);
 		//mElement.Add(mPWCredits);
-		
-		
 		
 		//logos
 		mPWLogoImage = new FlatElementImage(refs.perfectWomanLogo,1);
@@ -154,6 +200,10 @@ public class TransitionCameraManager : FakeMonoBehaviour
 		mElement.Add(mGLLogo);
 		mElement.Add(mFilmLogo);
 		mElement.Add(mMessageText);
+		
+	
+		
+		
 		
 		//display logo
 		//if no kinect is found
