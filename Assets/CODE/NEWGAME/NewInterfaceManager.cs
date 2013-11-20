@@ -30,7 +30,7 @@ public class NewInterfaceManager {
 	public void SkipSingle()
 	{ DoSkipSingleThisFrame = true; }
 	
-	public void Start()
+	public void initialize()
     {
 		DoSkipSingleThisFrame = false;
 		DoSkipMultipleThisFrame = false;

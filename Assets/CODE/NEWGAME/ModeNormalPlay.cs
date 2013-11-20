@@ -33,7 +33,10 @@ public class ModeNormalPlay
 	List<PerformanceStats> mPerformanceStats = new List<PerformanceStats>();
 	BodyParticleHelper mParticles = new BodyParticleHelper();
 	ChoiceHelper mChoiceHelper;
+	
 	public NewInterfaceManager mInterfaceManager = null;
+	public SunsetManager mSunsetManager = null;
+	public ChoosingManager mChoosingManager = null;
 	
 	AdvancedGrading mGrading = new AdvancedGrading();
 	
@@ -47,7 +50,13 @@ public class ModeNormalPlay
 		mChoiceHelper = new ChoiceHelper();
 		
 		mInterfaceManager = new NewInterfaceManager(mManager);
-		mInterfaceManager.Start();
+		mInterfaceManager.initialize();
+		mSunsetManager = new SunsetManager(mManager);
+		mSunsetManager.initialize();
+		mSunsetManager.mFlatCamera.set_render_texture_mode(true);
+		mChoosingManager = new ChoosingManager(mManager);
+		mChoosingManager.initialize();
+		mChoosingManager.mFlatCamera.set_render_texture_mode(true);
 	}
 	
 	
@@ -130,6 +139,8 @@ public class ModeNormalPlay
 	public void update()
 	{
 		mInterfaceManager.Update();
+		mSunsetManager.update();
+		mChoosingManager.update();
 		
 		if(GS == NormalPlayGameState.PLAY)
 		{		

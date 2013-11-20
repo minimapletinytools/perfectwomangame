@@ -27,7 +27,7 @@ public class ChoosingManager
 	public void initialize()
 	{
 		
-		
+		TED = new TimedEventDistributor();
 		
 		mFlatCamera = new FlatCameraManager(new Vector3(234234,-35435,0),10);
 		mFlatCamera.fit_camera_to_screen();
