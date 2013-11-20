@@ -52,7 +52,11 @@ public class FlatCameraManager{
 	{
 		get { return new Vector2(Width,Height);}
 	}
-
+	
+	public RenderTexture RT
+	{
+		get; private set;
+	}
     
     public FlatCameraManager(Vector3 aCenter, float aDistance)
     {
@@ -81,8 +85,22 @@ public class FlatCameraManager{
         Camera.clearFlags = CameraClearFlags.Depth;
     }
 	
-	//TODO rename these functions, make them call each other pfftt
+	public void set_render_texture_mode(bool aUse)
+	{
+		if(aUse)
+		{
+			RT = new RenderTexture((int)Camera.pixelWidth,(int)Camera.pixelHeight,16);
+			RT.Create();
+			Camera.targetTexture = RT;
+		}
+		else
+		{
+			Camera.targetTexture = null;
+			RT = null;
+		}
+	}
 	
+	//TODO rename these functions, make them call each other pfftt
 	public static void fit_camera_to_screen(Camera aCam)
 	{
 		//comment out this function to disable black bars
