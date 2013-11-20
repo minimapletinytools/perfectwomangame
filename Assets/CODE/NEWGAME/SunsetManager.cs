@@ -13,11 +13,10 @@ public class SunsetManager
     public FlatCameraManager mFlatCamera;
     HashSet<FlatElementBase> mElement = new HashSet<FlatElementBase>();
 	
-	
-	
-	
 	public void initialize()
 	{
+		mFlatCamera = new FlatCameraManager(new Vector3(100000, -30000, 0), 10);
+		mFlatCamera.fit_camera_to_screen();
 	}
 	
 	public void update()
@@ -27,6 +26,9 @@ public class SunsetManager
             e.update(Time.deltaTime);       
 		
 		TED.update(Time.deltaTime);
+		
+		
+		//TODO should render mFlatCamera to a render texture
 	}
 	
 	FlatElementImage mBackground = null;
