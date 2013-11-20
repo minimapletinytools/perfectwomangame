@@ -49,24 +49,43 @@ Perfect Woman features a branching decision tree which serves to create a narrat
 
 
 ::TODO XI::
--email chris charla
+DONE-email chris charla
+-age 5 should really be age like... 12
 -intro screeen
-	-give lea format for start screen
+	DONE-give lea format for start screen
 	-silhouette for locked chars
 	-darker silhoutte for unlocked
 	-color for played characters
 	-be able to move all characters in start screen :D
 -PERFECT SIMIAN
-	
--continous particles
--try playing particles a fraction of a second before the pose changes
--why is looping music pausing???? :((((
--remove pose weight from POSE
--age 5 should really be age like... 12
+-turn miniman into asset bundle for consistency
+-particles
+	-make them look awesome 1
+	-make them look awesome 2
+	DONE-continous particles
+	DONE-try playing particles a fraction of a second before the pose changes
+-doooo unlockables
+-do sliding transitions
+	-slide left to sunset
+	-slide right to choice
+	-slide down to loading
+	-slide down to play
+	-slide up/down to credits?
+-switch to 16x9
+-too much time between premature death and choice
+-there is a bug in sctore counting
+-consider making harder/easier for first set of choices random
+	-lul, need to hardcode this...
+-microsoft kinect GoodPosition does not work. Need better way to determine if player is out of frame
+	DONE-in addition, do not contort the figure if something bad happens.
+		-:(((
+	DONE-pressing key should toggle between 3 states, no warning ever, only warning on bad kinect input, always show warning
 
 
 
--new game plan
+IGNORE-remove pose weight from POSE
+IGNORE-green word bubble problem...
+IGNORE-new game plan
 	-set up meta Manager
 		-unlock
 			-game_finished(performances)
@@ -84,29 +103,14 @@ Perfect Woman features a branching decision tree which serves to create a narrat
 				-call at end of game
 			-load_game
 				-call at begining...
-
-
-
--green word bubble problem...
--does music freeze during transition????
--see if you can do a loading screen...
-
--consider making harder/easier for first set of choices random
-	-lul, need to hardcode this...
--fix the dot issue in performance graph
+IGNORE-why is looping music pausing???? :((((
+IGNORE-does music freeze during transition????
+IGNORE-fix the dot issue in performance graph
 	-does not seem to happen on OSX under editor... great.. could be ogl buggy artifact?
--microsoft kinect GoodPosition does not work. Need better way to determine if player is out of frame
-	DONE-in addition, do not contort the figure if something bad happens.
-		-:(((
-	DONE-pressing key should toggle between 3 states, no warning ever, only warning on bad kinect input, always show warning
--restart the game if no one is playing after 30 seconds
-	-test me
+DONE-restart the game if no one is playing after 30 seconds
+	DONE-test me
 	IGNORE-maybe black out the screne before you restart so people don't see the artifacts
-
--switch to 16x9
--too much time between premature death and choice
--there is a bug in sctore counting
--graph should be more visually apparent if performance was good or bad (just looks like a squiggly line...)
+IGNORE-graph should be more visually apparent if performance was good or bad (just looks like a squiggly line...)
 	-I think more smoohtnig can help this out and better colors...
 		-maybe add some grading grace during pose changes
 
