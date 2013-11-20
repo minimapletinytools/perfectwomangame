@@ -56,6 +56,8 @@ public struct CharacterIndex : IEquatable<CharacterIndex>
 	public int Choice{get; private set;}
 	public int Age{
 		get{
+			if(LEVEL_TO_AGE[LevelIndex] == "05") //hack, you should really just rename the files...
+				return 9;
 			return System.Convert.ToInt32(LEVEL_TO_AGE[LevelIndex]);
 		}
 	}

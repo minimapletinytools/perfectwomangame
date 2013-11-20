@@ -50,7 +50,7 @@ Perfect Woman features a branching decision tree which serves to create a narrat
 
 ::TODO XI::
 DONE-email chris charla
--age 5 should really be age like... 12
+DONE-age 5 should really be age like... 12
 -intro screeen
 	DONE-give lea format for start screen
 	-silhouette for locked chars
