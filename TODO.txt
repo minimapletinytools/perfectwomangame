@@ -63,7 +63,7 @@ DONE-email chris charla
 	-use mini_loaded_callback and asign it to a new character such as 0-1
 	-delete CharacterBehaviour nonsense in FlatElementImage
 DONE-make a way to start and skip fetus...
--grading sholud be based on interpolated target position, not true target position.
+DONE-grading sholud be based on interpolated target position, not true target position.
 -particles
 	DONE-make them look awesome 1
 	-make them look awesome 2
