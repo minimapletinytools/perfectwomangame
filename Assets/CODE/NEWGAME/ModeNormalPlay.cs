@@ -52,9 +52,10 @@ public class ModeNormalPlay
 	
 	
 	
-	public void initialize_fetus()
+	public void initialize_game_with_character(CharacterIndex aChar)
 	{
-		mManager.mAssetLoader.new_load_character("0-1",mManager.mCharacterBundleManager);
+		Debug.Log (aChar.StringIdentifier);
+		mManager.mAssetLoader.new_load_character(aChar.StringIdentifier,mManager.mCharacterBundleManager);
 		
 		mInterfaceManager.setup_bb();
 		mInterfaceManager.setup_pb();
@@ -62,6 +63,7 @@ public class ModeNormalPlay
 		
 		
 		//TODO put this in its own function
+		//load poses
 		List<KeyValuePair<CharacterIndex,Pose>> poses = new List<KeyValuePair<CharacterIndex, Pose>>();
 		foreach(CharacterIndex e in CharacterIndex.sAllCharacters)
 		{

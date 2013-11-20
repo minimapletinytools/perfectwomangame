@@ -38,17 +38,22 @@ public class BodyParticleHelper
 		{
 			float score = ProGrading.grade_to_perfect(aGrade.joint_aggregate_score(e.Value));
 			output[e.Key] = score;
-			if(!continuous)
-				mParticles.emit_point(score,activeBody.mFlat.get_body_part_position(e.Key));
-			else
+			//if(!continuous)
+				//mParticles.emit_point(score,activeBody.mFlat.get_body_part_position(e.Key),200);
+			//else
 				mParticles.emit_continuous(score,activeBody.mFlat.get_body_part_position(e.Key));
 			
+		}
+		
+		if(!continuous)
+		{
+			mParticles.emit_point(ProGrading.grade_to_perfect(aGrade.CurrentGrade), activeBody.mFlat.get_body_part_position(ZigJointId.Torso),1000);
 		}
 		
 		string s = "";
 		foreach(var e in output)
 			s += e.Value + " ";
-		Debug.Log(s);
+		//Debug.Log(s);
 		
 		//mParticles.emit_rect(grade.CurrentScore,new Rect
 	}

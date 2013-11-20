@@ -45,8 +45,8 @@ public class MusicManager : FakeMonoBehaviour
 		
 		foreach(var e in typeof(NewMenuReferenceBehaviour).GetFields())
 		{
-			Debug.Log (e.Name);
-			Debug.Log (e.FieldType);
+			//Debug.Log (e.Name);
+			//Debug.Log (e.FieldType);
 		}
 		foreach(FieldInfo e in typeof(NewMenuReferenceBehaviour).GetFields().Where(e => e.FieldType == typeof(AudioClip)))
 		{

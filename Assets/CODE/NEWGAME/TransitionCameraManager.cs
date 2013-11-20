@@ -183,7 +183,7 @@ public class TransitionCameraManager : FakeMonoBehaviour
 					dState = 2;
 					*/
 				if((aTime > 5 && mManager.mZigManager.has_user() && mManager.mCharacterBundleManager.is_initial_loaded()) ||
-					Input.GetKeyDown(KeyCode.Alpha0) ||
+					Input.GetKeyDown(KeyCode.Alpha0) || Input.GetKeyDown(KeyCode.Alpha9) ||
 					mForceStart){
 					go_to_fetus(0); 
 					return true;
@@ -214,11 +214,17 @@ public class TransitionCameraManager : FakeMonoBehaviour
 	public bool go_to_fetus(float time)
 	{
 		mManager.mMusicManager.fade_out_extra_music();
+		
+		//cheap hack 
+		CharacterIndex charIndex = Input.GetKeyDown(KeyCode.Alpha9) ? new CharacterIndex(1,0) : CharacterIndex.sFetus;
+		if(Input.GetKeyDown(KeyCode.Alpha9) )
+			GameConstants.fadingTime = 0.1f;
+		
 		//TODO if user is not roughly in the center of the screen, return false
 		fade_out_with_sound(
 			delegate()
 			{
-				mManager.mGameManager.start_game();
+				mManager.mGameManager.start_game(charIndex);
 				destroy_configuration_display();
 			}
 		);

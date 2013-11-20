@@ -21,6 +21,7 @@ public class NewMenuReferenceBehaviour : MonoBehaviour {
 	//partices
 	public Texture2D partGold;
 	public Texture2D partSilver;
+	public Texture2D partSilver2;
 	public Texture2D partGlow;
 	public Texture2D partRed;
 	

@@ -70,7 +70,7 @@ public class NewGameManager : FakeMonoBehaviour
 	
 	}
 	
-	public void start_game()
+	public void start_game(CharacterIndex aChar)
 	{
 		
 		if(mManager.mSimianMode)
@@ -82,7 +82,9 @@ public class NewGameManager : FakeMonoBehaviour
 		else
 		{
 			GS = GameState.NORMAL;
-			mModeNormalPlay.initialize_fetus();
+			
+			
+			mModeNormalPlay.initialize_game_with_character(aChar);
 		}
 	}
 	
