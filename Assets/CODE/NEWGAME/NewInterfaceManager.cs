@@ -109,6 +109,7 @@ public class NewInterfaceManager {
 	//BLUE BAR
 	FlatElementImage mBB;
 	Vector3 mBBBasePosition;
+	
 	//PLAY
 	PerformanceStats mBBLastPerformanceGraph = null; //owned by Character
 	FlatElementText mBBText;
@@ -119,6 +120,7 @@ public class NewInterfaceManager {
 	FlatElementImage[] mBBPerfectStars;
 	
 	//CHOOSING
+	//TODO DELETE
 	int BB_NUM_CHOICES = 3;
 	List<NewChoiceObject> mBBChoices = new List<NewChoiceObject>();
 	List<FlatBodyObject> mBBChoiceBodies = new List<FlatBodyObject>();
@@ -178,8 +180,8 @@ public class NewInterfaceManager {
 		
 		
 		//BB choice nonsense
-		//TODO reposition further to the left need to make boxes smaller too...
 		var miniMan = ((GameObject)GameObject.Instantiate(refs.mMiniChar)).GetComponent<CharacterTextureBehaviour>();
+		//mMiniMan = //TODO something like this: mManager.mCharacterBundleManager.get_mini_character(new CharacterIndex(0,1));
 		Vector3 miniManScale = (new Vector3(1,1,1))*1.5f;
 		float padding = 400;
 		float netWidth = (BB_NUM_CHOICES)*padding;
@@ -240,6 +242,7 @@ public class NewInterfaceManager {
 	
 	//related to transitioning between PLAY and CHOOSING
 	//called by set_bb_small/full
+	//TODO DELETE moved to ChoosingManager
 	public void fade_choosing_contents(bool small)
 	{
 		Color smallColor = small ? new Color(0.5f,0.5f,0.5f,1) : new Color(0.5f,0.5f,0.5f,0);
