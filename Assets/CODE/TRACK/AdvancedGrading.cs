@@ -53,10 +53,15 @@ public class AdvancedGrading
 		return Mathf.Sqrt(r)/aJoints.Length;
 	}
 	
-	public float CurrentScore
+	public float CurrentGrade
 	{
 		get{
-			return mCurrentScore.Aggregate((e,f) => new KeyValuePair<ZigJointId,float>(e.Key,e.Value + f.Value)).Value / mCurrentScore.Count;
+			float r = 0;
+			foreach(var e in mCurrentScore)
+			{
+				r += e.Value*e.Value;
+			}
+			return Mathf.Sqrt(r)/mCurrentScore.Count;
 		}
 	}
 	
