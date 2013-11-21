@@ -430,8 +430,10 @@ public class ModeNormalPlay
 					mManager.mMusicManager.play_cutscene_music(NGM.CurrentCharacterLoader.Images.deathMusic);
 					if(NGM.CurrentCharacterLoader.has_cutscene(4))
 						mManager.mBackgroundManager.load_cutscene(4,NGM.CurrentCharacterLoader);
-					else
+					else if(NGM.DeathCharacter != null) //this will fail if we skip the fetus 
 						mManager.mBackgroundManager.load_cutscene(4,NGM.DeathCharacter);
+					else
+						mManager.mBackgroundManager.load_cutscene(1,NGM.CurrentCharacterLoader); //just load the bad cutcene instead, who cares it's testing mode only
 				}
 			);
 		}

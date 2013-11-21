@@ -956,6 +956,10 @@ public class NewInterfaceManager {
 		if(aStats.Last().Character.Age == 999)
 			aStats.RemoveAt(aStats.Count-1);
 		
+		//add in fetus in case we skipped it in debug mode
+		if(aStats.First().Character.Age != 0)
+			aStats.Insert(0, new PerformanceStats(new CharacterIndex(0,0)));
+		
 		
 		//fake it for testing...
 		/*
