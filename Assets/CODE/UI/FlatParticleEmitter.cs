@@ -73,21 +73,11 @@ public class SparkleStarFlashParticle
 		
 	}
 	
-	public void emit_point(float grade, Vector3 position, float speed)
+	public void emit_point(int count, Vector3 position, float speed)
 	{
-		float ag = (grade-0.4f)*(grade-0.4f);
 		
-		if(grade > 0.7f)
-		{
-			float count = (int)(100*ag);
-			for(int i = 0; i < count; i++)
-				create_particle("gold",position,speed*new Vector3(Mathf.Cos (i/count*Mathf.PI*2),Mathf.Sin (i/count*Mathf.PI*2),0));
-		}
-		/*
-		if(grade > 0.5f)
-			for(int i = 0; i < 40*ag; i++)
-				create_particle("silver",position);
-				*/
+		for(int i = 0; i < count; i++)
+			create_particle("gold",position,speed*new Vector3(Mathf.Cos (i/(float)count*Mathf.PI*2),Mathf.Sin (i/(float)count*Mathf.PI*2),0));
 	}
 	
 	public void emit_continuous(float grade, Vector3 position)
@@ -95,7 +85,7 @@ public class SparkleStarFlashParticle
 		float ag = grade*grade;
 		
 		if(grade > 0.5f)
-			for(int i = 0; i < 40*ag; i++)
+			for(int i = 0; i < 10*ag; i++)
 				if(Random.value < 0.15f)
 					create_particle("silver",position,Random.insideUnitCircle*1200);
 	}

@@ -43,6 +43,11 @@ public class AdvancedGrading
 		}
 	}
 	
+	public float joint_score(ZigJointId aJoint)
+	{
+		return mCurrentScore[aJoint];
+	}
+	
 	public float joint_aggregate_score(ZigJointId[] aJoints)
 	{
 		float r = 0;

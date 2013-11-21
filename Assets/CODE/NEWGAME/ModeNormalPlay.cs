@@ -234,7 +234,7 @@ public class ModeNormalPlay
 			if(TimeRemaining > 0) //insurance, something funny could happen if music runs slightly longer than it should.
 				CurrentPerformanceStat.update_score(PercentTimeCompletion,grade);			
 			
-			mManager.mCameraManager.set_camera_effects(grade);
+			//mManager.mCameraManager.set_camera_effects(grade);
 			//update score
 			mInterfaceManager.update_bb_score(TotalScore);	
         }
