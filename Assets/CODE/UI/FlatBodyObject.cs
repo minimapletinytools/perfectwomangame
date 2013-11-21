@@ -76,7 +76,8 @@ public class FlatBodyObject : FlatElementBase
 			if( e.Key != ZigJointId.LeftHand &&
 				e.Key != ZigJointId.RightHand &&
 				e.Key != ZigJointId.LeftAnkle &&
-				e.Key != ZigJointId.RightAnkle )
+				e.Key != ZigJointId.RightAnkle &&
+				e.Key != ZigJointId.Head )
 			{
 	            PoseElement pe = new PoseElement();
 	            pe.joint = e.Key;
@@ -156,7 +157,7 @@ public class FlatBodyObject : FlatElementBase
     public IEnumerable<FlatBodyObject> load_sequential(CharacterData.CharacterDataImages aImages, CharacterData.CharacterDataSizes aSizes)
     {
         
-        GameObject head = create_object(ZigJointId.Neck, aImages.head, aSizes.mLimbSizes[0], aSizes.mMountingPositions[0]);
+        GameObject neck = create_object(ZigJointId.Neck, aImages.head, aSizes.mLimbSizes[0], aSizes.mMountingPositions[0]);
         yield return null;
         GameObject leftLowerArm = create_object(ZigJointId.LeftElbow, aImages.leftLowerArm, aSizes.mLimbSizes[1], aSizes.mMountingPositions[1]);
         yield return null;
@@ -184,6 +185,7 @@ public class FlatBodyObject : FlatElementBase
 		GameObject rightHand = create_extremety(ZigJointId.RightHand);
 		GameObject leftAnkle = create_extremety(ZigJointId.LeftAnkle);
 		GameObject rightAnkle = create_extremety(ZigJointId.RightAnkle);
+		GameObject head = create_extremety(ZigJointId.Head);
 		
 		
 
@@ -192,7 +194,7 @@ public class FlatBodyObject : FlatElementBase
         Dictionary<ZigJointId, Texture2D> jointTexture = new Dictionary<ZigJointId, Texture2D>();
         jointObject[ZigJointId.Torso] = torso;
         jointObject[ZigJointId.Waist] = waist;
-        jointObject[ZigJointId.Neck] = head;
+        jointObject[ZigJointId.Neck] = neck;
         jointObject[ZigJointId.LeftShoulder] = leftUpperArm;
         jointObject[ZigJointId.RightShoulder] = rightUpperArm;
         jointObject[ZigJointId.LeftElbow] = leftLowerArm;
@@ -206,6 +208,7 @@ public class FlatBodyObject : FlatElementBase
 		jointObject[ZigJointId.RightHand] = rightHand;
 		jointObject[ZigJointId.LeftAnkle] = leftAnkle;
 		jointObject[ZigJointId.RightAnkle] = rightAnkle;
+		jointObject[ZigJointId.Head] = head;
 
         //these two are special
         torso.transform.position = waist.transform.position;
@@ -231,6 +234,7 @@ public class FlatBodyObject : FlatElementBase
 		relations.Add(new KeyValuePair<ZigJointId, ZigJointId>(ZigJointId.RightHand, ZigJointId.RightElbow));
 		relations.Add(new KeyValuePair<ZigJointId, ZigJointId>(ZigJointId.LeftAnkle, ZigJointId.LeftKnee));
 		relations.Add(new KeyValuePair<ZigJointId, ZigJointId>(ZigJointId.RightAnkle, ZigJointId.RightKnee));
+		relations.Add(new KeyValuePair<ZigJointId, ZigJointId>(ZigJointId.Head, ZigJointId.Neck));
 		 
 
         foreach (KeyValuePair<ZigJointId, ZigJointId> e in relations)
@@ -267,7 +271,7 @@ public class FlatBodyObject : FlatElementBase
         rotateMe.Add(new KeyValuePair<GameObject, float>(rightUpperLeg, -90));
         rotateMe.Add(new KeyValuePair<GameObject, float>(torso, 90));
         rotateMe.Add(new KeyValuePair<GameObject, float>(waist, -90));
-        rotateMe.Add(new KeyValuePair<GameObject, float>(head, 90));
+        rotateMe.Add(new KeyValuePair<GameObject, float>(neck, 90));
 
         rotateMe.Add(new KeyValuePair<GameObject, float>(leftLowerLeg, -90));
         rotateMe.Add(new KeyValuePair<GameObject, float>(rightLowerLeg, -90));
