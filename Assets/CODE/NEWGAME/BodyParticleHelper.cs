@@ -86,7 +86,6 @@ public class BodyParticleHelper
 			float grade = ProGrading.grade_to_perfect(aGrade.CurrentGrade);
 			float ag = (grade-0.4f)*(grade-0.4f);
 			int count = (int)(100*ag);
-			Debug.Log (count);
 				
 			if(grade > 0.6f)
 				mParticles.emit_point(count*2/3, activeBody.mFlat.get_body_part_position(ZigJointId.Torso),700);

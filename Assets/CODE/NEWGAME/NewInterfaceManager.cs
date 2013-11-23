@@ -756,7 +756,7 @@ public class NewInterfaceManager {
 		return;*/
 		
 		float gStartCutsceneDelay = 2.5f;
-		float gPerformanceText = 5f;
+		float gPerformanceText = 4f;
 		float gCutsceneText = 5f;
 		float gPreParticle = 1.5f;
 		float gParticle = 2f;

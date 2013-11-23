@@ -11,10 +11,10 @@ public class CameraManager : FakeMonoBehaviour {
     public Camera BackgroundCamera { get; private set; } //layer 3
     public Camera ForegroundCamera { get; private set; } //layer 4
 	
-	
     GameObject ImageEffects { get; set; }
 
     public Camera[] AllCameras { get { return new Camera[] { MainBodyCamera,TransparentBodyCamera,BackgroundCamera,ForegroundCamera};} }
+	
 	public override void Start () 
     {
 		Camera wipeCamera = (new GameObject("genWipeCamera")).AddComponent<Camera>();
@@ -55,7 +55,7 @@ public class CameraManager : FakeMonoBehaviour {
 		
 		
 		
-		
+		/* no more bloom
         MainBodyCameraBloomEffect = MainBodyCamera.gameObject.AddComponent<BloomAndLensFlares>();
 		//MainBodyCameraBloomEffect = BackgroundCamera.gameObject.AddComponent<BloomAndLensFlares>();
         BloomAndLensFlares templateBloom = ImageEffects.GetComponent<BloomAndLensFlares>();
@@ -66,7 +66,7 @@ public class CameraManager : FakeMonoBehaviour {
         MainBodyCameraBloomEffect.screenBlendShader = templateBloom.screenBlendShader;
         MainBodyCameraBloomEffect.separableBlurShader = templateBloom.separableBlurShader;
         MainBodyCameraBloomEffect.vignetteShader = templateBloom.vignetteShader;
-        MainBodyCameraBloomEffect.bloomIntensity = 0;
+        MainBodyCameraBloomEffect.bloomIntensity = 0;*/
 		
 		
         
@@ -93,6 +93,6 @@ public class CameraManager : FakeMonoBehaviour {
     public override void Update()
     {
 		float interp = 0.1f;
-		MainBodyCameraBloomEffect.bloomIntensity = MainBodyCameraBloomEffect.bloomIntensity*(1-interp) + mBloomIntensity * MAX_BLOOM_INTENSITY * interp;
+		//MainBodyCameraBloomEffect.bloomIntensity = MainBodyCameraBloomEffect.bloomIntensity*(1-interp) + mBloomIntensity * MAX_BLOOM_INTENSITY * interp;
 	}
 }

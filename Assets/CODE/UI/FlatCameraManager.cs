@@ -89,8 +89,10 @@ public class FlatCameraManager{
 	{
 		if(aUse)
 		{
+		
 			//RT = new RenderTexture(GameConstants.CONTENT_WIDTH,GameConstants.CONTENT_HEIGHT,0,RenderTextureFormat.ARGB32);
-			RT = new RenderTexture(Screen.width,Screen.height,0,RenderTextureFormat.ARGB32);
+			//RT = new RenderTexture(Screen.width,Screen.height,0,RenderTextureFormat.ARGB32);
+			RT = new RenderTexture((int)(Camera.orthographicSize*2*Camera.aspect/Camera.rect.width),(int)(Camera.orthographicSize*2/Camera.rect.height),0,RenderTextureFormat.ARGB32);
 			RT.Create();
 			Camera.targetTexture = RT;
 		}
