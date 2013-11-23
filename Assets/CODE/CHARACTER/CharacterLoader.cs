@@ -4,8 +4,8 @@ using System.Linq;
 
 public class CharacterLoader {
     public bool Done { get; private set; }
-    public CharacterData.CharacterDataImages Images { get; private set; }
-    public CharacterData.CharacterDataSizes Sizes { get; private set; }
+    public CharacterData.CharacterDataImages Images { get; private set; } //this contains background images, cutscene images, and anything else
+    public CharacterData.CharacterDataSizes Sizes { get; private set; } //and their sizes
 	public CharacterIndex Character {get{return new CharacterIndex(Name);}}
     public string Name { get; private set; }
     public CharacterLoader()
@@ -30,7 +30,7 @@ public class CharacterLoader {
         Name = aName;
         string output = "Loading character " + aName + "\n";
 		
-        if (aName != "999")
+        if (aName != "999") //TODO DELETE do not need a check here since everything below will load null anyhow.
         {
             Images.head = aBundle.Load("HEAD_A", typeof(Texture2D)) as Texture2D;
             Images.leftLowerArm = aBundle.Load("LLA_A", typeof(Texture2D)) as Texture2D;
