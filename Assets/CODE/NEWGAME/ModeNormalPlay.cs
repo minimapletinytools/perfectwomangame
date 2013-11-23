@@ -54,23 +54,31 @@ public class ModeNormalPlay
 		
 		mInterfaceManager = new NewInterfaceManager(mManager);
 		mInterfaceManager.initialize();
-		mInterfaceManager.mFlatCamera.set_render_texture_mode(true);
+		//mInterfaceManager.mFlatCamera.set_render_texture_mode(true);
 		
 		mSunsetManager = new SunsetManager(mManager);
 		mSunsetManager.initialize();
 		mSunsetManager.mFlatCamera.set_render_texture_mode(true);
 		
+		
 		mChoosingManager = new ChoosingManager(mManager);
 		mChoosingManager.initialize();
 		mChoosingManager.mFlatCamera.set_render_texture_mode(true);
 		
-		mFlatCamera = new FlatCameraManager(new Vector3(-2334,3545,0),10);
+		mFlatCamera = new FlatCameraManager(new Vector3(-23234,3545,0),10);
 		mFlatCamera.Camera.depth = 1000;
 		mFlatCamera.fit_camera_to_screen();
 		
-		FlatElementImage img = new FlatElementImage(mInterfaceManager.mFlatCamera.RT,0);
+		
+		
+		FlatElementImage img = new FlatElementImage(mSunsetManager.mFlatCamera.RT,0);
 		img.HardPosition = mFlatCamera.Center;
 		mElement.Add(img);
+		
+		/*
+		FlatElementImage img2 = new FlatElementImage(mChoosingManager.mFlatCamera.RT,0);
+		img2.HardPosition = mFlatCamera.Center;
+		mElement.Add(img2);*/
 	}
 	
 	
@@ -150,19 +158,26 @@ public class ModeNormalPlay
 		mManager.mTransitionCameraManager.fade_in_with_sound();
 	}
 	
+	public void draw_render_texture(FlatCameraManager aCam)
+	{
+		//aCam.Camera.enabled = true;
+		RenderTexture.active = aCam.RT;
+		aCam.Camera.backgroundColor = new Color(1,1,1,0);
+		aCam.Camera.clearFlags = CameraClearFlags.SolidColor;
+		aCam.Camera.DoClear();
+		aCam.Camera.Render();
+		RenderTexture.active = null;
+		//aCam.Camera.enabled = false;
+	}
+	
 	public void update()
 	{
 		mInterfaceManager.Update();
 		mSunsetManager.update();
 		mChoosingManager.update();
 		
-		
-		RenderTexture.active = mInterfaceManager.mFlatCamera.RT;
-		mInterfaceManager.mFlatCamera.Camera.backgroundColor = new Color(1,1,1,0);
-		mInterfaceManager.mFlatCamera.Camera.clearFlags = CameraClearFlags.SolidColor;
-		mInterfaceManager.mFlatCamera.Camera.DoClear();
-		mInterfaceManager.mFlatCamera.Camera.Render();
-		RenderTexture.active = null;
+		draw_render_texture(mSunsetManager.mFlatCamera);
+		//draw_render_texture(mChoosingManager.mFlatCamera);
 		
 		mFlatCamera.update(Time.deltaTime);
         foreach (FlatElementBase e in mElement)

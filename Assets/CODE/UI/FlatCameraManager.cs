@@ -103,6 +103,14 @@ public class FlatCameraManager{
 		}
 	}
 	
+	public void fit_camera_to_game()
+	{
+		Camera.aspect = ManagerManager.FORCED_ASPECT_RATIO;
+		Camera.isOrthoGraphic = true;
+		Camera.orthographicSize = ManagerManager.DESIRED_SCENE_HEIGHT/2;
+		Camera.rect = new Rect(0,0,1,1);
+	}
+	
 	//TODO rename these functions, make them call each other pfftt
 	public static void fit_camera_to_screen(Camera aCam)
 	{
@@ -127,6 +135,7 @@ public class FlatCameraManager{
 		aCam.orthographicSize = ManagerManager.DESIRED_SCENE_HEIGHT/2f;
 	}
 	
+	//????
 	public void fit_camera_to_screen(bool hard = true)
 	{
 		
