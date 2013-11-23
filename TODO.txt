@@ -49,10 +49,22 @@ Perfect Woman features a branching decision tree which serves to create a narrat
 
 
 ::TODO XI::
+DONE-dying wont work unless you first load the fetus...
+	-this is a problem when I press 9 to start the game..
+-transition to cutscene sucks
+-remove glow effect component from camera (for performance)
+DONE-move word bubbles to middle?
+-create new choice screen maybe?
+-create filler for sunset
+-do new cutscene graphics
+
 DONE-email chris charla
 DONE-age 5 should really be age like... 12
 -intro screeen
 	DONE-give lea format for start screen
+	-loading, use CharacterLoader
+		-need to assign bundle name and put a check in the load function so as not to load limbs
+		DONE-need new character loading function that calls a custom callback
 	-silhouette for locked chars
 	-darker silhoutte for unlocked
 	-color for played characters
@@ -66,7 +78,9 @@ DONE-make a way to start and skip fetus...
 DONE-grading sholud be based on interpolated target position, not true target position.
 -particles
 	DONE-make them look awesome 1
-	-make them look awesome 2
+	DONE-make them look awesome 2
+		DONE-more fuzzy particles along entire joint, not just ends
+		DONE-double ring explosion (or single for ok, double for super good performance)
 	DONE-continous particles
 	DONE-try playing particles a fraction of a second before the pose changes
 -doooo unlockables
@@ -76,6 +90,7 @@ DONE-grading sholud be based on interpolated target position, not true target po
 	-slide down to loading
 	-slide down to play
 	-slide up/down to credits?
+	IGNORE-do it with camera properties... poo poo poo
 -switch to 16x9
 -too much time between premature death and choice
 -there is a bug in sctore counting
