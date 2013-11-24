@@ -82,19 +82,8 @@ public class ModeNormalPlay
 	}
 	
 	
-	
-	public void initialize_game_with_character(CharacterIndex aChar)
+	public void set_pb_character_icon_poses()
 	{
-		Debug.Log (aChar.StringIdentifier);
-		mManager.mAssetLoader.new_load_character(aChar.StringIdentifier,mManager.mCharacterBundleManager);
-		
-		mInterfaceManager.setup_bb();
-		mInterfaceManager.setup_pb();
-		mInterfaceManager.set_pb_character_icon_colors(NGM.CharacterHelper.Characters);
-		
-		
-		//TODO put this in its own function
-		//load poses
 		List<KeyValuePair<CharacterIndex,Pose>> poses = new List<KeyValuePair<CharacterIndex, Pose>>();
 		foreach(CharacterIndex e in CharacterIndex.sAllCharacters)
 		{
@@ -103,6 +92,25 @@ public class ModeNormalPlay
 			poses.Add(new KeyValuePair<CharacterIndex,Pose>(e,poseAnimation.get_pose(Random.Range(0,poseAnimation.poses.Count))));
 		}
 		mInterfaceManager.set_pb_character_icon_poses(poses);
+	}
+	public void initialize_game_with_character(CharacterIndex aChar)
+	{
+		//load the character
+		mManager.mAssetLoader.new_load_character(aChar.StringIdentifier,mManager.mCharacterBundleManager);
+	
+		
+		//setup the interacem manager
+		mInterfaceManager.setup_bb();
+		mInterfaceManager.setup_pb();
+		mInterfaceManager.set_pb_character_icon_colors(NGM.CharacterHelper.Characters);
+		//set_pb_character_icon_poses();
+		
+		//load sunset stuff
+		mManager.mAssetLoader.new_load_asset_bundle("SUNSET",
+			delegate(AssetBundle aBundle){
+				mSunsetManager.sunset_loaded_callback(aBundle,"SUNSET");
+			}
+		);
 	}
 	
 	public void set_time_for_PLAY(float aTime)

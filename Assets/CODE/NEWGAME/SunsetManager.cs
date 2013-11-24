@@ -7,6 +7,7 @@ public class SunsetManager
     public SunsetManager(ManagerManager aManager)
 	{
 		mManager = aManager;
+		IsLoaded = false;
 	}
 
 	public TimedEventDistributor TED { get; private set; }
@@ -20,17 +21,21 @@ public class SunsetManager
 		mFlatCamera.fit_camera_to_game();
 	}
 	
-	CharacterLoader mLoader;
 	
+	CharacterLoader mLoader;
+
 	FlatElementImage mBackground;
 	FlatElementImage mStubbyHairyGrass;
 	FlatElementImage mSun;
 	FlatElementImage mLightRay;
 	List<FlatElementImage> mCharacters = new List<FlatElementImage>();
 	
+	bool IsLoaded{get;set;}
+	
 	
 	FlatElementImage construct_flat_image(string aName, int aDepth)
 	{
+		Debug.Log(aName);
 		var sizing = mLoader.Sizes.find_static_element(aName);
 		var r = new FlatElementImage(mLoader.Images.staticElements[aName],sizing.Size,aDepth);
 		r.HardPosition = sizing.Offset;
@@ -49,10 +54,10 @@ public class SunsetManager
 		//should turn this into a function geez...
 		mBackground = new FlatElementImage(mLoader.Images.background1,mLoader.Sizes.mBackSize,0);
 		mBackground.HardPosition = mFlatCamera.get_point(0,0);
-		mStubbyHairyGrass = construct_flat_image("STUBBY_HAIRY_GRASS",2);
+		//mStubbyHairyGrass = construct_flat_image("STUBBY_HAIRY_GRASS",2);
 		
 		mElement.Add(mBackground);
-		mElement.Add(mStubbyHairyGrass);
+		//mElement.Add(mStubbyHairyGrass);
 		
 		
 		//mManager.mCharacterBundleManager.get_image();
@@ -63,6 +68,8 @@ public class SunsetManager
 		//mElement.Add(mSun);
 		//mElement.Add(mLightRay);
 		
+		
+		IsLoaded = true;
 	}
 	
 	public void add_character(CharacterIndex aChar)
@@ -78,7 +85,6 @@ public class SunsetManager
 		mFlatCamera.update(Time.deltaTime);
         foreach (FlatElementBase e in mElement)
             e.update(Time.deltaTime);       
-		
 		TED.update(Time.deltaTime);
 		
 		
