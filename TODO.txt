@@ -49,17 +49,18 @@ Perfect Woman features a branching decision tree which serves to create a narrat
 
 
 ::TODO XI::
-DONE-dying wont work unless you first load the fetus...
-	-this is a problem when I press 9 to start the game..
+-contact katherine
+-solid particles
+
 -transition to cutscene sucks
 -remove glow effect component from camera (for performance)
-DONE-move word bubbles to middle?
--create new choice screen maybe?
--create filler for sunset
--do new cutscene graphics
 
-DONE-email chris charla
-DONE-age 5 should really be age like... 12
+-create new choice screen maybe?
+
+-do new cutscene graphics
+-can delete code for old gravestone
+-unlock badges...
+-new credits???
 -intro screeen
 	DONE-give lea format for start screen
 	-loading, use CharacterLoader
@@ -74,15 +75,6 @@ DONE-age 5 should really be age like... 12
 	-make the bundle in ggfiles
 	-use mini_loaded_callback and asign it to a new character such as 0-1
 	-delete CharacterBehaviour nonsense in FlatElementImage
-DONE-make a way to start and skip fetus...
-DONE-grading sholud be based on interpolated target position, not true target position.
--particles
-	DONE-make them look awesome 1
-	DONE-make them look awesome 2
-		DONE-more fuzzy particles along entire joint, not just ends
-		DONE-double ring explosion (or single for ok, double for super good performance)
-	DONE-continous particles
-	DONE-try playing particles a fraction of a second before the pose changes
 -doooo unlockables
 -do sliding transitions
 	-slide left to sunset
@@ -100,6 +92,23 @@ DONE-grading sholud be based on interpolated target position, not true target po
 	DONE-in addition, do not contort the figure if something bad happens.
 		-:(((
 	DONE-pressing key should toggle between 3 states, no warning ever, only warning on bad kinect input, always show warning
+
+DONE-dying wont work unless you first load the fetus...
+	-this is a problem when I press 9 to start the game..
+DONE-move word bubbles to middle?
+IGNORE-create filler for sunset
+DONE-email chris charla
+DONE-age 5 should really be age like... 12
+DONE-make a way to start and skip fetus...
+DONE-grading sholud be based on interpolated target position, not true target position.
+DONE-particles
+	DONE-make them look awesome 1
+	DONE-make them look awesome 2
+		DONE-more fuzzy particles along entire joint, not just ends
+		DONE-double ring explosion (or single for ok, double for super good performance)
+	DONE-continous particles
+	DONE-try playing particles a fraction of a second before the pose changes
+
 
 
 
