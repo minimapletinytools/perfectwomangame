@@ -88,7 +88,6 @@ public class BackgroundManager  : FakeMonoBehaviour
 					fx
 				,0);
 			}
-				
 			//dataList[i].AnimationEffect
 		}
 	}
