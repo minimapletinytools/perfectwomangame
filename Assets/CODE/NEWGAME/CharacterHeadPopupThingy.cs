@@ -50,13 +50,25 @@ public class CharacterHeadPopupThingy
 			//TODO
 			var img = ManagerManager.Manager.mCharacterBundleManager.get_image(aChars[i].StringIdentifier);
 			mCharacters[i] = new FlatElementImage(img.Image,img.Data.Size,10);
-			//mBadges[i] = new FlatElementImage(
+			mBadges[i] = new FlatElementImage(ManagerManager.Manager.mNewRef.bbChoicePerfectIcons[aDiffs[i]],11);
+
 			
 			//TODO create images
 			//hide images
 			//popup images
 			//enable diff badges one at a time
+			//mIcon.SoftColor = GameConstants.IconDifficultyColorsOverTwo[difficulty];
+			
 			//hide images
+		}
+
+		for(int i = 0; i < count; i++)
+		{
+			//TODO animate badges
+			//need little pulsating scale animation for difficulty
+			//mBadges[i].Events.add_event(
+			//sound
+			//maybe jiggle player a little
 		}
 	}
 }

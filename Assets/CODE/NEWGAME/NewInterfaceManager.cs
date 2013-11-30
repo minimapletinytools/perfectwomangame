@@ -557,6 +557,7 @@ public class NewInterfaceManager {
 	
 	public void add_cutscene_particle_stream_new(CharacterIndex aTarget, PopupTextObject aPopup, float duration, bool aPositive)
 	{
+		//TODO keep or delete
 		//pop little guys up from bottom
 		//do a little bing with badges displaying new difficulty with sound effects
 		//move little guys back down
@@ -743,6 +744,8 @@ public class NewInterfaceManager {
 	System.Action mLastCutsceneCompleteCb = null;
 	public void set_for_CUTSCENE(System.Action cutsceneCompleteCb, NUPD.ChangeSet aChanges)
 	{
+
+
 		//used for skipping cutscene
 		/*
 		TED.add_event(
@@ -847,6 +850,8 @@ public class NewInterfaceManager {
 				{
 					if(!po.IsDestroyed)
 					{
+
+						//TODO replace with new cutscene system..
 						foreach(CharacterIndex cchar in CharacterIndex.sAllCharacters)
 						{
 							if(diffChanges[cchar] != 0){
