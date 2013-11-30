@@ -12,7 +12,7 @@ public class CharacterBundleManager : FakeMonoBehaviour {
 		//Debug.Log ("starting CBM");
 		mManager.mAssetLoader.new_load_poses("POSES",this);
 		mManager.mAssetLoader.new_load_interface_images("IMAGES",this);
-		load_mini_characters();
+		//load_mini_characters();
 	}
 			
 	public bool is_initial_loaded()
