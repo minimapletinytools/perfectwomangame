@@ -105,6 +105,7 @@ public class FlatCameraManager{
 	
 	public void fit_camera_to_game()
 	{
+		Interpolator.TargetOrthographicHeight = ManagerManager.DESIRED_SCENE_HEIGHT/2f;
 		Camera.aspect = ManagerManager.FORCED_ASPECT_RATIO;
 		Camera.isOrthoGraphic = true;
 		Camera.orthographicSize = ManagerManager.DESIRED_SCENE_HEIGHT/2;
