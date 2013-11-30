@@ -1,11 +1,12 @@
 using UnityEngine;
 using System.Collections;
-
+using System;
 using System.Reflection;
+
 public class AnimationEffects 
 {
 	
-	public static FlatElementAnimations.ElementAnimationDelegate get_effect(string effect)
+	public static Func<FlatElementBase,float,bool> get_effect(string effect)
 	{
 		/*
 		string[] effects;

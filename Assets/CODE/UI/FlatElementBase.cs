@@ -1,17 +1,17 @@
 using UnityEngine;
 using System.Collections.Generic;
-
+using System;
 
 public class FlatElementBase {
 
     
     public class TimedEventHandler
     {
-        Dictionary<QuTimer, FlatElementAnimations.ElementAnimationDelegate> mTimedEvents = new Dictionary<QuTimer, FlatElementAnimations.ElementAnimationDelegate>();
+        Dictionary<QuTimer, Func<FlatElementBase,float,bool>> mTimedEvents = new Dictionary<QuTimer, Func<FlatElementBase,float,bool>>();
         public void update(float aDeltaTime, FlatElementBase aElement)
         {
-            LinkedList<KeyValuePair<QuTimer, FlatElementAnimations.ElementAnimationDelegate>> removal = new LinkedList<KeyValuePair<QuTimer, FlatElementAnimations.ElementAnimationDelegate>>();
-            foreach (KeyValuePair<QuTimer, FlatElementAnimations.ElementAnimationDelegate> e in mTimedEvents)
+            LinkedList<KeyValuePair<QuTimer, Func<FlatElementBase,float,bool>>> removal = new LinkedList<KeyValuePair<QuTimer, Func<FlatElementBase,float,bool>>>();
+            foreach (KeyValuePair<QuTimer, Func<FlatElementBase,float,bool>> e in mTimedEvents)
             {
                 e.Key.update(aDeltaTime);
                 if (e.Key.isExpired())
@@ -21,10 +21,10 @@ public class FlatElementBase {
 
                 }
             }
-            foreach (KeyValuePair<QuTimer, FlatElementAnimations.ElementAnimationDelegate> e in removal)
+            foreach (KeyValuePair<QuTimer, Func<FlatElementBase,float,bool>> e in removal)
                 mTimedEvents.Remove(e.Key);
         }
-        public void add_event(FlatElementAnimations.ElementAnimationDelegate aEvent, float aTime)
+        public void add_event(Func<FlatElementBase,float,bool> aEvent, float aTime)
         {
             mTimedEvents[new QuTimer(0,aTime)] = aEvent;
         }

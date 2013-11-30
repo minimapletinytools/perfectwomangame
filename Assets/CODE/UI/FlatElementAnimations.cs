@@ -1,10 +1,7 @@
 using UnityEngine;
-using System.Collections;
+using System.Collections.Generic;
 
 public class FlatElementAnimations {
-    public delegate bool ElementAnimationDelegate(FlatElementBase aElement, float aDeltaTime);
-    public delegate float ForceFunctionDelegate(float aTime);
-    public delegate void SetForceDelegate(float aTime, float aForce, FlatElementBase aElement);
 
     public static void SetPosition(float aTime, float aForce, FlatElementBase aElement)
     {
@@ -25,9 +22,9 @@ public class FlatElementAnimations {
     {
         QuTimer mTime;
         float mForce;
-        SetForceDelegate mChange;
-        ForceFunctionDelegate mFunction;
-        public GenericAnimation(float aTime, float aForce, SetForceDelegate aChange, ForceFunctionDelegate aFunction)
+		System.Action<float,float,FlatElementBase> mChange;
+		System.Func<float,float> mFunction;
+		public GenericAnimation(float aTime, float aForce, System.Action<float,float,FlatElementBase> aChange, System.Func<float,float> aFunction)
         {
             mTime = new QuTimer(0, aTime);
             mForce = aForce;
@@ -43,15 +40,15 @@ public class FlatElementAnimations {
         }
     }
 
-    public static ElementAnimationDelegate position_jiggle_delegate(float aTime, float aForce)
+	public static System.Func<FlatElementBase,float,bool> position_jiggle_delegate(float aTime, float aForce)
     {
         return (new GenericAnimation(aTime, aForce, SetPosition, One)).animate;
     }
-    public static ElementAnimationDelegate color_jiggle_delegate(float aTime, float aForce)
+	public static System.Func<FlatElementBase,float,bool> color_jiggle_delegate(float aTime, float aForce)
     {
         return (new GenericAnimation(aTime, aForce, SetColor, One)).animate;
     }
-    public static ElementAnimationDelegate rotation_jiggle_delegate(float aTime, float aForce)
+	public static System.Func<FlatElementBase,float,bool> rotation_jiggle_delegate(float aTime, float aForce)
     {
         return (new GenericAnimation(aTime, aForce, SetRotation, One)).animate;
     }
