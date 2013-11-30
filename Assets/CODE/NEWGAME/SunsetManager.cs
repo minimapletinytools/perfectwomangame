@@ -54,10 +54,10 @@ public class SunsetManager
 		//should turn this into a function geez...
 		mBackground = new FlatElementImage(mLoader.Images.background1,mLoader.Sizes.mBackSize,0);
 		mBackground.HardPosition = mFlatCamera.get_point(0,0);
-		//mStubbyHairyGrass = construct_flat_image("STUBBY_HAIRY_GRASS",2);
+		mStubbyHairyGrass = construct_flat_image("BG-1",2);
 		
 		mElement.Add(mBackground);
-		//mElement.Add(mStubbyHairyGrass);
+		mElement.Add(mStubbyHairyGrass);
 		
 		
 		//mManager.mCharacterBundleManager.get_image();

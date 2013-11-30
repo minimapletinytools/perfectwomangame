@@ -44,14 +44,19 @@ public class CharacterHeadPopupThingy
 		cleanup();
 		mCharacters = new FlatElementImage[count];
 		mBadges = new FlatElementImage[count];
-		
+
+		Vector3 start = NIM.mFlatCamera.get_point(0,-1.2f);
+		Vector3 step = new Vector3(-200,0,0);
+		Vector3 offset = count*step/2f;
+		Vector3 badgeOffset = new Vector3(-50,-100,0);
+
 		for(int i = 0; i < count; i++)
 		{
-			//TODO
+
 			var img = ManagerManager.Manager.mCharacterBundleManager.get_image(aChars[i].StringIdentifier);
 			mCharacters[i] = new FlatElementImage(img.Image,img.Data.Size,10);
 			mBadges[i] = new FlatElementImage(ManagerManager.Manager.mNewRef.bbChoicePerfectIcons[aDiffs[i]],11);
-
+			mBadges[i].HardColor = GameConstants.UiWhiteTransparent;
 			
 			//TODO create images
 			//hide images
@@ -64,9 +69,17 @@ public class CharacterHeadPopupThingy
 
 		for(int i = 0; i < count; i++)
 		{
-			//TODO animate badges
-			//need little pulsating scale animation for difficulty
-			//mBadges[i].Events.add_event(
+			mBadges[i].SoftColor = GameConstants.UiWhite;
+			//pulsating scale animation
+			mBadges[i].Events.add_event(
+				delegate(FlatElementBase aBase, float aTime) 
+				{
+					aBase.mLocalScale = Vector3.one * (1+Mathf.Sin(aTime*6))*1.2f;
+					if(aTime > 0.3f) 
+						return true;
+					return false;
+				},
+			0);
 			//sound
 			//maybe jiggle player a little
 		}
