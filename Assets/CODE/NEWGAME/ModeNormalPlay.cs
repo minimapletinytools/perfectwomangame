@@ -72,7 +72,8 @@ public class ModeNormalPlay
 		
 		
 		FlatElementImage img = new FlatElementImage(mSunsetManager.mFlatCamera.RT,0);
-		img.HardPosition = mFlatCamera.Center;
+		//img.HardPosition = mFlatCamera.Center;
+		img.HardPosition = mFlatCamera.get_point(-1.5f,0);
 		mElement.Add(img);
 		
 		/*
