@@ -55,16 +55,10 @@ public class CharacterHeadPopupThingy
 
 			var img = ManagerManager.Manager.mCharacterBundleManager.get_image(aChars[i].StringIdentifier);
 			mCharacters[i] = new FlatElementImage(img.Image,img.Data.Size,10);
+			mCharacters[i].HardPosition = start + offset + step*i;
 			mBadges[i] = new FlatElementImage(ManagerManager.Manager.mNewRef.bbChoicePerfectIcons[aDiffs[i]],11);
 			mBadges[i].HardColor = GameConstants.UiWhiteTransparent;
-			
-			//TODO create images
-			//hide images
-			//popup images
-			//enable diff badges one at a time
-			//mIcon.SoftColor = GameConstants.IconDifficultyColorsOverTwo[difficulty];
-			
-			//hide images
+
 		}
 
 		for(int i = 0; i < count; i++)
@@ -80,8 +74,12 @@ public class CharacterHeadPopupThingy
 					return false;
 				},
 			0);
-			//sound
-			//maybe jiggle player a little
+			//pop out charcater
+			mCharacters[i].SoftPosition = mCharacters[i].SoftPosition + new Vector3(0,300,0);
+			//TODO sound
+			//TODO maybe jiggle player a little
+			//put character back
+			mCharacters[i].SoftPosition = start + offset + step*i;
 		}
 	}
 }
