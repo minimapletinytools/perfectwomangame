@@ -56,30 +56,69 @@ public class CharacterHeadPopupThingy
 			var img = ManagerManager.Manager.mCharacterBundleManager.get_image(aChars[i].StringIdentifier);
 			mCharacters[i] = new FlatElementImage(img.Image,img.Data.Size,10);
 			mCharacters[i].HardPosition = start + offset + step*i;
+			mCharacters[i].SoftPosition = mCharacters[i].SoftPosition + new Vector3(0,300,0);
+
 			mBadges[i] = new FlatElementImage(ManagerManager.Manager.mNewRef.bbChoicePerfectIcons[aDiffs[i]],11);
 			mBadges[i].HardColor = GameConstants.UiWhiteTransparent;
 
 		}
 
+		float gTimeBeforeBadges = 1f;
+		float gBadgeTime = 1f;
+		float gTimeAfterBadges = 1f;
+
+		//wait one second
+		var chain = TED.add_event(
+			delegate(float aTime) {
+				return true;
+			},
+		gTimeBeforeBadges);
+
 		for(int i = 0; i < count; i++)
 		{
-			mBadges[i].SoftColor = GameConstants.UiWhite;
-			//pulsating scale animation
-			mBadges[i].Events.add_event(
-				delegate(FlatElementBase aBase, float aTime) 
-				{
-					aBase.mLocalScale = Vector3.one * (1+Mathf.Sin(aTime*6))*1.2f;
-					if(aTime > 0.3f) 
-						return true;
-					return false;
+			chain = chain.then_one_shot(
+				delegate() {
+					//appear the badge
+					mBadges[i].SoftColor = GameConstants.UiWhite;
+					mBadges[i].HardPosition = mCharacters[i].SoftPosition + badgeOffset;
+
+					//pulsating scale animation
+					mBadges[i].Events.add_event(
+						delegate(FlatElementBase aBase, float aTime) 
+						{
+							aBase.mLocalScale = Vector3.one * (1+Mathf.Sin(aTime*6))*1.2f;
+							if(aTime > 0.3f) 
+								return true;
+							return false;
+						},
+					0);
+
+					//jiggle character
+					mCharacters[i].Events.add_event(
+						delegate(FlatElementBase aBase, float aTime) 
+						{
+							aBase.mLocalScale = Vector3.one * (1+Mathf.Sin(aTime*6))*1.2f;
+							if(aTime > 0.3f) 
+								return true;
+							return false;
+						},
+					0);
+
+					//playa sound
+					ManagerManager.Manager.mMusicManager.play_sound_effect("badge_blip_TODO");
 				},
-			0);
-			//pop out charcater
-			mCharacters[i].SoftPosition = mCharacters[i].SoftPosition + new Vector3(0,300,0);
-			//TODO sound
-			//TODO maybe jiggle player a little
-			//put character back
-			mCharacters[i].SoftPosition = start + offset + step*i;
+			gBadgeTime);
 		}
+
+		//put character back
+		chain = chain.then_one_shot(
+			delegate() {
+				for(int i = 0; i < count; i++)
+				{
+					mBadges[i].SoftColor = GameConstants.UiWhiteTransparent;
+					mCharacters[i].SoftPosition = start + offset + step*i;
+				}
+			},
+		gTimeAfterBadges);
 	}
 }
