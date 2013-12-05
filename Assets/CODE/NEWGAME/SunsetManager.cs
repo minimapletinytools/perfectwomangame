@@ -75,6 +75,11 @@ public class SunsetManager
 		mElement.Add(addMe);
 		
 	}
+
+	public void add_gravestone()
+	{
+		//CharacterIndex lastIndex = mCharacters[mCharacters.Count - 1]
+	}
 	
 	public void update()
 	{
@@ -82,9 +87,6 @@ public class SunsetManager
         foreach (FlatElementBase e in mElement)
             e.update(Time.deltaTime);       
 		TED.update(Time.deltaTime);
-		
-		
-		//TODO should render mFlatCamera to a render texture
 	}
 	
 	

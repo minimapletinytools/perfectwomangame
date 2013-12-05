@@ -33,12 +33,12 @@ public class ChoiceHelper
         { mPossibleChoicePoses[i] = ProGrading.read_pose(ManagerManager.Manager.mReferences.mPossiblePoses[i]); }
 	}
 	
-	public void shuffle_and_set_choice_poses(int aCount, NewInterfaceManager aInterface)
+	public void shuffle_and_set_choice_poses(int aCount, ChoosingManager aChoosing)
 	{
 		//reset the choosing percentages from last round
 		mChoicePoses = get_random_possible_poses(aCount);
 		ChoosingPercentages = new float[aCount];
-		aInterface.set_bb_choice_poses(mChoicePoses.ToList());
+		aChoosing.set_bb_choice_poses(mChoicePoses.ToList());
 		
 	}
 	
