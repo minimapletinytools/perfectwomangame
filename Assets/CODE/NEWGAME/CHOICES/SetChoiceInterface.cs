@@ -9,17 +9,17 @@ public interface SetChoiceInterface
 
 public class SetPlayChoice : SetChoiceInterface
 {
-	NewInterfaceManager NIM {get; set;}
-	public SetPlayChoice(NewInterfaceManager aNim)
+	ChoosingManager CM {get; set;}
+	public SetPlayChoice(ChoosingManager aCM)
 	{
-		NIM = aNim;
+		CM = aCM;
 	}
 	public void set_choice(int aChoice)
 	{
-		NIM.set_bb_choice(aChoice);
+		CM.set_bb_choice(aChoice);
 	}
 	public void set_choice_percentages(int aChoice, float aPercentage)
 	{
-		NIM.set_bb_choice_percentages(aChoice,aPercentage);
+		CM.set_bb_choice_percentages(aChoice,aPercentage);
 	}
 }

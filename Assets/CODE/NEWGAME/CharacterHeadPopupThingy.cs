@@ -103,7 +103,7 @@ public class CharacterHeadPopupThingy
 						},
 					0);
 
-					//playa sound
+					//play a sound
 					ManagerManager.Manager.mMusicManager.play_sound_effect("badge_blip_TODO");
 				},
 			gBadgeTime);

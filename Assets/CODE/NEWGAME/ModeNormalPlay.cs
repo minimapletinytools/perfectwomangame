@@ -81,19 +81,8 @@ public class ModeNormalPlay
 		img2.HardPosition = mFlatCamera.Center;
 		mElement.Add(img2);*/
 	}
-	
-	
-	public void set_pb_character_icon_poses()
-	{
-		List<KeyValuePair<CharacterIndex,Pose>> poses = new List<KeyValuePair<CharacterIndex, Pose>>();
-		foreach(CharacterIndex e in CharacterIndex.sAllCharacters)
-		{
-			//poses.Add(new KeyValuePair<CharacterIndex,ProGrading.Pose>(e,mManager.mCharacterBundleManager.get_pose(e,mCharacterHelper.Characters[e.Index].Difficulty).get_pose(0)));
-			var poseAnimation = mManager.mCharacterBundleManager.get_pose(e,NGM.CharacterHelper.Characters[e].Difficulty);
-			poses.Add(new KeyValuePair<CharacterIndex,Pose>(e,poseAnimation.get_pose(Random.Range(0,poseAnimation.poses.Count))));
-		}
-		mInterfaceManager.set_pb_character_icon_poses(poses);
-	}
+
+
 	public void initialize_game_with_character(CharacterIndex aChar)
 	{
 		//load the character
@@ -343,9 +332,9 @@ public class ModeNormalPlay
 	
 	public void update_CHOICE()
 	{
-		mInterfaceManager.set_bb_decider_pose(NGM.CurrentPose);
+		mChoosingManager.set_bb_decider_pose(NGM.CurrentPose);
 		mChoiceHelper.CurrentPose = NGM.CurrentPose;
-		int choice = mChoiceHelper.update(new SetPlayChoice(mInterfaceManager));
+		int choice = mChoiceHelper.update(new SetPlayChoice(mChoosingManager));
 		if(choice != -1)
 		{
 			mManager.mMusicManager.fade_out_extra_music();
@@ -384,9 +373,7 @@ public class ModeNormalPlay
 						{
 							if(diffChanges[cchar] != 0)
 							{
-						
 			                	int nDiff = mManager.mGameManager.change_character_difficulty(cchar, diffChanges[cchar]);
-								change_interface_pose(cchar,nDiff);
 							}
 						}
 			        }
@@ -516,24 +503,25 @@ public class ModeNormalPlay
 	{
         //TODO update difficulties in NIM charactericons here in case the user skipped the cutscenes and the diffs did not get updated
 		GS = NormalPlayGameState.CHOICE;
-		mChoiceHelper.shuffle_and_set_choice_poses(3,mInterfaceManager); //TODO evnetually 4 or more..
+		mChoiceHelper.shuffle_and_set_choice_poses(3,mChoosingManager); //TODO evnetually 4 or more..
 		//TODO these bottom two functions should be absoredb by ChoiceHelper
 		//lol this is a dumb hack to not choose the missing character
 		var chars = new CharacterIndex(CurrentPerformanceStat.Character.LevelIndex+1,3).Neighbors;
 		
 		//TODO DELETE no longer have perfect
 		var perfs = chars.Select(e=>NGM.CharacterHelper.Characters[e].Perfect).ToList();
-		mInterfaceManager.set_bb_choice_perfectness(perfs);
+		mChoosingManager.set_bb_choice_perfectness(perfs);
 		
 		
 		//TODO only show unlocked BB Stuff
 		//mManager.mMetaManager.UnlockManager.is_unlocked()
-		//TODO tell interfacemanager how many choices we want
-		mInterfaceManager.set_bb_choice_bodies(NGM.CurrentCharacterIndex);
-		
-		mInterfaceManager.set_bb_for_choosing();	
+		//TODO tell choosing manager how many choices we want
+		mChoosingManager.set_bb_choice_bodies(NGM.CurrentCharacterIndex);
 		
 		mManager.mMusicManager.fade_in_extra_music("choiceMusic");
+
+		//switch over to choice screen
+
 	}
 	
 	
@@ -555,11 +543,7 @@ public class ModeNormalPlay
 		
 		float gDiffDisplayDur = 5f;
 		GS = NormalPlayGameState.TRANSITION;
-		
 
-
-		//TODO move this into NewInterfaceManager
-		mInterfaceManager.fade_choosing_contents(true);
 		var diffPhrases = new string[]{	"That's an easy choice. You should be able to manage that!", 
 										"You made a normal choice. Show how good you are!", 
 										"That's a hard one. Show your skills!", 
@@ -662,12 +646,6 @@ public class ModeNormalPlay
 			//mManager.mTransparentBodyManager.set_target_pose(CurrentTargetPose);
 		}
 	}
-	//TODO DELETE
-	public void change_interface_pose(CharacterIndex aChar,  int aDiff)
-	{
-		List<KeyValuePair<CharacterIndex,Pose>> poses = new List<KeyValuePair<CharacterIndex, Pose>>();
-		var poseAnimation = mManager.mCharacterBundleManager.get_pose(aChar,aDiff);
-		poses.Add(new KeyValuePair<CharacterIndex,Pose>(aChar,poseAnimation.get_pose(Random.Range(0,poseAnimation.poses.Count))));
-		mInterfaceManager.set_pb_character_icon_poses(poses);
-	}
+
+
 }
