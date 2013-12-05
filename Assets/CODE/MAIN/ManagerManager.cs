@@ -59,7 +59,8 @@ public class ManagerManager : MonoBehaviour{
 		mNewRef = GetComponent<NewMenuReferenceBehaviour>();
         
         Manager = this;
-		
+
+		mCharacterBundleManager = new CharacterBundleManager(this);
 		mMusicManager = new MusicManager(this);
         mEventManager = new EventManager(this);
         mInputManager = new InputManager(this);
@@ -73,7 +74,6 @@ public class ManagerManager : MonoBehaviour{
         mAssetLoader = new AssetBundleLoader(this);
         mGameManager = new NewGameManager(this);
 		mTransitionCameraManager = new TransitionCameraManager(this);
-		mCharacterBundleManager = new CharacterBundleManager(this);
 		mMetaManager = new MetaManager(this);
 		
 		if(mStartDelegates != null) 

@@ -52,8 +52,7 @@ public class CharacterHeadPopupThingy
 
 		for(int i = 0; i < count; i++)
 		{
-
-			var img = ManagerManager.Manager.mCharacterBundleManager.get_image(aChars[i].StringIdentifier);
+			var img = ManagerManager.Manager.mCharacterBundleManager.get_image("ANGELS_"+aChars[i].StringIdentifier);
 			mCharacters[i] = new FlatElementImage(img.Image,img.Data.Size,10);
 			mCharacters[i].HardPosition = start + offset + step*i;
 			mCharacters[i].SoftPosition = mCharacters[i].SoftPosition + new Vector3(0,300,0);

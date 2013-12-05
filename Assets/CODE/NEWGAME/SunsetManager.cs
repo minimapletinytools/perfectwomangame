@@ -38,7 +38,6 @@ public class SunsetManager
 		var sizing = mLoader.Sizes.find_static_element(aName);
 		var r = new FlatElementImage(mLoader.Images.staticElements[aName],sizing.Size,aDepth);
 		r.HardPosition = mFlatCamera.Center + sizing.Offset;
-		Debug.Log (sizing.Offset);
 		return r;
 	}
 	
@@ -56,6 +55,7 @@ public class SunsetManager
 		mElement.Add(mBackground);
 		mElement.Add(mStubbyHairyGrass);
 
+
 		var sun = mManager.mCharacterBundleManager.get_image("SUN");
 		mSun = new FlatElementImage(sun.Image,sun.Data.Size,1);
 		var light = mManager.mCharacterBundleManager.get_image("SHINE");
@@ -63,7 +63,7 @@ public class SunsetManager
 		mLightRay.HardPosition = mFlatCamera.get_point(0,-10000);
 		mElement.Add(mSun);
 		mElement.Add(mLightRay);
-		
+
 		
 		IsLoaded = true;
 	}

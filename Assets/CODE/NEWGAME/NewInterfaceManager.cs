@@ -15,7 +15,8 @@ public class NewInterfaceManager {
 	public TimedEventDistributor TED { get; private set; }
     public FlatCameraManager mFlatCamera;
     HashSet<FlatElementBase> mElement = new HashSet<FlatElementBase>();
-	
+
+	CharacterHeadPopupThingy mHeadPop;
 	
     CharacterTextureBehaviour mMiniMan;
 	FlatBodyObject mCurrentBody = null;
@@ -39,21 +40,8 @@ public class NewInterfaceManager {
 		mFlatCamera.fit_camera_to_screen();
         mMiniMan = ((GameObject)GameObject.Instantiate(ManagerManager.Manager.mReferences.mMiniChar)).GetComponent<CharacterTextureBehaviour>();        
 		//mMiniMan = //TODO something like this: mManager.mCharacterBundleManager.get_mini_character(new CharacterIndex(0,1));
-		
-		/*
-		var refs = mManager.mMenuReferences;
-		FlatElementSpriteText spriteTex = new FlatElementSpriteText(refs.fontTex,20,"testmessage",10);
-		spriteTex.SoftPosition = mFlatCamera.Center;
-		spriteTex.SoftScale = new Vector3(0.5f,0.5f,0.5f);
-		mElement.Add (spriteTex);*/
-		
-		
-		/*var refs = mManager.mMenuReferences;
-		//FlatElementText text = new FlatElementText(mManager.mNewRef.genericFontPrefab,50,"aeuaeuoe",10);
-		FlatElementText text = new FlatElementText(refs.menuFont,50,"aeuaeuoe",10);
-		text.SoftPosition = mFlatCamera.Center;
-		text.SoftScale = new ector3(0.5f,0.5f,0.5f);
-		mElement.Add (text);*/
+
+		mHeadPop = new CharacterHeadPopupThingy(this);
     }
     public void Update()
     {
@@ -850,8 +838,18 @@ public class NewInterfaceManager {
 				{
 					if(!po.IsDestroyed)
 					{
+						List<CharacterIndex> aChangedChars = new List<CharacterIndex>();
+						List<int> aDiffs = new List<int>();
+						foreach(CharacterIndex cchar in CharacterIndex.sAllCharacters)
+							if(diffChanges[cchar] != 0)
+							{
+								aChangedChars.Add(cchar);
+								int nDiff = Mathf.Clamp(mManager.mGameManager.get_character_difficulty(cchar) + diffChanges[cchar], 0, 3);
+								aDiffs.Add(nDiff);
+							}
+						mHeadPop.popup_character(aChangedChars.ToArray(),aDiffs.ToArray());
 
-						//TODO replace with new cutscene system..
+						//TODO DELETE old interface
 						foreach(CharacterIndex cchar in CharacterIndex.sAllCharacters)
 						{
 							if(diffChanges[cchar] != 0){
