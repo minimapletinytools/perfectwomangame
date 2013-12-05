@@ -232,9 +232,10 @@ public class TransitionCameraManager : FakeMonoBehaviour
 				else
 					dState = 2;
 					*/
-				if((aTime > 5 && mManager.mZigManager.has_user() && mManager.mCharacterBundleManager.is_initial_loaded()) ||
+				if( mManager.mCharacterBundleManager.is_initial_loaded() &&
+			   		((aTime > 5 && mManager.mZigManager.has_user()) ||
 					Input.GetKeyDown(KeyCode.Alpha0) || Input.GetKeyDown(KeyCode.Alpha9) ||
-					mForceStart){
+					mForceStart)){
 					go_to_fetus(0); 
 					return true;
 				}	
