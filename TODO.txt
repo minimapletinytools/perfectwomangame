@@ -47,21 +47,53 @@ Perfect Woman features a branching decision tree which serves to create a narrat
 				-TODO design this...
 
 
+::order of operations/TODOXII::
+-make images fly out instead of fade out
+IGNORE-draw black bars to make sure there are no screen artifacts
+DONE-make sure image bundle is loaded firts before allowing players to start game..
+-double check
+	DONE?-headb 05-2
+-add in new interface nonsense
+	-little people that pop up from the bottom
+	-little flags that indicate the change
+	-sounds to accompany changes
+-new choosing screen nonsense??
+	-just move to the new choosing manager. It can look the same for now.
+-text file format for unlockable characters
+	-manually fill out for now
+-sunset screen nonsense???	
+-start screen nonsense
+	-make new thing in ggfiles for packaging this properly...
+		-I think the character packager thing should jsut work...
+	-make new class for this... but still call it from Transparent Camera Manager I guess.
+	-read stuff from unlockmanager
+-new grave integrates with sunset screen
 
 ::TODO XI::
+DONE-sunset missing a file
 -contact katherine
 -solid particles
-
+-see if you can show at dreamhack lol
 -transition to cutscene sucks
--remove glow effect component from camera (for performance)
-
--create new choice screen maybe?
-
--do new cutscene graphics
+-turn miniman into asset bundle for consistency
+	-make the bundle in ggfiles
+	-use mini_loaded_callback and asign it to a new character such as 0-1
+	-delete CharacterBehaviour nonsense in FlatElementImage
 -can delete code for old gravestone
 -unlock badges...
--new credits???
--intro screeen
+-PERFECT SIMIAN
+-too much time between premature death and choice
+	-some timing bugs in general..
+-consider making harder/easier for first set of choices random
+	-lul, need to hardcode this...
+-better way to detect if user is not on screen
+-define interface for kinect stuff for when you need to swap in kinect2.0
+
+DONE-remove glow effect component from camera (for performance)
+IGNORE-create new choice screen maybe?
+IGNORE??-do new cutscene graphics
+IGNORE-new credits???
+IGNORE-intro screeen
 	DONE-give lea format for start screen
 	-loading, use CharacterLoader
 		-need to assign bundle name and put a check in the load function so as not to load limbs
@@ -70,29 +102,20 @@ Perfect Woman features a branching decision tree which serves to create a narrat
 	-darker silhoutte for unlocked
 	-color for played characters
 	-be able to move all characters in start screen :D
--PERFECT SIMIAN
--turn miniman into asset bundle for consistency
-	-make the bundle in ggfiles
-	-use mini_loaded_callback and asign it to a new character such as 0-1
-	-delete CharacterBehaviour nonsense in FlatElementImage
--doooo unlockables
--do sliding transitions
+IGNORE-doooo unlockables
+IGNORE-do sliding transitions
 	-slide left to sunset
 	-slide right to choice
 	-slide down to loading
 	-slide down to play
 	-slide up/down to credits?
 	IGNORE-do it with camera properties... poo poo poo
--switch to 16x9
--too much time between premature death and choice
--there is a bug in sctore counting
--consider making harder/easier for first set of choices random
-	-lul, need to hardcode this...
--microsoft kinect GoodPosition does not work. Need better way to determine if player is out of frame
+IGNORE-switch to 16x9
+IGNORE-there is a bug in sctore counting
+IGNORE-microsoft kinect GoodPosition does not work. Need better way to determine if player is out of frame
 	DONE-in addition, do not contort the figure if something bad happens.
 		-:(((
 	DONE-pressing key should toggle between 3 states, no warning ever, only warning on bad kinect input, always show warning
-
 DONE-dying wont work unless you first load the fetus...
 	-this is a problem when I press 9 to start the game..
 DONE-move word bubbles to middle?
@@ -108,10 +131,6 @@ DONE-particles
 		DONE-double ring explosion (or single for ok, double for super good performance)
 	DONE-continous particles
 	DONE-try playing particles a fraction of a second before the pose changes
-
-
-
-
 IGNORE-remove pose weight from POSE
 IGNORE-green word bubble problem...
 IGNORE-new game plan
