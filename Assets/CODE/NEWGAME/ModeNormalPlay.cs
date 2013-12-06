@@ -123,7 +123,9 @@ public class ModeNormalPlay
 		mPerformanceStats.Add(new PerformanceStats(NGM.CurrentCharacterIndex));
 		CurrentPerformanceStat.Stats = NGM.CharacterHelper.Characters[NGM.CurrentCharacterIndex];
 		mInterfaceManager.begin_new_character(CurrentPerformanceStat);
-		
+
+		if(NGM.CurrentCharacterLoader.Name != "0-1")
+			mSunsetManager.add_character(NGM.CurrentCharacterLoader.Character);
 		switch(NGM.CurrentCharacterLoader.Name)
 		{
 			case "0-1":	
@@ -454,8 +456,6 @@ public class ModeNormalPlay
 						mManager.mBackgroundManager.load_cutscene(4,NGM.CurrentCharacterLoader);
 					else if(NGM.DeathCharacter != null) //this will fail if we skip the fetus 
 						mManager.mBackgroundManager.load_cutscene(4,NGM.DeathCharacter);
-					else
-						mManager.mBackgroundManager.load_cutscene(1,NGM.CurrentCharacterLoader); //just load the bad cutcene instead, who cares it's testing mode only
 				}
 			);
 		}

@@ -60,6 +60,9 @@ public class CharacterHeadPopupThingy
 			mBadges[i] = new FlatElementImage(ManagerManager.Manager.mNewRef.bbChoicePerfectIcons[aDiffs[i]],11);
 			mBadges[i].HardColor = GameConstants.UiWhiteTransparent;
 
+			mElement.Add(mCharacters[i]);
+			mElement.Add(mBadges[i]);
+
 		}
 
 		float gTimeBeforeBadges = 1f;

@@ -76,11 +76,6 @@ public class SunsetManager
 		
 	}
 
-	public void add_gravestone()
-	{
-		//CharacterIndex lastIndex = mCharacters[mCharacters.Count - 1]
-	}
-	
 	public void update()
 	{
 		mFlatCamera.update(Time.deltaTime);

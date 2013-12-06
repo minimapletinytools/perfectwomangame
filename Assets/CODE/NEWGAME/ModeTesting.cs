@@ -28,7 +28,6 @@ public class ModeTesting
 	
 	public void update()
 	{
-		Debug.Log ("update");
 		
 		if(NGM.CurrentPose != null && mManager.mBodyManager.mFlat != null) //make sure a character is in fact loaded, this can apparently happen in testing scene.
 		{
