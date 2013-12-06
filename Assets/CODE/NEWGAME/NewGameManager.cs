@@ -59,7 +59,9 @@ public class NewGameManager : FakeMonoBehaviour
 	public override void Start()
 	{
 		CurrentCharacterLoader = null;
-		GS = GameState.MENU;
+
+		if(GS != GameState.TEST)
+			GS = GameState.MENU;
 		
 		
 		
@@ -72,19 +74,20 @@ public class NewGameManager : FakeMonoBehaviour
 	
 	public void start_game(CharacterIndex aChar)
 	{
-		
 		if(mManager.mSimianMode)
 		{
 			Debug.Log("simian mode hehe");
 			GS = GameState.SIMIAN;
 			mModeSimian.initialize();
 		}
-		else
+		else if(GS != GameState.TEST)
 		{
 			GS = GameState.NORMAL;
-			
-			
 			mModeNormalPlay.initialize_game_with_character(aChar);
+		}
+		else if(GS == GameState.TEST)
+		{
+			mManager.mAssetLoader.new_load_character(aChar.StringIdentifier,mManager.mCharacterBundleManager);
 		}
 	}
 	
@@ -99,7 +102,9 @@ public class NewGameManager : FakeMonoBehaviour
 			mModeNormalPlay.character_loaded();
 		else if(GS == GameState.SIMIAN)
 			mModeSimian.character_loaded();
-		//TODO testing, challenge
+		else if(GS == GameState.TEST)
+			mModeTesting.character_loaded();
+		//TODO, challenge
 		
 		if(aCharacter.Name == "0-1") //in this very special case, we keep the bundle to load the death cutscene
 		{

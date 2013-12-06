@@ -12,6 +12,11 @@ public class ModeTesting
 		NGM = aNgm;
 		mManager = aNgm.mManager;
 	}
+
+	public void character_loaded()
+	{
+		mManager.mTransitionCameraManager.fade_in_with_sound();
+	}
 	
 	
 	public int mLastDiff = 0;
@@ -23,6 +28,7 @@ public class ModeTesting
 	
 	public void update()
 	{
+		Debug.Log ("update");
 		
 		if(NGM.CurrentPose != null && mManager.mBodyManager.mFlat != null) //make sure a character is in fact loaded, this can apparently happen in testing scene.
 		{
@@ -63,10 +69,16 @@ public class ModeTesting
 		
 		if(Input.GetKeyDown(KeyCode.Alpha5))
 		{
-			mManager.mBackgroundManager.load_cutscene(mLastCutscene,NGM.CurrentCharacterLoader);
-			ManagerManager.Manager.mDebugString = "loaded cutscene " + mLastCutscene;
-			mLastCutscene = (mLastCutscene+1) % 2;//5;
-			//mManager.mBackgroundManager.load_cutscene(4,DeathCharacter);
+			if(NGM.CurrentCharacterLoader.has_cutscene(mLastCutscene))
+			{
+				mManager.mBodyManager.transition_character_out();
+				mManager.mTransparentBodyManager.transition_character_out();
+				mManager.mBackgroundManager.load_cutscene(mLastCutscene,NGM.CurrentCharacterLoader);
+				ManagerManager.Manager.mDebugString = "loaded cutscene " + mLastCutscene;
+				mManager.mDebugString = "loaded cutscene " + mLastCutscene;
+			}
+			else mManager.mDebugString = "missing cutscene " + mLastCutscene;
+			mLastCutscene = (mLastCutscene+1) % 5;
 		}
 		
 		if(Input.GetKeyDown(KeyCode.Alpha6))
@@ -121,9 +133,11 @@ public class ModeTesting
 		if(choice != -1)
 		{
 			if(shift)
-				mManager.mAssetLoader.new_load_character(NGM.CurrentCharacterIndex.get_past_neighbor(choice).StringIdentifier,mManager.mCharacterBundleManager);
+				if(NGM.CurrentCharacterIndex.LevelIndex > 0)
+					mManager.mAssetLoader.new_load_character(NGM.CurrentCharacterIndex.get_past_neighbor(choice).StringIdentifier,mManager.mCharacterBundleManager);
 			else
-				mManager.mAssetLoader.new_load_character(NGM.CurrentCharacterIndex.get_future_neighbor(choice).StringIdentifier,mManager.mCharacterBundleManager);
+				if(NGM.CurrentCharacterIndex.LevelIndex < 8)
+					mManager.mAssetLoader.new_load_character(NGM.CurrentCharacterIndex.get_future_neighbor(choice).StringIdentifier,mManager.mCharacterBundleManager);
 		}
 	}
 }
