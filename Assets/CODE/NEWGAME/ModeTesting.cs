@@ -127,16 +127,24 @@ public class ModeTesting
 		{
 			choice = 2;
 		}
+		else if(Input.GetKeyDown(KeyCode.Alpha4))
+		{
+			choice = 3;
+		}
 		bool shift = Input.GetKey(KeyCode.LeftShift);
 		
 		if(choice != -1)
 		{
 			if(shift)
+			{
 				if(NGM.CurrentCharacterIndex.LevelIndex > 0)
 					mManager.mAssetLoader.new_load_character(NGM.CurrentCharacterIndex.get_past_neighbor(choice).StringIdentifier,mManager.mCharacterBundleManager);
+			}
 			else
+			{
 				if(NGM.CurrentCharacterIndex.LevelIndex < 8)
 					mManager.mAssetLoader.new_load_character(NGM.CurrentCharacterIndex.get_future_neighbor(choice).StringIdentifier,mManager.mCharacterBundleManager);
+			}
 		}
 	}
 }

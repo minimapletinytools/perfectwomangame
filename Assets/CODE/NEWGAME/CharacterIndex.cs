@@ -28,13 +28,13 @@ public struct CharacterIndex : IEquatable<CharacterIndex>
 	public static List<CharacterIndex> sAllCharacters = new List<CharacterIndex>()
 	{
 		new CharacterIndex(0,0),
-		new CharacterIndex(1,0),new CharacterIndex(1,1),new CharacterIndex(1,2),
-		new CharacterIndex(2,0),new CharacterIndex(2,1),new CharacterIndex(2,2),
-		new CharacterIndex(3,0),new CharacterIndex(3,1),new CharacterIndex(3,2),
-		new CharacterIndex(4,0),new CharacterIndex(4,1),new CharacterIndex(4,2),
-		new CharacterIndex(5,0),new CharacterIndex(5,1),new CharacterIndex(5,2),
-		new CharacterIndex(6,0),new CharacterIndex(6,1),new CharacterIndex(6,2),
-		new CharacterIndex(7,0),new CharacterIndex(7,1),new CharacterIndex(7,2),
+		new CharacterIndex(1,0),new CharacterIndex(1,1),new CharacterIndex(1,2),new CharacterIndex(1,3),
+		new CharacterIndex(2,0),new CharacterIndex(2,1),new CharacterIndex(2,2),new CharacterIndex(2,3),
+		new CharacterIndex(3,0),new CharacterIndex(3,1),new CharacterIndex(3,2),new CharacterIndex(3,3),
+		new CharacterIndex(4,0),new CharacterIndex(4,1),new CharacterIndex(4,2),new CharacterIndex(4,3),
+		new CharacterIndex(5,0),new CharacterIndex(5,1),new CharacterIndex(5,2),new CharacterIndex(5,3),
+		new CharacterIndex(6,0),new CharacterIndex(6,1),new CharacterIndex(6,2),new CharacterIndex(6,3),
+		new CharacterIndex(7,0),new CharacterIndex(7,1),new CharacterIndex(7,2),new CharacterIndex(7,3),
 		new CharacterIndex(8,0),
 		new CharacterIndex(9,0)
 	};

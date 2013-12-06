@@ -14,7 +14,7 @@ public class CharIndexContainerInt
 		Contents = new int[ageCount][];
 		for(int i = 0; i < ageCount; i++)
 		{
-			int charCount = ((i==0 || i == 8 || i == 9) ? 1 : 5);
+			int charCount = GameConstants.numberChoices[i];
 			for(int j = 0; j < charCount; j++)
 			{
 				Contents[i] = new int[charCount];
@@ -70,7 +70,7 @@ public class CharIndexContainerCharacterLoader
 		Contents = new CharacterLoader[ageCount][];
 		for(int i = 0; i < ageCount; i++)
 		{
-			int charCount = ((i==0 || i == 8 || i == 9) ? 1 : 5);
+			int charCount = GameConstants.numberChoices[i];
 			for(int j = 0; j < charCount; j++)
 			{
 				Contents[i] = new CharacterLoader[charCount];
@@ -109,7 +109,7 @@ public class CharIndexContainerString
 		Contents = new String[ageCount][];
 		for(int i = 0; i < ageCount; i++)
 		{
-			int charCount = ((i==0 || i == 8 || i == 9) ? 1 : 5);
+			int charCount = GameConstants.numberChoices[i];
 			for(int j = 0; j < charCount; j++)
 			{
 				Contents[i] = new String[charCount];
@@ -161,7 +161,7 @@ public class CharIndexContainerCharacterStats
 		Contents = new CharacterStats[ageCount][];
 		for(int i = 0; i < ageCount; i++)
 		{
-			int charCount = ((i==0 || i == 8 || i == 9) ? 1 : 5);
+			int charCount = GameConstants.numberChoices[i];
 			for(int j = 0; j < charCount; j++)
 			{
 				Contents[i] = new CharacterStats[charCount];
@@ -210,7 +210,7 @@ public class CharIndexContainerCharacterIconObject
 		Contents = new CharacterIconObject[ageCount][];
 		for(int i = 0; i < ageCount; i++)
 		{
-			int charCount = ((i==0 || i == 8 || i == 9) ? 1 : 5);
+			int charCount = GameConstants.numberChoices[i];
 			for(int j = 0; j < charCount; j++)
 			{
 				Contents[i] = new CharacterIconObject[charCount];
