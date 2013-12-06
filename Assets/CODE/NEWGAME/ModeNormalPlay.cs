@@ -37,6 +37,10 @@ public class ModeNormalPlay
 	public NewInterfaceManager mInterfaceManager = null;
 	public SunsetManager mSunsetManager = null;
 	public ChoosingManager mChoosingManager = null;
+
+	FlatElementImage mInterfaceImage;
+	FlatElementImage mSunsetImage;
+	FlatElementImage mChoosingImage;
 	
 	public FlatCameraManager mFlatCamera;
     HashSet<FlatElementBase> mElement = new HashSet<FlatElementBase>();
@@ -71,15 +75,19 @@ public class ModeNormalPlay
 		
 		
 		
-		FlatElementImage img = new FlatElementImage(mSunsetManager.mFlatCamera.RT,0);
-		//img.HardPosition = mFlatCamera.Center;
-		img.HardPosition = mFlatCamera.get_point(-1.5f,0);
-		mElement.Add(img);
+		mSunsetImage = new FlatElementImage(mSunsetManager.mFlatCamera.RT,0);
+		mSunsetImage.HardPosition = mFlatCamera.Center + Vector3.right*mSunsetImage.BoundingBox.width;
+		mElement.Add(mSunsetImage);
 		
+
+		mChoosingImage = new FlatElementImage(mChoosingManager.mFlatCamera.RT,0);
+		mChoosingImage.HardPosition = mFlatCamera.Center + Vector3.right*mChoosingImage.BoundingBox.width;
+		mElement.Add(mChoosingImage);
+
 		/*
-		FlatElementImage img2 = new FlatElementImage(mChoosingManager.mFlatCamera.RT,0);
-		img2.HardPosition = mFlatCamera.Center;
-		mElement.Add(img2);*/
+		mInterfaceImage = new FlatElementImage(mInterfaceManager.mFlatCamera.RT,0);
+		mInterfaceImage.HardPosition = mFlatCamera.Center;
+		mElement.Add(mInterfaceImage);*/
 	}
 
 
@@ -173,9 +181,11 @@ public class ModeNormalPlay
 		mInterfaceManager.Update();
 		mSunsetManager.update();
 		mChoosingManager.update();
-		
-		draw_render_texture(mSunsetManager.mFlatCamera);
-		//draw_render_texture(mChoosingManager.mFlatCamera);
+
+		//TODO only draw if necessary
+		//draw_render_texture(mSunsetManager.mFlatCamera);
+		draw_render_texture(mChoosingManager.mFlatCamera);
+		//draw_render_texture(mInterfaceManager.mFlatCamera);
 		
 		mFlatCamera.update(Time.deltaTime);
         foreach (FlatElementBase e in mElement)
@@ -337,6 +347,7 @@ public class ModeNormalPlay
 		int choice = mChoiceHelper.update(new SetPlayChoice(mChoosingManager));
 		if(choice != -1)
 		{
+			slide_image(mChoosingImage,mInterfaceImage);
 			mManager.mMusicManager.fade_out_extra_music();
 			transition_to_TRANSITION_play(CurrentPerformanceStat.Character.get_future_neighbor(choice));
 		}
@@ -521,6 +532,7 @@ public class ModeNormalPlay
 		mManager.mMusicManager.fade_in_extra_music("choiceMusic");
 
 		//switch over to choice screen
+		slide_image(mInterfaceImage,mChoosingImage);
 
 	}
 	
@@ -645,6 +657,19 @@ public class ModeNormalPlay
 			NGM.CurrentTargetPose = NGM.CurrentPoseAnimation.get_pose(0);
 			//mManager.mTransparentBodyManager.set_target_pose(CurrentTargetPose);
 		}
+	}
+
+	public void slide_image(FlatElementImage cur, FlatElementImage next)
+	{
+
+		//TODO set triggers to deactivate the surfaces, maybe not here.. for performance..
+		if(next!=null)
+		{
+			next.HardPosition = mFlatCamera.Center + Vector3.right*next.BoundingBox.width;
+			next.SoftPosition = mFlatCamera.Center;
+		}
+		if(cur != null)
+			cur.SoftPosition = mFlatCamera.Center - Vector3.right*cur.BoundingBox.width;
 	}
 
 

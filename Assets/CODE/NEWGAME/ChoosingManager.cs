@@ -76,7 +76,10 @@ public class ChoosingManager
 		mElement.Add(mBBMiniMan);
 		mElement.Add(mBBQuestionText);
         mElement.Add(mBBQuestionTextPrefix);
-		//???DELETE???GameObject.Destroy(mMiniMan.gameObject);
+
+		GameObject.Destroy(miniMan.gameObject);
+
+		set_for_choosing();
 	}
 	
 	//TODO we don't need this function if we are going to do slide transition...
@@ -98,8 +101,7 @@ public class ChoosingManager
 			e.SoftColor = fullColor;
 		mBBQuestionText.SoftColor = fullColor;
         mBBQuestionTextPrefix.SoftColor = fullColor*GameConstants.UiRed*2;
-		
-		//mBBChoosingBackground.SoftColor = fullColor*(new Color(0.6f,0.6f,1))*1;//0.2f;
+		mBBChoosingBackground.SoftColor = fullColor*(new Color(0.6f,0.6f,1))*1;//0.2f;
 	}
 	
 	public void set_for_choosing()
@@ -109,15 +111,7 @@ public class ChoosingManager
 		Color fullColor = new Color(0.5f,0.5f,0.5f,1);
 		mBBChoosingBackground.SoftColor = fullColor*(new Color(0.6f,0.6f,1))*1;//0.2f;
 	}
-	
-	void set_for_play()
-	{
-		fade_choosing_contents(true);
-		Color fullColor = new Color(0.5f,0.5f,0.5f,0);
-		mBBChoosingBackground.SoftColor = fullColor*(new Color(0.6f,0.6f,1))*1;
-	}
-	
-	
+
 	public void update()
 	{
 		mFlatCamera.update(Time.deltaTime);
