@@ -86,7 +86,9 @@ public class FlatElementBase {
             mTargetPosition = value; 
         }
     }
-	public virtual float PositionInterpolationLimit
+	public virtual float PositionInterpolationMaxLimit
+	{ get; set; }
+	public virtual float PositionInterpolationMinLimit
 	{ get; set; }
 
     Vector3 mBaseScale;
@@ -181,7 +183,9 @@ public class FlatElementBase {
 		HardColor = new Color(0.5f,0.5f,0.5f,0.5f);
 		
 		ColorInterpolationLimit = 0.1f;
-		PositionInterpolationLimit = 100;
+
+		PositionInterpolationMaxLimit = Mathf.Infinity;
+		PositionInterpolationMinLimit = 0;
 		
         Events = new TimedEventHandler();
     }
@@ -248,14 +252,18 @@ public class FlatElementBase {
 	        mCurrentRotation = Quaternion.Slerp(mCurrentRotation, mTargetRotation, SoftInterpolation);
 	        mCurrentScale = (1 - SoftInterpolation) * mCurrentScale + SoftInterpolation * mTargetScale;
 			
-			/* ugg
-			Vector3 desiredPosition = (1 - SoftInterpolation) * mCurrentPosition + SoftInterpolation * mTargetPosition;
-			float desiredPositionDistance = (desiredPosition-mCurrentPosition).magnitude;
-			if(desiredPositionDistance > 0)
-				mCurrentPosition += (desiredPosition-mCurrentPosition)	/desiredPositionDistance * Mathf.Min(PositionInterpolationLimit,desiredPositionDistance);
-				*/
-			
-			mCurrentPosition = (1 - SoftInterpolation) * mCurrentPosition + SoftInterpolation * mTargetPosition;
+
+			if(PositionInterpolationMaxLimit < Mathf.Infinity || PositionInterpolationMinLimit > 0)
+			{
+				Vector3 desiredPosition = (1 - SoftInterpolation) * mCurrentPosition + SoftInterpolation * mTargetPosition;
+				float desiredPositionDistance = (desiredPosition-mCurrentPosition).magnitude;
+				if(desiredPositionDistance < PositionInterpolationMinLimit)
+					mCurrentPosition = desiredPosition;
+				else if(desiredPositionDistance > 0)
+					mCurrentPosition += (desiredPosition-mCurrentPosition) / desiredPositionDistance * Mathf.Min(PositionInterpolationMaxLimit,desiredPositionDistance);
+			}
+			else
+				mCurrentPosition = (1 - SoftInterpolation) * mCurrentPosition + SoftInterpolation * mTargetPosition;
 			
 			
 			Vector4 lerpingColorA = new Vector4(mCurrentColor.r, mCurrentColor.g, mCurrentColor.b, mCurrentColor.a);
