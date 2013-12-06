@@ -86,9 +86,9 @@ public class FlatElementBase {
             mTargetPosition = value; 
         }
     }
-	public virtual float PositionInterpolationMaxLimit
+	public virtual float PositionInterpolationMaxLimit //in pixels per second
 	{ get; set; }
-	public virtual float PositionInterpolationMinLimit
+	public virtual float PositionInterpolationMinLimit //in pixels per second
 	{ get; set; }
 
     Vector3 mBaseScale;
@@ -255,12 +255,15 @@ public class FlatElementBase {
 
 			if(PositionInterpolationMaxLimit < Mathf.Infinity || PositionInterpolationMinLimit > 0)
 			{
+				float minLimitChange = PositionInterpolationMinLimit * aDeltaTime;
+				float maxLimitChange = PositionInterpolationMaxLimit * aDeltaTime;
+
 				Vector3 desiredPosition = (1 - SoftInterpolation) * mCurrentPosition + SoftInterpolation * mTargetPosition;
 				float desiredPositionDistance = (desiredPosition-mCurrentPosition).magnitude;
-				if(desiredPositionDistance < PositionInterpolationMinLimit)
+				if(desiredPositionDistance < minLimitChange)
 					mCurrentPosition = desiredPosition;
 				else if(desiredPositionDistance > 0)
-					mCurrentPosition += (desiredPosition-mCurrentPosition) / desiredPositionDistance * Mathf.Min(PositionInterpolationMaxLimit,desiredPositionDistance);
+					mCurrentPosition += (desiredPosition-mCurrentPosition) / desiredPositionDistance * Mathf.Min(maxLimitChange,desiredPositionDistance);
 			}
 			else
 				mCurrentPosition = (1 - SoftInterpolation) * mCurrentPosition + SoftInterpolation * mTargetPosition;

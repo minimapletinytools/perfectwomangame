@@ -181,4 +181,10 @@ public class FlatCameraManager{
 	{
 		return Center + new Vector3(aX * Width * (1/Camera.rect.width) / 2.0f, aY * Height * (1/Camera.rect.height) / 2.0f, 0);
 	}
+
+	public Vector3 get_random_point_off_camera(float aBuffer = 300)
+	{
+		float range = Mathf.Max(Width,Height) + aBuffer;
+		return Center + (new Vector3(Random.Range(-1f, 1f), Random.Range(-1f, 1f), 0)).normalized * Random.Range(range,range);
+	}
 }

@@ -77,7 +77,17 @@ public class BackgroundManager  : FakeMonoBehaviour
 			//if(tex == null)
 				//throw new UnityException("data exists for " + data.Name + " but texture does not");
 			var img = new FlatElementImage(tex,dataList[i].Size,startingDepth + aImages.Count);
+
+
+			//fly in
+			//img.HardPosition = random_position();
+			//img.SoftPosition = dataList[i].Offset;
+
+			//fade in
+			img.HardColor = GameConstants.UiWhiteTransparent;
+			img.SoftColor = GameConstants.UiWhite;
 			img.HardPosition = dataList[i].Offset;
+
 			aImages.Add(img);
 			
 			var fx = AnimationEffects.get_effect(dataList[i].AnimationEffect);
@@ -91,15 +101,35 @@ public class BackgroundManager  : FakeMonoBehaviour
 			//dataList[i].AnimationEffect
 		}
 	}
-	
+
+
+	Vector3 random_position()
+	{
+		//UGG piece of junk...
+		return mManager.mCameraManager.BackgroundCamera.transform.position + (new Vector3(Random.Range(-1f, 1f), Random.Range(-1f, 1f), 0)).normalized * Random.Range(2000,20000);
+	}
 	
 	//note aCharacter need not be the same as teh original character (use this or death)
 	public void load_cutscene(int aNum, CharacterLoader aCharacter)
 	{
 		foreach (FlatElementImage e in mForegroundElements)
+		{
+			//slide out
+			//e.PositionInterpolationMaxLimit = 1000;
+			//e.SoftPosition = random_position();
+
+			//fadeout
 			e.SoftColor = new Color(1,1,1,0);
+		}
 		foreach (FlatElementImage e in mBackgroundElements)
+		{
+			//slide out
+			//e.PositionInterpolationMaxLimit = 1000;
+			//e.SoftPosition = random_position();
+
+			//fadeout
 			e.SoftColor = new Color(1,1,1,0);
+		}
 		
 		string prefix = "CUTSCENE"+aNum+"_";
 		load_images(aCharacter,mForegroundElements,sForegroundStartingDepth,prefix);

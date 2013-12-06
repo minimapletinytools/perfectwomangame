@@ -46,6 +46,8 @@ public class NewInterfaceManager {
     }
     public void Update()
     {
+
+
 		
 		if(Input.GetKeyDown(KeyCode.Alpha0))
 			DoSkipMultipleThisFrame = true;
@@ -61,7 +63,9 @@ public class NewInterfaceManager {
 		
 		TED.update(Time.deltaTime);
 		
-		
+		mHeadPop.update();
+
+
 		//hacks
 		if(DoSkipMultipleThisFrame)
 		{

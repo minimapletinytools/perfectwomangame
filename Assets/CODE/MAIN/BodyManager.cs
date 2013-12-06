@@ -58,7 +58,12 @@ public class BodyManager : FakeMonoBehaviour {
 	
 	public void transition_character_out()
 	{
-		mFlat.SoftColor = new Color(1,1,1,0);
+		//fade out
+		//mFlat.SoftColor = new Color(1,1,1,0);
+
+		//fly out
+		mFlat.PositionInterpolationMaxLimit = 5000;
+		mFlat.SoftPosition = mFlat.HardPosition + new Vector3(0,4000,0);
 	}
 	
     public void destroy_character()

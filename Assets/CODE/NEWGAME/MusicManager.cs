@@ -78,7 +78,10 @@ public class MusicManager : FakeMonoBehaviour
 			
 		}
 		else
-			throw new UnityException("sound " + aSound + " not found");
+		{
+			//throw new UnityException("sound " + aSound + " not found");
+			Debug.Log("sound " + aSound + " not found");
+		}
 	}
 	
 	public void fade_out(float aFadeTime = -1)

@@ -50,6 +50,8 @@ public class CharacterHeadPopupThingy
 		Vector3 offset = count*step/2f;
 		Vector3 badgeOffset = new Vector3(-50,-100,0);
 
+		Debug.Log(start);
+
 		for(int i = 0; i < count; i++)
 		{
 			var img = ManagerManager.Manager.mCharacterBundleManager.get_image("ANGELS_"+aChars[i].StringIdentifier);
@@ -57,12 +59,13 @@ public class CharacterHeadPopupThingy
 			mCharacters[i].HardPosition = start + offset + step*i;
 			mCharacters[i].SoftPosition = mCharacters[i].SoftPosition + new Vector3(0,300,0);
 
+			Debug.Log(mCharacters[i].HardPosition);
+
 			mBadges[i] = new FlatElementImage(ManagerManager.Manager.mNewRef.bbChoicePerfectIcons[aDiffs[i]],11);
 			mBadges[i].HardColor = GameConstants.UiWhiteTransparent;
 
 			mElement.Add(mCharacters[i]);
 			mElement.Add(mBadges[i]);
-
 		}
 
 		float gTimeBeforeBadges = 1f;
@@ -76,16 +79,17 @@ public class CharacterHeadPopupThingy
 			},
 		gTimeBeforeBadges);
 
-		for(int i = 0; i < count; i++)
+		for(int j = 0; j < count; j++)
 		{
+			int workingIndex = j;
 			chain = chain.then_one_shot(
 				delegate() {
 					//appear the badge
-					mBadges[i].SoftColor = GameConstants.UiWhite;
-					mBadges[i].HardPosition = mCharacters[i].SoftPosition + badgeOffset;
+					mBadges[workingIndex].SoftColor = GameConstants.UiWhite;
+					mBadges[workingIndex].HardPosition = mCharacters[workingIndex].SoftPosition + badgeOffset;
 
 					//pulsating scale animation
-					mBadges[i].Events.add_event(
+					mBadges[workingIndex].Events.add_event(
 						delegate(FlatElementBase aBase, float aTime) 
 						{
 							aBase.mLocalScale = Vector3.one * (1+Mathf.Sin(aTime*6))*1.2f;
@@ -96,7 +100,7 @@ public class CharacterHeadPopupThingy
 					0);
 
 					//jiggle character
-					mCharacters[i].Events.add_event(
+					mCharacters[workingIndex].Events.add_event(
 						delegate(FlatElementBase aBase, float aTime) 
 						{
 							aBase.mLocalScale = Vector3.one * (1+Mathf.Sin(aTime*6))*1.2f;
