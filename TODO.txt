@@ -17,7 +17,7 @@ The game is structured into progressive levels, each one representing a differen
 Perfect Woman features a branching decision tree which serves to create a narrative of the character's life. Past choices may make future choices more difficult. It's not always possible to be perfect at every stage in life, and that's perfectly finxqe.
 
 ::SOUND LIST::
--generic
+	-generic
 		-FADE_IN
 		-FADE_OUT
 		-SWIPE_1/2/3/4 
@@ -48,26 +48,46 @@ Perfect Woman features a branching decision tree which serves to create a narrat
 
 
 ::order of operations/TODOXII::
--make images fly out instead of fade out
-IGNORE-draw black bars to make sure there are no screen artifacts
-DONE-make sure image bundle is loaded firts before allowing players to start game..
--double check
-	DONE?-headb 05-2
+-something wrong with 05-3 ??
+
+-ask lea to rename all the background images..
+-give background color to sunset..
+-start screen should be moved 100% inside of TCM.
+	-see sunsetmanager for erference.	
+-testing/challenge/simian mode should inherit from interface..
+-redo that ugly warning thing and move it to the center
 -add in new interface nonsense
-	-little people that pop up from the bottom
-	-little flags that indicate the change
+	-make it not look crappy lol
 	-sounds to accompany changes
+	DONE-little people that pop up from the bottom
+	DONE-little flags that indicate the change
+-popup guys
+	-fix sizing and position
+	-need to set as a chain type so you can return when the popup animations are done
+		-or maybe make it fixed timing and speed up the animations based on how many there are
+
 -new choosing screen nonsense??
-	-just move to the new choosing manager. It can look the same for now.
+	DONE-just move to the new choosing manager. It can look the same for now.
+	-reorganize things to the center
 -text file format for unlockable characters
 	-manually fill out for now
--sunset screen nonsense???	
+-sunset screen nonsense??
 -start screen nonsense
 	-make new thing in ggfiles for packaging this properly...
 		-I think the character packager thing should jsut work...
 	-make new class for this... but still call it from Transparent Camera Manager I guess.
 	-read stuff from unlockmanager
 -new grave integrates with sunset screen
+-still have perfect stars floating around somewhere..
+-make BACKGROUND part of the big image dump instead of an exception case
+
+DONE-make images fly out instead of fade out
+IGNORE-draw black bars to make sure there are no screen artifacts
+DONE-make sure image bundle is loaded firts before allowing players to start game..
+DONE-images
+	-RUA base dote of terrorist is in wrong position
+DONE-double check
+	DONE?-headb 05-2
 
 ::TODO XI::
 DONE-sunset missing a file
