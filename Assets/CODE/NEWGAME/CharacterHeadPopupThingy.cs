@@ -46,8 +46,8 @@ public class CharacterHeadPopupThingy
 		mBadges = new FlatElementImage[count];
 
 		Vector3 start = NIM.mFlatCamera.get_point(0,-1.2f);
-		Vector3 step = new Vector3(-200,0,0);
-		Vector3 offset = count*step/2f;
+		Vector3 step = new Vector3(-400,0,0);
+		Vector3 offset = count*(-step)/2f;
 		Vector3 badgeOffset = new Vector3(-50,-100,0);
 
 		Debug.Log(start);
