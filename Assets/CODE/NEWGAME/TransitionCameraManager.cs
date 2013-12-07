@@ -39,13 +39,15 @@ public class TransitionCameraManager : FakeMonoBehaviour
     {
 		AllRenderTexture = new RenderTexture(Screen.width,Screen.height,16); 
 		TED = new TimedEventDistributor();
+		mManager.mAssetLoader.new_load_asset_bundle("START",delegate(AssetBundle aBundle){start_screen_loaded_callback(aBundle,"START");});
     }
 	
 	public override void Start()
 	{
 		mFlatCamera = new FlatCameraManager(new Vector3(10000, 10000, 0), 10);
 		mFlatCamera.Camera.depth = 101; //we want this on top always
-		mFlatCamera.Camera.clearFlags = CameraClearFlags.SolidColor;
+		//mFlatCamera.Camera.clearFlags = CameraClearFlags.SolidColor;
+		mFlatCamera.Camera.clearFlags = CameraClearFlags.Depth;
 		mFlatCamera.Camera.backgroundColor = new Color32(37,37,37,255);
 		mFlatCamera.fit_camera_to_screen(false);
 		
@@ -119,7 +121,17 @@ public class TransitionCameraManager : FakeMonoBehaviour
 		
         
 	}
-	
+
+
+	/*
+	FlatElementImage construct_flat_image(string aName, int aDepth)
+	{
+		var sizing = mLoader.Sizes.find_static_element(aName);
+		var r = new FlatElementImage(mLoader.Images.staticElements[aName],sizing.Size,aDepth);
+		r.HardPosition = mFlatCamera.Center + sizing.Offset;
+		return r;
+	}*/
+
 	
 	public void start_screen_loaded_callback(AssetBundle aBundle, string aBundleName)
 	{
@@ -130,43 +142,23 @@ public class TransitionCameraManager : FakeMonoBehaviour
 		CharacterLoader loader = new CharacterLoader();
         loader.complete_load_character(aBundle,aBundleName);
 		mManager.mBackgroundManager.character_changed_listener(loader);
-		mManager.mMusicManager.character_changed_listener(loader);
+
+		//mManager.mMusicManager.character_changed_listener(loader);
+
+
+
+		/*
+		foreach(CharacterIndex e in CharacterIndex.sAllCharacters)
+		{
+			if(e.LevelIndex != 0 && e.Age != 9 && e.Age != 8)
+			{
+				//construct_flat_image(
+			}
+		}*/
 		
 		//TODO draw silhouette of locked characters
 		//TODO enable unlocked characters in background manager
-		
-		mMessageText = new FlatElementText(refs.genericFont,60,"",1);
-		mMessageText.HardPosition = mFlatCamera.Center + new Vector3(0,400,0);
-		mElement.Add(mMessageText);
-		int dState = 0; //0-started, 1-kinect not found
-		TED.add_event(
-			delegate(float aTime){
-			
-				/*
-				if(!mManager.mZigManager.is_reader_connected())
-					dState = 1;
-				else if(mManager.mZigManager.has_user() && false) //TODO test if user is in frame
-					dState = 4;
-				else if(mManager.mZigManager.has_user()) //TODO test if user is found
-					dState = 3;
-				else
-					dState = 2;
-					*/
-				if((aTime > 5 && mManager.mZigManager.has_user() && mManager.mCharacterBundleManager.is_initial_loaded()) ||
-					Input.GetKeyDown(KeyCode.Alpha0) || Input.GetKeyDown(KeyCode.Alpha9) ||
-					mForceStart){
-					go_to_fetus(0); 
-					return true;
-				}	
-				if(dState == 1)
-					mMessageText.Text = "Kinect not found";
-				else if(dState == 2)
-					mMessageText.Text = "Center yourself in the screen";
-				else
-					mMessageText.Text = "";
-				return false;
-			}
-		);
+
 	}
 	
 	public void start_configuration_display()
@@ -191,14 +183,21 @@ public class TransitionCameraManager : FakeMonoBehaviour
 		mPWLogoImage.HardPosition = mFlatCamera.Center + new Vector3(0,200,0);
 		mGLLogo.HardPosition = mFlatCamera.get_point(0,-0.5f) + new Vector3(mGLLogo.BoundingBox.width/2 + 50,0,0);
 		mFilmLogo.HardPosition = mFlatCamera.get_point(0,-0.5f) - new Vector3(mFilmLogo.BoundingBox.width/2 + 50,0,0);
+
+		//mPWLogo.Enabled = false;
+		mGLLogo.Enabled = false;
+		mFilmLogo.Enabled = false;
+		//mPWLogo.HardColor = GameConstants.UiWhiteTransparent;
 		
 		
 		mMessageText = new FlatElementText(refs.genericFont,60,"",1);
 		mMessageText.HardPosition = mFlatCamera.Center + new Vector3(0,400,0);
-		
+
+		//TODO delete all this stuffeouou
 		mElement.Add (mPWLogoImage);
 		mElement.Add(mGLLogo);
 		mElement.Add(mFilmLogo);
+
 		mElement.Add(mMessageText);
 		
 	

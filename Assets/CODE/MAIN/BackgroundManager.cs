@@ -65,8 +65,18 @@ public class BackgroundManager  : FakeMonoBehaviour
 		{
 			string name = aPrefix+i;
 			CharacterData.ImageSizeOffsetAnimationData data = aCharacter.Sizes.find_static_element(name);
+			if(data == null) //sometimes there are zero prefixes
+			{
+				name = aPrefix + "0"+i;
+				data = aCharacter.Sizes.find_static_element(name);
+			}
 			if(data == null)
 				break;
+
+			//Debug.Log("loading " + name);
+
+
+
 			dataList.Add(data);
 			nameList.Add(name);
 		}
