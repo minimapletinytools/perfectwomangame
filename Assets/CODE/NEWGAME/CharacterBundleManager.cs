@@ -114,6 +114,10 @@ public class CharacterBundleManager : FakeMonoBehaviour {
 	//scene bundle related
 	//----------
 	List<AssetBundle> mUnloadAtEnd = new List<AssetBundle>();
+	public void add_bundle_to_unload(AssetBundle aBundle)
+	{
+		mUnloadAtEnd.Add(aBundle);
+	}
     public void scene_loaded_callback(AssetBundle aBundle, string aBundleName)
     {
         //Debug.Log("loading character in CharacterLoader " + aBundleName);

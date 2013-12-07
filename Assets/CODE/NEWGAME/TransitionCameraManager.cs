@@ -123,38 +123,66 @@ public class TransitionCameraManager : FakeMonoBehaviour
 	}
 
 
-	/*
+
 	FlatElementImage construct_flat_image(string aName, int aDepth)
 	{
-		var sizing = mLoader.Sizes.find_static_element(aName);
-		var r = new FlatElementImage(mLoader.Images.staticElements[aName],sizing.Size,aDepth);
+		if(mLoader == null)
+			throw new UnityException("start screen bundle null");
+
+
+		CharacterData.ImageSizeOffsetAnimationData sizing;
+		FlatElementImage r;
+		if(aName != "BACKGROUND") //this is stupid and you should make background part of the dump..
+		{
+			sizing = mLoader.Sizes.find_static_element(aName);
+			r = new FlatElementImage(mLoader.Images.staticElements[aName],sizing.Size,aDepth);
+		}
+		else 
+		{
+			var backSize = mLoader.Sizes.mBackSize;
+			sizing = new CharacterData.ImageSizeOffsetAnimationData();
+			sizing.Offset = new Vector2(0,0);
+			sizing.Size = backSize;
+			r = new FlatElementImage(mLoader.Images.background1,backSize,aDepth);
+		}
 		r.HardPosition = mFlatCamera.Center + sizing.Offset;
 		return r;
-	}*/
+	}
 
-	
+
+
+	CharacterLoader mLoader = null;
+	AssetBundle mBundle = null;
 	public void start_screen_loaded_callback(AssetBundle aBundle, string aBundleName)
 	{
+		mBundle = aBundle;
+
 		NewMenuReferenceBehaviour refs = mManager.mNewRef;
 		
-		TED.add_event(fade_in,0);
+		//TED.add_event(fade_in,0);
 		
 		CharacterLoader loader = new CharacterLoader();
         loader.complete_load_character(aBundle,aBundleName);
-		mManager.mBackgroundManager.character_changed_listener(loader);
+		mLoader = loader;
 
+		//mManager.mBackgroundManager.character_changed_listener(loader);
 		//mManager.mMusicManager.character_changed_listener(loader);
 
 
 
-		/*
-		foreach(CharacterIndex e in CharacterIndex.sAllCharacters)
+		mElement.Add(construct_flat_image("BACKGROUND",0));
+		mElement.Add(construct_flat_image("FG-1",30));
+
+		for(int i = 1; i < 28; i++)
+		//foreach(CharacterIndex e in CharacterIndex.sAllCharacters)
 		{
-			if(e.LevelIndex != 0 && e.Age != 9 && e.Age != 8)
+			//if(e.LevelIndex != 0 && e.Age != 9 && e.Age != 8)
 			{
-				//construct_flat_image(
+				mElement.Add(construct_flat_image("BG-"+ (i < 10 ? "0"+i : ""+i ),i));
 			}
-		}*/
+		}
+
+
 		
 		//TODO draw silhouette of locked characters
 		//TODO enable unlocked characters in background manager
@@ -184,19 +212,19 @@ public class TransitionCameraManager : FakeMonoBehaviour
 		mGLLogo.HardPosition = mFlatCamera.get_point(0,-0.5f) + new Vector3(mGLLogo.BoundingBox.width/2 + 50,0,0);
 		mFilmLogo.HardPosition = mFlatCamera.get_point(0,-0.5f) - new Vector3(mFilmLogo.BoundingBox.width/2 + 50,0,0);
 
-		//mPWLogo.Enabled = false;
+		/*mPWLogo.Enabled = false;
 		mGLLogo.Enabled = false;
-		mFilmLogo.Enabled = false;
-		//mPWLogo.HardColor = GameConstants.UiWhiteTransparent;
+		mFilmLogo.Enabled = false;*/
+
 		
 		
 		mMessageText = new FlatElementText(refs.genericFont,60,"",1);
 		mMessageText.HardPosition = mFlatCamera.Center + new Vector3(0,400,0);
 
 		//TODO delete all this stuffeouou
-		mElement.Add (mPWLogoImage);
+		/*mElement.Add(mPWLogoImage);
 		mElement.Add(mGLLogo);
-		mElement.Add(mFilmLogo);
+		mElement.Add(mFilmLogo);*/
 
 		mElement.Add(mMessageText);
 		
@@ -235,7 +263,7 @@ public class TransitionCameraManager : FakeMonoBehaviour
 			   		((aTime > 5 && mManager.mZigManager.has_user()) ||
 					Input.GetKeyDown(KeyCode.Alpha0) || Input.GetKeyDown(KeyCode.Alpha9) ||
 					mForceStart)){
-					go_to_fetus(0); 
+					go_to_play(); 
 					return true;
 				}	
 				if(dState == 1)
@@ -252,6 +280,9 @@ public class TransitionCameraManager : FakeMonoBehaviour
 	
 	public void destroy_configuration_display()
 	{
+
+		foreach(var e in mElement)
+			e.destroy();
 		//we assume things have faded already so we can just destroy
 		//mPWLogo.destroy();
 		//mPWCredits.destroy();
@@ -259,9 +290,14 @@ public class TransitionCameraManager : FakeMonoBehaviour
 		mGLLogo.destroy();
 		mFilmLogo.destroy();
 		mFlatCamera.Camera.clearFlags = CameraClearFlags.Depth;
+
+
+
+		mBundle.Unload(true);
+		mBundle = null;
 	}
 	
-	public bool go_to_fetus(float time)
+	public bool go_to_play()
 	{
 		mManager.mMusicManager.fade_out_extra_music();
 		
