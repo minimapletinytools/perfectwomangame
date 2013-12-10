@@ -28,6 +28,10 @@ public class TransitionCameraManager : FakeMonoBehaviour
 	FlatElementImage mGLLogo;
 	FlatElementImage mFilmLogo;
 	FlatElementText mMessageText;
+
+
+	//TODO...
+	FlatElementImage mWarningOverlay;
 	
 	//DepthWarning nonsense
 	FlatElementText mDepthWarningText;

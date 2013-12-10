@@ -13,7 +13,8 @@ public class NewMenuReferenceBehaviour : MonoBehaviour {
 	public Texture2D gameLabLogo;
 	public Texture2D filmAkademieLogo;
 	public Texture2D depthBorder;
-	
+	public Texture2D redWarning;
+
 	//ui
 	public Texture2D uiPerfectStar;
 	public GameObject uiParticlePrefab;
