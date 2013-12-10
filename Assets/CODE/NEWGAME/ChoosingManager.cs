@@ -15,7 +15,7 @@ public class ChoosingManager
     HashSet<FlatElementBase> mElement = new HashSet<FlatElementBase>();
 	
 	
-	int BB_NUM_CHOICES = 3;
+	int BB_NUM_CHOICES = 4;
 	List<NewChoiceObject> mBBChoices = new List<NewChoiceObject>();
 	List<FlatBodyObject> mBBChoiceBodies = new List<FlatBodyObject>();
 	FlatElementImage mBBChoosingBackground;
@@ -23,6 +23,8 @@ public class ChoosingManager
     FlatElementText mBBQuestionTextPrefix;
 	FlatBodyObject mBBMiniMan;
 	Vector3 mBBMiniManBasePosition;
+
+	CharacterIndex[] mChoices = null;
 	
 	
 	public void initialize()
@@ -33,7 +35,8 @@ public class ChoosingManager
 		mFlatCamera = new FlatCameraManager(new Vector3(24234,-3535,0),10);
 		mFlatCamera.fit_camera_to_game();
 		
-		
+
+		//TODO delete all the positioning stuff, it is now replaced by set_bb_choices
 		
 		var refs = mManager.mReferences;
 		var newRef = mManager.mNewRef;
@@ -137,14 +140,16 @@ public class ChoosingManager
 	//called by ChoiceHelper
 	public void set_bb_choice_poses(List<Pose> aPoses)
 	{
-		for(int i = 0; i < BB_NUM_CHOICES; i++)
+		for(int i = 0; i < aPoses.Count; i++)
 		{
 			mBBChoiceBodies[i].set_target_pose(aPoses[i]);
 		}
 	}
+
+	//TODO DELETE
 	public void set_bb_choice_perfectness(List<int> aPerfect)
 	{
-		for(int i = 0; i < BB_NUM_CHOICES; i++)
+		for(int i = 0; i < aPerfect.Count; i++)
 		{
 			mBBChoices[i].set_perfectness(aPerfect[i]);
 		}
@@ -152,6 +157,8 @@ public class ChoosingManager
 	
 	public void set_bb_choices(CharacterIndex[] aChoices)
 	{
+		mChoices = aChoices;
+
 		var ch = aChoices.OrderBy(e => e.Choice).ToArray();
 		int len = ch.Count();
 		
@@ -170,8 +177,8 @@ public class ChoosingManager
 			
 			
 			float xOffset = awkwardOffset - padding*i;
-			mBBChoices[i].HardPosition = mFlatCamera.get_point(0.5f, 0) + new Vector3(xOffset,0,0);
-			mBBChoiceBodies[i].HardPosition = mFlatCamera.get_point(0.5f, 0) + new Vector3(xOffset,-195,0);
+			mBBChoices[i].HardPosition = mFlatCamera.get_point(0, 0) + new Vector3(xOffset,0,0);
+			mBBChoiceBodies[i].HardPosition = mFlatCamera.get_point(0, 0) + new Vector3(xOffset,-195,0);
 		}
 	}
 	

@@ -509,25 +509,33 @@ public class ModeNormalPlay
 			}
 		);
 	}
+
+
+	public CharacterIndex[] available_choices(CharacterIndex age)
+	{
+		List<CharacterIndex> r = new List<CharacterIndex>();
+		foreach(CharacterIndex e in age.get_neighbors())
+		{
+			if(mManager.mMetaManager.UnlockManager.is_unlocked(e) == 1)
+			{
+				r.Add(e);
+			}
+		}
+		return r.ToArray();
+	}
 	
 	public void transition_to_CHOICE()
 	{
-        //TODO update difficulties in NIM charactericons here in case the user skipped the cutscenes and the diffs did not get updated
 		GS = NormalPlayGameState.CHOICE;
-		mChoiceHelper.shuffle_and_set_choice_poses(3,mChoosingManager); //TODO evnetually 4 or more..
-		//TODO these bottom two functions should be absoredb by ChoiceHelper
-		//lol this is a dumb hack to not choose the missing character
-		var chars = new CharacterIndex(CurrentPerformanceStat.Character.LevelIndex+1,3).Neighbors;
-		
-		//TODO DELETE no longer have perfect
-		var perfs = chars.Select(e=>NGM.CharacterHelper.Characters[e].Perfect).ToList();
-		mChoosingManager.set_bb_choice_perfectness(perfs);
-		
-		
-		//TODO only show unlocked BB Stuff
-		//mManager.mMetaManager.UnlockManager.is_unlocked()
-		//TODO tell choosing manager how many choices we want
-		mChoosingManager.set_bb_choice_bodies(NGM.CurrentCharacterIndex);
+
+
+		//TODO what happens when there is no future???
+		CharacterIndex[] chars = available_choices(NGM.CurrentCharacterIndex.get_future_neighbor(0));
+		mChoiceHelper.shuffle_and_set_choice_poses(chars.Length,mChoosingManager); 
+		mChoosingManager.set_bb_choices(chars);
+		//DELETE
+		//mChoosingManager.set_bb_choice_bodies(NGM.CurrentCharacterIndex);
+
 		
 		mManager.mMusicManager.fade_in_extra_music("choiceMusic");
 

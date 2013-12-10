@@ -136,6 +136,12 @@ public struct CharacterIndex : IEquatable<CharacterIndex>
 	{
 		return new CharacterIndex(LevelIndex, choiceIndex);
 	}
+
+	public CharacterIndex[] get_neighbors()
+	{
+		int li = LevelIndex;
+		return sAllCharacters.Where(e=>e.LevelIndex == li).ToArray();
+	}
 	
 	//ctors
 	private void set_character(int aLevelIndex, int aChoiceIndex)
