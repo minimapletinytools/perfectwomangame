@@ -93,6 +93,11 @@ public class ChoiceHelper
 			NextContendingChoice = 2;
 			growthRate = 1;
 		}
+		else if(Input.GetKey(KeyCode.Alpha4))
+		{
+			NextContendingChoice = 3;
+			growthRate = 1;
+		}
 		//else if(Input.GetKey(KeyCode.Alpha4))
 		//	NextContendingChoice = 3;
 		
