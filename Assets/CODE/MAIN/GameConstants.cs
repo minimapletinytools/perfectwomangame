@@ -4,7 +4,8 @@ using System.Linq;
 
 public static class GameConstants
 {
-	public static int CONTENT_WIDTH = 2880;
+	//public static int CONTENT_WIDTH = 2880;
+	public static int CONTENT_WIDTH = 3200;
 	public static int CONTENT_HEIGHT = 1800;
 
 	
