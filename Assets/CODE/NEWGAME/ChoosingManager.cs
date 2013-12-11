@@ -158,7 +158,7 @@ public class ChoosingManager
 			mBBChoices[i].set_difficulty(mManager.mCharacterBundleManager.get_character_helper().Characters[ch[i]].Difficulty);
 			
 			
-			float xOffset = awkwardOffset - padding*i;
+			float xOffset = netWidth/2 - padding/2 - padding*i;
 			mBBChoices[i].HardPosition = mFlatCamera.get_point(0, 0) + new Vector3(xOffset,0,0);
 			mBBChoiceBodies[i].HardPosition = mFlatCamera.get_point(0, 0) + new Vector3(xOffset,-195,0);
 		}
