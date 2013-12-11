@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 using System.Threading;
+using System.Linq;
 public class CharacterBundleManager : FakeMonoBehaviour {
 	
 	public CharacterBundleManager(ManagerManager aManager) : base(aManager) 
@@ -47,6 +48,10 @@ public class CharacterBundleManager : FakeMonoBehaviour {
 		ImageBundle = aBundle;
 		mUnloadAtEnd.Add(ImageBundle);
 		mImagesLoaded = true;
+
+		
+		//foreach(ImageSizeData e in ImageIndex.OrderBy(f => f.Name))
+			//Debug.Log (e.Name + " " + e.Size );
 	}
 	public ImageSizePair get_image(string identifier)
 	{
@@ -54,7 +59,8 @@ public class CharacterBundleManager : FakeMonoBehaviour {
 		r.Image = ImageBundle.Load(identifier) as Texture2D;
 		r.Data = ImageIndex.Find(e => e.Name == identifier); //TODO not finding size data
 
-		//Debug.Log("loaded " + r.Image + " should be " + identifier);
+		if(r.Data == null || r.Image == null)
+			Debug.Log("could not find id " + identifier + " image " + r.Image + " data " + r.Data);
 		return r;
 	}
 	
