@@ -175,14 +175,22 @@ public class TransitionCameraManager : FakeMonoBehaviour
 
 
 		mElement.Add(construct_flat_image("BACKGROUND",0));
-		mElement.Add(construct_flat_image("FG-1",30));
+		//mElement.Add(construct_flat_image("FG-1",30));
 
 		for(int i = 1; i < 28; i++)
 		//foreach(CharacterIndex e in CharacterIndex.sAllCharacters)
 		{
 			//if(e.LevelIndex != 0 && e.Age != 9 && e.Age != 8)
 			{
-				mElement.Add(construct_flat_image("BG-"+ (i < 10 ? "0"+i : ""+i ),i));
+				var img = construct_flat_image("BG-"+i,i);
+
+				//if(mManager.mMetaManager.UnlockManager.is_unlocked())
+				//img.HardShader = mManager.mReferences.mTransparentCharacaterShader;
+				//img.HardColor = GameConstants.UiRed;
+
+				mElement.Add(img);
+				//TODO custom ordering
+				//mElement.Add(construct_flat_image("CHAR_"+ e.StringIdentifier,e.LevelIndex));
 			}
 		}
 
