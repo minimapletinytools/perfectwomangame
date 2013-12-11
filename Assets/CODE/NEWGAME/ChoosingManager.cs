@@ -36,25 +36,17 @@ public class ChoosingManager
 		mFlatCamera.fit_camera_to_game();
 		
 
-		//TODO delete all the positioning stuff, it is now replaced by set_bb_choices
-		
 		var refs = mManager.mReferences;
 		var newRef = mManager.mNewRef;
 		//BB choice nonsense
 		var miniMan = ((GameObject)GameObject.Instantiate(refs.mMiniChar)).GetComponent<CharacterTextureBehaviour>();
 		//mMiniMan = //TODO something like this: mManager.mCharacterBundleManager.get_mini_character(new CharacterIndex(0,1));
 		Vector3 miniManScale = (new Vector3(1,1,1))*1.5f;
-		float padding = 400;
-		float netWidth = (BB_NUM_CHOICES)*padding;
-		float awkwardOffset = netWidth/2 - padding/1.35f;
 		for(int i = 0; i < BB_NUM_CHOICES; i++)
 		{
 			mBBChoices.Add(new NewChoiceObject(11));
 			mBBChoiceBodies.Add(new FlatBodyObject(miniMan,12));
-			float xOffset = awkwardOffset - padding*i;
-			mBBChoices[i].HardPosition = mFlatCamera.get_point(0.5f, 0) + new Vector3(xOffset,0,0);
 			mBBChoiceBodies[i].HardShader = refs.mMiniCharacterShader;
-			mBBChoiceBodies[i].HardPosition = mFlatCamera.get_point(0.5f, 0) + new Vector3(xOffset,-195,0);
 			mBBChoiceBodies[i].HardScale = miniManScale;
 			mElement.Add(mBBChoices[i]);
 			mElement.Add(mBBChoiceBodies[i]);
@@ -64,13 +56,13 @@ public class ChoosingManager
 		mBBChoosingBackground.HardPosition = mFlatCamera.Center;
 		mBBQuestionText = new ColorTextObject(10);
         mBBQuestionTextPrefix = new FlatElementText(newRef.genericFont, 100, "", 10);
-		mBBQuestionText.HardPosition = mFlatCamera.get_point(0.5f,0.75f) + new Vector3(awkwardOffset-padding,-75,0);
-        mBBQuestionTextPrefix.HardPosition = mFlatCamera.get_point(0.5f, 0.75f) + new Vector3(awkwardOffset - padding,75, 0);
+		mBBQuestionText.HardPosition = mFlatCamera.get_point(0,0.75f) + new Vector3(0,-75,0);
+		mBBQuestionTextPrefix.HardPosition = mFlatCamera.get_point(0, 0.75f) + new Vector3(0,75, 0);
 		mBBQuestionText.SoftInterpolation = 1;
         mBBQuestionTextPrefix.SoftInterpolation = 1;
 		mBBMiniMan = new FlatBodyObject(miniMan,20);
 		mBBMiniMan.HardScale = miniManScale;
-		mBBMiniManBasePosition = mFlatCamera.get_point(0.5f, -0.7f) + new Vector3(awkwardOffset - padding,0,0);
+		mBBMiniManBasePosition = mFlatCamera.get_point(0, -0.7f);
 		mBBMiniMan.HardPosition = mBBMiniManBasePosition;
 		
 		
@@ -85,9 +77,8 @@ public class ChoosingManager
 		set_for_choosing();
 	}
 	
-	//TODO we don't need this function if we are going to do slide transition...
-	//DELETE
-	public void fade_choosing_contents(bool small)
+	//NOTE this function is no longer needed but we still use it to initialize choosing
+	public void fade_choosing_contents(bool small = false)
 	{
 		mBBMiniMan.SoftColor = GameConstants.UiMiniMan;
 		
@@ -145,15 +136,6 @@ public class ChoosingManager
 			mBBChoiceBodies[i].set_target_pose(aPoses[i]);
 		}
 	}
-
-	//TODO DELETE
-	public void set_bb_choice_perfectness(List<int> aPerfect)
-	{
-		for(int i = 0; i < aPerfect.Count; i++)
-		{
-			mBBChoices[i].set_perfectness(aPerfect[i]);
-		}
-	}
 	
 	public void set_bb_choices(CharacterIndex[] aChoices)
 	{
@@ -180,32 +162,6 @@ public class ChoosingManager
 			mBBChoices[i].HardPosition = mFlatCamera.get_point(0, 0) + new Vector3(xOffset,0,0);
 			mBBChoiceBodies[i].HardPosition = mFlatCamera.get_point(0, 0) + new Vector3(xOffset,-195,0);
 		}
-	}
-	
-	//TODO DELETE this is replaced by the function above
-	//called by ChoiceHelper
-	//this should really be called set_bb_choice_icons now
-	public void set_bb_choice_bodies(CharacterIndex aIndex)
-	{
-		CharacterIndex index = new CharacterIndex(aIndex.LevelIndex+1,0);
-		var all = index.NeighborsAndSelf;
-		all.RemoveAt(3);
-		set_bb_choices(all.ToArray());
-		
-		
-		/* TODO DELETE
-		all.Add(index);
-		for(int i = 0; i < 3; i++)
-		{
-			//mBBChoices[i].set_actual_character(mManager.mCharacterBundleManager.get_mini_character(all[i]));
-			//TODO DELETE this is set in the following function mBBChoices[i].Character = all[i];
-			mBBChoices[i].set_actual_character(all[i]);
-			mBBChoices[i].set_difficulty(mManager.mCharacterBundleManager.get_character_helper().Characters[all[i]].Difficulty);
-
-			
-			//OLD when using mini char icons we took from PB
-			//mBBChoices[i].return_body(mPBCharacterIcons[all[i].Index].take_body()); //make sure to return the body
-		}*/
 	}
 
 
