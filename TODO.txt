@@ -48,39 +48,54 @@ Perfect Woman features a branching decision tree which serves to create a narrat
 
 
 ::order of operations/TODOXII::
--something wrong with 05-3 ??
 
--ask lea to rename all the background images..
--give background color to sunset..
--start screen should be moved 100% inside of TCM.
-	-see sunsetmanager for erference.	
--testing/challenge/simian mode should inherit from interface..
+-start screen
+	-start screen should read unlockables
+	-fix bugs
+	-add character map so you can read data from unlockables
+	IGNORE-switch start screen to use new character names..
+-move cutscene text buble a little higher up..
+
 -redo that ugly warning thing and move it to the center
+	-better yet to flashing obnoxious red...
+	-http://www.youtube.com/watch?v=yr-OLZmKZ_I
 -add in new interface nonsense
 	-make it not look crappy lol
 	-sounds to accompany changes
 	DONE-little people that pop up from the bottom
 	DONE-little flags that indicate the change
--popup guys
-	-fix sizing and position
-	-need to set as a chain type so you can return when the popup animations are done
-		-or maybe make it fixed timing and speed up the animations based on how many there are
-
--new choosing screen nonsense??
-	DONE-just move to the new choosing manager. It can look the same for now.
-	-reorganize things to the center
+	-popup guys
+		-skipping causes some bugs with new cutscenes I think
+		-fix sizing and position
+		-need to set as a chain type so you can return when the popup animations are done
+			-or maybe make it fixed timing and speed up the animations based on how many there are
 -text file format for unlockable characters
 	-manually fill out for now
--sunset screen nonsense??
--start screen nonsense
-	-make new thing in ggfiles for packaging this properly...
-		-I think the character packager thing should jsut work...
-	-make new class for this... but still call it from Transparent Camera Manager I guess.
-	-read stuff from unlockmanager
--new grave integrates with sunset screen
--still have perfect stars floating around somewhere..
+-grave
+	-new grave integrates with sunset screen
+	-during cutscenes, jiggle the involved characters instead of using particles or popups
+
+-cleanup
+	-still have perfect stars floating around somewhere..
+	-cleanup all the PB stuff
+-testing/challenge/simian mode should inherit from interface..
 -make BACKGROUND part of the big image dump instead of an exception case
 
+DONE-choose align is not correct
+DONE-something wrong with 05-3 ??
+DONE/OOPS-ask lea to rename all the background images..
+IGNORE??-give background color to sunset..
+DONE-new choosing screen nonsense??
+	DONE-just move to the new choosing manager. It can look the same for now.
+	-reorganize things to the center
+IGNORE-sunset screen nonsense??
+DONE-start screen should be moved 100% inside of TCM.
+	-see sunsetmanager for erference.	
+IGNORE-start screen nonsense
+	DONE-make new thing in ggfiles for packaging this properly...
+		-I think the character packager thing should jsut work...
+	IGNORE-make new class for this... but still call it from Transparent Camera Manager I guess.
+	-read stuff from unlockmanager
 DONE-make images fly out instead of fade out
 IGNORE-draw black bars to make sure there are no screen artifacts
 DONE-make sure image bundle is loaded firts before allowing players to start game..
