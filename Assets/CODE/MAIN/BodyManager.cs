@@ -55,7 +55,13 @@ public class BodyManager : FakeMonoBehaviour {
         }
     }
 	
-	
+
+	public void transition_character_in(Color aColor)
+	{
+		mFlat.SoftColor = aColor;
+		mFlat.PositionInterpolationMaxLimit = 5000;
+		mFlat.SoftPosition = Vector3.zero;
+	}
 	public void transition_character_out()
 	{
 		//fade out

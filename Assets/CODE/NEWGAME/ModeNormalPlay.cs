@@ -141,8 +141,7 @@ public class ModeNormalPlay
 					delegate(){
 						NGM.CurrentTargetPose = mManager.mReferences.mCheapPose.to_pose();
 						mManager.mTransparentBodyManager.set_target_pose(NGM.CurrentTargetPose);
-						mManager.mTransparentBodyManager.mFlat.SoftColor = 
-							mManager.mCharacterBundleManager.get_character_stat(NGM.CurrentCharacterIndex).CharacterInfo.CharacterOutlineColor;
+						mManager.mTransparentBodyManager.transition_character_in(mManager.mCharacterBundleManager.get_character_stat(NGM.CurrentCharacterIndex).CharacterInfo.CharacterOutlineColor);
 					},
 				0).then(
 					mInterfaceManager.skippable_text_bubble_event("MATCH THE POSE BEHIND YOU", gTextDisplayDur),
