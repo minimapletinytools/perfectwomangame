@@ -14,7 +14,7 @@
 	-frameref.relativetime tells color and edpth frame timed iff?
 	-frame.accessunderlyingbuffer for raw access (com only)
 -1 byte per pixel body index picture (same as depth res) 
-	- 0-5 body index, -1 no body
+	-0-5 body index, -1 no body
 -bodyframe
 	-frame.getandrefreshbodydata
 	-frame also has bodycount and floor clip plane
@@ -84,14 +84,32 @@ Perfect Woman features a branching decision tree which serves to create a narrat
 
 
 ::order of operations/TODOXII::
-
+-grave
+	-new grave integrates with sunset screen
+	-during cutscenes, jiggle the involved characters instead of using particles or popups
+	-should no longer load 999
+	-design:
+		-if 
+		-fade out, fade into sunset
+		-usual text nonsense
+		-go through each character, jiggle and adjust score maybe with particle effects?
+			-or not do this...
+			-play sound with jiggle
+		-go through each connection
+			-jiggle each character with connection
+			-play sound with jiggle
+		-character unlock badges would show up here
+		-insert custom picture of player here maybe???
+		-game over
+		-scroll all contents everything DOWN and scroll in credits from above ;)
 -start screen
 	-start screen should read unlockables
 	-fix bugs
 	-add character map so you can read data from unlockables
 	IGNORE-switch start screen to use new character names..
--move cutscene text buble a little higher up..
-DONE-something wrong with transparent pose on fetus
+-sunset add sun animations and sky darkness
+	-use background.png color for sky color
+	-position sun in an arc around the mound
 -rethink how skipping works with all the new crap you just added...
 	-skipping is no longer a NIM thing. Needs to be a ModeNormalPlay thing I think...
 
@@ -111,16 +129,14 @@ DONE-something wrong with transparent pose on fetus
 			-or maybe make it fixed timing and speed up the animations based on how many there are
 -text file format for unlockable characters
 	-manually fill out for now
--grave
-	-new grave integrates with sunset screen
-	-during cutscenes, jiggle the involved characters instead of using particles or popups
-
 -cleanup
 	-still have perfect stars floating around somewhere..
 	-cleanup all the PB stuff
 -testing/challenge/simian mode should inherit from interface..
 -make BACKGROUND part of the big image dump instead of an exception case
 
+DONE-move cutscene text buble a little higher up..
+DONE-something wrong with transparent pose on fetus
 DONE-choose align is not correct
 DONE-something wrong with 05-3 ??
 DONE/OOPS-ask lea to rename all the background images..
