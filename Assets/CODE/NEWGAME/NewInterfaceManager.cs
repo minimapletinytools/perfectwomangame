@@ -527,7 +527,8 @@ public class NewInterfaceManager {
 		float gCutsceneText = 5f;
 		float gPreParticle = 1.5f;
 		float gParticle = 2f;
-		
+
+		float gBubblePos = 0.2f;
 		
 		//this slows the game down a lot...
 		set_bb_for_play(mPB.BoundingBox.height/2+205);
@@ -593,7 +594,7 @@ public class NewInterfaceManager {
 				{
 					if(po == null)
 					{
-						po = add_timed_text_bubble(changeMsg,gCutsceneText);
+						po = add_timed_text_bubble(changeMsg,gCutsceneText,gBubblePos);
 					
 						//dumb stuff I need to make sure there was actually a change
 						foreach(CharacterIndex cchar in CharacterIndex.sAllCharacters)
