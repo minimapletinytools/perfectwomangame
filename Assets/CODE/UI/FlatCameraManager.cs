@@ -92,7 +92,10 @@ public class FlatCameraManager{
 		
 			//RT = new RenderTexture(GameConstants.CONTENT_WIDTH,GameConstants.CONTENT_HEIGHT,0,RenderTextureFormat.ARGB32);
 			//RT = new RenderTexture(Screen.width,Screen.height,0,RenderTextureFormat.ARGB32);
-			RT = new RenderTexture((int)(Camera.orthographicSize*2*Camera.aspect/Camera.rect.width),(int)(Camera.orthographicSize*2/Camera.rect.height),0,RenderTextureFormat.ARGB32);
+			//RT = new RenderTexture((int)(Camera.orthographicSize*2*Camera.aspect/Camera.rect.width),(int)(Camera.orthographicSize*2/Camera.rect.height),0,RenderTextureFormat.ARGB32);
+			//if(width_dictate()) //use screen width
+				//...
+			RT = new RenderTexture(1600,900,0,RenderTextureFormat.ARGB32);
 			RT.Create();
 			Camera.targetTexture = RT;
 		}
@@ -111,7 +114,16 @@ public class FlatCameraManager{
 		Camera.orthographicSize = ManagerManager.DESIRED_SCENE_HEIGHT/2;
 		Camera.rect = new Rect(0,0,1,1);
 	}
-	
+
+
+	//width dictate means 
+	public static bool width_dictate()
+	{
+		float desiredAspect = ManagerManager.FORCED_ASPECT_RATIO;
+		float screenRatio = Screen.width / (float)Screen.height;
+		return (desiredAspect > screenRatio);
+	}
+
 	//TODO rename these functions, make them call each other pfftt
 	public static void fit_camera_to_screen(Camera aCam)
 	{
@@ -119,7 +131,7 @@ public class FlatCameraManager{
 		float desiredAspect = ManagerManager.FORCED_ASPECT_RATIO;
 		float screenRatio = Screen.width / (float)Screen.height;
 		Rect newRect = aCam.rect;
-        if (desiredAspect > screenRatio) //match camera width to screen width
+        if(width_dictate()) //match camera width to screen width
 		{
 			float yGive = screenRatio/desiredAspect; //desiredHeight to screenHeight
 			newRect.y = (1-yGive)/2;

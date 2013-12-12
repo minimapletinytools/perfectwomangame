@@ -37,8 +37,8 @@ public class NewInterfaceManager {
 		DoSkipMultipleThisFrame = false;
 		TED = new TimedEventDistributor();
         mFlatCamera = new FlatCameraManager(new Vector3(50000, 10000, 0), 10);
-		mFlatCamera.fit_camera_to_screen();
-		//mFlatCamera.fit_camera_to_game();
+		//mFlatCamera.fit_camera_to_screen();
+		mFlatCamera.fit_camera_to_game();
         mMiniMan = ((GameObject)GameObject.Instantiate(ManagerManager.Manager.mReferences.mMiniChar)).GetComponent<CharacterTextureBehaviour>();        
 		//mMiniMan = //TODO something like this: mManager.mCharacterBundleManager.get_mini_character(new CharacterIndex(0,1));
 
