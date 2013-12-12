@@ -3,7 +3,10 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
 public class ManagerManager : MonoBehaviour{
-	public const float FORCED_ASPECT_RATIO = 16/10f;
+
+	//TODO move to gameconstants
+	//public const float FORCED_ASPECT_RATIO = 16/10f;
+	public const float FORCED_ASPECT_RATIO = 16/9f;
 	public const float DESIRED_SCENE_HEIGHT = 1800;
 
 
