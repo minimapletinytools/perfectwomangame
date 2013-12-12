@@ -1,3 +1,39 @@
+::Kinect for windows v2 api notes::
+-lifecycle
+	-find, open, use, close
+	-sensor unplugged:
+		-as before, but can not poll for frames (or send events)
+		-KinectSensor.IsAvailable()
+-infrared
+	-single frame
+	-long frame (avg of 3 frames)
+-getting rfames
+	-poll FrameDescription for frame related info
+	-framerefrenece.acquireframe()
+	-may come back as null (sometimes a newer frame comes in by this time)
+	-frameref.relativetime tells color and edpth frame timed iff?
+	-frame.accessunderlyingbuffer for raw access (com only)
+-1 byte per pixel body index picture (same as depth res) 
+	- 0-5 body index, -1 no body
+-bodyframe
+	-frame.getandrefreshbodydata
+	-frame also has bodycount and floor clip plane
+	-joint tracknig state,
+		-not tracked, inferred, tracked
+		-body.Joints
+		-body.JointOrientations (quat)
+-other
+	-hand states
+		-unknown/nottracked/open/closed/lasso (peace sign), left/right, high/low,
+	-head
+		-Activities/Apprearance/Expressions
+	-lean
+	-clip edges (by fov)
+-audio
+	-stearable cone of focus for audio
+-features
+	-
+
 ::INSTALLATION::
 Kinect
 at least 10 feet of space
@@ -55,7 +91,11 @@ Perfect Woman features a branching decision tree which serves to create a narrat
 	-add character map so you can read data from unlockables
 	IGNORE-switch start screen to use new character names..
 -move cutscene text buble a little higher up..
+DONE-something wrong with transparent pose on fetus
+-rethink how skipping works with all the new crap you just added...
+	-skipping is no longer a NIM thing. Needs to be a ModeNormalPlay thing I think...
 
+-score and time label in upper right
 -redo that ugly warning thing and move it to the center
 	-better yet to flashing obnoxious red...
 	-http://www.youtube.com/watch?v=yr-OLZmKZ_I
@@ -65,8 +105,8 @@ Perfect Woman features a branching decision tree which serves to create a narrat
 	DONE-little people that pop up from the bottom
 	DONE-little flags that indicate the change
 	-popup guys
-		-skipping causes some bugs with new cutscenes I think
-		-fix sizing and position
+		DONE-skipping causes some bugs with new cutscenes I think
+		DONE-fix sizing and position
 		-need to set as a chain type so you can return when the popup animations are done
 			-or maybe make it fixed timing and speed up the animations based on how many there are
 -text file format for unlockable characters
