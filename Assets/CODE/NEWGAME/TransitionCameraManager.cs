@@ -175,7 +175,7 @@ public class TransitionCameraManager : FakeMonoBehaviour
 
 
 		mElement.Add(construct_flat_image("BACKGROUND",0));
-		//mElement.Add(construct_flat_image("FG-1",30));
+		mElement.Add(construct_flat_image("FG-1",30));
 
 		for(int i = 1; i < 28; i++)
 		//foreach(CharacterIndex e in CharacterIndex.sAllCharacters)
