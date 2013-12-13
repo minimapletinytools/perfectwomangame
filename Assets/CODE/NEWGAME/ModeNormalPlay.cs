@@ -151,10 +151,6 @@ public class ModeNormalPlay
 				setup_next_poses(true);
 				transition_to_PLAY();
 				break;
-			case "999":
-				setup_next_poses(true);
-				transition_to_GRAVE();
-				break;
 			default:
 				set_time_for_PLAY(30f);
 				setup_next_poses(false);
@@ -578,8 +574,16 @@ public class ModeNormalPlay
 			delegate(){
 				mManager.mTransitionCameraManager.fade_out_with_sound(
 					delegate(){
-						mManager.mAssetLoader.new_load_character(aNextCharacter.StringIdentifier,mManager.mCharacterBundleManager);
-						slide_image(mSunsetImage,null);
+						if(aNextCharacter != CharacterIndex.sGrave) 
+						{
+							mManager.mAssetLoader.new_load_character(aNextCharacter.StringIdentifier,mManager.mCharacterBundleManager);
+							slide_image(mSunsetImage,null);
+						} else 
+						{
+							mManager.mTransitionCameraManager.fade_in_with_sound();
+							slide_image(null,mSunsetImage,true);
+							transition_to_GRAVE();
+						}
 					}
 				);
 			}
@@ -665,7 +669,7 @@ public class ModeNormalPlay
 		}
 	}
 
-	public void slide_image(FlatElementImage cur, FlatElementImage next)
+	public void slide_image(FlatElementImage cur, FlatElementImage next, bool instant = false)
 	{
 
 		//TODO set triggers to deactivate the surfaces, maybe not here.. for performance..
@@ -673,9 +677,15 @@ public class ModeNormalPlay
 		{
 			next.HardPosition = mFlatCamera.Center + Vector3.right*next.BoundingBox.width;
 			next.SoftPosition = mFlatCamera.Center;
+			if(instant)
+				next.HardPosition = next.SoftPosition;
 		}
 		if(cur != null)
+		{
 			cur.SoftPosition = mFlatCamera.Center - Vector3.right*cur.BoundingBox.width;
+			if(instant)
+				cur.HardPosition = cur.SoftPosition;
+		}
 	}
 
 
