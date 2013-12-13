@@ -75,7 +75,7 @@ public class SunsetManager
 
 	public void set_sun(int index)
 	{
-		float gTotalIndices = 7;
+		float gTotalIndices = 6;
 		float lambda = index/gTotalIndices;
 		float ttt = Mathf.PI*lambda;
 		mSun.HardPosition = mFlatCamera.Center + new Vector3(500*Mathf.Cos(ttt),700*Mathf.Sin(ttt),0);
@@ -91,10 +91,13 @@ public class SunsetManager
 		var addMe = construct_flat_image("SUNSET_"+aChar.StringIdentifier,4);
 
 		//TODO special positioning for grave
+		//if(aChar == CharacterIndex.sGrave && crap)
+		{
+			//var posImg = construct_flat_image(aChar
+		}
 
 		mCharacters.Add(addMe);
 		mElement.Add(addMe);
-
 
 		set_sun(mCharacters.Count-1);
 	}
