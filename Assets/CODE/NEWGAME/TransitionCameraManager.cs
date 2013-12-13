@@ -5,6 +5,38 @@ using System.Collections.Generic;
 //this class also handles initialization camera nonsense
 public class TransitionCameraManager : FakeMonoBehaviour
 {
+	static List<CharacterIndex> sCharOrderList = new List<CharacterIndex>()
+	{
+		new CharacterIndex("60-4"),
+		new CharacterIndex("60-3"),
+		new CharacterIndex("27-4"),
+		new CharacterIndex("85-1"),
+		new CharacterIndex("60-1"),
+		new CharacterIndex("85-4"),
+		new CharacterIndex("05-1"),
+		new CharacterIndex("05-2"),
+		new CharacterIndex("34-4"),
+		new CharacterIndex("05-3"),
+		new CharacterIndex("05-4"),
+		new CharacterIndex("16-2"),
+		new CharacterIndex("45-3"),
+		new CharacterIndex("16-4"),
+		new CharacterIndex("34-1"),
+		new CharacterIndex("27-1"),
+		new CharacterIndex("27-3"),
+		new CharacterIndex("34-2"),
+		new CharacterIndex("34-3"),
+		new CharacterIndex("45-1"),
+		new CharacterIndex("45-2"),
+		new CharacterIndex("45-4"),
+		new CharacterIndex("60-2"),
+		new CharacterIndex("85-2"),
+		new CharacterIndex("85-3"),
+		new CharacterIndex("27-2"),
+		new CharacterIndex("16-1"),
+		new CharacterIndex("16-3")
+	};
+
 	static float MAX_FADE = 30;
 	
 	
@@ -174,24 +206,24 @@ public class TransitionCameraManager : FakeMonoBehaviour
 
 
 
+
 		mElement.Add(construct_flat_image("BACKGROUND",0));
 		mElement.Add(construct_flat_image("FG-1",30));
 
-		for(int i = 1; i < 28; i++)
-		//foreach(CharacterIndex e in CharacterIndex.sAllCharacters)
+		for(int i = 2; i < 30; i++)
 		{
-			//if(e.LevelIndex != 0 && e.Age != 9 && e.Age != 8)
+			var img = construct_flat_image("BG-"+i,30-i);
+			if(mManager.mMetaManager.UnlockManager.is_unlocked(sCharOrderList[i-2]) != 1)
 			{
-				var img = construct_flat_image("BG-"+i,i);
+				img.HardShader = mManager.mReferences.mTransparentCharacaterShader;
+				img.HardColor = //new Color(0.75f,0,0,1);
+					//actually can't read this data yet because it's not loaded fast enough I guess...
+					mManager.mCharacterBundleManager.get_character_stat(sCharOrderList[i-2]).CharacterInfo.CharacterOutlineColor;
 
-				//if(mManager.mMetaManager.UnlockManager.is_unlocked())
-				//img.HardShader = mManager.mReferences.mTransparentCharacaterShader;
-				//img.HardColor = GameConstants.UiRed;
-
-				mElement.Add(img);
-				//TODO custom ordering
-				//mElement.Add(construct_flat_image("CHAR_"+ e.StringIdentifier,e.LevelIndex));
 			}
+
+			mElement.Add(img);
+			
 		}
 
 
