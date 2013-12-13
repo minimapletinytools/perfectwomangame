@@ -56,7 +56,7 @@ public class ModeNormalPlay
 		TED = new TimedEventDistributor();
 		mChoiceHelper = new ChoiceHelper();
 		
-		mInterfaceManager = new NewInterfaceManager(mManager);
+		mInterfaceManager = new NewInterfaceManager(mManager,this);
 		mInterfaceManager.initialize();
 		mInterfaceManager.mFlatCamera.set_render_texture_mode(true);
 		
@@ -101,9 +101,6 @@ public class ModeNormalPlay
 		
 		//setup the interacem manager
 		mInterfaceManager.setup_bb();
-		mInterfaceManager.setup_pb();
-		mInterfaceManager.set_pb_character_icon_colors(NGM.CharacterHelper.Characters);
-		//set_pb_character_icon_poses();
 		
 		//load sunset stuff
 		mManager.mAssetLoader.new_load_asset_bundle("SUNSET",
@@ -391,7 +388,6 @@ public class ModeNormalPlay
 							}
 						}
 			        }
-					mInterfaceManager.set_pb_character_icon_colors(mManager.mGameManager.CharacterHelper.Characters);
 				}
 				mManager.mMusicManager.fade_out();
 			}
@@ -503,7 +499,8 @@ public class ModeNormalPlay
 	public void transition_to_GRAVE()
 	{
 		GS = NormalPlayGameState.GRAVE;
-		mInterfaceManager.set_for_GRAVE(mPerformanceStats, 
+
+		mSunsetManager.set_for_GRAVE(mPerformanceStats, 
 			delegate()
 			{
 				mManager.mTransitionCameraManager.fade_out_with_sound(mManager.restart_game);
@@ -555,7 +552,6 @@ public class ModeNormalPlay
 		//no target pose means we don't want a transparent body
 		if(NGM.CurrentTargetPose == null)
 			mManager.mTransparentBodyManager.transition_character_out();
-		mInterfaceManager.set_for_PLAY();
 		
 	}
 	
