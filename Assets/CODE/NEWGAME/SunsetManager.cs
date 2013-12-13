@@ -69,13 +69,34 @@ public class SunsetManager
 		mManager.mCharacterBundleManager.add_bundle_to_unload(aBundle);
 		IsLoaded = true;
 	}
+
+	//TODO some function for showing score above characters...
+
+
+	public void set_sun(int index)
+	{
+		float gTotalIndices = 7;
+		float lambda = index/gTotalIndices;
+		float ttt = Mathf.PI*lambda;
+		mSun.HardPosition = mFlatCamera.Center + new Vector3(500*Mathf.Cos(ttt),700*Mathf.Sin(ttt),0);
+		//TODO dark blue to light blue to dark golden orange
+		if(lambda < 0.5f)
+			mBackground.HardColor = Color.Lerp(new Color32(25,25,112,255),new Color32(135,206,235,255),lambda*2)/2f;
+		else
+			mBackground.HardColor = Color.Lerp(new Color32(135,206,235,255),new Color(150,75,0,255),(lambda-0.5f)*2)/2f;
+	}
 	
 	public void add_character(CharacterIndex aChar)
 	{
 		var addMe = construct_flat_image("SUNSET_"+aChar.StringIdentifier,4);
+
+		//TODO special positioning for grave
+
 		mCharacters.Add(addMe);
 		mElement.Add(addMe);
-		
+
+
+		set_sun(mCharacters.Count-1);
 	}
 
 	public void update()
@@ -171,6 +192,9 @@ public class SunsetManager
 	System.Action<bool> mGraveCompleteCb = null;
 	public void set_for_GRAVE(List<PerformanceStats> aStats, System.Action graveCompleteCb)
 	{
+		//add the gravestone
+		add_character(CharacterIndex.sGrave);
+
 		//timing vars
 		float gIntroText = 4.5f;
 		float gCharacterText = 4.5f;
