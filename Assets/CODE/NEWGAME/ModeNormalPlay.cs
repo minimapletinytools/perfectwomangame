@@ -563,7 +563,7 @@ public class ModeNormalPlay
 			delegate(float aTime){return true;}
 		).then(
 			
-			NGM.CurrentCharacterIndex.LevelIndex < 7 //TODO
+			(NGM.CurrentCharacterIndex.LevelIndex < 7 && aNextCharacter != CharacterIndex.sGrave)
 			?
 			mInterfaceManager.skippable_text_bubble_event("You turn " + NGM.CurrentCharacterIndex.get_future_neighbor(0).Age,gAgeDisplayDur)
 			:
