@@ -73,11 +73,11 @@ public class SunsetManager
 
 	int char_to_list_index(CharacterIndex aIndex)
 	{
+		if(aIndex == CharacterIndex.sGrave)
+			return mCharacters.Count - 1;
 		int r = aIndex.LevelIndex - 1;
 		if(r >= mCharacters.Count)
 			return -1;
-		if(aIndex == CharacterIndex.sGrave)
-			return mCharacters.Count - 1;
 		return r;
 	}
 	
@@ -90,6 +90,8 @@ public class SunsetManager
 		scoreBg.SoftPosition = mCharacters[ind].SoftPosition + new Vector3(0,300,0);
 		scoreText.HardPosition = scoreBg.HardPosition;
 		scoreText.SoftPosition = scoreBg.SoftPosition;
+		mElement.Add(scoreBg);
+		mElement.Add(scoreText);
 		TED.add_event(
 			delegate(float aTime) {
 				if(aTime > showTime)
@@ -137,6 +139,8 @@ public class SunsetManager
 
 			mCharacters.Add(addMe);
 			mElement.Add(addMe);
+
+			show_score(aChar,(int)mManager.mGameManager.mModeNormalPlay.CurrentPerformanceStat.Score,10);
 		}
 
 		set_sun(mCharacters.Count-1);
@@ -247,7 +251,7 @@ public class SunsetManager
 		float gPreScoreCount = 0.5f;
 		float gScoreCount = 0.7f;
 		float gPostScoreCount = 1f;
-		float gRestart = 45;
+		float gRestart = 65;
 		
 		//remove the grave
 		if(aStats.Last().Character.Age == 999)
@@ -294,7 +298,7 @@ public class SunsetManager
 			f.gameObject.layer = 4;
 		//foreach (Renderer f in perfectEngraving.PrimaryGameObject.GetComponentsInChildren<Renderer>()) f.gameObject.layer = 4;
 		
-		Vector3 graveCenter = mManager.mBackgroundManager.mBackgroundElements[0].SoftPosition + new Vector3(0, 50, 0);
+		Vector3 graveCenter = mCharacters[mCharacters.Count-1].HardPosition + new Vector3(0, 50, 0);
 		finalScoreText.HardPosition = graveCenter + new Vector3(0,-250,0);
 		//perfectEngraving.SoftPosition = graveCenter + new Vector3(35,250,0);
 		perfectPercent.HardPosition = graveCenter + new Vector3(24,180,0);
@@ -311,13 +315,10 @@ public class SunsetManager
 		       skippable_text_bubble_event("HERE IS YOUR LIFE STORY",gIntroText)
 		       );
 
-		//TODO go through characters one at a time and add score together
 		for(int i = 1; i < aStats.Count; i++)
 		{
 			int it = i;
 			PerformanceStats ps = aStats[i];
-
-
 			
 			chain = chain.then(
 				delegate(float aTime)
@@ -396,7 +397,25 @@ public class SunsetManager
 									if(npo == null)
 									{
 										npo = add_timed_text_bubble(conText[0],gFirstConnectionText + gConnectionText);
-										//TODO particle effects or whatever
+
+
+										FlatElementImage[] effectImage = new FlatElementImage[]{
+											mCharacters[char_to_list_index(targetCharacter)],
+											mCharacters[char_to_list_index(ps.Character)]
+										};
+
+										foreach(FlatElementImage f in effectImage)
+										{
+											f.Events.add_event(
+												delegate(FlatElementBase aBase, float aTime2) 
+												{
+													aBase.mLocalRotation = Quaternion.AngleAxis((1+Mathf.Sin(aTime2*6)*0.1f),Vector3.forward);
+													if(aTime2 > 1) 
+														return true;
+													return false;
+												}
+											,0);
+										}
 									}
 									if(npo.IsDestroyed || aTime > gPreParticle) 
 									{
@@ -446,13 +465,19 @@ public class SunsetManager
 				{
 					gameOver = new PopupTextObject("G A M E O V E R",30);
 					gameOver.HardPosition = mFlatCamera.Center + new Vector3(0,mFlatCamera.Height/2+450,0);
+					gameOver.HardColor = GameConstants.UiWhiteTransparent;
+					gameOver.SoftColor = GameConstants.UiWhite;
+					gameOver.set_text_color(GameConstants.UiWhiteTransparent,true);
+					gameOver.set_text_color(GameConstants.UiRed);
+					gameOver.set_background_color(GameConstants.UiWhiteTransparent,true);
+					gameOver.set_background_color(GameConstants.UiPopupBubble);
 					mElement.Add(gameOver);
 
 					int counter = 0;
 					foreach(string e in GameConstants.credits.Reverse())
 					{
 						var text = new FlatElementText(mManager.mNewRef.genericFont,50,e,10);
-						text.HardColor = new Color(1,1,1,1);
+						text.HardColor = new Color(0,0,1,1);
 						text.HardPosition = mFlatCamera.Center + new Vector3(0,mFlatCamera.Height/2+1000,0) + (new Vector3(0,70,0))*counter;
 						creditsText.Add(text);
 						mElement.Add(text);
