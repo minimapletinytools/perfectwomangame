@@ -109,29 +109,36 @@ public class NewInterfaceManager {
 		var newRef = mManager.mNewRef;
 		var refs = mManager.mReferences;
 
-		var nameFrame = mManager.mCharacterBundleManager.get_image("TEXTBOX-01.png");
-		var scoreFrame = mManager.mCharacterBundleManager.get_image("TEXTBOX-02.png");
+		var nameFrame = mManager.mCharacterBundleManager.get_image("TEXTBOX-01");
+		var scoreFrame = mManager.mCharacterBundleManager.get_image("TEXTBOX-02");
 
 		
 		//BB small nonsense
-		mBBNameText = new FlatElementText(mManager.mNewRef.genericFont,60,"",10);
-		mBBNameTextFrame = new FlatElementImage(nameFrame.Image,9);
-		mBBScoreFrame = new FlatElementImage(scoreFrame.Image,9);
-		mBBScoreText = new FlatElementText(mManager.mNewRef.genericFont,60,"0",10);
+		mBBNameText = new FlatElementText(mManager.mNewRef.genericFont,60,"",11);
+		mBBNameTextFrame = new FlatElementImage(nameFrame.Image,10);
+		mBBScoreText = new FlatElementText(mManager.mNewRef.genericFont,60,"0",11);
+		mBBScoreFrame = new FlatElementImage(scoreFrame.Image,10);
+		mBBMultiplierImage = new FlatElementImage(null,15);
 
 		//mBBWarningText = new FlatElementText(mManager.mNewRef.genericFont,150,"WARNING",12);
 		mBBWarningText = new FlatElementText(mManager.mNewRef.genericFont,400,"WARNING",20);
 		mBBWarningText.HardColor = new Color(0.5f,0.5f,0.5f,0);
+		mBBWarningText.HardPosition = mFlatCamera.Center;
 
-		mBBMultiplierImage = new FlatElementImage(null,15);
-		mBBNameText.HardPosition = mFlatCamera.get_point(0,0); //TODO
-        mBBNameText.HardColor = GameConstants.UiPink;
+
+		mBBNameText.HardColor = GameConstants.UiPink;
 		mBBNameText.Alignment = TextAlignment.Left;
 		mBBNameText.Anchor = TextAnchor.MiddleLeft;
-		mBBNameTextFrame.HardPosition = mFlatCamera.get_point(0,0); //TODO
-		mBBScoreFrame.HardPosition = mFlatCamera.get_point(0,0); //TODO
-		mBBScoreText.HardPosition = mFlatCamera.get_point(0,0); //TODO
-		mBBScoreText.HardColor = GameConstants.UiRed;
+		mBBScoreText.HardColor = GameConstants.UiPink;
+		mBBMultiplierImage.HardPosition = mFlatCamera.get_point(-1,1) + new Vector3(200,-200,0) 
+			+ new Vector3(mBBMultiplierImage.BoundingBox.width, mBBMultiplierImage.BoundingBox.height,0)/2f; 
+
+		mBBNameTextFrame.HardPosition = mBBMultiplierImage.HardPosition + new Vector3(mBBNameTextFrame.BoundingBox.width,120,0)/2;
+		mBBNameText.HardPosition = mBBNameTextFrame.HardPosition;
+		mBBScoreFrame.HardPosition = mBBMultiplierImage.HardPosition + new Vector3(mBBScoreFrame.BoundingBox.width,-120,0)/2;
+		mBBScoreText.HardPosition = mBBScoreFrame.HardPosition;
+
+		
 
 		mElement.Add(mBBNameText);
 		mElement.Add(mBBNameTextFrame);
@@ -250,7 +257,7 @@ public class NewInterfaceManager {
 		mBBNameText.Text = FlatElementText.convert_to_multiline(aChar.Character.Description.Length > 20 ? 2 : 1 ,aChar.Character.Description + " (" + aChar.Character.Age.ToString() + ")");
 		if(aChar.Character.LevelIndex != 0)
 		{
-			mBBMultiplierImage.set_new_texture(mManager.mNewRef.bbScoreMultiplier[aChar.Stats.Difficulty]);
+			mBBMultiplierImage.set_new_texture(mManager.mNewRef.bbChoicePerfectIcons[aChar.Stats.Difficulty]);
 		}
 	}
 	
