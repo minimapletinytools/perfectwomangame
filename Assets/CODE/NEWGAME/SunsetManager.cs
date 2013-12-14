@@ -393,17 +393,18 @@ public class SunsetManager
 							chain = chain.then (
 								delegate(float aTime)
 								{
-								if(npo == null)
-								{
-									npo = add_timed_text_bubble(conText[0],gFirstConnectionText + gConnectionText);
-									//TODO particle effects or whatever
+									if(npo == null)
+									{
+										npo = add_timed_text_bubble(conText[0],gFirstConnectionText + gConnectionText);
+										//TODO particle effects or whatever
+									}
+									if(npo.IsDestroyed || aTime > gPreParticle) 
+									{
+										return true;
+									}
+									return false;
 								}
-								if(npo.IsDestroyed || aTime > gPreParticle) 
-								{
-									return true;
-								}
-								return false;
-							},0);
+							,0);
 						} else {
 							//TODO
 							Debug.Log("Peter was too lazy to implement optional splitting. Connection text MUST be split");
@@ -420,9 +421,14 @@ public class SunsetManager
 		float lastTime = 0;
 		FlatElementImage logo1 = null;
 		FlatElementImage logo2 = null;
+
+		PopupTextObject gameOver = null;
+
+
+
 		List<FlatElementText> creditsText = new List<FlatElementText>();
 		float scrollSpeed = 75;
-		
+
 		
 
 		
@@ -432,34 +438,39 @@ public class SunsetManager
 			TED.add_one_shot_event(
 				delegate()
 				{
-				add_timed_text_bubble("G A M E  O V E R",99999,0);
-				mManager.mMusicManager.fade_in_extra_music("creditsMusic");
-				mManager.mMusicManager.fade_out();
-			}
+					mManager.mMusicManager.fade_in_extra_music("creditsMusic");
+					mManager.mMusicManager.fade_out();
+				}
 			,0).then_one_shot(
 				delegate()
 				{
-				int counter = 0;
-				foreach(string e in GameConstants.credits.Reverse())
-				{
-					var text = new FlatElementText(mManager.mNewRef.genericFont,50,e,10);
-					text.HardColor = new Color(1,1,1,1);
-					text.HardPosition = mFlatCamera.Center + new Vector3(0,mFlatCamera.Height/2+450,0) + (new Vector3(0,70,0))*counter;
-					creditsText.Add(text);
-					mElement.Add(text);
-					counter++;
+					gameOver = new PopupTextObject("G A M E O V E R",30);
+					gameOver.HardPosition = mFlatCamera.Center + new Vector3(0,mFlatCamera.Height/2+450,0);
+					mElement.Add(gameOver);
+
+					int counter = 0;
+					foreach(string e in GameConstants.credits.Reverse())
+					{
+						var text = new FlatElementText(mManager.mNewRef.genericFont,50,e,10);
+						text.HardColor = new Color(1,1,1,1);
+						text.HardPosition = mFlatCamera.Center + new Vector3(0,mFlatCamera.Height/2+1000,0) + (new Vector3(0,70,0))*counter;
+						creditsText.Add(text);
+						mElement.Add(text);
+						counter++;
+					}
+					
+					float logoStartHeight = mFlatCamera.Height/2 + 1000 + 70*counter + 500;
+					logo1 = new FlatElementImage(mManager.mNewRef.gameLabLogo,10);
+					logo2 = new FlatElementImage(mManager.mNewRef.filmAkademieLogoGrave,10);
+					logo1.HardPosition = mFlatCamera.Center + new Vector3(0,logoStartHeight,0);
+					logo2.HardPosition = mFlatCamera.Center + new Vector3(0,logoStartHeight + 700,0);
+
+
+					
+					mElement.Add(logo1);
+					mElement.Add(logo2);
+					
 				}
-				
-				float logoStartHeight = mFlatCamera.Height/2+450 + 70*counter + 500;
-				logo1 = new FlatElementImage(mManager.mNewRef.gameLabLogo,10);
-				logo2 = new FlatElementImage(mManager.mNewRef.filmAkademieLogoGrave,10);
-				logo1.HardPosition = mFlatCamera.Center + new Vector3(0,logoStartHeight,0);
-				logo2.HardPosition = mFlatCamera.Center + new Vector3(0,logoStartHeight + 700,0);
-				
-				mElement.Add(logo1);
-				mElement.Add(logo2);
-				
-			}
 			,0).then(
 				delegate(float aTime)
 				{
@@ -470,6 +481,7 @@ public class SunsetManager
 				{
 					e.SoftPosition = e.SoftPosition + scroll;
 				}
+				gameOver.SoftPosition = gameOver.SoftPosition + scroll;
 				logo1.SoftPosition = logo1.SoftPosition + scroll;
 				logo2.SoftPosition = logo2.SoftPosition + scroll;
 				
