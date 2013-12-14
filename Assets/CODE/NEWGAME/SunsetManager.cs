@@ -71,8 +71,44 @@ public class SunsetManager
 		IsLoaded = true;
 	}
 
-	//TODO some function for showing score above characters...
-
+	int char_to_list_index(CharacterIndex aIndex)
+	{
+		int r = aIndex.LevelIndex - 1;
+		if(r >= mCharacters.Count)
+			return -1;
+		if(aIndex == CharacterIndex.sGrave)
+			return mCharacters.Count - 1;
+		return r;
+	}
+	
+	public void show_score(CharacterIndex aIndex, int aScore, float showTime)
+	{
+		int ind = char_to_list_index(aIndex);
+		FlatElementText scoreText = new FlatElementText(mManager.mNewRef.genericFont,100, aScore.ToString(), 21);
+		FlatElementImage scoreBg = new FlatElementImage(null,20);
+		scoreBg.HardPosition = mFlatCamera.get_point(0,1.5f);
+		scoreBg.SoftPosition = mCharacters[ind].SoftPosition + new Vector3(0,300,0);
+		scoreText.HardPosition = scoreBg.HardPosition;
+		scoreText.SoftPosition = scoreBg.SoftPosition;
+		TED.add_event(
+			delegate(float aTime) {
+				if(aTime > showTime)
+				{
+					scoreBg.SoftColor = GameConstants.UiWhiteTransparent;
+					scoreText.SoftColor = GameConstants.UiWhiteTransparent;
+					return true;
+				}
+				return false;
+			}
+		,0).then_one_shot( 
+			delegate(){ 
+				mElement.Remove(scoreBg);
+				mElement.Remove(scoreText);
+				scoreBg.destroy();
+				scoreText.destroy();
+			}
+		,3);
+	}
 
 	public void set_sun(int index)
 	{
