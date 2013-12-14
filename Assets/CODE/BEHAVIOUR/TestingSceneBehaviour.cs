@@ -18,6 +18,7 @@ public class TestingSceneBehaviour : MonoBehaviour {
 	
 	public void Update()
 	{
+		/* draws character icon in upper right corner lol..
 		if(ManagerManager.Manager.mCharacterBundleManager.is_initial_loaded() && ManagerManager.Manager.mGameManager.DeathCharacter != null)
 		{
 			
@@ -26,7 +27,7 @@ public class TestingSceneBehaviour : MonoBehaviour {
 				mLastCharacter = ManagerManager.Manager.mGameManager.CurrentCharacterIndex;
 				mImage = ManagerManager.Manager.mCharacterBundleManager.get_image("BOX_"+mLastCharacter.StringIdentifier).Image;
 			}
-		}
+		}*/
 	}
 	
 	void OnGUI()
