@@ -17,6 +17,7 @@ public class SunsetManager
 	
 	public void initialize()
 	{
+		IsLoaded = false;
 		TED = new TimedEventDistributor();
 		mFlatCamera = new FlatCameraManager(new Vector3(10000, -3000, 0), 10);
 		mFlatCamera.fit_camera_to_game();
@@ -31,7 +32,7 @@ public class SunsetManager
 	FlatElementImage mLightRay;
 	List<FlatElementImage> mCharacters = new List<FlatElementImage>();
 	
-	bool IsLoaded{get;set;}
+	public bool IsLoaded{get; private set;}
 	
 	
 	FlatElementImage construct_flat_image(string aName, int aDepth)

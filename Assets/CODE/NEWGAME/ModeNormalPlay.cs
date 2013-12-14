@@ -63,6 +63,11 @@ public class ModeNormalPlay
 		mSunsetManager = new SunsetManager(mManager);
 		mSunsetManager.initialize();
 		mSunsetManager.mFlatCamera.set_render_texture_mode(true);
+		mManager.mAssetLoader.new_load_asset_bundle("SUNSET",
+			delegate(AssetBundle aBundle){
+				mSunsetManager.sunset_loaded_callback(aBundle,"SUNSET");
+			}
+		);
 		
 		
 		mChoosingManager = new ChoosingManager(mManager);
@@ -101,13 +106,7 @@ public class ModeNormalPlay
 		
 		//setup the interacem manager
 		mInterfaceManager.setup_bb();
-		
-		//load sunset stuff
-		mManager.mAssetLoader.new_load_asset_bundle("SUNSET",
-			delegate(AssetBundle aBundle){
-				mSunsetManager.sunset_loaded_callback(aBundle,"SUNSET");
-			}
-		);
+
 	}
 	
 	public void set_time_for_PLAY(float aTime)

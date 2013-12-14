@@ -16,9 +16,11 @@ public class CharacterBundleManager : FakeMonoBehaviour {
 		//load_mini_characters();
 	}
 			
+
 	public bool is_initial_loaded()
 	{
-		return mPosesLoaded && (mNumberCharactersLoading == 0) && mImagesLoaded;
+		return mPosesLoaded && (mNumberMiniCharactersLoading == 0) && mImagesLoaded;
+			//&& (mManager.mGameManager.mModeNormalPlay.mSunsetManager.IsLoaded); //TODO may want to check game mode to make sure we aren't in testing or simian
 	}
 	
 	
@@ -71,7 +73,7 @@ public class CharacterBundleManager : FakeMonoBehaviour {
 	//----------
 	Mutex mMiniCharLock;
 	CharIndexContainerCharacterLoader mMiniCharacters = new CharIndexContainerCharacterLoader();
-	int mNumberCharactersLoading = 0;
+	int mNumberMiniCharactersLoading = 0;
 	//mini bundle related
 	public void load_mini_characters()
 	{
@@ -81,7 +83,7 @@ public class CharacterBundleManager : FakeMonoBehaviour {
 			
 			if(mManager.mAssetLoader.does_bundle_exist(index.StringIdentifier+"_mini"))
 			{
-				mNumberCharactersLoading++;
+				mNumberMiniCharactersLoading++;
 				mManager.mAssetLoader.new_load_mini_characater(index.StringIdentifier, this);
 			}
 			else
@@ -97,7 +99,7 @@ public class CharacterBundleManager : FakeMonoBehaviour {
 			mMiniCharacters[index].complete_load_character(aBundle,aBundleName);
 		}
 		aBundle.Unload(false);
-		mNumberCharactersLoading--;
+		mNumberMiniCharactersLoading--;
 	}
 	public CharacterLoader get_mini_character(CharacterIndex aIndex)
 	{

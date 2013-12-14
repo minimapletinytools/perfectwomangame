@@ -48,7 +48,7 @@ public class NewGameManager : FakeMonoBehaviour
 	
 	ModeTesting mModeTesting;
 	ModeChallenge mModeChallenge;
-	ModeNormalPlay mModeNormalPlay;
+	public ModeNormalPlay mModeNormalPlay;
 	ModePerfectSimian mModeSimian;
 	
 	public void set_testing()
