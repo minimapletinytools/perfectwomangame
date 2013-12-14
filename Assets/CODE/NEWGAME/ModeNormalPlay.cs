@@ -123,8 +123,7 @@ public class ModeNormalPlay
 		CurrentPerformanceStat.Stats = NGM.CharacterHelper.Characters[NGM.CurrentCharacterIndex];
 		mInterfaceManager.begin_new_character(CurrentPerformanceStat);
 
-		if(NGM.CurrentCharacterLoader.Name != "0-1")
-			mSunsetManager.add_character(NGM.CurrentCharacterLoader.Character);
+		mSunsetManager.add_character(NGM.CurrentCharacterLoader.Character);
 		switch(NGM.CurrentCharacterLoader.Name)
 		{
 			case "0-1":	
