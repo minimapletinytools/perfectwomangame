@@ -88,16 +88,19 @@ public class SunsetManager
 	
 	public void add_character(CharacterIndex aChar)
 	{
-		var addMe = construct_flat_image("SUNSET_"+aChar.StringIdentifier,4);
-
-		//TODO special positioning for grave
-		//if(aChar == CharacterIndex.sGrave && crap)
+		if(aChar != CharacterIndex.sFetus)
 		{
-			//var posImg = construct_flat_image(aChar
-		}
+			var addMe = construct_flat_image("SUNSET_"+aChar.StringIdentifier,4);
 
-		mCharacters.Add(addMe);
-		mElement.Add(addMe);
+			//TODO special positioning for grave
+			//if(aChar == CharacterIndex.sGrave && crap)
+			{
+				//var posImg = construct_flat_image(aChar
+			}
+
+			mCharacters.Add(addMe);
+			mElement.Add(addMe);
+		}
 
 		set_sun(mCharacters.Count-1);
 	}
