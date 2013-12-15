@@ -546,6 +546,8 @@ public class ModeNormalPlay
 		
 		float gDiffDisplayDur = 5f;
 		float gAgeDisplayDur = 3f;
+		float gSunMoveDur = 2f;
+
 		GS = NormalPlayGameState.TRANSITION;
 
 		var diffPhrases = new string[]{	"That's an easy choice. You should be able to manage that!", 
@@ -556,16 +558,21 @@ public class ModeNormalPlay
 		TED.add_event(
 			aNextCharacter != CharacterIndex.sGrave 
 			?
-			mInterfaceManager.skippable_text_bubble_event(diffPhrases[NGM.CharacterHelper.Characters[aNextCharacter].Difficulty],gDiffDisplayDur)
+			mSunsetManager.low_skippable_text_bubble_event(diffPhrases[NGM.CharacterHelper.Characters[aNextCharacter].Difficulty],gDiffDisplayDur)
 			:
 			delegate(float aTime){return true;}
 		).then(
 			
 			(NGM.CurrentCharacterIndex.LevelIndex < 7 && aNextCharacter != CharacterIndex.sGrave)
 			?
-			mInterfaceManager.skippable_text_bubble_event("You turn " + NGM.CurrentCharacterIndex.get_future_neighbor(0).Age,gAgeDisplayDur)
+			mSunsetManager.low_skippable_text_bubble_event("You turn " + NGM.CurrentCharacterIndex.get_future_neighbor(0).Age,gAgeDisplayDur)
 			:
 			delegate(float aTime){return true;}
+		,0).then(
+			delegate(float aTime){
+				mSunsetManager.set_sun();
+				return aTime > gSunMoveDur;
+			}
 		,0).then_one_shot(
 			//TODO before this, till mInterfaceManager to explain what choice the user just made
 			//maybe play a sound "Too Easy" "Ok" "Hard" "That's Impossible!!"

@@ -57,7 +57,6 @@ public class SunsetManager
 		mElement.Add(mBackground);
 		mElement.Add(mStubbyHairyGrass);
 
-
 		var sun = mManager.mCharacterBundleManager.get_image("SUN");
 		mSun = new FlatElementImage(sun.Image,sun.Data.Size,1);
 		var light = mManager.mCharacterBundleManager.get_image("SHINE");
@@ -66,9 +65,10 @@ public class SunsetManager
 		mElement.Add(mSun);
 		mElement.Add(mLightRay);
 
-
 		mManager.mCharacterBundleManager.add_bundle_to_unload(aBundle);
 		IsLoaded = true;
+
+		set_sun(-1, true);
 	}
 
 	int char_to_list_index(CharacterIndex aIndex)
@@ -85,7 +85,8 @@ public class SunsetManager
 	{
 		int ind = char_to_list_index(aIndex);
 		FlatElementText scoreText = new FlatElementText(mManager.mNewRef.genericFont,100, aScore.ToString(), 21);
-		FlatElementImage scoreBg = new FlatElementImage(null,20);
+		var scoreBgImage = mManager.mCharacterBundleManager.get_image("SCORELABEL");
+		FlatElementImage scoreBg = new FlatElementImage(scoreBgImage.Image,scoreBgImage.Data.Size,20);
 		scoreBg.HardPosition = mFlatCamera.get_point(0,1.5f);
 		scoreBg.SoftPosition = mCharacters[ind].SoftPosition + new Vector3(0,300,0);
 		scoreText.HardPosition = scoreBg.HardPosition;
@@ -112,17 +113,27 @@ public class SunsetManager
 		,3);
 	}
 
-	public void set_sun(int index)
+	public void set_sun(int aIndex, bool hard = false)
 	{
+		int index = aIndex;
+		
 		float gTotalIndices = 6;
 		float lambda = index/gTotalIndices;
 		float ttt = Mathf.PI*lambda;
-		mSun.HardPosition = mFlatCamera.Center + new Vector3(500*Mathf.Cos(ttt),700*Mathf.Sin(ttt),0);
-		//TODO dark blue to light blue to dark golden orange
+		mSun.PositionInterpolationMaxLimit = 300;
+		if(!hard)
+			mSun.SoftPosition = mFlatCamera.Center + new Vector3(200*Mathf.Cos(ttt),700*Mathf.Sin(ttt),0);
+		else mSun.HardPosition = mFlatCamera.Center + new Vector3(200*Mathf.Cos(ttt),700*Mathf.Sin(ttt),0);
+		
+		mBackground.ColorInterpolationLimit = 1f;
 		if(lambda < 0.5f)
-			mBackground.HardColor = Color.Lerp(new Color32(25,25,112,255),new Color32(135,206,235,255),lambda*2)/2f;
+			mBackground.SoftColor = Color.Lerp(new Color32(25,25,112,255),new Color32(135,206,235,255),lambda*2)/2f;
 		else
-			mBackground.HardColor = Color.Lerp(new Color32(135,206,235,255),new Color(150,75,0,255),(lambda-0.5f)*2)/2f;
+			mBackground.SoftColor = Color.Lerp(new Color32(135,206,235,255),new Color(150,75,0,255),(lambda-0.5f)*2)/2f;
+	}
+	public void set_sun()
+	{
+		set_sun (mCharacters.Count-1);
 	}
 	
 	public void add_character(CharacterIndex aChar)
@@ -131,10 +142,12 @@ public class SunsetManager
 		{
 			var addMe = construct_flat_image("SUNSET_"+aChar.StringIdentifier,4);
 
-			//TODO special positioning for grave
-			//if(aChar == CharacterIndex.sGrave && crap)
+			//special positioning for grave
+			if(aChar == CharacterIndex.sGrave)
 			{
-				//var posImg = construct_flat_image(aChar
+				var posImg = construct_flat_image("SUNSET_"+(new CharacterIndex(mCharacters.Count,0)).get_neighbor(0).StringIdentifier,0);
+				addMe.HardPosition = posImg.SoftPosition;
+				posImg.destroy();
 			}
 
 			mCharacters.Add(addMe);
@@ -142,8 +155,6 @@ public class SunsetManager
 
 			show_score(aChar,(int)mManager.mGameManager.mModeNormalPlay.CurrentPerformanceStat.Score,10);
 		}
-
-		set_sun(mCharacters.Count-1);
 	}
 
 	public void update()
@@ -154,14 +165,21 @@ public class SunsetManager
 		TED.update(Time.deltaTime);
 	}
 	
-	
-	
-	
-	//TODO I just copied this from NIM...
-	//new PopupTextObject("",10,loader.Images.staticElements["BUBBLE"]); //add sizing...
-	public PopupTextObject add_timed_text_bubble(string aMsg, float duration, float yRelOffset = 0)
+
+	//bubble types 0 - regular, 1 - long small, 2 - long big
+	public PopupTextObject add_timed_text_bubble(string aMsg, float duration, float yRelOffset = 0, int bubbleType = 0)
 	{
-		PopupTextObject to = new PopupTextObject(aMsg,30);
+		PopupTextObject to = null;
+		if(bubbleType == 0)
+			to = new PopupTextObject(aMsg,30);
+		else if(bubbleType == 1)
+		{
+			var bubbleImg = mManager.mCharacterBundleManager.get_image("BUBBLE");
+			to = new PopupTextObject(aMsg,30,bubbleImg.Image,bubbleImg.Data.Size);
+		} else if(bubbleType == 2)
+		{
+			to = new PopupTextObject(aMsg,30); //TODO??
+		}
 		//to.HardPosition = random_position();
 		to.HardColor = GameConstants.UiWhiteTransparent;
 		to.SoftColor = GameConstants.UiWhite;
@@ -211,16 +229,19 @@ public class SunsetManager
 		return to;
 	}
 
+	public System.Func<float,bool> low_skippable_text_bubble_event(string aText, float displayDur)
+	{
+		return skippable_text_bubble_event(aText,displayDur,-0.6f,1);
+	}
 
-	
-	public System.Func<float,bool> skippable_text_bubble_event(string aText, float displayDur)
+	public System.Func<float,bool> skippable_text_bubble_event(string aText, float displayDur,float yRelOffset = 0, int bubbleType = 0)
 	{
 		System.Func<float,bool> skip_del = null;
 		PopupTextObject po = null;
 		return delegate(float aTime){
 			if(po == null)
 			{
-				po = add_timed_text_bubble(aText,displayDur);
+				po = add_timed_text_bubble(aText,displayDur,yRelOffset,bubbleType);
 				skip_del = PopupTextObject.skip(displayDur,po);
 			}
 			return skip_del(aTime);
@@ -263,7 +284,7 @@ public class SunsetManager
 		
 		
 		//fake it for testing...
-		/*
+
 		Random.seed = 23344;
 		for(int i = 0; i < 8; i++)
 		{
@@ -276,7 +297,7 @@ public class SunsetManager
 				aStats.Add(stat);
 			}
 		}
-		*/
+
 
 		
 		//this is all a hack to get the score to show up right...
@@ -310,9 +331,9 @@ public class SunsetManager
 		TimedEventDistributor.TimedEventChain chain;
 		
 		chain = TED.add_event(
-			skippable_text_bubble_event("YOU REST HERE BENEATH THE EARTH...",gIntroText)
+			skippable_text_bubble_event("YOU REST HERE BENEATH THE EARTH...",gIntroText,1)
 			).then( //wait a little bit to let the fading finish
-		       skippable_text_bubble_event("HERE IS YOUR LIFE STORY",gIntroText)
+		       skippable_text_bubble_event("HERE IS YOUR LIFE STORY",gIntroText,1)
 		       );
 
 		for(int i = 1; i < aStats.Count; i++)
@@ -398,7 +419,7 @@ public class SunsetManager
 									{
 										npo = add_timed_text_bubble(conText[0],gFirstConnectionText + gConnectionText);
 
-
+										//TODO make it so this code wont crash when I do it in debug..
 										FlatElementImage[] effectImage = new FlatElementImage[]{
 											mCharacters[char_to_list_index(targetCharacter)],
 											mCharacters[char_to_list_index(ps.Character)]
