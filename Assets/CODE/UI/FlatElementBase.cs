@@ -182,7 +182,7 @@ public class FlatElementBase {
         HardScale = Vector3.one;
 		HardColor = new Color(0.5f,0.5f,0.5f,0.5f);
 		
-		ColorInterpolationLimit = 0.1f;
+		ColorInterpolationLimit = 1f;
 
 		PositionInterpolationMaxLimit = Mathf.Infinity;
 		PositionInterpolationMinLimit = 0;
@@ -276,7 +276,7 @@ public class FlatElementBase {
 			float lerpingColorDist = lerpingColorDir.magnitude;
 			Vector4 finalColor = lerpingColorA;
 			if(lerpingColorDist > 0)
-				finalColor = lerpingColorA + lerpingColorDir/lerpingColorDist * Mathf.Min(lerpingColorDir.magnitude,ColorInterpolationLimit);
+				finalColor = lerpingColorA + lerpingColorDir/lerpingColorDist * Mathf.Min(lerpingColorDir.magnitude,ColorInterpolationLimit*aDeltaTime);
 			mCurrentColor = new Color(finalColor.x,finalColor.y,finalColor.z,finalColor.w);
 		}
     }
