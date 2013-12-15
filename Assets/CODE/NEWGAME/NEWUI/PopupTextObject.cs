@@ -81,9 +81,9 @@ public class PopupTextObject : FlatElementMultiBase {
 	}
 	
 	//TODO need custom split setting function...
-    public PopupTextObject(string aText, int aDepth, Texture2D aBubble = null)
+	public PopupTextObject(string aText, int aDepth, Texture2D aBubble = null, System.Nullable<Vector2> aBubbleSize = null)
     {
-		mBackground = new FlatElementImage(aBubble == null ? random_bubble(0) : aBubble, aDepth);
+		mBackground = new FlatElementImage(aBubble == null ? random_bubble(0) : aBubble,aBubbleSize, aDepth);
 		mText = new FlatElementText(ManagerManager.Manager.mNewRef.genericFont,100,"",aDepth+1);
         mText.HardColor = new Color(0, 0, 0);
 		mElements.Add(new FlatElementMultiBase.ElementOffset(mBackground, new Vector3(0, 0, 0)));
