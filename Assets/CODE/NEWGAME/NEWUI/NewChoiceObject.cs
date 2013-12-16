@@ -63,6 +63,7 @@ public class NewChoiceObject : FlatElementMultiBase {
 	public void set_actual_character(CharacterIndex aIndex)
 	{ 
 		/*
+		 * TODO DELETE
 		//remove the old one
 		if(mBodyElementOffset != null)
 		{
@@ -73,9 +74,14 @@ public class NewChoiceObject : FlatElementMultiBase {
 		mBody = new FlatBodyObject(aActualChar, Depth + 2);
 		mBodyElementOffset = new FlatElementMultiBase.ElementOffset(mBody, new Vector3(0,0,0));
 		mElements.Add(mBodyElementOffset);*/
-		
-		
-		mIcon.set_new_texture(ManagerManager.Manager.mCharacterBundleManager.get_image("BOX_" + aIndex.StringIdentifier).Image,null);
+
+
+		var charIcon = ManagerManager.Manager.mCharacterBundleManager.get_image("ICON_S_" +  + aIndex.StringIdentifier);
+		if(charIcon.Image != null && charIcon.Data != null)
+			mIcon.set_new_texture(charIcon.Image,charIcon.Data.Size);
+		else 
+			mIcon.set_new_texture(ManagerManager.Manager.mCharacterBundleManager.get_image("BOX_" + aIndex.StringIdentifier).Image,null);
+
 		
 		
 		Character = aIndex;
