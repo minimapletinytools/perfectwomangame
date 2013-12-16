@@ -62,6 +62,8 @@ public class NewMenuReferenceBehaviour : MonoBehaviour {
 	public AudioClip cutGood;
 	public AudioClip cutBad;
 	public AudioClip cutDie;
+	public AudioClip headPopupGood;
+	public AudioClip headPopupBad;
 	//TODO more
 	
 	//music
