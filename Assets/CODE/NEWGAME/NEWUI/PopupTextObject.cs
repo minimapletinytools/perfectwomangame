@@ -36,26 +36,26 @@ public class PopupTextObject : FlatElementMultiBase {
 			float textOffset = 0;
 			if(aText.Length > 20  && aText.Length < 40)
 			{
-				textOffset = 15;
+				textOffset = 10;
 				aText = FlatElementText.convert_to_multiline(2,aText);
 			} else if (aText.Length >= 40 && aText.Length < 55)
 			{
-				textOffset = 30;
+				textOffset = 20;
 				aText = FlatElementText.convert_to_multiline(3,aText);
 			} else if (aText.Length >= 55)
 			{
-				textOffset = 45;
+				textOffset = 30;
 				aText = FlatElementText.convert_to_multiline(4,aText);
 			}
 			mText.Text = aText.ToUpper();
 			mTextOffset.Position = new Vector3(0,textOffset,0);
 			
 			if(aText.Length > 80)
-				set_font_size(80);
-			if(aText.Length > 100)
 				set_font_size(70);
-			if(aText.Length > 120)
+			if(aText.Length > 100)
 				set_font_size(60);
+			if(aText.Length > 120)
+				set_font_size(50);
 		}
 	}
 	
@@ -84,7 +84,7 @@ public class PopupTextObject : FlatElementMultiBase {
 	public PopupTextObject(string aText, int aDepth, Texture2D aBubble = null, System.Nullable<Vector2> aBubbleSize = null)
     {
 		mBackground = new FlatElementImage(aBubble == null ? random_bubble(0) : aBubble,aBubbleSize, aDepth);
-		mText = new FlatElementText(ManagerManager.Manager.mNewRef.genericFont,100,"",aDepth+1);
+		mText = new FlatElementText(ManagerManager.Manager.mNewRef.genericFont,80,"",aDepth+1);
         mText.HardColor = new Color(0, 0, 0);
 		mElements.Add(new FlatElementMultiBase.ElementOffset(mBackground, new Vector3(0, 0, 0)));
 		mTextOffset = new FlatElementMultiBase.ElementOffset(mText, new Vector3(0, 0, 0));
