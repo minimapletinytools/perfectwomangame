@@ -86,7 +86,7 @@ public class SunsetManager
 	public void show_score(CharacterIndex aIndex, int aScore, float showTime)
 	{
 		int ind = char_to_list_index(aIndex);
-		FlatElementText scoreText = new FlatElementText(mManager.mNewRef.genericFont,65, aScore.ToString(), 21);
+		FlatElementText scoreText = new FlatElementText(mManager.mNewRef.genericFont,40, aScore.ToString(), 21);
 		var scoreBgImage = mManager.mCharacterBundleManager.get_image("SCORELABEL");
 		FlatElementImage scoreBg = new FlatElementImage(scoreBgImage.Image,scoreBgImage.Data.Size,20);
 		scoreBg.HardPosition = mFlatCamera.get_point(0,1.5f);
@@ -437,7 +437,7 @@ public class SunsetManager
 								{
 									if(npo == null)
 									{
-										npo = add_timed_text_bubble(conText[0],gFirstConnectionText + gConnectionText);
+										npo = add_timed_text_bubble(conText[0],gFirstConnectionText + gConnectionText,-0.6f,1);
 									}
 									if(npo.IsDestroyed || aTime > gPreParticle) 
 									{
