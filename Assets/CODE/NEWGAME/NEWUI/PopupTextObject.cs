@@ -36,15 +36,15 @@ public class PopupTextObject : FlatElementMultiBase {
 			float textOffset = 0;
 			if(aText.Length > 20  && aText.Length < 40)
 			{
-				textOffset = 10;
+				textOffset = 15;
 				aText = FlatElementText.convert_to_multiline(2,aText);
 			} else if (aText.Length >= 40 && aText.Length < 55)
 			{
-				textOffset = 20;
+				textOffset = 30;
 				aText = FlatElementText.convert_to_multiline(3,aText);
 			} else if (aText.Length >= 55)
 			{
-				textOffset = 30;
+				textOffset = 45;
 				aText = FlatElementText.convert_to_multiline(4,aText);
 			}
 			mText.Text = aText.ToUpper();
