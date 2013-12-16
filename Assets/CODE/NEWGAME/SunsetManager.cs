@@ -85,6 +85,7 @@ public class SunsetManager
 	
 	public void show_score(CharacterIndex aIndex, int aScore, float showTime)
 	{
+		Debug.Log ("shawing score " + aScore);
 		int ind = char_to_list_index(aIndex);
 		FlatElementText scoreText = new FlatElementText(mManager.mNewRef.genericFont,40, aScore.ToString(), 21);
 		var scoreBgImage = mManager.mCharacterBundleManager.get_image("SCORELABEL");
@@ -93,7 +94,6 @@ public class SunsetManager
 		scoreBg.SoftPosition = mCharacters[ind].SoftPosition + new Vector3(0,300,0);
 		scoreText.HardPosition = scoreBg.HardPosition;
 		scoreText.SoftPosition = scoreBg.SoftPosition;
-		Debug.Log ("showing score " + aScore);
 		scoreText.Text = ""+aScore;
 		mElement.Add(scoreBg);
 		mElement.Add(scoreText);
@@ -366,7 +366,7 @@ public class SunsetManager
 				delegate(float aTime)
 				{
 					aTime -= gPreScoreCount;
-					if(aTime > 0)
+					if(aTime > 0 && aTime < gScoreCount)
 					{
 						float displayScore = scoreIncrementor + (aTime/gScoreCount)*ps.AdjustedScore;
 						float displayAge = ageIncrementer + (aTime/gScoreCount)*(ps.Character.Age-ageIncrementer);
@@ -457,9 +457,9 @@ public class SunsetManager
 						System.Func<FlatElementBase,float,bool> jiggleDelegate = 
 							delegate(FlatElementBase aBase, float aTime2) 
 							{
-								aBase.mLocalRotation = Quaternion.AngleAxis((1+Mathf.Sin(aTime2*Mathf.PI*2)*15f),Vector3.forward);
-								if(aTime2 > 3) 
-								return true;
+								aBase.mLocalRotation = Quaternion.AngleAxis((Mathf.Sin(aTime2*Mathf.PI*2)*15f,Vector3.forward);
+								if(aTime2 >= 3) 
+									return true;
 								return false;
 							};
 
