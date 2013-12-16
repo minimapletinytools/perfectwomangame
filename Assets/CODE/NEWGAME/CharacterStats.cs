@@ -98,7 +98,6 @@ public class PerformanceStats
 		if(mScore.Count > 0)
 			mTotalScore += (aTime-mScore.Last().Key)*aScore;
 		mScore.Add(new KeyValuePair<float,float>(aTime,aScore));
-		
 		//PerformanceGraph.update_graph(aTime,aScore);
 	}
 	

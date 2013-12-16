@@ -82,16 +82,28 @@ Perfect Woman features a branching decision tree which serves to create a narrat
 			-CHARACTER/FEATURE_UNLOCKED 
 				-TODO design this...
 
+::TODO list for LEA::
+-need a grave dot in sunset for positioning the grave..
 
 ::order of operations/TODOXII::
+DONE/BAD-fix the transparency NIM bug
+-add skip multiple to sunset progress
+-fix what cutscenes get played for last set of ages...
+-fix name and score labels in NIM, put in lea's fat ugly badges
+-new font fucks everything up :D
+????DONE-final death to grave too abrupt (needs some text bubbles, why aren't there text bubbles?)
+-reposition stuff that shows up on gravestone..
+-sunset score labels need to look better and be positioned better
 -grave
-	-new grave integrates with sunset screen
 	-during cutscenes, jiggle the involved characters instead of using particles or popups
-	-should no longer load 999
+	DONE-no game over bubble anymore
+		-this should go in credits now that it's all in the middle of the screen....
+	DONE-new grave integrates with sunset screen
+	DONE-should no longer load 999
 	-design:
-		-if 
-		-fade out, fade into sunset
-		-usual text nonsense
+		-if die
+		DONE-fade out, fade into sunset
+		DONE-usual text nonsense
 		-go through each character, jiggle and adjust score maybe with particle effects?
 			-or not do this...
 			-play sound with jiggle
@@ -99,34 +111,29 @@ Perfect Woman features a branching decision tree which serves to create a narrat
 			-jiggle each character with connection
 			-play sound with jiggle
 		-character unlock badges would show up here
-		-insert custom picture of player here maybe???
+		-insert custom picture of player here maybe???f
 		-game over
 		-scroll all contents everything DOWN and scroll in credits from above ;)
--start screen
-	-start screen should read unlockables
-	-fix bugs
-	-add character map so you can read data from unlockables
-	IGNORE-switch start screen to use new character names..
--sunset add sun animations and sky darkness
-	-use background.png color for sky color
-	-position sun in an arc around the mound
--rethink how skipping works with all the new crap you just added...
+-score name time etc in play
+	-need adjustable box width
+-transparency shader seems to blend with thing underneath....??..?.??
+	-happens with word bubbles and the character heads in ChoosingManager...
+-score counting in sunset
+-headpopup
+	-sounds
+	-fix timing
+DONE-rethink how skipping works with all the new crap you just added...
 	-skipping is no longer a NIM thing. Needs to be a ModeNormalPlay thing I think...
-
--score and time label in upper right
--redo that ugly warning thing and move it to the center
-	-better yet to flashing obnoxious red...
+	-the scary part is most of the skip code still works...
+	-skipping in sunset stuff needs to be fixed
+-flahing obnoxious red warning 
 	-http://www.youtube.com/watch?v=yr-OLZmKZ_I
--add in new interface nonsense
-	-make it not look crappy lol
-	-sounds to accompany changes
-	DONE-little people that pop up from the bottom
-	DONE-little flags that indicate the change
-	-popup guys
-		DONE-skipping causes some bugs with new cutscenes I think
-		DONE-fix sizing and position
-		-need to set as a chain type so you can return when the popup animations are done
-			-or maybe make it fixed timing and speed up the animations based on how many there are
+-clean up UI folder
+	-delet box
+	-delete angel
+	-delete other stuf
+	
+
 -text file format for unlockable characters
 	-manually fill out for now
 -cleanup
@@ -135,6 +142,36 @@ Perfect Woman features a branching decision tree which serves to create a narrat
 -testing/challenge/simian mode should inherit from interface..
 -make BACKGROUND part of the big image dump instead of an exception case
 
+DONE-sun movement on "you turn" message
+	DONE-maybe make the sun a little closer to the center
+	-use UI/SUNSET/BUBBLE for bubble in sun and make it show at bottom of screen...
+DONE-add score labels (in SUNSET folder)
+DONE-use new fonts??
+DONE-increase timing before text appears over cutscenes
+DONE-score labels need to slide out...
+DONE-redo that ugly warning thing and move it to the center
+	-better yet to flashing obnoxious red...
+DONE-bmp format for play (did I dot his already??)
+DONE-still says "you turn" when you die
+DONE-fetus sunset is still a white screen ()
+DONE-start screen
+	DONE-start screen should read unlockables
+	DONE-fix bugs
+	DONe-add character map so you can read data from unlockables
+	IGNORE-switch start screen to use new character names..
+DONE-sunset
+	DONE-sunset add sun animations and sky darkness
+		DONE-use background.png color for sky color
+		DONE-position sun in an arc around the mound
+DONE-add in new interface nonsense
+	DONE-make it not look crappy lol
+	DONE-little people that pop up from the bottom
+	DONE-little flags that indicate the change
+	DONE-popup guys
+		DONE-skipping causes some bugs with new cutscenes I think
+		DONE-fix sizing and position
+		IGNORE-need to set as a chain type so you can return when the popup animations are done
+			-or maybe make it fixed timing and speed up the animations based on how many there are
 DONE-move cutscene text buble a little higher up..
 DONE-something wrong with transparent pose on fetus
 DONE-choose align is not correct
