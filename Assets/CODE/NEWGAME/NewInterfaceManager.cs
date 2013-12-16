@@ -76,10 +76,10 @@ public class NewInterfaceManager {
 
 		
 		//BB small nonsense
-		mBBNameText = new FlatElementText(mManager.mNewRef.genericFont,60,"",11);
-		mBBNameTextFrame = new FlatElementImage(nameFrame.Image,10);
+		mBBNameText = new FlatElementText(mManager.mNewRef.genericFont,50,"",11);
+		mBBNameTextFrame = new FlatElementImage(nameFrame.Image,nameFrame.Data.Size,10);
 		mBBScoreText = new FlatElementText(mManager.mNewRef.genericFont,60,"0",11);
-		mBBScoreFrame = new FlatElementImage(scoreFrame.Image,10);
+		mBBScoreFrame = new FlatElementImage(scoreFrame.Image,scoreFrame.Data.Size,10);
 		mBBMultiplierImage = new FlatElementImage(null,15);
 
 		//mBBWarningText = new FlatElementText(mManager.mNewRef.genericFont,150,"WARNING",12);
@@ -95,9 +95,10 @@ public class NewInterfaceManager {
 		mBBMultiplierImage.HardPosition = mFlatCamera.get_point(-1,1) + new Vector3(200,-200,0) 
 			+ new Vector3(mBBMultiplierImage.BoundingBox.width, mBBMultiplierImage.BoundingBox.height,0)/2f; 
 
-		mBBNameTextFrame.HardPosition = mBBMultiplierImage.HardPosition + new Vector3(mBBNameTextFrame.BoundingBox.width+40,170,0)/2;
+		Vector3 textOffset = new Vector3(70,50,0)/2;
+		mBBNameTextFrame.HardPosition = mBBMultiplierImage.HardPosition + new Vector3(mBBNameTextFrame.BoundingBox.width,140,0)/2 + textOffset;
 		mBBNameText.HardPosition = mBBNameTextFrame.HardPosition;
-		mBBScoreFrame.HardPosition = mBBMultiplierImage.HardPosition + new Vector3(mBBScoreFrame.BoundingBox.width+40,-110,0)/2;
+		mBBScoreFrame.HardPosition = mBBMultiplierImage.HardPosition + new Vector3(mBBScoreFrame.BoundingBox.width,-140,0)/2 + textOffset;
 		mBBScoreText.HardPosition = mBBScoreFrame.HardPosition;
 
 		
@@ -134,7 +135,8 @@ public class NewInterfaceManager {
 		aPopup.set_background_color(useColor,true);
 	}
 	
-	
+
+	//TODO DELETE
 	public void add_cutscene_particle_stream_new(CharacterIndex aTarget, PopupTextObject aPopup, float duration, bool aPositive)
 	{
 		//TODO keep or delete
