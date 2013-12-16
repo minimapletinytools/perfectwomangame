@@ -58,7 +58,7 @@ public class ModeNormalPlay
 		
 		mInterfaceManager = new NewInterfaceManager(mManager,this);
 		mInterfaceManager.initialize();
-		mInterfaceManager.mFlatCamera.set_render_texture_mode(true);
+		//mInterfaceManager.mFlatCamera.set_render_texture_mode(true);
 		
 		mSunsetManager = new SunsetManager(mManager);
 		mSunsetManager.initialize();
@@ -91,10 +91,11 @@ public class ModeNormalPlay
 
 		//this is silly, we forec the interface image to appear above everything else pretty much just so we can have text bubbles show above everything
 		//kind of a dumb way to do it oh well.
+		/*
 		mInterfaceImage = new FlatElementImage(mInterfaceManager.mFlatCamera.RT,1);
 		mInterfaceImage.HardScale = Vector3.one * mFlatCamera.Width/mInterfaceImage.mImage.PixelDimension.x;
 		mInterfaceImage.HardPosition = mFlatCamera.Center;
-		mElement.Add(mInterfaceImage);
+		mElement.Add(mInterfaceImage);*/
 	}
 
 
@@ -179,7 +180,7 @@ public class ModeNormalPlay
 		//TODO only draw if necessary
 		draw_render_texture(mSunsetManager.mFlatCamera);
 		draw_render_texture(mChoosingManager.mFlatCamera);
-		draw_render_texture(mInterfaceManager.mFlatCamera);
+		//draw_render_texture(mInterfaceManager.mFlatCamera);
 		
 		mFlatCamera.update(Time.deltaTime);
         foreach (FlatElementBase e in mElement)

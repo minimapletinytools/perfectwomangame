@@ -38,9 +38,9 @@ public class NewInterfaceManager {
 		DoSkipSingleThisFrame = false;
 		DoSkipMultipleThisFrame = false;
 		TED = new TimedEventDistributor();
-        mFlatCamera = new FlatCameraManager(new Vector3(50000, 10000, 0), 10);
-		//mFlatCamera.fit_camera_to_screen();
-		mFlatCamera.fit_camera_to_game();
+        mFlatCamera = new FlatCameraManager(new Vector3(50000, 10000, 0), 9);
+		mFlatCamera.fit_camera_to_screen();
+		//mFlatCamera.fit_camera_to_game();
         mMiniMan = ((GameObject)GameObject.Instantiate(ManagerManager.Manager.mReferences.mMiniChar)).GetComponent<CharacterTextureBehaviour>();        
 		//mMiniMan = //TODO something like this: mManager.mCharacterBundleManager.get_mini_character(new CharacterIndex(0,1));
 
@@ -127,8 +127,8 @@ public class NewInterfaceManager {
 
 
 		mBBNameText.HardColor = GameConstants.UiPink;
-		mBBNameText.Alignment = TextAlignment.Left;
-		mBBNameText.Anchor = TextAnchor.MiddleLeft;
+		//mBBNameText.Alignment = TextAlignment.Left;
+		//mBBNameText.Anchor = TextAnchor.MiddleLeft;
 		mBBScoreText.HardColor = GameConstants.UiPink;
 		mBBMultiplierImage.HardPosition = mFlatCamera.get_point(-1,1) + new Vector3(200,-200,0) 
 			+ new Vector3(mBBMultiplierImage.BoundingBox.width, mBBMultiplierImage.BoundingBox.height,0)/2f; 
@@ -253,8 +253,7 @@ public class NewInterfaceManager {
 	//this gets called by NewGameManager
 	public void begin_new_character(PerformanceStats aChar)
 	{
-		//BB
-		mBBNameText.Text = FlatElementText.convert_to_multiline(aChar.Character.Description.Length > 20 ? 2 : 1 ,aChar.Character.Description + " (" + aChar.Character.Age.ToString() + ")");
+		mBBNameText.Text = aChar.Character.Description + " (" + aChar.Character.Age.ToString() + ")";//FlatElementText.convert_to_multiline(aChar.Character.Description.Length > 20 ? 2 : 1 ,aChar.Character.Description + " (" + aChar.Character.Age.ToString() + ")");
 		if(aChar.Character.LevelIndex != 0)
 		{
 			mBBMultiplierImage.set_new_texture(mManager.mNewRef.bbChoicePerfectIcons[aChar.Stats.Difficulty]);
@@ -282,7 +281,7 @@ public class NewInterfaceManager {
 			delegate(){cutsceneCompleteCb();},END_CUTSCENE_DELAY_TIME);
 		return;*/
 		
-		float gStartCutsceneDelay = 2.5f;
+		float gStartCutsceneDelay = 4f;
 		float gPerformanceText = 4f;
 		float gCutsceneText = 5f;
 		float gPreParticle = 1.5f;
@@ -403,7 +402,7 @@ public class NewInterfaceManager {
 	//returns amount of time this will take
 	public TimedEventDistributor.TimedEventChain set_for_DEATH(CharacterIndex aChar)
 	{
-		float gTextTime = 7;
+		float gTextTime = 4;
 		
 		TimedEventDistributor.TimedEventChain chain;
 		
