@@ -28,9 +28,10 @@ public class CharacterHeadPopupThingy
 
 		FlatElementImage[] mCharacters = null;
 		FlatElementImage[] mBadges = null;
+		FlatElementText[] mNames = null;
 		mCharacters = new FlatElementImage[count];
 		mBadges = new FlatElementImage[count];
-
+		mNames = new FlatElementText[count];
 
 		//var sizeImg = ManagerManager.Manager.mCharacterBundleManager.get_image("ICON_05-1");
 		//TODO read from sizeImg
@@ -41,6 +42,7 @@ public class CharacterHeadPopupThingy
 		Vector3 start = NIM.mFlatCamera.get_point(0,-1) - new Vector3(0,gIconHeight/2,0);
 		Vector3 offset = (count-1)*(-step)/2f;
 		Vector3 badgeOffset = new Vector3(-150,180,0);
+		Vector3 nameOffset = new Vector3(0,-180,0);
 
 
 
@@ -54,14 +56,21 @@ public class CharacterHeadPopupThingy
 			mCharacters[i] = new FlatElementImage(img.Image,img.Data.Size,10);
 			mCharacters[i].HardPosition = start + offset + step*i;
 			mCharacters[i].SoftPosition = mCharacters[i].SoftPosition + new Vector3(0,gIconHeight + 50,0);
-
-			//Debug.Log(mCharacters[i].HardPosition);
-
+		
 			mBadges[i] = new FlatElementImage(ManagerManager.Manager.mNewRef.bbChoicePerfectIcons[aDiffs[i]],11);
 			mBadges[i].HardColor = GameConstants.UiWhiteTransparent;
 
+			mNames[i] = new FlatElementText(
+				ManagerManager.Manager.mNewRef.genericFont,
+				60,
+				ManagerManager.Manager.mGameManager.CharacterHelper.Characters[aChars[i]].CharacterInfo.ShortName,
+				11);
+			mNames[i].HardPosition = mCharacters[i].HardPosition + nameOffset;
+			mNames[i].SoftPosition = mCharacters[i].SoftPosition + nameOffset;
+
 			mElement.Add(mCharacters[i]);
 			mElement.Add(mBadges[i]);
+			mElement.Add(mNames[i]);
 		}
 
 		float gTimeBeforeBadges = 1f;
@@ -107,7 +116,8 @@ public class CharacterHeadPopupThingy
 					0);
 
 					//play a sound
-					ManagerManager.Manager.mMusicManager.play_sound_effect("badge_blip_TODO");
+					//TODO play diff sound for good or bad
+					ManagerManager.Manager.mMusicManager.play_sound_effect("headPopupGood");
 				},
 			gBadgeTime);
 		}
@@ -121,12 +131,14 @@ public class CharacterHeadPopupThingy
 					int index = i;
 					mBadges[i].SoftColor = GameConstants.UiWhiteTransparent;
 					mCharacters[i].SoftPosition = start + offset + step*i + new Vector3(0,-100,0); //move down a little more to compensate for scale change
+					mNames[i].SoftPosition = mCharacters[i].SoftPosition + nameOffset;
 					//destroy them eventually.
 					TED.add_one_shot_event(
 						delegate()
 					    {
 							mBadges[index].destroy();
 							mCharacters[index].destroy();
+							mNames[index].destroy();
 						},
 					3);
 				}
