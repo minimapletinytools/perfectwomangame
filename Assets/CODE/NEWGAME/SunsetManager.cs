@@ -91,6 +91,7 @@ public class SunsetManager
 		scoreBg.SoftPosition = mCharacters[ind].SoftPosition + new Vector3(0,300,0);
 		scoreText.HardPosition = scoreBg.HardPosition;
 		scoreText.SoftPosition = scoreBg.SoftPosition;
+		scoreText.Text = ""+aScore;
 		mElement.Add(scoreBg);
 		mElement.Add(scoreText);
 		TED.add_event(
@@ -125,7 +126,7 @@ public class SunsetManager
 			mSun.SoftPosition = mFlatCamera.Center + new Vector3(200*Mathf.Cos(ttt),700*Mathf.Sin(ttt),0);
 		else mSun.HardPosition = mFlatCamera.Center + new Vector3(200*Mathf.Cos(ttt),700*Mathf.Sin(ttt),0);
 		
-		mBackground.ColorInterpolationLimit = 1f;
+		mBackground.ColorInterpolationLimit = 0.5f;
 		if(lambda < 0.5f)
 			mBackground.SoftColor = Color.Lerp(new Color32(25,25,112,255),new Color32(135,206,235,255),lambda*2)/2f;
 		else
@@ -136,16 +137,16 @@ public class SunsetManager
 		set_sun (mCharacters.Count-1);
 	}
 	
-	public void add_character(CharacterIndex aChar)
+	public void add_character(CharacterIndex aChar, bool aShowScore = true)
 	{
 		if(aChar != CharacterIndex.sFetus)
 		{
 			var addMe = construct_flat_image("SUNSET_"+aChar.StringIdentifier,4);
 
 			//special positioning for grave
-			if(aChar == CharacterIndex.sGrave)
+			if(aChar == CharacterIndex.sGrave && mCharacters.Count < 7) //second check because we don't have SUNSET_100 yet
 			{
-				var posImg = construct_flat_image("SUNSET_"+(new CharacterIndex(mCharacters.Count,0)).get_neighbor(0).StringIdentifier,0);
+				var posImg = construct_flat_image("SUNSET_"+(new CharacterIndex(mCharacters.Count,0)).get_future_neighbor(0).StringIdentifier,0);
 				addMe.HardPosition = posImg.SoftPosition;
 				posImg.destroy();
 			}
@@ -153,7 +154,8 @@ public class SunsetManager
 			mCharacters.Add(addMe);
 			mElement.Add(addMe);
 
-			show_score(aChar,(int)mManager.mGameManager.mModeNormalPlay.CurrentPerformanceStat.Score,10);
+			if(aShowScore)
+				show_score(aChar,(int)mManager.mGameManager.mModeNormalPlay.CurrentPerformanceStat.Score,10);
 		}
 	}
 
@@ -260,19 +262,19 @@ public class SunsetManager
 	System.Action<bool> mGraveCompleteCb = null;
 	public void set_for_GRAVE(List<PerformanceStats> aStats, System.Action graveCompleteCb)
 	{
-		//add the gravestone
-		add_character(CharacterIndex.sGrave);
-
 		//timing vars
 		float gIntroText = 4.5f;
 		float gCharacterText = 4.5f;
 		float gPreGlory = 0f;
 		float gGlory = 0f;
 		float gPostGlory = 0f;
-		float gPreScoreCount = 0.5f;
+		float gPreScoreCount = 0f;
 		float gScoreCount = 0.7f;
 		float gPostScoreCount = 1f;
 		float gRestart = 65;
+
+		//add the gravestone to the scene
+		add_character(CharacterIndex.sGrave);
 		
 		//remove the grave
 		if(aStats.Last().Character.Age == 999)
@@ -281,11 +283,11 @@ public class SunsetManager
 		//add in fetus in case we skipped it in debug mode
 		if(aStats.First().Character.Age != 0)
 			aStats.Insert(0, new PerformanceStats(new CharacterIndex(0,0)));
-		
-		
-		//fake it for testing...
 
-		Random.seed = 23344;
+		//fake it for testing...
+		mCharacters.Last().destroy();
+		mCharacters.RemoveAt(mCharacters.Count -1);
+		Random.seed = 344;
 		for(int i = 0; i < 8; i++)
 		{
 			if(aStats.Last().Character.Age < (new CharacterIndex(i,0)).Age)
@@ -295,8 +297,11 @@ public class SunsetManager
 				stat.update_score(1,Random.value);
 				stat.Stats = mManager.mGameManager.CharacterHelper.Characters[stat.Character];
 				aStats.Add(stat);
+
+				add_character(stat.Character,false);
 			}
 		}
+		add_character(CharacterIndex.sGrave,false);
 
 
 		
@@ -320,9 +325,9 @@ public class SunsetManager
 		//foreach (Renderer f in perfectEngraving.PrimaryGameObject.GetComponentsInChildren<Renderer>()) f.gameObject.layer = 4;
 		
 		Vector3 graveCenter = mCharacters[mCharacters.Count-1].HardPosition + new Vector3(0, 50, 0);
-		finalScoreText.HardPosition = graveCenter + new Vector3(0,-250,0);
+		finalScoreText.HardPosition = graveCenter + new Vector3(0,-100,0);
 		//perfectEngraving.SoftPosition = graveCenter + new Vector3(35,250,0);
-		perfectPercent.HardPosition = graveCenter + new Vector3(24,180,0);
+		perfectPercent.HardPosition = graveCenter + new Vector3(0,100,0);
 		mElement.Add(finalScoreText);
 		//mElement.Add(perfectEngraving);
 		mElement.Add(perfectPercent);
@@ -331,17 +336,21 @@ public class SunsetManager
 		TimedEventDistributor.TimedEventChain chain;
 		
 		chain = TED.add_event(
-			skippable_text_bubble_event("YOU REST HERE BENEATH THE EARTH...",gIntroText,1)
+				low_skippable_text_bubble_event("YOU REST HERE BENEATH THE EARTH...",gIntroText)
 			).then( //wait a little bit to let the fading finish
-		       skippable_text_bubble_event("HERE IS YOUR LIFE STORY",gIntroText,1)
-		       );
+		    	low_skippable_text_bubble_event("HERE IS YOUR LIFE STORY",gIntroText)
+		    );
 
 		for(int i = 1; i < aStats.Count; i++)
 		{
 			int it = i;
 			PerformanceStats ps = aStats[i];
 			
-			chain = chain.then(
+			chain = chain.then_one_shot(
+				delegate() {
+					show_score(ps.Character,(int)ps.Score,gPreScoreCount + gScoreCount + gPostScoreCount);
+				},
+			0).then(
 				delegate(float aTime)
 				{
 					aTime -= gPreScoreCount;
@@ -350,15 +359,14 @@ public class SunsetManager
 						float displayScore = scoreIncrementor + (aTime/gScoreCount)*ps.AdjustedScore;
 						float displayAge = ageIncrementer + (aTime/gScoreCount)*(ps.Character.Age-ageIncrementer);
 						finalScoreText.Text = ""+(int)displayScore;
-						//TODO why this no work??
-						//perfectPercent.Text = ""+(int)displayAge;
+						perfectPercent.Text = ""+(int)displayAge;
 					}
-					//CAN DELETE
-					//if(po.IsDestroyed || aTime >  gScoreCount + gPostScoreCount)
 					if(aTime >  gScoreCount + gPostScoreCount)
 					{
 						scoreIncrementor += ps.AdjustedScore;
-						ageIncrementer += (ps.Character.Age - ageIncrementer);
+						ageIncrementer = ps.Character.Age;
+						finalScoreText.Text = ""+(int)scoreIncrementor;
+						perfectPercent.Text = ""+(int)ageIncrementer;
 						return true;
 					}
 					return false;
@@ -418,25 +426,6 @@ public class SunsetManager
 									if(npo == null)
 									{
 										npo = add_timed_text_bubble(conText[0],gFirstConnectionText + gConnectionText);
-
-										//TODO make it so this code wont crash when I do it in debug..
-										FlatElementImage[] effectImage = new FlatElementImage[]{
-											mCharacters[char_to_list_index(targetCharacter)],
-											mCharacters[char_to_list_index(ps.Character)]
-										};
-
-										foreach(FlatElementImage f in effectImage)
-										{
-											f.Events.add_event(
-												delegate(FlatElementBase aBase, float aTime2) 
-												{
-													aBase.mLocalRotation = Quaternion.AngleAxis((1+Mathf.Sin(aTime2*6)*0.1f),Vector3.forward);
-													if(aTime2 > 1) 
-														return true;
-													return false;
-												}
-											,0);
-										}
 									}
 									if(npo.IsDestroyed || aTime > gPreParticle) 
 									{
@@ -450,6 +439,44 @@ public class SunsetManager
 							Debug.Log("Peter was too lazy to implement optional splitting. Connection text MUST be split");
 							Debug.Log ("TNHOEUONSTUHNST");
 						}
+
+
+
+						System.Func<FlatElementBase,float,bool> jiggleDelegate = 
+							delegate(FlatElementBase aBase, float aTime2) 
+							{
+								aBase.mLocalRotation = Quaternion.AngleAxis((1+Mathf.Sin(aTime2*6)*15f),Vector3.forward);
+								if(aTime2 > 3) 
+								return true;
+								return false;
+							};
+
+
+						chain = chain.then_one_shot(
+							delegate()
+							{
+								if(npo != null)
+									mCharacters[char_to_list_index(targetCharacter)].Events.add_event(jiggleDelegate,0);
+							}
+						).then_one_shot(
+							delegate()
+							{
+								if(npo != null)
+								{
+									npo.Text =  conText[conText.Length -1];
+									mCharacters[char_to_list_index(ps.Character)].Events.add_event(jiggleDelegate,0);
+								}
+							},
+						gFirstConnectionText-gPreParticle).then (
+							delegate(float aTime){
+								if(npo.IsDestroyed || aTime > gConnectionText)
+								{
+									npo = null;
+									return true;
+								}
+								return false;
+							}
+						);
 					}
 				}
 			}
