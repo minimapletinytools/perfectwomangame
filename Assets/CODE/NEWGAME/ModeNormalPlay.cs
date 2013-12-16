@@ -98,13 +98,13 @@ public class ModeNormalPlay
 		mSunsetImage = new FlatElementImage(mSunsetManager.mFlatCamera.RT,0);
 		mSunsetImage.HardScale = Vector3.one * mFlatCamera.Width/mSunsetImage.mImage.PixelDimension.x;
 		mSunsetImage.HardPosition = mFlatCamera.Center + Vector3.right*mSunsetImage.BoundingBox.width;
-		mSunsetImage.HardShader = Shader.Find("Custom/FlatOpaqueShader");
+		mSunsetImage.HardShader = mManager.mReferences.mRenderTextureShader;
 		mElement.Add(mSunsetImage);
 
 		mChoosingImage = new FlatElementImage(mChoosingManager.mFlatCamera.RT,0);
 		mChoosingImage.HardScale = Vector3.one * mFlatCamera.Width/mChoosingImage.mImage.PixelDimension.x;
 		mChoosingImage.HardPosition = mFlatCamera.Center + Vector3.right*mChoosingImage.BoundingBox.width;
-		mChoosingImage.HardShader = Shader.Find("Custom/FlatOpaqueShader");
+		mChoosingImage.HardShader = mManager.mReferences.mRenderTextureShader;
 		mElement.Add(mChoosingImage);
 
 
