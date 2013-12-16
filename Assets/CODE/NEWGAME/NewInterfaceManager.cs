@@ -22,21 +22,10 @@ public class NewInterfaceManager {
 	
     CharacterTextureBehaviour mMiniMan;
 	FlatBodyObject mCurrentBody = null;
-	
-	//skipping
-	bool DoSkipMultipleThisFrame
-	{get; set;}
-	public void SkipMultiple()
-	{ DoSkipMultipleThisFrame = true; }
-	bool DoSkipSingleThisFrame
-	{get; set;}
-	public void SkipSingle()
-	{ DoSkipSingleThisFrame = true; }
+
 	
 	public void initialize()
     {
-		DoSkipSingleThisFrame = false;
-		DoSkipMultipleThisFrame = false;
 		TED = new TimedEventDistributor();
         mFlatCamera = new FlatCameraManager(new Vector3(50000, 10000, 0), 9);
 		mFlatCamera.fit_camera_to_screen();
@@ -48,14 +37,6 @@ public class NewInterfaceManager {
     }
     public void Update()
     {
-
-
-		
-		if(Input.GetKeyDown(KeyCode.Alpha0))
-			DoSkipMultipleThisFrame = true;
-		if(Input.GetKeyDown(KeyCode.Alpha9))
-			DoSkipSingleThisFrame = true;
-		
 		
         mFlatCamera.update(Time.deltaTime);
         if (mCurrentBody != null)
@@ -66,25 +47,6 @@ public class NewInterfaceManager {
 		TED.update(Time.deltaTime);
 		
 		mHeadPop.update();
-
-
-		//hacks
-		if(DoSkipMultipleThisFrame)
-		{
-			if(mLastCutsceneCompleteCb != null && mLastCutsceneChain != null)
-			{
-				TED.remove_event(mLastCutsceneChain);
-				mLastCutsceneCompleteCb();
-				mLastCutsceneChain = null;
-				mLastCutsceneCompleteCb = null;
-			}
-			
-			//grave skipping lul
-			DoSkipMultipleThisFrame = false;
-		}
-		
-		if(DoSkipSingleThisFrame)
-			DoSkipSingleThisFrame = false;
     }
     
     Vector3 random_position()
@@ -133,9 +95,9 @@ public class NewInterfaceManager {
 		mBBMultiplierImage.HardPosition = mFlatCamera.get_point(-1,1) + new Vector3(200,-200,0) 
 			+ new Vector3(mBBMultiplierImage.BoundingBox.width, mBBMultiplierImage.BoundingBox.height,0)/2f; 
 
-		mBBNameTextFrame.HardPosition = mBBMultiplierImage.HardPosition + new Vector3(mBBNameTextFrame.BoundingBox.width,120,0)/2;
+		mBBNameTextFrame.HardPosition = mBBMultiplierImage.HardPosition + new Vector3(mBBNameTextFrame.BoundingBox.width+40,170,0)/2;
 		mBBNameText.HardPosition = mBBNameTextFrame.HardPosition;
-		mBBScoreFrame.HardPosition = mBBMultiplierImage.HardPosition + new Vector3(mBBScoreFrame.BoundingBox.width,-120,0)/2;
+		mBBScoreFrame.HardPosition = mBBMultiplierImage.HardPosition + new Vector3(mBBScoreFrame.BoundingBox.width+40,-110,0)/2;
 		mBBScoreText.HardPosition = mBBScoreFrame.HardPosition;
 
 		
@@ -207,9 +169,9 @@ public class NewInterfaceManager {
 			{
 				if(aTime > duration) 
 					return true;
-				if(DoSkipSingleThisFrame)
+				if(mModeNormalPlay.DoSkipSingleThisFrame)
 				{
-					DoSkipSingleThisFrame = false;
+					mModeNormalPlay.DoSkipSingleThisFrame = false;
 					return true;
 				}
 				return false;
@@ -256,15 +218,31 @@ public class NewInterfaceManager {
 		mBBNameText.Text = aChar.Character.Description + " (" + aChar.Character.Age.ToString() + ")";//FlatElementText.convert_to_multiline(aChar.Character.Description.Length > 20 ? 2 : 1 ,aChar.Character.Description + " (" + aChar.Character.Age.ToString() + ")");
 		if(aChar.Character.LevelIndex != 0)
 		{
-			mBBMultiplierImage.set_new_texture(mManager.mNewRef.bbChoicePerfectIcons[aChar.Stats.Difficulty]);
+			string[] labelNames = new string[]{"label_easy_BIG","label_normal_BIG","label_hard_BIG","label_extreme_BIG"};
+			var diffImage = mManager.mCharacterBundleManager.get_image(labelNames[aChar.Stats.Difficulty]);
+			mBBMultiplierImage.set_new_texture(diffImage.Image,diffImage.Data.Size);
+			//mBBMultiplierImage.set_new_texture(mManager.mNewRef.bbChoicePerfectIcons[aChar.Stats.Difficulty]);
 		}
 	}
 	
 
-	
+
+
 	//these are hacks to allow me to skip cutscenes
 	QuTimer mLastCutsceneChain = null;
 	System.Action mLastCutsceneCompleteCb = null;
+
+	public void skip_cutscene()
+	{
+		if(mLastCutsceneCompleteCb != null && mLastCutsceneChain != null)
+		{
+			TED.remove_event(mLastCutsceneChain);
+			mLastCutsceneCompleteCb();
+			mLastCutsceneChain = null;
+			mLastCutsceneCompleteCb = null;
+		}
+	}
+
 	public void set_for_CUTSCENE(System.Action cutsceneCompleteCb, NUPD.ChangeSet aChanges)
 	{
 

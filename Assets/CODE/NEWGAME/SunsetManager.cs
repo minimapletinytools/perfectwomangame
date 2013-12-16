@@ -5,8 +5,10 @@ using System.Linq;
 public class SunsetManager 
 {
 	ManagerManager mManager;
-    public SunsetManager(ManagerManager aManager)
+	ModeNormalPlay mModeNormalPlay;
+    public SunsetManager(ManagerManager aManager,ModeNormalPlay aNormalPlay)
 	{
+		mModeNormalPlay = aNormalPlay;
 		mManager = aManager;
 		IsLoaded = false;
 	}
@@ -68,7 +70,7 @@ public class SunsetManager
 		mManager.mCharacterBundleManager.add_bundle_to_unload(aBundle);
 		IsLoaded = true;
 
-		set_sun(-1, true);
+		set_sun(-2, true);
 	}
 
 	int char_to_list_index(CharacterIndex aIndex)
@@ -84,13 +86,14 @@ public class SunsetManager
 	public void show_score(CharacterIndex aIndex, int aScore, float showTime)
 	{
 		int ind = char_to_list_index(aIndex);
-		FlatElementText scoreText = new FlatElementText(mManager.mNewRef.genericFont,100, aScore.ToString(), 21);
+		FlatElementText scoreText = new FlatElementText(mManager.mNewRef.genericFont,65, aScore.ToString(), 21);
 		var scoreBgImage = mManager.mCharacterBundleManager.get_image("SCORELABEL");
 		FlatElementImage scoreBg = new FlatElementImage(scoreBgImage.Image,scoreBgImage.Data.Size,20);
 		scoreBg.HardPosition = mFlatCamera.get_point(0,1.5f);
 		scoreBg.SoftPosition = mCharacters[ind].SoftPosition + new Vector3(0,300,0);
 		scoreText.HardPosition = scoreBg.HardPosition;
 		scoreText.SoftPosition = scoreBg.SoftPosition;
+		Debug.Log ("showing score " + aScore);
 		scoreText.Text = ""+aScore;
 		mElement.Add(scoreBg);
 		mElement.Add(scoreText);
@@ -155,7 +158,7 @@ public class SunsetManager
 			mElement.Add(addMe);
 
 			if(aShowScore)
-				show_score(aChar,(int)mManager.mGameManager.mModeNormalPlay.CurrentPerformanceStat.Score,10);
+				show_score(aChar,(int)mManager.mGameManager.mModeNormalPlay.CurrentPerformanceStat.AdjustedScore,10);
 		}
 	}
 
@@ -202,12 +205,12 @@ public class SunsetManager
 			{
 				if(aTime > duration) 
 					return true;
-			/*
-				if(DoSkipSingleThisFrame)
+
+				if(mModeNormalPlay.DoSkipSingleThisFrame)
 				{
-					DoSkipSingleThisFrame = false;
+					mModeNormalPlay.DoSkipSingleThisFrame = false;
 					return true;
-				}*/
+				}
 				return false;
 			},
 		0).then_one_shot(
@@ -255,11 +258,20 @@ public class SunsetManager
 
 
 
-
+	public void skip_grave()
+	{
+		if(mGraveCompleteCb != null && mGraveChain != null)
+		{
+			TED.remove_event(mGraveChain);
+			mGraveCompleteCb();
+			mGraveChain = null;
+			mGraveCompleteCb = null;
+		}
+	}
 	
 	//delegates needed for skipping cleanly
 	QuTimer mGraveChain = null;
-	System.Action<bool> mGraveCompleteCb = null;
+	System.Action mGraveCompleteCb = null;
 	public void set_for_GRAVE(List<PerformanceStats> aStats, System.Action graveCompleteCb)
 	{
 		//timing vars
@@ -348,7 +360,7 @@ public class SunsetManager
 			
 			chain = chain.then_one_shot(
 				delegate() {
-					show_score(ps.Character,(int)ps.Score,gPreScoreCount + gScoreCount + gPostScoreCount);
+					show_score(ps.Character,(int)ps.AdjustedScore,gPreScoreCount + gScoreCount + gPostScoreCount);
 				},
 			0).then(
 				delegate(float aTime)
@@ -445,7 +457,7 @@ public class SunsetManager
 						System.Func<FlatElementBase,float,bool> jiggleDelegate = 
 							delegate(FlatElementBase aBase, float aTime2) 
 							{
-								aBase.mLocalRotation = Quaternion.AngleAxis((1+Mathf.Sin(aTime2*6)*15f),Vector3.forward);
+								aBase.mLocalRotation = Quaternion.AngleAxis((1+Mathf.Sin(aTime2*Mathf.PI*2)*15f),Vector3.forward);
 								if(aTime2 > 3) 
 								return true;
 								return false;
@@ -499,7 +511,7 @@ public class SunsetManager
 		
 
 		
-		mGraveCompleteCb = delegate( bool aSetPositions)
+		mGraveCompleteCb = delegate()
 		{
 			
 			TED.add_one_shot_event(
@@ -574,10 +586,10 @@ public class SunsetManager
 		chain = chain.then_one_shot(
 			delegate()
 			{
-			mGraveCompleteCb(false);
-			mGraveCompleteCb = null;
-			mGraveChain = null;
-		}
+				mGraveCompleteCb();
+				mGraveCompleteCb = null;
+				mGraveChain = null;
+			}
 		);
 		
 		mGraveChain = TED.LastEventKeyAdded;

@@ -46,6 +46,20 @@ public class ModeNormalPlay
     HashSet<FlatElementBase> mElement = new HashSet<FlatElementBase>();
 	
 	AdvancedGrading mGrading = new AdvancedGrading();
+
+
+	
+	//skipping
+	public bool DoSkipMultipleThisFrame
+	{get; set;}
+	public void SkipMultiple()
+	{ DoSkipMultipleThisFrame = true; }
+	public bool DoSkipSingleThisFrame
+	{get; set;}
+	public void SkipSingle()
+	{ DoSkipSingleThisFrame = true; }
+
+
 	
 	public ModeNormalPlay(NewGameManager aNgm)
 	{
@@ -55,12 +69,15 @@ public class ModeNormalPlay
 		GS = NormalPlayGameState.NONE;
 		TED = new TimedEventDistributor();
 		mChoiceHelper = new ChoiceHelper();
+
+		DoSkipSingleThisFrame = false;
+		DoSkipMultipleThisFrame = false;
 		
 		mInterfaceManager = new NewInterfaceManager(mManager,this);
 		mInterfaceManager.initialize();
 		//mInterfaceManager.mFlatCamera.set_render_texture_mode(true);
 		
-		mSunsetManager = new SunsetManager(mManager);
+		mSunsetManager = new SunsetManager(mManager,this);
 		mSunsetManager.initialize();
 		mSunsetManager.mFlatCamera.set_render_texture_mode(true);
 		mManager.mAssetLoader.new_load_asset_bundle("SUNSET",
@@ -81,11 +98,13 @@ public class ModeNormalPlay
 		mSunsetImage = new FlatElementImage(mSunsetManager.mFlatCamera.RT,0);
 		mSunsetImage.HardScale = Vector3.one * mFlatCamera.Width/mSunsetImage.mImage.PixelDimension.x;
 		mSunsetImage.HardPosition = mFlatCamera.Center + Vector3.right*mSunsetImage.BoundingBox.width;
+		mSunsetImage.HardShader = Shader.Find("Custom/FlatOpaqueShader");
 		mElement.Add(mSunsetImage);
 
 		mChoosingImage = new FlatElementImage(mChoosingManager.mFlatCamera.RT,0);
 		mChoosingImage.HardScale = Vector3.one * mFlatCamera.Width/mChoosingImage.mImage.PixelDimension.x;
 		mChoosingImage.HardPosition = mFlatCamera.Center + Vector3.right*mChoosingImage.BoundingBox.width;
+		mChoosingImage.HardShader = Shader.Find("Custom/FlatOpaqueShader");
 		mElement.Add(mChoosingImage);
 
 
@@ -161,18 +180,24 @@ public class ModeNormalPlay
 	
 	public void draw_render_texture(FlatCameraManager aCam)
 	{
-		aCam.Camera.enabled = true;
+		//aCam.Camera.enabled = true;
 		RenderTexture.active = aCam.RT;
+		aCam.Camera.targetTexture = aCam.RT;
 		aCam.Camera.backgroundColor = new Color(1,1,1,0);
 		aCam.Camera.clearFlags = CameraClearFlags.SolidColor;
 		aCam.Camera.DoClear();
 		aCam.Camera.Render();
 		RenderTexture.active = null;
-		aCam.Camera.enabled = false;
+		//aCam.Camera.enabled = false;
 	}
 	
 	public void update()
 	{
+		if(Input.GetKeyDown(KeyCode.Alpha0))
+			DoSkipMultipleThisFrame = true;
+		if(Input.GetKeyDown(KeyCode.Alpha9))
+			DoSkipSingleThisFrame = true;
+
 		mInterfaceManager.Update();
 		mSunsetManager.update();
 		mChoosingManager.update();
@@ -201,7 +226,20 @@ public class ModeNormalPlay
 		mParticles.update(Time.deltaTime);
 		TED.update(Time.deltaTime);
 		
+	
+		//hacks
+		if(DoSkipMultipleThisFrame)
+		{
+			mInterfaceManager.skip_cutscene();
+
+			mSunsetManager.skip_grave();
+			
+			//grave skipping lul
+			DoSkipMultipleThisFrame = false;
+		}
 		
+		if(DoSkipSingleThisFrame)
+			DoSkipSingleThisFrame = false;
 	}
 	
 	
@@ -271,7 +309,7 @@ public class ModeNormalPlay
 				if(newGrade > 0.76f)
 				{
 					//this may or may not work depending on which update gets called first
-					mInterfaceManager.SkipSingle();
+					SkipSingle();
 					scoreProp.SetValue(CurrentPerformanceStat,0);
 					TimeRemaining = 0;
 				}
@@ -390,16 +428,15 @@ public class ModeNormalPlay
 			{	 
 				if(CurrentPerformanceStat.Character.LevelIndex > 6) //if age 85 or greater ?????? TODO whats going on here
 				{
-					//TODO conditions to get to age 100
-					if(false)
-					{
-						transition_to_TRANSITION_play(new CharacterIndex("100"));
-					}
-					else
-					{
-						transition_to_TRANSITION_play(new CharacterIndex("999"));
-						//transition_to_DEATH();
-					}
+					//TODO age 100
+
+					mInterfaceManager.set_for_DEATH(CurrentPerformanceStat.Character)
+						.then_one_shot(
+							delegate()
+							{
+								transition_to_TRANSITION_play(new CharacterIndex("999"));
+							}
+						,0);
 				}
 				else
 					transition_to_CHOICE(); 
@@ -542,12 +579,13 @@ public class ModeNormalPlay
 		
 	}
 	
+	//TODO move to sunset
 	public void transition_to_TRANSITION_play(CharacterIndex aNextCharacter)
 	{
 		
 		float gDiffDisplayDur = 5f;
 		float gAgeDisplayDur = 3f;
-		float gSunMoveDur = 2f;
+		float gSunMoveDur = 4f;
 
 		GS = NormalPlayGameState.TRANSITION;
 
@@ -580,12 +618,10 @@ public class ModeNormalPlay
 			delegate(){
 				mManager.mTransitionCameraManager.fade_out_with_sound(
 					delegate(){
-						if(aNextCharacter != CharacterIndex.sGrave) 
-						{
+						if(aNextCharacter != CharacterIndex.sGrave) {
 							mManager.mAssetLoader.new_load_character(aNextCharacter.StringIdentifier,mManager.mCharacterBundleManager);
 							slide_image(mSunsetImage,null);
-						} else 
-						{
+						} else {
 							mManager.mTransitionCameraManager.fade_in_with_sound();
 							slide_image(null,mSunsetImage,true);
 							transition_to_GRAVE();
