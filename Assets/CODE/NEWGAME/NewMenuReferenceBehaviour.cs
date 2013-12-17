@@ -7,6 +7,9 @@ public class NewMenuReferenceBehaviour : MonoBehaviour {
 	public Texture2D genericFontTex;
 	public int genericFontTexWidth;
 	public Font genericFont;
+	public Font skinnyFont;
+	public Font fatFont;
+	public Font serifFont;
 	
 	//configurator
 	public Texture2D perfectWomanLogo;
