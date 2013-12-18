@@ -1,3 +1,4 @@
+
 ::Kinect for windows v2 api notes::
 -lifecycle
 	-find, open, use, close
@@ -83,19 +84,115 @@ Perfect Woman features a branching decision tree which serves to create a narrat
 				-TODO design this...
 
 ::TODO list for LEA::
--need a grave dot in sunset for positioning the grave..
+DONE-need a grave dot in sunset for positioning the grave..
+DONE-name label needs to be even longer 
+DONE-sunset score label needs to be a littel large
+DONE-reorder 85 cutscenes one more time! (sorry, I think we had miscommunication on how this should be done)
+	-cutscene 4 should be early death (gruesome death)
+	-cutscene 0 is good natural death (i.e. made it to end of stage)
+	-cutscene 1 is bad natural death
+DONE-whale position appears to be off
+-Cashier's flashlight is not transparent!!!!
+-what do you mean name of the pose (e.g. belly dance teacher) can still be seen in selection screen????
+	-I wont be implementing the new choosing screen anytime soon, is this related to the new choosing screen?
+-sunset dot colors
+	-change dot for grave to 255,0,0,45
+	-add a dot for age 110, it should be 255,0,0,40 I need this for positioning the grave 
+	-add a dummy character for age 110 and call it SUNSET_110.png. If you are lazy you can just copy paste one of the other characters ;).
+-sunset dots (two options) (pick one. I vote for option 1 :D)
+	-option 1
+		-distance from ground to dot position should be about the same for each characters
+		-distance between each dot should be about the same
+		-problem with this is the centers of characters may be off and the rotation jiggle wont look right
+			-actually this is kind of a problem regardless because you have characters like the whale which probably wont be exactly centered the same way the other characters are..
+			-could solve this problem by using a position jiggle
+	-option 2
+		-dots stay the same
+		-I use formula to determine where the characters approximately are and use that to place score labels
+		-problem with this is the labels may not line up nicely with the characters...
+-baby name label has ugly croppynig what to do?
 
 ::order of operations/TODOXII::
-DONE/BAD-fix the transparency NIM bug
--add skip multiple to sunset progress
--fix what cutscenes get played for last set of ages...
--fix name and score labels in NIM, put in lea's fat ugly badges
--new font fucks everything up :D
-????DONE-final death to grave too abrupt (needs some text bubbles, why aren't there text bubbles?)
+
+
+-name of the pose (e.g. belly dance teacher) can still be seen in selection screen????
+-don't change bg color of sunset in animations...
+???-heads not disappearing sometimes?? (skipping issue?)
+-look into shine and special bubble for sunset connections?
+-figure out what to do about the sunset lables
+	-position all wrong
+-do lea's new scene ordering nonsense
+-change default pose back to what hands down pose (not T pose)
+-choosing
+	DONE-switch to using new character icons
+	-adjust font size
+	-implement lea's crazy new choosing thing nah
 -reposition stuff that shows up on gravestone..
--sunset score labels need to look better and be positioned better
--grave
-	-during cutscenes, jiggle the involved characters instead of using particles or popups
+-headpopup
+	DONE-sounds
+	-fix timing
+-flahing obnoxious red warning 
+	-http://www.youtube.com/watch?v=yr-OLZmKZ_I
+	
+-add boundaries to each of the joints... (namely waist, torso, neck)
+-add skip multiple to sunset progress
+-clean up UI folder
+	-delet box
+	-delete angel
+	-delete other stuf
+-text file format for unlockable characters
+	-manually fill out for now
+-cleanup
+	-still have perfect stars floating around somewhere..
+	-cleanup all the PB stuff
+-testing/challenge/simian mode should inherit from interface..
+-make BACKGROUND part of the big image dump instead of an exception case
+
+
+DONE-test Game crashed in cutscene of 34-4 (cashier). exactly when it said: "But fancy life styles will be really hard“ it would just stay there.
+DONE-tell lea how to test recorded poses lol...
+DONE-remove "this is your life story"
+DONE-move the sun slightly more to the middle ;)
+DONE-make the sun closer to the right edge at age 85 or something... (should be close to ground)
+DONE-make jiggling faster!
+DONE-difficulty labels on each character in sunset
+DONE-not adding age 85 characters to sunset??
+DONE-transparency on character shader (cashier flash light)
+DONE-short names on icons during head popup should be in caps
+DONE-make bubbles 70% opacity (202)
+DONE-see lea's font description email and updated accordingly
+DONE-see why arms f 16-4 aren't working right
+DONE-score name time etc in play
+	-need adjustable box width
+	-make text right aligned
+DONE-grave stone serif font size 16pt
+DONE-check grave position dot, lea says it's there at it's 255,0,0,40
+DONE-check score label length, Lea says it's the right one
+DONE-use larger score label and use LEA_BLOCK for it
+
+
+DONE-show score on sunset cutscene is working inconsistently
+DONE-make sure jiggle returns character to original position...
+DONE-score counting bug
+DONE-fix what cutscenes get played for last set of ages...
+DONE-fix depth issues in grave
+DONE-score counting in sunset
+DONE-put names underneath character icons...
+DONE-fix name and score labels in NIM, put in lea's fat ugly badges
+DONE-new font fucks everything up :D
+	-resize all the fonts....
+	-change vertical spacing to be a little less
+DONE-need to resize grave connection bubblses so they don't cover the characters...
+DONE-sunset score labels need to look better and be positioned better
+DONE-transparency shader seems to blend with thing underneath....??..?.??
+	-happens with word bubbles and the character heads in ChoosingManager...
+DONE-rethink how skipping works with all the new crap you just added...
+	-skipping is no longer a NIM thing. Needs to be a ModeNormalPlay thing I think...
+	-the scary part is most of the skip code still works...
+	-skipping in sunset stuff needs to be fixed
+????DONE-final death to grave too abrupt (needs some text bubbles, why aren't there text bubbles?)
+DONE-grave
+	DOTE-during cutscenes, jiggle the involved characters instead of using particles or popups
 	DONE-no game over bubble anymore
 		-this should go in credits now that it's all in the middle of the screen....
 	DONE-new grave integrates with sunset screen
@@ -104,7 +201,7 @@ DONE/BAD-fix the transparency NIM bug
 		-if die
 		DONE-fade out, fade into sunset
 		DONE-usual text nonsense
-		-go through each character, jiggle and adjust score maybe with particle effects?
+		DONE-go through each character, jiggle and adjust score maybe with particle effects?
 			-or not do this...
 			-play sound with jiggle
 		-go through each connection
@@ -114,34 +211,8 @@ DONE/BAD-fix the transparency NIM bug
 		-insert custom picture of player here maybe???f
 		-game over
 		-scroll all contents everything DOWN and scroll in credits from above ;)
--score name time etc in play
-	-need adjustable box width
--transparency shader seems to blend with thing underneath....??..?.??
-	-happens with word bubbles and the character heads in ChoosingManager...
--score counting in sunset
--headpopup
-	-sounds
-	-fix timing
-DONE-rethink how skipping works with all the new crap you just added...
-	-skipping is no longer a NIM thing. Needs to be a ModeNormalPlay thing I think...
-	-the scary part is most of the skip code still works...
-	-skipping in sunset stuff needs to be fixed
--flahing obnoxious red warning 
-	-http://www.youtube.com/watch?v=yr-OLZmKZ_I
--clean up UI folder
-	-delet box
-	-delete angel
-	-delete other stuf
-	
-
--text file format for unlockable characters
-	-manually fill out for now
--cleanup
-	-still have perfect stars floating around somewhere..
-	-cleanup all the PB stuff
--testing/challenge/simian mode should inherit from interface..
--make BACKGROUND part of the big image dump instead of an exception case
-
+DONE/BAD-fix the transparency NIM bug
+DONE-make sure shader is packaged
 DONE-sun movement on "you turn" message
 	DONE-maybe make the sun a little closer to the center
 	-use UI/SUNSET/BUBBLE for bubble in sun and make it show at bottom of screen...
