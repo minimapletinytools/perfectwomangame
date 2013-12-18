@@ -69,7 +69,7 @@ public static class GameConstants
 	public static Color UiWhiteTransparent{get {return new Color(uiWhite.r,uiWhite.g,uiWhite.b,0)/2f; }}
 	
 	public static Color UiMiniMan{get {return new Color(1,0.3f,0.2f); }}
-	public static Color UiPopupBubble{get { return new Color(0.4f,0.4f,0.4f,0.4f); } }
+	public static Color UiPopupBubble{get { return new Color(0.5f,0.5f,0.5f,0.4f); } }
 	
 	public static Color uiGraveText = new Color32(102,101,101,255);
 	public static Color UiGraveText {get{return uiGraveText*0.5f;}}

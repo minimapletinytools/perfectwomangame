@@ -34,17 +34,18 @@ public class PopupTextObject : FlatElementMultiBase {
 			string aText = value;
 			SplitNumber = 20;
 			float textOffset = 0;
+		
 			if(aText.Length > 20  && aText.Length < 40)
 			{
-				textOffset = 15;
+				//textOffset = 5;
 				aText = FlatElementText.convert_to_multiline(2,aText);
 			} else if (aText.Length >= 40 && aText.Length < 55)
 			{
-				textOffset = 30;
+				//textOffset = 10;
 				aText = FlatElementText.convert_to_multiline(3,aText);
 			} else if (aText.Length >= 55)
 			{
-				textOffset = 45;
+				//textOffset = 15;
 				aText = FlatElementText.convert_to_multiline(4,aText);
 			}
 			mText.Text = aText.ToUpper();
