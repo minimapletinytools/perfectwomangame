@@ -35,7 +35,7 @@ public class ImageGameObjectUtility
         get 
         { 
             Vector3 planeScale = PlaneObject.transform.localScale;
-            return new Vector2(planeScale.x*10, planeScale.y*10); //techincally, you need to do something like convert units
+            return new Vector2(planeScale.x*10, planeScale.z*10); //techincally, you need to do something like convert units
         }
         set
         {
@@ -75,6 +75,7 @@ public class ImageGameObjectUtility
 
 	
 	//0,0, is upper left, width,height is bottom right
+	//always relative to BaseDimension ofc
 	public void pixel_crop(Rect pixelRect)
 	{
 		relative_crop(new Rect(pixelRect.x / BaseDimension.x, 
@@ -88,7 +89,7 @@ public class ImageGameObjectUtility
 	{
 		//TODO check if this is right???
 		TextureOffset = -new Vector2(relRect.x,relRect.y);
-		TextureScale = new Vector2(1/relRect.width,1/relRect.height);
+		TextureScale = new Vector2(relRect.width,relRect.height);
 		PixelDimension = new Vector2(relRect.width * BaseDimension.x,relRect.height * BaseDimension.y);
 	}
 

@@ -36,6 +36,21 @@ public class FlatElementText : FlatElementBase
 		get { return mMesh.anchor; }
 		set { mMesh.anchor = value; }
 	}
+
+    
+    
+   	public override Rect BoundingBox {
+		get {
+			/*GUIStyle style = new GUIStyle();
+			style.font = mMesh.font;
+			style.fontSize = Size;
+			Vector2 size = style.CalcSize(new GUIContent(aText.Aggregate((e,f) => e + f))).x;*/
+
+			//TODO this is probably wrong w/e
+			var r = mMesh.renderer.bounds;
+			return new Rect(r.min.x,r.max.y,r.size.x,r.size.y);
+		}
+	}
             
 	public FlatElementText(GameObject fontPrefab, int aSize, string aText, int aDepth)
 	{

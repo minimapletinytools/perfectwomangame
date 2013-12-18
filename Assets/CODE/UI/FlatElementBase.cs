@@ -136,6 +136,7 @@ public class FlatElementBase {
 	public virtual float ColorInterpolationLimit
 	{ get; set; }
 
+	//TODO this should really be bounds not rect
     public virtual Rect BoundingBox
     {
         get { return new Rect(0, 0, 0, 0); }

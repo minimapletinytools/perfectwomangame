@@ -89,15 +89,16 @@ public class NewInterfaceManager {
 
 
 		mBBNameText.HardColor = GameConstants.UiPink;
-		//mBBNameText.Alignment = TextAlignment.Left;
-		//mBBNameText.Anchor = TextAnchor.MiddleLeft;
+		mBBNameText.Alignment = TextAlignment.Right;
+		mBBNameText.Anchor = TextAnchor.MiddleRight;
 		mBBScoreText.HardColor = GameConstants.UiPink;
+
 		mBBMultiplierImage.HardPosition = mFlatCamera.get_point(-1,1) + new Vector3(200,-270,0) 
 			+ new Vector3(mBBMultiplierImage.BoundingBox.width, mBBMultiplierImage.BoundingBox.height,0)/2f; 
 
-		Vector3 textOffset = new Vector3(70,70,0)/2;
+		Vector3 textOffset = new Vector3(70,85,0)/2;
 		mBBNameTextFrame.HardPosition = mBBMultiplierImage.HardPosition + new Vector3(mBBNameTextFrame.BoundingBox.width,140,0)/2 + textOffset;
-		mBBNameText.HardPosition = mBBNameTextFrame.HardPosition;
+		mBBNameText.HardPosition = mBBMultiplierImage.HardPosition + new Vector3(50,140,0)/2 + textOffset;
 		mBBScoreFrame.HardPosition = mBBMultiplierImage.HardPosition + new Vector3(mBBScoreFrame.BoundingBox.width,-140,0)/2 + textOffset;
 		mBBScoreText.HardPosition = mBBScoreFrame.HardPosition;
 
@@ -218,6 +219,13 @@ public class NewInterfaceManager {
 	public void begin_new_character(PerformanceStats aChar)
 	{
 		mBBNameText.Text = aChar.Character.Description + " (" + aChar.Character.Age.ToString() + ")";//FlatElementText.convert_to_multiline(aChar.Character.Description.Length > 20 ? 2 : 1 ,aChar.Character.Description + " (" + aChar.Character.Age.ToString() + ")");
+
+
+		var origPos = mBBNameTextFrame.SoftPosition - new Vector3(mBBNameTextFrame.BoundingBox.width/2f,0,0);
+		float newWidth = mBBNameText.BoundingBox.width+150;
+		mBBNameTextFrame.mImage.pixel_crop(new Rect(0,0,newWidth,mBBNameTextFrame.mImage.BaseDimension.y));
+		mBBNameTextFrame.HardPosition = origPos + new Vector3(newWidth/2f,0,0);
+
 		if(aChar.Character.LevelIndex != 0)
 		{
 			string[] labelNames = new string[]{"label_easy_BIG","label_normal_BIG","label_hard_BIG","label_extreme_BIG"};
