@@ -7,7 +7,7 @@ public struct CharacterIndex : IEquatable<CharacterIndex>
 {
 	public const int NUMBER_AGES = 10;
 	public const int NUMBER_CHARACTERS = 31;
-	public static string[] LEVEL_TO_AGE = new string[10] { "0", "05", "16", "27", "34", "45", "60", "85", "100", "999" };
+	public static string[] LEVEL_TO_AGE = new string[10] { "0", "05", "16", "27", "34", "45", "60", "85", "110", "999" };
 	
 	//TODO DELET
 	public static CharacterIndex[] INDEX_TO_CHARACTER = new CharacterIndex[]
@@ -63,7 +63,7 @@ public struct CharacterIndex : IEquatable<CharacterIndex>
 	}
 	public string StringIdentifier{
 		get{
-			if(LevelIndex == 8) return "100";
+			if(LevelIndex == 8) return "110";
 			if(LevelIndex == 9) return "999";
 			return LEVEL_TO_AGE[LevelIndex] + "-" + (Choice+1);
 		}

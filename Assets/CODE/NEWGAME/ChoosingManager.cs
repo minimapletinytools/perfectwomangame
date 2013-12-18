@@ -172,9 +172,9 @@ public class ChoosingManager
 		{
 			mBBMiniMan.SoftColor = GameConstants.UiRedTransparent;
 			mBBMiniMan.SoftPosition = mBBMiniManBasePosition;
-			mBBQuestionTextPrefix.Text = "What will you be like";
+			mBBQuestionTextPrefix.Text = "Choose your perfect life";
 			mBBQuestionText.set_text(
-				new string[]{("at age " + mManager.mGameManager.CurrentCharacterIndex.get_future_neighbor(0).Age) + "?"},
+				new string[]{("at age " + mManager.mGameManager.CurrentCharacterIndex.get_future_neighbor(0).Age) + "!"},
 			new Color[]{GameConstants.UiRed});
 		}
 		else{

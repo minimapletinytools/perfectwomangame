@@ -146,25 +146,27 @@ public class SunsetManager
 		if(aChar != CharacterIndex.sFetus)
 		{
 			var addMe = construct_flat_image("SUNSET_"+aChar.StringIdentifier,4);
+			Debug.Log ("adding character " + aChar.StringIdentifier);
 
 			//special positioning for grave
-			/*
-			if(aChar == CharacterIndex.sGrave && mCharacters.Count < 7) //second check because we don't have SUNSET_100 yet
+			if(aChar == CharacterIndex.sGrave)
 			{
 				var posImg = construct_flat_image("SUNSET_"+(new CharacterIndex(mCharacters.Count,0)).get_future_neighbor(0).StringIdentifier,0);
 				addMe.HardPosition = posImg.SoftPosition;
 				posImg.destroy();
-			}*/
+			} else if(mCharacters.Count < 7) { //add diff label, note no difficulty for age 100
+				string[] labelNames = new string[]{"label_easy","label_normal","label_hard","label_extreme"};
+				var diffLabel = mManager.mCharacterBundleManager.get_image(labelNames[mManager.mGameManager.get_character_difficulty(aChar)]);
+				FlatElementImage diffLabelImage = new FlatElementImage(diffLabel.Image,diffLabel.Data.Size,5);
+				diffLabelImage.HardPosition = addMe.HardPosition + gDiffLabelOffset;
+				mDiffLabels.Add(diffLabelImage);
+				mElement.Add(diffLabelImage);
+			}
 
 			mCharacters.Add(addMe);
 			mElement.Add(addMe);
 
-			string[] labelNames = new string[]{"label_easy","label_normal","label_hard","label_extreme"};
-			var diffLabel = mManager.mCharacterBundleManager.get_image(labelNames[mManager.mGameManager.get_character_difficulty(aChar)]);
-			FlatElementImage diffLabelImage = new FlatElementImage(diffLabel.Image,diffLabel.Data.Size,5);
-			diffLabelImage.HardPosition = addMe.HardPosition + gDiffLabelOffset;
-			mDiffLabels.Add(diffLabelImage);
-			mElement.Add(diffLabelImage);
+
 
 			if(aShowScore)
 				show_score(aChar,(int)mManager.mGameManager.mModeNormalPlay.CurrentPerformanceStat.AdjustedScore,10);
@@ -290,6 +292,9 @@ public class SunsetManager
 		float gPostScoreCount = 1f;
 		float gRestart = 65;
 
+		//add the last character played to the scene (normally this gets added during choice)
+		add_character(mModeNormalPlay.NGM.CurrentCharacterLoader.Character);
+
 		//add the gravestone to the scene
 		add_character(CharacterIndex.sGrave,false);
 		
@@ -302,7 +307,8 @@ public class SunsetManager
 			aStats.Insert(0, new PerformanceStats(new CharacterIndex(0,0)));
 
 		//fake it for testing...
-		mCharacters.Last().destroy();
+		mCharacters.Last().destroy(); //remove the grave
+		mElement.Remove(mCharacters.Last());
 		mCharacters.RemoveAt(mCharacters.Count -1);
 		Random.seed = 344;
 		for(int i = 0; i < 8; i++)
@@ -318,7 +324,7 @@ public class SunsetManager
 				add_character(stat.Character,false);
 			}
 		}
-		add_character(CharacterIndex.sGrave,false);
+		add_character(CharacterIndex.sGrave,false); //add the grave back in
 
 
 		

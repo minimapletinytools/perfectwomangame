@@ -11,7 +11,7 @@ public class ModeNormalPlay
 		NONE,PREPLAY,PLAY,CUTSCENE,DEATH,CHOICE,TRANSITION,GRAVE
 	}
 	
-	NewGameManager NGM {get; set;}
+	public NewGameManager NGM {get; set;}
 	ManagerManager mManager {get; set;}
 	
 	public float TimeRemaining
@@ -378,6 +378,7 @@ public class ModeNormalPlay
 		int choice = mChoiceHelper.update(new SetPlayChoice(mChoosingManager));
 		if(choice != -1)
 		{
+			//add the LAST character
 			mSunsetManager.add_character(NGM.CurrentCharacterLoader.Character);
 			slide_image(mChoosingImage,mSunsetImage);
 			mManager.mMusicManager.fade_out_extra_music();
@@ -428,7 +429,6 @@ public class ModeNormalPlay
 				if(CurrentPerformanceStat.Character.LevelIndex > 6) //if age 85 or greater ?????? TODO whats going on here
 				{
 					//TODO age 100
-
 					mInterfaceManager.set_for_DEATH(CurrentPerformanceStat.Character)
 						.then_one_shot(
 							delegate()
@@ -600,17 +600,17 @@ public class ModeNormalPlay
 			:
 			delegate(float aTime){return true;}
 		).then(
+			delegate(float aTime){
+				mSunsetManager.set_sun();
+				return true;
+			}
+		,0).then(
 			
 			(NGM.CurrentCharacterIndex.LevelIndex < 7 && aNextCharacter != CharacterIndex.sGrave)
 			?
 			mSunsetManager.low_skippable_text_bubble_event("You turn " + NGM.CurrentCharacterIndex.get_future_neighbor(0).Age,gAgeDisplayDur)
 			:
 			delegate(float aTime){return true;}
-		,0).then(
-			delegate(float aTime){
-				mSunsetManager.set_sun();
-				return aTime > gSunMoveDur;
-			}
 		,0).then_one_shot(
 			//TODO before this, till mInterfaceManager to explain what choice the user just made
 			//maybe play a sound "Too Easy" "Ok" "Hard" "That's Impossible!!"

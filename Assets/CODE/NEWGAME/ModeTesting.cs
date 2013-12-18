@@ -142,7 +142,7 @@ public class ModeTesting
 			}
 			else
 			{
-				if(NGM.CurrentCharacterIndex.LevelIndex < 8)
+				if(NGM.CurrentCharacterIndex.LevelIndex < 7)
 					mManager.mAssetLoader.new_load_character(NGM.CurrentCharacterIndex.get_future_neighbor(choice).StringIdentifier,mManager.mCharacterBundleManager);
 			}
 		}
