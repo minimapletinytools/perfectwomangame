@@ -121,7 +121,7 @@ public class SparkleStarFlashParticle
 	
 	public void update(float aDelta)
 	{
-		foreach(var e in mEmitter.update(aDelta))
+		foreach(var e in mEmitter.update_particles(aDelta))
 		{
 			//e.destroy();
 			//TODO need to identify the type name and put them in the right place
@@ -221,7 +221,7 @@ public class FlatParticleEmitter : FlatElementBase
 	public Color EndColor {get; set;}
 	
 	
-	public List<FlatSubParticle> update(float aDelta)
+	public List<FlatSubParticle> update_particles(float aDelta)
 	{
 		List<FlatSubParticle> removed = new List<FlatSubParticle>();
 		LinkedListNode<FlatSubParticle> starting = mParticles.First;

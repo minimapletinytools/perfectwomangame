@@ -201,7 +201,7 @@ public class SunsetManager
 		to.set_text_color(GameConstants.UiRed);
 		to.set_background_color(GameConstants.UiWhiteTransparent,true);
 		to.set_background_color(GameConstants.UiPopupBubble);
-		TimedEventDistributor.TimedEventChain chain = TED.add_event(
+		TED.add_event(
 			delegate(float aTime)
 			{
 				to.SoftPosition = mFlatCamera.get_point(0,yRelOffset); //fly in
@@ -285,10 +285,6 @@ public class SunsetManager
 	{
 		//timing vars
 		float gIntroText = 4.5f;
-		float gCharacterText = 4.5f;
-		float gPreGlory = 0f;
-		float gGlory = 0f;
-		float gPostGlory = 0f;
 		float gPreScoreCount = 0f;
 		float gScoreCount = 0.7f;
 		float gPostScoreCount = 1f;
@@ -366,7 +362,6 @@ public class SunsetManager
 
 		for(int i = 1; i < aStats.Count; i++)
 		{
-			int it = i;
 			PerformanceStats ps = aStats[i];
 			
 			chain = chain.then_one_shot(
@@ -400,7 +395,6 @@ public class SunsetManager
 		//CONNECTIONS
 		for(int i = 1; i < aStats.Count; i++)
 		{
-			int it = i;
 			PerformanceStats ps = aStats[i];
 
 			
@@ -408,7 +402,6 @@ public class SunsetManager
 			float gFirstConnectionText = 3.5f;
 			float gConnectionText = 4f;
 			float gPreParticle = 1.5f;
-			float gParticle = 5f;
 			
 			
 			//TODO grave connections

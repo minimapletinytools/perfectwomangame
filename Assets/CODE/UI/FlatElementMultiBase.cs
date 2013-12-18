@@ -227,7 +227,7 @@ public class FlatElementMultiBase : FlatElementBase
 	
 	
     //TODO do your fancy blending version...
-    public virtual void set_color(Color aColor)
+    public virtual new void set_color(Color aColor)
     {
 		foreach (ElementOffset e in mElements)
 			e.Element.set_color((aColor*e.Element.HardColor)*2); 

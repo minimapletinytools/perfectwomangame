@@ -68,8 +68,6 @@ public class NewInterfaceManager {
 	//called by NewGameManager
 	public void setup_bb()
 	{
-		var newRef = mManager.mNewRef;
-		var refs = mManager.mReferences;
 
 		var nameFrame = mManager.mCharacterBundleManager.get_image("TEXTBOX-01");
 		var scoreFrame = mManager.mCharacterBundleManager.get_image("TEXTBOX-02");
@@ -159,7 +157,7 @@ public class NewInterfaceManager {
 		to.set_text_color(GameConstants.UiRed);
 		to.set_background_color(GameConstants.UiWhiteTransparent,true);
 		to.set_background_color(GameConstants.UiPopupBubble);
-		TimedEventDistributor.TimedEventChain chain = TED.add_event(
+		TED.add_event(
 			delegate(float aTime)
 			{
 				to.SoftPosition = mFlatCamera.get_point(0,yRelOffset); //fly in
@@ -273,7 +271,6 @@ public class NewInterfaceManager {
 		float gPerformanceText = 4f;
 		float gCutsceneText = 5f;
 		float gPreParticle = 1.5f;
-		float gParticle = 2f;
 
 		float gBubblePos = 0.2f;
 
@@ -284,13 +281,13 @@ public class NewInterfaceManager {
 			mLastCutsceneChain = null;
 		};
 		
-		string[] perfectPhrase = {"awful","mediocre","good", "perfect"};
-		string[] performancePhrase = {"horribly","poorly","well", "excellently"};
+		//string[] perfectPhrase = {"awful","mediocre","good", "perfect"};
+		//string[] performancePhrase = {"horribly","poorly","well", "excellently"};
 		PopupTextObject introPo = null;
 		TimedEventDistributor.TimedEventChain chain = TED.add_event(
 			delegate(float aTime)
 			{
-				string text = "";
+				//string text = "";
 				if(mModeNormalPlay.CurrentPerformanceStat.Character == CharacterIndex.sFetus)
 				{
 					//DELETE this has been moved to text files..

@@ -42,12 +42,15 @@ public class MusicManager : FakeMonoBehaviour
 		mSoundEffects["choiceMade"] = mManager.mNewRef.choiceMade;
 		mSoundEffects["choiceMusic"] = mManager.mNewRef.choiceMusic;
 		mSoundEffects["graveAngel"] = mManager.mNewRef.graveAngel;	*/
-		
+
+		/*
 		foreach(var e in typeof(NewMenuReferenceBehaviour).GetFields())
 		{
-			//Debug.Log (e.Name);
-			//Debug.Log (e.FieldType);
-		}
+			Debug.Log (e.Name);
+			Debug.Log (e.FieldType);
+		}*/
+
+
 		foreach(FieldInfo e in typeof(NewMenuReferenceBehaviour).GetFields().Where(e => e.FieldType == typeof(AudioClip)))
 		{
 			mSoundEffects[e.Name] = e.GetValue(mManager.mNewRef) as AudioClip;

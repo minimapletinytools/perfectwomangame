@@ -38,7 +38,7 @@ public class CharacterIconObject : FlatElementMultiBase {
 		//mBodyOffset = mDifficultyStars.mImageElements[0].BoundingBox.width/2 + 5;
 		//float starOffset = mBackground.BoundingBox.width/2+5;
 		
-		float starOffset = 0;
+		//float starOffset = 0;
 		mBodyOffset = 0;
 		//mElements.Add(new ElementOffset(mDifficultyStars, new Vector3(-starOffset,-70,0)));
 		mElements.Add(new ElementOffset(mBackground, new Vector3(mBodyOffset,0,0)));

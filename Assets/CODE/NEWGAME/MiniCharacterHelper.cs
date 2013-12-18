@@ -13,8 +13,7 @@ public class MiniCharacterHelper
 	{
 		CharacterLoader loader = new CharacterLoader();
 		loader.complete_load_character(aBundle,aName);
-		foreach(FlatBodyObject e in mBody.load_sequential(loader.Images,loader.Sizes))
-			;
+		//foreach(FlatBodyObject e in mBody.load_sequential(loader.Images,loader.Sizes));
 		
 		//TODO position mBody;
 	}

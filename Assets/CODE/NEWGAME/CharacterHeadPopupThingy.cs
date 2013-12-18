@@ -36,7 +36,7 @@ public class CharacterHeadPopupThingy
 		//var sizeImg = ManagerManager.Manager.mCharacterBundleManager.get_image("ICON_05-1");
 		//TODO read from sizeImg
 		float gIconHeight = 343;
-		float gIconWidth = 266;
+		//float gIconWidth = 266;
 
 		Vector3 step = new Vector3(-500,0,0);
 		Vector3 start = NIM.mFlatCamera.get_point(0,-1) - new Vector3(0,gIconHeight/2,0);

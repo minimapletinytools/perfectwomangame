@@ -409,13 +409,13 @@ public class ModeNormalPlay
 			        foreach (var e in changes.Changes)
 			        {
 			            CharIndexContainerInt diffChanges = e.Changes;
-			            string changeMsg = e.Description;
+			            //string changeMsg = e.Description;
 					
 						foreach(CharacterIndex cchar in CharacterIndex.sAllCharacters)
 						{
 							if(diffChanges[cchar] != 0)
 							{
-			                	int nDiff = mManager.mGameManager.change_character_difficulty(cchar, diffChanges[cchar]);
+			                	//int nDiff = mManager.mGameManager.change_character_difficulty(cchar, diffChanges[cchar]);
 							}
 						}
 			        }

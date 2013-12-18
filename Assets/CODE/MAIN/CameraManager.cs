@@ -93,7 +93,7 @@ public class CameraManager : FakeMonoBehaviour {
     }
     public override void Update()
     {
-		float interp = 0.1f;
+		//float interp = 0.1f;
 		//MainBodyCameraBloomEffect.bloomIntensity = MainBodyCameraBloomEffect.bloomIntensity*(1-interp) + mBloomIntensity * MAX_BLOOM_INTENSITY * interp;
 	}
 }

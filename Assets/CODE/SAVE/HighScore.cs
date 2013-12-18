@@ -49,7 +49,7 @@ public class HighScore
 	{
 		//TODO deserialize Scores
 		//Scores = 
-		foreach(ScoreEntry e in Scores) //TODO order and take first 10 only
+		//foreach(ScoreEntry e in Scores) //TODO order and take first 10 only
 		{
 			//TODO load images...
 			//e.image = 

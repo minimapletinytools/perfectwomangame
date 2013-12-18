@@ -83,7 +83,7 @@ public class ChoosingManager
 		mBBMiniMan.SoftColor = GameConstants.UiMiniMan;
 		
 		//TODO read out of game constants please
-		Color smallColor = small ? new Color(0.5f,0.5f,0.5f,1) : new Color(0.5f,0.5f,0.5f,0);
+		//Color smallColor = small ? new Color(0.5f,0.5f,0.5f,1) : new Color(0.5f,0.5f,0.5f,0);
 		Color fullColor = !small ? new Color(0.5f,0.5f,0.5f,1) : new Color(0.5f,0.5f,0.5f,0);
 		
 		foreach(FlatBodyObject e in mBBChoiceBodies)
@@ -146,7 +146,6 @@ public class ChoosingManager
 		
 		float padding = 400;
 		float netWidth = (len)*padding;
-		float awkwardOffset = netWidth/2 - padding/1.35f;
 		
 		for(int i = len; i < mBBChoices.Count; i++)
 			mBBChoices[i].Enabled = false;
@@ -186,7 +185,7 @@ public class ChoosingManager
 			var diffPhrases = new string[]{" easy", " normal", " hard", " extreme"};
 			//var perfectPhrases = new string[]{" horrible", " passable", " perfect", " PERFECT"};
 			//var perfectColors = new Color[]{new Color32(200,173,27,255),new Color32(240,220,130,255),new Color32(253,238,0,255),new Color32(255,126,0,255)};
-			var diffColors = new Color[]{new Color(0,0.8f,0,1), new Color(0.8f,0.8f,0,1), new Color(0.9f,0.4f,0,1), new Color(0.8f,0,0,1)};
+			//var diffColors = new Color[]{new Color(0,0.8f,0,1), new Color(0.8f,0.8f,0,1), new Color(0.9f,0.4f,0,1), new Color(0.8f,0,0,1)};
 			mBBQuestionTextPrefix.Text = "That is a";
 			mBBQuestionText.set_text(
 				//new string[]{("Will you be " + nChar.Description + "\nThat is a " can't do this because my multicolor font thing can't handle new line

@@ -64,9 +64,9 @@ public class UnlockManager
 			if(mUnlocked.unlockedCharacters[e] != 1)
 				if(UnlockRquirements.requirements.ContainsKey(e))
 				{
-					string msg = UnlockRquirements.requirements[e](aStats);
-					if(msg != "")
-						;//TODO
+					//string msg = UnlockRquirements.requirements[e](aStats);
+					//if(msg != "")
+					//	;//TODO
 				}
 		}
 	}

@@ -193,7 +193,6 @@ public class TransitionCameraManager : FakeMonoBehaviour
 	{
 		mBundle = aBundle;
 
-		NewMenuReferenceBehaviour refs = mManager.mNewRef;
 		
 		//TED.add_event(fade_in,0);
 		

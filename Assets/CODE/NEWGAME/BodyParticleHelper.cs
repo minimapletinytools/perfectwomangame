@@ -48,7 +48,6 @@ public class BodyParticleHelper
 	public void create_particles(AdvancedGrading aGrade, bool continuous = false)
 	{
 		ManagerManager man = ManagerManager.Manager;
-		NewGameManager ngm = man.mGameManager;
 		BodyManager activeBody = man.mBodyManager;
 	
 		/*foreach(var e in sJointGroups)

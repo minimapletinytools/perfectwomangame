@@ -9,8 +9,6 @@ public class CharacterHelper
 	
 	public CharacterHelper()
 	{
-		 int[] mPerfectness = new int[]{ 
-            2, 1, 0, 3, 0};
 		
 		Characters = new CharIndexContainerCharacterStats();
 		foreach(CharacterIndex e in CharacterIndex.sAllCharacters)
