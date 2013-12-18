@@ -141,8 +141,6 @@ public class ModeNormalPlay
 		mPerformanceStats.Add(new PerformanceStats(NGM.CurrentCharacterIndex));
 		CurrentPerformanceStat.Stats = NGM.CharacterHelper.Characters[NGM.CurrentCharacterIndex];
 		mInterfaceManager.begin_new_character(CurrentPerformanceStat);
-
-		mSunsetManager.add_character(NGM.CurrentCharacterLoader.Character);
 		switch(NGM.CurrentCharacterLoader.Name)
 		{
 			case "0-1":	
@@ -380,6 +378,7 @@ public class ModeNormalPlay
 		int choice = mChoiceHelper.update(new SetPlayChoice(mChoosingManager));
 		if(choice != -1)
 		{
+			mSunsetManager.add_character(NGM.CurrentCharacterLoader.Character);
 			slide_image(mChoosingImage,mSunsetImage);
 			mManager.mMusicManager.fade_out_extra_music();
 			transition_to_TRANSITION_play(CurrentPerformanceStat.Character.get_future_neighbor(choice));

@@ -32,7 +32,7 @@ public class NewChoiceObject : FlatElementMultiBase {
     {
 		var newRef = ManagerManager.Manager.mNewRef;
 		mSquare = new FlatElementImage(newRef.bbChoiceBox, aDepth);
-		mText = new FlatElementText(newRef.genericFont,45,"",aDepth +2);
+		mText = new FlatElementText(newRef.genericFont,34,"",aDepth +2);
 		mDiffImage = new FlatElementImage(null,aDepth +2);
         //mPerfect = new DifficultyObject(ManagerManager.Manager.mNewRef.uiPerfectStar, aDepth);
 		mIcon = new FlatElementImage(null,aDepth +2);
@@ -43,7 +43,7 @@ public class NewChoiceObject : FlatElementMultiBase {
         
         //mBody.set_target_pose(aPose);
 		mElements.Add(new FlatElementMultiBase.ElementOffset(mSquare, new Vector3(0,0,0)));
-		mElements.Add(new FlatElementMultiBase.ElementOffset(mDiffImage, new Vector3(-mSquare.BoundingBox.width/2,mSquare.BoundingBox.height/2,0)));
+		mElements.Add(new FlatElementMultiBase.ElementOffset(mDiffImage, new Vector3(-mSquare.BoundingBox.width/2f,mSquare.BoundingBox.height/2f,0)));
 		mElements.Add(new FlatElementMultiBase.ElementOffset(mText, new Vector3(0,20,0)));
 		//mElements.Add(new FlatElementMultiBase.ElementOffset(mPerfect, new Vector3(-122,65,0)));
         mElements.Add(new FlatElementMultiBase.ElementOffset(mMeter, new Vector3(0,0,0)));
@@ -76,7 +76,7 @@ public class NewChoiceObject : FlatElementMultiBase {
 		mElements.Add(mBodyElementOffset);*/
 
 
-		var charIcon = ManagerManager.Manager.mCharacterBundleManager.get_image("ICON_S_" +  + aIndex.StringIdentifier);
+		var charIcon = ManagerManager.Manager.mCharacterBundleManager.get_image("ICON_S_" + aIndex.StringIdentifier);
 		if(charIcon.Image != null && charIcon.Data != null)
 			mIcon.set_new_texture(charIcon.Image,charIcon.Data.Size);
 		else 
@@ -95,7 +95,8 @@ public class NewChoiceObject : FlatElementMultiBase {
 			mCharacterIndex = value;
 			if(mCharacterIndex.LevelIndex != -1)
 			{
-				mText.Text = FlatElementText.convert_to_multiline(2,mCharacterIndex.ShortName.ToUpper());
+				//mText.Text = FlatElementText.convert_to_multiline(2,mCharacterIndex.ShortName.ToUpper());
+				mText.Text = mCharacterIndex.ShortName.ToUpper();
 			}
 			else mText.Text = "";
 		}
@@ -134,7 +135,7 @@ public class NewChoiceObject : FlatElementMultiBase {
 	
 	public void set_difficulty(int difficulty)
 	{
-		mIcon.SoftColor = GameConstants.IconDifficultyColorsOverTwo[difficulty];
+		//mIcon.SoftColor = GameConstants.IconDifficultyColorsOverTwo[difficulty];
 		mDiffImage.set_new_texture(ManagerManager.Manager.mNewRef.bbChoicePerfectIcons[difficulty]);
 	}
 	
