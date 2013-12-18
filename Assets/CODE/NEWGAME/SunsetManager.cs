@@ -33,6 +33,7 @@ public class SunsetManager
 	FlatElementImage mSun;
 	FlatElementImage mLightRay;
 	List<FlatElementImage> mCharacters = new List<FlatElementImage>();
+	List<FlatElementImage> mDiffLabels = new List<FlatElementImage>();
 	
 	public bool IsLoaded{get; private set;}
 	
@@ -85,9 +86,8 @@ public class SunsetManager
 	
 	public void show_score(CharacterIndex aIndex, int aScore, float showTime)
 	{
-		Debug.Log ("shawing score " + aScore);
 		int ind = char_to_list_index(aIndex);
-		FlatElementText scoreText = new FlatElementText(mManager.mNewRef.genericFont,40, aScore.ToString(), 21);
+		FlatElementText scoreText = new FlatElementText(mManager.mNewRef.fatFont,40, aScore.ToString(), 21);
 		var scoreBgImage = mManager.mCharacterBundleManager.get_image("SCORELABEL");
 		FlatElementImage scoreBg = new FlatElementImage(scoreBgImage.Image,scoreBgImage.Data.Size,20);
 		scoreBg.HardPosition = mFlatCamera.get_point(0,1.5f);
@@ -126,8 +126,8 @@ public class SunsetManager
 		float ttt = Mathf.PI*lambda;
 		mSun.PositionInterpolationMaxLimit = 300;
 		if(!hard)
-			mSun.SoftPosition = mFlatCamera.Center + new Vector3(200*Mathf.Cos(ttt),700*Mathf.Sin(ttt),0);
-		else mSun.HardPosition = mFlatCamera.Center + new Vector3(200*Mathf.Cos(ttt),700*Mathf.Sin(ttt),0);
+			mSun.SoftPosition = mFlatCamera.Center + new Vector3(50*Mathf.Cos(ttt),700*Mathf.Sin(ttt),0);
+		else mSun.HardPosition = mFlatCamera.Center + new Vector3(50*Mathf.Cos(ttt),700*Mathf.Sin(ttt),0);
 		
 		mBackground.ColorInterpolationLimit = 0.5f;
 		if(lambda < 0.5f)
@@ -137,25 +137,34 @@ public class SunsetManager
 	}
 	public void set_sun()
 	{
-		set_sun (mCharacters.Count-1);
+		set_sun (mCharacters.Count);
 	}
 	
 	public void add_character(CharacterIndex aChar, bool aShowScore = true)
 	{
+		Vector3 gDiffLabelOffset = new Vector3(-100,-350,0);
 		if(aChar != CharacterIndex.sFetus)
 		{
 			var addMe = construct_flat_image("SUNSET_"+aChar.StringIdentifier,4);
 
 			//special positioning for grave
+			/*
 			if(aChar == CharacterIndex.sGrave && mCharacters.Count < 7) //second check because we don't have SUNSET_100 yet
 			{
 				var posImg = construct_flat_image("SUNSET_"+(new CharacterIndex(mCharacters.Count,0)).get_future_neighbor(0).StringIdentifier,0);
 				addMe.HardPosition = posImg.SoftPosition;
 				posImg.destroy();
-			}
+			}*/
 
 			mCharacters.Add(addMe);
 			mElement.Add(addMe);
+
+			string[] labelNames = new string[]{"label_easy","label_normal","label_hard","label_extreme"};
+			var diffLabel = mManager.mCharacterBundleManager.get_image(labelNames[mManager.mGameManager.get_character_difficulty(aChar)]);
+			FlatElementImage diffLabelImage = new FlatElementImage(diffLabel.Image,diffLabel.Data.Size,5);
+			diffLabelImage.HardPosition = addMe.HardPosition + gDiffLabelOffset;
+			mDiffLabels.Add(diffLabelImage);
+			mElement.Add(diffLabelImage);
 
 			if(aShowScore)
 				show_score(aChar,(int)mManager.mGameManager.mModeNormalPlay.CurrentPerformanceStat.AdjustedScore,10);
@@ -286,7 +295,7 @@ public class SunsetManager
 		float gRestart = 65;
 
 		//add the gravestone to the scene
-		add_character(CharacterIndex.sGrave);
+		add_character(CharacterIndex.sGrave,false);
 		
 		//remove the grave
 		if(aStats.Last().Character.Age == 999)
@@ -319,10 +328,10 @@ public class SunsetManager
 		
 		//this is all a hack to get the score to show up right...
 		float scoreIncrementor = 0;
-		FlatElementText finalScoreText = new FlatElementText(mManager.mNewRef.genericFont,100,"",10);
+		FlatElementText finalScoreText = new FlatElementText(mManager.mNewRef.serifFont,70,"",10);
 		finalScoreText.HardColor = (GameConstants.UiGraveText);
 		//FlatElementImage perfectEngraving = new FlatElementImage(mManager.mNewRef.gravePerfectnessEngraving,10);
-		FlatElementText perfectPercent = new FlatElementText(mManager.mNewRef.genericFont,100,"",11);
+		FlatElementText perfectPercent = new FlatElementText(mManager.mNewRef.serifFont,40,"",11);
 		float ageIncrementer = 0;
 		perfectPercent.HardColor = (GameConstants.UiGraveText);
 		//perfectPercent.Text = ((int)(100*aStats.Sum(e=>e.Stats.Perfect+1)/(float)(aStats.Count*3))).ToString() + "%";
@@ -337,9 +346,9 @@ public class SunsetManager
 		//foreach (Renderer f in perfectEngraving.PrimaryGameObject.GetComponentsInChildren<Renderer>()) f.gameObject.layer = 4;
 		
 		Vector3 graveCenter = mCharacters[mCharacters.Count-1].HardPosition + new Vector3(0, 50, 0);
-		finalScoreText.HardPosition = graveCenter + new Vector3(0,-100,0);
+		finalScoreText.HardPosition = graveCenter + new Vector3(10,-150,0);
 		//perfectEngraving.SoftPosition = graveCenter + new Vector3(35,250,0);
-		perfectPercent.HardPosition = graveCenter + new Vector3(0,100,0);
+		perfectPercent.HardPosition = graveCenter + new Vector3(15,60,0);
 		mElement.Add(finalScoreText);
 		//mElement.Add(perfectEngraving);
 		mElement.Add(perfectPercent);
@@ -349,9 +358,11 @@ public class SunsetManager
 		
 		chain = TED.add_event(
 				low_skippable_text_bubble_event("YOU REST HERE BENEATH THE EARTH...",gIntroText)
-			).then( //wait a little bit to let the fading finish
+			);
+
+		/*.then( //wait a little bit to let the fading finish
 		    	low_skippable_text_bubble_event("HERE IS YOUR LIFE STORY",gIntroText)
-		    );
+		    );*/
 
 		for(int i = 1; i < aStats.Count; i++)
 		{
@@ -457,8 +468,8 @@ public class SunsetManager
 						System.Func<FlatElementBase,float,bool> jiggleDelegate = 
 							delegate(FlatElementBase aBase, float aTime2) 
 							{
-								aBase.mLocalRotation = Quaternion.AngleAxis((Mathf.Sin(aTime2*Mathf.PI*2)*15f,Vector3.forward);
-								if(aTime2 >= 3) 
+								aBase.mLocalRotation = Quaternion.AngleAxis(Mathf.Sin(aTime2*Mathf.PI*2*4)*15f,Vector3.forward);
+								if(aTime2 >= gFirstConnectionText-gPreParticle) 
 									return true;
 								return false;
 							};
