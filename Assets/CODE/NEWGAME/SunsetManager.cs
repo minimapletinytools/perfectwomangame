@@ -190,7 +190,7 @@ public class SunsetManager
 			to = new PopupTextObject(aMsg,30);
 		else if(bubbleType == 1)
 		{
-			var bubbleImg = mManager.mCharacterBundleManager.get_image("BUBBLE");
+			var bubbleImg = mManager.mCharacterBundleManager.get_image("SUNSET_BUBBLE");
 			to = new PopupTextObject(aMsg,30,bubbleImg.Image,bubbleImg.Data.Size);
 		} else if(bubbleType == 2)
 		{
@@ -267,6 +267,29 @@ public class SunsetManager
 
 
 
+
+	public void create_shine_over_character(CharacterIndex aIndex,bool positive, float duration)
+	{
+		//TODO positive/negative colors
+		int index = aIndex.LevelIndex - 1;
+		var shineImage = mManager.mCharacterBundleManager.get_image("SHINE");
+		FlatElementImage shine = new FlatElementImage(shineImage.Image,shineImage.Data.Size,3);
+		Vector3 targetPos = mCharacters[index].SoftPosition + new Vector3(0,shine.BoundingBox.height/2-300,0);
+		shine.HardPosition = targetPos + new Vector3(0,2000,0);
+		shine.SoftPosition = targetPos;
+		shine.HardColor = positive ? GameConstants.UiGreen : GameConstants.UiRed; 
+		mElement.Add(shine);
+		TED.add_one_shot_event(
+			delegate() {
+				shine.SoftColor = GameConstants.UiWhiteTransparent;
+			},
+		duration).then_one_shot(
+			delegate() {
+				mElement.Remove(shine);
+				shine.destroy();
+			},
+		3);
+	}
 
 
 	public void skip_grave()
@@ -474,11 +497,14 @@ public class SunsetManager
 							};
 
 
+
 						chain = chain.then_one_shot(
 							delegate()
 							{
 								if(npo != null)
 									mCharacters[char_to_list_index(targetCharacter)].Events.add_event(jiggleDelegate,0);
+								//create the shine
+								create_shine_over_character(targetCharacter,!wasHard, gFirstConnectionText);
 							}
 						).then_one_shot(
 							delegate()
@@ -487,6 +513,7 @@ public class SunsetManager
 								{
 									npo.Text =  conText[conText.Length -1];
 									mCharacters[char_to_list_index(ps.Character)].Events.add_event(jiggleDelegate,0);
+									create_shine_over_character(ps.Character,!wasHard, gFirstConnectionText-gPreParticle);
 								}
 							},
 						gFirstConnectionText-gPreParticle).then (

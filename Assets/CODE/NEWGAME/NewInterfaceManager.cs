@@ -123,7 +123,7 @@ public class NewInterfaceManager {
 	//called by NewGameManager
 	public void update_bb_score(float aScore)
 	{
-		mBBScoreText.Text = ((int)aScore).ToString();
+		mBBScoreText.Text = "SCORE: "+((int)aScore).ToString();
 	}
 	
 	public void set_popup_color_for_cutscene_particles(PopupTextObject aPopup, bool aPositive)
@@ -146,10 +146,13 @@ public class NewInterfaceManager {
 
 
 	//TEXT
-	//TODO get rid ofthe stupid yreloffset parameter...
-	public PopupTextObject add_timed_text_bubble(string aMsg, float duration, float yRelOffset = 0)
+	public PopupTextObject add_timed_text_bubble(string aMsg, float duration, float yRelOffset = 0, CharacterBundleManager.ImageSizePair image = null)
 	{
-		PopupTextObject to = new PopupTextObject(aMsg,30);
+		PopupTextObject to = null;
+		if(image == null)
+			to = new PopupTextObject(aMsg,30);
+		else
+			to = new PopupTextObject(aMsg,30,image.Image,image.Data.Size);
 		to.HardPosition = random_position();
 		to.HardColor = GameConstants.UiWhiteTransparent;
 		to.SoftColor = GameConstants.UiWhite;
@@ -271,8 +274,9 @@ public class NewInterfaceManager {
 		float gPerformanceText = 4f;
 		float gCutsceneText = 5f;
 		float gPreParticle = 1.5f;
-
 		float gBubblePos = 0.2f;
+
+		var cutsceneBubble = mManager.mCharacterBundleManager.get_image("CUTSCENE_BUBBLE");
 
 		
 		mLastCutsceneCompleteCb = delegate() {
@@ -332,7 +336,7 @@ public class NewInterfaceManager {
 				{
 					if(po == null)
 					{
-						po = add_timed_text_bubble(changeMsg,gCutsceneText,gBubblePos);
+						po = add_timed_text_bubble(changeMsg,gCutsceneText,gBubblePos,cutsceneBubble);
 					
 						//dumb stuff I need to make sure there was actually a change
 						foreach(CharacterIndex cchar in CharacterIndex.sAllCharacters)

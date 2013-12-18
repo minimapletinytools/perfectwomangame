@@ -22,6 +22,41 @@ public class CharacterHeadPopupThingy
 	}
 
 
+	
+	public void create_shine_over_character(FlatElementImage aHead,bool positive, float duration)
+	{
+		var shineImage = ManagerManager.Manager.mCharacterBundleManager.get_image("STREAM");
+		FlatElementImage shine = new FlatElementImage(shineImage.Image,shineImage.Data.Size,3);
+		Vector3 targetPos = aHead.SoftPosition + new Vector3(0,shine.BoundingBox.height/2-150,0);
+		shine.HardPosition = targetPos + new Vector3(0,500,0);
+		//shine.SoftPosition = targetPos;
+		shine.HardColor = positive ? GameConstants.UiGreenTransparent : GameConstants.UiRedTransparent; 
+		shine.HardColor = positive ? GameConstants.UiGreen : GameConstants.UiRed; 
+		mElement.Add(shine); 
+	
+		var boxImage = ManagerManager.Manager.mCharacterBundleManager.get_image("CUTSCENE_BOX");
+		FlatElementImage box = new FlatElementImage(boxImage.Image,boxImage.Data.Size,3);
+		box.HardPosition = aHead.SoftPosition;
+		box.HardColor = positive ? GameConstants.UiGreenTransparent : GameConstants.UiRedTransparent; 
+		box.HardColor = positive ? GameConstants.UiGreen : GameConstants.UiRed; 
+		mElement.Add(box);
+	
+		TED.add_one_shot_event(
+			delegate() {
+				shine.HardColor = GameConstants.UiWhiteTransparent;
+			box.HardColor = GameConstants.UiWhiteTransparent;
+			},
+		duration).then_one_shot(
+			delegate() {
+				mElement.Remove(shine);
+				mElement.Remove(box);
+				shine.destroy();
+				box.destroy();
+			},
+		3);
+	}
+
+
 	public void popup_character(CharacterIndex[] aChars, int[] aDiffs)
 	{
 		int count = aChars.Length;
@@ -118,6 +153,10 @@ public class CharacterHeadPopupThingy
 							return false;
 						},
 					0);
+
+					//Shineeee
+					//TODO good/bad
+					create_shine_over_character(mCharacters[workingIndex],true,gBadgeTime);
 
 					//play a sound
 					//TODO play diff sound for good or bad
