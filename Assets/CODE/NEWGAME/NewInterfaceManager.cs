@@ -366,7 +366,7 @@ public class NewInterfaceManager {
 								int nDiff = Mathf.Clamp(mManager.mGameManager.get_character_difficulty(cchar) + diffChanges[cchar], 0, 3);
 								aDiffs.Add(nDiff);
 							}
-						mHeadPop.popup_character(aChangedChars.ToArray(),aDiffs.ToArray());
+						mHeadPop.popup_character(aChangedChars.ToArray(),aDiffs.ToArray(),!changes.is_positive());
 					}
 					return true;
 				}
@@ -422,7 +422,7 @@ public class NewInterfaceManager {
 			gTextTime).then_one_shot(
 				delegate()
 				{
-					add_timed_text_bubble("but you lived 100 years",gTextTime);
+					add_timed_text_bubble("but you lived 110 years",gTextTime);
 				},
 			gTextTime).then_one_shot( //dummy 
 				delegate(){},gTextTime);

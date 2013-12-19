@@ -125,15 +125,26 @@ public class SunsetManager
 		float lambda = index/gTotalIndices;
 		float ttt = Mathf.PI*lambda;
 		mSun.PositionInterpolationMaxLimit = 300;
-		if(!hard)
-			mSun.SoftPosition = mFlatCamera.Center + new Vector3(50*Mathf.Cos(ttt),700*Mathf.Sin(ttt),0);
-		else mSun.HardPosition = mFlatCamera.Center + new Vector3(50*Mathf.Cos(ttt),700*Mathf.Sin(ttt),0);
-		
+
+		//linear arc thing
+		mSun.SoftPosition = lambda <= 0.5f ? 
+			lambda*2*(mFlatCamera.Center + new Vector3(0,600,0)) + (1-lambda*2)*(mFlatCamera.Center + new Vector3(-50,0,0)) : 
+			(1-(lambda-0.5f)*2)*(mFlatCamera.Center + new Vector3(0,500,0)) + (lambda-0.5f)*2*(mFlatCamera.Center + new Vector3(-50,0,0));
+		//circle arc
+		//mSun.SoftPosition = mFlatCamera.Center + new Vector3(50*Mathf.Cos(ttt),700*Mathf.Sin(ttt),0);
+
+
+		if(hard) mSun.HardPosition = mSun.SoftPosition;
+
 		mBackground.ColorInterpolationLimit = 0.5f;
+
+		Color leftColor = new Color32(25,25,112,255);
+		Color highColor = new Color32(135,206,235,255);
+		Color rightColor = leftColor;
 		if(lambda < 0.5f)
-			mBackground.SoftColor = Color.Lerp(new Color32(25,25,112,255),new Color32(135,206,235,255),lambda*2)/2f;
+			mBackground.SoftColor = Color.Lerp(leftColor,highColor,lambda*2)/2f;
 		else
-			mBackground.SoftColor = Color.Lerp(new Color32(135,206,235,255),new Color(150,75,0,255),(lambda-0.5f)*2)/2f;
+			mBackground.SoftColor = Color.Lerp(highColor,rightColor,(lambda-0.5f)*2)/2f;
 	}
 	public void set_sun()
 	{
@@ -145,7 +156,7 @@ public class SunsetManager
 		Vector3 gDiffLabelOffset = new Vector3(-100,-350,0);
 		if(aChar != CharacterIndex.sFetus)
 		{
-			var addMe = construct_flat_image("SUNSET_"+aChar.StringIdentifier,4);
+			var addMe = construct_flat_image("SUNSET_"+aChar.StringIdentifier,4 + mCharacters.Count);
 			Debug.Log ("adding character " + aChar.StringIdentifier);
 
 			//special positioning for grave
@@ -169,7 +180,7 @@ public class SunsetManager
 
 
 			if(aShowScore)
-				show_score(aChar,(int)mManager.mGameManager.mModeNormalPlay.CurrentPerformanceStat.AdjustedScore,10);
+				show_score(aChar,(int)mManager.mGameManager.mModeNormalPlay.CurrentPerformanceStat.AdjustedScore,13);
 		}
 	}
 
@@ -603,6 +614,16 @@ public class SunsetManager
 				{
 					e.SoftPosition = e.SoftPosition + scroll;
 				}
+				foreach(FlatElementImage e in mCharacters)
+				{
+					e.SoftPosition = e.SoftPosition + scroll;
+				}
+				foreach(FlatElementImage e in mDiffLabels)
+				{
+					e.SoftPosition = e.SoftPosition + scroll;
+				}
+				finalScoreText.SoftPosition = finalScoreText.SoftPosition + scroll;
+				perfectPercent.SoftPosition = perfectPercent.SoftPosition + scroll;
 				gameOver.SoftPosition = gameOver.SoftPosition + scroll;
 				logo1.SoftPosition = logo1.SoftPosition + scroll;
 				logo2.SoftPosition = logo2.SoftPosition + scroll;

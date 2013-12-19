@@ -27,7 +27,7 @@ public class CharacterHeadPopupThingy
 	{
 		var shineImage = ManagerManager.Manager.mCharacterBundleManager.get_image("STREAM");
 		FlatElementImage shine = new FlatElementImage(shineImage.Image,shineImage.Data.Size,3);
-		Vector3 targetPos = aHead.SoftPosition + new Vector3(0,shine.BoundingBox.height/2-150,0);
+		Vector3 targetPos = aHead.SoftPosition + new Vector3(0,shine.BoundingBox.height/2-360,0);
 		shine.HardPosition = targetPos + new Vector3(0,500,0);
 		//shine.SoftPosition = targetPos;
 		shine.HardColor = positive ? GameConstants.UiGreenTransparent : GameConstants.UiRedTransparent; 
@@ -44,7 +44,7 @@ public class CharacterHeadPopupThingy
 		TED.add_one_shot_event(
 			delegate() {
 				shine.HardColor = GameConstants.UiWhiteTransparent;
-			box.HardColor = GameConstants.UiWhiteTransparent;
+				box.HardColor = GameConstants.UiWhiteTransparent;
 			},
 		duration).then_one_shot(
 			delegate() {
@@ -57,7 +57,7 @@ public class CharacterHeadPopupThingy
 	}
 
 
-	public void popup_character(CharacterIndex[] aChars, int[] aDiffs)
+	public void popup_character(CharacterIndex[] aChars, int[] aDiffs, bool isGreen)
 	{
 		int count = aChars.Length;
 
@@ -112,9 +112,10 @@ public class CharacterHeadPopupThingy
 			mElement.Add(mNames[i]);
 		}
 
-		float gTimeBeforeBadges = 1f;
-		float gBadgeTime = 1f;
-		float gTimeAfterBadges = 1f;
+		float scaleTime = Mathf.Sqrt(1/(float)count);
+		float gTimeBeforeBadges = scaleTime * 2f;
+		float gBadgeTime = scaleTime * 2f;
+		float gTimeAfterBadges = scaleTime * 2f;
 
 		//wait one second
 		var chain = TED.add_event(
@@ -136,7 +137,7 @@ public class CharacterHeadPopupThingy
 					mBadges[workingIndex].Events.add_event(
 						delegate(FlatElementBase aBase, float aTime) 
 						{
-							aBase.mLocalScale = Vector3.one * (1+Mathf.Sin(aTime*6)*0.3f);
+							aBase.mLocalScale = Vector3.one * (1+Mathf.Sin(aTime*6)*0.2f);
 							if(aTime > 0.3f) 
 								return true;
 							return false;
@@ -147,7 +148,7 @@ public class CharacterHeadPopupThingy
 					mCharacters[workingIndex].Events.add_event(
 						delegate(FlatElementBase aBase, float aTime) 
 						{
-							aBase.mLocalScale = Vector3.one * (1+Mathf.Sin(aTime*6)*0.3f);
+							aBase.mLocalScale = Vector3.one * (1+Mathf.Sin(aTime*6)*0.15f);
 							if(aTime > 0.3f) 
 								return true;
 							return false;
@@ -155,12 +156,13 @@ public class CharacterHeadPopupThingy
 					0);
 
 					//Shineeee
-					//TODO good/bad
-					create_shine_over_character(mCharacters[workingIndex],true,gBadgeTime);
+					create_shine_over_character(mCharacters[workingIndex],isGreen,gBadgeTime*2/3f);
 
 					//play a sound
-					//TODO play diff sound for good or bad
-					ManagerManager.Manager.mMusicManager.play_sound_effect("headPopupGood");
+					if(isGreen)
+						ManagerManager.Manager.mMusicManager.play_sound_effect("headPopupGood");
+					else
+						ManagerManager.Manager.mMusicManager.play_sound_effect("headPopupBad");
 				},
 			gBadgeTime);
 		}
