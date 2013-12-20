@@ -95,6 +95,7 @@ public class CharacterHeadPopupThingy
 
 			mCharacters[i].HardPosition = start + offset + step*i;
 			mCharacters[i].SoftPosition = mCharacters[i].SoftPosition + new Vector3(0,gIconHeight + 50,0);
+			mCharacters[i].HardScale = Vector3.one*0.9f;
 		
 			mBadges[i] = new FlatElementImage(ManagerManager.Manager.mNewRef.bbChoicePerfectIcons[aDiffs[i]],11);
 			mBadges[i].HardColor = GameConstants.UiWhiteTransparent;
@@ -113,9 +114,9 @@ public class CharacterHeadPopupThingy
 		}
 
 		float scaleTime = Mathf.Sqrt(1/(float)count);
-		float gTimeBeforeBadges = scaleTime * 0.5f;
-		float gBadgeTime = scaleTime * 1.4f;
-		float gTimeAfterBadges = scaleTime * 0.5f;
+		float gTimeBeforeBadges = scaleTime * 1f;
+		float gBadgeTime = scaleTime * 1.2f;
+		float gTimeAfterBadges = scaleTime * 0.4f;
 
 		//Shineeee
 		TED.add_one_shot_event(
@@ -124,10 +125,10 @@ public class CharacterHeadPopupThingy
 				{
 					int workingIndex = j;
 					//make sure this does not last too long
-					create_shine_over_character(mCharacters[workingIndex],isGreen,(gTimeBeforeBadges+gBadgeTime+gTimeAfterBadges)*count - gTimeBeforeBadges);
+					create_shine_over_character(mCharacters[workingIndex],isGreen,(gBadgeTime)*count + 0.5f);
 				}
 			},
-		gTimeBeforeBadges);
+		gTimeBeforeBadges/2);
 
 		//wait one second
 		var chain = TED.add_event(
@@ -144,6 +145,7 @@ public class CharacterHeadPopupThingy
 					//appear the badge
 					mBadges[workingIndex].SoftColor = GameConstants.UiWhite;
 					mBadges[workingIndex].HardPosition = mCharacters[workingIndex].SoftPosition + badgeOffset;
+					mBadges[workingIndex].HardScale = Vector3.one*0.9f;
 
 					//pulsating scale animation
 					mBadges[workingIndex].Events.add_event(

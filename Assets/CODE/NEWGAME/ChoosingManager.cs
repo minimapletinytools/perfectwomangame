@@ -5,8 +5,10 @@ using System.Linq;
 public class ChoosingManager 
 {
 	ManagerManager mManager;
-    public ChoosingManager(ManagerManager aManager)
+	ModeNormalPlay mModeNormalPlay;
+    public ChoosingManager(ManagerManager aManager, ModeNormalPlay aModeNormalPlay)
 	{
+		mModeNormalPlay = aModeNormalPlay;
 		mManager = aManager;
 	}
 
@@ -34,6 +36,7 @@ public class ChoosingManager
 		
 		mFlatCamera = new FlatCameraManager(new Vector3(24234,-3535,0),10);
 		mFlatCamera.fit_camera_to_game();
+		//mFlatCamera = mModeNormalPlay.mSunsetManager.mFlatCamera;
 		
 
 		var refs = mManager.mReferences;
@@ -53,6 +56,7 @@ public class ChoosingManager
 		}
 		
 		mBBChoosingBackground = new FlatElementImage(null,mFlatCamera.Size,0);
+		mBBChoosingBackground.Enabled = false;
 		mBBChoosingBackground.HardPosition = mFlatCamera.Center;
 		mBBQuestionText = new ColorTextObject(10);
         mBBQuestionTextPrefix = new FlatElementText(newRef.genericFont, 100, "", 10);

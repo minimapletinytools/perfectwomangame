@@ -38,7 +38,7 @@ public class ModeNormalPlay
 	public SunsetManager mSunsetManager = null;
 	public ChoosingManager mChoosingManager = null;
 
-	FlatElementImage mInterfaceImage;
+	//FlatElementImage mInterfaceImage;
 	FlatElementImage mSunsetImage;
 	FlatElementImage mChoosingImage;
 	
@@ -87,7 +87,7 @@ public class ModeNormalPlay
 		);
 		
 		
-		mChoosingManager = new ChoosingManager(mManager);
+		mChoosingManager = new ChoosingManager(mManager,this);
 		mChoosingManager.initialize();
 		mChoosingManager.mFlatCamera.set_render_texture_mode(true);
 		
@@ -101,10 +101,11 @@ public class ModeNormalPlay
 		mSunsetImage.HardShader = mManager.mReferences.mRenderTextureShader;
 		mElement.Add(mSunsetImage);
 
-		mChoosingImage = new FlatElementImage(mChoosingManager.mFlatCamera.RT,0);
+
+		mChoosingImage = new FlatElementImage(mChoosingManager.mFlatCamera.RT,1);
 		mChoosingImage.HardScale = Vector3.one * mFlatCamera.Width/mChoosingImage.mImage.PixelDimension.x;
 		mChoosingImage.HardPosition = mFlatCamera.Center + Vector3.right*mChoosingImage.BoundingBox.width;
-		mChoosingImage.HardShader = mManager.mReferences.mRenderTextureShader;
+		//mChoosingImage.HardShader = mManager.mReferences.mRenderTextureShader;
 		mElement.Add(mChoosingImage);
 
 
@@ -378,9 +379,9 @@ public class ModeNormalPlay
 		int choice = mChoiceHelper.update(new SetPlayChoice(mChoosingManager));
 		if(choice != -1)
 		{
-			//add the LAST character
-			mSunsetManager.add_character(NGM.CurrentCharacterLoader.Character);
-			slide_image(mChoosingImage,mSunsetImage);
+			slide_image(mChoosingImage,null);
+
+
 			mManager.mMusicManager.fade_out_extra_music();
 			transition_to_TRANSITION_play(CurrentPerformanceStat.Character.get_future_neighbor(choice));
 		}
@@ -554,14 +555,26 @@ public class ModeNormalPlay
 		CharacterIndex[] chars = available_choices(NGM.CurrentCharacterIndex.get_future_neighbor(0));
 		mChoiceHelper.shuffle_and_set_choice_poses(chars.Length,mChoosingManager); 
 		mChoosingManager.set_bb_choices(chars);
-		//DELETE
-		//mChoosingManager.set_bb_choice_bodies(NGM.CurrentCharacterIndex);
-
-		
-		mManager.mMusicManager.fade_in_extra_music("choiceMusic");
+		mSunsetManager.add_character(NGM.CurrentCharacterLoader.Character);
 
 		//switch over to choice screen
-		slide_image(null,mChoosingImage);
+		float gAgeDisplayDur = 3f;
+		slide_image(null,mSunsetImage);
+		TED.add_event(
+			delegate(float aTime){
+				mSunsetManager.set_sun();
+				return true;
+			}
+		,0).then(
+			mSunsetManager.low_skippable_text_bubble_event("You turn " + NGM.CurrentCharacterIndex.get_future_neighbor(0).Age,gAgeDisplayDur)
+		,0).then_one_shot(
+			delegate(){
+				slide_image(null,mChoosingImage);
+				mManager.mMusicManager.fade_in_extra_music("choiceMusic");
+			}
+		,0);
+
+
 
 	}
 	
@@ -583,8 +596,7 @@ public class ModeNormalPlay
 	{
 		
 		float gDiffDisplayDur = 5f;
-		float gAgeDisplayDur = 3f;
-		float gSunMoveDur = 4f;
+
 
 		GS = NormalPlayGameState.TRANSITION;
 
@@ -599,19 +611,7 @@ public class ModeNormalPlay
 			mSunsetManager.low_skippable_text_bubble_event(diffPhrases[NGM.CharacterHelper.Characters[aNextCharacter].Difficulty],gDiffDisplayDur)
 			:
 			delegate(float aTime){return true;}
-		).then(
-			delegate(float aTime){
-				mSunsetManager.set_sun();
-				return true;
-			}
-		,0).then(
-			
-			(NGM.CurrentCharacterIndex.LevelIndex < 7 && aNextCharacter != CharacterIndex.sGrave)
-			?
-			mSunsetManager.low_skippable_text_bubble_event("You turn " + NGM.CurrentCharacterIndex.get_future_neighbor(0).Age,gAgeDisplayDur)
-			:
-			delegate(float aTime){return true;}
-		,0).then_one_shot(
+		).then_one_shot(
 			//TODO before this, till mInterfaceManager to explain what choice the user just made
 			//maybe play a sound "Too Easy" "Ok" "Hard" "That's Impossible!!"
 			delegate(){
@@ -622,6 +622,8 @@ public class ModeNormalPlay
 							slide_image(mSunsetImage,null);
 						} else {
 							mManager.mTransitionCameraManager.fade_in_with_sound();
+							mSunsetManager.add_character(NGM.CurrentCharacterLoader.Character);
+							mSunsetManager.set_sun();
 							slide_image(null,mSunsetImage,true);
 							transition_to_GRAVE();
 						}

@@ -34,6 +34,8 @@ public class SunsetManager
 	FlatElementImage mLightRay;
 	List<FlatElementImage> mCharacters = new List<FlatElementImage>();
 	List<FlatElementImage> mDiffLabels = new List<FlatElementImage>();
+	List<FlatElementImage> mScoreLabels = new List<FlatElementImage>();
+	List<FlatElementText> mScoreTexts = new List<FlatElementText>();
 	
 	public bool IsLoaded{get; private set;}
 	
@@ -83,7 +85,8 @@ public class SunsetManager
 			return -1;
 		return r;
 	}
-	
+
+	//this needs to be called in order of characters created....
 	public void show_score(CharacterIndex aIndex, int aScore, float showTime)
 	{
 		int ind = char_to_list_index(aIndex);
@@ -95,8 +98,13 @@ public class SunsetManager
 		scoreText.HardPosition = scoreBg.HardPosition;
 		scoreText.SoftPosition = scoreBg.SoftPosition;
 		scoreText.Text = ""+aScore;
+
+		mScoreLabels.Add(scoreBg);
+		mScoreTexts.Add(scoreText);
 		mElement.Add(scoreBg);
 		mElement.Add(scoreText);
+
+		/*
 		TED.add_event(
 			delegate(float aTime) {
 				if(aTime > showTime)
@@ -114,22 +122,22 @@ public class SunsetManager
 				scoreBg.destroy();
 				scoreText.destroy();
 			}
-		,3);
+		,3);*/
 	}
 
 	public void set_sun(int aIndex, bool hard = false)
 	{
 		int index = aIndex;
 		
-		float gTotalIndices = 6;
+		float gTotalIndices = 8;
 		float lambda = index/gTotalIndices;
 		float ttt = Mathf.PI*lambda;
 		mSun.PositionInterpolationMaxLimit = 300;
 
 		//linear arc thing
 		mSun.SoftPosition = lambda <= 0.5f ? 
-			lambda*2*(mFlatCamera.Center + new Vector3(0,600,0)) + (1-lambda*2)*(mFlatCamera.Center + new Vector3(-50,0,0)) : 
-			(1-(lambda-0.5f)*2)*(mFlatCamera.Center + new Vector3(0,500,0)) + (lambda-0.5f)*2*(mFlatCamera.Center + new Vector3(-50,0,0));
+			lambda*2*(mFlatCamera.Center + new Vector3(0,850,0)) + (1-lambda*2)*(mFlatCamera.Center + new Vector3(-50,0,0)) : 
+			(1-(lambda-0.5f)*2)*(mFlatCamera.Center + new Vector3(0,850,0)) + (lambda-0.5f)*2*(mFlatCamera.Center + new Vector3(-50,0,0));
 		//circle arc
 		//mSun.SoftPosition = mFlatCamera.Center + new Vector3(50*Mathf.Cos(ttt),700*Mathf.Sin(ttt),0);
 
@@ -176,8 +184,6 @@ public class SunsetManager
 
 			mCharacters.Add(addMe);
 			mElement.Add(addMe);
-
-
 
 			if(aShowScore)
 				show_score(aChar,(int)mManager.mGameManager.mModeNormalPlay.CurrentPerformanceStat.AdjustedScore,13);
@@ -332,10 +338,7 @@ public class SunsetManager
 		float gScoreCount = 0.2f;
 		float gPostScoreCount = 0f;
 		float gRestart = 65;
-
-		//add the last character played to the scene (normally this gets added during choice)
-		add_character(mModeNormalPlay.NGM.CurrentCharacterLoader.Character);
-
+		
 		//add the gravestone to the scene
 		add_character(CharacterIndex.sGrave,false);
 		
@@ -362,7 +365,7 @@ public class SunsetManager
 				stat.Stats = mManager.mGameManager.CharacterHelper.Characters[stat.Character];
 				aStats.Add(stat);
 
-				add_character(stat.Character,false);
+				add_character(stat.Character,true);
 			}
 		}
 		add_character(CharacterIndex.sGrave,false); //add the grave back in
@@ -371,9 +374,9 @@ public class SunsetManager
 		
 		//this is all a hack to get the score to show up right...
 		float scoreIncrementor = 0;
-		FlatElementText finalScoreText = new FlatElementText(mManager.mNewRef.serifFont,70,"",15);
+		FlatElementText finalScoreText = new FlatElementText(mManager.mNewRef.serifFont,70,"0",15);
 		finalScoreText.HardColor = (GameConstants.UiGraveText);
-		FlatElementText perfectPercent = new FlatElementText(mManager.mNewRef.serifFont,40,"",15);
+		FlatElementText perfectPercent = new FlatElementText(mManager.mNewRef.serifFont,40,"0",15);
 		float ageIncrementer = 0;
 		perfectPercent.HardColor = (GameConstants.UiGraveText);
 		//perfectPercent.Text = ((int)(100*aStats.Sum(e=>e.Stats.Perfect+1)/(float)(aStats.Count*3))).ToString() + "%";
@@ -409,9 +412,19 @@ public class SunsetManager
 		{
 			PerformanceStats ps = aStats[i];
 			
+			System.Func<FlatElementBase,float,bool> scoreJiggleDelegate = 
+				delegate(FlatElementBase aBase, float aTime2) 
+				{
+					aBase.mLocalRotation = Quaternion.AngleAxis(Mathf.Sin(aTime2*Mathf.PI*2*4)*15f,Vector3.forward);
+					if(aTime2 >= 0.7f) 
+						return true;
+					return false;
+				};
+
 			chain = chain.then_one_shot(
 				delegate() {
-					show_score(ps.Character,(int)ps.AdjustedScore,gPreScoreCount + gScoreCount + gPostScoreCount);
+					mScoreLabels[ps.Character.LevelIndex-1].Events.add_event(scoreJiggleDelegate,0);
+						//show_score(ps.Character,(int)ps.AdjustedScore,gPreScoreCount + gScoreCount + gPostScoreCount);
 				},
 			0).then(
 				delegate(float aTime)
@@ -504,16 +517,16 @@ public class SunsetManager
 
 
 
+						
+						
 						System.Func<FlatElementBase,float,bool> jiggleDelegate = 
 							delegate(FlatElementBase aBase, float aTime2) 
-							{
-								aBase.mLocalRotation = Quaternion.AngleAxis(Mathf.Sin(aTime2*Mathf.PI*2*4)*15f,Vector3.forward);
-								if(aTime2 >= gFirstConnectionText-gPreParticle) 
-									return true;
-								return false;
-							};
-
-
+						{
+							aBase.mLocalRotation = Quaternion.AngleAxis(Mathf.Sin(aTime2*Mathf.PI*2*4)*15f,Vector3.forward);
+							if(aTime2 >= gFirstConnectionText-gPreParticle) 
+							return true;
+							return false;
+						};
 
 						chain = chain.then_one_shot(
 							delegate()
@@ -521,16 +534,16 @@ public class SunsetManager
 								if(npo != null)
 									mCharacters[char_to_list_index(targetCharacter)].Events.add_event(jiggleDelegate,0);
 								//create the shine
-								create_shine_over_character(targetCharacter,wasHard, gFirstConnectionText);
+								create_shine_over_character(targetCharacter,wasHard,gFirstConnectionText);
 							}
 						).then_one_shot(
 							delegate()
 							{
 								if(npo != null)
 								{
-									npo.Text =  conText[conText.Length -1];
+									npo.Text = conText[conText.Length -1];
 									mCharacters[char_to_list_index(ps.Character)].Events.add_event(jiggleDelegate,0);
-									create_shine_over_character(ps.Character,!wasHard, gFirstConnectionText-gPreParticle);
+									create_shine_over_character(ps.Character,!wasHard,gFirstConnectionText-gPreParticle);
 								}
 							},
 						gFirstConnectionText-gPreParticle).then (
@@ -625,6 +638,14 @@ public class SunsetManager
 					e.SoftPosition = e.SoftPosition + scroll;
 				}
 				foreach(FlatElementImage e in mDiffLabels)
+				{
+					e.SoftPosition = e.SoftPosition + scroll;
+				}
+				foreach(FlatElementImage e in mScoreLabels)
+				{
+					e.SoftPosition = e.SoftPosition + scroll;
+				}
+				foreach(FlatElementText e in mScoreTexts)
 				{
 					e.SoftPosition = e.SoftPosition + scroll;
 				}

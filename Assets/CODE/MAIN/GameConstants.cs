@@ -22,7 +22,8 @@ public static class GameConstants
 	
 	
 	//static Color particleStreamEasy = new Color32(28,182,71,255);
-	public static Color ParticleStreamEasy { get { return new Color32(28,182,71,255); } }
+	//public static Color ParticleStreamEasy { get { return new Color32(28,182,71,255); } }
+	public static Color ParticleStreamEasy { get { return new Color32(0,255,0,255); } }
 	//static Color particleStreamHard = new Color32(255,0,0,255);
 	public static Color ParticleStreamHard { get { return new Color32(255,0,0,255); } }
 	
