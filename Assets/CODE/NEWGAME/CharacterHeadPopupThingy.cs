@@ -113,9 +113,21 @@ public class CharacterHeadPopupThingy
 		}
 
 		float scaleTime = Mathf.Sqrt(1/(float)count);
-		float gTimeBeforeBadges = scaleTime * 2f;
-		float gBadgeTime = scaleTime * 2f;
-		float gTimeAfterBadges = scaleTime * 2f;
+		float gTimeBeforeBadges = scaleTime * 0.5f;
+		float gBadgeTime = scaleTime * 1.4f;
+		float gTimeAfterBadges = scaleTime * 0.5f;
+
+		//Shineeee
+		TED.add_one_shot_event(
+			delegate(){
+				for(int j = 0; j < count; j++)
+				{
+					int workingIndex = j;
+					//make sure this does not last too long
+					create_shine_over_character(mCharacters[workingIndex],isGreen,(gTimeBeforeBadges+gBadgeTime+gTimeAfterBadges)*count - gTimeBeforeBadges);
+				}
+			},
+		gTimeBeforeBadges);
 
 		//wait one second
 		var chain = TED.add_event(
@@ -154,9 +166,6 @@ public class CharacterHeadPopupThingy
 							return false;
 						},
 					0);
-
-					//Shineeee
-					create_shine_over_character(mCharacters[workingIndex],isGreen,gBadgeTime*2/3f);
 
 					//play a sound
 					if(isGreen)
