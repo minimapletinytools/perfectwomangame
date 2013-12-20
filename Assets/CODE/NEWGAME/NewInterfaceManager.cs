@@ -69,8 +69,8 @@ public class NewInterfaceManager {
 	public void setup_bb()
 	{
 
-		var nameFrame = mManager.mCharacterBundleManager.get_image("TEXTBOX-01");
-		var scoreFrame = mManager.mCharacterBundleManager.get_image("TEXTBOX-02");
+		var nameFrame = mManager.mCharacterBundleManager.get_image("TEXTBOX");
+		var scoreFrame = mManager.mCharacterBundleManager.get_image("SCORE");
 
 		
 		//BB small nonsense
@@ -90,6 +90,8 @@ public class NewInterfaceManager {
 		mBBNameText.Alignment = TextAlignment.Right;
 		mBBNameText.Anchor = TextAnchor.MiddleRight;
 		mBBScoreText.HardColor = GameConstants.UiPink;
+		mBBScoreText.Alignment = TextAlignment.Right;
+		mBBScoreText.Anchor = TextAnchor.MiddleRight;
 
 		mBBMultiplierImage.HardPosition = mFlatCamera.get_point(-1,1) + new Vector3(200,-270,0) 
 			+ new Vector3(mBBMultiplierImage.BoundingBox.width, mBBMultiplierImage.BoundingBox.height,0)/2f; 
@@ -98,7 +100,7 @@ public class NewInterfaceManager {
 		mBBNameTextFrame.HardPosition = mBBMultiplierImage.HardPosition + new Vector3(mBBNameTextFrame.BoundingBox.width,140,0)/2 + textOffset;
 		mBBNameText.HardPosition = mBBMultiplierImage.HardPosition + new Vector3(275,140,0)/2 + textOffset;
 		mBBScoreFrame.HardPosition = mBBMultiplierImage.HardPosition + new Vector3(mBBScoreFrame.BoundingBox.width,-140,0)/2 + textOffset;
-		mBBScoreText.HardPosition = mBBScoreFrame.HardPosition;
+		mBBScoreText.HardPosition = mBBScoreFrame.HardPosition + new Vector3(-mBBScoreFrame.BoundingBox.width +140,0,0);
 
 		
 
@@ -123,7 +125,7 @@ public class NewInterfaceManager {
 	//called by NewGameManager
 	public void update_bb_score(float aScore)
 	{
-		mBBScoreText.Text = "SCORE: "+((int)aScore).ToString();
+		mBBScoreText.Text = ((int)aScore).ToString();
 	}
 	
 	public void set_popup_color_for_cutscene_particles(PopupTextObject aPopup, bool aPositive)
