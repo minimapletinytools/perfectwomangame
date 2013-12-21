@@ -144,7 +144,7 @@ public class SunsetManager
 
 		if(hard) mSun.HardPosition = mSun.SoftPosition;
 
-		mBackground.ColorInterpolationLimit = 0.5f;
+		mBackground.ColorInterpolationLimit = 0.3f;
 
 		Color leftColor = new Color32(25,25,112,255);
 		Color highColor = new Color32(135,206,235,255);
@@ -153,6 +153,8 @@ public class SunsetManager
 			mBackground.SoftColor = Color.Lerp(leftColor,highColor,lambda*2)/2f;
 		else
 			mBackground.SoftColor = Color.Lerp(highColor,rightColor,(lambda-0.5f)*2)/2f;
+
+		ManagerManager.Manager.mMusicManager.play_sound_effect("sunRises");
 	}
 	public void set_sun()
 	{
@@ -288,7 +290,7 @@ public class SunsetManager
 
 	public void create_shine_over_character(CharacterIndex aIndex,bool positive, float duration)
 	{
-		//TODO positive/negative colors
+		ManagerManager.Manager.mMusicManager.play_sound_effect("graveShine");
 		int index = aIndex.LevelIndex - 1;
 		var shineImage = mManager.mCharacterBundleManager.get_image("SHINE");
 		FlatElementImage shine = new FlatElementImage(shineImage.Image,shineImage.Data.Size,3);
