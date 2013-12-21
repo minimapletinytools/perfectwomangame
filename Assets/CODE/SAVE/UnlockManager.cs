@@ -42,7 +42,7 @@ public class Unlockables
 			if(e.Choice == 0)
 				unlockedCharacters[e] = 1; //unlocked
 			else if(e.Choice < 4)
-				unlockedCharacters[e] = 2; //hidden
+				unlockedCharacters[e] = 1;//2; //hidden
 			else
 				unlockedCharacters[e] = 0; //unknown
 		}
@@ -57,7 +57,8 @@ public class UnlockManager
 	public UnlockManager()
 	{
 		mUnlocked = new Unlockables();
-		read_unlock();
+
+		//read_unlock();
 	}
 	
 	public void game_finished(List<PerformanceStats> aStats)
@@ -72,9 +73,11 @@ public class UnlockManager
 						;//TODO
 				}
 		}
+
+		write_unlock();
 	}
 
-	public void read_unlock()
+	void read_unlock()
 	{
 		try{
 			IFormatter formatter = new BinaryFormatter();
@@ -83,6 +86,7 @@ public class UnlockManager
 			stream.Close();
 		} catch {} //no such file, must be first launch
 	}
+
 	public void write_unlock()
 	{
 
