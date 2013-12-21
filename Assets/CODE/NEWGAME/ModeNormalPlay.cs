@@ -72,18 +72,23 @@ public class ModeNormalPlay
 
 		DoSkipSingleThisFrame = false;
 		DoSkipMultipleThisFrame = false;
+	}
+
+	public void initialize()
+	{
 		
 		mInterfaceManager = new NewInterfaceManager(mManager,this);
 		mInterfaceManager.initialize();
 		//mInterfaceManager.mFlatCamera.set_render_texture_mode(true);
+		mInterfaceManager.setup_bb();
 		
 		mSunsetManager = new SunsetManager(mManager,this);
 		mSunsetManager.initialize();
 		mSunsetManager.mFlatCamera.set_render_texture_mode(true);
 		mManager.mAssetLoader.new_load_asset_bundle("SUNSET",
-			delegate(AssetBundle aBundle){
-				mSunsetManager.sunset_loaded_callback(aBundle,"SUNSET");
-			}
+		                                            delegate(AssetBundle aBundle){
+			mSunsetManager.sunset_loaded_callback(aBundle,"SUNSET");
+		}
 		);
 		
 		
@@ -94,21 +99,21 @@ public class ModeNormalPlay
 		mFlatCamera = new FlatCameraManager(new Vector3(-23234,3545,0),10);
 		mFlatCamera.Camera.depth = 100;
 		mFlatCamera.fit_camera_to_screen();
-
+		
 		mSunsetImage = new FlatElementImage(mSunsetManager.mFlatCamera.RT,0);
 		mSunsetImage.HardScale = Vector3.one * mFlatCamera.Width/mSunsetImage.mImage.PixelDimension.x;
 		mSunsetImage.HardPosition = mFlatCamera.Center + Vector3.right*mSunsetImage.BoundingBox.width;
 		mSunsetImage.HardShader = mManager.mReferences.mRenderTextureShader;
 		mElement.Add(mSunsetImage);
-
-
+		
+		
 		mChoosingImage = new FlatElementImage(mChoosingManager.mFlatCamera.RT,1);
 		mChoosingImage.HardScale = Vector3.one * mFlatCamera.Width/mChoosingImage.mImage.PixelDimension.x;
 		mChoosingImage.HardPosition = mFlatCamera.Center + Vector3.right*mChoosingImage.BoundingBox.width;
 		//mChoosingImage.HardShader = mManager.mReferences.mRenderTextureShader;
 		mElement.Add(mChoosingImage);
-
-
+		
+		
 		//this is silly, we forec the interface image to appear above everything else pretty much just so we can have text bubbles show above everything
 		//kind of a dumb way to do it oh well.
 		/*
@@ -124,9 +129,7 @@ public class ModeNormalPlay
 		//load the character
 		mManager.mAssetLoader.new_load_character(aChar.StringIdentifier,mManager.mCharacterBundleManager);
 	
-		
-		//setup the interacem manager
-		mInterfaceManager.setup_bb();
+		initialize();
 
 	}
 	
