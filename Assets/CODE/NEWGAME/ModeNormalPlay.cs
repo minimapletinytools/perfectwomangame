@@ -417,7 +417,7 @@ public class ModeNormalPlay
 						{
 							if(diffChanges[cchar] != 0)
 							{
-			                	//int nDiff = mManager.mGameManager.change_character_difficulty(cchar, diffChanges[cchar]);
+			                	mManager.mGameManager.change_character_difficulty(cchar, diffChanges[cchar]);
 							}
 						}
 			        }

@@ -34,24 +34,25 @@ public class CharacterHeadPopupThingy
 		shine.HardColor = positive ? GameConstants.UiGreen : GameConstants.UiRed; 
 		mElement.Add(shine); 
 	
+		/*
 		var boxImage = ManagerManager.Manager.mCharacterBundleManager.get_image("CUTSCENE_BOX");
 		FlatElementImage box = new FlatElementImage(boxImage.Image,boxImage.Data.Size,3);
 		box.HardPosition = aHead.SoftPosition;
 		box.HardColor = positive ? GameConstants.UiGreenTransparent : GameConstants.UiRedTransparent; 
 		box.HardColor = positive ? GameConstants.UiGreen : GameConstants.UiRed; 
-		mElement.Add(box);
+		mElement.Add(box);*/
 	
 		TED.add_one_shot_event(
 			delegate() {
 				shine.HardColor = GameConstants.UiWhiteTransparent;
-				box.HardColor = GameConstants.UiWhiteTransparent;
+				//box.HardColor = GameConstants.UiWhiteTransparent;
 			},
 		duration).then_one_shot(
 			delegate() {
 				mElement.Remove(shine);
-				mElement.Remove(box);
+				//mElement.Remove(box);
 				shine.destroy();
-				box.destroy();
+				//box.destroy();
 			},
 		3);
 	}
@@ -63,9 +64,11 @@ public class CharacterHeadPopupThingy
 
 		FlatElementImage[] mCharacters = null;
 		FlatElementImage[] mBadges = null;
+		FlatElementImage[] mBackgrounds = null;
 		FlatElementText[] mNames = null;
 		mCharacters = new FlatElementImage[count];
 		mBadges = new FlatElementImage[count];
+		mBackgrounds = new FlatElementImage[count];
 		mNames = new FlatElementText[count];
 
 		//var sizeImg = ManagerManager.Manager.mCharacterBundleManager.get_image("ICON_05-1");
@@ -100,6 +103,14 @@ public class CharacterHeadPopupThingy
 			mBadges[i] = new FlatElementImage(ManagerManager.Manager.mNewRef.bbChoicePerfectIcons[aDiffs[i]],11);
 			mBadges[i].HardColor = GameConstants.UiWhiteTransparent;
 
+			var boxImage = ManagerManager.Manager.mCharacterBundleManager.get_image("CUTSCENE_BOX");
+			FlatElementImage box = new FlatElementImage(boxImage.Image,boxImage.Data.Size,3);
+			box.HardPosition = mCharacters[i].HardPosition;
+			box.SoftPosition = mCharacters[i].SoftPosition;
+			box.HardColor = isGreen ? GameConstants.UiGreenTransparent : GameConstants.UiRedTransparent; 
+			box.HardColor = isGreen ? GameConstants.UiGreen : GameConstants.UiRed; 
+			mBackgrounds[i] = box;
+
 			mNames[i] = new FlatElementText(
 				ManagerManager.Manager.mNewRef.genericFont,
 				60,
@@ -110,6 +121,7 @@ public class CharacterHeadPopupThingy
 
 			mElement.Add(mCharacters[i]);
 			mElement.Add(mBadges[i]);
+			mElement.Add(mBackgrounds[i]);
 			mElement.Add(mNames[i]);
 		}
 
@@ -119,6 +131,7 @@ public class CharacterHeadPopupThingy
 		float gTimeAfterBadges = scaleTime * 0.4f;
 
 		//Shineeee
+		/*
 		TED.add_one_shot_event(
 			delegate(){
 				for(int j = 0; j < count; j++)
@@ -128,7 +141,7 @@ public class CharacterHeadPopupThingy
 					create_shine_over_character(mCharacters[workingIndex],isGreen,(gBadgeTime)*count + 0.5f);
 				}
 			},
-		gTimeBeforeBadges/2);
+		gTimeBeforeBadges/2);*/
 
 		//wait one second
 		var chain = TED.add_event(
@@ -146,6 +159,9 @@ public class CharacterHeadPopupThingy
 					mBadges[workingIndex].SoftColor = GameConstants.UiWhite;
 					mBadges[workingIndex].HardPosition = mCharacters[workingIndex].SoftPosition + badgeOffset;
 					mBadges[workingIndex].HardScale = Vector3.one*0.9f;
+
+					//shine
+					create_shine_over_character(mCharacters[workingIndex],isGreen,gBadgeTime*(count-workingIndex)-0.4f);
 
 					//pulsating scale animation
 					mBadges[workingIndex].Events.add_event(
@@ -188,15 +204,19 @@ public class CharacterHeadPopupThingy
 					mBadges[i].SoftColor = GameConstants.UiWhiteTransparent;
 					mCharacters[i].SoftPosition = start + offset + step*i + new Vector3(0,-100,0); //move down a little more to compensate for scale change
 					mNames[i].SoftPosition = mCharacters[i].SoftPosition + nameOffset;
+					mBackgrounds[i].SoftPosition = mCharacters[i].SoftPosition;
+
 					//destroy them eventually.
 					TED.add_one_shot_event(
 						delegate()
 					    {
 							mElement.Remove(mCharacters[index]);
 							mElement.Remove(mBadges[index]);
+							mElement.Remove(mBackgrounds[index]);
 							mElement.Remove(mNames[index]);
 							mBadges[index].destroy();
 							mCharacters[index].destroy();
+							mBackgrounds[index].destroy();
 							mNames[index].destroy();
 						},
 					3);

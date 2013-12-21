@@ -73,7 +73,7 @@ public class SunsetManager
 		mManager.mCharacterBundleManager.add_bundle_to_unload(aBundle);
 		IsLoaded = true;
 
-		set_sun(-2, true);
+		set_sun(-1, true);
 	}
 
 	int char_to_list_index(CharacterIndex aIndex)
@@ -176,6 +176,7 @@ public class SunsetManager
 			} else if(mCharacters.Count < 7) { //add diff label, note no difficulty for age 100
 				string[] labelNames = new string[]{"label_easy","label_normal","label_hard","label_extreme"};
 				var diffLabel = mManager.mCharacterBundleManager.get_image(labelNames[mManager.mGameManager.get_character_difficulty(aChar)]);
+				Debug.Log ("creating label " + labelNames[mManager.mGameManager.get_character_difficulty(aChar)]);
 				FlatElementImage diffLabelImage = new FlatElementImage(diffLabel.Image,diffLabel.Data.Size,11);
 				diffLabelImage.HardPosition = addMe.HardPosition + gDiffLabelOffset;
 				mDiffLabels.Add(diffLabelImage);
@@ -417,13 +418,17 @@ public class SunsetManager
 				{
 					aBase.mLocalRotation = Quaternion.AngleAxis(Mathf.Sin(aTime2*Mathf.PI*2*4)*15f,Vector3.forward);
 					if(aTime2 >= 0.7f) 
+					{
+						aBase.mLocalRotation = Quaternion.identity;
 						return true;
+					}
 					return false;
 				};
 
 			chain = chain.then_one_shot(
 				delegate() {
 					mScoreLabels[ps.Character.LevelIndex-1].Events.add_event(scoreJiggleDelegate,0);
+					mScoreTexts[ps.Character.LevelIndex-1].Events.add_event(scoreJiggleDelegate,0);
 						//show_score(ps.Character,(int)ps.AdjustedScore,gPreScoreCount + gScoreCount + gPostScoreCount);
 				},
 			0).then(
@@ -522,9 +527,12 @@ public class SunsetManager
 						System.Func<FlatElementBase,float,bool> jiggleDelegate = 
 							delegate(FlatElementBase aBase, float aTime2) 
 						{
-							aBase.mLocalRotation = Quaternion.AngleAxis(Mathf.Sin(aTime2*Mathf.PI*2*4)*15f,Vector3.forward);
-							if(aTime2 >= gFirstConnectionText-gPreParticle) 
-							return true;
+							aBase.mLocalRotation = Quaternion.AngleAxis(Mathf.Sin(aTime2*Mathf.PI*2*8)*15f,Vector3.forward);
+							if(aTime2 >= (gFirstConnectionText-gPreParticle)/2f) 
+							{
+								aBase.mLocalRotation = Quaternion.identity;
+								return true;
+							}
 							return false;
 						};
 
@@ -534,7 +542,7 @@ public class SunsetManager
 								if(npo != null)
 									mCharacters[char_to_list_index(targetCharacter)].Events.add_event(jiggleDelegate,0);
 								//create the shine
-								create_shine_over_character(targetCharacter,wasHard,gFirstConnectionText);
+								create_shine_over_character(targetCharacter,!wasHard,gFirstConnectionText);
 							}
 						).then_one_shot(
 							delegate()
