@@ -161,7 +161,7 @@ public class CharacterHeadPopupThingy
 					mBadges[workingIndex].HardScale = Vector3.one*0.9f;
 
 					//shine
-					create_shine_over_character(mCharacters[workingIndex],isGreen,gBadgeTime*(count-workingIndex)-0.4f);
+					create_shine_over_character(mCharacters[workingIndex],isGreen,gBadgeTime*(count-workingIndex)-0.8f);
 
 					//pulsating scale animation
 					mBadges[workingIndex].Events.add_event(
