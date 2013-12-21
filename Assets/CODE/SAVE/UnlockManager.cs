@@ -2,8 +2,11 @@ using UnityEngine;
 using System.Collections.Generic;
 using System;
 using System.Linq;
+using System.IO;
+using System.Runtime.Serialization;
+using System.Runtime.Serialization.Formatters.Binary;
 
-public static class UnlockRquirements
+public static class UnlockRequirements
 {
 	public static Dictionary<CharacterIndex, System.Func<List<PerformanceStats>, string> > 
 		requirements = new Dictionary<CharacterIndex,System.Func<List<PerformanceStats>, string>>()
@@ -39,7 +42,7 @@ public class Unlockables
 			if(e.Choice == 0)
 				unlockedCharacters[e] = 1; //unlocked
 			else if(e.Choice < 4)
-				unlockedCharacters[e] = 1;//2; //hidden
+				unlockedCharacters[e] = 2; //hidden
 			else
 				unlockedCharacters[e] = 0; //unknown
 		}
@@ -54,7 +57,7 @@ public class UnlockManager
 	public UnlockManager()
 	{
 		mUnlocked = new Unlockables();
-		//TODO deserialize
+		read_unlock();
 	}
 	
 	public void game_finished(List<PerformanceStats> aStats)
@@ -62,13 +65,32 @@ public class UnlockManager
 		foreach(CharacterIndex e in CharacterIndex.sAllCharacters)
 		{
 			if(mUnlocked.unlockedCharacters[e] != 1)
-				if(UnlockRquirements.requirements.ContainsKey(e))
+				if(UnlockRequirements.requirements.ContainsKey(e))
 				{
-					//string msg = UnlockRquirements.requirements[e](aStats);
-					//if(msg != "")
-					//	;//TODO
+					string msg = UnlockRequirements.requirements[e](aStats);
+					if(msg != "")
+						;//TODO
 				}
 		}
+	}
+
+	public void read_unlock()
+	{
+		try{
+			IFormatter formatter = new BinaryFormatter();
+			Stream stream = new FileStream("gg.bin", FileMode.Open, FileAccess.Read, FileShare.Read);
+			mUnlocked = (Unlockables) formatter.Deserialize(stream);
+			stream.Close();
+		} catch {} //no such file, must be first launch
+	}
+	public void write_unlock()
+	{
+
+		IFormatter formatter = new BinaryFormatter();
+		Stream stream = new FileStream("gg.bin", FileMode.Create, FileAccess.Write, FileShare.None);
+		formatter.Serialize(stream, mUnlocked);
+		stream.Close();
+		
 	}
 	
 	public int is_unlocked(CharacterIndex aIndex)
