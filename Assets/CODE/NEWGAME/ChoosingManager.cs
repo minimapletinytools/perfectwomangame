@@ -61,14 +61,15 @@ public class ChoosingManager
 		mBBChoosingBackground.HardPosition = mFlatCamera.Center;
 		mBBQuestionText = new ColorTextObject(10);
         mBBQuestionTextPrefix = new FlatElementText(newRef.genericFont, 100, "", 10);
-		mBBQuestionText.HardPosition = mFlatCamera.get_point(0,0.65f) + new Vector3(0,-75,0);
-		mBBQuestionTextPrefix.HardPosition = mFlatCamera.get_point(0, 0.65f) + new Vector3(0,75, 0);
+		mBBQuestionText.HardPosition = mFlatCamera.get_point(0,0.6f) + new Vector3(0,-75,0);
+		mBBQuestionTextPrefix.HardPosition = mFlatCamera.get_point(0, 0.6f) + new Vector3(0,75, 0);
 		mBBQuestionText.SoftInterpolation = 1;
         mBBQuestionTextPrefix.SoftInterpolation = 1;
 		var bubbleImage = mManager.mCharacterBundleManager.get_image("SUNSET_BUBBLE");
 		mBBQuestionBubble = new FlatElementImage(bubbleImage.Image,bubbleImage.Data.Size,1);
-		mBBQuestionBubble.HardPosition = mFlatCamera.get_point(0,0.65f);
+		mBBQuestionBubble.HardPosition = mFlatCamera.get_point(0,0.6f);
 		mBBQuestionBubble.HardScale = new Vector3(1.3f,1.1f,1);
+		mBBQuestionBubble.HardColor = GameConstants.UiPopupBubble;
 		mBBMiniMan = new FlatBodyObject(miniMan,20);
 		mBBMiniMan.HardScale = miniManScale;
 		mBBMiniManBasePosition = mFlatCamera.get_point(0, -0.8f);
@@ -168,8 +169,8 @@ public class ChoosingManager
 			
 			
 			float xOffset = netWidth/2 - padding/2 - padding*i;
-			mBBChoices[i].HardPosition = mFlatCamera.get_point(0, -0.3f) + new Vector3(xOffset,0,0);
-			mBBChoiceBodies[i].HardPosition = mFlatCamera.get_point(0, -0.3f) + new Vector3(xOffset,-195,0);
+			mBBChoices[i].HardPosition = mFlatCamera.get_point(0, -0.4f) + new Vector3(xOffset,0,0);
+			mBBChoiceBodies[i].HardPosition = mFlatCamera.get_point(0, -0.4f) + new Vector3(xOffset,-195,0);
 		}
 	}
 
