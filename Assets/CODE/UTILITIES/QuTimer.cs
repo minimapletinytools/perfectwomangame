@@ -4,12 +4,11 @@ using System.Collections.Generic;
 
 public class QuTimer{
     private HashSet<float> mTriggerList = new HashSet<float>();
-    private float mStart,mCurrent,mTarget;
+	private float mStart = 0,mCurrent,mTarget;
     //private bool mPaused = false;
-    public QuTimer(float aStart = 0, float aTarget = 0)
+    public QuTimer(float aCurrent = 0, float aTarget = 0)
     {
-        mStart = aStart;
-        mCurrent = aStart;
+        mCurrent = aCurrent;
         mTarget = aTarget;
     }
     public float getCurrent()
