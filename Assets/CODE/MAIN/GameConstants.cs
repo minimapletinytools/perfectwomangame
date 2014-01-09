@@ -34,15 +34,16 @@ public static class GameConstants
 	//grave stuff
 	//public static string[] credits = {"Perfect Woman","created by", "Lea Sch\u00F6enfelder", "Peter Lu"};
     public static string[] credits = { 
-		"David Elliott","Sabrina Winter", "Eddo Stern", 
-		"Ingo Von Staden", "Andreas Hykade", "Alex Rickett","Steven Amrhein",
-		"Teut Weidemann", "Marc Lutz", "Aliah Darke", "And thanks:", " ",
-		
-		"Dirk Handreke", "Frank Simper", "Ingo Feuker", "David Hill", 
-		"Lukas Nowok", "Luigi Maria Rapisarda", "Jonas Schwall", "Steffen Thumm", "Sound + Music: "," ",
+		"A game by:","Lea Schoenfelder","Peter Lu", " ",
 
-		"Benedikts Haas", "Annika Bauer", "Marius Winter", "With assistance from:"," ",
-		"Lea Schoenfelder","Peter Lu", "A game by:"
+		"With assistance from:","Benedikts Haas", "Annika Bauer", "Marius Winter"," ",
+
+		"Sound + Music: ","Lukas Nowok", "Luigi Maria Rapisarda", "Jonas Schwall", "Steffen Thumm", 
+		"Dirk Handreke", "Frank Simper", "Ingo Feuker", "David Hill", " ",
+
+		"And thanks to:","Teut Weidemann", "Marc Lutz", "Aliah Darke",  
+		"Ingo Von Staden", "Andreas Hykade", "Alex Rickett","Steven Amrhein",
+		"David Elliott","Sabrina Winter", "Eddo Stern"
 	};
 	
 	
@@ -61,6 +62,7 @@ public static class GameConstants
 	
 
     //colors
+	//TODO should maybe rename the capital ones Ui<Color>Neutral or something
     static Color uiPink = new Color(1, .8f, .8f, 1);
     public static Color UiPink { get { return uiPink * 0.5f; } }
 	static Color uiRed = new Color(1,0,0,1);
@@ -72,7 +74,9 @@ public static class GameConstants
 	static Color uiWhite= new Color(1,1,1,1);
 	public static Color UiWhite{get {return uiWhite * 0.5f;}}
 	public static Color UiWhiteTransparent{get {return new Color(uiWhite.r,uiWhite.g,uiWhite.b,0)/2f; }}
-	
+	static Color uiYellow = new Color(1,1,0);
+	public static Color UiYellow {get {return uiYellow*0.5f;}}
+
 	public static Color UiMiniMan{get {return new Color(1,0.3f,0.2f); }}
 	public static Color UiPopupBubble{get { return new Color(0.5f,0.5f,0.5f,0.4f); } }
 	
@@ -81,7 +85,8 @@ public static class GameConstants
 	
 	public static Color TransparentBodyDefaultColor {get {return new Color(0,0.317f,.898f,1);}}
 	
-	
+
+	//TODO DELETE
 	//characters
 	//oddly enough, these are not constant :)
 	//NOTE these get set in CharacterBundleManager, not the ideal way to do it but it works
