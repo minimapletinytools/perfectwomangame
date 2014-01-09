@@ -95,6 +95,7 @@ public class PopupTextObject : FlatElementMultiBase {
 		
 		Depth = aDepth;
     }
+
 	
 	Texture2D random_bubble(int size)
 	{

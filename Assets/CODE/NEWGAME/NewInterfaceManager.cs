@@ -129,7 +129,7 @@ public class NewInterfaceManager {
 	//called by NewGameManager
 	public void enable_warning_text(bool enable)
 	{
-		if(enabled && mWarningTimer.isExpired())
+		if(enable && mWarningTimer.isExpired())
 			mWarningTimer.reset();
 		mBBWarningText.HardColor = (((int)(Time.time*8)) % 2 == 0) && enable ? new Color(0.75f,0.05f,0.0f,0.5f) : new Color(0,0,0,0);
 	}

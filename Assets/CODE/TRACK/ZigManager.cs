@@ -197,10 +197,12 @@ public class ZigManager : FakeMonoBehaviour {
 
 		//TODO test if its in current "crumpled" pose, needed for OpenNI
 		//instead we check neck and one arm)
-		//TODO make sure these are the right 90 degree angles.. they probably are not.. lol
-		if(get_relative_rotation(Joints[ZigJointId.LeftShoulder],Joints[ZigJointId.LeftElbow]).flat_rotation() == -90 &&
-		   get_relative_rotation(Joints[ZigJointId.Neck],Joints[ZigJointId.Head]).flat_rotation() == 90)
+		if(get_relative_rotation(Joints[ZigJointId.LeftShoulder],Joints[ZigJointId.LeftElbow]).flat_rotation() == 0 &&
+		   get_relative_rotation(Joints[ZigJointId.Neck],Joints[ZigJointId.Head]).flat_rotation() == 0)
+		{
+			badTimer = 0; //instabad???
 			bad = true;
+		}
 
 		if(!bad)
 			badTimer = 1.5f;
