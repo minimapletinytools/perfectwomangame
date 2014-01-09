@@ -96,11 +96,13 @@ public class NewInterfaceManager {
 		mBBMultiplierImage.HardPosition = mFlatCamera.get_point(-1,1) + new Vector3(200,-270,0) 
 			+ new Vector3(mBBMultiplierImage.BoundingBox.width, mBBMultiplierImage.BoundingBox.height,0)/2f; 
 
+		//this is just to position the text, it's done again in begin_new_character
 		Vector3 textOffset = new Vector3(70,115,0)/2;
 		mBBNameTextFrame.HardPosition = mBBMultiplierImage.HardPosition + new Vector3(mBBNameTextFrame.BoundingBox.width,140,0)/2 + textOffset;
 		mBBNameText.HardPosition = mBBMultiplierImage.HardPosition + new Vector3(275,140,0)/2 + textOffset;
 		mBBScoreFrame.HardPosition = mBBMultiplierImage.HardPosition + new Vector3(mBBScoreFrame.BoundingBox.width,-140,0)/2 + textOffset;
 		mBBScoreText.HardPosition = mBBScoreFrame.HardPosition + new Vector3(-mBBScoreFrame.BoundingBox.width/2 + 145,0,0);
+
 
 		
 
@@ -221,13 +223,34 @@ public class NewInterfaceManager {
 	//this gets called by NewGameManager
 	public void begin_new_character(PerformanceStats aChar)
 	{
-		mBBNameText.Text = aChar.Character.Description.ToUpper() + " (" + aChar.Character.Age.ToString() + ")";//FlatElementText.convert_to_multiline(aChar.Character.Description.Length > 20 ? 2 : 1 ,aChar.Character.Description + " (" + aChar.Character.Age.ToString() + ")");
+		var nameFrame = 
+			aChar.Character == CharacterIndex.sFetus ? mManager.mCharacterBundleManager.get_image("TEXTBOX-FETUS") : 
+				aChar.Character == CharacterIndex.sOneHundred ? mManager.mCharacterBundleManager.get_image("TEXTBOX-110") :
+					mManager.mCharacterBundleManager.get_image("TEXTBOX");
+		var scoreFrame = 
+			aChar.Character == CharacterIndex.sFetus ? mManager.mCharacterBundleManager.get_image("SCORE-FETUS") : 
+				aChar.Character == CharacterIndex.sOneHundred ? mManager.mCharacterBundleManager.get_image("SCORE-110") : 
+					mManager.mCharacterBundleManager.get_image("SCORE");
+
+		mBBNameTextFrame.set_new_texture(nameFrame.Image,nameFrame.Data.Size);
+		mBBScoreFrame.set_new_texture(scoreFrame.Image,scoreFrame.Data.Size);
+
+		Vector3 textOffset = new Vector3(70,115,0)/2;
+		mBBNameTextFrame.HardPosition = 
+			mBBMultiplierImage.HardPosition + new Vector3(mBBNameTextFrame.BoundingBox.width,140,0)/2 + textOffset;
+		mBBScoreFrame.HardPosition = 
+			mBBMultiplierImage.HardPosition + new Vector3(mBBScoreFrame.BoundingBox.width,-140,0)/2 + textOffset;
 
 
-		var origPos = mBBNameTextFrame.SoftPosition - new Vector3(mBBNameTextFrame.BoundingBox.width/2f,0,0);
-		float newWidth = mBBNameText.BoundingBox.width+200;
-		mBBNameTextFrame.mImage.pixel_crop(new Rect(0,0,newWidth,mBBNameTextFrame.mImage.BaseDimension.y));
-		mBBNameTextFrame.HardPosition = origPos + new Vector3(newWidth/2f,0,0);
+
+		if(!(aChar.Character == CharacterIndex.sFetus || aChar.Character == CharacterIndex.sOneHundred))
+		{
+			mBBNameText.Text = aChar.Character.Description.ToUpper() + " (" + aChar.Character.Age.ToString() + ")";//FlatElementText.convert_to_multiline(aChar.Character.Description.Length > 20 ? 2 : 1 ,aChar.Character.Description + " (" + aChar.Character.Age.ToString() + ")");
+			var origPos = mBBNameTextFrame.SoftPosition - new Vector3(mBBNameTextFrame.BoundingBox.width/2f,0,0);
+			float newWidth = mBBNameText.BoundingBox.width+200;
+			mBBNameTextFrame.mImage.pixel_crop(new Rect(0,0,newWidth,mBBNameTextFrame.mImage.BaseDimension.y));
+			mBBNameTextFrame.HardPosition = origPos + new Vector3(newWidth/2f,0,0);
+		}
 
 		if(aChar.Character.LevelIndex != 0)
 		{
