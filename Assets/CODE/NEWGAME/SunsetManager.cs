@@ -284,6 +284,23 @@ public class SunsetManager
 		};
 	}
 
+	public void fade_characters(bool fade = true, bool hard = false)
+	{
+		foreach(FlatElementBase e in 
+		        mCharacters.Cast<FlatElementBase>()
+		        .Concat(mDiffLabels.Cast<FlatElementBase>())
+		        .Concat(mScoreLabels.Cast<FlatElementBase>())
+		        .Concat(mScoreTexts.Cast<FlatElementBase>()))
+		{
+			if(hard)
+				e.HardColor = fade ? GameConstants.UiWhiteTransparent : GameConstants.UiWhite;
+			else
+				e.SoftColor = fade ? GameConstants.UiWhiteTransparent : GameConstants.UiWhite;
+			
+
+		}
+	}
+
 
 
 
@@ -583,7 +600,7 @@ public class SunsetManager
 
 
 		List<FlatElementText> creditsText = new List<FlatElementText>();
-		float scrollSpeed = 75;
+		float scrollSpeed = 100;
 
 		
 
@@ -600,28 +617,28 @@ public class SunsetManager
 			,0).then_one_shot(
 				delegate()
 				{
-					gameOver = new PopupTextObject("G A M E O V E R",30);
-					gameOver.HardPosition = mFlatCamera.Center + new Vector3(0,mFlatCamera.Height/2+450,0);
+					gameOver = new PopupTextObject("G A M E\nO V E R",30);
+					gameOver.set_font_size(200);
+					gameOver.HardPosition = mFlatCamera.Center - new Vector3(0,mFlatCamera.Height/2+450,0);
 					gameOver.HardColor = GameConstants.UiWhiteTransparent;
 					gameOver.SoftColor = GameConstants.UiWhite;
+					gameOver.set_background_color(GameConstants.UiWhiteTransparent);
 					gameOver.set_text_color(GameConstants.UiWhiteTransparent,true);
 					gameOver.set_text_color(GameConstants.UiRed);
-					gameOver.set_background_color(GameConstants.UiWhiteTransparent,true);
-					gameOver.set_background_color(GameConstants.UiPopupBubble);
 					mElement.Add(gameOver);
 
 					int counter = 0;
-					foreach(string e in GameConstants.credits.Reverse())
+					foreach(string e in GameConstants.credits)
 					{
 						var text = new FlatElementText(mManager.mNewRef.genericFont,50,e,10);
 						text.HardColor = new Color(1,1,1,1);
-						text.HardPosition = mFlatCamera.Center + new Vector3(0,mFlatCamera.Height/2+1000,0) + (new Vector3(0,70,0))*counter;
+						text.HardPosition = mFlatCamera.Center - new Vector3(0,mFlatCamera.Height/2+1000,0) - (new Vector3(0,70,0))*counter;
 						creditsText.Add(text);
 						mElement.Add(text);
 						counter++;
 					}
 					
-					float logoStartHeight = mFlatCamera.Height/2 + 1000 + 70*counter + 500;
+					float logoStartHeight = -(mFlatCamera.Height/2 + 1000 + 70*counter + 900);
 					logo1 = new FlatElementImage(mManager.mNewRef.gameLabLogo,10);
 					logo2 = new FlatElementImage(mManager.mNewRef.filmAkademieLogoGrave,10);
 					logo1.HardPosition = mFlatCamera.Center + new Vector3(0,logoStartHeight,0);
@@ -633,34 +650,33 @@ public class SunsetManager
 					mElement.Add(logo2);
 					
 				}
+			,0).then_one_shot(
+				delegate() {
+
+					List<FlatElementBase> graveItems = new List<FlatElementBase>(){finalScoreText,perfectPercent};
+					foreach(FlatElementBase e in 
+				        mCharacters.Cast<FlatElementBase>()
+				        .Concat(mDiffLabels.Cast<FlatElementBase>())
+				        .Concat(mScoreLabels.Cast<FlatElementBase>())
+				        .Concat(mScoreTexts.Cast<FlatElementBase>())
+				        .Concat(graveItems.Cast<FlatElementBase>()))
+					{
+						e.ColorInterpolationLimit = 0.05f;
+						e.SoftColor = GameConstants.UiWhiteTransparent;
+					}
+				}
 			,0).then(
 				delegate(float aTime)
 				{
 				
 				//scroll contents down
-				Vector3 scroll = -new Vector3(0,scrollSpeed*(aTime-lastTime),0);
+				Vector3 scroll = new Vector3(0,scrollSpeed*(aTime-lastTime),0);
 				foreach(FlatElementText e in creditsText)
 				{
 					e.SoftPosition = e.SoftPosition + scroll;
 				}
-				foreach(FlatElementImage e in mCharacters)
-				{
-					e.SoftPosition = e.SoftPosition + scroll;
-				}
-				foreach(FlatElementImage e in mDiffLabels)
-				{
-					e.SoftPosition = e.SoftPosition + scroll;
-				}
-				foreach(FlatElementImage e in mScoreLabels)
-				{
-					e.SoftPosition = e.SoftPosition + scroll;
-				}
-				foreach(FlatElementText e in mScoreTexts)
-				{
-					e.SoftPosition = e.SoftPosition + scroll;
-				}
-				finalScoreText.SoftPosition = finalScoreText.SoftPosition + scroll;
-				perfectPercent.SoftPosition = perfectPercent.SoftPosition + scroll;
+
+
 				gameOver.SoftPosition = gameOver.SoftPosition + scroll;
 				logo1.SoftPosition = logo1.SoftPosition + scroll;
 				logo2.SoftPosition = logo2.SoftPosition + scroll;

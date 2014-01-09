@@ -383,6 +383,7 @@ public class ModeNormalPlay
 		if(choice != -1)
 		{
 			slide_image(mChoosingImage,null);
+			mSunsetManager.fade_characters(false);
 
 
 			mManager.mMusicManager.fade_out_extra_music();
@@ -565,6 +566,7 @@ public class ModeNormalPlay
 		slide_image(null,mSunsetImage);
 		TED.add_event(
 			delegate(float aTime){
+				mSunsetManager.fade_characters(true,true);
 				mSunsetManager.set_sun();
 				return true;
 			}
