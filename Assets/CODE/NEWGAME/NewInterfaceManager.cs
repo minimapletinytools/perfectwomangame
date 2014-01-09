@@ -37,6 +37,8 @@ public class NewInterfaceManager {
     }
     public void Update()
     {
+		mWarningTimer.update(Time.deltaTime);
+		mWarningOverlay.HardColor = GameConstants.UiWhite * Mathf.Clamp01(mWarningTimer.getUpsidedownParabola()) * 0.7f;
 		
         mFlatCamera.update(Time.deltaTime);
         if (mCurrentBody != null)
@@ -62,6 +64,8 @@ public class NewInterfaceManager {
 	FlatElementImage mBBMultiplierImage; //replace with difficulty image
 
 	FlatElementText mBBWarningText = null;
+	FlatElementImage mWarningOverlay;
+	QuTimer mWarningTimer = new QuTimer(1.5f,1.5f);
 
 	
 	
@@ -104,7 +108,10 @@ public class NewInterfaceManager {
 		mBBScoreText.HardPosition = mBBScoreFrame.HardPosition + new Vector3(-mBBScoreFrame.BoundingBox.width/2 + 145,0,0);
 
 
-		
+		var warningImage = mManager.mNewRef.redWarning; //mManager.mCharacterBundleManager.get_image("WARNING");
+		mWarningOverlay = new FlatElementImage(warningImage,mFlatCamera.Size,100);
+		mWarningOverlay.HardPosition = mFlatCamera.Center;
+
 
 		mElement.Add(mBBNameText);
 		mElement.Add(mBBNameTextFrame);
@@ -112,6 +119,7 @@ public class NewInterfaceManager {
 		mElement.Add(mBBScoreText);
 		mElement.Add(mBBWarningText);
 		mElement.Add(mBBMultiplierImage);
+		mElement.Add(mWarningOverlay);
 	}
 	
 	
@@ -121,6 +129,8 @@ public class NewInterfaceManager {
 	//called by NewGameManager
 	public void enable_warning_text(bool enable)
 	{
+		if(enabled && mWarningTimer.isExpired())
+			mWarningTimer.reset();
 		mBBWarningText.HardColor = (((int)(Time.time*8)) % 2 == 0) && enable ? new Color(0.75f,0.05f,0.0f,0.5f) : new Color(0,0,0,0);
 	}
 	

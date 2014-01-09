@@ -60,10 +60,6 @@ public class TransitionCameraManager : FakeMonoBehaviour
 	FlatElementImage mGLLogo;
 	FlatElementImage mFilmLogo;
 	FlatElementText mMessageText;
-
-
-	//TODO...
-	FlatElementImage mWarningOverlay;
 	
 	//DepthWarning nonsense
 	FlatElementText mDepthWarningText;
@@ -202,7 +198,6 @@ public class TransitionCameraManager : FakeMonoBehaviour
 
 		//mManager.mBackgroundManager.character_changed_listener(loader);
 		//mManager.mMusicManager.character_changed_listener(loader);
-
 
 
 
