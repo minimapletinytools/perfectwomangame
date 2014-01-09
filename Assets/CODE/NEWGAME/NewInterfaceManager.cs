@@ -274,7 +274,8 @@ public class NewInterfaceManager {
 		
 		float gStartCutsceneDelay = 4f;
 		float gPerformanceText = 4f;
-		float gCutsceneText = 5f;
+		float gCutsceneText = 4f;
+		float gCutsceneTextIncrement = 1f;
 		float gPreParticle = 1.5f;
 		float gBubblePos = 0.2f;
 
@@ -333,12 +334,23 @@ public class NewInterfaceManager {
             var diffChanges = e.Changes;
             string changeMsg = e.Description;
 			PopupTextObject po = null;
+
+			List<CharacterIndex> aChangedChars = new List<CharacterIndex>();
+			List<int> aDiffs = new List<int>();
+			foreach(CharacterIndex cchar in CharacterIndex.sAllCharacters)
+				if(diffChanges[cchar] != 0)
+			{
+				aChangedChars.Add(cchar);
+				int nDiff = Mathf.Clamp(mManager.mGameManager.get_character_difficulty(cchar) + diffChanges[cchar], 0, 3);
+				aDiffs.Add(nDiff);
+			}
+
 			chain = chain.then(
 				delegate(float aTime)
 				{
 					if(po == null)
 					{
-						po = add_timed_text_bubble(changeMsg,gCutsceneText,gBubblePos,cutsceneBubble);
+						po = add_timed_text_bubble(changeMsg,gCutsceneText + gCutsceneTextIncrement * aChangedChars.Count ,gBubblePos,cutsceneBubble);
 					
 						//dumb stuff I need to make sure there was actually a change
 						foreach(CharacterIndex cchar in CharacterIndex.sAllCharacters)
@@ -358,16 +370,7 @@ public class NewInterfaceManager {
 				delegate(float aTime)
 				{
 					if(!po.IsDestroyed)
-					{
-						List<CharacterIndex> aChangedChars = new List<CharacterIndex>();
-						List<int> aDiffs = new List<int>();
-						foreach(CharacterIndex cchar in CharacterIndex.sAllCharacters)
-							if(diffChanges[cchar] != 0)
-							{
-								aChangedChars.Add(cchar);
-								int nDiff = Mathf.Clamp(mManager.mGameManager.get_character_difficulty(cchar) + diffChanges[cchar], 0, 3);
-								aDiffs.Add(nDiff);
-							}
+					{	
 						mHeadPop.popup_character(aChangedChars.ToArray(),aDiffs.ToArray(),!changes.is_positive());
 					}
 					return true;
@@ -375,7 +378,7 @@ public class NewInterfaceManager {
 			,0).then(
 				delegate(float aTime)
 				{
-					if(po.IsDestroyed || aTime > gCutsceneText-gPreParticle)
+					if(po.IsDestroyed || aTime > gCutsceneText + gCutsceneTextIncrement * aChangedChars.Count-gPreParticle)
 					{	
 						return true;
 					}

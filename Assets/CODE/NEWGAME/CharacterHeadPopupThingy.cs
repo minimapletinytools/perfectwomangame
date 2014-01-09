@@ -125,10 +125,10 @@ public class CharacterHeadPopupThingy
 			mElement.Add(mNames[i]);
 		}
 
-		float scaleTime = Mathf.Sqrt(1/(float)count);
+		float scaleTime = Mathf.Sqrt (Mathf.Sqrt(1/(float)count));
 		float gTimeBeforeBadges = scaleTime * 1f;
 		float gBadgeTime = scaleTime * 1.2f;
-		float gTimeAfterBadges = scaleTime * 0.4f;
+		float gTimeAfterBadges = scaleTime * 1.2f;
 
 		//Shineeee
 		/*
@@ -161,7 +161,7 @@ public class CharacterHeadPopupThingy
 					mBadges[workingIndex].HardScale = Vector3.one*0.9f;
 
 					//shine
-					create_shine_over_character(mCharacters[workingIndex],isGreen,gBadgeTime*(count-workingIndex)-0.8f);
+					create_shine_over_character(mCharacters[workingIndex],isGreen,gBadgeTime*(count-workingIndex)-0.6f);
 
 					//pulsating scale animation
 					mBadges[workingIndex].Events.add_event(
