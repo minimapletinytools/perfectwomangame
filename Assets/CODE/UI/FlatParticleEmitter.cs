@@ -85,9 +85,9 @@ public class SparkleStarFlashParticle
 		float ag = grade*grade;
 		
 		if(grade > 0.5f)
-			for(int i = 0; i < 10*ag; i++)
-				if(Random.value < 0.15f)
-					create_particle("silver",position,Random.insideUnitCircle*1200);
+			for(int i = 0; i < 4*ag; i++)
+				if(Random.value < 0.0075f)
+					create_particle("silver",position,Random.insideUnitCircle*500);
 	}
 	
 	public void create_particle(string aType, Vector3 position, Vector3 speed)
@@ -103,9 +103,12 @@ public class SparkleStarFlashParticle
 				tex = ManagerManager.Manager.mNewRef.partSilver2;
 			var newPart = new FlatElementImage(tex,new Vector2(60,60),1000);
 			if(aType == "silver")
-				newPart.HardScale = 0.8f*(new Vector3(1,1,1));
-			if(aType == "gold")
+			{
 				newPart.HardScale = 1.2f*(new Vector3(1,1,1));
+				newPart.HardFlatRotation = Random.Range(0f,360f);
+			}
+			if(aType == "gold")
+				newPart.HardScale = 1.7f*(new Vector3(1,1,1));
 			foreach (Renderer f in newPart.PrimaryGameObject.GetComponentsInChildren<Renderer>())	
 				f.gameObject.layer = ManagerManager.Manager.mBackgroundManager.mBackgroundLayer;
 			cache.return_particle(newPart);
@@ -113,7 +116,7 @@ public class SparkleStarFlashParticle
 		var part = mEmitter.add_particle(cache.take_particle(),position,speed,0.7f,aType);
 		if(aType == "silver")
 		{
-			part.timer = new QuTimer(0,0.2f);
+			part.timer = new QuTimer(-0.5f,0.2f);
 			
 		}
 		
@@ -242,7 +245,10 @@ public class FlatParticleEmitter : FlatElementBase
 			//update the element
 			e.element.HardPosition = e.pos;
 			if(UseColor)
-				e.element.HardColor = StartColor*(1-e.timer.getLinear()) + EndColor*e.timer.getLinear();
+			{
+				float lambda = Mathf.Clamp01(e.timer.getSquare());
+				e.element.HardColor = StartColor*(1-lambda) + EndColor*lambda;
+			}
 			
 			e.element.update(aDelta);
 		}

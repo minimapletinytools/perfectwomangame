@@ -69,9 +69,9 @@ public class BodyParticleHelper
 				path[2] = activeBody.mFlat.get_body_part_position(e.Value[1]);
 			PolygonalPath pPath = new PolygonalPath(path);
 			
-			for(int i = 0; i < pPath.PathLength/100f; i++)
+			for(int i = 0; i < pPath.PathLength/20f; i++)
 			{
-				mParticles.emit_continuous(score,pPath.evaluate(i/pPath.PathLength));
+				mParticles.emit_continuous(score,pPath.evaluate((float)i*20/pPath.PathLength));
 			}
 			
 			if(pPath.PathLength == 0)
@@ -87,9 +87,9 @@ public class BodyParticleHelper
 			int count = (int)(100*ag);
 				
 			if(grade > 0.6f)
-				mParticles.emit_point(count*2/3, activeBody.mFlat.get_body_part_position(ZigJointId.Torso),700);
+				mParticles.emit_point(count*1/3, activeBody.mFlat.get_body_part_position(ZigJointId.Torso),700);
 			if(grade > 0.8f)
-				mParticles.emit_point(count, activeBody.mFlat.get_body_part_position(ZigJointId.Torso),1000);
+				mParticles.emit_point(count*2/3, activeBody.mFlat.get_body_part_position(ZigJointId.Torso),1000);
 		}
 		
 		

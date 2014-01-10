@@ -6,7 +6,7 @@ using System.Linq;
 public class AdvancedGrading
 {
 	
-	const float GRADE_INTERP = 0.9f;
+	const float GRADE_INTERP = 0f; //0.9f;
 	Dictionary<ZigJointId,float> mLastScore = null;
 	Dictionary<ZigJointId,float> mCurrentScore = null;
 	

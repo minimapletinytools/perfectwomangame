@@ -60,13 +60,14 @@ public class PolygonalPath
 			return Vector3.zero;
 		if(mPoints.Length == 1)
 			return mPoints[0];
+
 		float val = aT * mLengths[mLengths.Length-1];
 		for(int i = 0; i < mPoints.Length-1; i++)
 		{
 			if(val < mLengths[i]) //that means we are in segment [i,i+1]
 			{
 				float prev = (i == 0 ? 0 : mLengths[i-1]);
-				float lambda = (mLengths[i] - prev) == 0 ? 0 : (aT - prev) / (mLengths[i] - prev);
+				float lambda = (mLengths[i] - prev) == 0 ? 0 : (val - prev) / (mLengths[i] - prev);
 				return mPoints[i]*(1-lambda) + mPoints[i+1]*lambda;
 			}
 		}

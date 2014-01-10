@@ -268,25 +268,27 @@ public class ModeNormalPlay
         {
 			NGM.CurrentTargetPose = NGM.CurrentPoseAnimation.get_pose(Time.time);
 			mManager.mTransparentBodyManager.set_target_pose(NGM.CurrentTargetPose);
-			
+
+			mGrading.update(mManager.mBodyManager.get_current_pose(),mManager.mTransparentBodyManager.get_current_pose());
+			float grade = ProGrading.grade_pose(mManager.mBodyManager.get_current_pose(),mManager.mTransparentBodyManager.get_current_pose());
+			grade = ProGrading.grade_to_perfect(grade);
+			/* TODO DELETE gradnig smoothing for graph version..
+			float newGrade = mLastGrade*0.95f + grade*0.05f;
+			if(newGrade < mLastGrade)
+				mLastGrade = Mathf.Max(newGrade,mLastGrade - Time.deltaTime/6f);
+			else mLastGrade = newGrade;*/
+
 			if(PercentTimeCompletion > 0.01f)
 			{
 				mParticles.create_particles(mGrading,true);
 				if(NGM.CurrentPoseAnimation.does_pose_change_precoginitive(Time.time,Time.deltaTime,0.07f))
+				{
 					mParticles.create_particles(mGrading);
+					mManager.mMusicManager.play_sound_effect("pose" + Mathf.Clamp((int)(6*grade),0,5));
+				}
 			}
 			
-			
-			
-			
-            float grade = ProGrading.grade_pose(mManager.mBodyManager.get_current_pose(),mManager.mTransparentBodyManager.get_current_pose());
-			grade = ProGrading.grade_to_perfect(grade);
-			mGrading.update(mManager.mBodyManager.get_current_pose(),mManager.mTransparentBodyManager.get_current_pose());
-			
-			float newGrade = mLastGrade*0.95f + grade*0.05f;
-			if(newGrade < mLastGrade)
-				mLastGrade = Mathf.Max(newGrade,mLastGrade - Time.deltaTime/6f);
-			else mLastGrade = newGrade;
+
 			grade = mLastGrade;
 			
 			if(TimeRemaining > 0) //insurance, something funny could happen if music runs slightly longer than it should.
