@@ -81,7 +81,7 @@ public class TransitionCameraManager : FakeMonoBehaviour
 		//mFlatCamera.Camera.clearFlags = CameraClearFlags.SolidColor;
 		mFlatCamera.Camera.clearFlags = CameraClearFlags.Depth;
 		mFlatCamera.Camera.backgroundColor = new Color32(37,37,37,255);
-		mFlatCamera.fit_camera_to_screen(false);
+		mFlatCamera.fit_camera_to_screen(true);
 		
         SunShafts shafts = ((GameObject)GameObject.Instantiate(mManager.mReferences.mImageEffectsPrefabs)).GetComponent<SunShafts>();
 		

@@ -154,7 +154,8 @@ public class SunsetManager
 		else
 			mBackground.SoftColor = Color.Lerp(highColor,rightColor,(lambda-0.5f)*2)/2f;
 
-		ManagerManager.Manager.mMusicManager.play_sound_effect("sunRises");
+		if(!hard)
+			ManagerManager.Manager.mMusicManager.play_sound_effect("sunRises");
 	}
 	public void set_sun()
 	{
@@ -314,7 +315,7 @@ public class SunsetManager
 		Vector3 targetPos = mCharacters[index].SoftPosition + new Vector3(0,shine.BoundingBox.height/2-300,0);
 		shine.HardPosition = targetPos + new Vector3(0,2000,0);
 		shine.SoftPosition = targetPos;
-		shine.HardColor = positive ? GameConstants.UiGreen : GameConstants.UiRed; 
+		shine.HardColor = positive ? GameConstants.UiYellow : GameConstants.UiRed; 
 		mElement.Add(shine);
 		TED.add_one_shot_event(
 			delegate() {

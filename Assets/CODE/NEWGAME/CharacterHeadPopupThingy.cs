@@ -30,9 +30,11 @@ public class CharacterHeadPopupThingy
 		Vector3 targetPos = aHead.SoftPosition + new Vector3(0,shine.BoundingBox.height/2-360,0);
 		shine.HardPosition = targetPos + new Vector3(0,500,0);
 		//shine.SoftPosition = targetPos;
-		shine.HardColor = positive ? GameConstants.UiGreenTransparent : GameConstants.UiRedTransparent; 
-		shine.HardColor = positive ? GameConstants.UiGreen : GameConstants.UiRed; 
+		shine.HardColor = positive ? GameConstants.UiYellowTransparent : GameConstants.UiRedTransparent; 
+		shine.HardColor = positive ? GameConstants.UiYellow : GameConstants.UiRed; 
 		mElement.Add(shine); 
+
+
 	
 		/*
 		var boxImage = ManagerManager.Manager.mCharacterBundleManager.get_image("CUTSCENE_BOX");
@@ -58,7 +60,7 @@ public class CharacterHeadPopupThingy
 	}
 
 
-	public void popup_character(CharacterIndex[] aChars, int[] aDiffs, bool isGreen)
+	public void popup_character(CharacterIndex[] aChars, int[] aDiffs, int[] aOldDiffs, bool isGreen)
 	{
 		int count = aChars.Length;
 
@@ -100,15 +102,18 @@ public class CharacterHeadPopupThingy
 			mCharacters[i].SoftPosition = mCharacters[i].SoftPosition + new Vector3(0,gIconHeight + 50,0);
 			mCharacters[i].HardScale = Vector3.one*0.9f;
 		
-			mBadges[i] = new FlatElementImage(ManagerManager.Manager.mNewRef.bbChoicePerfectIcons[aDiffs[i]],11);
+			mBadges[i] = new FlatElementImage(ManagerManager.Manager.mNewRef.bbChoicePerfectIcons[aOldDiffs[i]],11);
 			mBadges[i].HardColor = GameConstants.UiWhiteTransparent;
+			mBadges[i].SoftColor = GameConstants.UiWhite;
+			mBadges[i].HardPosition = mCharacters[i].SoftPosition + badgeOffset;
+			mBadges[i].HardScale = Vector3.one*0.9f;
 
 			var boxImage = ManagerManager.Manager.mCharacterBundleManager.get_image("CUTSCENE_BOX");
 			FlatElementImage box = new FlatElementImage(boxImage.Image,boxImage.Data.Size,3);
 			box.HardPosition = mCharacters[i].HardPosition;
 			box.SoftPosition = mCharacters[i].SoftPosition;
-			box.HardColor = isGreen ? GameConstants.UiGreenTransparent : GameConstants.UiRedTransparent; 
-			box.HardColor = isGreen ? GameConstants.UiGreen : GameConstants.UiRed; 
+			box.HardColor = isGreen ? GameConstants.UiYellowTransparent : GameConstants.UiRedTransparent; 
+			box.HardColor = isGreen ? GameConstants.UiYellow : GameConstants.UiRed; 
 			mBackgrounds[i] = box;
 
 			mNames[i] = new FlatElementText(
@@ -155,13 +160,11 @@ public class CharacterHeadPopupThingy
 			int workingIndex = j;
 			chain = chain.then_one_shot(
 				delegate() {
-					//appear the badge
-					mBadges[workingIndex].SoftColor = GameConstants.UiWhite;
-					mBadges[workingIndex].HardPosition = mCharacters[workingIndex].SoftPosition + badgeOffset;
-					mBadges[workingIndex].HardScale = Vector3.one*0.9f;
+					
 
 					//shine
-					create_shine_over_character(mCharacters[workingIndex],isGreen,gBadgeTime*(count-workingIndex)-0.6f);
+					create_shine_over_character(mCharacters[workingIndex],isGreen,gBadgeTime*(count-workingIndex));
+					mBadges[workingIndex].set_new_texture(ManagerManager.Manager.mNewRef.bbChoicePerfectIcons[aDiffs[workingIndex]]);
 
 					//pulsating scale animation
 					mBadges[workingIndex].Events.add_event(
@@ -178,7 +181,7 @@ public class CharacterHeadPopupThingy
 					mCharacters[workingIndex].Events.add_event(
 						delegate(FlatElementBase aBase, float aTime) 
 						{
-							aBase.mLocalScale = Vector3.one * (1+Mathf.Sin(aTime*6)*0.15f);
+							aBase.mLocalScale = Vector3.one * (1+Mathf.Sin(aTime*6)*0.05f);
 							if(aTime > 0.3f) 
 								return true;
 							return false;
@@ -194,8 +197,7 @@ public class CharacterHeadPopupThingy
 			gBadgeTime);
 		}
 
-		//TODO I think this crashes if you skip through th ecutscenes...	
-		//put character back
+
 		chain = chain.then_one_shot(
 			delegate() {
 				for(int i = 0; i < count; i++)

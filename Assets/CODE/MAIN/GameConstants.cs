@@ -23,13 +23,13 @@ public static class GameConstants
 	
 	//static Color particleStreamEasy = new Color32(28,182,71,255);
 	//public static Color ParticleStreamEasy { get { return new Color32(28,182,71,255); } }
-	public static Color ParticleStreamEasy { get { return new Color32(0,255,0,255); } }
+	public static Color ParticleStreamEasy { get { return new Color32(255,255,0,255); } }
 	//static Color particleStreamHard = new Color32(255,0,0,255);
 	public static Color ParticleStreamHard { get { return new Color32(255,0,0,255); } }
 	
 	//game stuff
-	public static float maxGradeNorm = 16;
-	public static float minGradeNorm = 2;
+	public static float maxGradeNorm = 25f;
+	public static float minGradeNorm = 1f;
 	
 	//grave stuff
 	//public static string[] credits = {"Perfect Woman","created by", "Lea Sch\u00F6enfelder", "Peter Lu"};
@@ -63,19 +63,20 @@ public static class GameConstants
 
     //colors
 	//TODO should maybe rename the capital ones Ui<Color>Neutral or something
-    static Color uiPink = new Color(1, .8f, .8f, 1);
+	public static Color uiPink = new Color(1, .8f, .8f, 1);
     public static Color UiPink { get { return uiPink * 0.5f; } }
-	static Color uiRed = new Color(1,0,0,1);
+	public static Color uiRed = new Color(1,0,0,1);
 	public static Color UiRed{get {return uiRed*0.5f;}}
 	public static Color UiRedTransparent{get {return new Color(uiRed.r,uiRed.g,uiRed.b,0)/2f; }}
 	public static Color uiGreen = new Color(0,1,0,1);
 	public static Color UiGreen{get {return uiGreen*0.5f;}}
 	public static Color UiGreenTransparent{get {return new Color(uiGreen.r,uiGreen.g,uiGreen.b,0)/2f; }}
+	public static Color uiYellow = new Color(1,1,0,1);
+	public static Color UiYellow{get {return uiYellow*0.5f;}}
+	public static Color UiYellowTransparent{get {return new Color(uiYellow.r,uiYellow.g,uiYellow.b,0)/2f; }}
 	static Color uiWhite= new Color(1,1,1,1);
 	public static Color UiWhite{get {return uiWhite * 0.5f;}}
 	public static Color UiWhiteTransparent{get {return new Color(uiWhite.r,uiWhite.g,uiWhite.b,0)/2f; }}
-	static Color uiYellow = new Color(1,1,0);
-	public static Color UiYellow {get {return uiYellow*0.5f;}}
 
 	public static Color UiMiniMan{get {return new Color(1,0.3f,0.2f); }}
 	public static Color UiPopupBubble{get { return new Color(0.5f,0.5f,0.5f,0.4f); } }

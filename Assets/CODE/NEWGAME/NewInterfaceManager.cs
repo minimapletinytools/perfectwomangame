@@ -369,12 +369,14 @@ public class NewInterfaceManager {
 			PopupTextObject po = null;
 
 			List<CharacterIndex> aChangedChars = new List<CharacterIndex>();
+			List<int> oldDiffs = new List<int>();
 			List<int> aDiffs = new List<int>();
 			foreach(CharacterIndex cchar in CharacterIndex.sAllCharacters)
 				if(diffChanges[cchar] != 0)
 			{
 				aChangedChars.Add(cchar);
 				int nDiff = Mathf.Clamp(mManager.mGameManager.get_character_difficulty(cchar) + diffChanges[cchar], 0, 3);
+				oldDiffs.Add(mManager.mGameManager.get_character_difficulty(cchar));
 				aDiffs.Add(nDiff);
 			}
 
@@ -404,7 +406,7 @@ public class NewInterfaceManager {
 				{
 					if(!po.IsDestroyed)
 					{	
-						mHeadPop.popup_character(aChangedChars.ToArray(),aDiffs.ToArray(),!changes.is_positive());
+						mHeadPop.popup_character(aChangedChars.ToArray(),aDiffs.ToArray(),oldDiffs.ToArray(),!changes.is_positive());
 					}
 					return true;
 				}

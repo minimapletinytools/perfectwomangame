@@ -69,8 +69,7 @@ public class AlternativeImageViewer : MonoBehaviour
 		//userTexture.SetPixels32(userOutputPixels);
 		//userTexture.Apply();
 
-
-		Debug.Log(image.xres + " " + image.yres + " " + image.data[100]);
+	
         Color32[] rawImageMap = image.data;
         int srcIndex = 0;
         int factorX = image.xres / imageSizeData.Width;

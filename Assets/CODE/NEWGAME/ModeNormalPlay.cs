@@ -37,6 +37,7 @@ public class ModeNormalPlay
 	public NewInterfaceManager mInterfaceManager = null;
 	public SunsetManager mSunsetManager = null;
 	public ChoosingManager mChoosingManager = null;
+	public GiftManager mGiftManager = null;
 
 	//FlatElementImage mInterfaceImage;
 	FlatElementImage mSunsetImage;
@@ -86,11 +87,19 @@ public class ModeNormalPlay
 		mSunsetManager.initialize();
 		mSunsetManager.mFlatCamera.set_render_texture_mode(true);
 		mManager.mAssetLoader.new_load_asset_bundle("SUNSET",
-		                                            delegate(AssetBundle aBundle){
-			mSunsetManager.sunset_loaded_callback(aBundle,"SUNSET");
-		}
+            delegate(AssetBundle aBundle){
+				mSunsetManager.sunset_loaded_callback(aBundle,"SUNSET");
+			}
 		);
-		
+
+		mGiftManager = new GiftManager(mManager,this);
+		mGiftManager.initialize();
+		/*
+		mManager.mAssetLoader.new_load_asset_bundle("GIFT",
+        	delegate(AssetBundle aBundle){
+				mSunsetManager.gift_loaded_callback(aBundle,"GIFT");
+			}
+		);*/
 		
 		mChoosingManager = new ChoosingManager(mManager,this);
 		mChoosingManager.initialize();
@@ -180,7 +189,7 @@ public class ModeNormalPlay
 		mManager.mTransitionCameraManager.fade_in_with_sound();
 	}
 	
-	public void draw_render_texture(FlatCameraManager aCam)
+	public static void draw_render_texture(FlatCameraManager aCam)
 	{
 		//aCam.Camera.enabled = true;
 		RenderTexture.active = aCam.RT;
@@ -203,6 +212,7 @@ public class ModeNormalPlay
 		mInterfaceManager.Update();
 		mSunsetManager.update();
 		mChoosingManager.update();
+		mGiftManager.update();
 
 		//TODO only draw if necessary
 		draw_render_texture(mSunsetManager.mFlatCamera);
@@ -276,7 +286,8 @@ public class ModeNormalPlay
 			float newGrade = mLastGrade*0.95f + grade*0.05f;
 			if(newGrade < mLastGrade)
 				mLastGrade = Mathf.Max(newGrade,mLastGrade - Time.deltaTime/6f);
-			else mLastGrade = newGrade;*/
+			else mLastGrade = newGrade;
+			grade = mLastGrade;*/
 
 			if(PercentTimeCompletion > 0.01f)
 			{
@@ -289,7 +300,7 @@ public class ModeNormalPlay
 			}
 			
 
-			grade = mLastGrade;
+
 			
 			if(TimeRemaining > 0) //insurance, something funny could happen if music runs slightly longer than it should.
 				CurrentPerformanceStat.update_score(PercentTimeCompletion,grade);			
