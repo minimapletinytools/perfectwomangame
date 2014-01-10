@@ -11,6 +11,10 @@ public class QuTimer{
         mCurrent = aCurrent;
         mTarget = aTarget;
     }
+	public float getTarget()
+	{
+		return mTarget;
+	}
     public float getCurrent()
     {
         return mCurrent;

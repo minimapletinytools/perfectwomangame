@@ -4,7 +4,7 @@ using System.Collections.Generic;
 public class BackgroundManager  : FakeMonoBehaviour
 {
     public int mBackgroundLayer = 0; //should not be private TODO
-    int mForegroundLayer = 0;
+    public int mForegroundLayer = 0;
     FlatElementImage mBackground;
 	
 	static int sBackgroundStartingDepth = 5;

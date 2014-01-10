@@ -44,16 +44,15 @@ public class SparkleStarFlashParticle
 		mEmitter = new FlatParticleEmitter()
 		{
 			UseColor = true,
-			StartColor = new Color(1,1,1,0.65f),
-			EndColor = new Color(1,1,1,0),
-			//Gravity = new Vector3(0,-100,0)
+			StartColor = GameConstants.UiWhite,
+			EndColor = GameConstants.UiWhiteTransparent
 		};
 		
 		mEmitter2 = new FlatParticleEmitter()
 		{
 			UseColor = true,
-			StartColor = new Color(1,1,1,0.65f),
-			EndColor = new Color(1,1,1,0),
+			StartColor = GameConstants.UiWhite,
+			EndColor = GameConstants.UiWhiteTransparent,
 			Gravity = new Vector3(0,-100,0)
 		};
 		
@@ -112,7 +111,7 @@ public class SparkleStarFlashParticle
 				tex = ManagerManager.Manager.mNewRef.partSilver2;
 			var newPart = new FlatElementImage(tex,new Vector2(60,60),1000);
 			foreach (Renderer f in newPart.PrimaryGameObject.GetComponentsInChildren<Renderer>())	
-				f.gameObject.layer = ManagerManager.Manager.mBackgroundManager.mBackgroundLayer;
+				f.gameObject.layer = ManagerManager.Manager.mBackgroundManager.mForegroundLayer;
 			cache.return_particle(newPart);
 		}
 		var part = mEmitter.add_particle(cache.take_particle(),position,speed,1f,aType);
@@ -226,8 +225,8 @@ public class FlatParticleEmitter : FlatElementBase
 	{
 		Gravity = new Vector3(0,0,0);
 		UseColor = true;
-		StartColor = new Color(1,1,1,1);
-		EndColor = new Color(1,1,1,1);
+		StartColor = GameConstants.UiWhite;
+		EndColor = GameConstants.UiWhite;
 	}
 	
 	public void add_texture_particle(Texture2D aImage, Vector2 aSize, Vector3 aPos, Vector3 aVel, float aLifetime,string aId)

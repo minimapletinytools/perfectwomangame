@@ -59,6 +59,7 @@ public class BodyParticleHelper
 				mParticles.emit_continuous(score,activeBody.mFlat.get_body_part_position(e.Key));
 		}*/
 
+
 		/*
 		foreach(var e in sConnectedGroups)
 		{
@@ -88,19 +89,29 @@ public class BodyParticleHelper
 				
 			if(grade > 0.5 && grade <= 0.7)
 			{
-				mParticles.emit_ring("silver",12,activeBody.mFlat.get_body_part_position(ZigJointId.Torso),700, 1.3f);
+				mParticles.emit_ring("silver",5,activeBody.mFlat.get_body_part_position(ZigJointId.Torso),600, 1.5f);
+				mParticles.emit_ring("silver",7,activeBody.mFlat.get_body_part_position(ZigJointId.Torso),900, 1.5f);
 			}
-			if(grade > 0.7 && grade <= 0.9)
+			if(grade > 0.7 && grade <= 0.8)
 			{
-				mParticles.emit_ring("silver",20,activeBody.mFlat.get_body_part_position(ZigJointId.Torso),1500, 1.3f);
+
+				mParticles.emit_ring("silver",5,activeBody.mFlat.get_body_part_position(ZigJointId.Torso),600, 1.5f);
+				mParticles.emit_ring("gold",7,activeBody.mFlat.get_body_part_position(ZigJointId.Torso),900, 1.5f);
+				mParticles.emit_ring("silver",10,activeBody.mFlat.get_body_part_position(ZigJointId.Torso),1300, 1.5f);
 			}
-			if(grade > 0.8)
+			if(grade > 0.8 && grade <= 0.9)
 			{
-				mParticles.emit_ring("gold",16,activeBody.mFlat.get_body_part_position(ZigJointId.Torso),700,1.5f);
+				mParticles.emit_ring("gold",5,activeBody.mFlat.get_body_part_position(ZigJointId.Torso),700,2f);
+				mParticles.emit_ring("silver",7,activeBody.mFlat.get_body_part_position(ZigJointId.Torso),1000, 1.5f);
+				mParticles.emit_ring("gold",10,activeBody.mFlat.get_body_part_position(ZigJointId.Torso),1500,2f);
 			}
 			if(grade > 0.9)
 			{
-				mParticles.emit_ring("gold",29,activeBody.mFlat.get_body_part_position(ZigJointId.Torso),1500,1.5f);
+				mParticles.emit_ring("gold",20,activeBody.mFlat.get_body_part_position(ZigJointId.Torso),2500,2f);
+				//mParticles.emit_ring("gold",15,activeBody.mFlat.get_body_part_position(ZigJointId.Torso),1500,3f);
+				mParticles.emit_ring("silver",12,activeBody.mFlat.get_body_part_position(ZigJointId.Torso),1900, 3f);
+				mParticles.emit_ring("gold",7,activeBody.mFlat.get_body_part_position(ZigJointId.Torso),1200,4f);
+				mParticles.emit_ring("silver",10,activeBody.mFlat.get_body_part_position(ZigJointId.Torso),600,1.5f);
 			}
 
 
