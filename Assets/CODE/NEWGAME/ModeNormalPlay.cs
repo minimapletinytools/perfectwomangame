@@ -94,12 +94,11 @@ public class ModeNormalPlay
 
 		mGiftManager = new GiftManager(mManager,this);
 		mGiftManager.initialize();
-		/*
 		mManager.mAssetLoader.new_load_asset_bundle("GIFT",
         	delegate(AssetBundle aBundle){
-				mSunsetManager.gift_loaded_callback(aBundle,"GIFT");
+				mGiftManager.gift_loaded_callback(aBundle,"GIFT");
 			}
-		);*/
+		);
 		
 		mChoosingManager = new ChoosingManager(mManager,this);
 		mChoosingManager.initialize();
@@ -154,6 +153,8 @@ public class ModeNormalPlay
 		mPerformanceStats.Add(new PerformanceStats(NGM.CurrentCharacterIndex));
 		CurrentPerformanceStat.Stats = NGM.CharacterHelper.Characters[NGM.CurrentCharacterIndex];
 		mInterfaceManager.begin_new_character(CurrentPerformanceStat);
+		if(NGM.CurrentCharacterLoader.Character != CharacterIndex.sFetus)
+			mGiftManager.add_character(NGM.CurrentCharacterLoader.Character);
 		switch(NGM.CurrentCharacterLoader.Name)
 		{
 			case "0-1":	
@@ -294,6 +295,7 @@ public class ModeNormalPlay
 				mParticles.create_particles(mGrading,true);
 				if(NGM.CurrentPoseAnimation.does_pose_change_precoginitive(Time.time,Time.deltaTime,0.07f))
 				{
+					mGiftManager.capture_player();
 					mParticles.create_particles(mGrading);
 					mManager.mMusicManager.play_sound_effect("pose" + Mathf.Clamp((int)(6*grade),0,5));
 				}
@@ -379,6 +381,7 @@ public class ModeNormalPlay
 		}
 		if(die)
 		{
+			mGiftManager.capture_player();
 			CurrentPerformanceStat.Finished = true;
 			mManager.mCameraManager.set_camera_effects(0);
 			mInterfaceManager.enable_warning_text(false);

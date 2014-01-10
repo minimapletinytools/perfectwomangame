@@ -144,5 +144,10 @@ public class TimedEventDistributor
     {
         return add_event(delegate(float time) { aEvent(); return true; }, aTime);
     }
+
+	public TimedEventChain empty_chain() //actually has one frame delay I think lol
+	{
+		return add_event(delegate(float time) { return true; }, 0);
+	}
     
 }

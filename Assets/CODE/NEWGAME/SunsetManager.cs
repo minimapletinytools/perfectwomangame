@@ -539,10 +539,6 @@ public class SunsetManager
 							Debug.Log("Peter was too lazy to implement optional splitting. Connection text MUST be split");
 							Debug.Log ("TNHOEUONSTUHNST");
 						}
-
-
-
-						
 						
 						System.Func<FlatElementBase,float,bool> jiggleDelegate = 
 							delegate(FlatElementBase aBase, float aTime2) 
@@ -588,6 +584,36 @@ public class SunsetManager
 				}
 			}
 		}
+
+
+		FlatElementImage rewardImage = null;
+		FlatElementImage rewardFrame = null;
+		mModeNormalPlay.mGiftManager.set_background_for_render();
+		chain = chain.then_one_shot(
+			delegate()  {
+
+				rewardImage = new FlatElementImage(mModeNormalPlay.mGiftManager.render_gift(0),new Vector2(1280,960),10);
+				rewardFrame = new FlatElementImage(null,0);
+				rewardImage.HardPosition = mFlatCamera.get_point(-3,0);
+				rewardFrame.HardPosition = rewardImage.HardPosition;
+				rewardImage.SoftPosition = mFlatCamera.Center;
+				rewardFrame.SoftPosition = rewardImage.SoftPosition;
+				mElement.Add(rewardImage);
+				mElement.Add(rewardFrame);
+				//create reward image and scroll it in.
+				var subChain = TED.empty_chain();
+				for(int i = 1; i < mModeNormalPlay.mGiftManager.gift_count(); i++)
+				{
+					subChain = subChain.then_one_shot(
+						delegate(){
+							mModeNormalPlay.mGiftManager.render_gift(i);
+						}
+					,0.6f);
+				}
+				
+			}
+		,1);
+		chain = chain.then (low_skippable_text_bubble_event("YOU ARE THE PERFECT WOMAN",gIntroText),0);
 		
 		
 		
@@ -595,16 +621,9 @@ public class SunsetManager
 		float lastTime = 0;
 		FlatElementImage logo1 = null;
 		FlatElementImage logo2 = null;
-
 		PopupTextObject gameOver = null;
-
-
-
 		List<FlatElementText> creditsText = new List<FlatElementText>();
 		float scrollSpeed = 100;
-
-		
-
 		
 		mGraveCompleteCb = delegate()
 		{

@@ -16,12 +16,16 @@ public class AlternativeImageViewer : MonoBehaviour
 	
 	public Texture2D take_color_image()
 	{
-		UpdateTexture (ZigInput.Image,ZigInput.LabelMap);
+		if(ManagerManager.Manager.mZigManager.is_reader_connected() == 2)
+		{
+			UpdateTexture (ZigInput.Image,ZigInput.LabelMap);
+			Debug.Log ("updated image");
+		}
 		return imageTexture;
 	}
 
 	public ZigResolution imageResolution = ZigResolution.QQVGA_160x120;
-    Texture2D imageTexture;
+    Texture2D imageTexture = null;
     ResolutionData imageSizeData;
     Color32[] imageOutputPixels;
 
@@ -103,9 +107,9 @@ public class AlternativeImageViewer : MonoBehaviour
 	}
 
 
-	/* for testing
+
 	void OnGUI() {
 		GUI.depth = int.MaxValue;
 		GUI.DrawTexture(new Rect(0,0,200,200), imageTexture);
-	}*/
+	}
 }

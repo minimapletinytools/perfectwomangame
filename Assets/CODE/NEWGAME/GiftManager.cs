@@ -34,6 +34,7 @@ public class GiftManager
 
 
 		mPlayerImage = new FlatElementImage(null,10);
+		mPlayerImage.PrimaryGameObject.name = "PLAYERIMAGE";
 		mElement.Add(mPlayerImage);
 	}
 
@@ -55,7 +56,8 @@ public class GiftManager
 		r.HardPosition = mFlatCamera.Center + sizing.Offset;
 		return r;
 	}
-	
+
+
 	public void update()
 	{
 		mFlatCamera.update(Time.deltaTime);
@@ -73,14 +75,17 @@ public class GiftManager
 
 	List<PlayerStageGroup> mStages = new List<PlayerStageGroup>();
 
+	public int gift_count() { return mStages.Count; }
+
 	public void add_character(CharacterIndex aIndex)
 	{
 		mStages.Add(new PlayerStageGroup(){Index = aIndex});
 	}
-
 	public void capture_player()
 	{
-		mStages.Last().playerTex = mManager.mZigManager.ImageView.take_color_image();
+		var tex = mManager.mZigManager.ImageView.take_color_image();
+		mStages.Last().playerTex = new Texture2D(tex.width,tex.height,tex.format,false);
+		mStages.Last().playerTex.SetPixels(tex.GetPixels());
 	}
 
 	public void set_background_for_render()
@@ -89,8 +94,8 @@ public class GiftManager
 	}
 	public Texture render_gift(int index)
 	{
-		mPlayerImage.set_new_texture(mStages[index].playerTex);
-		mElement.Add(construct_flat_image("REWARD_"+mStages[index].Index.StringIdentifier,index));
+		mPlayerImage.set_new_texture(mStages[index].playerTex,new Vector2(1280,960));
+		//mElement.Add(construct_flat_image("REWARD_"+mStages[index].Index.StringIdentifier,index));
 		update(); //note if you have any TED stuff, this will update it a second time
 		ModeNormalPlay.draw_render_texture(mFlatCamera);
 		return mFlatCamera.RT;
