@@ -130,7 +130,7 @@ public class FlatBodyObject : FlatElementBase
     {
        update_parameters_impl(aDeltaTime);
     }
-	public void update_parameters_impl(float aDeltaTime, float interp = 0.1f)
+	public void update_parameters_impl(float aDeltaTime, float interp = 0.2f)
 	{
 		if (mTargetPose != null)
         {

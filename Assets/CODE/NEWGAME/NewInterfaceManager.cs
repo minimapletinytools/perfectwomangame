@@ -65,7 +65,7 @@ public class NewInterfaceManager {
 
 	FlatElementText mBBWarningText = null;
 	FlatElementImage mWarningOverlay;
-	QuTimer mWarningTimer = new QuTimer(1.5f,1.5f);
+	QuTimer mWarningTimer = new QuTimer(1f,1f);
 
 	
 	

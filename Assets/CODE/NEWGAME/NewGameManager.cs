@@ -43,7 +43,7 @@ public class NewGameManager : FakeMonoBehaviour
 	public CharacterLoader DeathCharacter //hack to store fetus death
 	{ get; set; }
 	
-	QuTimer mIdleTimer = new QuTimer(0,30);
+	QuTimer mIdleTimer = new QuTimer(0,300);
 
 	
 	ModeTesting mModeTesting;

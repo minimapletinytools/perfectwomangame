@@ -1,3 +1,111 @@
+::TODO INTL ED::
+-sunset sound gets played at fetus (should nto hapen)
+-birth pose should be hands up
+DONE-make particles come right away
+-customized ending....
+-put boundaries on joints for openNI....
+-grave connections still all green??
+-see if you can fix the startup time delay. Seems to have gotten worse
+-replce all the green stuff with yellow stuff....
+-see if you can fix the body crumpled up problem
+	-this still happens because openNI will still say trackedskeleton even when player is gone..
+		-we can hard detect this by checking if the player is in a crumpled position..
+-enable one retry and make sure it still works!
+-redo particles one more time lol
+-some performances are to easy
+	-can do princess and mom well without doing anything...
+-put in new sounds
+DONE-flahing obnoxious red warning 
+	-http://www.youtube.com/watch?v=yr-OLZmKZ_I	
+
+
+-contact katherine
+
+-clean up UI folder
+	-delet box
+	-delete angel
+	-delete other stuf
+-text file format for unlockable characters
+	-manually fill out for now
+-cleanup
+	-still have perfect stars floating around somewhere..
+	-cleanup all the PB stuff
+-testing/challenge/simian mode should inherit from interface..
+-make BACKGROUND part of the big image dump instead of an exception case
+-add skip multiple to sunset progress
+-turn miniman into asset bundle for consistency
+	-make the bundle in ggfiles
+	-use mini_loaded_callback and asign it to a new character such as 0-1
+	-delete CharacterBehaviour nonsense in FlatElementImage
+-can delete code for old gravestone
+-unlock badges...
+-PERFECT SIMIAN
+-too much time between premature death and choice
+	-some timing bugs in general..
+-consider making harder/easier for first set of choices random
+	-lul, need to hardcode this...
+-better way to detect if user is not on screen
+-define interface for kinect stuff for when you need to swap in kinect2.0
+
+
+DONE-characters should fade in/out during choosing
+DONE-do something about fetus name.....
+DONE-redo the credits booo
+DONE-fix timings on cutscenes...
+IGNORE-maybe do some sun repositioning???
+IGNORE-add boundaries to each of the joints... (namely waist, torso, neck)
+DONE-transition to cutscene sucks
+
+
+
+::TODO list for LEA::
+DONE-need a grave dot in sunset for positioning the grave..
+DONE-name label needs to be even longer 
+DONE-sunset score label needs to be a littel large
+DONE-reorder 85 cutscenes one more time! (sorry, I think we had miscommunication on how this should be done)
+	-cutscene 4 should be early death (gruesome death)
+	-cutscene 0 is good natural death (i.e. made it to end of stage)
+	-cutscene 1 is bad natural death
+DONE-whale position appears to be off
+DONE-Cashier's flashlight is not transparent!!!!
+DONE-what do you mean name of the pose (e.g. belly dance teacher) can still be seen in selection screen????
+	-I wont be implementing the new choosing screen anytime soon, is this related to the new choosing screen?
+DONE-sunset dot colors
+	-change dot for grave to 255,0,0,45
+	-add a dot for age 110, it should be 255,0,0,40 I need this for positioning the grave 
+	-add a dummy character for age 110 and call it SUNSET_110.png. If you are lazy you can just copy paste one of the other characters ;).
+DONE-sunset dots (two options) (pick one. I vote for option 1 :D)
+	-option 1
+		-distance from ground to dot position should be about the same for each characters
+		-distance between each dot should be about the same
+		-problem with this is the centers of characters may be off and the rotation jiggle wont look right
+			-actually this is kind of a problem regardless because you have characters like the whale which probably wont be exactly centered the same way the other characters are..
+			-could solve this problem by using a position jiggle
+	-option 2
+		-dots stay the same
+		-I use formula to determine where the characters approximately are and use that to place score labels
+		-problem with this is the labels may not line up nicely with the characters...
+DONE-age 45 sunset dot in wrong position or maybe it's not reading it properly?
+DONEish...-baby name label has ugly croppynig what to do?
+	-OK special label sounds good
+	-special label for age 110 as well
+DONE-matriarch not centered about the fireplace
+	-I actualyl think it's okay if some characters are very off centered. e.g. mourning lady should be off to the side. I think it adds interesting variation
+NOPE-head should go in front of hands
+-because you were as tudent, becoming a prof was hard for you???
+DONE-mising
+	-05-4 CUTSCENE1_2
+	-16-1 HEAD_B (only 1 dot)
+	-16-4 CUTSCENE1_1
+	-27-4 CUTSCENE4_2
+	-34-4 CUTSCENE1_5
+	-60-2 CUTScene1_0
+	-85-4 CUTScene1_1, 4_2, 0_2, 4_1, 1_2, 0_1
+	-85-2 CUTScene5_0, 5_1, 
+	-85-3 CUTSCENE 5_0, 5_1, 5_2
+	-85-1 CUTSCENE 5_0, 5_1
+
+
 
 ::Kinect for windows v2 api notes::
 -lifecycle
@@ -83,71 +191,84 @@ Perfect Woman features a branching decision tree which serves to create a narrat
 			-CHARACTER/FEATURE_UNLOCKED 
 				-TODO design this...
 
-::TODO list for LEA::
-DONE-need a grave dot in sunset for positioning the grave..
-DONE-name label needs to be even longer 
-DONE-sunset score label needs to be a littel large
-DONE-reorder 85 cutscenes one more time! (sorry, I think we had miscommunication on how this should be done)
-	-cutscene 4 should be early death (gruesome death)
-	-cutscene 0 is good natural death (i.e. made it to end of stage)
-	-cutscene 1 is bad natural death
-DONE-whale position appears to be off
--Cashier's flashlight is not transparent!!!!
--what do you mean name of the pose (e.g. belly dance teacher) can still be seen in selection screen????
-	-I wont be implementing the new choosing screen anytime soon, is this related to the new choosing screen?
--sunset dot colors
-	-change dot for grave to 255,0,0,45
-	-add a dot for age 110, it should be 255,0,0,40 I need this for positioning the grave 
-	-add a dummy character for age 110 and call it SUNSET_110.png. If you are lazy you can just copy paste one of the other characters ;).
--sunset dots (two options) (pick one. I vote for option 1 :D)
-	-option 1
-		-distance from ground to dot position should be about the same for each characters
-		-distance between each dot should be about the same
-		-problem with this is the centers of characters may be off and the rotation jiggle wont look right
-			-actually this is kind of a problem regardless because you have characters like the whale which probably wont be exactly centered the same way the other characters are..
-			-could solve this problem by using a position jiggle
-	-option 2
-		-dots stay the same
-		-I use formula to determine where the characters approximately are and use that to place score labels
-		-problem with this is the labels may not line up nicely with the characters...
--baby name label has ugly croppynig what to do?
 
 ::order of operations/TODOXII::
 
+DONE-make the heads appear with the backround
+	-make streams appear with the badges I guess
+DONE-make figure jiggling 2x as fast
+DONE-all difficulties are normal in sunset now..
+DONE-add word bubble to "choose your perfect life at..."
+	-just make it in the background as an image
+	-lower everything a little bit
+DONE-make text and text bubble jiggle and make sure they recenter when done
+DONE-something wrong with shining in grave?
+DNOE-something wrong with 27-2
+DONE-head popup streams look like ass
 
--name of the pose (e.g. belly dance teacher) can still be seen in selection screen????
--don't change bg color of sunset in animations...
-???-heads not disappearing sometimes?? (skipping issue?)
--look into shine and special bubble for sunset connections?
--figure out what to do about the sunset lables
+DONE-color text bubbles in grave...
+IGNORE-left bounding text on kinect description text uggg
+IGNORE-don't change bg color of sunset in animations...
+DONE-figure out what to do about the sunset lables
 	-position all wrong
--do lea's new scene ordering nonsense
--change default pose back to what hands down pose (not T pose)
--choosing
+IGNORE-get rid of gamevoer bubble...
+IGNORE-choosing
 	DONE-switch to using new character icons
 	-adjust font size
 	-implement lea's crazy new choosing thing nah
--reposition stuff that shows up on gravestone..
--headpopup
+DONE-headpopup
 	DONE-sounds
-	-fix timing
--flahing obnoxious red warning 
-	-http://www.youtube.com/watch?v=yr-OLZmKZ_I
-	
--add boundaries to each of the joints... (namely waist, torso, neck)
--add skip multiple to sunset progress
--clean up UI folder
-	-delet box
-	-delete angel
-	-delete other stuf
--text file format for unlockable characters
-	-manually fill out for now
--cleanup
-	-still have perfect stars floating around somewhere..
-	-cleanup all the PB stuff
--testing/challenge/simian mode should inherit from interface..
--make BACKGROUND part of the big image dump instead of an exception case
-
+	DONE-fix timing
+DONE-time the stream in cutscene better
+DONE-shrink the heads in cutscene a little or make them not grow as large
+DONE-force ordering on characters in sunset..
+DONE-timing for headpopup
+	-bubble appears
+	-streams appear and heads popup
+	-streams dissapear
+	-bubbled dissaepars
+	-heads dissapear
+DONE-fix ordering on sunset chars
+DONE-new dramaturgy stuff
+	-option 1:
+		-choosing camera should use sunset camera
+		-add some sort of grouping nonsense so you can move all characters badges and score labels together
+	-option 2:
+		-figure out why transparency on render texture is not working right and overaly choosing over sunset..
+	-set_choosing -> slide choosing stuff in with sunset background
+	-set_sunset -> slide out choosing stuff and slide in sunset stuff
+	-finish -> slide out sunset background with sunset stuff	
+DONE-make score label premanent I guess...
+	DONE-jiggle it in the grave counting...
+DONE-do lea's new scene ordering nonsense
+DONE-line up text in upper right word bubbles
+	DONE-align score text right
+DONE-change default pose back to what hands down pose (not T pose)
+DONE-score text and age text in wrong place in grave
+DONE-word bubble green still off
+DONE-make sun a little higher so it is cropped (700)
+DONE-move score labels a little higher
+DONE-score label still too small??
+DONE-switch to cutscene bubbles..	
+DONE-reposition stuff that shows up on gravestone..
+DONE-scroll ALL contents down including characters in grave
+DONE-sun
+	DONE-sun animates during "you turn 9"
+	DONE-sunset goes white in interp, change that
+	DONE-don't use sin/cos nonsense for sun path, use linear instead..
+	DONE-sun should nto be half cut off like it is righ tnow
+DONE-mess around with sun dots
+	-try and talk to lea bout this...
+DONE-prefix score with SCORE in DANCE
+???-heads not disappearing sometimes?? (skipping issue?)
+DONE-add in the stream picturse.. can't be that hard right
+DONE-look into shine and special bubble for sunset connections?
+DONE-age 85 not showing in sunset???
+DONE-update matriarch and cashier
+DONE-all caps character description...
+DONE-something wrong with 85-3???
+DONE-should say "Choose your perfect life at age 9!"
+DONE-name of the pose (e.g. belly dance teacher) can still be seen in selection screen????
 
 DONE-test Game crashed in cutscene of 34-4 (cashier). exactly when it said: "But fancy life styles will be really hard“ it would just stay there.
 DONE-tell lea how to test recorded poses lol...
@@ -269,25 +390,9 @@ DONE-double check
 	DONE?-headb 05-2
 
 ::TODO XI::
-DONE-sunset missing a file
--contact katherine
--solid particles
--see if you can show at dreamhack lol
--transition to cutscene sucks
--turn miniman into asset bundle for consistency
-	-make the bundle in ggfiles
-	-use mini_loaded_callback and asign it to a new character such as 0-1
-	-delete CharacterBehaviour nonsense in FlatElementImage
--can delete code for old gravestone
--unlock badges...
--PERFECT SIMIAN
--too much time between premature death and choice
-	-some timing bugs in general..
--consider making harder/easier for first set of choices random
-	-lul, need to hardcode this...
--better way to detect if user is not on screen
--define interface for kinect stuff for when you need to swap in kinect2.0
 
+IGNORE-see if you can show at dreamhack lol
+DONE-sunset missing a file
 DONE-remove glow effect component from camera (for performance)
 IGNORE-create new choice screen maybe?
 IGNORE??-do new cutscene graphics
