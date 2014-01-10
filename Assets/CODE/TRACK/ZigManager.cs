@@ -9,6 +9,7 @@ public class ZigManager : FakeMonoBehaviour {
     ZigCallbackBehaviour mZigCallbackBehaviour = null;
     ZigInput mZigInput = null;
 	public AlternativeDepthViewer DepthView { get; private set; }
+	public AlternativeImageViewer ImageView { get; private set; }
     public Dictionary<ZigJointId, ZigInputJoint> Joints{get; private set;}
 	ZigJointId[] ImportantJoints = new ZigJointId[]{ZigJointId.Head,ZigJointId.LeftHand,ZigJointId.RightHand};//,ZigJointId.LeftAnkle,ZigJointId.RightAnkle};
     public ZigTrackedUser LastTrackedUser { get; private set; }
@@ -41,6 +42,8 @@ public class ZigManager : FakeMonoBehaviour {
 	public override void Start () {
         mZigObject = mManager.gameObject;
 		DepthView = mZigObject.AddComponent<AlternativeDepthViewer>();
+		ImageView = mZigObject.AddComponent<AlternativeImageViewer>();
+
         //mZigObject.AddComponent<kinectSpecific>();
 		mZig = mZigObject.GetComponent<Zig>();
         
@@ -196,13 +199,17 @@ public class ZigManager : FakeMonoBehaviour {
 		}
 
 		//TODO test if its in current "crumpled" pose, needed for OpenNI
-		//instead we check neck and one arm)
-		if(get_relative_rotation(Joints[ZigJointId.LeftShoulder],Joints[ZigJointId.LeftElbow]).flat_rotation() == 0 &&
-		   get_relative_rotation(Joints[ZigJointId.Neck],Joints[ZigJointId.Head]).flat_rotation() == 0)
-		{
-			badTimer = 0; //instabad???
-			bad = true;
-		}
+		//instead we chec	k neck and one arm)
+		if(Joints.ContainsKey(ZigJointId.LeftShoulder) && 
+		   Joints.ContainsKey(ZigJointId.LeftElbow) && 
+		   Joints.ContainsKey(ZigJointId.Neck) && 
+		   Joints.ContainsKey(ZigJointId.Head))
+			if(get_relative_rotation(Joints[ZigJointId.LeftShoulder],Joints[ZigJointId.LeftElbow]).flat_rotation() == 0 &&
+			   get_relative_rotation(Joints[ZigJointId.Neck],Joints[ZigJointId.Head]).flat_rotation() == 0)
+				{
+					badTimer = 0; //instabad???
+					bad = true;
+				}
 
 		if(!bad)
 			badTimer = 1.5f;
