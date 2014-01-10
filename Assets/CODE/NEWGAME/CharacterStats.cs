@@ -52,7 +52,7 @@ public class PerformanceStats
 	public bool Finished { get; set; } //did we finish with this character already
 	public float DeathTime { get; set; } //what time (0,1) did this character die
 	
-	public PerformanceGraphObject PerformanceGraph { get; private set; }
+	//public PerformanceGraphObject PerformanceGraph { get; private set; }
 	
 	public CharacterStats Stats
 	{ get; set; }
@@ -84,7 +84,7 @@ public class PerformanceStats
 		Finished = false;
 		DeathTime = -1;
 		
-		PerformanceGraph = new PerformanceGraphObject(11);
+		//PerformanceGraph = new PerformanceGraphObject(11);
 		
 		mScore = new List<KeyValuePair<float, float>>();
 		update_score(0,0); //this is a dummy point
