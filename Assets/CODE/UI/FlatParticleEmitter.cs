@@ -46,7 +46,7 @@ public class SparkleStarFlashParticle
 			UseColor = true,
 			StartColor = new Color(1,1,1,0.65f),
 			EndColor = new Color(1,1,1,0),
-			Gravity = new Vector3(0,-100,0)
+			//Gravity = new Vector3(0,-100,0)
 		};
 		
 		mEmitter2 = new FlatParticleEmitter()
@@ -75,11 +75,21 @@ public class SparkleStarFlashParticle
 	
 	public void emit_point(int count, Vector3 position, float speed)
 	{
-		
-		for(int i = 0; i < count; i++)
-			create_particle("gold",position,speed*new Vector3(Mathf.Cos (i/(float)count*Mathf.PI*2),Mathf.Sin (i/(float)count*Mathf.PI*2),0));
+		emit_ring("gold",count,position,speed,1.3f);
 	}
-	
+
+	public void emit_ring(string type, int count, Vector3 position, float speed, float scale)
+	{
+		for(int i = 0; i < count; i++)
+			create_particle(type,
+			                position,
+			                speed*new Vector3(Mathf.Cos (i/(float)count*Mathf.PI*2),Mathf.Sin (i/(float)count*Mathf.PI*2),0),
+			                new QuTimer(-0.5f,0.2f),
+			                scale,
+			                true
+			                );
+	}
+
 	public void emit_continuous(float grade, Vector3 position)
 	{
 		float ag = grade*grade;
@@ -89,7 +99,28 @@ public class SparkleStarFlashParticle
 				if(Random.value < 0.0075f)
 					create_particle("silver",position,Random.insideUnitCircle*500);
 	}
-	
+
+	public void create_particle(string aType, Vector3 position, Vector3 speed, QuTimer aTimer, float aScale, bool aUseRandomRotation)
+	{
+		var cache = mCachedParticles[aType];
+		if(!cache.has_particle())
+		{
+			Texture2D tex = null;
+			if(aType == "gold")
+				tex = ManagerManager.Manager.mNewRef.partGold;
+			if(aType == "silver")
+				tex = ManagerManager.Manager.mNewRef.partSilver2;
+			var newPart = new FlatElementImage(tex,new Vector2(60,60),1000);
+			foreach (Renderer f in newPart.PrimaryGameObject.GetComponentsInChildren<Renderer>())	
+				f.gameObject.layer = ManagerManager.Manager.mBackgroundManager.mBackgroundLayer;
+			cache.return_particle(newPart);
+		}
+		var part = mEmitter.add_particle(cache.take_particle(),position,speed,1f,aType);
+		part.element.HardFlatRotation = Random.Range(0f,360f);
+		part.element.HardScale = aScale * Vector3.one;
+		part.timer = new QuTimer(aTimer.getCurrent(),aTimer.getTarget());
+	}
+
 	public void create_particle(string aType, Vector3 position, Vector3 speed)
 	{
 		//TODO diff particle types
@@ -246,7 +277,7 @@ public class FlatParticleEmitter : FlatElementBase
 			e.element.HardPosition = e.pos;
 			if(UseColor)
 			{
-				float lambda = Mathf.Clamp01(e.timer.getSquare());
+				float lambda = Mathf.Clamp01(e.timer.getLinear());
 				e.element.HardColor = StartColor*(1-lambda) + EndColor*lambda;
 			}
 			

@@ -58,7 +58,8 @@ public class BodyParticleHelper
 			//else
 				mParticles.emit_continuous(score,activeBody.mFlat.get_body_part_position(e.Key));
 		}*/
-		
+
+		/*
 		foreach(var e in sConnectedGroups)
 		{
 			float score = ProGrading.grade_to_perfect(aGrade.joint_score(e.Key));
@@ -68,7 +69,7 @@ public class BodyParticleHelper
 			if(e.Value.Length == 2)
 				path[2] = activeBody.mFlat.get_body_part_position(e.Value[1]);
 			PolygonalPath pPath = new PolygonalPath(path);
-			
+
 			for(int i = 0; i < pPath.PathLength/20f; i++)
 			{
 				mParticles.emit_continuous(score,pPath.evaluate((float)i*20/pPath.PathLength));
@@ -76,20 +77,41 @@ public class BodyParticleHelper
 			
 			if(pPath.PathLength == 0)
 				mParticles.emit_continuous(score,pPath.evaluate(0));
-		}
+		}*/
 		
 		
 		//TODO double it!
 		if(!continuous)
 		{
 			float grade = ProGrading.grade_to_perfect(aGrade.CurrentGrade);
+
+				
+			if(grade > 0.5 && grade <= 0.7)
+			{
+				mParticles.emit_ring("silver",12,activeBody.mFlat.get_body_part_position(ZigJointId.Torso),700, 1.3f);
+			}
+			if(grade > 0.7 && grade <= 0.9)
+			{
+				mParticles.emit_ring("silver",20,activeBody.mFlat.get_body_part_position(ZigJointId.Torso),1500, 1.3f);
+			}
+			if(grade > 0.8)
+			{
+				mParticles.emit_ring("gold",16,activeBody.mFlat.get_body_part_position(ZigJointId.Torso),700,1.5f);
+			}
+			if(grade > 0.9)
+			{
+				mParticles.emit_ring("gold",29,activeBody.mFlat.get_body_part_position(ZigJointId.Torso),1500,1.5f);
+			}
+
+
 			float ag = (grade-0.4f)*(grade-0.4f);
 			int count = (int)(100*ag);
-				
+			/*
 			if(grade > 0.6f)
 				mParticles.emit_point(count*1/3, activeBody.mFlat.get_body_part_position(ZigJointId.Torso),700);
 			if(grade > 0.8f)
 				mParticles.emit_point(count*2/3, activeBody.mFlat.get_body_part_position(ZigJointId.Torso),1000);
+				*/
 		}
 		
 		
