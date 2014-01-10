@@ -69,11 +69,13 @@ public class NewMenuReferenceBehaviour : MonoBehaviour {
 	public AudioClip sunRises;
 	public AudioClip graveShine;
 	public AudioClip featureUnlocked;
+	public AudioClip pose0;
 	public AudioClip pose1;
 	public AudioClip pose2;
 	public AudioClip pose3;
 	public AudioClip pose4;
 	public AudioClip pose5;
+
 	//TODO more
 	
 	//music
