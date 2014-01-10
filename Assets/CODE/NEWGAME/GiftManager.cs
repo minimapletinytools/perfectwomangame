@@ -19,13 +19,22 @@ public class GiftManager
 	
 	CharacterLoader mLoader;
 	public bool IsLoaded{get; private set;}
-	
+
+	Texture2D mOutputTexture;
+	FlatElementImage mPlayerImage;
+
 	public void initialize()
 	{
 		IsLoaded = false;
 		TED = new TimedEventDistributor();
-		mFlatCamera = new FlatCameraManager(new Vector3(10000, 3000, 0), 10);
+		mFlatCamera = new FlatCameraManager(mManager.mCameraManager.BackgroundCamera.transform.position, 10);
 		mFlatCamera.fit_camera_to_game(); 
+		mFlatCamera.Camera.cullingMask = (1 << 3) | (1 << 0);
+		mFlatCamera.set_render_texture_mode(true);
+
+
+		mPlayerImage = new FlatElementImage(null,10);
+		mElement.Add(mPlayerImage);
 	}
 
 	
@@ -55,5 +64,36 @@ public class GiftManager
 		TED.update(Time.deltaTime);
 	}
 
+
+	class PlayerStageGroup
+	{
+		public Texture2D playerTex = null;
+		public CharacterIndex Index {get; set;}
+	}
+
+	List<PlayerStageGroup> mStages = new List<PlayerStageGroup>();
+
+	public void add_character(CharacterIndex aIndex)
+	{
+		mStages.Add(new PlayerStageGroup(){Index = aIndex});
+	}
+
+	public void capture_player()
+	{
+		mStages.Last().playerTex = mManager.mZigManager.ImageView.take_color_image();
+	}
+
+	public void set_background_for_render()
+	{
+		mManager.mBackgroundManager.character_changed_listener(mManager.mGameManager.CurrentCharacterLoader);
+	}
+	public Texture render_gift(int index)
+	{
+		mPlayerImage.set_new_texture(mStages[index].playerTex);
+		mElement.Add(construct_flat_image("REWARD_"+mStages[index].Index.StringIdentifier,index));
+		update(); //note if you have any TED stuff, this will update it a second time
+		ModeNormalPlay.draw_render_texture(mFlatCamera);
+		return mFlatCamera.RT;
+	}
 	
 }
