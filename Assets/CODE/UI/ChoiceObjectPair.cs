@@ -36,7 +36,7 @@ public class ChoiceObjectPair : FlatElementMultiBase {
         mElements.Add(new FlatElementMultiBase.ElementOffset(mDifficultyStars, new Vector3(-mSide, mRightBot, 0)));
         mElements.Add(new FlatElementMultiBase.ElementOffset(mDifficultyBalls, new Vector3(-mSide, mRightBot, 0)));
 
-        mMeter = new MeterImageObject(aLeftTex, MeterImageObject.FillStyle.DU, aDepth + 1);
+        mMeter = new MeterImageObject(aLeftTex,null, MeterImageObject.FillStyle.DU, aDepth + 1);
         mMeter.Percentage = 0.0f;
         mBody = new FlatBodyObject(aChar, aDepth + 2);
         mBody.set_target_pose(aPose);

@@ -61,13 +61,14 @@ public class ChoosingManager
 		mBBChoosingBackground.HardPosition = mFlatCamera.Center;
 		mBBQuestionText = new ColorTextObject(10);
         mBBQuestionTextPrefix = new FlatElementText(newRef.genericFont, 100, "", 10);
-		mBBQuestionText.HardPosition = mFlatCamera.get_point(0,0.6f) + new Vector3(0,-75,0);
-		mBBQuestionTextPrefix.HardPosition = mFlatCamera.get_point(0, 0.6f) + new Vector3(0,75, 0);
+		//mBBQuestionText.HardPosition = mFlatCamera.get_point(0,0.6f) + new Vector3(0,-75,0);
+		mBBQuestionText.HardPosition = mFlatCamera.get_point(0,0.8f);
+		mBBQuestionTextPrefix.HardPosition = mFlatCamera.get_point(0, 0.75f) + new Vector3(0,75, 0);
 		mBBQuestionText.SoftInterpolation = 1;
         mBBQuestionTextPrefix.SoftInterpolation = 1;
-		var bubbleImage = mManager.mCharacterBundleManager.get_image("SUNSET_BUBBLE");
+		var bubbleImage = mManager.mCharacterBundleManager.get_image("SELECTION_BUBBLE");
 		mBBQuestionBubble = new FlatElementImage(bubbleImage.Image,bubbleImage.Data.Size,1);
-		mBBQuestionBubble.HardPosition = mFlatCamera.get_point(0,0.6f);
+		mBBQuestionBubble.HardPosition = mFlatCamera.get_point(0,0.75f);
 		mBBQuestionBubble.HardScale = new Vector3(1.3f,1.1f,1);
 		mBBQuestionBubble.HardColor = GameConstants.UiPopupBubble;
 		mBBMiniMan = new FlatBodyObject(miniMan,20);
@@ -98,7 +99,7 @@ public class ChoosingManager
 		Color fullColor = !small ? new Color(0.5f,0.5f,0.5f,1) : new Color(0.5f,0.5f,0.5f,0);
 		
 		foreach(FlatBodyObject e in mBBChoiceBodies)
-			e.SoftColor = fullColor;
+			e.SoftColor =  !small ? GameConstants.uiWhite : GameConstants.UiWhiteTransparent;
 		foreach(NewChoiceObject e in mBBChoices)
 			e.SoftColor = fullColor;
 		mBBMiniMan.SoftColor = fullColor;
@@ -155,7 +156,7 @@ public class ChoosingManager
 		var ch = aChoices.OrderBy(e => e.Choice).ToArray();
 		int len = ch.Count();
 		
-		float padding = 400;
+		float padding = 700;
 		float netWidth = (len)*padding;
 		
 		for(int i = len; i < mBBChoices.Count; i++)
@@ -169,8 +170,8 @@ public class ChoosingManager
 			
 			
 			float xOffset = netWidth/2 - padding/2 - padding*i;
-			mBBChoices[i].HardPosition = mFlatCamera.get_point(0, -0.4f) + new Vector3(xOffset,0,0);
-			mBBChoiceBodies[i].HardPosition = mFlatCamera.get_point(0, -0.4f) + new Vector3(xOffset,-195,0);
+			mBBChoices[i].HardPosition = mFlatCamera.get_point(0, -0.1f) + new Vector3(xOffset,0,0);
+			mBBChoiceBodies[i].HardPosition = mFlatCamera.get_point(0, -0.1f) + new Vector3(xOffset,-230,0);
 		}
 	}
 
@@ -183,9 +184,9 @@ public class ChoosingManager
 		{
 			mBBMiniMan.SoftColor = GameConstants.UiRedTransparent;
 			mBBMiniMan.SoftPosition = mBBMiniManBasePosition;
-			mBBQuestionTextPrefix.Text = "Choose your perfect life";
+			//mBBQuestionTextPrefix.Text = "Choose your perfect life";
 			mBBQuestionText.set_text(
-				new string[]{("at age " + mManager.mGameManager.CurrentCharacterIndex.get_future_neighbor(0).Age) + "!"},
+				new string[]{("Choose your perfect life at age " + mManager.mGameManager.CurrentCharacterIndex.get_future_neighbor(0).Age) + "!"},
 			new Color[]{GameConstants.UiRed});
 		}
 		else{
@@ -195,13 +196,12 @@ public class ChoosingManager
 			var nCharDiff = mManager.mCharacterBundleManager.get_character_helper().Characters[nChar];
 			var diffPhrases = new string[]{" easy", " normal", " hard", " extreme"};
 			//var perfectPhrases = new string[]{" horrible", " passable", " perfect", " PERFECT"};
-			//var perfectColors = new Color[]{new Color32(200,173,27,255),new Color32(240,220,130,255),new Color32(253,238,0,255),new Color32(255,126,0,255)};
+			//var perfectColors = new Color[]{GameConstants.uiYellow, GameConstants.uio
 			//var diffColors = new Color[]{new Color(0,0.8f,0,1), new Color(0.8f,0.8f,0,1), new Color(0.9f,0.4f,0,1), new Color(0.8f,0,0,1)};
-			mBBQuestionTextPrefix.Text = "That is a";
+			//mBBQuestionTextPrefix.Text = "That is a";
 			mBBQuestionText.set_text(
-				//new string[]{("Will you be " + nChar.Description + "\nThat is a " can't do this because my multicolor font thing can't handle new line
 				new string[]{
-				//("That is a "),
+				("That is a "),
 				//perfectPhrases[nCharDiff.Perfect], 
 				//Mathf.Abs((3-nCharDiff.Difficulty) - nCharDiff.Perfect) > 1 ? " but" : " and",
 				diffPhrases[nCharDiff.Difficulty],
@@ -212,6 +212,7 @@ public class ChoosingManager
 				GameConstants.UiRed,
 				//GameConstants.UiPink,
 				//perfectColors[nCharDiff.Perfect]/2f,
+				GameConstants.UiRed,
 				GameConstants.UiRed});
 		}
 	}

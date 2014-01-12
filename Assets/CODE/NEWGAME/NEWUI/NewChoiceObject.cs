@@ -30,27 +30,31 @@ public class NewChoiceObject : FlatElementMultiBase {
     //void initialize(CharacterLoader aActualChar, int aDepth)
 	void initialize(CharacterIndex? aIndex, int aDepth)
     {
+		var meterImage = ManagerManager.Manager.mCharacterBundleManager.get_image("SELECTION_BOX");
+
 		var newRef = ManagerManager.Manager.mNewRef;
-		mSquare = new FlatElementImage(newRef.bbChoiceBox, aDepth);
+		//mSquare = new FlatElementImage(newRef.bbChoiceBox, aDepth);
+		mSquare = new FlatElementImage(meterImage.Image,meterImage.Data.Size, aDepth);
 		mText = new FlatElementText(newRef.genericFont,34,"",aDepth +2);
 		mDiffImage = new FlatElementImage(null,aDepth +2);
         //mPerfect = new DifficultyObject(ManagerManager.Manager.mNewRef.uiPerfectStar, aDepth);
 		mIcon = new FlatElementImage(null,aDepth +2);
 		mIcon.HardScale = 1.15f*Vector3.one;
-        mMeter = new MeterImageObject(newRef.bbChoiceBox, MeterImageObject.FillStyle.DU, aDepth + 1);
+        //mMeter = new MeterImageObject(newRef.bbChoiceBox, null,MeterImageObject.FillStyle.DU, aDepth + 1);
+		mMeter = new MeterImageObject(meterImage.Image,meterImage.Data.Size,MeterImageObject.FillStyle.DU, aDepth + 1);
         mMeter.Percentage = 0.0f;
 		set_perfectness(3);
         
         //mBody.set_target_pose(aPose);
 		mElements.Add(new FlatElementMultiBase.ElementOffset(mSquare, new Vector3(0,0,0)));
-		mElements.Add(new FlatElementMultiBase.ElementOffset(mDiffImage, new Vector3(-mSquare.BoundingBox.width/2f,mSquare.BoundingBox.height/2f,0)));
-		mElements.Add(new FlatElementMultiBase.ElementOffset(mText, new Vector3(0,20,0)));
+		mElements.Add(new FlatElementMultiBase.ElementOffset(mDiffImage, new Vector3(-mSquare.BoundingBox.width/2f+100,-mSquare.BoundingBox.height/2f+100,0)));
+		mElements.Add(new FlatElementMultiBase.ElementOffset(mText, new Vector3(0,0,0)));
 		//mElements.Add(new FlatElementMultiBase.ElementOffset(mPerfect, new Vector3(-122,65,0)));
         mElements.Add(new FlatElementMultiBase.ElementOffset(mMeter, new Vector3(0,0,0)));
 		
-		mElements.Add(new FlatElementMultiBase.ElementOffset(mIcon, new Vector3(0,175,0)));
+		mElements.Add(new FlatElementMultiBase.ElementOffset(mIcon, new Vector3(0,210,0)));
         
-		mText.SoftColor = new Color(0,0,0,1);
+		mText.SoftColor = GameConstants.UiWhite;
 		if(aIndex != null)
 			set_actual_character(aIndex.Value);
 
@@ -95,8 +99,8 @@ public class NewChoiceObject : FlatElementMultiBase {
 			mCharacterIndex = value;
 			if(mCharacterIndex.LevelIndex != -1)
 			{
-				//mText.Text = FlatElementText.convert_to_multiline(2,mCharacterIndex.ShortName.ToUpper());
-				mText.Text = mCharacterIndex.ShortName.ToUpper();
+				mText.Text = FlatElementText.convert_to_multiline(2,mCharacterIndex.Description.ToUpper());
+				//mText.Text = mCharacterIndex.ShortName.ToUpper();
 			}
 			else mText.Text = "";
 		}

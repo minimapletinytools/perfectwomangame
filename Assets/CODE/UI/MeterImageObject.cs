@@ -24,11 +24,12 @@ public class MeterImageObject : FlatElementBase
     }
     public FillStyle Style{get; set;}
     public ImageGameObjectUtility mImage;
-    public MeterImageObject(Texture2D aTex, FillStyle aStyle, int aDepth)
+    public MeterImageObject(Texture2D aTex, Vector2? aSize, FillStyle aStyle, int aDepth)
     {
-		SoftColor = new Color(0.5f,0.5f,0.5f,1);
+		//SoftColor = new Color(0.5f,0.5f,0.5f,1);
+		HardColor = GameConstants.UiBlue;
         Style = aStyle;
-        mImage = new ImageGameObjectUtility(aTex);
+        mImage = new ImageGameObjectUtility(aTex,aSize);
         PrimaryGameObject = mImage.ParentObject;
         Depth = aDepth;
         mCurrentPercentage = mPercentage = 0;
@@ -71,11 +72,13 @@ public class MeterImageObject : FlatElementBase
         if (Style == FillStyle.DU)
             PrimaryGameObject.transform.position = aPos + new Vector3(0,-(1-mPercentage)*mImage.BaseDimension.y/2f,0);
     }
-	
+
+
+
 	public override Color SoftColor
 	{
 		set{
-			base.SoftColor = new Color32(0/2, 81/2, 229/2,(int)(.8*255/2f))*value*2;
+			base.SoftColor = GameConstants.uiBlue*value;
 		}
 	}
 }

@@ -59,6 +59,13 @@ public class PopupTextObject : FlatElementMultiBase {
 				set_font_size(50);
 		}
 	}
+
+	public string HardText
+	{
+		set{
+			mText.Text = value;
+		}
+	}
 	
 	bool need_split(string text)
 	{
