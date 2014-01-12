@@ -177,7 +177,7 @@ public class CharacterHeadPopupThingy
 			chain = chain.then_one_shot(
 				delegate() {
 					//shine
-					create_shine_over_character(mCharacters[workingIndex],isGreen,gBadgeTime*(count)+gTimeAfterBadges-0.5f);
+					create_shine_over_character(mCharacters[workingIndex],isGreen,gBadgeTime*(count)+gTimeAfterBadges+0.5f);
 				}
 			,0);
 		}
