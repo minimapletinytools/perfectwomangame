@@ -100,7 +100,7 @@ public class AlternativeImageViewer : MonoBehaviour
 
     }
 
-
+	/*
 	void Zig_Update(ZigInput input)
 	{
 		UpdateTexture(ZigInput.Image,ZigInput.LabelMap);
@@ -111,5 +111,5 @@ public class AlternativeImageViewer : MonoBehaviour
 	void OnGUI() {
 		GUI.depth = int.MaxValue;
 		GUI.DrawTexture(new Rect(0,0,200,200), imageTexture);
-	}
+	}*/
 }

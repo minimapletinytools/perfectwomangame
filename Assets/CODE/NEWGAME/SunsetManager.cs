@@ -16,6 +16,7 @@ public class SunsetManager
 	public TimedEventDistributor TED { get; private set; }
     public FlatCameraManager mFlatCamera;
     HashSet<FlatElementBase> mElement = new HashSet<FlatElementBase>();
+	UnlockAnnouncer mUnlockAnnouncer;
 	
 	public void initialize()
 	{
@@ -23,9 +24,10 @@ public class SunsetManager
 		TED = new TimedEventDistributor();
 		mFlatCamera = new FlatCameraManager(new Vector3(10000, -3000, 0), 10);
 		mFlatCamera.fit_camera_to_game();
+		mUnlockAnnouncer = new UnlockAnnouncer(this);
 	}
 	
-	
+
 	CharacterLoader mLoader;
 
 	FlatElementImage mBackground;
@@ -506,12 +508,12 @@ public class SunsetManager
 					int accumChange = 0; //accum change is targetCharacters effect on the current character
 					if(aStats[j].CutsceneChangeSet != null) //TODO this check should never fail
 					{
-						Debug.Log("accum change for " + aStats[j].Character.StringIdentifier + " is " + aStats[j].CutsceneChangeSet.accumulative_changes()[ps.Character]);
+						//Debug.Log("accum change for " + aStats[j].Character.StringIdentifier + " is " + aStats[j].CutsceneChangeSet.accumulative_changes()[ps.Character]);
 						accumChange = aStats[j].CutsceneChangeSet.accumulative_changes()[ps.Character];
 					}
 					else
 					{
-						Debug.Log ("null cutscene change for " + aStats[j].Character.StringIdentifier + " " + aStats[j].CutsceneChangeSet);
+						//Debug.Log ("null cutscene change for " + aStats[j].Character.StringIdentifier + " " + aStats[j].CutsceneChangeSet);
 					}
 					if( (wasHard && accumChange > 0) || //if was hard and effect was positive (i.e. hard)
 					   (!wasHard && accumChange < 0)) //if was easy and effect was negative (i.e. easy)

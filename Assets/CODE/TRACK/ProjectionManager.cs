@@ -101,6 +101,12 @@ public class ProjectionManager : FakeMonoBehaviour {
 		if(!B.GoodPosition) 
 			return -A.Rotation.flat_rotation() + 90;
         float r =  get_relative(A.Position, B.Position);
+
+		//openni fix to solve head being set to -90 angle problem
+		if(B.Id == ZigJointId.Neck)
+			if(r == -90 || r == 270)
+				r = 90;
+
         return r;
 	}
 

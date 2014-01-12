@@ -94,10 +94,13 @@ public class GiftManager
 	}
 	public Texture render_gift(int index)
 	{
-		mPlayerImage.set_new_texture(mStages[index].playerTex,new Vector2(1280,960));
-		//mElement.Add(construct_flat_image("REWARD_"+mStages[index].Index.StringIdentifier,index));
-		update(); //note if you have any TED stuff, this will update it a second time
-		ModeNormalPlay.draw_render_texture(mFlatCamera);
+		if(index < mStages.Count)
+		{
+			mPlayerImage.set_new_texture(mStages[index].playerTex,new Vector2(1280,960));
+			//mElement.Add(construct_flat_image("REWARD_"+mStages[index].Index.StringIdentifier,index));
+			update(); //note if you have any TED stuff, this will update it a second time
+			ModeNormalPlay.draw_render_texture(mFlatCamera);
+		}
 		return mFlatCamera.RT;
 	}
 	

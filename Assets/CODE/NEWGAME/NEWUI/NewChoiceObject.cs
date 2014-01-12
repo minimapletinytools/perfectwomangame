@@ -135,8 +135,12 @@ public class NewChoiceObject : FlatElementMultiBase {
 	
 	public void set_difficulty(int difficulty)
 	{
+		string[] labelNames = new string[]{
+			"label_easy","label_normal","label_hard","label_extreme"
+		};
 		//mIcon.SoftColor = GameConstants.IconDifficultyColorsOverTwo[difficulty];
-		mDiffImage.set_new_texture(ManagerManager.Manager.mNewRef.bbChoicePerfectIcons[difficulty]);
+		var tex = ManagerManager.Manager.mCharacterBundleManager.get_image(labelNames[difficulty]);
+		mDiffImage.set_new_texture(tex.Image,tex.Data.Size);
 	}
 	
     public override Color SoftColor
