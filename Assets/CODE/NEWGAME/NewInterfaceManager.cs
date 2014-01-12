@@ -39,6 +39,8 @@ public class NewInterfaceManager {
     {
 		mWarningTimer.update(Time.deltaTime);
 		mWarningOverlay.HardColor = GameConstants.UiWhite * Mathf.Clamp01(mWarningTimer.getUpsidedownParabola()) * 0.7f;
+
+		mHeadPop.update();
 		
         mFlatCamera.update(Time.deltaTime);
         if (mCurrentBody != null)
@@ -48,7 +50,7 @@ public class NewInterfaceManager {
 		
 		TED.update(Time.deltaTime);
 		
-		mHeadPop.update();
+
     }
     
     Vector3 random_position()
@@ -307,8 +309,8 @@ public class NewInterfaceManager {
 		
 		float gStartCutsceneDelay = 4f;
 		float gPerformanceText = 4f;
-		float gCutsceneText = 4f;
-		float gCutsceneTextIncrement = 1f;
+		float gCutsceneText = 6f;
+		float gCutsceneTextIncrement = .9f;
 		float gPreParticle = 1.5f;
 		float gBubblePos = 0.2f;
 

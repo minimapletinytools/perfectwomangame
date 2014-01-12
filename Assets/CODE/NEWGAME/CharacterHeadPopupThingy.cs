@@ -27,9 +27,10 @@ public class CharacterHeadPopupThingy
 	{
 		var shineImage = ManagerManager.Manager.mCharacterBundleManager.get_image("STREAM");
 		FlatElementImage shine = new FlatElementImage(shineImage.Image,shineImage.Data.Size,3);
-		Vector3 targetPos = aHead.SoftPosition + new Vector3(0,shine.BoundingBox.height/2-360,0);
-		shine.HardPosition = targetPos + new Vector3(0,500,0);
-		//shine.SoftPosition = targetPos;
+		Vector3 targetPos = aHead.SoftPosition + new Vector3(0,shine.BoundingBox.height/2-360,0) + new Vector3(0,500,0);
+		Vector3 storePosition = targetPos + new Vector3((NIM.mFlatCamera.Center.x-targetPos.x)*0.2f,shine.BoundingBox.height - 60,0);
+		shine.HardPosition = storePosition;
+		shine.SoftPosition = targetPos;
 		shine.HardColor = positive ? GameConstants.UiYellowTransparent : GameConstants.UiRedTransparent; 
 		shine.HardColor = positive ? GameConstants.UiYellow : GameConstants.UiRed; 
 		mElement.Add(shine); 
@@ -46,7 +47,8 @@ public class CharacterHeadPopupThingy
 	
 		TED.add_one_shot_event(
 			delegate() {
-				shine.HardColor = GameConstants.UiWhiteTransparent;
+				shine.SoftPosition = storePosition;
+				//shine.HardColor = GameConstants.UiWhiteTransparent;
 				//box.HardColor = GameConstants.UiWhiteTransparent;
 			},
 		duration).then_one_shot(
@@ -56,13 +58,20 @@ public class CharacterHeadPopupThingy
 				shine.destroy();
 				//box.destroy();
 			},
-		3);
+		1f);
 	}
 
 
 	public void popup_character(CharacterIndex[] aChars, int[] aDiffs, int[] aOldDiffs, bool isGreen)
 	{
+		
 		int count = aChars.Length;
+		float gTimeBeforeBadges = 1.5f;
+		float scaleTime = Mathf.Sqrt (Mathf.Sqrt(1/(float)count));
+		float gBadgeTime = scaleTime * .5f;
+		float gTimeAfterBadges = 2.0f;
+
+
 
 		FlatElementImage[] mCharacters = null;
 		FlatElementImage[] mBadges = null;
@@ -81,112 +90,135 @@ public class CharacterHeadPopupThingy
 		Vector3 step = new Vector3(-500,0,0);
 		Vector3 start = NIM.mFlatCamera.get_point(0,-1) - new Vector3(0,gIconHeight/2,0);
 		Vector3 offset = (count-1)*(-step)/2f;
-		Vector3 badgeOffset = new Vector3(-150,180,0);
+		Vector3 badgeOffset = new Vector3(-150,165,0);
 		Vector3 nameOffset = new Vector3(0,-180,0);
 
+		CharacterBundleManager.ImageSizePair[] badgeImages = new CharacterBundleManager.ImageSizePair[]{
+			ManagerManager.Manager.mCharacterBundleManager.get_image("label_easy"),
+			ManagerManager.Manager.mCharacterBundleManager.get_image("label_normal"),
+			ManagerManager.Manager.mCharacterBundleManager.get_image("label_hard"),
+			ManagerManager.Manager.mCharacterBundleManager.get_image("label_extreme")
+		};
 
 
-		for(int i = 0; i < count; i++)
-		{
-			//TODO delete all the fallback stuff
-			CharacterBundleManager.ImageSizePair img = null;
-			img = ManagerManager.Manager.mCharacterBundleManager.get_image("ICON_"+aChars[i].StringIdentifier);
-			if(img == null || img.Data == null || img.Image == null)
-				img = ManagerManager.Manager.mCharacterBundleManager.get_image("ANGELS_"+aChars[i].StringIdentifier);
-			if(img == null || img.Data == null || img.Image == null)
-				mCharacters[i] = new FlatElementImage(null,10);
-			else
-				mCharacters[i] = new FlatElementImage(img.Image,img.Data.Size,10);
-
-			mCharacters[i].HardPosition = start + offset + step*i;
-			mCharacters[i].SoftPosition = mCharacters[i].SoftPosition + new Vector3(0,gIconHeight + 50,0);
-			mCharacters[i].HardScale = Vector3.one*0.9f;
 		
-			mBadges[i] = new FlatElementImage(ManagerManager.Manager.mNewRef.bbChoicePerfectIcons[aOldDiffs[i]],11);
-			mBadges[i].HardColor = GameConstants.UiWhiteTransparent;
-			mBadges[i].SoftColor = GameConstants.UiWhite;
-			mBadges[i].HardPosition = mCharacters[i].SoftPosition + badgeOffset;
-			mBadges[i].HardScale = Vector3.one*0.9f;
-
-			var boxImage = ManagerManager.Manager.mCharacterBundleManager.get_image("CUTSCENE_BOX");
-			FlatElementImage box = new FlatElementImage(boxImage.Image,boxImage.Data.Size,3);
-			box.HardPosition = mCharacters[i].HardPosition;
-			box.SoftPosition = mCharacters[i].SoftPosition;
-			box.HardColor = isGreen ? GameConstants.UiYellowTransparent : GameConstants.UiRedTransparent; 
-			box.HardColor = isGreen ? GameConstants.UiYellow : GameConstants.UiRed; 
-			mBackgrounds[i] = box;
-
-			mNames[i] = new FlatElementText(
-				ManagerManager.Manager.mNewRef.genericFont,
-				60,
-				ManagerManager.Manager.mGameManager.CharacterHelper.Characters[aChars[i]].CharacterInfo.ShortName.ToUpper(),
-				11);
-			mNames[i].HardPosition = mCharacters[i].HardPosition + nameOffset;
-			mNames[i].SoftPosition = mCharacters[i].SoftPosition + nameOffset;
-
-			mElement.Add(mCharacters[i]);
-			mElement.Add(mBadges[i]);
-			mElement.Add(mBackgrounds[i]);
-			mElement.Add(mNames[i]);
-		}
-
-		float scaleTime = Mathf.Sqrt (Mathf.Sqrt(1/(float)count));
-		float gTimeBeforeBadges = scaleTime * 1f;
-		float gBadgeTime = scaleTime * 1.2f;
-		float gTimeAfterBadges = scaleTime * 1.2f;
-
-		//Shineeee
-		/*
-		TED.add_one_shot_event(
-			delegate(){
-				for(int j = 0; j < count; j++)
-				{
-					int workingIndex = j;
-					//make sure this does not last too long
-					create_shine_over_character(mCharacters[workingIndex],isGreen,(gBadgeTime)*count + 0.5f);
-				}
-			},
-		gTimeBeforeBadges/2);*/
-
-		//wait one second
 		var chain = TED.add_event(
 			delegate(float aTime) {
+				for(int i = 0; i < count; i++)
+				{
+					//TODO delete all the fallback stuff
+					CharacterBundleManager.ImageSizePair img = null;
+					img = ManagerManager.Manager.mCharacterBundleManager.get_image("ICON_"+aChars[i].StringIdentifier);
+					if(img == null || img.Data == null || img.Image == null)
+						img = ManagerManager.Manager.mCharacterBundleManager.get_image("ANGELS_"+aChars[i].StringIdentifier);
+					if(img == null || img.Data == null || img.Image == null)
+						mCharacters[i] = new FlatElementImage(null,10);
+					else
+						mCharacters[i] = new FlatElementImage(img.Image,img.Data.Size,10);
+
+					mCharacters[i].HardPosition = start + offset + step*i;
+					mCharacters[i].SoftPosition = mCharacters[i].SoftPosition + new Vector3(0,gIconHeight + 43,0);
+					mCharacters[i].HardScale = Vector3.one*0.8f;
+				
+					mBadges[i] = new FlatElementImage(badgeImages[aOldDiffs[i]].Image,badgeImages[aOldDiffs[i]].Data.Size,11);
+					//mBadges[i].HardColor = GameConstants.UiWhiteTransparent;
+					mBadges[i].HardColor = GameConstants.UiWhite;
+					mBadges[i].HardPosition = mCharacters[i].HardPosition + badgeOffset;
+					mBadges[i].SoftPosition = mCharacters[i].SoftPosition + badgeOffset;
+					mBadges[i].HardScale = Vector3.one*0.9f;
+
+					var boxImage = ManagerManager.Manager.mCharacterBundleManager.get_image("CUTSCENE_BOX");
+					FlatElementImage box = new FlatElementImage(boxImage.Image,boxImage.Data.Size,3);
+					box.HardPosition = mCharacters[i].HardPosition;
+					box.SoftPosition = mCharacters[i].SoftPosition;
+					box.HardColor = isGreen ? GameConstants.UiYellowTransparent : GameConstants.UiRedTransparent; 
+					box.HardColor = isGreen ? GameConstants.UiYellow : GameConstants.UiRed; 
+					mBackgrounds[i] = box;
+
+					mNames[i] = new FlatElementText(
+						ManagerManager.Manager.mNewRef.genericFont,
+						60,
+						ManagerManager.Manager.mGameManager.CharacterHelper.Characters[aChars[i]].CharacterInfo.ShortName.ToUpper(),
+						11);
+					mNames[i].HardPosition = mCharacters[i].HardPosition + nameOffset;
+					mNames[i].SoftPosition = mCharacters[i].SoftPosition + nameOffset;
+					mNames[i].HardColor = (!isGreen) ? GameConstants.UiWhite : GameConstants.UiRed; 
+					
+
+					mElement.Add(mCharacters[i]);
+					mElement.Add(mBadges[i]);
+					mElement.Add(mBackgrounds[i]);
+					mElement.Add(mNames[i]);
+				}
+				//Shineeee
+				/*
+				TED.add_one_shot_event(
+					delegate(){
+						for(int j = 0; j < count; j++)
+						{
+							int workingIndex = j;
+							//make sure this does not last too long
+							create_shine_over_character(mCharacters[workingIndex],isGreen,(gBadgeTime)*count + 0.5f);
+						}
+					},
+				gTimeBeforeBadges/2);*/
+
 				return true;
 			},
 		gTimeBeforeBadges);
+
+
+		chain = chain.wait(0.2f);
+
 
 		for(int j = 0; j < count; j++)
 		{
 			int workingIndex = j;
 			chain = chain.then_one_shot(
 				delegate() {
-					
-
 					//shine
-					create_shine_over_character(mCharacters[workingIndex],isGreen,gBadgeTime*(count-workingIndex));
-					mBadges[workingIndex].set_new_texture(ManagerManager.Manager.mNewRef.bbChoicePerfectIcons[aDiffs[workingIndex]]);
+					create_shine_over_character(mCharacters[workingIndex],isGreen,gBadgeTime*(count)+gTimeAfterBadges-0.5f);
+				}
+			,0);
+		}
+
+		chain = chain.wait(0.5f);
+
+		for(int j = 0; j < count; j++)
+		{
+			int workingIndex = j;
+			chain = chain.then_one_shot(
+				delegate() {
+
+					//TODO DELETE
+					//mBadges[workingIndex].destroy();
+					//Vector3 pos = mBadges[workingIndex].HardPosition;
+					//mBadges[workingIndex] = new FlatElementImage(badgeImages[aDiffs[workingIndex]].Image,badgeImages[aDiffs[workingIndex]].Data.Size,11);
+					//mBadges[workingIndex].HardPosition = pos;
+					//mElement.Add(mBadges[workingIndex]);
+					mBadges[workingIndex].set_new_texture(badgeImages[aDiffs[workingIndex]].Image,badgeImages[aDiffs[workingIndex]].Data.Size);
 
 					//pulsating scale animation
 					mBadges[workingIndex].Events.add_event(
 						delegate(FlatElementBase aBase, float aTime) 
 						{
-							aBase.mLocalScale = Vector3.one * (1+Mathf.Sin(aTime*6)*0.2f);
-							if(aTime > 0.3f) 
+							aBase.mLocalScale = Vector3.one * (1+Mathf.Sin(aTime*12)*0.3f);
+							if(aTime > 0.225f) 
 								return true;
 							return false;
 						},
 					0);
 
-					//jiggle character
+					/*
 					mCharacters[workingIndex].Events.add_event(
 						delegate(FlatElementBase aBase, float aTime) 
 						{
-							aBase.mLocalScale = Vector3.one * (1+Mathf.Sin(aTime*6)*0.05f);
+							aBase.mLocalScale = Vector3.one * (1+Mathf.Sin(aTime*6)*0.1f);
 							if(aTime > 0.3f) 
 								return true;
 							return false;
 						},
-					0);
+					0);*/
 
 					//play a sound
 					if(isGreen)
@@ -203,10 +235,11 @@ public class CharacterHeadPopupThingy
 				for(int i = 0; i < count; i++)
 				{
 					int index = i;
-					mBadges[i].SoftColor = GameConstants.UiWhiteTransparent;
-					mCharacters[i].SoftPosition = start + offset + step*i + new Vector3(0,-100,0); //move down a little more to compensate for scale change
+					//mBadges[i].SoftColor = GameConstants.UiWhiteTransparent;
+					mCharacters[i].SoftPosition = start + offset + step*i + new Vector3(0,-220,0); //move down a little more to compensate for scale change
 					mNames[i].SoftPosition = mCharacters[i].SoftPosition + nameOffset;
 					mBackgrounds[i].SoftPosition = mCharacters[i].SoftPosition;
+					mBadges[i].SoftPosition = mCharacters[i].SoftPosition + badgeOffset;
 
 					//destroy them eventually.
 					TED.add_one_shot_event(
