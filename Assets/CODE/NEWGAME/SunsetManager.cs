@@ -357,9 +357,9 @@ public class SunsetManager
 	{
 		//timing vars
 		float gIntroText = 4.5f;
-		float gPreScoreCount = 0.1f;
+		float gPreScoreCount = 0f;
 		float gScoreCount = 0.2f;
-		float gPostScoreCount = 0f;
+		float gPostScoreCount = 0.1f;
 		float gRestart = 65;
 		
 		//add the gravestone to the scene
@@ -453,7 +453,12 @@ public class SunsetManager
 					mScoreTexts[ps.Character.LevelIndex-1].Events.add_event(scoreJiggleDelegate,0);
 						//show_score(ps.Character,(int)ps.AdjustedScore,gPreScoreCount + gScoreCount + gPostScoreCount);
 				},
-			0).then(
+			0).then_one_shot(
+				delegate()
+				{
+					mManager.mMusicManager.play_sound_effect("counting");
+				}
+			,0).then(
 				delegate(float aTime)
 				{
 					aTime -= gPreScoreCount;
