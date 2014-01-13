@@ -124,6 +124,24 @@ public class FlatCameraManager{
 		return (desiredAspect > screenRatio);
 	}
 
+	//this will return the difference in pixels from the bottom left of the screen to the bottom left of where camera crops
+	public static Vector2 get_fit_difference()
+	{
+		Vector2 r = new Vector2(0,0);
+		float desiredAspect = ManagerManager.FORCED_ASPECT_RATIO;
+		float screenRatio = Screen.width / (float)Screen.height;
+		if(width_dictate()) //match camera width to screen width
+		{
+			float yGive = screenRatio/desiredAspect; //desiredHeight to screenHeight
+			r.y = (1-yGive) * Screen.height;
+		}
+		else
+		{
+			float xGive = desiredAspect/screenRatio; //screen width to camera width
+			r.x = (1-xGive) * Screen.width;
+		}
+		return r;
+	}
 	//TODO rename these functions, make them call each other pfftt
 	public static void fit_camera_to_screen(Camera aCam)
 	{

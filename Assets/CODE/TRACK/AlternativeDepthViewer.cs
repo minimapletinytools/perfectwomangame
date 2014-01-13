@@ -30,6 +30,8 @@ public class AlternativeDepthViewer : MonoBehaviour {
         if (null != target) {
             target.material.mainTexture = DepthTexture;
         }
+
+
 	}
 
     void UpdateHistogram(ZigDepth depth)
@@ -113,31 +115,22 @@ public class AlternativeDepthViewer : MonoBehaviour {
 
     Rect targetRect = new Rect(10, Screen.height - 120 - 10, 160, 120);
 	Rect currentRect = new Rect(10, Screen.height - 120 - 10, 160, 120);
-    //Rect currentRect = new Rect(0, 0, Screen.width, Screen.height);
-    public void set_full(bool full)
-    {
-		//TODO Delete
-        if (full)
-        {
-            targetRect = new Rect(0, 0, Screen.width, Screen.height);
-        }
-        else
-        {
-            targetRect = new Rect(10, Screen.height - 120 - 10, 160, 120);
-        }
-    }
-	
+
 	public void show_indicator(bool show)
 	{
+		Vector2 give = FlatCameraManager.get_fit_difference();
+		targetRect = new Rect(-400, Screen.height - 120 - 20 - give.y/2, 160, 120);
+		currentRect.y = Screen.height - 120 - 20 - give.y/2;
 		if(!show)
 		{
-			targetRect.x = -300;
+			targetRect.x = -400;
 		}
-		else targetRect.x = 10;
+		else targetRect.x = 10 + give.x/2;
+
+
 	}
     void Update()
     {
-        //TODO tween depth image position
         float lambda = 0.1f;
         currentRect.x = (1 - lambda) * currentRect.x + lambda * targetRect.x;
         currentRect.y = (1 - lambda) * currentRect.y + lambda * targetRect.y;
