@@ -116,7 +116,7 @@ public class TransitionCameraManager : FakeMonoBehaviour
 		mDepthImage = new FlatElementImage(null,100);
 		mDepthWarningText = new FlatElementText(mManager.mNewRef.genericFont,40,"Make sure you are\n in frame and no body\n parts are covered",100);
 		mDepthWarningText.HardColor = new Color(1,1,1,0);	
-		mDepthWarningText.HardPosition = mFlatCamera.get_point_total(1,-1) + mFlatCamera.screen_pixels_to_camera_pixels(new Vector3(-330,80,0));
+		mDepthWarningText.HardPosition = mFlatCamera.get_point_total(1,-1) + mFlatCamera.screen_pixels_to_camera_pixels(new Vector3(-330,160,0));
 		//mDepthWarningText.Alignment = TextAlignment.Left;
 		EnableDepthWarning = false;
 		
@@ -342,7 +342,10 @@ public class TransitionCameraManager : FakeMonoBehaviour
 		//cheap hack 
 		CharacterIndex charIndex = Input.GetKeyDown(KeyCode.Alpha9) ? new CharacterIndex(1,0) : CharacterIndex.sFetus;
 		if(Input.GetKeyDown(KeyCode.Alpha9) )
+		{
 			GameConstants.fadingTime = 0.1f;
+			GameConstants.numberRetries = 0;
+		}
 		
 		//TODO if user is not roughly in the center of the screen, return false
 		fade_out_with_sound(

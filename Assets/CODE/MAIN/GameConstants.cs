@@ -45,17 +45,8 @@ public static class GameConstants
 		"Ingo Von Staden", "Andreas Hykade", "Alex Rickett","Steven Amrhein",
 		"David Elliott","Sabrina Winter", "Eddo Stern"
 	};
-	
-	
-	/*
-	public static int numberRetries = 0;
-	public static float preplayTime = 0.1f;
-	public static float fadingTime = 0.1f;
-	public static float transitionToChoiceDelayTime = 0.1f;
-	*/
-	
-	public static int numberRetries = 0;
-	//public static int numberRetries = 1;
+
+	public static int numberRetries = 1;
 	public static float preplayTime = 2f;
 	public static float fadingTime = 2.3f;
 	public static float transitionToChoiceDelayTime = 1.2f;
