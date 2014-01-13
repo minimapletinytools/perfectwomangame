@@ -86,6 +86,7 @@ public class GiftManager
 		var tex = mManager.mZigManager.ImageView.take_color_image();
 		mStages.Last().playerTex = new Texture2D(tex.width,tex.height,tex.format,false);
 		mStages.Last().playerTex.SetPixels(tex.GetPixels());
+		mStages.Last().playerTex.Apply();
 	}
 
 	public void set_background_for_render()

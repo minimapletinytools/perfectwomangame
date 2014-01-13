@@ -62,7 +62,7 @@ public class ChoosingManager
 		mBBQuestionText = new ColorTextObject(10);
         mBBQuestionTextPrefix = new FlatElementText(newRef.genericFont, 100, "", 10);
 		//mBBQuestionText.HardPosition = mFlatCamera.get_point(0,0.6f) + new Vector3(0,-75,0);
-		mBBQuestionText.HardPosition = mFlatCamera.get_point(0,0.8f);
+		mBBQuestionText.HardPosition = mFlatCamera.get_point(0,0.75f);
 		mBBQuestionTextPrefix.HardPosition = mFlatCamera.get_point(0, 0.75f) + new Vector3(0,75, 0);
 		mBBQuestionText.SoftInterpolation = 1;
         mBBQuestionTextPrefix.SoftInterpolation = 1;
@@ -100,11 +100,11 @@ public class ChoosingManager
 		
 		foreach(FlatBodyObject e in mBBChoiceBodies)
 			e.SoftColor =  !small ? GameConstants.uiWhite : GameConstants.UiWhiteTransparent;
-		foreach(NewChoiceObject e in mBBChoices)
-			e.SoftColor = fullColor;
+		//foreach(NewChoiceObject e in mBBChoices)
+		//	e.SoftColor = fullColor;
 		mBBMiniMan.SoftColor = fullColor;
-		foreach(var e in mBBChoices)
-			e.SoftColor = fullColor;
+		//foreach(var e in mBBChoices)
+		//	e.SoftColor = fullColor;
 		mBBQuestionText.SoftColor = fullColor;
         mBBQuestionTextPrefix.SoftColor = fullColor*GameConstants.UiRed*2;
 		mBBChoosingBackground.SoftColor = fullColor*(new Color(0.6f,0.6f,1))*1;//0.2f;

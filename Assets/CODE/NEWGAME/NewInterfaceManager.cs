@@ -27,7 +27,7 @@ public class NewInterfaceManager {
 	public void initialize()
     {
 		TED = new TimedEventDistributor();
-        mFlatCamera = new FlatCameraManager(new Vector3(50000, 10000, 0), 9);
+        mFlatCamera = new FlatCameraManager(new Vector3(-50000, 10000, 0), 9);
 		mFlatCamera.fit_camera_to_screen();
 		//mFlatCamera.fit_camera_to_game();
         mMiniMan = ((GameObject)GameObject.Instantiate(ManagerManager.Manager.mReferences.mMiniChar)).GetComponent<CharacterTextureBehaviour>();        
@@ -56,7 +56,7 @@ public class NewInterfaceManager {
     Vector3 random_position()
     {
         //UGG piece of junk...
-        return (new Vector3(Random.Range(-1f, 1f), Random.Range(-1f, 1f), 0)).normalized * Random.Range(2000,20000);
+        return mFlatCamera.Center + (new Vector3(Random.Range(-1f, 1f), Random.Range(-1f, 1f), 0)).normalized * Random.Range(4000,4000);
     }
 
 	FlatElementImage mBBNameTextFrame;

@@ -503,7 +503,7 @@ public class ModeNormalPlay
 		
 		//BAD PERFORMANCE
 		chain = chain.then(
-			mInterfaceManager.skippable_text_bubble_event("BAD PERFORMANCE", gTextDisplayDur)
+			mInterfaceManager.skippable_text_bubble_event(firstDeath ? "BAD PERFORMANCE!" : "HORRIBLE PERFORMANCE! EARLY DEATH", gTextDisplayDur)
 		,2);
 		
 		//NEXT TIME YOU PERFORM THAT BAD YOU MIGHT DIE

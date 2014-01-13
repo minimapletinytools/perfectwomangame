@@ -35,7 +35,8 @@ public class NewChoiceObject : FlatElementMultiBase {
 		var newRef = ManagerManager.Manager.mNewRef;
 		//mSquare = new FlatElementImage(newRef.bbChoiceBox, aDepth);
 		mSquare = new FlatElementImage(meterImage.Image,meterImage.Data.Size, aDepth);
-		mText = new FlatElementText(newRef.genericFont,34,"",aDepth +2);
+		mSquare.HardColor = GameConstants.UiRed;
+		mText = new FlatElementText(newRef.genericFont,32,"",aDepth +2);
 		mDiffImage = new FlatElementImage(null,aDepth +2);
         //mPerfect = new DifficultyObject(ManagerManager.Manager.mNewRef.uiPerfectStar, aDepth);
 		mIcon = new FlatElementImage(null,aDepth +2);
@@ -54,7 +55,7 @@ public class NewChoiceObject : FlatElementMultiBase {
 		
 		mElements.Add(new FlatElementMultiBase.ElementOffset(mIcon, new Vector3(0,210,0)));
         
-		mText.SoftColor = GameConstants.UiWhite;
+		mText.HardColor = GameConstants.uiWhite;
 		if(aIndex != null)
 			set_actual_character(aIndex.Value);
 
@@ -146,7 +147,10 @@ public class NewChoiceObject : FlatElementMultiBase {
 		var tex = ManagerManager.Manager.mCharacterBundleManager.get_image(labelNames[difficulty]);
 		mDiffImage.set_new_texture(tex.Image,tex.Data.Size);
 	}
-	
+
+
+	//TODO this function doe not work
+	/*
     public override Color SoftColor
     {
         get
@@ -168,7 +172,7 @@ public class NewChoiceObject : FlatElementMultiBase {
 			
 			//DELETE this is a stupid hack
 			if(value.a != 0 && mText != null)
-				mText.SoftColor = new Color(0,0,0,1);
+				mText.SoftColor = GameConstants.uiWhite;
 			
 			//this is also a stupid hack
 			//if(mBody!=null)
@@ -176,5 +180,5 @@ public class NewChoiceObject : FlatElementMultiBase {
 			if(mIcon != null && value.a != 0)
 				mIcon.SoftColor = bodyColor;
         }
-    }
+    }*/
 }
