@@ -241,6 +241,16 @@ public class CharacterBundleManager : FakeMonoBehaviour {
 				mCharacterHelper.Characters[e].CharacterInfo = NUPD.CharacterInformation.default_character_info(e);
 			}
 		}
+
+		//this is a hack
+		//randomize difficulty changes for fetus
+		var avail = CharacterIndex.sAllCharacters
+			.Where(f => f.LevelIndex == 1)
+				.Where(f=>mManager.mMetaManager.UnlockManager.is_unlocked(f) == 1).ToArray();
+		ChoiceHelper.Shuffle(avail);
+		var changeThisInfo = mCharacterHelper.Characters[CharacterIndex.sFetus].CharacterInfo;
+		changeThisInfo.ChangeSet[0].Changes[1].Changes[avail[0]] = -1;
+		changeThisInfo.ChangeSet[0].Changes[2].Changes[avail[1]] = 1;
 		
 		foreach(CharacterIndex e in CharacterIndex.sAllCharacters)
 		{
