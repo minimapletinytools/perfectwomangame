@@ -36,7 +36,7 @@ public class NewChoiceObject : FlatElementMultiBase {
 		//mSquare = new FlatElementImage(newRef.bbChoiceBox, aDepth);
 		mSquare = new FlatElementImage(meterImage.Image,meterImage.Data.Size, aDepth);
 		mSquare.HardColor = GameConstants.UiRed;
-		mText = new FlatElementText(newRef.genericFont,32,"",aDepth +2);
+		mText = new FlatElementText(newRef.genericFont,40,"",aDepth +2);
 		mDiffImage = new FlatElementImage(null,aDepth +2);
         //mPerfect = new DifficultyObject(ManagerManager.Manager.mNewRef.uiPerfectStar, aDepth);
 		mIcon = new FlatElementImage(null,aDepth +2);
@@ -53,7 +53,7 @@ public class NewChoiceObject : FlatElementMultiBase {
 		//mElements.Add(new FlatElementMultiBase.ElementOffset(mPerfect, new Vector3(-122,65,0)));
         mElements.Add(new FlatElementMultiBase.ElementOffset(mMeter, new Vector3(0,0,0)));
 		
-		mElements.Add(new FlatElementMultiBase.ElementOffset(mIcon, new Vector3(0,210,0)));
+		mElements.Add(new FlatElementMultiBase.ElementOffset(mIcon, new Vector3(0,250,0)));
         
 		mText.HardColor = GameConstants.uiWhite;
 		if(aIndex != null)
@@ -100,7 +100,7 @@ public class NewChoiceObject : FlatElementMultiBase {
 			mCharacterIndex = value;
 			if(mCharacterIndex.LevelIndex != -1)
 			{
-				mText.Text = FlatElementText.convert_to_multiline(2,mCharacterIndex.Description.ToUpper());
+				mText.Text = FlatElementText.convert_to_multiline(mCharacterIndex.Description.Length > 40 ? 3 : 2,mCharacterIndex.Description.ToUpper());
 				//mText.Text = mCharacterIndex.ShortName.ToUpper();
 			}
 			else mText.Text = "";

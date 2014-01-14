@@ -29,7 +29,7 @@ public class ChoosingManager
 
 	CharacterIndex[] mChoices = null;
 	
-	
+
 	public void initialize()
 	{
 		
@@ -62,8 +62,8 @@ public class ChoosingManager
 		mBBQuestionText = new ColorTextObject(10);
         mBBQuestionTextPrefix = new FlatElementText(newRef.genericFont, 100, "", 10);
 		//mBBQuestionText.HardPosition = mFlatCamera.get_point(0,0.6f) + new Vector3(0,-75,0);
-		mBBQuestionText.HardPosition = mFlatCamera.get_point(0,0.75f);
-		mBBQuestionTextPrefix.HardPosition = mFlatCamera.get_point(0, 0.75f) + new Vector3(0,75, 0);
+		mBBQuestionText.HardPosition = mFlatCamera.get_point(0,0.72f);
+		mBBQuestionTextPrefix.HardPosition = mFlatCamera.get_point(0, 0.72f) + new Vector3(0,75, 0);
 		mBBQuestionText.SoftInterpolation = 1;
         mBBQuestionTextPrefix.SoftInterpolation = 1;
 		var bubbleImage = mManager.mCharacterBundleManager.get_image("SELECTION_BUBBLE");
@@ -170,8 +170,8 @@ public class ChoosingManager
 			
 			
 			float xOffset = netWidth/2 - padding/2 - padding*i;
-			mBBChoices[i].HardPosition = mFlatCamera.get_point(0, -0.1f) + new Vector3(xOffset,0,0);
-			mBBChoiceBodies[i].HardPosition = mFlatCamera.get_point(0, -0.1f) + new Vector3(xOffset,-230,0);
+			mBBChoices[i].HardPosition = mFlatCamera.get_point(0, -0.16f) + new Vector3(xOffset,0,0);
+			mBBChoiceBodies[i].HardPosition = mFlatCamera.get_point(0, -0.16f) + new Vector3(xOffset,-245,0);
 		}
 	}
 
