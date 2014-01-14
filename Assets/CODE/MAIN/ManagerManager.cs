@@ -52,7 +52,9 @@ public class ManagerManager : MonoBehaviour{
 	public NewMenuReferenceBehaviour mNewRef;
 
 	void Awake () {
-		
+
+		Application.targetFrameRate = (int)GameConstants.TARGET_FRAMERATE;
+
 		Screen.showCursor = false;
 		gameObject.AddComponent<AudioListener>();
 		

@@ -179,7 +179,7 @@ public class FlatElementBase {
 
     public FlatElementBase()
     {
-        SoftInterpolation = 0.1f;
+        SoftInterpolation = 0.08f;
         HardScale = Vector3.one;
 		HardColor = new Color(0.5f,0.5f,0.5f,0.5f);
 		

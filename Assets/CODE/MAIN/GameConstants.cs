@@ -8,7 +8,7 @@ public static class GameConstants
 	public static int CONTENT_WIDTH = 3200;
 	public static int CONTENT_HEIGHT = 1800;
 
-	
+	public static float TARGET_FRAMERATE = 50;
 	
 	public static int numberAges = 10; //fetus, 5, 16, 27, 34, 45, 60, 85, 100, DEAD
 	public static int[] numberChoices = new int[]{1,10,10,10,10,10,10,10,1,1};
@@ -28,7 +28,7 @@ public static class GameConstants
 	public static Color ParticleStreamHard { get { return new Color32(255,0,0,255); } }
 	
 	//game stuff
-	public static float maxGradeNorm = 25f;
+	public static float maxGradeNorm = 18f;
 	public static float minGradeNorm = 1f;
 	
 	//grave stuff
@@ -72,7 +72,7 @@ public static class GameConstants
 	public static Color UiWhiteTransparent{get {return new Color(uiWhite.r,uiWhite.g,uiWhite.b,0)/2f; }}
 
 	public static Color UiMiniMan{get {return new Color(1,0.3f,0.2f); }}
-	public static Color UiPopupBubble{get { return new Color(0.5f,0.5f,0.5f,0.4f); } }
+	public static Color UiPopupBubble{get { return new Color(0.43f,0.43f,0.43f,0.42f); } }
 	
 	public static Color uiGraveText = new Color32(102,101,101,255);
 	public static Color UiGraveText {get{return uiGraveText*0.5f;}}

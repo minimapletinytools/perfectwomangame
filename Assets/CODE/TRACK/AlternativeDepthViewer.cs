@@ -113,8 +113,8 @@ public class AlternativeDepthViewer : MonoBehaviour {
     }
 
 
-    Rect targetRect = new Rect(10, Screen.height - 120 - 10, 160, 120);
-	Rect currentRect = new Rect(10, Screen.height - 120 - 10, 160, 120);
+    Rect targetRect = new Rect(20, Screen.height - 120 - 10, 160, 120);
+	Rect currentRect = new Rect(20, Screen.height - 120 - 10, 160, 120);
 
 	public void show_indicator(bool show)
 	{
@@ -125,7 +125,7 @@ public class AlternativeDepthViewer : MonoBehaviour {
 		{
 			targetRect.x = -400;
 		}
-		else targetRect.x = 10 + give.x/2;
+		else targetRect.x = 20 + give.x/2;
 
 
 	}
