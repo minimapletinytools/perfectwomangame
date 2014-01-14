@@ -1,26 +1,112 @@
+::NEW TODO::
+
+::MEETING NOTES::
+-custom ending 
+	-finish art
+	-decide on credits (scroll over for now) and time the animations
+	-polish and resize the image capture
+	DONE-cycle through poses
+-boundaries for the joints
+-do particles properly
+	DONE???-move behind the body, and set the color
+	-feedback during play of how well you do (particles) + (other?)
+		-particles falling from the sky based on overall performance
+		-maybe particles on the character
+-balance the grading
+	-how easy it is to do well (0-1)
+		-extreme choices too easy
+DONE-bubbles should be 202,202,202,70%
+-go over selection and connection together in detail
+-either new font or shrink text in head pop up names
+-if we have time, age 110
+	-when you die at 85 gives special message and then goes to 110
+	-beginning of 110 it says "you lived a very long life. Enjoy what is left"
+	-asteroids you can bump around ..........
+	-only 10-15 seconds
+	-floating off in space death cutscene
+		-no death text goes straight to sunset
+	-transition to sunset, has starry sky space background with 110 floating in it.
+-get more differentiated play sounds (and make the volume less loud)
+-bmp format
+
 ::TODO INTL ED::
--sunset sound gets played at fetus (should nto hapen)
--birth pose should be hands up
-DONE-make particles come right away
--customized ending....
--put boundaries on joints for openNI....
--grave connections still all green??
--see if you can fix the startup time delay. Seems to have gotten worse
--replce all the green stuff with yellow stuff....
+-have steven fix website, scrolling problem with image. extra bad in safari
+-early death with retry at age 85 makes it still say "you die a natural death"
+DONE-make figure always in sunset
+DONE-particles behind the figure
+-extreme is too easy right now (raise lower bound of performance htreshlod)
+-confetti from top of screen ifyou do super duper well
+-change performance evaluaton to match up better with new grading
+-make reward image bigger
+	-better yet make it scale based on the player size in image
+-random/different word bubbles
+-adjust positions in new choice object
+-add particles based on overall performance, rhythm game style
+
+
+-connection text is too fast, hard to read
+-reduce volume of sound effects during PLAY
+-05-3 BPM roundoff makes it too fast I think
+
+-limits on head torso and waist
+	-this is hard because I want relative limits but I compute angles absolute..
+-depth image no longer disappears properly
+
+-still huge delay between early death and cutscenes
+-birth pose should be hands up (I think whale hunter has a pose like this??)
 -see if you can fix the body crumpled up problem
 	-this still happens because openNI will still say trackedskeleton even when player is gone..
 		-we can hard detect this by checking if the player is in a crumpled position..
--enable one retry and make sure it still works!
--redo particles one more time lol
 -some performances are to easy
+	-maybe add difficulty tuning parameter
 	-can do princess and mom well without doing anything...
--put in new sounds
+
+DONE-make stars same color as the background character
+DONE-gift still broken
+	-a word bubble shows up here for some reason...
+DONE??-cutscene bubble flying still causing that funny glitch thing
+	-just need to move interface camera further away from play camera I guess???
+	-oh actually I guess it was an update order thing???
+IGNORE-put in new sounds
+IGNORE-consider switching bakc ot smooth grading. Right now it will play particles based on yoru immediate grade..
+	-of course having rgading frame rate dependent would suck
+DONE-enable one retry and make sure it still works!
+DONE-set a max limit to framerate...
+DONE-medium choices maybe should be harder (too similar to easy??)
+DONE-popuptextbubble fading should be faster
+DONE-randomize the fetus cutscene text difficulty changes
+DONE-maybe should say bad performance, early death
+IGNORE-game freezes (but not crashes) in end cutscene..
+DONE/IGNORE-title screen needs to size properly
+	-it does not because you have full screen fading instead of jsut the cropped area...
+	-good job peter
+DONE-sunset sound gets played at fetus (should not hapen)
+DONE-customized ending....
+DONE-badges getting distorted in cutscenes...
+DONE-grave connections still all green??
+IGNORE-see if you can fix the startup time delay. Seems to have gotten worse
+DONE-replce all the green stuff with yellow stuff....
+DONE-gift manager
+	-list<texture2d> playertexturearray
+	-list<index> playerindex
+	-capture_player
+	-started_new_character
+	-set_final_character
+	-render(int index) 
+	-format
+		-ugggg
+		-REWARD_<age>-<index>
+			-should be colored <level>*5,0,0,255
+DONE-redo particles one more time lol
 DONE-flahing obnoxious red warning 
 	-http://www.youtube.com/watch?v=yr-OLZmKZ_I	
-
+DONE-make particles come right away
+DONE-heads should come in with old labels
+DONE-make labels disappear same time as streamS (too hard)
+DONE-particles over foreground
+DONE-everything seems to be performance mediocre right now
 
 -contact katherine
-
 -clean up UI folder
 	-delet box
 	-delete angel
@@ -59,6 +145,12 @@ DONE-transition to cutscene sucks
 
 
 ::TODO list for LEA::
+-missing
+	-34-3 CUTSCENE0_1
+-05-2, 27-4 icons are too red
+-change one of the team names in the pro gamer to "Scarlet Queens" pretty please :)
+-use "poor" instead of mediocre maybe
+
 DONE-need a grave dot in sunset for positioning the grave..
 DONE-name label needs to be even longer 
 DONE-sunset score label needs to be a littel large
@@ -104,6 +196,14 @@ DONE-mising
 	-85-2 CUTScene5_0, 5_1, 
 	-85-3 CUTSCENE 5_0, 5_1, 5_2
 	-85-1 CUTSCENE 5_0, 5_1
+DONE-missing
+	-34-3 POSITIONS.png missing character dot, CUTSCENE41,40,10,11,01,00, BG-1
+	-16-4 CUTSCENE1_1
+	-05-4 BG-3 BG-2
+	-05-2 BG-1
+	-16-1 HEAD_B (only 1 dot)
+	-85-4 CUTSCENE30,41,11,01,32,31
+
 
 
 
