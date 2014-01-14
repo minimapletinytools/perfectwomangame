@@ -38,6 +38,24 @@ public class SparkleStarFlashParticle
 	FlatParticleEmitter mEmitter2;
 	Dictionary<string, CachedFlatParticles> mCachedParticles = new Dictionary<string, CachedFlatParticles>();
 	public string[] mParticleTypes = new string[]{"gold","silver","glow","red"};
+
+	public void set_emitter_particle_color(Color aColor, int emitterNum)
+	{
+		Color endColor = aColor;
+		endColor.a = 0;
+		if(emitterNum == 1)
+		{
+			mEmitter.StartColor = aColor;
+			mEmitter.EndColor = endColor;
+		}
+		else
+		{
+			mEmitter2.StartColor = aColor;
+			mEmitter2.EndColor = endColor;
+		}
+
+
+	}
 	
 	public SparkleStarFlashParticle()
 	{
@@ -52,8 +70,7 @@ public class SparkleStarFlashParticle
 		{
 			UseColor = true,
 			StartColor = GameConstants.UiWhite,
-			EndColor = GameConstants.UiWhiteTransparent,
-			Gravity = new Vector3(0,-100,0)
+			EndColor = GameConstants.UiWhiteTransparent
 		};
 		
 		foreach(string e in mParticleTypes)
@@ -109,18 +126,19 @@ public class SparkleStarFlashParticle
 				tex = ManagerManager.Manager.mNewRef.partGold;
 			if(aType == "silver")
 				tex = ManagerManager.Manager.mNewRef.partSilver2;
-			var newPart = new FlatElementImage(tex,new Vector2(60,60),1000);
+			var newPart = new FlatElementImage(tex,new Vector2(60,60),5);
 			foreach (Renderer f in newPart.PrimaryGameObject.GetComponentsInChildren<Renderer>())	
-				f.gameObject.layer = ManagerManager.Manager.mBackgroundManager.mForegroundLayer;
+				f.gameObject.layer = ManagerManager.Manager.mBackgroundManager.mBackgroundLayer;
 			cache.return_particle(newPart);
 		}
-		var part = mEmitter.add_particle(cache.take_particle(),position,speed,1f,aType);
+		var emitter = aType == "gold" ? mEmitter2 : mEmitter;
+		var part = emitter.add_particle(cache.take_particle(),position,speed,1f,aType);
 		part.element.HardFlatRotation = Random.Range(0f,360f);
 		part.element.HardScale = aScale * Vector3.one;
 		part.timer = new QuTimer(aTimer.getCurrent(),aTimer.getTarget());
 	}
 
-	public void create_particle(string aType, Vector3 position, Vector3 speed)
+	public void create_particle(string aType, Vector3 position, Vector3 speed, int emitterNum = 1)
 	{
 		//TODO diff particle types
 		var cache = mCachedParticles[aType];
@@ -131,7 +149,7 @@ public class SparkleStarFlashParticle
 				tex = ManagerManager.Manager.mNewRef.partGold;
 			if(aType == "silver")
 				tex = ManagerManager.Manager.mNewRef.partSilver2;
-			var newPart = new FlatElementImage(tex,new Vector2(60,60),1000);
+			var newPart = new FlatElementImage(tex,new Vector2(60,60),5);
 			if(aType == "silver")
 			{
 				newPart.HardScale = 1.2f*(new Vector3(1,1,1));
@@ -143,6 +161,7 @@ public class SparkleStarFlashParticle
 				f.gameObject.layer = ManagerManager.Manager.mBackgroundManager.mBackgroundLayer;
 			cache.return_particle(newPart);
 		}
+
 		var part = mEmitter.add_particle(cache.take_particle(),position,speed,0.7f,aType);
 		if(aType == "silver")
 		{
@@ -156,8 +175,10 @@ public class SparkleStarFlashParticle
 	{
 		foreach(var e in mEmitter.update_particles(aDelta))
 		{
-			//e.destroy();
-			//TODO need to identify the type name and put them in the right place
+			mCachedParticles[e.id].return_particle(e.element);
+		}
+		foreach(var e in mEmitter2.update_particles(aDelta))
+		{
 			mCachedParticles[e.id].return_particle(e.element);
 		}
 	}
@@ -227,12 +248,6 @@ public class FlatParticleEmitter : FlatElementBase
 		UseColor = true;
 		StartColor = GameConstants.UiWhite;
 		EndColor = GameConstants.UiWhite;
-	}
-	
-	public void add_texture_particle(Texture2D aImage, Vector2 aSize, Vector3 aPos, Vector3 aVel, float aLifetime,string aId)
-	{
-		FlatElementImage image = new FlatElementImage(aImage,aSize,0); //TODO depth
-		add_particle(image,aPos,aVel,aLifetime,aId);
 	}
 	
 	public FlatSubParticle add_particle(FlatElementBase aParticle, Vector3 aPos, Vector3 aVel, float aLifetime, string aId)

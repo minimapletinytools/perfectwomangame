@@ -96,7 +96,7 @@ public class SunsetManager
 		var scoreBgImage = mManager.mCharacterBundleManager.get_image("SCORELABEL");
 		FlatElementImage scoreBg = new FlatElementImage(scoreBgImage.Image,scoreBgImage.Data.Size,20);
 		scoreBg.HardPosition = mFlatCamera.get_point(0,1.5f);
-		scoreBg.SoftPosition = mCharacters[ind].SoftPosition + new Vector3(0,400,0);
+		scoreBg.HardPosition = mCharacters[ind].SoftPosition + new Vector3(0,400,0);
 		scoreText.HardPosition = scoreBg.HardPosition;
 		scoreText.SoftPosition = scoreBg.SoftPosition;
 		scoreText.Text = ""+aScore;
@@ -374,6 +374,7 @@ public class SunsetManager
 			aStats.Insert(0, new PerformanceStats(new CharacterIndex(0,0)));
 
 		//fake it for testing...
+		/*
 		mCharacters.Last().destroy(); //remove the grave
 		mElement.Remove(mCharacters.Last());
 		mCharacters.RemoveAt(mCharacters.Count -1);
@@ -392,7 +393,7 @@ public class SunsetManager
 			}
 		}
 		add_character(CharacterIndex.sGrave,false); //add the grave back in
-
+		*/
 
 		
 		//this is all a hack to get the score to show up right...
@@ -599,7 +600,7 @@ public class SunsetManager
 		chain = chain.then_one_shot(
 			delegate()  {
 
-				rewardImage = new FlatElementImage(mModeNormalPlay.mGiftManager.render_gift(0),new Vector2(1280,960),10);
+				rewardImage = new FlatElementImage(mModeNormalPlay.mGiftManager.render_gift(0),new Vector2(1280,960),25);
 				rewardFrame = new FlatElementImage(null,0);
 				rewardImage.HardPosition = mFlatCamera.get_point(-3,0);
 				rewardFrame.HardPosition = rewardImage.HardPosition;
@@ -609,13 +610,15 @@ public class SunsetManager
 				mElement.Add(rewardFrame);
 				//create reward image and scroll it in.
 				var subChain = TED.empty_chain();
-				for(int i = 1; i < mModeNormalPlay.mGiftManager.gift_count(); i++)
+				for(int i = 1; i < 100; i++)
 				{
+					int localIndex = i%mModeNormalPlay.mGiftManager.gift_count();
 					subChain = subChain.then_one_shot(
 						delegate(){
-							mModeNormalPlay.mGiftManager.render_gift(i);
+							//TODO sound effect
+							mModeNormalPlay.mGiftManager.render_gift(localIndex);
 						}
-					,0.6f);
+					,1f);
 				}
 				
 			}
@@ -628,7 +631,7 @@ public class SunsetManager
 		float lastTime = 0;
 		FlatElementImage logo1 = null;
 		FlatElementImage logo2 = null;
-		PopupTextObject gameOver = null;
+		//PopupTextObject gameOver = null;
 		List<FlatElementText> creditsText = new List<FlatElementText>();
 		float scrollSpeed = 100;
 		
@@ -644,6 +647,7 @@ public class SunsetManager
 			,0).then_one_shot(
 				delegate()
 				{
+					/*
 					gameOver = new PopupTextObject("G A M E\nO V E R",30);
 					gameOver.set_font_size(200);
 					gameOver.HardPosition = mFlatCamera.Center - new Vector3(0,mFlatCamera.Height/2+450,0);
@@ -652,20 +656,20 @@ public class SunsetManager
 					gameOver.set_background_color(GameConstants.UiWhiteTransparent);
 					gameOver.set_text_color(GameConstants.UiWhiteTransparent,true);
 					gameOver.set_text_color(GameConstants.UiRed);
-					mElement.Add(gameOver);
+					mElement.Add(gameOver);*/
 
 					int counter = 0;
 					foreach(string e in GameConstants.credits)
 					{
 						var text = new FlatElementText(mManager.mNewRef.genericFont,50,e,10);
 						text.HardColor = new Color(1,1,1,1);
-						text.HardPosition = mFlatCamera.Center - new Vector3(0,mFlatCamera.Height/2+1000,0) - (new Vector3(0,70,0))*counter;
+						text.HardPosition = mFlatCamera.Center - new Vector3(0,mFlatCamera.Height/2+450,0) - (new Vector3(0,70,0))*counter;
 						creditsText.Add(text);
 						mElement.Add(text);
 						counter++;
 					}
 					
-					float logoStartHeight = -(mFlatCamera.Height/2 + 1000 + 70*counter + 900);
+					float logoStartHeight = -(mFlatCamera.Height/2 + 450 + 70*counter + 900);
 					logo1 = new FlatElementImage(mManager.mNewRef.gameLabLogo,10);
 					logo2 = new FlatElementImage(mManager.mNewRef.filmAkademieLogoGrave,10);
 					logo1.HardPosition = mFlatCamera.Center + new Vector3(0,logoStartHeight,0);
@@ -703,8 +707,14 @@ public class SunsetManager
 					e.SoftPosition = e.SoftPosition + scroll;
 				}
 
+				if(rewardImage != null)
+				{
+					rewardImage.SoftPosition = rewardImage.SoftPosition + scroll;
+					rewardFrame.SoftPosition = rewardFrame.SoftPosition + scroll;
+				}
 
-				gameOver.SoftPosition = gameOver.SoftPosition + scroll;
+
+				//gameOver.SoftPosition = gameOver.SoftPosition + scroll;
 				logo1.SoftPosition = logo1.SoftPosition + scroll;
 				logo2.SoftPosition = logo2.SoftPosition + scroll;
 				

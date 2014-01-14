@@ -153,6 +153,8 @@ public class ModeNormalPlay
 		mPerformanceStats.Add(new PerformanceStats(NGM.CurrentCharacterIndex));
 		CurrentPerformanceStat.Stats = NGM.CharacterHelper.Characters[NGM.CurrentCharacterIndex];
 		mInterfaceManager.begin_new_character(CurrentPerformanceStat);
+		//set particle color
+		mParticles.mParticles.set_emitter_particle_color(mManager.mCharacterBundleManager.get_character_stat(NGM.CurrentCharacterIndex).CharacterInfo.CharacterOutlineColor,1);
 		if(NGM.CurrentCharacterLoader.Character != CharacterIndex.sFetus)
 			mGiftManager.add_character(NGM.CurrentCharacterLoader.Character);
 		switch(NGM.CurrentCharacterLoader.Name)
@@ -399,7 +401,7 @@ public class ModeNormalPlay
 		if(choice != -1)
 		{
 			slide_image(mChoosingImage,null);
-			mSunsetManager.fade_characters(false);
+			//mSunsetManager.fade_characters(false);
 
 
 			mManager.mMusicManager.fade_out_extra_music();
@@ -582,7 +584,7 @@ public class ModeNormalPlay
 		slide_image(null,mSunsetImage);
 		TED.add_event(
 			delegate(float aTime){
-				mSunsetManager.fade_characters(true,true);
+				//mSunsetManager.fade_characters(true,true);
 				mSunsetManager.set_sun();
 				return true;
 			}
@@ -722,7 +724,7 @@ public class ModeNormalPlay
 			if(diff == 0)
 				NGM.CurrentPoseAnimation.set_change_time(4);
 			else if(diff == 1)
-				NGM.CurrentPoseAnimation.set_change_time(2);
+				NGM.CurrentPoseAnimation.set_change_time(1.5f);
 			else if(diff == 2)
 				NGM.CurrentPoseAnimation.set_change_time(1);
 			else if(diff == 3)

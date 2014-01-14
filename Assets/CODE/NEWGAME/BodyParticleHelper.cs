@@ -30,7 +30,7 @@ public class BodyParticleHelper
 		{ZigJointId.Head,new ZigJointId[]{ZigJointId.Neck,ZigJointId.Torso,ZigJointId.Waist}},
 	};
 	
-	SparkleStarFlashParticle mParticles;
+	public SparkleStarFlashParticle mParticles;
 	public BodyParticleHelper()
 	{
 		mParticles = new SparkleStarFlashParticle();
@@ -49,6 +49,9 @@ public class BodyParticleHelper
 	{
 		ManagerManager man = ManagerManager.Manager;
 		BodyManager activeBody = man.mBodyManager;
+
+
+
 	
 		/*foreach(var e in sJointGroups)
 		{
@@ -81,7 +84,7 @@ public class BodyParticleHelper
 		}*/
 		
 		
-		//TODO double it!
+
 		if(!continuous)
 		{
 			float grade = ProGrading.grade_to_perfect(aGrade.CurrentGrade);
