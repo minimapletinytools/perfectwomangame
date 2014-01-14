@@ -89,26 +89,27 @@ public class BodyParticleHelper
 		{
 			float grade = ProGrading.grade_to_perfect(aGrade.CurrentGrade);
 
+			int inc = Mathf.Clamp((int)(6*grade),0,5);
 				
-			if(grade > 0.5 && grade <= 0.7)
+			if(inc > 1 && inc <= 2)
 			{
 				mParticles.emit_ring("silver",5,activeBody.mFlat.get_body_part_position(ZigJointId.Torso),600, 1.5f);
 				mParticles.emit_ring("silver",7,activeBody.mFlat.get_body_part_position(ZigJointId.Torso),900, 1.5f);
 			}
-			if(grade > 0.7 && grade <= 0.8)
+			if(inc > 2 && inc <= 3)
 			{
 
 				mParticles.emit_ring("silver",5,activeBody.mFlat.get_body_part_position(ZigJointId.Torso),600, 1.5f);
 				mParticles.emit_ring("gold",7,activeBody.mFlat.get_body_part_position(ZigJointId.Torso),900, 1.5f);
 				mParticles.emit_ring("silver",10,activeBody.mFlat.get_body_part_position(ZigJointId.Torso),1300, 1.5f);
 			}
-			if(grade > 0.8 && grade <= 0.9)
+			if(inc > 3 && inc <= 4)
 			{
 				mParticles.emit_ring("gold",5,activeBody.mFlat.get_body_part_position(ZigJointId.Torso),700,2f);
 				mParticles.emit_ring("silver",7,activeBody.mFlat.get_body_part_position(ZigJointId.Torso),1000, 1.5f);
 				mParticles.emit_ring("gold",10,activeBody.mFlat.get_body_part_position(ZigJointId.Torso),1500,2f);
 			}
-			if(grade > 0.9)
+			if(inc > 4)
 			{
 				mParticles.emit_ring("gold",20,activeBody.mFlat.get_body_part_position(ZigJointId.Torso),2500,2f);
 				//mParticles.emit_ring("gold",15,activeBody.mFlat.get_body_part_position(ZigJointId.Torso),1500,3f);
