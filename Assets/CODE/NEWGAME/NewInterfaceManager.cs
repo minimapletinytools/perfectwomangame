@@ -441,7 +441,7 @@ public class NewInterfaceManager {
 	//returns amount of time this will take
 	public TimedEventDistributor.TimedEventChain set_for_DEATH(CharacterIndex aChar)
 	{
-		float gTextTime = 4;
+		float gTextTime = 5;
 		
 		TimedEventDistributor.TimedEventChain chain = TED.empty_chain();
 		

@@ -75,7 +75,9 @@ public class SunsetManager
 		mManager.mCharacterBundleManager.add_bundle_to_unload(aBundle);
 		IsLoaded = true;
 
+		//prep the sky for fetus
 		set_sun(-1, true);
+		set_sky_color(0);
 	}
 
 	int char_to_list_index(CharacterIndex aIndex)
@@ -92,21 +94,24 @@ public class SunsetManager
 	public void show_score(CharacterIndex aIndex, int aScore, float showTime)
 	{
 		int ind = char_to_list_index(aIndex);
-		FlatElementText scoreText = new FlatElementText(mManager.mNewRef.fatFont,40, aScore.ToString(), 21);
+		FlatElementText scoreText = new FlatElementText(mManager.mNewRef.fatFont,40, aScore.ToString(), 12);
 		var scoreBgImage = mManager.mCharacterBundleManager.get_image("SCORELABEL");
-		FlatElementImage scoreBg = new FlatElementImage(scoreBgImage.Image,scoreBgImage.Data.Size,20);
+		FlatElementImage scoreBg = new FlatElementImage(scoreBgImage.Image,scoreBgImage.Data.Size,11);
 		scoreBg.HardPosition = mFlatCamera.get_point(0,1.5f);
 		scoreBg.HardPosition = mCharacters[ind].SoftPosition + new Vector3(0,400,0);
 		scoreText.HardPosition = scoreBg.HardPosition;
 		scoreText.SoftPosition = scoreBg.SoftPosition;
 		scoreText.Text = ""+aScore;
+		scoreText.PositionInterpolationMinLimit = 200f;
+		scoreBg.PositionInterpolationMinLimit = 200f;
+		scoreText.ColorInterpolationMaxLimit = Mathf.Infinity;
+		scoreBg.ColorInterpolationMaxLimit = Mathf.Infinity;
 
 		mScoreLabels.Add(scoreBg);
 		mScoreTexts.Add(scoreText);
 		mElement.Add(scoreBg);
 		mElement.Add(scoreText);
 
-		/*
 		TED.add_event(
 			delegate(float aTime) {
 				if(aTime > showTime)
@@ -124,7 +129,21 @@ public class SunsetManager
 				scoreBg.destroy();
 				scoreText.destroy();
 			}
-		,3);*/
+		,3);
+	}
+
+	public void set_sky_color(int aIndex)
+	{
+		int index = aIndex;
+		float gTotalIndices = 8;
+		float lambda = index/gTotalIndices;
+		Color leftColor = new Color32(25,25,112,255);
+		Color highColor = new Color32(135,206,235,255);
+		Color rightColor = leftColor;
+		if(lambda < 0.5f)
+			mBackground.HardColor = Color.Lerp(leftColor,highColor,lambda*2)/2f;
+		else
+			mBackground.HardColor = Color.Lerp(highColor,rightColor,(lambda-0.5f)*2)/2f;
 	}
 
 	public void set_sun(int aIndex, bool hard = false)
@@ -143,18 +162,7 @@ public class SunsetManager
 		//circle arc
 		//mSun.SoftPosition = mFlatCamera.Center + new Vector3(50*Mathf.Cos(ttt),700*Mathf.Sin(ttt),0);
 
-
 		if(hard) mSun.HardPosition = mSun.SoftPosition;
-
-		mBackground.ColorInterpolationLimit = 0.3f;
-
-		Color leftColor = new Color32(25,25,112,255);
-		Color highColor = new Color32(135,206,235,255);
-		Color rightColor = leftColor;
-		if(lambda < 0.5f)
-			mBackground.SoftColor = Color.Lerp(leftColor,highColor,lambda*2)/2f;
-		else
-			mBackground.SoftColor = Color.Lerp(highColor,rightColor,(lambda-0.5f)*2)/2f;
 
 		if(!hard)
 			ManagerManager.Manager.mMusicManager.play_sound_effect("sunRises");
@@ -170,7 +178,7 @@ public class SunsetManager
 		if(aChar != CharacterIndex.sFetus)
 		{
 			var addMe = construct_flat_image("SUNSET_"+aChar.StringIdentifier,10 - mCharacters.Count);
-			Debug.Log ("adding character " + aChar.StringIdentifier);
+			//Debug.Log ("adding character " + aChar.StringIdentifier);
 
 			//special positioning for grave
 			if(aChar == CharacterIndex.sGrave)
@@ -193,6 +201,8 @@ public class SunsetManager
 
 			if(aShowScore)
 				show_score(aChar,(int)mManager.mGameManager.mModeNormalPlay.CurrentPerformanceStat.AdjustedScore,13);
+
+			set_sky_color(mCharacters.Count);
 		}
 	}
 
@@ -313,14 +323,16 @@ public class SunsetManager
 
 	public void create_shine_over_character(CharacterIndex aIndex,bool positive, float duration)
 	{
-		ManagerManager.Manager.mMusicManager.play_sound_effect("graveShine");
 		int index = aIndex.LevelIndex - 1;
 		var shineImage = mManager.mCharacterBundleManager.get_image("SHINE");
 		FlatElementImage shine = new FlatElementImage(shineImage.Image,shineImage.Data.Size,3);
-		Vector3 targetPos = mCharacters[index].SoftPosition + new Vector3(0,shine.BoundingBox.height/2-300,0);
+		Vector3 targetPos = mCharacters[index].SoftPosition + new Vector3(0,shine.BoundingBox.height/2-340,0);
 		shine.HardPosition = targetPos + new Vector3(0,2000,0);
 		shine.SoftPosition = targetPos;
 		shine.HardColor = positive ? GameConstants.UiYellow : GameConstants.UiRed; 
+		shine.PositionInterpolationMinLimit = 200;
+		shine.ColorInterpolationMaxLimit = Mathf.Infinity;
+		shine.ColorInterpolationMinLimit = Mathf.Infinity;
 		mElement.Add(shine);
 		TED.add_one_shot_event(
 			delegate() {
@@ -360,9 +372,9 @@ public class SunsetManager
 	{
 		//timing vars
 		float gIntroText = 4.5f;
-		float gPreScoreCount = 0f;
+		float gPreScoreCount = 0.03f;
 		float gScoreCount = 0.2f;
-		float gPostScoreCount = 0.1f;
+		float gPostScoreCount = 0.07f;
 		float gRestart = 65;
 		
 		//add the gravestone to the scene
@@ -377,11 +389,11 @@ public class SunsetManager
 			aStats.Insert(0, new PerformanceStats(new CharacterIndex(0,0)));
 
 		//fake it for testing...
-		/*
+
 		mCharacters.Last().destroy(); //remove the grave
 		mElement.Remove(mCharacters.Last());
 		mCharacters.RemoveAt(mCharacters.Count -1);
-		Random.seed = 344;
+		Random.seed = 123;
 		for(int i = 0; i < 8; i++)
 		{
 			if(aStats.Last().Character.Age < (new CharacterIndex(i,0)).Age)
@@ -392,18 +404,18 @@ public class SunsetManager
 				stat.Stats = mManager.mGameManager.CharacterHelper.Characters[stat.Character];
 				aStats.Add(stat);
 
-				add_character(stat.Character,true);
+				add_character(stat.Character,false);
 			}
 		}
 		add_character(CharacterIndex.sGrave,false); //add the grave back in
-		*/
+
 
 		
 		//this is all a hack to get the score to show up right...
 		float scoreIncrementor = 0;
-		FlatElementText finalScoreText = new FlatElementText(mManager.mNewRef.serifFont,70,"0",15);
+		FlatElementText finalScoreText = new FlatElementText(mManager.mNewRef.serifFont,70,"0",12);
 		finalScoreText.HardColor = (GameConstants.UiGraveText);
-		FlatElementText perfectPercent = new FlatElementText(mManager.mNewRef.serifFont,40,"0",15);
+		FlatElementText perfectPercent = new FlatElementText(mManager.mNewRef.serifFont,50,"0",12);
 		float ageIncrementer = 0;
 		perfectPercent.HardColor = (GameConstants.UiGraveText);
 		//perfectPercent.Text = ((int)(100*aStats.Sum(e=>e.Stats.Perfect+1)/(float)(aStats.Count*3))).ToString() + "%";
@@ -419,17 +431,21 @@ public class SunsetManager
 		
 		Vector3 graveCenter = mCharacters[mCharacters.Count-1].HardPosition + new Vector3(0, 50, 0);
 		finalScoreText.HardPosition = graveCenter + new Vector3(30,-180,0);
-		perfectPercent.HardPosition = graveCenter + new Vector3(35,20,0);
+		perfectPercent.HardPosition = graveCenter + new Vector3(35,23,0);
 		mElement.Add(finalScoreText);
 		//mElement.Add(perfectEngraving);
 		mElement.Add(perfectPercent);
 
 
-		TimedEventDistributor.TimedEventChain chain;
-		
-		chain = TED.add_event(
-				low_skippable_text_bubble_event("YOU REST HERE BENEATH THE EARTH...",gIntroText)
-			);
+		TimedEventDistributor.TimedEventChain chain = TED.empty_chain();
+
+		chain = chain.then_one_shot(
+			delegate {
+				set_sun();
+			}
+		,0);
+		chain = chain.then(
+				low_skippable_text_bubble_event("YOU REST HERE BENEATH THE EARTH...",gIntroText),3);
 
 		/*.then( //wait a little bit to let the fading finish
 		    	low_skippable_text_bubble_event("HERE IS YOUR LIFE STORY",gIntroText)
@@ -453,20 +469,18 @@ public class SunsetManager
 
 			chain = chain.then_one_shot(
 				delegate() {
-					mScoreLabels[ps.Character.LevelIndex-1].Events.add_event(scoreJiggleDelegate,0);
-					mScoreTexts[ps.Character.LevelIndex-1].Events.add_event(scoreJiggleDelegate,0);
-						//show_score(ps.Character,(int)ps.AdjustedScore,gPreScoreCount + gScoreCount + gPostScoreCount);
-				},
-			0).then_one_shot(
-				delegate()
-				{
+					show_score(ps.Character,(int)ps.AdjustedScore,gPreScoreCount + gScoreCount + gPostScoreCount + 1.5f);
+				}
+			,gPreScoreCount).then_one_shot(
+				delegate() {
+					mScoreLabels.Last().Events.add_event(scoreJiggleDelegate,0);
+					mScoreTexts.Last().Events.add_event(scoreJiggleDelegate,0);
 					mManager.mMusicManager.play_sound_effect("counting");
 				}
 			,0).then(
 				delegate(float aTime)
 				{
-					aTime -= gPreScoreCount;
-					if(aTime > 0 && aTime < gScoreCount)
+					if(aTime < gScoreCount)
 					{
 						float displayScore = scoreIncrementor + (aTime/gScoreCount)*ps.AdjustedScore;
 						float displayAge = ageIncrementer + (aTime/gScoreCount)*(ps.Character.Age-ageIncrementer);
@@ -485,7 +499,9 @@ public class SunsetManager
 				},
 			0);
 		}
-		
+
+		chain = chain.wait(2.5f);
+
 		//CONNECTIONS
 		for(int i = 1; i < aStats.Count; i++)
 		{
@@ -493,9 +509,9 @@ public class SunsetManager
 
 			
 			
-			float gFirstConnectionText = 3.5f;
-			float gConnectionText = 4f;
-			float gPreParticle = 1.5f;
+			float gFirstConnectionText = 5f;
+			float gConnectionText = 5f;
+			float gPreParticle = 2f;
 			
 			
 			//TODO grave connections
@@ -529,59 +545,62 @@ public class SunsetManager
 					{
 						string [] conText = targetConnection.Replace("<S>","@").Split('@');
 						PopupTextObject npo = null;
-						if(conText.Length == 2){
-							chain = chain.then (
-								delegate(float aTime)
+						chain = chain.then (
+							delegate(float aTime)
+							{
+								if(npo == null)
 								{
-									if(npo == null)
-									{
-										npo = add_timed_text_bubble(conText[0],gFirstConnectionText + gConnectionText,-0.6f,1);
-										set_popup_color_for_cutscene_particles(npo,wasHard);
-									}
-									if(npo.IsDestroyed || aTime > gPreParticle) 
-									{
-										return true;
-									}
-									return false;
+									npo = add_timed_text_bubble(conText[0],gFirstConnectionText + gConnectionText,-0.6f,1);
+									set_popup_color_for_cutscene_particles(npo,wasHard);
+									create_shine_over_character(targetCharacter,!wasHard,gFirstConnectionText + gConnectionText);
+									TED.add_one_shot_event(
+										delegate() {
+											create_shine_over_character(ps.Character,!wasHard,gFirstConnectionText + gConnectionText - 0.3f);
+										}
+									,0.3f);
 								}
-							,0);
-						} else {
-							//TODO
-							Debug.Log("Peter was too lazy to implement optional splitting. Connection text MUST be split");
-							Debug.Log ("TNHOEUONSTUHNST");
-						}
+								if(npo.IsDestroyed || aTime > gPreParticle) 
+								{
+									return true;
+								}
+								return false;
+							}
+						,0);
 						
 						System.Func<FlatElementBase,float,bool> jiggleDelegate = 
 							delegate(FlatElementBase aBase, float aTime2) 
-						{
-							aBase.mLocalRotation = Quaternion.AngleAxis(Mathf.Sin(aTime2*Mathf.PI*2*8)*15f,Vector3.forward);
-							if(aTime2 >= (gFirstConnectionText-gPreParticle)/2f) 
 							{
-								aBase.mLocalRotation = Quaternion.identity;
-								return true;
-							}
-							return false;
-						};
+								aBase.mLocalRotation = Quaternion.AngleAxis(Mathf.Sin(aTime2*Mathf.PI*2*8)*10f,Vector3.forward);
+								if(aTime2 >= (gFirstConnectionText-gPreParticle)/4f) 
+								{
+									aBase.mLocalRotation = Quaternion.identity;
+									return true;
+								}
+								return false;
+							};
 
 						chain = chain.then_one_shot(
 							delegate()
 							{
 								if(npo != null)
+								{
 									mCharacters[char_to_list_index(targetCharacter)].Events.add_event(jiggleDelegate,0);
+									ManagerManager.Manager.mMusicManager.play_sound_effect("graveShine");
+								}
 								//create the shine
-								create_shine_over_character(targetCharacter,!wasHard,gFirstConnectionText);
+								
 							}
 						).then_one_shot(
 							delegate()
 							{
 								if(npo != null)
 								{
-									npo.Text = conText[conText.Length -1];
+									npo.Text = conText.Last();
 									mCharacters[char_to_list_index(ps.Character)].Events.add_event(jiggleDelegate,0);
-									create_shine_over_character(ps.Character,!wasHard,gFirstConnectionText-gPreParticle);
+									ManagerManager.Manager.mMusicManager.play_sound_effect("graveShine");
 								}
 							},
-						gFirstConnectionText-gPreParticle).then (
+						gFirstConnectionText - gPreParticle).then (
 							delegate(float aTime){
 								if(npo.IsDestroyed || aTime > gConnectionText)
 								{
@@ -596,7 +615,6 @@ public class SunsetManager
 			}
 		}
 
-
 		FlatElementImage rewardImage = null;
 		FlatElementImage rewardFrame = null;
 		mModeNormalPlay.mGiftManager.set_background_for_render();
@@ -604,33 +622,39 @@ public class SunsetManager
 			delegate()  {
 
 				var frameImg = mManager.mCharacterBundleManager.get_image("GIFT_frame");
-				rewardFrame = new FlatElementImage(frameImg.Image,frameImg.Data.Size,26);
-				rewardImage = new FlatElementImage(mModeNormalPlay.mGiftManager.render_gift(0),new Vector2(2001,1128),25);
+				rewardFrame = new FlatElementImage(frameImg.Image,frameImg.Data.Size,14);
+				rewardImage = new FlatElementImage(mModeNormalPlay.mGiftManager.render_gift(0),new Vector2(2001,1128),13);
 
 				//TODO play sound effect
 				rewardImage.HardPosition = mFlatCamera.get_point(0,3);
 				rewardFrame.HardPosition = rewardImage.HardPosition;
 				rewardImage.SoftPosition = mFlatCamera.Center + new Vector3(0,150,0);
-				rewardFrame.SoftPosition = rewardImage.SoftPosition + new Vector3(0,320,0);
+				rewardFrame.SoftPosition = rewardImage.SoftPosition + new Vector3(0,70,0);
 				mElement.Add(rewardImage);
 				mElement.Add(rewardFrame);
 
-				var subChain = TED.empty_chain();
-				for(int i = 1; i < 100; i++)
+				var subChain = TED.empty_chain().wait(4);
+				if(mModeNormalPlay.mGiftManager.gift_count() > 0)
 				{
-					int localIndex = i%mModeNormalPlay.mGiftManager.gift_count();
-					subChain = subChain.then_one_shot(
-						delegate(){
-							//TODO sound effect
-							mModeNormalPlay.mGiftManager.render_gift(localIndex);
-						}
-					,1f);
+					for(int i = 1; i < 100; i++)
+					{
+						int localIndex = i%mModeNormalPlay.mGiftManager.gift_count();
+						subChain = subChain.then_one_shot(
+							delegate(){
+								//TODO sound effect
+								mModeNormalPlay.mGiftManager.render_gift(localIndex);
+							}
+						,1f);
+					}
 				}
 				
 			}
-		,1);
+		,3);
+		chain = chain.wait(3);
 		chain = chain.then (low_skippable_text_bubble_event("YOU ARE THE PERFECT WOMAN",gIntroText),0);
-		
+
+		//TODO DELET when you switch to side scrolling credits
+		chain = chain.wait(5);
 		
 		
 		//variables for credits animation..
@@ -667,7 +691,7 @@ public class SunsetManager
 					int counter = 0;
 					foreach(string e in GameConstants.credits)
 					{
-						var text = new FlatElementText(mManager.mNewRef.genericFont,50,e,10);
+						var text = new FlatElementText(mManager.mNewRef.genericFont,50,e,15);
 						text.HardColor = new Color(1,1,1,1);
 						text.HardPosition = mFlatCamera.Center - new Vector3(0,mFlatCamera.Height/2+450,0) - (new Vector3(0,70,0))*counter;
 						creditsText.Add(text);
@@ -676,8 +700,8 @@ public class SunsetManager
 					}
 					
 					float logoStartHeight = -(mFlatCamera.Height/2 + 450 + 70*counter + 900);
-					logo1 = new FlatElementImage(mManager.mNewRef.gameLabLogo,10);
-					logo2 = new FlatElementImage(mManager.mNewRef.filmAkademieLogoGrave,10);
+					logo1 = new FlatElementImage(mManager.mNewRef.gameLabLogo,15);
+					logo2 = new FlatElementImage(mManager.mNewRef.filmAkademieLogoGrave,15);
 					logo1.HardPosition = mFlatCamera.Center + new Vector3(0,logoStartHeight,0);
 					logo2.HardPosition = mFlatCamera.Center + new Vector3(0,logoStartHeight + 700,0);
 
@@ -690,6 +714,7 @@ public class SunsetManager
 			,0).then_one_shot(
 				delegate() {
 
+					/* this will fade everything out super slowly
 					List<FlatElementBase> graveItems = new List<FlatElementBase>(){finalScoreText,perfectPercent};
 					foreach(FlatElementBase e in 
 				        mCharacters.Cast<FlatElementBase>()
@@ -700,7 +725,7 @@ public class SunsetManager
 					{
 						e.ColorInterpolationLimit = 0.05f;
 						e.SoftColor = GameConstants.UiWhiteTransparent;
-					}
+					}*/
 				}
 			,0).then(
 				delegate(float aTime)

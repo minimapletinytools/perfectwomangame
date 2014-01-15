@@ -133,7 +133,9 @@ public class FlatElementBase {
         get { return mCurrentColor; }
         set { mCurrentColor = mTargetColor = value; }
     }
-	public virtual float ColorInterpolationLimit
+	public virtual float ColorInterpolationMaxLimit
+	{ get; set; }
+	public virtual float ColorInterpolationMinLimit
 	{ get; set; }
 
 	//TODO this should really be bounds not rect
@@ -183,7 +185,8 @@ public class FlatElementBase {
         HardScale = Vector3.one;
 		HardColor = new Color(0.5f,0.5f,0.5f,0.5f);
 		
-		ColorInterpolationLimit = 1f;
+		ColorInterpolationMaxLimit = 1f;
+		ColorInterpolationMinLimit = 0.04f;
 
 		PositionInterpolationMaxLimit = Mathf.Infinity;
 		PositionInterpolationMinLimit = 0;
@@ -254,6 +257,8 @@ public class FlatElementBase {
 	        mCurrentScale = (1 - SoftInterpolation) * mCurrentScale + SoftInterpolation * mTargetScale;
 			
 
+
+			//TODO PositionInterpolationMinLimit is bugged
 			if(PositionInterpolationMaxLimit < Mathf.Infinity || PositionInterpolationMinLimit > 0)
 			{
 				float minLimitChange = PositionInterpolationMinLimit * aDeltaTime;
@@ -261,10 +266,10 @@ public class FlatElementBase {
 
 				Vector3 desiredPosition = (1 - SoftInterpolation) * mCurrentPosition + SoftInterpolation * mTargetPosition;
 				float desiredPositionDistance = (desiredPosition-mCurrentPosition).magnitude;
-				if(desiredPositionDistance < minLimitChange)
+				if((mCurrentPosition-mTargetPosition).magnitude < minLimitChange)
 					mCurrentPosition = desiredPosition;
 				else if(desiredPositionDistance > 0)
-					mCurrentPosition += (desiredPosition-mCurrentPosition) / desiredPositionDistance * Mathf.Min(maxLimitChange,desiredPositionDistance);
+					mCurrentPosition += (desiredPosition-mCurrentPosition) / desiredPositionDistance * Mathf.Clamp(desiredPositionDistance,minLimitChange,maxLimitChange);
 			}
 			else
 				mCurrentPosition = (1 - SoftInterpolation) * mCurrentPosition + SoftInterpolation * mTargetPosition;
@@ -273,12 +278,20 @@ public class FlatElementBase {
 			Vector4 lerpingColorA = new Vector4(mCurrentColor.r, mCurrentColor.g, mCurrentColor.b, mCurrentColor.a);
 			Color targetColor = (1 - SoftInterpolation) * mCurrentColor + SoftInterpolation * mTargetColor;
 			Vector4 lerpingColorB = new Vector4(targetColor.r, targetColor.g, targetColor.b, targetColor.a);
+			Vector4 finalColor = new Vector4(mTargetColor.r, mTargetColor.g, mTargetColor.b, mTargetColor.a);
 			Vector4 lerpingColorDir = lerpingColorB - lerpingColorA;
 			float lerpingColorDist = lerpingColorDir.magnitude;
-			Vector4 finalColor = lerpingColorA;
-			if(lerpingColorDist > 0)
-				finalColor = lerpingColorA + lerpingColorDir/lerpingColorDist * Mathf.Min(lerpingColorDir.magnitude,ColorInterpolationLimit*aDeltaTime);
-			mCurrentColor = new Color(finalColor.x,finalColor.y,finalColor.z,finalColor.w);
+			Vector4 actualColor = lerpingColorA;
+
+			float maxChange = ColorInterpolationMaxLimit*aDeltaTime;
+			float minChange = ColorInterpolationMinLimit*aDeltaTime;
+
+			if((lerpingColorA - finalColor).magnitude < ColorInterpolationMinLimit)
+				actualColor = finalColor;
+			else if(lerpingColorDist > 0)
+				actualColor = lerpingColorA + lerpingColorDir/lerpingColorDist * Mathf.Clamp(lerpingColorDist,minChange,maxChange);
+
+			mCurrentColor = new Color(actualColor.x,actualColor.y,actualColor.z,actualColor.w);
 		}
     }
 
