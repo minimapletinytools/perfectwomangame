@@ -600,15 +600,18 @@ public class SunsetManager
 		chain = chain.then_one_shot(
 			delegate()  {
 
-				rewardImage = new FlatElementImage(mModeNormalPlay.mGiftManager.render_gift(0),new Vector2(1280,960),25);
-				rewardFrame = new FlatElementImage(null,0);
-				rewardImage.HardPosition = mFlatCamera.get_point(-3,0);
-				rewardFrame.HardPosition = rewardImage.HardPosition;
-				rewardImage.SoftPosition = mFlatCamera.Center;
+				var frameImg = mManager.mCharacterBundleManager.get_image("GIFT_frame");
+				rewardFrame = new FlatElementImage(frameImg.Image,frameImg.Data.Size,26);
+				rewardImage = new FlatElementImage(mModeNormalPlay.mGiftManager.render_gift(0),new Vector2(2001,1128),25);
+
+				//TODO play sound effect
+				rewardImage.HardPosition = mFlatCamera.get_point(0,3);
+				rewardFrame.HardPosition = rewardImage.HardPosition + new Vector3(0,320,0);
+				rewardImage.SoftPosition = mFlatCamera.Center + new Vector3(0,80,0);
 				rewardFrame.SoftPosition = rewardImage.SoftPosition;
 				mElement.Add(rewardImage);
 				mElement.Add(rewardFrame);
-				//create reward image and scroll it in.
+
 				var subChain = TED.empty_chain();
 				for(int i = 1; i < 100; i++)
 				{

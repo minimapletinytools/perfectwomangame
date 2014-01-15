@@ -92,14 +92,18 @@ public class GiftManager
 	public void set_background_for_render()
 	{
 		mManager.mBackgroundManager.character_changed_listener(mManager.mGameManager.CurrentCharacterLoader);
+		int[] depthMap = new int[]{1,-1,4,2,-2,3,5};
+		for(int i = 0; i < mStages.Count-1; i++)
+		{
+			//TODO custom depth
+			mElement.Add(construct_flat_image("GIFT_"+mStages[i].Index.StringIdentifier,10+depthMap[i]));
+		}
 	}
 	public Texture render_gift(int index)
 	{
 		if(index < mStages.Count)
 		{
 			mPlayerImage.set_new_texture(mStages[index].playerTex,new Vector2(1280,960));
-			//mElement.Add(construct_flat_image("REWARD_"+mStages[index].Index.StringIdentifier,index));
-			update(); //note if you have any TED stuff, this will update it a second time
 			ModeNormalPlay.draw_render_texture(mFlatCamera);
 		}
 		return mFlatCamera.RT;
