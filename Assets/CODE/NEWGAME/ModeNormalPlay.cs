@@ -154,7 +154,7 @@ public class ModeNormalPlay
 		CurrentPerformanceStat.Stats = NGM.CharacterHelper.Characters[NGM.CurrentCharacterIndex];
 		mInterfaceManager.begin_new_character(CurrentPerformanceStat);
 		//set particle color
-		mParticles.mParticles.set_emitter_particle_color(mManager.mCharacterBundleManager.get_character_stat(NGM.CurrentCharacterIndex).CharacterInfo.CharacterOutlineColor,1);
+		mParticles.mParticles.set_emitter_particle_color(mManager.mCharacterBundleManager.get_character_stat(NGM.CurrentCharacterIndex).CharacterInfo.CharacterOutlineColor/2f,2);
 		if(NGM.CurrentCharacterLoader.Character != CharacterIndex.sFetus)
 			mGiftManager.add_character(NGM.CurrentCharacterLoader.Character);
 		switch(NGM.CurrentCharacterLoader.Name)
@@ -386,7 +386,8 @@ public class ModeNormalPlay
 		}
 		if(die)
 		{
-			mGiftManager.capture_player();
+			if(NGM.CurrentCharacterIndex != CharacterIndex.sFetus) //this only happens if we try and force die on fetus
+				mGiftManager.capture_player();
 			CurrentPerformanceStat.Finished = true;
 			mManager.mCameraManager.set_camera_effects(0);
 			mInterfaceManager.enable_warning_text(false);

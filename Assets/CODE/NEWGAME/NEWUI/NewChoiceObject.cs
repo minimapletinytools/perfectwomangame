@@ -101,7 +101,7 @@ public class NewChoiceObject : FlatElementMultiBase {
 			mCharacterIndex = value;
 			if(mCharacterIndex.LevelIndex != -1)
 			{
-				mText.Text = FlatElementText.convert_to_multiline(mCharacterIndex.Description.Length > 40 ? 3 : 2,mCharacterIndex.Description.ToUpper());
+				mText.Text = FlatElementText.convert_to_multiline(mCharacterIndex.Description.Length > 34 ? 3 : 2,mCharacterIndex.Description.ToUpper());
 				//mText.Text = mCharacterIndex.ShortName.ToUpper();
 			}
 			else mText.Text = "";

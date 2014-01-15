@@ -340,7 +340,7 @@ public class TransitionCameraManager : FakeMonoBehaviour
 		mManager.mMusicManager.fade_out_extra_music();
 		
 		//cheap hack 
-		CharacterIndex charIndex = Input.GetKeyDown(KeyCode.Alpha9) ? new CharacterIndex(1,0) : CharacterIndex.sFetus;
+		CharacterIndex charIndex = Input.GetKeyDown(KeyCode.Alpha9) ? new CharacterIndex(1,Random.Range(0,4)) : CharacterIndex.sFetus;
 		if(Input.GetKeyDown(KeyCode.Alpha9) )
 		{
 			GameConstants.fadingTime = 0.1f;

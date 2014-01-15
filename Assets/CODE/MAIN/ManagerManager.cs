@@ -53,6 +53,7 @@ public class ManagerManager : MonoBehaviour{
 
 	void Awake () {
 
+		Random.seed = System.Environment.TickCount;
 		Application.targetFrameRate = (int)GameConstants.TARGET_FRAMERATE;
 
 		Screen.showCursor = false;
