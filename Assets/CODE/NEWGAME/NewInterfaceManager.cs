@@ -314,7 +314,12 @@ public class NewInterfaceManager {
 		float gPreParticle = 1.5f;
 		float gBubblePos = 0.2f;
 
-		var cutsceneBubble = mManager.mCharacterBundleManager.get_image("CUTSCENE_BUBBLE");
+		//TODO put in actual random bubbless
+		var cutsceneBubbles = new CharacterBundleManager.ImageSizePair[] {
+			mManager.mCharacterBundleManager.get_image("CUTSCENE_BUBBLE"),
+			mManager.mCharacterBundleManager.get_image("CUTSCENE_BUBBLE"),
+			mManager.mCharacterBundleManager.get_image("CUTSCENE_BUBBLE")
+		};
 
 		
 		mLastCutsceneCompleteCb = delegate() {
@@ -387,7 +392,10 @@ public class NewInterfaceManager {
 				{
 					if(po == null)
 					{
-						po = add_timed_text_bubble(changeMsg,gCutsceneText + gCutsceneTextIncrement * aChangedChars.Count ,gBubblePos,cutsceneBubble);
+						po = add_timed_text_bubble(
+							changeMsg,gCutsceneText + gCutsceneTextIncrement * aChangedChars.Count,
+							gBubblePos,
+							cutsceneBubbles[Random.Range(0,cutsceneBubbles.Length-1)]);
 					
 						//dumb stuff I need to make sure there was actually a change
 						foreach(CharacterIndex cchar in CharacterIndex.sAllCharacters)
