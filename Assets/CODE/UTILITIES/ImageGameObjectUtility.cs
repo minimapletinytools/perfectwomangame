@@ -55,6 +55,7 @@ public class ImageGameObjectUtility
 
         PlaneObject.transform.rotation = Quaternion.AngleAxis(90, Vector3.right) * PlaneObject.transform.rotation;
         PlaneObject.transform.parent = ParentObject.transform;
+		ParentObject.transform.position = new Vector3(12321,124345,1234); //this will solve some one frame appearance glitches 
     }
 
     public void set_new_texture(Texture aTex, System.Nullable<Vector2> aSize = null)
