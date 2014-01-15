@@ -36,11 +36,12 @@ public class NewChoiceObject : FlatElementMultiBase {
 		//mSquare = new FlatElementImage(newRef.bbChoiceBox, aDepth);
 		mSquare = new FlatElementImage(meterImage.Image,meterImage.Data.Size, aDepth);
 		mSquare.HardColor = GameConstants.UiRed;
-		mText = new FlatElementText(newRef.genericFont,40,"",aDepth +2);
+		mText = new FlatElementText(newRef.fatFont,50,"",aDepth +2);
 		mDiffImage = new FlatElementImage(null,aDepth +2);
+		mDiffImage.HardScale = 1.33f * Vector3.one;
         //mPerfect = new DifficultyObject(ManagerManager.Manager.mNewRef.uiPerfectStar, aDepth);
 		mIcon = new FlatElementImage(null,aDepth +2);
-		mIcon.HardScale = 1.15f*Vector3.one;
+		mIcon.HardScale = 1.25f*Vector3.one;
         //mMeter = new MeterImageObject(newRef.bbChoiceBox, null,MeterImageObject.FillStyle.DU, aDepth + 1);
 		mMeter = new MeterImageObject(meterImage.Image,meterImage.Data.Size,MeterImageObject.FillStyle.DU, aDepth + 1);
         mMeter.Percentage = 0.0f;
@@ -48,12 +49,12 @@ public class NewChoiceObject : FlatElementMultiBase {
         
         //mBody.set_target_pose(aPose);
 		mElements.Add(new FlatElementMultiBase.ElementOffset(mSquare, new Vector3(0,0,0)));
-		mElements.Add(new FlatElementMultiBase.ElementOffset(mDiffImage, new Vector3(-mSquare.BoundingBox.width/2f+100,-mSquare.BoundingBox.height/2f+100,0)));
+		mElements.Add(new FlatElementMultiBase.ElementOffset(mDiffImage, new Vector3(-mSquare.BoundingBox.width/2f+80,-mSquare.BoundingBox.height/2f+80,0)));
 		mElements.Add(new FlatElementMultiBase.ElementOffset(mText, new Vector3(0,0,0)));
 		//mElements.Add(new FlatElementMultiBase.ElementOffset(mPerfect, new Vector3(-122,65,0)));
         mElements.Add(new FlatElementMultiBase.ElementOffset(mMeter, new Vector3(0,0,0)));
 		
-		mElements.Add(new FlatElementMultiBase.ElementOffset(mIcon, new Vector3(0,250,0)));
+		mElements.Add(new FlatElementMultiBase.ElementOffset(mIcon, new Vector3(0,275,0)));
         
 		mText.HardColor = GameConstants.uiWhite;
 		if(aIndex != null)

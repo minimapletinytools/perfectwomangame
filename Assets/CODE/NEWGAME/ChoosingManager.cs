@@ -171,7 +171,7 @@ public class ChoosingManager
 			
 			float xOffset = netWidth/2 - padding/2 - padding*i;
 			mBBChoices[i].HardPosition = mFlatCamera.get_point(0, -0.16f) + new Vector3(xOffset,0,0);
-			mBBChoiceBodies[i].HardPosition = mFlatCamera.get_point(0, -0.16f) + new Vector3(xOffset,-245,0);
+			mBBChoiceBodies[i].HardPosition = mFlatCamera.get_point(0, -0.16f) + new Vector3(xOffset,-270,0);
 		}
 	}
 

@@ -592,7 +592,7 @@ public class ModeNormalPlay
 		mSunsetManager.add_character(NGM.CurrentCharacterLoader.Character);
 
 		//switch over to choice screen
-		float gAgeDisplayDur = 3f;
+		float gAgeDisplayDur = 7f;
 		slide_image(null,mSunsetImage);
 		TED.add_event(
 			delegate(float aTime){
@@ -600,9 +600,10 @@ public class ModeNormalPlay
 				mSunsetManager.set_sun();
 				return true;
 			}
-		,0).then(
+		,5);
+		TED.add_event(
 			mSunsetManager.low_skippable_text_bubble_event("You turn " + NGM.CurrentCharacterIndex.get_future_neighbor(0).Age,gAgeDisplayDur)
-		,0).then_one_shot(
+		,2.5f).then_one_shot(
 			delegate(){
 				slide_image(null,mChoosingImage);
 				mManager.mMusicManager.fade_in_extra_music("choiceMusic");
