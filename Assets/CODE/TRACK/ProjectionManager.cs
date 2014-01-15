@@ -96,28 +96,41 @@ public class ProjectionManager : FakeMonoBehaviour {
 	}
 	public float get_relative(ZigInputJoint A, ZigInputJoint B)
 	{
+		float r = 0;
 		if(A.Id == ZigJointId.None)
 			return 0;
-		if(!B.GoodPosition) 
-			return -A.Rotation.flat_rotation() + 90;
-        float r =  get_relative(A.Position, B.Position);
+		if(!B.GoodPosition)
+			r = -A.Rotation.flat_rotation() + 90;
+		else
+        	r = get_relative(A.Position, B.Position);
 
 		//openni fix to solve head being set to -90 angle problem
-		if(B.Id == ZigJointId.Neck)
-			if(r == -90 || r == 270)
-				r = 90;
+		/*
+		if(B.Id == ZigJointId.Head)
+		{
+			r = Mathf.Clamp(r, 0, 180);
+		}*/
+
+		if(B.Id == ZigJointId.Head)
+			mManager.mDebugString = 
+				(B.GoodPosition ? "true" : "false") + 
+				" " + r.ToString() + 
+				" " + (mImportant[ZigJointId.Torso].smoothing.current-90+mImportant[ZigJointId.Neck].smoothing.current);
 
         return r;
 	}
 
     public float get_waist(ZigInputJoint waist, ZigInputJoint L, ZigInputJoint R)
     {
-		
+
+		float r = 0;
         if(false && !mManager.mZigManager.using_nite()) //TODO some problems with this lockngi... Should default to below if that happens
 		//if(!mManager.mZigManager.using_nite())
-            return -waist.Rotation.flat_rotation() + 90;    
+            r = -waist.Rotation.flat_rotation() + 90;    
         else
-            return get_relative(waist.Position, L.Position * 0.5f + R.Position * 0.5f);
+            r = get_relative(waist.Position, L.Position * 0.5f + R.Position * 0.5f);
+
+		return r;
     }
 
     public float get_relative(Vector3 A, Vector3 B)

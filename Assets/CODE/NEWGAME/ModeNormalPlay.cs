@@ -659,7 +659,7 @@ public class ModeNormalPlay
 							slide_image(mSunsetImage,null);
 						} else {
 							mManager.mTransitionCameraManager.fade_in_with_sound();
-							mSunsetManager.add_character(NGM.CurrentCharacterLoader.Character);
+							mSunsetManager.add_character(NGM.CurrentCharacterLoader.Character,false);
 							mSunsetManager.set_sun();
 							slide_image(null,mSunsetImage,true);
 							transition_to_GRAVE();

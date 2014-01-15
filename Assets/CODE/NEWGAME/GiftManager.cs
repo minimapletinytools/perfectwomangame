@@ -103,7 +103,7 @@ public class GiftManager
 	{
 		if(index < mStages.Count)
 		{
-			mPlayerImage.set_new_texture(mStages[index].playerTex,new Vector2(1280,960) * 1.7f);
+			mPlayerImage.set_new_texture(mStages[index].playerTex,new Vector2(2001,1500));
 			ModeNormalPlay.draw_render_texture(mFlatCamera);
 		}
 		return mFlatCamera.RT;

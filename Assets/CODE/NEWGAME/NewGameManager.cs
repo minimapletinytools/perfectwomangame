@@ -119,7 +119,7 @@ public class NewGameManager : FakeMonoBehaviour
 	
     public override void Update()
     {
-		if(mManager.mZigManager.has_user())
+		if(mManager.mZigManager.has_user() && mManager.mZigManager.is_skeleton_tracked_alternative())
         	CurrentPose = ProGrading.snap_pose(mManager); 
 		else CurrentPose = mManager.mReferences.mDefaultPose.to_pose();
 		

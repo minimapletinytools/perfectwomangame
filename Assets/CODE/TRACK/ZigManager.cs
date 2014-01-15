@@ -41,11 +41,24 @@ public class ZigManager : FakeMonoBehaviour {
 	// Use this for initialization
 	public override void Start () {
         mZigObject = mManager.gameObject;
+		
+		//mZigObject.AddComponent<kinectSpecific>();
+		mZig = mZigObject.GetComponent<Zig>();
+
+		/*
+		mZig = mZigObject.AddComponent<Zig>();
+		mZig.inputType = ZigInputType.Auto;
+		mZig.settings.UpdateDepth = true;
+		mZig.settings.UpdateImage = true;
+		mZig.settings.AlignDepthToRGB = false;
+		mZig.settings.OpenNISpecific.Mirror = true;
+		mZigObject.AddComponent<ZigEngageSingleUser>();
+		*/
+
 		DepthView = mZigObject.AddComponent<AlternativeDepthViewer>();
 		ImageView = mZigObject.AddComponent<AlternativeImageViewer>();
 
-        //mZigObject.AddComponent<kinectSpecific>();
-		mZig = mZigObject.GetComponent<Zig>();
+
         
 		
         
@@ -179,25 +192,17 @@ public class ZigManager : FakeMonoBehaviour {
 		
 		return true;
 	}
-	
-	float badTimer = 0;
-	public bool is_user_in_screen()
+
+	//for openni, we use an alternative version because the openni one suckso
+	public bool is_skeleton_tracked_alternative()
 	{
-		
-		bool bad = false;
-		
-		
-        if (LastTrackedUser != null)
-            if (LastTrackedUser.SkeletonTracked == false || LastTrackedUser.PositionTracked == false)
-                bad = true;
-
-
-		foreach(var e in Joints)
+		if (LastTrackedUser != null)
 		{
-			if(ImportantJoints.Contains(e.Key) && !e.Value.GoodPosition)
-				bad = true;
-		}
+			if (LastTrackedUser.SkeletonTracked == false || LastTrackedUser.PositionTracked == false)
+				return false;
+		} else return false;
 
+		
 		//TODO test if its in current "crumpled" pose, needed for OpenNI
 		//instead we chec	k neck and one arm)
 		if(Joints.ContainsKey(ZigJointId.LeftShoulder) && 
@@ -206,11 +211,30 @@ public class ZigManager : FakeMonoBehaviour {
 		   Joints.ContainsKey(ZigJointId.Head))
 			if(get_relative_rotation(Joints[ZigJointId.LeftShoulder],Joints[ZigJointId.LeftElbow]).flat_rotation() == 0 &&
 			   get_relative_rotation(Joints[ZigJointId.Neck],Joints[ZigJointId.Head]).flat_rotation() == 0)
-				{
-					badTimer = 0; //instabad???
-					bad = true;
-				}
+		{
+			return false;
+		}
+		return true;
+	}
 
+
+	float badTimer = 0;
+	public bool is_user_in_screen()
+	{
+		
+		bool bad = false;
+
+		if(is_skeleton_tracked_alternative())
+			bad = true;
+
+
+		foreach(var e in Joints)
+		{
+			if(ImportantJoints.Contains(e.Key) && !e.Value.GoodPosition)
+				bad = true;
+		}
+		
+	
 		if(!bad)
 			badTimer = 1.5f;
 		else

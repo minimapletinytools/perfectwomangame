@@ -19,7 +19,7 @@ public class AlternativeImageViewer : MonoBehaviour
 		if(ManagerManager.Manager.mZigManager.is_reader_connected() == 2)
 		{
 			UpdateTexture (ZigInput.Image,ZigInput.LabelMap);
-			Debug.Log ("updated image");
+			//Debug.Log ("updated image");
 		}
 		return imageTexture;
 	}
