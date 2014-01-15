@@ -178,10 +178,13 @@ public class ModeNormalPlay
 					mInterfaceManager.skippable_text_bubble_event("MATCH THE POSE BEHIND YOU", gTextDisplayDur),
 				1.5f);
 				break;
-			case "100":
-				set_time_for_PLAY(30f);
+			case "110":
+				set_time_for_PLAY(15f);
 				setup_next_poses(true);
 				transition_to_PLAY();
+				TED.add_event(
+					mInterfaceManager.skippable_text_bubble_event("YOU LIVED TO BE VERY OLD. ENJOY WHATS LEFT OF YOUR LIFE", 4),
+				1);
 				break;
 			default:
 				set_time_for_PLAY(30f);
@@ -451,7 +454,14 @@ public class ModeNormalPlay
 			{	 
 				if(CurrentPerformanceStat.Character.LevelIndex > 6) //if age 85 or greater ?????? TODO whats going on here
 				{
-					//TODO age 100
+					//TODO set true when you have 110
+					if(false && CurrentPerformanceStat.Character.LevelIndex == 7)
+					{
+						if(mPerformanceStats.Where(e=>e.Score < GameConstants.astronautCutoff).Count() == 0) //if we did well on all stages
+						{
+							transition_to_TRANSITION_play(CharacterIndex.sOneHundred);
+						}
+					}
 					mInterfaceManager.set_for_DEATH(CurrentPerformanceStat.Character)
 						.then_one_shot(
 							delegate()
@@ -473,6 +483,8 @@ public class ModeNormalPlay
 		float gTextDisplayDur = 5;
 		
 		bool firstDeath = mPerformanceStats.Where(e => e.DeathTime != -1).Count() < GameConstants.numberRetries;
+		if(NGM.CurrentCharacterIndex.LevelIndex == 7) //no retry at age 85
+			firstDeath = false;
 		CurrentPerformanceStat.DeathTime = PercentTimeCompletion;
 		
 		var chain = TED.add_one_shot_event(delegate(){});
