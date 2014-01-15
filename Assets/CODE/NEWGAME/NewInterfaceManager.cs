@@ -435,22 +435,26 @@ public class NewInterfaceManager {
 	{
 		float gTextTime = 4;
 		
-		TimedEventDistributor.TimedEventChain chain;
+		TimedEventDistributor.TimedEventChain chain = TED.empty_chain();
 		
 		if(aChar.LevelIndex == 7)
 		{
-			//80
-			chain = TED.add_one_shot_event(
-				delegate()
-				{
-					add_timed_text_bubble("It's time for you to die a natural death",gTextTime);
-				},
-	        0).then_one_shot( //dummy 
-			delegate(){},gTextTime);
+			//only show this message if we die a natural death (i.e. not early death)
+			if(mModeNormalPlay.CurrentPerformanceStat.DeathTime == -1)
+			{
+				chain = TED.add_one_shot_event(
+					delegate()
+					{
+						add_timed_text_bubble("You die a natural death at age 85",gTextTime);
+					},
+		        0).then_one_shot( //dummy 
+				delegate(){},gTextTime);
+			}
 		}
 		else if (aChar.LevelIndex == 8)
 		{
 			//100!!!
+			//TODO change this stuff, maybe just use cutscene bubble??
 			chain = TED.add_one_shot_event(
 				delegate()
 				{
