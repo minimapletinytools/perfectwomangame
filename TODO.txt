@@ -1,7 +1,6 @@
-::NEW TODO::
 
 ::MEETING NOTES::
--custom ending 
+DONE-custom ending 
 	-finish art
 	-decide on credits (scroll over for now) and time the animations
 	-polish and resize the image capture
@@ -15,9 +14,12 @@
 -balance the grading
 	-how easy it is to do well (0-1)
 		-extreme choices too easy
-DONE-bubbles should be 202,202,202,70%
--go over selection and connection together in detail
--either new font or shrink text in head pop up names
+
+-credits
+
+DONE-go over selection 
+-go over connection together in detail
+
 -if we have time, age 110
 	-when you die at 85 gives special message and then goes to 110
 	-beginning of 110 it says "you lived a very long life. Enjoy what is left"
@@ -26,41 +28,59 @@ DONE-bubbles should be 202,202,202,70%
 	-floating off in space death cutscene
 		-no death text goes straight to sunset
 	-transition to sunset, has starry sky space background with 110 floating in it.
--get more differentiated play sounds (and make the volume less loud)
 -bmp format
+DONE-bubbles should be 202,202,202,70%
 
 ::TODO INTL ED::
--have steven fix website, scrolling problem with image. extra bad in safari
--early death with retry at age 85 makes it still say "you die a natural death"
-DONE-make figure always in sunset
-DONE-particles behind the figure
--extreme is too easy right now (raise lower bound of performance htreshlod)
--confetti from top of screen ifyou do super duper well
--change performance evaluaton to match up better with new grading
--make reward image bigger
-	-better yet make it scale based on the player size in image
--random/different word bubbles
--adjust positions in new choice object
--add particles based on overall performance, rhythm game style
+-getting super particles seems a little hard now???
+-princess has 4 changes
+-make score appear (jiggle) and then dissapear
 
+DONE-enlarge character by 1.7x size
+DONE-delay on bubble
+DONE-move icons even further down in head  popup because extreme is too tall
+IGNORE-extreme is too easy right now (raise lower bound of performance htreshlod
+DONE-make reward image bigger
+	-better yet make it scale based on the player size in image
+IGNORE-change performance evaluaton to match up better with new grading
+IGNORE-limits on head torso and waist
+	-this is hard because I want relative limits but I compute angles absolute..
+DONE-depth image no longer disappears properly
+
+-make headpopup light beam animation faster
+-particles showing behind background elts instead of in front
+-sky should come in in the right color instead of change with the sun
+
+-half the color on particles when reading from character color
+-have steven fix website, scrolling problem with image. extra bad in safari
+
+-random/different word bubbles
+
+-add particles based on overall performance, rhythm game style
+-get more differentiated play sounds (and make the volume less loud)
 
 -connection text is too fast, hard to read
 -reduce volume of sound effects during PLAY
 -05-3 BPM roundoff makes it too fast I think
 
--limits on head torso and waist
-	-this is hard because I want relative limits but I compute angles absolute..
--depth image no longer disappears properly
+-some performances are to easy
+	-maybe add difficulty tuning parameter
+	-can do princess and mom well without doing anything...
+
 
 -still huge delay between early death and cutscenes
 -birth pose should be hands up (I think whale hunter has a pose like this??)
 -see if you can fix the body crumpled up problem
 	-this still happens because openNI will still say trackedskeleton even when player is gone..
 		-we can hard detect this by checking if the player is in a crumpled position..
--some performances are to easy
-	-maybe add difficulty tuning parameter
-	-can do princess and mom well without doing anything...
+	-okay there isa difinitely a difference between when player is gone and just totalyl not tracked but still in frame, openni should be abel to tell you this hopefulyl
 
+
+DONE-still says die an atural death on early death
+DONE-early death with retry at age 85 makes it still say "you die a natural death"
+DONE-make figure always in sunset
+DONE-particles behind the figure
+DONE-adjust positions in new choice object
 DONE-make stars same color as the background character
 DONE-gift still broken
 	-a word bubble shows up here for some reason...
