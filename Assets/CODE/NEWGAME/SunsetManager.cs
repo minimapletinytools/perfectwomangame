@@ -214,7 +214,9 @@ public class SunsetManager
 		else if(bubbleType == 1)
 		{
 			//TODO put in actual random bubbless
-			var bubbleImg = mManager.mCharacterBundleManager.get_image(Random.Range(0,1) == 0 ? "SUNSET_BUBBLE" : "SUNSET_BUBBLE");
+			var bubbleImg = mManager.mCharacterBundleManager.get_image(
+				Random.Range(0,3) == 0 ? "SUNSET_BUBBLE-0" : 
+				(Random.Range(0,2) == 0 ? "SUNSET_BUBBLE-1" : "SUNSET_BUBBLE-2"));
 			to = new PopupTextObject(aMsg,30,bubbleImg.Image,bubbleImg.Data.Size);
 		} else if(bubbleType == 2)
 		{

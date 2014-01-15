@@ -316,9 +316,9 @@ public class NewInterfaceManager {
 
 		//TODO put in actual random bubbless
 		var cutsceneBubbles = new CharacterBundleManager.ImageSizePair[] {
-			mManager.mCharacterBundleManager.get_image("CUTSCENE_BUBBLE"),
-			mManager.mCharacterBundleManager.get_image("CUTSCENE_BUBBLE"),
-			mManager.mCharacterBundleManager.get_image("CUTSCENE_BUBBLE")
+			mManager.mCharacterBundleManager.get_image("CUTSCENE_BUBBLE-0"),
+			mManager.mCharacterBundleManager.get_image("CUTSCENE_BUBBLE-1"),
+			mManager.mCharacterBundleManager.get_image("CUTSCENE_BUBBLE-2")
 		};
 
 		
@@ -395,7 +395,7 @@ public class NewInterfaceManager {
 						po = add_timed_text_bubble(
 							changeMsg,gCutsceneText + gCutsceneTextIncrement * aChangedChars.Count,
 							gBubblePos,
-							cutsceneBubbles[Random.Range(0,cutsceneBubbles.Length-1)]);
+							cutsceneBubbles[Random.Range(0,cutsceneBubbles.Length)]);
 					
 						//dumb stuff I need to make sure there was actually a change
 						foreach(CharacterIndex cchar in CharacterIndex.sAllCharacters)
