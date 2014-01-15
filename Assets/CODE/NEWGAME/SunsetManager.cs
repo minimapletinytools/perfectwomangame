@@ -606,9 +606,9 @@ public class SunsetManager
 
 				//TODO play sound effect
 				rewardImage.HardPosition = mFlatCamera.get_point(0,3);
-				rewardFrame.HardPosition = rewardImage.HardPosition + new Vector3(0,320,0);
-				rewardImage.SoftPosition = mFlatCamera.Center + new Vector3(0,80,0);
-				rewardFrame.SoftPosition = rewardImage.SoftPosition;
+				rewardFrame.HardPosition = rewardImage.HardPosition;
+				rewardImage.SoftPosition = mFlatCamera.Center + new Vector3(0,150,0);
+				rewardFrame.SoftPosition = rewardImage.SoftPosition + new Vector3(0,320,0);
 				mElement.Add(rewardImage);
 				mElement.Add(rewardFrame);
 
@@ -708,12 +708,6 @@ public class SunsetManager
 				foreach(FlatElementText e in creditsText)
 				{
 					e.SoftPosition = e.SoftPosition + scroll;
-				}
-
-				if(rewardImage != null)
-				{
-					rewardImage.SoftPosition = rewardImage.SoftPosition + scroll;
-					rewardFrame.SoftPosition = rewardFrame.SoftPosition + scroll;
 				}
 
 
