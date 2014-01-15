@@ -104,18 +104,25 @@ public class ProjectionManager : FakeMonoBehaviour {
 		else
         	r = get_relative(A.Position, B.Position);
 
-		//openni fix to solve head being set to -90 angle problem
+
 		/*
 		if(B.Id == ZigJointId.Head)
 		{
 			r = Mathf.Clamp(r, 0, 180);
 		}*/
 
+		//openni fix to solve head being set to -90 angle problem
+		if(B.Id == ZigJointId.Head)
+			if(!B.GoodPosition)
+				r = -90;
+
+		/*
 		if(B.Id == ZigJointId.Head)
 			mManager.mDebugString = 
 				(B.GoodPosition ? "true" : "false") + 
 				" " + r.ToString() + 
 				" " + (mImportant[ZigJointId.Torso].smoothing.current-90+mImportant[ZigJointId.Neck].smoothing.current);
+				*/
 
         return r;
 	}
