@@ -107,7 +107,7 @@ public class NewInterfaceManager {
 		mBBNameTextFrame.HardPosition = mBBMultiplierImage.HardPosition + new Vector3(mBBNameTextFrame.BoundingBox.width,140,0)/2 + textOffset;
 		mBBNameText.HardPosition = mBBMultiplierImage.HardPosition + new Vector3(275,140,0)/2 + textOffset;
 		mBBScoreFrame.HardPosition = mBBMultiplierImage.HardPosition + new Vector3(mBBScoreFrame.BoundingBox.width,-140,0)/2 + textOffset;
-		mBBScoreText.HardPosition = mBBScoreFrame.HardPosition + new Vector3(-mBBScoreFrame.BoundingBox.width/2 + 145,0,0);
+		mBBScoreText.HardPosition = mBBScoreFrame.HardPosition + new Vector3(-mBBScoreFrame.BoundingBox.width/2 + 170,0,0);
 
 
 		var warningImage = mManager.mNewRef.redWarning; //mManager.mCharacterBundleManager.get_image("WARNING");
@@ -257,9 +257,9 @@ public class NewInterfaceManager {
 
 		if(!(aChar.Character == CharacterIndex.sFetus || aChar.Character == CharacterIndex.sOneHundred))
 		{
-			mBBNameText.Text = aChar.Character.Description.ToUpper() + " (" + aChar.Character.Age.ToString() + ")";//FlatElementText.convert_to_multiline(aChar.Character.Description.Length > 20 ? 2 : 1 ,aChar.Character.Description + " (" + aChar.Character.Age.ToString() + ")");
+			mBBNameText.Text = aChar.Character.Description + " (" + aChar.Character.Age.ToString() + ")";//FlatElementText.convert_to_multiline(aChar.Character.Description.Length > 20 ? 2 : 1 ,aChar.Character.Description + " (" + aChar.Character.Age.ToString() + ")");
 			var origPos = mBBNameTextFrame.SoftPosition - new Vector3(mBBNameTextFrame.BoundingBox.width/2f,0,0);
-			float newWidth = mBBNameText.BoundingBox.width+200;
+			float newWidth = mBBNameText.BoundingBox.width+250;
 			mBBNameTextFrame.mImage.pixel_crop(new Rect(0,0,newWidth,mBBNameTextFrame.mImage.BaseDimension.y));
 			mBBNameTextFrame.HardPosition = origPos + new Vector3(newWidth/2f,0,0);
 		}
@@ -349,7 +349,7 @@ public class NewInterfaceManager {
 						text = "You lived your life " + noCapsDescription + " " + performancePhrase[(int)Mathf.Clamp(mBBLastPerformanceGraph.Score*4,0,3)] + ".";
 					else
 						text = "You lived your life as a " + noCapsDescription + " " + performancePhrase[(int)Mathf.Clamp(mBBLastPerformanceGraph.Score*4,0,3)] + ".";*/
-					introPo = add_timed_text_bubble(aChanges.PerformanceDescription.ToUpper(),gPerformanceText);
+					introPo = add_timed_text_bubble(aChanges.PerformanceDescription,gPerformanceText);
 				}
 				return true;
 			},
@@ -441,6 +441,8 @@ public class NewInterfaceManager {
 	//returns amount of time this will take
 	public TimedEventDistributor.TimedEventChain set_for_DEATH(CharacterIndex aChar)
 	{
+
+		//TODO switch to skippable bubbles here TY
 		float gTextTime = 5;
 		
 		TimedEventDistributor.TimedEventChain chain = TED.empty_chain();
@@ -453,7 +455,7 @@ public class NewInterfaceManager {
 				chain = TED.add_one_shot_event(
 					delegate()
 					{
-						add_timed_text_bubble("You die a natural death at age 85",gTextTime);
+						add_timed_text_bubble("You die a natural death at age 85.",gTextTime);
 					},
 		        0).then_one_shot( //dummy 
 				delegate(){},gTextTime);
@@ -466,17 +468,12 @@ public class NewInterfaceManager {
 			chain = TED.add_one_shot_event(
 				delegate()
 				{
-					add_timed_text_bubble("Congragulations",gTextTime);
+					add_timed_text_bubble("CONGRAGULATIONS",gTextTime);
 				},
 	        0).then_one_shot(
 				delegate()
 				{
-					add_timed_text_bubble("Your life was may not have been perfect",gTextTime);
-				},
-			gTextTime).then_one_shot(
-				delegate()
-				{
-					add_timed_text_bubble("but you lived 110 years",gTextTime);
+					add_timed_text_bubble("You lived 110 years.",gTextTime);
 				},
 			gTextTime).then_one_shot( //dummy 
 				delegate(){},gTextTime);
@@ -486,7 +483,7 @@ public class NewInterfaceManager {
 			chain = TED.add_one_shot_event(
 				delegate()
 				{
-					add_timed_text_bubble("You die at the age of " + aChar.Age,gTextTime);
+					add_timed_text_bubble("You die at the age of " + aChar.Age + ".",gTextTime);
 				},
 	        1).then_one_shot(
 				delegate()

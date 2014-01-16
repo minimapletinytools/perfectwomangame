@@ -74,6 +74,13 @@ public class PerformanceStats
 			return r;
 		}
 	}
+
+	public bool BadPerformance
+	{
+		get{
+			return Score <= GameConstants.badPerformanceThreshold;
+		}
+	}
 	
 	public PerformanceStats(CharacterIndex aChar)
 	{

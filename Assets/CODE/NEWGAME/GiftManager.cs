@@ -92,7 +92,7 @@ public class GiftManager
 	public void set_background_for_render()
 	{
 		mManager.mBackgroundManager.character_changed_listener(mManager.mGameManager.CurrentCharacterLoader);
-		int[] depthMap = new int[]{1,-1,4,2,-2,3,5};
+		int[] depthMap = (new int[]{1,-1,4,2,-2,3,5}).Reverse().ToArray();
 		for(int i = 0; i < mStages.Count-1; i++)
 		{
 			//TODO custom depth
@@ -103,7 +103,7 @@ public class GiftManager
 	{
 		if(index < mStages.Count)
 		{
-			mPlayerImage.set_new_texture(mStages[index].playerTex,new Vector2(2001,1500));
+			mPlayerImage.set_new_texture(mStages[index].playerTex,new Vector2(2001,1500)*1.4f);
 			ModeNormalPlay.draw_render_texture(mFlatCamera);
 		}
 		return mFlatCamera.RT;

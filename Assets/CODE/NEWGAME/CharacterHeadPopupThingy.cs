@@ -237,10 +237,11 @@ public class CharacterHeadPopupThingy
 				{
 					int index = i;
 					//mBadges[i].SoftColor = GameConstants.UiWhiteTransparent;
-					mCharacters[i].SoftPosition = start + offset + step*i + new Vector3(0,-220,0); //move down a little more to compensate for scale change
+					mCharacters[i].SoftPosition = start + offset + step*i + new Vector3(0,-200,0); //move down a little more to compensate for scale change
 					mNames[i].SoftPosition = mCharacters[i].SoftPosition + nameOffset;
 					mBackgrounds[i].SoftPosition = mCharacters[i].SoftPosition;
 					mBadges[i].SoftPosition = mCharacters[i].SoftPosition + badgeOffset;
+					mBadges[i].SoftColor = GameConstants.UiWhiteTransparent;
 
 					//destroy them eventually.
 					TED.add_one_shot_event(

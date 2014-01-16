@@ -224,7 +224,7 @@ public class ZigManager : FakeMonoBehaviour {
 		
 		bool bad = false;
 
-		if(is_skeleton_tracked_alternative())
+		if(!is_skeleton_tracked_alternative())
 			bad = true;
 
 

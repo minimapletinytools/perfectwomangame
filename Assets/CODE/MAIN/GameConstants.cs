@@ -15,6 +15,11 @@ public static class GameConstants
 
 	public static float astronautCutoff = .1f;
 
+	public static float playSuperCutoff = 0.9f;
+	public static float playDefaultPlayTime = 35f;
+
+	public static float badPerformanceThreshold = 0.6f;
+
 	public static Color[] IconDifficultyColors { get { return new Color[]{new Color32(28,182,71,255), new Color32(255,168,0,255), new Color32(234,84,2,255), new Color32(255,0,0,255)};}}
 	public static Color[] IconDifficultyColorsOverTwo { get{ return IconDifficultyColors.Select(e=> e/2f).ToArray();}}
 	

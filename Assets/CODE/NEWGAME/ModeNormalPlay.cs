@@ -27,6 +27,14 @@ public class ModeNormalPlay
 	{ get { return mPerformanceStats[mPerformanceStats.Count-1]; } }
 	public float TotalScore
 	{ get{ return mPerformanceStats.Sum(delegate (PerformanceStats e) { return e.AdjustedScore; }); } }
+	public bool IsFever
+	{ 
+		get{ 
+			float perc = 5f/GameConstants.playDefaultPlayTime;
+			return PercentTimeCompletion > perc && CurrentPerformanceStat.last_score(perc)/perc > 0.6f;
+		}
+	}
+
 	
 		
 	public float mLastGrade = 0.5f;
@@ -160,14 +168,13 @@ public class ModeNormalPlay
 		switch(NGM.CurrentCharacterLoader.Name)
 		{
 			case "0-1":	
-				//set_time_for_PLAY(30f);
 				set_time_for_PLAY(999999f);
 				setup_next_poses(true);
 				transition_to_PLAY();
 				float gTextDisplayDur = 4;
 				NGM.CurrentTargetPose = null;
 				TED.add_event(
-					mInterfaceManager.skippable_text_bubble_event("TRY AND MAKE YOUR FIRST MOVEMENTS", gTextDisplayDur),
+					mInterfaceManager.skippable_text_bubble_event("Try and make your first movements.", gTextDisplayDur),
 				3).then_one_shot(
 					delegate(){
 						NGM.CurrentTargetPose = mManager.mReferences.mCheapPose.to_pose();
@@ -175,7 +182,7 @@ public class ModeNormalPlay
 						mManager.mTransparentBodyManager.transition_character_in(mManager.mCharacterBundleManager.get_character_stat(NGM.CurrentCharacterIndex).CharacterInfo.CharacterOutlineColor);
 					},
 				0).then(
-					mInterfaceManager.skippable_text_bubble_event("MATCH THE POSE BEHIND YOU", gTextDisplayDur),
+					mInterfaceManager.skippable_text_bubble_event("Match the pose behind you.", gTextDisplayDur),
 				1.5f);
 				break;
 			case "110":
@@ -183,11 +190,11 @@ public class ModeNormalPlay
 				setup_next_poses(true);
 				transition_to_PLAY();
 				TED.add_event(
-					mInterfaceManager.skippable_text_bubble_event("YOU LIVED TO BE VERY OLD. ENJOY WHATS LEFT OF YOUR LIFE", 4),
+					mInterfaceManager.skippable_text_bubble_event("You lived to be very old. Enjoy what's left of your life.", 4),
 				1);
 				break;
 			default:
-				set_time_for_PLAY(30f);
+				set_time_for_PLAY(GameConstants.playDefaultPlayTime);
 				setup_next_poses(false);
 				transition_to_PLAY();
 				break;
@@ -264,11 +271,7 @@ public class ModeNormalPlay
 	
 	public void update_PLAY()
 	{
-		
-		
 		TimeRemaining -= Input.GetKey(KeyCode.O) ? Time.deltaTime * 5 : Time.deltaTime;
-		
-		mInterfaceManager.update_bb_score(TotalScore);
 		
 		if(NGM.CurrentPose != null) //this should never happen but just in case
 		{
@@ -302,7 +305,10 @@ public class ModeNormalPlay
 				{
 					mGiftManager.capture_player();
 					mParticles.create_particles(mGrading);
-					mManager.mMusicManager.play_sound_effect("pose" + Mathf.Clamp((int)(6*grade),0,5));
+					if(grade > GameConstants.playSuperCutoff && IsFever)
+						mManager.mMusicManager.play_sound_effect("pose5",0.6f);
+					else
+						mManager.mMusicManager.play_sound_effect("pose" + Mathf.Clamp((int)(5*grade),0,4),0.6f);
 				}
 			}
 			
@@ -343,7 +349,8 @@ public class ModeNormalPlay
 		//warning
 		if (NGM.CurrentPoseAnimation != null && NGM.CurrentCharacterIndex.LevelIndex != 0)
 		{
-			if(PercentTimeCompletion > 0.2f && CurrentPerformanceStat.last_score(1.5f/30f)/(1.5f/30f) < 0.2f)
+			float perc = 3f/GameConstants.playDefaultPlayTime;
+			if(PercentTimeCompletion > 0.15f && CurrentPerformanceStat.last_score(perc)/(perc) < 0.2f)
 				mInterfaceManager.enable_warning_text(true);
 			else 
 				mInterfaceManager.enable_warning_text(false);
@@ -378,9 +385,10 @@ public class ModeNormalPlay
 		//if (NGM.CurrentPoseAnimation != null && mManager.mZigManager.has_user() && NGM.CurrentCharacterIndex.LevelIndex != 0)
 		if (NGM.CurrentPoseAnimation != null && mManager.mZigManager.is_reader_connected() == 2 && NGM.CurrentCharacterIndex.LevelIndex != 0)
 		{
-			if(PercentTimeCompletion > 0.35f)
+			if(PercentTimeCompletion > 0.25f)
 			{
-				if(CurrentPerformanceStat.last_score(7/30f)/(7/30f) < 0.17f)
+				float perc = 7f/GameConstants.playDefaultPlayTime;
+				if(CurrentPerformanceStat.last_score(perc)/perc < 0.17f)
 					die |= true;
 			}
 		}
@@ -518,17 +526,22 @@ public class ModeNormalPlay
 		
 		//BAD PERFORMANCE
 		chain = chain.then(
-			mInterfaceManager.skippable_text_bubble_event(firstDeath ? "BAD PERFORMANCE!" : "HORRIBLE PERFORMANCE! EARLY DEATH", gTextDisplayDur)
+			mInterfaceManager.skippable_text_bubble_event(firstDeath ? "BAD PERFORMANCE!" : "HORRIBLE PERFORMANCE!", gTextDisplayDur)
 		,2);
+
+		if(!firstDeath)
+			chain = chain.then(
+					mInterfaceManager.skippable_text_bubble_event("You die an early death.", gTextDisplayDur)
+				,0);
 		
 		//NEXT TIME YOU PERFORM THAT BAD YOU MIGHT DIE
 		if(firstDeath) //if we haven't died previously
 		{
 			chain = chain.then(
 				NGM.CurrentLevel == 7 ?
-				mInterfaceManager.skippable_text_bubble_event("BUT IT'S OK BECAUSE YOU ARE ALREADY OLD", gTextDisplayDur)
+				mInterfaceManager.skippable_text_bubble_event("But that's okay, you are already old.", gTextDisplayDur)
 				:
-				mInterfaceManager.skippable_text_bubble_event("NEXT TIME YOU PERFORM THAT BAD YOU MIGHT DIE", gTextDisplayDur)
+				mInterfaceManager.skippable_text_bubble_event("Next time you perform that bad you will die.", gTextDisplayDur)
 			).then_one_shot(
 				delegate(){
 					mInterfaceManager.set_for_CUTSCENE(
@@ -603,7 +616,7 @@ public class ModeNormalPlay
 			}
 		,5);
 		TED.add_event(
-			mSunsetManager.low_skippable_text_bubble_event("You turn " + NGM.CurrentCharacterIndex.get_future_neighbor(0).Age,gAgeDisplayDur)
+			mSunsetManager.low_skippable_text_bubble_event("You turn " + NGM.CurrentCharacterIndex.get_future_neighbor(0).Age + ".",gAgeDisplayDur)
 		,2.5f).then_one_shot(
 			delegate(){
 				slide_image(null,mChoosingImage);
@@ -642,6 +655,7 @@ public class ModeNormalPlay
 										"That's a hard one. Show your skills!", 
 										"You made an extreme choice? Let's see if you survive!"
 		};
+
 		TED.add_event(
 			aNextCharacter != CharacterIndex.sGrave 
 			?
@@ -694,8 +708,8 @@ public class ModeNormalPlay
 			{
 				//mManager.mMusicManager.fade_in_cutscene_music(CurrentCharacterLoader.Images.cutsceneMusic[changeIndex]);
 				//mManager.mMusicManager.play_cutscene_music(CurrentCharacterLoader.Images.cutsceneMusic[changeIndex]);
-				mManager.mMusicManager.play_sound_effect(changes.UpperThreshold <= 0.5 ? "cutBad" : "cutGood");
-				mManager.mMusicManager.play_cutscene_music(NGM.CurrentCharacterLoader.Images.cutsceneMusic[changes.UpperThreshold <= 0.5 ? 0 : 1]);
+				mManager.mMusicManager.play_sound_effect(CurrentPerformanceStat.BadPerformance ? "cutBad" : "cutGood");
+				mManager.mMusicManager.play_cutscene_music(NGM.CurrentCharacterLoader.Images.cutsceneMusic[CurrentPerformanceStat.BadPerformance ? 1 : 0]);
 				//mManager.mMusicManager.fade_in_cutscene_music(CurrentCharacterLoader.Images.cutsceneMusic[changes.UpperThreshold <= 0.5 ? 0 : 1]);
 			}
 			else 
@@ -709,7 +723,7 @@ public class ModeNormalPlay
 		mManager.mBodyManager.transition_character_out();
 		mManager.mTransparentBodyManager.transition_character_out();
 
-		if(CurrentPerformanceStat.Score < 0.5f && NGM.CurrentCharacterLoader.has_cutscene(1))
+		if(CurrentPerformanceStat.BadPerformance && NGM.CurrentCharacterLoader.has_cutscene(1))
 			mManager.mBackgroundManager.load_cutscene(1,NGM.CurrentCharacterLoader);
 		else
 			mManager.mBackgroundManager.load_cutscene(0,NGM.CurrentCharacterLoader);

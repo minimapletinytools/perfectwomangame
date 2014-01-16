@@ -87,35 +87,44 @@ public class BodyParticleHelper
 
 		if(!continuous)
 		{
+
+			bool fever = man.mGameManager.mModeNormalPlay.IsFever;
+
 			float grade = ProGrading.grade_to_perfect(aGrade.CurrentGrade);
 
-			int inc = Mathf.Clamp((int)(6*grade),0,5);
+			int inc = Mathf.Clamp((int)(5*grade),0,4);
+
 				
-			if(inc > 1 && inc <= 2)
+			if(inc < 1)
 			{
-				mParticles.emit_ring("silver",5,activeBody.mFlat.get_body_part_position(ZigJointId.Torso),600, 1.5f);
+				//TODO sad particles
+			}
+			if(inc >= 2 && inc < 3)
+			{
+				//mParticles.emit_ring("silver",5,activeBody.mFlat.get_body_part_position(ZigJointId.Torso),600, 1.5f);
 				mParticles.emit_ring("silver",7,activeBody.mFlat.get_body_part_position(ZigJointId.Torso),900, 1.5f);
 			}
-			if(inc > 2 && inc <= 3)
+			if(inc >= 3  && inc <4)
 			{
-
-				mParticles.emit_ring("silver",5,activeBody.mFlat.get_body_part_position(ZigJointId.Torso),600, 1.5f);
-				mParticles.emit_ring("gold",7,activeBody.mFlat.get_body_part_position(ZigJointId.Torso),900, 1.5f);
-				mParticles.emit_ring("silver",10,activeBody.mFlat.get_body_part_position(ZigJointId.Torso),1300, 1.5f);
+				mParticles.emit_ring("silver",5,activeBody.mFlat.get_body_part_position(ZigJointId.Torso),700,1.5f);
+				mParticles.emit_ring("gold",7,activeBody.mFlat.get_body_part_position(ZigJointId.Torso),1000, 2f);
 			}
-			if(inc > 3 && inc <= 4)
+			if(inc == 4)
 			{
-				mParticles.emit_ring("gold",5,activeBody.mFlat.get_body_part_position(ZigJointId.Torso),700,2f);
-				mParticles.emit_ring("silver",7,activeBody.mFlat.get_body_part_position(ZigJointId.Torso),1000, 1.5f);
-				mParticles.emit_ring("gold",10,activeBody.mFlat.get_body_part_position(ZigJointId.Torso),1500,2f);
-			}
-			if(inc > 4)
-			{
-				mParticles.emit_ring("gold",20,activeBody.mFlat.get_body_part_position(ZigJointId.Torso),2500,2f);
-				//mParticles.emit_ring("gold",15,activeBody.mFlat.get_body_part_position(ZigJointId.Torso),1500,3f);
-				mParticles.emit_ring("silver",12,activeBody.mFlat.get_body_part_position(ZigJointId.Torso),1900, 3f);
-				mParticles.emit_ring("gold",7,activeBody.mFlat.get_body_part_position(ZigJointId.Torso),1200,4f);
-				mParticles.emit_ring("silver",10,activeBody.mFlat.get_body_part_position(ZigJointId.Torso),600,1.5f);
+				if(grade > GameConstants.playSuperCutoff && fever)
+				{
+					mParticles.emit_ring("gold",20,activeBody.mFlat.get_body_part_position(ZigJointId.Torso),2500,2f);
+					//mParticles.emit_ring("gold",15,activeBody.mFlat.get_body_part_position(ZigJointId.Torso),1500,3f);
+					mParticles.emit_ring("silver",12,activeBody.mFlat.get_body_part_position(ZigJointId.Torso),1900, 3f);
+					mParticles.emit_ring("gold",7,activeBody.mFlat.get_body_part_position(ZigJointId.Torso),1200,4f);
+					mParticles.emit_ring("silver",10,activeBody.mFlat.get_body_part_position(ZigJointId.Torso),600,1.5f);
+				}
+				else
+				{
+					mParticles.emit_ring("gold",12,activeBody.mFlat.get_body_part_position(ZigJointId.Torso),1900, 4f);
+					mParticles.emit_ring("silver",7,activeBody.mFlat.get_body_part_position(ZigJointId.Torso),1200,1.5f);
+					mParticles.emit_ring("gold",10,activeBody.mFlat.get_body_part_position(ZigJointId.Torso),600,3f);
+				}
 			}
 
 

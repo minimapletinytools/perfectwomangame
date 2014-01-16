@@ -104,8 +104,8 @@ public class SunsetManager
 		scoreText.Text = ""+aScore;
 		scoreText.PositionInterpolationMinLimit = 200f;
 		scoreBg.PositionInterpolationMinLimit = 200f;
-		scoreText.ColorInterpolationMaxLimit = Mathf.Infinity;
-		scoreBg.ColorInterpolationMaxLimit = Mathf.Infinity;
+		scoreText.ColorInterpolationMinLimit = Mathf.Infinity;
+		scoreBg.ColorInterpolationMinLimit = 3f;
 
 		mScoreLabels.Add(scoreBg);
 		mScoreTexts.Add(scoreText);
@@ -156,9 +156,11 @@ public class SunsetManager
 		mSun.PositionInterpolationMaxLimit = 300;
 
 		//linear arc thing
+		Vector3 sunHigh = mFlatCamera.Center + new Vector3(0,850,0);
+		Vector3 sunLow = mFlatCamera.Center + new Vector3(0,-70,0);
 		mSun.SoftPosition = lambda <= 0.5f ? 
-			lambda*2*(mFlatCamera.Center + new Vector3(0,850,0)) + (1-lambda*2)*(mFlatCamera.Center + new Vector3(-50,0,0)) : 
-			(1-(lambda-0.5f)*2)*(mFlatCamera.Center + new Vector3(0,850,0)) + (lambda-0.5f)*2*(mFlatCamera.Center + new Vector3(-50,0,0));
+			lambda*2*(sunHigh) + (1-lambda*2)*(sunLow) : 
+			(1-(lambda-0.5f)*2)*(sunHigh) + (lambda-0.5f)*2*(sunLow);
 		//circle arc
 		//mSun.SoftPosition = mFlatCamera.Center + new Vector3(50*Mathf.Cos(ttt),700*Mathf.Sin(ttt),0);
 
@@ -177,7 +179,7 @@ public class SunsetManager
 		Vector3 gDiffLabelOffset = new Vector3(-100,-350,0);
 		if(aChar != CharacterIndex.sFetus)
 		{
-			var addMe = construct_flat_image("SUNSET_"+aChar.StringIdentifier,10 - mCharacters.Count);
+			var addMe = construct_flat_image("SUNSET_"+aChar.StringIdentifier,3+mCharacters.Count);
 			//Debug.Log ("adding character " + aChar.StringIdentifier);
 
 			//special positioning for grave
@@ -200,7 +202,7 @@ public class SunsetManager
 			mElement.Add(addMe);
 
 			if(aShowScore)
-				show_score(aChar,(int)mManager.mGameManager.mModeNormalPlay.CurrentPerformanceStat.AdjustedScore,13);
+				show_score(aChar,(int)mManager.mGameManager.mModeNormalPlay.CurrentPerformanceStat.AdjustedScore,4);
 
 			set_sky_color(mCharacters.Count);
 		}
@@ -332,7 +334,7 @@ public class SunsetManager
 		shine.HardColor = positive ? GameConstants.UiYellow : GameConstants.UiRed; 
 		shine.PositionInterpolationMinLimit = 200;
 		shine.ColorInterpolationMaxLimit = Mathf.Infinity;
-		shine.ColorInterpolationMinLimit = Mathf.Infinity;
+		shine.ColorInterpolationMinLimit = .5f;
 		mElement.Add(shine);
 		TED.add_one_shot_event(
 			delegate() {
@@ -516,6 +518,8 @@ public class SunsetManager
 			
 			//TODO grave connections
 			CharIndexContainerString connections;
+
+			//TODO 
 			bool wasHard = ps.Stats.Difficulty > 1;
 			if(wasHard)
 				connections = mManager.mCharacterBundleManager.get_character_stat(ps.Character).CharacterInfo.HardConnections;
@@ -531,15 +535,8 @@ public class SunsetManager
 				if(targetConnection != null && targetConnection != "")
 				{
 					int accumChange = 0; //accum change is targetCharacters effect on the current character
-					if(aStats[j].CutsceneChangeSet != null) //TODO this check should never fail
-					{
-						//Debug.Log("accum change for " + aStats[j].Character.StringIdentifier + " is " + aStats[j].CutsceneChangeSet.accumulative_changes()[ps.Character]);
-						accumChange = aStats[j].CutsceneChangeSet.accumulative_changes()[ps.Character];
-					}
-					else
-					{
-						//Debug.Log ("null cutscene change for " + aStats[j].Character.StringIdentifier + " " + aStats[j].CutsceneChangeSet);
-					}
+					accumChange = aStats[j].CutsceneChangeSet.accumulative_changes()[ps.Character];
+
 					if( (wasHard && accumChange > 0) || //if was hard and effect was positive (i.e. hard)
 					   (!wasHard && accumChange < 0)) //if was easy and effect was negative (i.e. easy)
 					{

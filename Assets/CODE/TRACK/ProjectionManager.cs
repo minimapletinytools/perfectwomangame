@@ -116,13 +116,14 @@ public class ProjectionManager : FakeMonoBehaviour {
 			if(!B.GoodPosition)
 				r = -90;
 
+
 		/*
 		if(B.Id == ZigJointId.Head)
 			mManager.mDebugString = 
 				(B.GoodPosition ? "true" : "false") + 
 				" " + r.ToString() + 
 				" " + (mImportant[ZigJointId.Torso].smoothing.current-90+mImportant[ZigJointId.Neck].smoothing.current);
-				*/
+		*/		
 
         return r;
 	}
