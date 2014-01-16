@@ -90,6 +90,9 @@ public class FlatElementText : FlatElementBase
 		
         textElement.transform.parent = PrimaryGameObject.transform;
         Depth = aDepth;
+
+		//this solves the one frame flicker at 0,0
+		PrimaryGameObject.transform.position = new Vector3(-4000,4000,1234);
     }
 	
 	public override void destroy ()

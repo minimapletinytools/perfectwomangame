@@ -74,11 +74,14 @@ public static class GameConstants
 	public static Color UiYellowTransparent{get {return new Color(uiYellow.r,uiYellow.g,uiYellow.b,0)/2f; }}
 	public static Color uiBlue = new Color(0,0,1,1);
 	public static Color UiBlue{get {return uiBlue*0.5f;}}
+	public static Color uiPurple = new Color(1,0,1,1);
+	public static Color UiPurple{get {return uiPurple*0.5f;}}
+	public static Color UiPurpleTransparent{get {return new Color(uiPurple.r,uiPurple.g,uiPurple.b,0)/2f; }}
 	public static Color uiWhite= new Color(1,1,1,1);
 	public static Color UiWhite{get {return uiWhite * 0.5f;}}
 	public static Color UiWhiteTransparent{get {return new Color(uiWhite.r,uiWhite.g,uiWhite.b,0)/2f; }}
 
-	public static Color UiMiniMan{get {return new Color(1,0.3f,0.2f); }}
+	public static Color UiMiniMan{get {return new Color(0.8f,0.2f,0.8f); }}
 	public static Color UiPopupBubble{get { return new Color(0.43f,0.43f,0.43f,0.42f); } }
 	
 	public static Color uiGraveText = new Color32(102,101,101,255);

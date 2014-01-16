@@ -107,7 +107,7 @@ public class NewInterfaceManager {
 		mBBNameTextFrame.HardPosition = mBBMultiplierImage.HardPosition + new Vector3(mBBNameTextFrame.BoundingBox.width,140,0)/2 + textOffset;
 		mBBNameText.HardPosition = mBBMultiplierImage.HardPosition + new Vector3(275,140,0)/2 + textOffset;
 		mBBScoreFrame.HardPosition = mBBMultiplierImage.HardPosition + new Vector3(mBBScoreFrame.BoundingBox.width,-140,0)/2 + textOffset;
-		mBBScoreText.HardPosition = mBBScoreFrame.HardPosition + new Vector3(-mBBScoreFrame.BoundingBox.width/2 + 170,0,0);
+		mBBScoreText.HardPosition = mBBScoreFrame.HardPosition + new Vector3(-mBBScoreFrame.BoundingBox.width/2 + 155,0,0);
 
 
 		var warningImage = mManager.mNewRef.redWarning; //mManager.mCharacterBundleManager.get_image("WARNING");
@@ -259,7 +259,7 @@ public class NewInterfaceManager {
 		{
 			mBBNameText.Text = aChar.Character.Description + " (" + aChar.Character.Age.ToString() + ")";//FlatElementText.convert_to_multiline(aChar.Character.Description.Length > 20 ? 2 : 1 ,aChar.Character.Description + " (" + aChar.Character.Age.ToString() + ")");
 			var origPos = mBBNameTextFrame.SoftPosition - new Vector3(mBBNameTextFrame.BoundingBox.width/2f,0,0);
-			float newWidth = mBBNameText.BoundingBox.width+250;
+			float newWidth = mBBNameText.BoundingBox.width+300;
 			mBBNameTextFrame.mImage.pixel_crop(new Rect(0,0,newWidth,mBBNameTextFrame.mImage.BaseDimension.y));
 			mBBNameTextFrame.HardPosition = origPos + new Vector3(newWidth/2f,0,0);
 		}

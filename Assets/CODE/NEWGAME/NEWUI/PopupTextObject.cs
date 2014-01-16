@@ -48,7 +48,7 @@ public class PopupTextObject : FlatElementMultiBase {
 				//textOffset = 15;
 				aText = FlatElementText.convert_to_multiline(4,aText);
 			}
-			mText.Text = aText.ToUpper();
+			mText.Text = aText;//.ToUpper();
 			mTextOffset.Position = new Vector3(0,textOffset,0);
 			
 			if(aText.Length > 80)

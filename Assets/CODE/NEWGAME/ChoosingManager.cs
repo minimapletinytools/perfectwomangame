@@ -182,7 +182,7 @@ public class ChoosingManager
 	{
 		if(aIndex == -1) //no choice
 		{
-			mBBMiniMan.SoftColor = GameConstants.UiRedTransparent;
+			mBBMiniMan.SoftColor = GameConstants.UiPurpleTransparent;
 			mBBMiniMan.SoftPosition = mBBMiniManBasePosition;
 			//mBBQuestionTextPrefix.Text = "Choose your perfect life";
 			mBBQuestionText.set_text(

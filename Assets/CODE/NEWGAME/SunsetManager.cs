@@ -156,8 +156,8 @@ public class SunsetManager
 		mSun.PositionInterpolationMaxLimit = 300;
 
 		//linear arc thing
-		Vector3 sunHigh = mFlatCamera.Center + new Vector3(0,850,0);
-		Vector3 sunLow = mFlatCamera.Center + new Vector3(0,-70,0);
+		Vector3 sunHigh = mFlatCamera.Center + new Vector3(0,950,0);
+		Vector3 sunLow = mFlatCamera.Center + new Vector3(0,-200,0);
 		mSun.SoftPosition = lambda <= 0.5f ? 
 			lambda*2*(sunHigh) + (1-lambda*2)*(sunLow) : 
 			(1-(lambda-0.5f)*2)*(sunHigh) + (lambda-0.5f)*2*(sunLow);
@@ -179,7 +179,7 @@ public class SunsetManager
 		Vector3 gDiffLabelOffset = new Vector3(-100,-350,0);
 		if(aChar != CharacterIndex.sFetus)
 		{
-			var addMe = construct_flat_image("SUNSET_"+aChar.StringIdentifier,3+mCharacters.Count);
+			var addMe = construct_flat_image("SUNSET_"+aChar.StringIdentifier,3+mCharacters.Count*2);
 			//Debug.Log ("adding character " + aChar.StringIdentifier);
 
 			//special positioning for grave
@@ -192,7 +192,7 @@ public class SunsetManager
 				string[] labelNames = new string[]{"label_easy","label_normal","label_hard","label_extreme"};
 				var diffLabel = mManager.mCharacterBundleManager.get_image(labelNames[mManager.mGameManager.get_character_difficulty(aChar)]);
 				Debug.Log ("creating label " + labelNames[mManager.mGameManager.get_character_difficulty(aChar)]);
-				FlatElementImage diffLabelImage = new FlatElementImage(diffLabel.Image,diffLabel.Data.Size,11);
+				FlatElementImage diffLabelImage = new FlatElementImage(diffLabel.Image,diffLabel.Data.Size,3+mCharacters.Count*2 + 1);
 				diffLabelImage.HardPosition = addMe.HardPosition + gDiffLabelOffset;
 				mDiffLabels.Add(diffLabelImage);
 				mElement.Add(diffLabelImage);
@@ -202,7 +202,7 @@ public class SunsetManager
 			mElement.Add(addMe);
 
 			if(aShowScore)
-				show_score(aChar,(int)mManager.mGameManager.mModeNormalPlay.CurrentPerformanceStat.AdjustedScore,4);
+				show_score(aChar,(int)mManager.mGameManager.mModeNormalPlay.CurrentPerformanceStat.AdjustedScore,3);
 
 			set_sky_color(mCharacters.Count);
 		}
@@ -232,7 +232,10 @@ public class SunsetManager
 			to = new PopupTextObject(aMsg,30,bubbleImg.Image,bubbleImg.Data.Size);
 		} else if(bubbleType == 2)
 		{
-			to = new PopupTextObject(aMsg,30); //TODO??
+			var bubbleImg = mManager.mCharacterBundleManager.get_image("SELECTION_BUBBLE");
+			to = new PopupTextObject(aMsg,30,bubbleImg.Image,bubbleImg.Data.Size);
+			//hack fix, don't do this
+			to.HardText = aMsg;
 		}
 		//to.HardPosition = random_position();
 		to.HardColor = GameConstants.UiWhiteTransparent;
@@ -400,7 +403,8 @@ public class SunsetManager
 		{
 			if(aStats.Last().Character.Age < (new CharacterIndex(i,0)).Age)
 			{
-				PerformanceStats stat = new PerformanceStats(new CharacterIndex(i,Random.Range(0,3)));
+
+				PerformanceStats stat = new PerformanceStats(new CharacterIndex(i,3));
 				stat.update_score(0,Random.value);
 				stat.update_score(1,Random.value);
 				stat.Stats = mManager.mGameManager.CharacterHelper.Characters[stat.Character];
@@ -415,9 +419,9 @@ public class SunsetManager
 		
 		//this is all a hack to get the score to show up right...
 		float scoreIncrementor = 0;
-		FlatElementText finalScoreText = new FlatElementText(mManager.mNewRef.serifFont,70,"0",12);
+		FlatElementText finalScoreText = new FlatElementText(mManager.mNewRef.serifFont,70,"0",21);
 		finalScoreText.HardColor = (GameConstants.UiGraveText);
-		FlatElementText perfectPercent = new FlatElementText(mManager.mNewRef.serifFont,50,"0",12);
+		FlatElementText perfectPercent = new FlatElementText(mManager.mNewRef.serifFont,50,"0",21);
 		float ageIncrementer = 0;
 		perfectPercent.HardColor = (GameConstants.UiGraveText);
 		//perfectPercent.Text = ((int)(100*aStats.Sum(e=>e.Stats.Perfect+1)/(float)(aStats.Count*3))).ToString() + "%";
@@ -447,7 +451,7 @@ public class SunsetManager
 			}
 		,0);
 		chain = chain.then(
-				low_skippable_text_bubble_event("YOU REST HERE BENEATH THE EARTH...",gIntroText),3);
+				low_skippable_text_bubble_event("You rest here beneath the earth...",gIntroText),3);
 
 		/*.then( //wait a little bit to let the fading finish
 		    	low_skippable_text_bubble_event("HERE IS YOUR LIFE STORY",gIntroText)
@@ -619,8 +623,8 @@ public class SunsetManager
 			delegate()  {
 
 				var frameImg = mManager.mCharacterBundleManager.get_image("GIFT_frame");
-				rewardFrame = new FlatElementImage(frameImg.Image,frameImg.Data.Size,14);
-				rewardImage = new FlatElementImage(mModeNormalPlay.mGiftManager.render_gift(0),new Vector2(2001,1128),13);
+				rewardFrame = new FlatElementImage(frameImg.Image,frameImg.Data.Size,24);
+				rewardImage = new FlatElementImage(mModeNormalPlay.mGiftManager.render_gift(0),new Vector2(2001,1128),23);
 
 				//TODO play sound effect
 				rewardImage.HardPosition = mFlatCamera.get_point(0,3);
@@ -648,7 +652,8 @@ public class SunsetManager
 			}
 		,3);
 		chain = chain.wait(3);
-		chain = chain.then (low_skippable_text_bubble_event("YOU ARE THE PERFECT WOMAN",gIntroText),0);
+
+		chain = chain.then(skippable_text_bubble_event("YOU ARE THE PERFECT WOMAN!",5,-0.8f,2),0);
 
 		//TODO DELET when you switch to side scrolling credits
 		chain = chain.wait(5);
@@ -688,7 +693,7 @@ public class SunsetManager
 					int counter = 0;
 					foreach(string e in GameConstants.credits)
 					{
-						var text = new FlatElementText(mManager.mNewRef.genericFont,50,e,15);
+						var text = new FlatElementText(mManager.mNewRef.genericFont,50,e,25);
 						text.HardColor = new Color(1,1,1,1);
 						text.HardPosition = mFlatCamera.Center - new Vector3(0,mFlatCamera.Height/2+450,0) - (new Vector3(0,70,0))*counter;
 						creditsText.Add(text);
@@ -697,8 +702,8 @@ public class SunsetManager
 					}
 					
 					float logoStartHeight = -(mFlatCamera.Height/2 + 450 + 70*counter + 900);
-					logo1 = new FlatElementImage(mManager.mNewRef.gameLabLogo,15);
-					logo2 = new FlatElementImage(mManager.mNewRef.filmAkademieLogoGrave,15);
+					logo1 = new FlatElementImage(mManager.mNewRef.gameLabLogo,25);
+					logo2 = new FlatElementImage(mManager.mNewRef.filmAkademieLogoGrave,25);
 					logo1.HardPosition = mFlatCamera.Center + new Vector3(0,logoStartHeight,0);
 					logo2.HardPosition = mFlatCamera.Center + new Vector3(0,logoStartHeight + 700,0);
 
