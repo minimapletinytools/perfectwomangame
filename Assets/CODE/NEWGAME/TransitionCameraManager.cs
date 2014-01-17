@@ -110,13 +110,15 @@ public class TransitionCameraManager : FakeMonoBehaviour
 		
 	}
 	
-	
+
 	public void initialize_depth_warning()
 	{
 		mDepthImage = new FlatElementImage(null,100);
-		mDepthWarningText = new FlatElementText(mManager.mNewRef.genericFont,40,"Make sure you are\n in frame and no body\n parts are covered",100);
+		mDepthWarningText = new FlatElementText(mManager.mNewRef.genericFont,40,"Make sure you are\nin frame and no body\nparts are covered",100);
 		mDepthWarningText.HardColor = new Color(1,1,1,0);	
-		mDepthWarningText.HardPosition = mFlatCamera.get_point(1,-1) + new Vector3(-710,200,0);
+		mDepthWarningText.Alignment = TextAlignment.Left;
+		mDepthWarningText.Anchor = TextAnchor.MiddleLeft;
+		mDepthWarningText.HardPosition = mFlatCamera.get_point(1,-1) + new Vector3(-220,70,0) * mFlatCamera.screen_pixel_to_camera_pixel_ratio();
 		//mDepthWarningText.Alignment = TextAlignment.Left;
 		EnableDepthWarning = false;
 		

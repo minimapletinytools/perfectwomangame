@@ -206,10 +206,15 @@ public class FlatCameraManager{
     }
 	
 	//this version measures from the entire screen. Not the visible portion
-	//TODO does not account for not centered camera, i.e. modify by Camera.rect.x/y
+	//TODO does not account for not centered viewport, i.e. modify by Camera.rect.x/y
 	public Vector3 get_point_total(float aX, float aY)
 	{
 		return Center + new Vector3(aX * Width * (1/Camera.rect.width) / 2.0f, aY * Height * (1/Camera.rect.height) / 2.0f, 0);
+	}
+
+	public float screen_pixel_to_camera_pixel_ratio()
+	{
+		return Height/Screen.height;
 	}
 
 	public Vector3 get_random_point_off_camera(float aBuffer = 300)
