@@ -238,8 +238,8 @@ public class ModeNormalPlay
 		
 		if(GS == NormalPlayGameState.PLAY)
 		{		
-			if(Input.GetKeyDown(KeyCode.P))
-				mParticles.create_particles(mGrading);
+			//if(Input.GetKeyDown(KeyCode.P))
+			//	mParticles.create_particles(mGrading);
 	
 			update_PLAY();
 			if(Input.GetKeyDown(KeyCode.Alpha0))
@@ -291,12 +291,13 @@ public class ModeNormalPlay
 			mGrading.update(mManager.mBodyManager.get_current_pose(),mManager.mTransparentBodyManager.get_current_pose());
 			float grade = ProGrading.grade_pose(mManager.mBodyManager.get_current_pose(),mManager.mTransparentBodyManager.get_current_pose());
 			grade = ProGrading.grade_to_perfect(grade);
-			/* TODO DELETE gradnig smoothing for graph version..
+
+			//smooth grading, maybe you should only during short interval after does_pose_change_precoginitive
 			float newGrade = mLastGrade*0.95f + grade*0.05f;
 			if(newGrade < mLastGrade)
 				mLastGrade = Mathf.Max(newGrade,mLastGrade - Time.deltaTime/6f);
 			else mLastGrade = newGrade;
-			grade = mLastGrade;*/
+			grade = mLastGrade;
 
 			if(PercentTimeCompletion > 0.01f)
 			{
