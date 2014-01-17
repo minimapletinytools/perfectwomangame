@@ -8,7 +8,7 @@ public class ModeNormalPlay
 	
 	public enum NormalPlayGameState
 	{
-		NONE,PREPLAY,PLAY,CUTSCENE,DEATH,CHOICE,TRANSITION,GRAVE
+		NONE,PREPLAY,PLAY,CUTSCENE,DEATH,PRECHOICE, CHOICE,TRANSITION,GRAVE
 	}
 	
 	public NewGameManager NGM {get; set;}
@@ -599,7 +599,7 @@ public class ModeNormalPlay
 	
 	public void transition_to_CHOICE()
 	{
-		GS = NormalPlayGameState.CHOICE;
+		GS = NormalPlayGameState.PRECHOICE;
 
 
 		//TODO what happens when there is no future???
@@ -627,6 +627,7 @@ public class ModeNormalPlay
 			delegate(){
 				slide_image(null,mChoosingImage);
 				mManager.mMusicManager.fade_in_extra_music("choiceMusic");
+				GS = NormalPlayGameState.CHOICE;
 			}
 		,0);
 

@@ -135,7 +135,7 @@ public class MusicManager : FakeMonoBehaviour
 	
 	public void play_cutscene_music(AudioClip aClip)
 	{
-		Debug.Log ("playnig cutscene music " + aClip);
+		//Debug.Log ("playnig cutscene music " + aClip);
 		
 		mMusicSource.Stop();
 		mMusicSource.clip = aClip;

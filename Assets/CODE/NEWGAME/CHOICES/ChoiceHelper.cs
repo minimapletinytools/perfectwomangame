@@ -32,12 +32,14 @@ public class ChoiceHelper
         for (int i = 0; i < mPossibleChoicePoses.Length; i++)
         { mPossibleChoicePoses[i] = ProGrading.read_pose(ManagerManager.Manager.mReferences.mPossiblePoses[i]); }
 	}
-	
+
 	public void shuffle_and_set_choice_poses(int aCount, ChoosingManager aChoosing)
 	{
 		//reset the choosing percentages from last round
 		mChoicePoses = get_random_possible_poses(aCount);
 		ChoosingPercentages = new float[aCount];
+		for(int j = 0; j < ChoosingPercentages.Length; j++)
+			ChoosingPercentages[j] = 0;
 		aChoosing.set_bb_choice_poses(mChoicePoses.ToList());
 		
 	}
@@ -121,7 +123,8 @@ public class ChoiceHelper
 			aInterface.set_choice_percentages(i,ChoosingPercentages[i]);
             if (ChoosingPercentages[i] == 1)
             {
-                //choice is made!!!
+				for(int j = 0; j < ChoosingPercentages.Length; j++)
+					ChoosingPercentages[j] = 0;
 				LastContendingChoice = -1;
 				ManagerManager.Manager.mMusicManager.play_sound_effect("choiceMade");
 				return NextContendingChoice;

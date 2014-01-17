@@ -94,9 +94,9 @@ public class SunsetManager
 	public void show_score(CharacterIndex aIndex, int aScore, float showTime)
 	{
 		int ind = char_to_list_index(aIndex);
-		FlatElementText scoreText = new FlatElementText(mManager.mNewRef.fatFont,40, aScore.ToString(), 12);
+		FlatElementText scoreText = new FlatElementText(mManager.mNewRef.fatFont,40, aScore.ToString(), 21);
 		var scoreBgImage = mManager.mCharacterBundleManager.get_image("SCORELABEL");
-		FlatElementImage scoreBg = new FlatElementImage(scoreBgImage.Image,scoreBgImage.Data.Size,11);
+		FlatElementImage scoreBg = new FlatElementImage(scoreBgImage.Image,scoreBgImage.Data.Size,20);
 		scoreBg.HardPosition = mFlatCamera.get_point(0,1.5f);
 		scoreBg.HardPosition = mCharacters[ind].SoftPosition + new Vector3(0,400,0);
 		scoreText.HardPosition = scoreBg.HardPosition;
@@ -104,8 +104,8 @@ public class SunsetManager
 		scoreText.Text = ""+aScore;
 		scoreText.PositionInterpolationMinLimit = 200f;
 		scoreBg.PositionInterpolationMinLimit = 200f;
-		scoreText.ColorInterpolationMinLimit = 2f;
-		scoreBg.ColorInterpolationMinLimit = 2f;
+		scoreText.ColorInterpolationMinLimit = 1f;
+		scoreBg.ColorInterpolationMinLimit = 1f;
 
 		mScoreLabels.Add(scoreBg);
 		mScoreTexts.Add(scoreText);
@@ -207,7 +207,6 @@ public class SunsetManager
 			} else if(mCharacters.Count < 7) { //add diff label, note no difficulty for age 100
 				string[] labelNames = new string[]{"label_easy","label_normal","label_hard","label_extreme"};
 				var diffLabel = mManager.mCharacterBundleManager.get_image(labelNames[mManager.mGameManager.get_character_difficulty(aChar)]);
-				Debug.Log ("creating label " + labelNames[mManager.mGameManager.get_character_difficulty(aChar)]);
 				FlatElementImage diffLabelImage = new FlatElementImage(diffLabel.Image,diffLabel.Data.Size,19);
 				diffLabelImage.HardPosition = addMe.HardPosition + gDiffLabelOffset;
 				mDiffLabels.Add(diffLabelImage);
@@ -626,7 +625,7 @@ public class SunsetManager
 			deathSentence += "You died ";
 		if(!aStats[aStats.Count-1].Character.IsDescriptionAdjective)
 			deathSentence += "as a ";
-		deathSentence += aStats[aStats.Count-2].Character.Description;
+		deathSentence += aStats[aStats.Count-1].Character.Description;
 
 		chain = chain.then(
 			low_skippable_text_bubble_event(deathSentence,gIntroText)
@@ -691,7 +690,7 @@ public class SunsetManager
 		
 		mGraveCompleteCb = delegate()
 		{
-			Vector3 barYPosition = mFlatCamera.Center + new Vector3(0,-650,0);
+			Vector3 barYPosition = mFlatCamera.Center + new Vector3(0,-700,0);
 			TED.add_one_shot_event(
 				delegate()
 				{
