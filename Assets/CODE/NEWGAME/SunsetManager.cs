@@ -104,8 +104,8 @@ public class SunsetManager
 		scoreText.Text = ""+aScore;
 		scoreText.PositionInterpolationMinLimit = 200f;
 		scoreBg.PositionInterpolationMinLimit = 200f;
-		scoreText.ColorInterpolationMinLimit = 1f;
-		scoreBg.ColorInterpolationMinLimit = 1f;
+		scoreText.ColorInterpolationMinLimit = 2f;
+		scoreBg.ColorInterpolationMinLimit = 2f;
 
 		mScoreLabels.Add(scoreBg);
 		mScoreTexts.Add(scoreText);
@@ -352,7 +352,7 @@ public class SunsetManager
 		shine.HardColor = positive ? GameConstants.UiYellow : GameConstants.UiRed; 
 		shine.PositionInterpolationMinLimit = 200;
 		shine.ColorInterpolationMaxLimit = Mathf.Infinity;
-		shine.ColorInterpolationMinLimit = .5f;
+		shine.ColorInterpolationMinLimit = 1f;
 		mElement.Add(shine);
 		TED.add_one_shot_event(
 			delegate() {
