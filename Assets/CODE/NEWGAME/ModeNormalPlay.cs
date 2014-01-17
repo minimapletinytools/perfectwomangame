@@ -30,8 +30,8 @@ public class ModeNormalPlay
 	public bool IsFever
 	{ 
 		get{ 
-			float perc = 5f/GameConstants.playDefaultPlayTime;
-			return PercentTimeCompletion > perc && CurrentPerformanceStat.last_score(perc)/perc > 0.6f;
+			float perc = GameConstants.playFeverRequiredTime/GameConstants.playDefaultPlayTime;
+			return PercentTimeCompletion > perc && CurrentPerformanceStat.last_score(perc)/perc > GameConstants.playFeverCutoff;
 		}
 	}
 
@@ -308,7 +308,7 @@ public class ModeNormalPlay
 					if(grade > GameConstants.playSuperCutoff && IsFever)
 						mManager.mMusicManager.play_sound_effect("pose5",0.6f);
 					else
-						mManager.mMusicManager.play_sound_effect("pose" + Mathf.Clamp((int)(5*grade),0,4),0.6f);
+						mManager.mMusicManager.play_sound_effect("pose" + Mathf.Clamp((int)(5*grade),0,4),0.8f);
 				}
 			}
 			
@@ -414,8 +414,6 @@ public class ModeNormalPlay
 		{
 			slide_image(mChoosingImage,null);
 			//mSunsetManager.fade_characters(false);
-
-
 			mManager.mMusicManager.fade_out_extra_music();
 			transition_to_TRANSITION_play(CurrentPerformanceStat.Character.get_future_neighbor(choice));
 		}
@@ -529,20 +527,24 @@ public class ModeNormalPlay
 			mInterfaceManager.skippable_text_bubble_event(firstDeath ? "BAD PERFORMANCE!" : "HORRIBLE PERFORMANCE!", gTextDisplayDur)
 		,2);
 
-		if(!firstDeath)
+		if(!firstDeath && NGM.CurrentLevel == 7)
+		{
 			chain = chain.then(
-					mInterfaceManager.skippable_text_bubble_event("You die an early death.", gTextDisplayDur)
-				,0);
+				mInterfaceManager.skippable_text_bubble_event("You die an early death.", gTextDisplayDur)
+			,0).then(
+				mInterfaceManager.skippable_text_bubble_event("But that's okay, you are already old.", gTextDisplayDur)
+			,0);
+		}
+	
 		
 		//NEXT TIME YOU PERFORM THAT BAD YOU MIGHT DIE
 		if(firstDeath) //if we haven't died previously
 		{
-			chain = chain.then(
-				NGM.CurrentLevel == 7 ?
-				mInterfaceManager.skippable_text_bubble_event("But that's okay, you are already old.", gTextDisplayDur)
-				:
-				mInterfaceManager.skippable_text_bubble_event("Next time you perform that bad you will die.", gTextDisplayDur)
-			).then_one_shot(
+
+			chain = chain.then (mInterfaceManager.skippable_text_bubble_event("Next time you perform that bad you will die.", gTextDisplayDur));
+
+
+			chain = chain.then_one_shot(
 				delegate(){
 					mInterfaceManager.set_for_CUTSCENE(
 						delegate(){CUTSCENE_finished(CurrentPerformanceStat.CutsceneChangeSet);}, 
@@ -608,6 +610,7 @@ public class ModeNormalPlay
 		//switch over to choice screen
 		float gAgeDisplayDur = 7f;
 		slide_image(null,mSunsetImage);
+		mManager.mMusicManager.fade_out(3);
 		TED.add_event(
 			delegate(float aTime){
 				//mSunsetManager.fade_characters(true,true);
@@ -616,6 +619,8 @@ public class ModeNormalPlay
 			}
 		,5);
 		TED.add_event(
+			NGM.CurrentCharacterIndex == CharacterIndex.sFetus ?
+			mSunsetManager.low_skippable_text_bubble_event("Make your first life decision.",gAgeDisplayDur) :
 			mSunsetManager.low_skippable_text_bubble_event("You turn " + NGM.CurrentCharacterIndex.get_future_neighbor(0).Age + ".",gAgeDisplayDur)
 		,2.5f).then_one_shot(
 			delegate(){
@@ -709,8 +714,24 @@ public class ModeNormalPlay
 				//mManager.mMusicManager.fade_in_cutscene_music(CurrentCharacterLoader.Images.cutsceneMusic[changeIndex]);
 				//mManager.mMusicManager.play_cutscene_music(CurrentCharacterLoader.Images.cutsceneMusic[changeIndex]);
 				mManager.mMusicManager.play_sound_effect(CurrentPerformanceStat.BadPerformance ? "cutBad" : "cutGood");
-				mManager.mMusicManager.play_cutscene_music(NGM.CurrentCharacterLoader.Images.cutsceneMusic[CurrentPerformanceStat.BadPerformance ? 0 : 1]);
+				AudioClip cutsceneClip = NGM.CurrentCharacterLoader.Images.cutsceneMusic[CurrentPerformanceStat.BadPerformance ? 0 : 1];
+				mManager.mMusicManager.play_cutscene_music(cutsceneClip);
 				//mManager.mMusicManager.fade_in_cutscene_music(CurrentCharacterLoader.Images.cutsceneMusic[changes.UpperThreshold <= 0.5 ? 0 : 1]);
+
+				TED.add_event(
+					delegate(float aTime){
+						if(mManager.mMusicManager.MusicClip == cutsceneClip)
+						{
+							if(!mManager.mMusicManager.IsMusicSourcePlaying)
+							{
+								mManager.mMusicManager.play_music(NGM.CurrentCharacterLoader.Images.backgroundMusic,0,true);	
+								mManager.mMusicManager.fade_in(5,0.14f);
+								return true;
+							}
+						} else return true;
+						return false;
+					}
+				,0);
 			}
 			else 
 			{
@@ -752,9 +773,9 @@ public class ModeNormalPlay
 			if(diff == 0)
 				NGM.CurrentPoseAnimation.set_change_time(4);
 			else if(diff == 1)
-				NGM.CurrentPoseAnimation.set_change_time(1.5f);
+				NGM.CurrentPoseAnimation.set_change_time(2f);
 			else if(diff == 2)
-				NGM.CurrentPoseAnimation.set_change_time(1);
+				NGM.CurrentPoseAnimation.set_change_time(1f);
 			else if(diff == 3)
 				NGM.CurrentPoseAnimation.set_change_time(0.5f);
 			

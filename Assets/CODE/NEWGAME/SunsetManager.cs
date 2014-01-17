@@ -112,6 +112,22 @@ public class SunsetManager
 		mElement.Add(scoreBg);
 		mElement.Add(scoreText);
 
+		System.Func<FlatElementBase,float,bool> scoreJiggleDelegate = 
+			delegate(FlatElementBase aBase, float aTime2) 
+		{
+			aBase.mLocalRotation = Quaternion.AngleAxis(Mathf.Sin(aTime2*Mathf.PI*2*4)*15f,Vector3.forward);
+			if(aTime2 >= 0.7f) 
+			{
+				aBase.mLocalRotation = Quaternion.identity;
+				return true;
+			}
+			return false;
+		};
+		scoreBg.Events.add_event(scoreJiggleDelegate,0.03f);
+		scoreText.Events.add_event(scoreJiggleDelegate,0.03f);
+
+
+
 		TED.add_event(
 			delegate(float aTime) {
 				if(aTime > showTime)
@@ -192,7 +208,7 @@ public class SunsetManager
 				string[] labelNames = new string[]{"label_easy","label_normal","label_hard","label_extreme"};
 				var diffLabel = mManager.mCharacterBundleManager.get_image(labelNames[mManager.mGameManager.get_character_difficulty(aChar)]);
 				Debug.Log ("creating label " + labelNames[mManager.mGameManager.get_character_difficulty(aChar)]);
-				FlatElementImage diffLabelImage = new FlatElementImage(diffLabel.Image,diffLabel.Data.Size,3+mCharacters.Count*2 + 1);
+				FlatElementImage diffLabelImage = new FlatElementImage(diffLabel.Image,diffLabel.Data.Size,19);
 				diffLabelImage.HardPosition = addMe.HardPosition + gDiffLabelOffset;
 				mDiffLabels.Add(diffLabelImage);
 				mElement.Add(diffLabelImage);
@@ -394,7 +410,7 @@ public class SunsetManager
 			aStats.Insert(0, new PerformanceStats(new CharacterIndex(0,0)));
 
 		//fake it for testing...
-
+		/*
 		mCharacters.Last().destroy(); //remove the grave
 		mElement.Remove(mCharacters.Last());
 		mCharacters.RemoveAt(mCharacters.Count -1);
@@ -414,7 +430,7 @@ public class SunsetManager
 			}
 		}
 		add_character(CharacterIndex.sGrave,false); //add the grave back in
-
+		*/
 
 		
 		//this is all a hack to get the score to show up right...
@@ -460,18 +476,7 @@ public class SunsetManager
 		for(int i = 1; i < aStats.Count; i++)
 		{
 			PerformanceStats ps = aStats[i];
-			
-			System.Func<FlatElementBase,float,bool> scoreJiggleDelegate = 
-				delegate(FlatElementBase aBase, float aTime2) 
-				{
-					aBase.mLocalRotation = Quaternion.AngleAxis(Mathf.Sin(aTime2*Mathf.PI*2*4)*15f,Vector3.forward);
-					if(aTime2 >= 0.7f) 
-					{
-						aBase.mLocalRotation = Quaternion.identity;
-						return true;
-					}
-					return false;
-				};
+		
 
 			chain = chain.then_one_shot(
 				delegate() {
@@ -479,8 +484,6 @@ public class SunsetManager
 				}
 			,gPreScoreCount).then_one_shot(
 				delegate() {
-					mScoreLabels.Last().Events.add_event(scoreJiggleDelegate,0);
-					mScoreTexts.Last().Events.add_event(scoreJiggleDelegate,0);
 					mManager.mMusicManager.play_sound_effect("counting");
 				}
 			,0).then(
@@ -616,47 +619,66 @@ public class SunsetManager
 			}
 		}
 
-		FlatElementImage rewardImage = null;
-		FlatElementImage rewardFrame = null;
-		mModeNormalPlay.mGiftManager.set_background_for_render();
-		chain = chain.then_one_shot(
-			delegate()  {
+		string deathSentence = "";
+		if(aStats[aStats.Count-2].Character.LevelIndex < 7)
+			deathSentence += "Unfortunately you died";
+		else
+			deathSentence += "You died ";
+		if(aStats[aStats.Count-2].Character.IsDescriptionAdjective)
+			deathSentence += "as a ";
+		deathSentence += aStats[aStats.Count-2].Character.Description;
 
-				var frameImg = mManager.mCharacterBundleManager.get_image("GIFT_frame");
-				rewardFrame = new FlatElementImage(frameImg.Image,frameImg.Data.Size,24);
-				rewardImage = new FlatElementImage(mModeNormalPlay.mGiftManager.render_gift(0),new Vector2(2001,1128),23);
+		chain = chain.then(
+			low_skippable_text_bubble_event(deathSentence,gIntroText)
+		,1);
 
-				//TODO play sound effect
-				rewardImage.HardPosition = mFlatCamera.get_point(0,3);
-				rewardFrame.HardPosition = rewardImage.HardPosition;
-				rewardImage.SoftPosition = mFlatCamera.Center + new Vector3(0,150,0);
-				rewardFrame.SoftPosition = rewardImage.SoftPosition + new Vector3(0,70,0);
-				mElement.Add(rewardImage);
-				mElement.Add(rewardFrame);
 
-				var subChain = TED.empty_chain().wait(4);
-				if(mModeNormalPlay.mGiftManager.gift_count() > 0)
-				{
-					for(int i = 1; i < 100; i++)
+
+		if(aStats[aStats.Count-2].Character.LevelIndex >= 7)
+		{
+			FlatElementImage rewardImage = null;
+			FlatElementImage rewardFrame = null;
+			mModeNormalPlay.mGiftManager.set_background_for_render();
+			chain = chain.then_one_shot(
+				delegate()  {
+
+					var frameImg = mManager.mCharacterBundleManager.get_image("GIFT_frame");
+					rewardFrame = new FlatElementImage(frameImg.Image,frameImg.Data.Size,24);
+					rewardImage = new FlatElementImage(mModeNormalPlay.mGiftManager.render_gift(0),new Vector2(2001,1128),23);
+
+					//TODO play sound effect
+					rewardImage.HardPosition = mFlatCamera.get_point(0,3);
+					rewardFrame.HardPosition = rewardImage.HardPosition;
+					rewardImage.SoftPosition = mFlatCamera.Center + new Vector3(0,150,0);
+					rewardFrame.SoftPosition = rewardImage.SoftPosition + new Vector3(0,70,0);
+					mElement.Add(rewardImage);
+					mElement.Add(rewardFrame);
+
+					var subChain = TED.empty_chain().wait(4);
+					if(mModeNormalPlay.mGiftManager.gift_count() > 0)
 					{
-						int localIndex = i%mModeNormalPlay.mGiftManager.gift_count();
-						subChain = subChain.then_one_shot(
-							delegate(){
-								//TODO sound effect
-								mModeNormalPlay.mGiftManager.render_gift(localIndex);
-							}
-						,1f);
+						for(int i = 1; i < 100; i++)
+						{
+							int localIndex = i%mModeNormalPlay.mGiftManager.gift_count();
+							subChain = subChain.then_one_shot(
+								delegate(){
+									//TODO sound effect
+									mModeNormalPlay.mGiftManager.render_gift(localIndex);
+								}
+							,1f);
+						}
 					}
+					
 				}
-				
-			}
-		,3);
-		chain = chain.wait(3);
+			,3);
+			chain = chain.wait(6);
+			//chain = chain.then(skippable_text_bubble_event("YOU ARE THE PERFECT WOMAN!",5,-0.8f,2),0);
+		}
 
-		chain = chain.then(skippable_text_bubble_event("YOU ARE THE PERFECT WOMAN!",5,-0.8f,2),0);
+
 
 		//TODO DELET when you switch to side scrolling credits
-		chain = chain.wait(5);
+		chain = chain.wait(1);
 		
 		
 		//variables for credits animation..

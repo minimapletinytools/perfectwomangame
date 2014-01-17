@@ -214,6 +214,7 @@ public class ZigManager : FakeMonoBehaviour {
 		{
 			return false;
 		}
+
 		return true;
 	}
 
@@ -221,22 +222,23 @@ public class ZigManager : FakeMonoBehaviour {
 	float badTimer = 0;
 	public bool is_user_in_screen()
 	{
-		
 		bool bad = false;
-
 		if(!is_skeleton_tracked_alternative())
+		{
 			bad = true;
-
+			badTimer = 0;
+		}
 
 		foreach(var e in Joints)
 		{
 			if(ImportantJoints.Contains(e.Key) && !e.Value.GoodPosition)
+			{
 				bad = true;
+			}
 		}
-		
-	
+
 		if(!bad)
-			badTimer = 1.5f;
+			badTimer = 1.0f;
 		else
 			badTimer -= Time.deltaTime;
 		return badTimer > 0;

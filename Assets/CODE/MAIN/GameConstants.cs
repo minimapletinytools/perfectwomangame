@@ -13,12 +13,7 @@ public static class GameConstants
 	public static int numberAges = 10; //fetus, 5, 16, 27, 34, 45, 60, 85, 100, DEAD
 	public static int[] numberChoices = new int[]{1,10,10,10,10,10,10,10,1,1};
 
-	public static float astronautCutoff = .1f;
 
-	public static float playSuperCutoff = 0.9f;
-	public static float playDefaultPlayTime = 35f;
-
-	public static float badPerformanceThreshold = 0.6f;
 
 	public static Color[] IconDifficultyColors { get { return new Color[]{new Color32(28,182,71,255), new Color32(255,168,0,255), new Color32(234,84,2,255), new Color32(255,0,0,255)};}}
 	public static Color[] IconDifficultyColorsOverTwo { get{ return IconDifficultyColors.Select(e=> e/2f).ToArray();}}
@@ -35,8 +30,14 @@ public static class GameConstants
 	public static Color ParticleStreamHard { get { return new Color32(255,0,0,255); } }
 	
 	//game stuff
-	public static float maxGradeNorm = 18f;
-	public static float minGradeNorm = 1f;
+	public static float maxGradeNorm = 16f; //18 is good for final version, 16 for festival
+	public static float minGradeNorm = 1.5f;	//use to be 2
+	public static float astronautCutoff = .1f;
+	public static float playSuperCutoff = 0.9f;
+	public static float playFeverCutoff = 0.7f;
+	public static float playFeverRequiredTime = 5f;
+	public static float playDefaultPlayTime = 35f;
+	public static float badPerformanceThreshold = 0.6f;
 	
 	//grave stuff
 	//public static string[] credits = {"Perfect Woman","created by", "Lea Sch\u00F6enfelder", "Peter Lu"};

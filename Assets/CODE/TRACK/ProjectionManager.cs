@@ -100,16 +100,20 @@ public class ProjectionManager : FakeMonoBehaviour {
 		if(A.Id == ZigJointId.None)
 			return 0;
 		if(!B.GoodPosition)
-			r = -A.Rotation.flat_rotation() + 90;
+		{
+			if(B.Id == ZigJointId.LeftElbow 
+			   || B.Id == ZigJointId.RightElbow )
+			   //|| B.Id == ZigJointId.LeftHand 
+			   //|| B.Id == ZigJointId.RightHand)
+			{
+				r = mImportant[A.Id].smoothing.current;
+			}
+			else
+				r = -A.Rotation.flat_rotation() + 90;
+		}
 		else
         	r = get_relative(A.Position, B.Position);
 
-
-		/*
-		if(B.Id == ZigJointId.Head)
-		{
-			r = Mathf.Clamp(r, 0, 180);
-		}*/
 
 		//openni fix to solve head being set to -90 angle problem
 		if(B.Id == ZigJointId.Head)
@@ -117,13 +121,14 @@ public class ProjectionManager : FakeMonoBehaviour {
 				r = -90;
 
 
-		/*
-		if(B.Id == ZigJointId.Head)
-			mManager.mDebugString = 
-				(B.GoodPosition ? "true" : "false") + 
-				" " + r.ToString() + 
-				" " + (mImportant[ZigJointId.Torso].smoothing.current-90+mImportant[ZigJointId.Neck].smoothing.current);
-		*/		
+
+		if(B.Id == ZigJointId.LeftHand)
+			if(!B.GoodPosition)
+				r = mImportant[ZigJointId.LeftShoulder].smoothing.current;
+
+		if(B.Id == ZigJointId.RightHand)
+			if(!B.GoodPosition)
+				r = mImportant[ZigJointId.RightShoulder].smoothing.current;
 
         return r;
 	}

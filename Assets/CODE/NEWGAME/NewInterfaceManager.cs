@@ -257,7 +257,7 @@ public class NewInterfaceManager {
 
 		if(!(aChar.Character == CharacterIndex.sFetus || aChar.Character == CharacterIndex.sOneHundred))
 		{
-			mBBNameText.Text = aChar.Character.Description + " (" + aChar.Character.Age.ToString() + ")";//FlatElementText.convert_to_multiline(aChar.Character.Description.Length > 20 ? 2 : 1 ,aChar.Character.Description + " (" + aChar.Character.Age.ToString() + ")");
+			mBBNameText.Text = aChar.Character.Description.ToUpper() + " (" + aChar.Character.Age.ToString() + ")";
 			var origPos = mBBNameTextFrame.SoftPosition - new Vector3(mBBNameTextFrame.BoundingBox.width/2f,0,0);
 			float newWidth = mBBNameText.BoundingBox.width+300;
 			mBBNameTextFrame.mImage.pixel_crop(new Rect(0,0,newWidth,mBBNameTextFrame.mImage.BaseDimension.y));

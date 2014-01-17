@@ -18,6 +18,8 @@ public class TimedEventDistributor
         TimedEventChain()
         {
         }
+
+		//TODO this should spawn MULTILINEAR EVENTS, you will need a list of "mFollow" in this case ;)
         public TimedEventChain then(System.Func<float, bool> aEvent, float aTime = 0)
         {
             mEvent = aEvent;
