@@ -104,8 +104,8 @@ public class SunsetManager
 		scoreText.Text = ""+aScore;
 		scoreText.PositionInterpolationMinLimit = 200f;
 		scoreBg.PositionInterpolationMinLimit = 200f;
-		scoreText.ColorInterpolationMinLimit = Mathf.Infinity;
-		scoreBg.ColorInterpolationMinLimit = 3f;
+		scoreText.ColorInterpolationMinLimit = 2f;
+		scoreBg.ColorInterpolationMinLimit = 2f;
 
 		mScoreLabels.Add(scoreBg);
 		mScoreTexts.Add(scoreText);
@@ -396,7 +396,7 @@ public class SunsetManager
 		float gPreScoreCount = 0.03f;
 		float gScoreCount = 0.2f;
 		float gPostScoreCount = 0.07f;
-		float gRestart = 65;
+		float gRestart = 30;
 		
 		//add the gravestone to the scene
 		add_character(CharacterIndex.sGrave,false);
@@ -420,7 +420,7 @@ public class SunsetManager
 			if(aStats.Last().Character.Age < (new CharacterIndex(i,0)).Age)
 			{
 
-				PerformanceStats stat = new PerformanceStats(new CharacterIndex(i,3));
+				PerformanceStats stat = new PerformanceStats(new CharacterIndex(i,Random.Range(0,4)));
 				stat.update_score(0,Random.value);
 				stat.update_score(1,Random.value);
 				stat.Stats = mManager.mGameManager.CharacterHelper.Characters[stat.Character];
@@ -620,11 +620,11 @@ public class SunsetManager
 		}
 
 		string deathSentence = "";
-		if(aStats[aStats.Count-2].Character.LevelIndex < 7)
-			deathSentence += "Unfortunately you died";
+		if(aStats[aStats.Count-1].DeathTime != -1)
+			deathSentence += "Unfortunately you died ";
 		else
 			deathSentence += "You died ";
-		if(aStats[aStats.Count-2].Character.IsDescriptionAdjective)
+		if(!aStats[aStats.Count-1].Character.IsDescriptionAdjective)
 			deathSentence += "as a ";
 		deathSentence += aStats[aStats.Count-2].Character.Description;
 
@@ -634,7 +634,7 @@ public class SunsetManager
 
 
 
-		if(aStats[aStats.Count-2].Character.LevelIndex >= 7)
+		if(aStats[aStats.Count-1].Character.LevelIndex >= 7)
 		{
 			FlatElementImage rewardImage = null;
 			FlatElementImage rewardFrame = null;
@@ -683,59 +683,59 @@ public class SunsetManager
 		
 		//variables for credits animation..
 		float lastTime = 0;
-		FlatElementImage logo1 = null;
-		FlatElementImage logo2 = null;
+		FlatElementImage[] logos = new FlatElementImage[3];
 		//PopupTextObject gameOver = null;
 		List<FlatElementText> creditsText = new List<FlatElementText>();
-		float scrollSpeed = 100;
+		float scrollSpeed = 700;
+
 		
 		mGraveCompleteCb = delegate()
 		{
-			
+			Vector3 barYPosition = mFlatCamera.Center + new Vector3(0,-650,0);
 			TED.add_one_shot_event(
 				delegate()
 				{
 					mManager.mMusicManager.fade_in_extra_music("creditsMusic");
 					mManager.mMusicManager.fade_out();
+					var imgData = mManager.mCharacterBundleManager.get_image("BAR");
+					var barImg = new FlatElementImage(imgData.Image,imgData.Data.Size,24);
+					barImg.HardPosition = barYPosition + new Vector3(0,-1000,0);
+					barImg.SoftPosition = barYPosition;
+					mElement.Add(barImg);
 				}
 			,0).then_one_shot(
 				delegate()
 				{
-					/*
-					gameOver = new PopupTextObject("G A M E\nO V E R",30);
-					gameOver.set_font_size(200);
-					gameOver.HardPosition = mFlatCamera.Center - new Vector3(0,mFlatCamera.Height/2+450,0);
-					gameOver.HardColor = GameConstants.UiWhiteTransparent;
-					gameOver.SoftColor = GameConstants.UiWhite;
-					gameOver.set_background_color(GameConstants.UiWhiteTransparent);
-					gameOver.set_text_color(GameConstants.UiWhiteTransparent,true);
-					gameOver.set_text_color(GameConstants.UiRed);
-					mElement.Add(gameOver);*/
-
+					
+					float lastXPosition = mFlatCamera.Center.x-mFlatCamera.Width/2 - 100;	
 					int counter = 0;
 					foreach(string e in GameConstants.credits)
 					{
 						var text = new FlatElementText(mManager.mNewRef.genericFont,50,e,25);
+						float textWidth = text.BoundingBox.width;
 						text.HardColor = new Color(1,1,1,1);
-						text.HardPosition = mFlatCamera.Center - new Vector3(0,mFlatCamera.Height/2+450,0) - (new Vector3(0,70,0))*counter;
+						text.HardPosition = new Vector3(lastXPosition-textWidth/2f,barYPosition.y,0);
+						lastXPosition += -textWidth - 75;
 						creditsText.Add(text);
 						mElement.Add(text);
 						counter++;
 					}
 					
-					float logoStartHeight = -(mFlatCamera.Height/2 + 450 + 70*counter + 900);
-					logo1 = new FlatElementImage(mManager.mNewRef.gameLabLogo,25);
-					logo2 = new FlatElementImage(mManager.mNewRef.filmAkademieLogoGrave,25);
-					logo1.HardPosition = mFlatCamera.Center + new Vector3(0,logoStartHeight,0);
-					logo2.HardPosition = mFlatCamera.Center + new Vector3(0,logoStartHeight + 700,0);
-
-
-					
-					mElement.Add(logo1);
-					mElement.Add(logo2);
+					lastXPosition += -200;
+					string[] imageNames = new string[]{"LOGO_FA","LOGO_AI","LOGO_GL"};
+					for(int i = 0; i < imageNames.Length; i++)
+					{
+						var imgData = mManager.mCharacterBundleManager.get_image(imageNames[i]);
+						var img = new FlatElementImage(imgData.Image,imgData.Data.Size,25);
+						float imgWidth = img.BoundingBox.width;
+						img.HardPosition =  new Vector3(lastXPosition-imgWidth/2,barYPosition.y,0);
+						lastXPosition += -img.BoundingBox.width/2f - 500;
+						logos[i] = img;
+						mElement.Add(img);
+					}
 					
 				}
-			,0).then_one_shot(
+			,1).then_one_shot(
 				delegate() {
 
 					/* this will fade everything out super slowly
@@ -756,16 +756,16 @@ public class SunsetManager
 				{
 				
 				//scroll contents down
-				Vector3 scroll = new Vector3(0,scrollSpeed*(aTime-lastTime),0);
+				Vector3 scroll = new Vector3(scrollSpeed*(aTime-lastTime),0,0);
 				foreach(FlatElementText e in creditsText)
 				{
 					e.SoftPosition = e.SoftPosition + scroll;
 				}
 
-
-				//gameOver.SoftPosition = gameOver.SoftPosition + scroll;
-				logo1.SoftPosition = logo1.SoftPosition + scroll;
-				logo2.SoftPosition = logo2.SoftPosition + scroll;
+				foreach(FlatElementImage e in logos)
+				{
+					e.SoftPosition = e.SoftPosition + scroll;
+				}
 				
 				lastTime = aTime;
 				if(Input.GetKeyDown(KeyCode.Alpha0))

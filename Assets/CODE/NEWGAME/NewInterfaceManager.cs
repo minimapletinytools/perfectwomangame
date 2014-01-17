@@ -105,9 +105,9 @@ public class NewInterfaceManager {
 		//this is just to position the text, it's done again in begin_new_character
 		Vector3 textOffset = new Vector3(70,115,0)/2;
 		mBBNameTextFrame.HardPosition = mBBMultiplierImage.HardPosition + new Vector3(mBBNameTextFrame.BoundingBox.width,140,0)/2 + textOffset;
-		mBBNameText.HardPosition = mBBMultiplierImage.HardPosition + new Vector3(275,140,0)/2 + textOffset;
+		mBBNameText.HardPosition = mBBMultiplierImage.HardPosition + new Vector3(320,140,0)/2 + textOffset;
 		mBBScoreFrame.HardPosition = mBBMultiplierImage.HardPosition + new Vector3(mBBScoreFrame.BoundingBox.width,-140,0)/2 + textOffset;
-		mBBScoreText.HardPosition = mBBScoreFrame.HardPosition + new Vector3(-mBBScoreFrame.BoundingBox.width/2 + 155,0,0);
+		mBBScoreText.HardPosition = mBBScoreFrame.HardPosition + new Vector3(-mBBScoreFrame.BoundingBox.width/2 + 180,0,0);
 
 
 		var warningImage = mManager.mNewRef.redWarning; //mManager.mCharacterBundleManager.get_image("WARNING");

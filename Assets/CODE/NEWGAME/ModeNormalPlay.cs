@@ -387,8 +387,8 @@ public class ModeNormalPlay
 		{
 			if(PercentTimeCompletion > 0.25f)
 			{
-				float perc = 7f/GameConstants.playDefaultPlayTime;
-				if(CurrentPerformanceStat.last_score(perc)/perc < 0.17f)
+				float perc = GameConstants.deathRequiredTime/GameConstants.playDefaultPlayTime;
+				if(CurrentPerformanceStat.last_score(perc)/perc < GameConstants.deathPerformanceThreshold)
 					die |= true;
 			}
 		}
@@ -483,6 +483,7 @@ public class ModeNormalPlay
 		,GameConstants.transitionToChoiceDelayTime);
 			
 	}
+
 	
 	
 	public void transition_to_DEATH()
@@ -775,9 +776,9 @@ public class ModeNormalPlay
 			else if(diff == 1)
 				NGM.CurrentPoseAnimation.set_change_time(2f);
 			else if(diff == 2)
-				NGM.CurrentPoseAnimation.set_change_time(1f);
+				NGM.CurrentPoseAnimation.set_change_time(1.4f);
 			else if(diff == 3)
-				NGM.CurrentPoseAnimation.set_change_time(0.5f);
+				NGM.CurrentPoseAnimation.set_change_time(0.7f);
 			
 			NGM.CurrentTargetPose = NGM.CurrentPoseAnimation.get_pose(0);
 			//mManager.mTransparentBodyManager.set_target_pose(CurrentTargetPose);

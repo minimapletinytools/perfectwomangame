@@ -31,27 +31,29 @@ public static class GameConstants
 	
 	//game stuff
 	public static float maxGradeNorm = 16f; //18 is good for final version, 16 for festival
-	public static float minGradeNorm = 1.5f;	//use to be 2
+	public static float minGradeNorm = 2f;	//use 1.5f for final 
 	public static float astronautCutoff = .1f;
 	public static float playSuperCutoff = 0.9f;
 	public static float playFeverCutoff = 0.7f;
 	public static float playFeverRequiredTime = 5f;
 	public static float playDefaultPlayTime = 35f;
+	public static float deathPerformanceThreshold = 0.14f;
+	public static float deathRequiredTime = 7f;
 	public static float badPerformanceThreshold = 0.6f;
 	
 	//grave stuff
 	//public static string[] credits = {"Perfect Woman","created by", "Lea Sch\u00F6enfelder", "Peter Lu"};
     public static string[] credits = { 
-		"A game by:","Lea Schoenfelder","Peter Lu", " ",
+		"A game by:","Peter Lu","Lea Sch\u00F6enfelder"," ",
 
-		"With assistance from:","Benedikts Haas", "Annika Bauer", "Marius Winter"," ",
+		"With assistance from:","Steven Amrhein","Annika Bauer","Benedikt Haas","Marius Winter"," ",
 
 		"Sound + Music: ","Lukas Nowok", "Luigi Maria Rapisarda", "Jonas Schwall", "Steffen Thumm", 
-		"Dirk Handreke", "Frank Simper", "Ingo Feuker", "David Hill", " ",
+		"Dirk Handreke", "Frank Simper", "Ingo Feuker", "David Hill", "Christian Barth", "Leo Frick", " ",
 
-		"And thanks to:","Teut Weidemann", "Marc Lutz", "Aliah Darke",  
-		"Ingo Von Staden", "Andreas Hykade", "Alex Rickett","Steven Amrhein",
-		"David Elliott","Sabrina Winter", "Eddo Stern"
+		"Special thanks:","Teut Weidemann", "Marc Lutz", "Aliah Darke",  
+		"Inga Von Staden", "Andreas Hykade", "Alex Rickett","Steven Amrhein",
+		"David Elliott","Sabrina Winter", "Eddo Stern", "J\u00F6rg Ihle", "Tyler Stefanich", "Nikita Arefkia"
 	};
 
 	public static int numberRetries = 1;
