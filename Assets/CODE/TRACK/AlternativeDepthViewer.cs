@@ -144,9 +144,10 @@ public class AlternativeDepthViewer : MonoBehaviour {
         GUI.depth = int.MinValue;
         if (null == target) {
             //GUI.DrawTexture(new Rect(Screen.width - texture.width - 10, Screen.height - texture.height - 10, texture.width, texture.height), texture);
-            GUI.DrawTexture(currentRect, DepthTexture);
-			if(ManagerManager.Manager.mNewRef.depthBorder != null) //luls delete this check
-				GUI.DrawTexture(currentRect.expand(4),ManagerManager.Manager.mNewRef.depthBorder);
+    
+			GUI.DrawTexture(currentRect, DepthTexture);
+			GUI.DrawTexture(currentRect.expand(4),ManagerManager.Manager.mNewRef.depthBorder);
+
         }
 		
 		var style = new GUIStyle();

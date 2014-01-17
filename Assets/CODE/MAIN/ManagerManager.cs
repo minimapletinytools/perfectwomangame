@@ -144,25 +144,9 @@ public class ManagerManager : MonoBehaviour{
     {
 		
         mCharacterBundleManager.cleanup();
-		
-		//can't hurt
-		mEventManager = null;
-        mInputManager = null;
-		mZigManager = null;
-		mProjectionManager = null;
-        mBodyManager = null;
-        mTransparentBodyManager = null;
-        mBackgroundManager = null;
-        mCameraManager = null;
-        mAssetLoader = null;
-        mGameManager = null;
-		mTransitionCameraManager = null;
-		mCharacterBundleManager = null;
-		mMusicManager = null;
-		mMetaManager = null;
-		Manager = null;
+		Resources.UnloadUnusedAssets();
 		System.GC.Collect();
-		
+
         Application.LoadLevel(Application.loadedLevel);
     }
 

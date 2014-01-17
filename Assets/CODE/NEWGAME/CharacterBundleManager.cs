@@ -48,7 +48,7 @@ public class CharacterBundleManager : FakeMonoBehaviour {
         System.Xml.Serialization.XmlSerializer xs = new System.Xml.Serialization.XmlSerializer(typeof(List<ImageSizeData>));
         ImageIndex = xs.Deserialize(stream) as List<ImageSizeData>;
 		ImageBundle = aBundle;
-		mUnloadAtEnd.Add(ImageBundle);
+		add_bundle_to_unload(ImageBundle);
 		mImagesLoaded = true;
 
 		
@@ -275,5 +275,6 @@ public class CharacterBundleManager : FakeMonoBehaviour {
 		foreach(AssetBundle e in mUnloadAtEnd)
 			e.Unload(true);
 		mUnloadAtEnd.Clear();
+
 	}
 }

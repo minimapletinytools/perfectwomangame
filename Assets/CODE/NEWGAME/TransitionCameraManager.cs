@@ -71,7 +71,6 @@ public class TransitionCameraManager : FakeMonoBehaviour
     {
 		AllRenderTexture = new RenderTexture(Screen.width,Screen.height,16); 
 		TED = new TimedEventDistributor();
-		mManager.mAssetLoader.new_load_asset_bundle("START",delegate(AssetBundle aBundle){start_screen_loaded_callback(aBundle,"START");});
     }
 	
 	public override void Start()
@@ -106,7 +105,8 @@ public class TransitionCameraManager : FakeMonoBehaviour
 		
 		start_configuration_display();
 		initialize_depth_warning();
-		
+
+		mManager.mAssetLoader.new_load_asset_bundle("START",delegate(AssetBundle aBundle){start_screen_loaded_callback(aBundle,"START");});
 		
 	}
 	
@@ -195,10 +195,6 @@ public class TransitionCameraManager : FakeMonoBehaviour
         loader.complete_load_character(aBundle,aBundleName);
 		mLoader = loader;
 
-		//mManager.mBackgroundManager.character_changed_listener(loader);
-		//mManager.mMusicManager.character_changed_listener(loader);
-
-
 
 		mElement.Add(construct_flat_image("BACKGROUND",0));
 		mElement.Add(construct_flat_image("FG-1",30));
@@ -219,11 +215,7 @@ public class TransitionCameraManager : FakeMonoBehaviour
 			
 		}
 
-
-		
-		//TODO draw silhouette of locked characters
-		//TODO enable unlocked characters in background manager
-
+		mManager.mCharacterBundleManager.add_bundle_to_unload(mBundle);
 	}
 	
 	public void start_configuration_display()
