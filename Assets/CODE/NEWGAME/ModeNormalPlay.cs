@@ -350,7 +350,7 @@ public class ModeNormalPlay
 		if (NGM.CurrentPoseAnimation != null && NGM.CurrentCharacterIndex.LevelIndex != 0)
 		{
 			float perc = 3f/GameConstants.playDefaultPlayTime;
-			if(PercentTimeCompletion > 0.15f && CurrentPerformanceStat.last_score(perc)/(perc) < 0.2f)
+			if(PercentTimeCompletion > 0.25f && CurrentPerformanceStat.last_score(perc)/(perc) < 0.2f)
 				mInterfaceManager.enable_warning_text(true);
 			else 
 				mInterfaceManager.enable_warning_text(false);
@@ -385,7 +385,7 @@ public class ModeNormalPlay
 		//if (NGM.CurrentPoseAnimation != null && mManager.mZigManager.has_user() && NGM.CurrentCharacterIndex.LevelIndex != 0)
 		if (NGM.CurrentPoseAnimation != null && mManager.mZigManager.is_reader_connected() == 2 && NGM.CurrentCharacterIndex.LevelIndex != 0)
 		{
-			if(PercentTimeCompletion > 0.25f)
+			if(PercentTimeCompletion > 0.35f)
 			{
 				float perc = GameConstants.deathRequiredTime/GameConstants.playDefaultPlayTime;
 				if(CurrentPerformanceStat.last_score(perc)/perc < GameConstants.deathPerformanceThreshold)
@@ -726,7 +726,7 @@ public class ModeNormalPlay
 							if(!mManager.mMusicManager.IsMusicSourcePlaying)
 							{
 								mManager.mMusicManager.play_music(NGM.CurrentCharacterLoader.Images.backgroundMusic,0,true);	
-								mManager.mMusicManager.fade_in(5,0.14f);
+								mManager.mMusicManager.fade_in(5,0.2f);
 								return true;
 							}
 						} else return true;
