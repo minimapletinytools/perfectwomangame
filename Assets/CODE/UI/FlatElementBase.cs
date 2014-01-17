@@ -286,7 +286,7 @@ public class FlatElementBase {
 			float maxChange = ColorInterpolationMaxLimit*aDeltaTime;
 			float minChange = ColorInterpolationMinLimit*aDeltaTime;
 
-			if((lerpingColorA - finalColor).magnitude < ColorInterpolationMinLimit)
+			if((lerpingColorA - finalColor).magnitude < minChange)
 				actualColor = finalColor;
 			else if(lerpingColorDist > 0)
 				actualColor = lerpingColorA + lerpingColorDir/lerpingColorDist * Mathf.Clamp(lerpingColorDist,minChange,maxChange);
