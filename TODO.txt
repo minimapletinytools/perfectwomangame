@@ -1,40 +1,222 @@
+::still another::
+-tiny little white dot in corner next to name (I think it's in the fetus score label image and 
+-fix the aliasing issue on some chars
+
+DONE-neck on 16-1 sexy girl should be smaller
+
+-grave font bigger
+-uhh credits not showing up.....
+
+DONE-put cashier audio into prechar
+DONE-change call girl cutscene text to say call girl not porn star
+maybe the other ones too)
+DONE-shrink new choice object etx by 1 
+DONE-popup bubble fading should still be faster (reduce max fade not jsut min fade)
+DONE-faster fading on warning text (max fade), also move up by 10 pixels
+DONE-shrink head popup icons by a little
+DONE-restart broken
+DONE-score label .5f fading I guess??
+DONE-you died a natural death, should not say, already says in cutscene text
+	-still says "you die at the age of" on 85
+DONE-raise resolution of kinect picture and try and brighten it
+DONE-scene music should play during grave sunset
+DONE-cutscene bubble fade faster
+DONE-score and name still pink
+DONE-pass fetus maybe takes a litle tool ong with smooth grading now
+DONE-depth warn text should fade faster
+DONE-cutscene breaks still too long
+	DONE-less time to see cutscene
+	DONE-3 head pop up on cutscene takes too long
+DONE-score label needs to come in with delay
+DONE-force different random bubble for cutscenes and sunset
+IGNORE-bad performance -> cutscene text still too long
+DONE-quiet music even louder 
+
+-cutscene breaks are too boring
+-fallback on 45-4_b-1
+-head popup icons confusing
+-music looping still broken
+-normal slower??
+-play warning sholud come up sooner?
+
+
+
+
+
+::another todo list::
+????DONE????-selection bug
+IGNORE/DONE-should keep last good position?
+	-or acutally don't use the angle thing because it's useless
+DONE-arms still futzed up
+DONE-dying should be harder
+DONE-life decision.
+DONE-end song should start erlier
+DONE-unfrotunately you died... fix
+DONE-get rid of you died
+DONE-depth image is totally broke
+DONE-automatic hand positing for off the top of the frame stuff
+DONE-move sun in front of chars
+DONE-jiggle the score label
+DONE-should say something like "unfortuantely you die..." after connections
+DONE-play music during cutscenes
+DONE-too difficulty for "festival setting" (adjust the max discrepency end)
+	-maybe match old indiecade settings
+DONE-normal should go back to its old speed
+DONE-reduce sound effects volume
+DONE-remove "you are the perfect woman"
+IGNORE-see if you can adjust timings in cutscenes to make them less BOORING
+DONE-prepare to be born -> 9 is kind of weird
+	-maybe say something other than "you turn 9"
+DONE-credits
+DONE-you died as goes back to far
+DONE-loer red bar by 50 pixels
+DONE-cutscene low music should be louder
+DONE-score labels need to be in fornt of chars
+DONE-actually the relative position fo depth warning and warning text is resolution dependent 
+	-you should really move depth warning image into TCM
+DONE-in code turn poor back to mediocre
+DONE-set good threshold at .4 instead of .6
+
+-really make arms up birth pose
+
+-flip the grave in sunset
+
+
+-bmp format
+-make choosing figure come in from bottom and be solid and purple
+-make testing scene play music and set rate to what it should be
+-05-4 music needs to be louder
+
+
+
+
+
+::future::
+-actually shine is disapearing jsut as midgen too fast
+-choice bubble fading is wonk text fades first then bubble fix it...
+-tiny dot next to score in fetus
+-make cutscene bubbles not fly in
+-doing excellent (>.8) is a littel hard?
+-optional arms behind head for chars like dancer
+-disable depth warning during credits
+-do better grace grading right after poses change
+-redo all the texts
+	-all apostrophes
+-some connection texts will never be triggered because there is no actual connection.
+-particles still the wrong color
+-particles falling from sky during fever
+-see if you can fix kinect lighting
+-pose change predictor, draw super transparent "next" pose during play
+-if we have time, age 110
+	-when you die at 85 gives special message and then goes to 110
+	-beginning of 110 it says "you lived a very long life. Enjoy what is left"
+	-asteroids you can bump around.......... 
+	-only 10-15 seconds
+	-floating off in space death cutscene
+		-no death text goes straight to sunset
+	-transition to sunset, has starry sky space background with 110 floating in it.
+-characters in sunset have happy and sad based on how well you did
+-dolphin particle for princess
 
 ::MEETING NOTES::
+DONE-do particles properly
+	DONE???-move behind the body, and set the color
+	-feedback during play of how well you do (particles) + (other?)
+		-particles falling from the sky based on overall performance
+		-maybe particles on the character
+DONE-balance the grading
+	-how easy it is to do well (0-1)
+		-extreme choices too easy
+	-some perform ances are to easy
+	-maybe add difficulty tuning parameter
+	-can do princess and mom well without doing anything...
+
+
 DONE-custom ending 
 	-finish art
 	-decide on credits (scroll over for now) and time the animations
 	-polish and resize the image capture
 	DONE-cycle through poses
--boundaries for the joints
--do particles properly
-	DONE???-move behind the body, and set the color
-	-feedback during play of how well you do (particles) + (other?)
-		-particles falling from the sky based on overall performance
-		-maybe particles on the character
--balance the grading
-	-how easy it is to do well (0-1)
-		-extreme choices too easy
-
--credits
-
+DONE-boundaries for the joints
 DONE-go over selection 
--go over connection together in detail
-
--if we have time, age 110
-	-when you die at 85 gives special message and then goes to 110
-	-beginning of 110 it says "you lived a very long life. Enjoy what is left"
-	-asteroids you can bump around ..........
-	-only 10-15 seconds
-	-floating off in space death cutscene
-		-no death text goes straight to sunset
-	-transition to sunset, has starry sky space background with 110 floating in it.
--bmp format
+DONE-go over connection together in detail
 DONE-bubbles should be 202,202,202,70%
 
+
+IGNORE-time music to stop at the right time in credits
+	-music should come in whe npicture comes in
+
+
 ::TODO INTL ED::
--getting super particles seems a little hard now???
--princess has 4 changes
--make score appear (jiggle) and then dissapear
+DONE-name in label should be uppercase
+DONE-here you lie beneath the earth is still uppercase
+DONE-badges should be ordered with characters
+DONE-make the name tags longer
+	-push content of name labels to the left a little
+DONE-default position for text should also not be at 0,0
+	-you can see text flicker once at rewrard image
+	-text still flashing in front of gift image
+DONE-warning text not showing up
+	-warning text is in the wrong place
+IGNORE-update sunset again
+IGNORE-ui update again
+IGNORE-selection screen figure purple
+
+
+DONE-lowercase cutscene
+DONE-fix order in sunset
+	-character depth, needs to start at 3 so it is front of grass 	
+DONE-sun should be invisible at index 0
+	-move sun down by another 100 pixels
+DONE-make flag in selection screen disapear before the selection comes in
+	DONE-reduce by 2 seconds
+DONE-update all -4 characters again
+DONE-you are the perfect woman smaller bubble below frame
+DONE-score is non zero in fetus 
+DONE-remove debug text at the top
+DONE-fix order in customized picture
+DONE-make flag fade out faster
+DONE-time until warning should be less than .35 like .15
+DONE-Horrible performance <new bubble> you die an early death
+DONE-move extreme badges down even more in head popup.
+	-actually just fade it out instead...
+DONE-add periods to end of sentences
+DONE-is the neck frozen?
+DONE-depth indicator is broken (isusertracked thing..)
+DONE-new music got bad/good inverted
+DONE-fever is too difficult
+DONE-getting super particles seems a little hard now???
+DONE-particle sizes are wrong
+DONE-color of particles still wrong???
+
+
+-make all the score labels disapear at the same time
+-make you are the perfect woman bubble smaller
+IGNORE-start selection music a little sooner maybe
+
+
+DONE-reduce volume of sound effects during PLAY
+DONE-add particles based on overall performance, rhythm game style
+DONE-reduce volume on play sounds 
+DONE-see if you can fix the body crumpled up problem
+	-this still happens because openNI will still say trackedskeleton even when player is gone..
+		-we can hard detect this by checking if the player is in a crumpled position..
+	-okay there isa difinitely a difference between when player is gone and just totalyl not tracked but still in frame, openni should be abel to tell you this hopefulyl
+
+-get more differentiated play sounds 
+-05-3 BPM roundoff makes it too fast I think
+-birth pose should be hands up (I think whale hunter has a pose like this??)
+-kinect should lock in on first track user instead of always using lasttrackeduser	
+-head pop up change sounds should come in +1 +2, -1, -2 varieties
+-still huge delay between early death and cutscenes
+
+DONE-have steven fix website, scrolling problem with image. extra bad in safari
+DONE-connection text is too fast, hard to read
+DONE-color stars no thearts
+DONE-make score appear (jiggle) and then dissapear
+DONE-sky should come in in the right color instead of change with the sun
+DONE-half the color on particles when reading from character color
+DONE-random/different word bubbles
 
 DONE-enlarge character by 1.7x size
 DONE-delay on bubble
@@ -47,34 +229,8 @@ IGNORE-limits on head torso and waist
 	-this is hard because I want relative limits but I compute angles absolute..
 DONE-depth image no longer disappears properly
 
--make headpopup light beam animation faster
--particles showing behind background elts instead of in front
--sky should come in in the right color instead of change with the sun
-
--half the color on particles when reading from character color
--have steven fix website, scrolling problem with image. extra bad in safari
-
--random/different word bubbles
-
--add particles based on overall performance, rhythm game style
--get more differentiated play sounds (and make the volume less loud)
-
--connection text is too fast, hard to read
--reduce volume of sound effects during PLAY
--05-3 BPM roundoff makes it too fast I think
-
--some performances are to easy
-	-maybe add difficulty tuning parameter
-	-can do princess and mom well without doing anything...
-
-
--still huge delay between early death and cutscenes
--birth pose should be hands up (I think whale hunter has a pose like this??)
--see if you can fix the body crumpled up problem
-	-this still happens because openNI will still say trackedskeleton even when player is gone..
-		-we can hard detect this by checking if the player is in a crumpled position..
-	-okay there isa difinitely a difference between when player is gone and just totalyl not tracked but still in frame, openni should be abel to tell you this hopefulyl
-
+DONE-make headpopup light beam animation faster
+DONE-particles showing behind background elts instead of in front
 
 DONE-still says die an atural death on early death
 DONE-early death with retry at age 85 makes it still say "you die a natural death"
@@ -163,7 +319,6 @@ IGNORE-add boundaries to each of the joints... (namely waist, torso, neck)
 DONE-transition to cutscene sucks
 
 
-
 ::TODO list for LEA::
 -missing
 	-34-3 CUTSCENE0_1
@@ -223,6 +378,8 @@ DONE-missing
 	-05-2 BG-1
 	-16-1 HEAD_B (only 1 dot)
 	-85-4 CUTSCENE30,41,11,01,32,31
+DONE-princess has 4 changes	
+
 
 
 

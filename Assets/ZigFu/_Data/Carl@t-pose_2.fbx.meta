@@ -1,7 +1,208 @@
 fileFormatVersion: 2
 guid: 1d4dd64030a0a8f4184e81ee88b000e0
 ModelImporter:
+  serializedVersion: 15
   fileIDToRecycleName:
+    100000: //RootNode
+    100002: eyes
+    100004: Glasses
+    100006: Hair
+    100008: HandsGeo
+    100010: Head
+    100012: HeadGeo
+    100014: HeadTop_End
+    100016: Hips
+    100018: Jaw
+    100020: JawEND
+    100022: LeftArm
+    100024: LeftCheek
+    100026: LeftEye
+    100028: LeftEyelidLower
+    100030: LeftEyelidUpper
+    100032: LeftFoot
+    100034: LeftFootToeBase_End
+    100036: LeftForeArm
+    100038: LeftHand
+    100040: LeftHandIndex1
+    100042: LeftHandIndex2
+    100044: LeftHandIndex3
+    100046: LeftHandIndex4
+    100048: LeftHandMiddle1
+    100050: LeftHandMiddle2
+    100052: LeftHandMiddle3
+    100054: LeftHandMiddle4
+    100056: LeftHandPinky1
+    100058: LeftHandPinky2
+    100060: LeftHandPinky3
+    100062: LeftHandPinky4
+    100064: LeftHandRing1
+    100066: LeftHandRing2
+    100068: LeftHandRing3
+    100070: LeftHandRing4
+    100072: LeftHandThumb1
+    100074: LeftHandThumb2
+    100076: LeftHandThumb3
+    100078: LeftHandThumb4
+    100080: LeftInnerBrow
+    100082: LeftIOuterBrow
+    100084: LeftLeg
+    100086: LeftLipCorner
+    100088: LeftLipLower
+    100090: LeftLipUpper
+    100092: LeftNostril
+    100094: LeftShoulder
+    100096: LeftToeBase
+    100098: LeftUpLeg
+    100100: Neck
+    100102: Neck1
+    100104: PantsGeo
+    100106: RightArm
+    100108: RightCheek
+    100110: RightEye
+    100112: RightEyelidLower
+    100114: RightEyelidUpper
+    100116: RightFoot
+    100118: RightFootToeBase_End
+    100120: RightForeArm
+    100122: RightHand
+    100124: RightHandIndex1
+    100126: RightHandIndex2
+    100128: RightHandIndex3
+    100130: RightHandIndex4
+    100132: RightHandMiddle1
+    100134: RightHandMiddle2
+    100136: RightHandMiddle3
+    100138: RightHandMiddle4
+    100140: RightHandPinky1
+    100142: RightHandPinky2
+    100144: RightHandPinky3
+    100146: RightHandPinky4
+    100148: RightHandRing1
+    100150: RightHandRing2
+    100152: RightHandRing3
+    100154: RightHandRing4
+    100156: RightHandThumb1
+    100158: RightHandThumb2
+    100160: RightHandThumb3
+    100162: RightHandThumb4
+    100164: RightInnerBrow
+    100166: RightIOuterBrow
+    100168: RightLeg
+    100170: RightLipCorner
+    100172: RightLipLower
+    100174: RightLipUpper
+    100176: RightNostril
+    100178: RightShoulder
+    100180: RightToeBase
+    100182: RightUpLeg
+    100184: ShirtGeo
+    100186: ShoesGeo
+    100188: Spine
+    100190: Spine1
+    100192: Spine2
+    100194: TeethGeo
+    100196: TongueBack
+    100198: TongueTip
+    400000: //RootNode
+    400002: eyes
+    400004: Glasses
+    400006: Hair
+    400008: HandsGeo
+    400010: Head
+    400012: HeadGeo
+    400014: HeadTop_End
+    400016: Hips
+    400018: Jaw
+    400020: JawEND
+    400022: LeftArm
+    400024: LeftCheek
+    400026: LeftEye
+    400028: LeftEyelidLower
+    400030: LeftEyelidUpper
+    400032: LeftFoot
+    400034: LeftFootToeBase_End
+    400036: LeftForeArm
+    400038: LeftHand
+    400040: LeftHandIndex1
+    400042: LeftHandIndex2
+    400044: LeftHandIndex3
+    400046: LeftHandIndex4
+    400048: LeftHandMiddle1
+    400050: LeftHandMiddle2
+    400052: LeftHandMiddle3
+    400054: LeftHandMiddle4
+    400056: LeftHandPinky1
+    400058: LeftHandPinky2
+    400060: LeftHandPinky3
+    400062: LeftHandPinky4
+    400064: LeftHandRing1
+    400066: LeftHandRing2
+    400068: LeftHandRing3
+    400070: LeftHandRing4
+    400072: LeftHandThumb1
+    400074: LeftHandThumb2
+    400076: LeftHandThumb3
+    400078: LeftHandThumb4
+    400080: LeftInnerBrow
+    400082: LeftIOuterBrow
+    400084: LeftLeg
+    400086: LeftLipCorner
+    400088: LeftLipLower
+    400090: LeftLipUpper
+    400092: LeftNostril
+    400094: LeftShoulder
+    400096: LeftToeBase
+    400098: LeftUpLeg
+    400100: Neck
+    400102: Neck1
+    400104: PantsGeo
+    400106: RightArm
+    400108: RightCheek
+    400110: RightEye
+    400112: RightEyelidLower
+    400114: RightEyelidUpper
+    400116: RightFoot
+    400118: RightFootToeBase_End
+    400120: RightForeArm
+    400122: RightHand
+    400124: RightHandIndex1
+    400126: RightHandIndex2
+    400128: RightHandIndex3
+    400130: RightHandIndex4
+    400132: RightHandMiddle1
+    400134: RightHandMiddle2
+    400136: RightHandMiddle3
+    400138: RightHandMiddle4
+    400140: RightHandPinky1
+    400142: RightHandPinky2
+    400144: RightHandPinky3
+    400146: RightHandPinky4
+    400148: RightHandRing1
+    400150: RightHandRing2
+    400152: RightHandRing3
+    400154: RightHandRing4
+    400156: RightHandThumb1
+    400158: RightHandThumb2
+    400160: RightHandThumb3
+    400162: RightHandThumb4
+    400164: RightInnerBrow
+    400166: RightIOuterBrow
+    400168: RightLeg
+    400170: RightLipCorner
+    400172: RightLipLower
+    400174: RightLipUpper
+    400176: RightNostril
+    400178: RightShoulder
+    400180: RightToeBase
+    400182: RightUpLeg
+    400184: ShirtGeo
+    400186: ShoesGeo
+    400188: Spine
+    400190: Spine1
+    400192: Spine2
+    400194: TeethGeo
+    400196: TongueBack
+    400198: TongueTip
     4300000: eyes
     4300002: TeethGeo
     4300004: ShirtGeo
@@ -11,31 +212,44 @@ ModelImporter:
     4300012: HandsGeo
     4300014: Glasses
     4300016: Hair
-    7400000: mixamo.com //// Carl@t-pose_2
-  serializedVersion: 10
+    7400000: mixamo.com
+    11100000: //RootNode
+    13700000: eyes
+    13700002: Glasses
+    13700004: Hair
+    13700006: HandsGeo
+    13700008: HeadGeo
+    13700010: PantsGeo
+    13700012: ShirtGeo
+    13700014: ShoesGeo
+    13700016: TeethGeo
   materials:
     importMaterials: 1
     materialName: 3
     materialSearch: 1
   animations:
-    generateAnimations: 3
+    legacyGenerateAnimations: 4
     bakeSimulation: 0
-    splitAnimations: 1
+    optimizeGameObjects: 0
     animationCompression: 1
     animationRotationError: .5
     animationPositionError: .5
     animationScaleError: .5
     animationWrapMode: 0
+    extraExposedTransformPaths: []
     clipAnimations: []
+    isReadable: 1
   meshes:
     lODScreenPercentages: []
     globalScale: .00999999978
     meshCompression: 0
     addColliders: 0
+    importBlendShapes: 1
     swapUVChannels: 0
     generateSecondaryUV: 0
     useFileUnits: 1
-    optimizeMesh: 0
+    optimizeMeshForGPU: 1
+    weldVertices: 1
     secondaryUVAngleDistortion: 8
     secondaryUVAreaDistortion: 15.000001
     secondaryUVHardAngle: 88
@@ -45,734 +259,19 @@ ModelImporter:
     splitTangentsAcrossUV: 1
     normalImportMode: 0
     tangentImportMode: 1
-  textMetaNamesToFileIDs:
-    //RootNode:
-      data:
-        first: 1
-        second: 3c870100
-      data:
-        first: 4
-        second: 1c1b0600
-      data:
-        first: 111
-        second: 605fa900
-    Glasses:
-      data:
-        first: 1
-        second: 34870100
-      data:
-        first: 4
-        second: 141b0600
-      data:
-        first: 137
-        second: a00bd100
-    Hair:
-      data:
-        first: 1
-        second: 36870100
-      data:
-        first: 4
-        second: 161b0600
-      data:
-        first: 137
-        second: a20bd100
-    HandsGeo:
-      data:
-        first: 1
-        second: 3a870100
-      data:
-        first: 4
-        second: 1a1b0600
-      data:
-        first: 137
-        second: a60bd100
-    Head:
-      data:
-        first: 1
-        second: 20870100
-      data:
-        first: 4
-        second: 001b0600
-    HeadGeo:
-      data:
-        first: 1
-        second: 3e870100
-      data:
-        first: 4
-        second: 1e1b0600
-      data:
-        first: 137
-        second: a80bd100
-    HeadTop_End:
-      data:
-        first: 1
-        second: 1e870100
-      data:
-        first: 4
-        second: fe1a0600
-    Hips:
-      data:
-        first: 1
-        second: 2c870100
-      data:
-        first: 4
-        second: 0c1b0600
-    Jaw:
-      data:
-        first: 1
-        second: 18870100
-      data:
-        first: 4
-        second: f81a0600
-    JawEND:
-      data:
-        first: 1
-        second: 10870100
-      data:
-        first: 4
-        second: f01a0600
-    LeftArm:
-      data:
-        first: 1
-        second: ee860100
-      data:
-        first: 4
-        second: ce1a0600
-    LeftCheek:
-      data:
-        first: 1
-        second: 04870100
-      data:
-        first: 4
-        second: e41a0600
-    LeftEye:
-      data:
-        first: 1
-        second: 1c870100
-      data:
-        first: 4
-        second: fc1a0600
-    LeftEyelidLower:
-      data:
-        first: 1
-        second: 02870100
-      data:
-        first: 4
-        second: e21a0600
-    LeftEyelidUpper:
-      data:
-        first: 1
-        second: 00870100
-      data:
-        first: 4
-        second: e01a0600
-    LeftFoot:
-      data:
-        first: 1
-        second: 32870100
-      data:
-        first: 4
-        second: 121b0600
-    LeftFootToeBase_End:
-      data:
-        first: 1
-        second: a4860100
-      data:
-        first: 4
-        second: 841a0600
-    LeftForeArm:
-      data:
-        first: 1
-        second: ec860100
-      data:
-        first: 4
-        second: cc1a0600
-    LeftHand:
-      data:
-        first: 1
-        second: ea860100
-      data:
-        first: 4
-        second: ca1a0600
-    LeftHandIndex1:
-      data:
-        first: 1
-        second: d8860100
-      data:
-        first: 4
-        second: b81a0600
-    LeftHandIndex2:
-      data:
-        first: 1
-        second: d6860100
-      data:
-        first: 4
-        second: b61a0600
-    LeftHandIndex3:
-      data:
-        first: 1
-        second: d4860100
-      data:
-        first: 4
-        second: b41a0600
-    LeftHandIndex4:
-      data:
-        first: 1
-        second: d2860100
-      data:
-        first: 4
-        second: b21a0600
-    LeftHandMiddle1:
-      data:
-        first: 1
-        second: e0860100
-      data:
-        first: 4
-        second: c01a0600
-    LeftHandMiddle2:
-      data:
-        first: 1
-        second: de860100
-      data:
-        first: 4
-        second: be1a0600
-    LeftHandMiddle3:
-      data:
-        first: 1
-        second: dc860100
-      data:
-        first: 4
-        second: bc1a0600
-    LeftHandMiddle4:
-      data:
-        first: 1
-        second: da860100
-      data:
-        first: 4
-        second: ba1a0600
-    LeftHandPinky1:
-      data:
-        first: 1
-        second: c8860100
-      data:
-        first: 4
-        second: a81a0600
-    LeftHandPinky2:
-      data:
-        first: 1
-        second: c6860100
-      data:
-        first: 4
-        second: a61a0600
-    LeftHandPinky3:
-      data:
-        first: 1
-        second: c4860100
-      data:
-        first: 4
-        second: a41a0600
-    LeftHandPinky4:
-      data:
-        first: 1
-        second: c2860100
-      data:
-        first: 4
-        second: a21a0600
-    LeftHandRing1:
-      data:
-        first: 1
-        second: d0860100
-      data:
-        first: 4
-        second: b01a0600
-    LeftHandRing2:
-      data:
-        first: 1
-        second: ce860100
-      data:
-        first: 4
-        second: ae1a0600
-    LeftHandRing3:
-      data:
-        first: 1
-        second: cc860100
-      data:
-        first: 4
-        second: ac1a0600
-    LeftHandRing4:
-      data:
-        first: 1
-        second: ca860100
-      data:
-        first: 4
-        second: aa1a0600
-    LeftHandThumb1:
-      data:
-        first: 1
-        second: e8860100
-      data:
-        first: 4
-        second: c81a0600
-    LeftHandThumb2:
-      data:
-        first: 1
-        second: e6860100
-      data:
-        first: 4
-        second: c61a0600
-    LeftHandThumb3:
-      data:
-        first: 1
-        second: e4860100
-      data:
-        first: 4
-        second: c41a0600
-    LeftHandThumb4:
-      data:
-        first: 1
-        second: e2860100
-      data:
-        first: 4
-        second: c21a0600
-    LeftIOuterBrow:
-      data:
-        first: 1
-        second: fc860100
-      data:
-        first: 4
-        second: dc1a0600
-    LeftInnerBrow:
-      data:
-        first: 1
-        second: fe860100
-      data:
-        first: 4
-        second: de1a0600
-    LeftLeg:
-      data:
-        first: 1
-        second: 2e870100
-      data:
-        first: 4
-        second: 0e1b0600
-    LeftLipCorner:
-      data:
-        first: 1
-        second: 0a870100
-      data:
-        first: 4
-        second: ea1a0600
-    LeftLipLower:
-      data:
-        first: 1
-        second: 12870100
-      data:
-        first: 4
-        second: f21a0600
-    LeftLipUpper:
-      data:
-        first: 1
-        second: 08870100
-      data:
-        first: 4
-        second: e81a0600
-    LeftNostril:
-      data:
-        first: 1
-        second: 06870100
-      data:
-        first: 4
-        second: e61a0600
-    LeftShoulder:
-      data:
-        first: 1
-        second: f0860100
-      data:
-        first: 4
-        second: d01a0600
-    LeftToeBase:
-      data:
-        first: 1
-        second: 30870100
-      data:
-        first: 4
-        second: 101b0600
-    LeftUpLeg:
-      data:
-        first: 1
-        second: 50870100
-      data:
-        first: 4
-        second: 301b0600
-    Neck:
-      data:
-        first: 1
-        second: 24870100
-      data:
-        first: 4
-        second: 041b0600
-    Neck1:
-      data:
-        first: 1
-        second: 22870100
-      data:
-        first: 4
-        second: 021b0600
-    PantsGeo:
-      data:
-        first: 1
-        second: 38870100
-      data:
-        first: 4
-        second: 181b0600
-      data:
-        first: 137
-        second: a40bd100
-    RightArm:
-      data:
-        first: 1
-        second: be860100
-      data:
-        first: 4
-        second: 9e1a0600
-    RightCheek:
-      data:
-        first: 1
-        second: f6860100
-      data:
-        first: 4
-        second: d61a0600
-    RightEye:
-      data:
-        first: 1
-        second: 1a870100
-      data:
-        first: 4
-        second: fa1a0600
-    RightEyelidLower:
-      data:
-        first: 1
-        second: aa860100
-      data:
-        first: 4
-        second: 8a1a0600
-    RightEyelidUpper:
-      data:
-        first: 1
-        second: a0860100
-      data:
-        first: 4
-        second: 801a0600
-    RightFoot:
-      data:
-        first: 1
-        second: 4a870100
-      data:
-        first: 4
-        second: 2a1b0600
-    RightFootToeBase_End:
-      data:
-        first: 1
-        second: ac860100
-      data:
-        first: 4
-        second: 8c1a0600
-    RightForeArm:
-      data:
-        first: 1
-        second: bc860100
-      data:
-        first: 4
-        second: 9c1a0600
-    RightHand:
-      data:
-        first: 1
-        second: ba860100
-      data:
-        first: 4
-        second: 9a1a0600
-    RightHandIndex1:
-      data:
-        first: 1
-        second: b0860100
-      data:
-        first: 4
-        second: 901a0600
-    RightHandIndex2:
-      data:
-        first: 1
-        second: 66870100
-      data:
-        first: 4
-        second: 461b0600
-    RightHandIndex3:
-      data:
-        first: 1
-        second: 64870100
-      data:
-        first: 4
-        second: 441b0600
-    RightHandIndex4:
-      data:
-        first: 1
-        second: 62870100
-      data:
-        first: 4
-        second: 421b0600
-    RightHandMiddle1:
-      data:
-        first: 1
-        second: a6860100
-      data:
-        first: 4
-        second: 861a0600
-    RightHandMiddle2:
-      data:
-        first: 1
-        second: a2860100
-      data:
-        first: 4
-        second: 821a0600
-    RightHandMiddle3:
-      data:
-        first: 1
-        second: a8860100
-      data:
-        first: 4
-        second: 881a0600
-    RightHandMiddle4:
-      data:
-        first: 1
-        second: ae860100
-      data:
-        first: 4
-        second: 8e1a0600
-    RightHandPinky1:
-      data:
-        first: 1
-        second: 58870100
-      data:
-        first: 4
-        second: 381b0600
-    RightHandPinky2:
-      data:
-        first: 1
-        second: 56870100
-      data:
-        first: 4
-        second: 361b0600
-    RightHandPinky3:
-      data:
-        first: 1
-        second: 54870100
-      data:
-        first: 4
-        second: 341b0600
-    RightHandPinky4:
-      data:
-        first: 1
-        second: 52870100
-      data:
-        first: 4
-        second: 321b0600
-    RightHandRing1:
-      data:
-        first: 1
-        second: 60870100
-      data:
-        first: 4
-        second: 401b0600
-    RightHandRing2:
-      data:
-        first: 1
-        second: 5e870100
-      data:
-        first: 4
-        second: 3e1b0600
-    RightHandRing3:
-      data:
-        first: 1
-        second: 5c870100
-      data:
-        first: 4
-        second: 3c1b0600
-    RightHandRing4:
-      data:
-        first: 1
-        second: 5a870100
-      data:
-        first: 4
-        second: 3a1b0600
-    RightHandThumb1:
-      data:
-        first: 1
-        second: b8860100
-      data:
-        first: 4
-        second: 981a0600
-    RightHandThumb2:
-      data:
-        first: 1
-        second: b6860100
-      data:
-        first: 4
-        second: 961a0600
-    RightHandThumb3:
-      data:
-        first: 1
-        second: b4860100
-      data:
-        first: 4
-        second: 941a0600
-    RightHandThumb4:
-      data:
-        first: 1
-        second: b2860100
-      data:
-        first: 4
-        second: 921a0600
-    RightIOuterBrow:
-      data:
-        first: 1
-        second: f8860100
-      data:
-        first: 4
-        second: d81a0600
-    RightInnerBrow:
-      data:
-        first: 1
-        second: fa860100
-      data:
-        first: 4
-        second: da1a0600
-    RightLeg:
-      data:
-        first: 1
-        second: 4e870100
-      data:
-        first: 4
-        second: 2e1b0600
-    RightLipCorner:
-      data:
-        first: 1
-        second: 0c870100
-      data:
-        first: 4
-        second: ec1a0600
-    RightLipLower:
-      data:
-        first: 1
-        second: 0e870100
-      data:
-        first: 4
-        second: ee1a0600
-    RightLipUpper:
-      data:
-        first: 1
-        second: f2860100
-      data:
-        first: 4
-        second: d21a0600
-    RightNostril:
-      data:
-        first: 1
-        second: f4860100
-      data:
-        first: 4
-        second: d41a0600
-    RightShoulder:
-      data:
-        first: 1
-        second: c0860100
-      data:
-        first: 4
-        second: a01a0600
-    RightToeBase:
-      data:
-        first: 1
-        second: 48870100
-      data:
-        first: 4
-        second: 281b0600
-    RightUpLeg:
-      data:
-        first: 1
-        second: 4c870100
-      data:
-        first: 4
-        second: 2c1b0600
-    ShirtGeo:
-      data:
-        first: 1
-        second: 40870100
-      data:
-        first: 4
-        second: 201b0600
-      data:
-        first: 137
-        second: aa0bd100
-    ShoesGeo:
-      data:
-        first: 1
-        second: 46870100
-      data:
-        first: 4
-        second: 261b0600
-      data:
-        first: 137
-        second: b00bd100
-    Spine:
-      data:
-        first: 1
-        second: 2a870100
-      data:
-        first: 4
-        second: 0a1b0600
-    Spine1:
-      data:
-        first: 1
-        second: 28870100
-      data:
-        first: 4
-        second: 081b0600
-    Spine2:
-      data:
-        first: 1
-        second: 26870100
-      data:
-        first: 4
-        second: 061b0600
-    TeethGeo:
-      data:
-        first: 1
-        second: 44870100
-      data:
-        first: 4
-        second: 241b0600
-      data:
-        first: 137
-        second: ae0bd100
-    TongueBack:
-      data:
-        first: 1
-        second: 16870100
-      data:
-        first: 4
-        second: f61a0600
-    TongueTip:
-      data:
-        first: 1
-        second: 14870100
-      data:
-        first: 4
-        second: f41a0600
-    eyes:
-      data:
-        first: 1
-        second: 42870100
-      data:
-        first: 4
-        second: 221b0600
-      data:
-        first: 137
-        second: ac0bd100
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    human: []
+    skeleton: []
+    armTwist: .5
+    foreArmTwist: .5
+    upperLegTwist: .5
+    legTwist: .5
+    armStretch: .0500000007
+    legStretch: .0500000007
+    feetSpacing: 0
+    rootMotionBoneName: 
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 1
+  userData: 
