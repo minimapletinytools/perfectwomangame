@@ -119,6 +119,7 @@ public class TransitionCameraManager : FakeMonoBehaviour
 		mDepthWarningText.Alignment = TextAlignment.Left;
 		mDepthWarningText.Anchor = TextAnchor.MiddleLeft;
 		mDepthWarningText.HardPosition = mFlatCamera.get_point(1,-1) + new Vector3(-220,70,0) * mFlatCamera.screen_pixel_to_camera_pixel_ratio();
+		mDepthWarningText.ColorInterpolationMinLimit = 2f;
 		//mDepthWarningText.Alignment = TextAlignment.Left;
 		EnableDepthWarning = false;
 		
@@ -325,7 +326,7 @@ public class TransitionCameraManager : FakeMonoBehaviour
 		//because it got destoryed at the step above
 		initialize_depth_warning();
 
-		mBundle.Unload(true);
+		mManager.mCharacterBundleManager.unload_bundle(mBundle);
 		mBundle = null;
 	}
 	
@@ -392,3 +393,4 @@ public class TransitionCameraManager : FakeMonoBehaviour
 		return l>=1;
 	}
 }
+

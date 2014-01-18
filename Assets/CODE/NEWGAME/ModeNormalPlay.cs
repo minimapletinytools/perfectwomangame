@@ -335,7 +335,7 @@ public class ModeNormalPlay
 				float oldGrade = (float)scoreProp.GetValue(CurrentPerformanceStat);
 				float newGrade = oldGrade*0.93f + grade*0.07f;
 				scoreProp.SetValue(CurrentPerformanceStat,newGrade);
-				if(newGrade > 0.76f)
+				if(newGrade > GameConstants.playFetusPassThreshold)
 				{
 					//this may or may not work depending on which update gets called first
 					SkipSingle();
@@ -470,6 +470,8 @@ public class ModeNormalPlay
 							transition_to_TRANSITION_play(CharacterIndex.sOneHundred);
 						}
 					}
+
+					//natural death
 					mInterfaceManager.set_for_DEATH(CurrentPerformanceStat.Character)
 						.then_one_shot(
 							delegate()
@@ -542,8 +544,7 @@ public class ModeNormalPlay
 		//NEXT TIME YOU PERFORM THAT BAD YOU MIGHT DIE
 		if(firstDeath) //if we haven't died previously
 		{
-
-			chain = chain.then (mInterfaceManager.skippable_text_bubble_event("Next time you perform that bad you will die.", gTextDisplayDur));
+			chain = chain.then(mInterfaceManager.skippable_text_bubble_event("Next time you perform that bad you will die.", gTextDisplayDur),0);
 
 
 			chain = chain.then_one_shot(
@@ -553,7 +554,7 @@ public class ModeNormalPlay
 						CurrentPerformanceStat.CutsceneChangeSet
 					);
 				}
-			);
+			,0);
 			return;
 		}
 			
@@ -575,6 +576,13 @@ public class ModeNormalPlay
 	public void transition_to_GRAVE()
 	{
 		GS = NormalPlayGameState.GRAVE;
+
+		//since cutscene does not play during horrible death, music does not get played so we start it up again here
+		if(mManager.mMusicManager.MusicClip != NGM.CurrentCharacterLoader.Images.backgroundMusic)
+		{
+			mManager.mMusicManager.play_music(NGM.CurrentCharacterLoader.Images.backgroundMusic,0,true);	
+			mManager.mMusicManager.fade_in(5,0.5f);
+		}
 
 		mSunsetManager.set_for_GRAVE(mPerformanceStats, 
 			delegate()

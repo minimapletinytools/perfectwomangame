@@ -59,7 +59,7 @@ public class CharacterHeadPopupThingy
 				shine.destroy();
 				//box.destroy();
 			},
-		1f);
+		0.5f);
 	}
 
 
@@ -67,10 +67,10 @@ public class CharacterHeadPopupThingy
 	{
 		
 		int count = aChars.Length;
-		float gTimeBeforeBadges = 1.5f;
+		float gTimeBeforeBadges = .7f;
 		float scaleTime = Mathf.Sqrt (Mathf.Sqrt(1/(float)count));
-		float gBadgeTime = scaleTime * .5f;
-		float gTimeAfterBadges = 2.0f;
+		float gBadgeTime = scaleTime * .3f;
+		float gTimeAfterBadges = 1.0f;
 
 
 

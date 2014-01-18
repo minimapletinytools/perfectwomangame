@@ -24,7 +24,7 @@ public class AlternativeImageViewer : MonoBehaviour
 		return imageTexture;
 	}
 
-	public ZigResolution imageResolution = ZigResolution.QQVGA_160x120;
+	public ZigResolution imageResolution = ZigResolution.VGA_640x480;
     Texture2D imageTexture = null;
     ResolutionData imageSizeData;
     Color32[] imageOutputPixels;

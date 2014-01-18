@@ -92,10 +92,10 @@ public class NewInterfaceManager {
 		mBBWarningText.HardPosition = mFlatCamera.Center;
 
 
-		mBBNameText.HardColor = GameConstants.UiPink;
+		mBBNameText.HardColor = GameConstants.UiWhite;
 		mBBNameText.Alignment = TextAlignment.Right;
 		mBBNameText.Anchor = TextAnchor.MiddleRight;
-		mBBScoreText.HardColor = GameConstants.UiPink;
+		mBBScoreText.HardColor = GameConstants.UiWhite;
 		mBBScoreText.Alignment = TextAlignment.Right;
 		mBBScoreText.Anchor = TextAnchor.MiddleRight;
 
@@ -307,14 +307,15 @@ public class NewInterfaceManager {
 			delegate(){cutsceneCompleteCb();},END_CUTSCENE_DELAY_TIME);
 		return;*/
 		
-		float gStartCutsceneDelay = 4f;
+		float gStartCutsceneDelay = 3f;
 		float gPerformanceText = 4f;
-		float gCutsceneText = 6f;
-		float gCutsceneTextIncrement = .9f;
+		float gCutsceneText = 5f;
+		float gCutsceneTextIncrement = .3f;
 		float gPreParticle = 1.5f;
 		float gBubblePos = 0.2f;
 
 		//TODO put in actual random bubbless
+		int lastBubbleIndex = Random.Range(0,3);
 		var cutsceneBubbles = new CharacterBundleManager.ImageSizePair[] {
 			mManager.mCharacterBundleManager.get_image("CUTSCENE_BUBBLE-0"),
 			mManager.mCharacterBundleManager.get_image("CUTSCENE_BUBBLE-1"),
@@ -395,7 +396,8 @@ public class NewInterfaceManager {
 						po = add_timed_text_bubble(
 							changeMsg,gCutsceneText + gCutsceneTextIncrement * aChangedChars.Count,
 							gBubblePos,
-							cutsceneBubbles[Random.Range(0,cutsceneBubbles.Length)]);
+							cutsceneBubbles[lastBubbleIndex]);
+							lastBubbleIndex = (lastBubbleIndex+1)%3;
 					
 						//dumb stuff I need to make sure there was actually a change
 						foreach(CharacterIndex cchar in CharacterIndex.sAllCharacters)
@@ -446,22 +448,8 @@ public class NewInterfaceManager {
 		float gTextTime = 5;
 		
 		TimedEventDistributor.TimedEventChain chain = TED.empty_chain();
-		
-		if(aChar.LevelIndex == 7)
-		{
-			//only show this message if we die a natural death (i.e. not early death)
-			if(mModeNormalPlay.CurrentPerformanceStat.DeathTime == -1)
-			{
-				chain = TED.add_one_shot_event(
-					delegate()
-					{
-						add_timed_text_bubble("You die a natural death at age 85.",gTextTime);
-					},
-		        0).then_one_shot( //dummy 
-				delegate(){},gTextTime);
-			}
-		}
-		else if (aChar.LevelIndex == 8)
+
+		if (aChar.LevelIndex == 8)
 		{
 			//100!!!
 			//TODO change this stuff, maybe just use cutscene bubble??

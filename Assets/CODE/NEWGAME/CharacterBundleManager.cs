@@ -126,6 +126,12 @@ public class CharacterBundleManager : FakeMonoBehaviour {
 	{
 		mUnloadAtEnd.Add(aBundle);
 	}
+	public void unload_bundle(AssetBundle aBundle)
+	{
+		aBundle.Unload(true);
+		mUnloadAtEnd.Remove(aBundle);
+	}
+
     public void scene_loaded_callback(AssetBundle aBundle, string aBundleName)
     {
         //Debug.Log("loading character in CharacterLoader " + aBundleName);
@@ -272,9 +278,11 @@ public class CharacterBundleManager : FakeMonoBehaviour {
 	
 	public void cleanup()
 	{
+		Debug.Log ("cleaning up asset bundles");
 		foreach(AssetBundle e in mUnloadAtEnd)
+		{
 			e.Unload(true);
+		}
 		mUnloadAtEnd.Clear();
-
 	}
 }

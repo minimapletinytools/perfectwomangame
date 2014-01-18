@@ -115,11 +115,15 @@ public class SunsetManager
 		System.Func<FlatElementBase,float,bool> scoreJiggleDelegate = 
 			delegate(FlatElementBase aBase, float aTime2) 
 		{
-			aBase.mLocalRotation = Quaternion.AngleAxis(Mathf.Sin(aTime2*Mathf.PI*2*4)*15f,Vector3.forward);
-			if(aTime2 >= 0.7f) 
+			aTime2 -= 0.5f;
+			if(aTime2 > 0)
 			{
-				aBase.mLocalRotation = Quaternion.identity;
-				return true;
+				aBase.mLocalRotation = Quaternion.AngleAxis(Mathf.Sin(aTime2*Mathf.PI*2*4)*15f,Vector3.forward);
+				if(aTime2 >= 0.7f) 
+				{
+					aBase.mLocalRotation = Quaternion.identity;
+					return true;
+				}
 			}
 			return false;
 		};
@@ -217,7 +221,7 @@ public class SunsetManager
 			mElement.Add(addMe);
 
 			if(aShowScore)
-				show_score(aChar,(int)mManager.mGameManager.mModeNormalPlay.CurrentPerformanceStat.AdjustedScore,3);
+				show_score(aChar,(int)mManager.mGameManager.mModeNormalPlay.CurrentPerformanceStat.AdjustedScore,4);
 
 			set_sky_color(mCharacters.Count);
 		}
@@ -232,6 +236,7 @@ public class SunsetManager
 	}
 	
 
+	int mLastSunsetBubbleIndex = 0;
 	//bubble types 0 - regular, 1 - long small, 2 - long big
 	public PopupTextObject add_timed_text_bubble(string aMsg, float duration, float yRelOffset = 0, int bubbleType = 0)
 	{
@@ -240,10 +245,10 @@ public class SunsetManager
 			to = new PopupTextObject(aMsg,30);
 		else if(bubbleType == 1)
 		{
+			string[] bubbleNames = new string[]{"SUNSET_BUBBLE-0","SUNSET_BUBBLE-1","SUNSET_BUBBLE-2"};
 			//TODO put in actual random bubbless
-			var bubbleImg = mManager.mCharacterBundleManager.get_image(
-				Random.Range(0,3) == 0 ? "SUNSET_BUBBLE-0" : 
-				(Random.Range(0,2) == 0 ? "SUNSET_BUBBLE-1" : "SUNSET_BUBBLE-2"));
+			var bubbleImg = mManager.mCharacterBundleManager.get_image(bubbleNames[mLastSunsetBubbleIndex]);
+			mLastSunsetBubbleIndex = (mLastSunsetBubbleIndex+1)%3;
 			to = new PopupTextObject(aMsg,30,bubbleImg.Image,bubbleImg.Data.Size);
 		} else if(bubbleType == 2)
 		{
@@ -685,7 +690,7 @@ public class SunsetManager
 		FlatElementImage[] logos = new FlatElementImage[3];
 		//PopupTextObject gameOver = null;
 		List<FlatElementText> creditsText = new List<FlatElementText>();
-		float scrollSpeed = 700;
+		float scrollSpeed = 730;
 
 		
 		mGraveCompleteCb = delegate()
@@ -710,7 +715,7 @@ public class SunsetManager
 					int counter = 0;
 					foreach(string e in GameConstants.credits)
 					{
-						var text = new FlatElementText(mManager.mNewRef.genericFont,50,e,25);
+						var text = new FlatElementText(mManager.mNewRef.genericFont,70,e,25);
 						float textWidth = text.BoundingBox.width;
 						text.HardColor = new Color(1,1,1,1);
 						text.HardPosition = new Vector3(lastXPosition-textWidth/2f,barYPosition.y,0);

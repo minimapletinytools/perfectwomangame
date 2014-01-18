@@ -37,9 +37,10 @@ public static class GameConstants
 	public static float playFeverCutoff = 0.7f;
 	public static float playFeverRequiredTime = 5f;
 	public static float playDefaultPlayTime = 35f;
+	public static float playFetusPassThreshold = 0.6f;
 	public static float deathPerformanceThreshold = 0.1f;
 	public static float deathRequiredTime = 8f;
-	public static float badPerformanceThreshold = 0.6f;
+	public static float badPerformanceThreshold = 0.4f;
 	
 	//grave stuff
 	//public static string[] credits = {"Perfect Woman","created by", "Lea Sch\u00F6enfelder", "Peter Lu"};

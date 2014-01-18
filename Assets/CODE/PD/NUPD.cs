@@ -188,7 +188,7 @@ namespace NUPD
 					operatingChangeSetList.Last().Index = ci.ChangeSet.Count + operatingChangeSetList.Count;
 					if(sp.Length > 1)
 						//operatingChangeSet.PerformanceDescription = sp.Skip(1).Aggregate((s1,s2)=>s1+" "+s2);
-						operatingChangeSetList.Last().PerformanceDescription = sp.Skip(1).Aggregate((s1,s2)=>s1+" "+s2);
+						operatingChangeSetList.Last().PerformanceDescription = sp.Skip(1).Aggregate((s1,s2)=>s1+" "+s2).Replace("poor","mediocre").Replace("poorly","ok");
 					//ci.ChangeSet.Add(operatingChangeSet);
 				} else if(first == "CDESC")
 				{

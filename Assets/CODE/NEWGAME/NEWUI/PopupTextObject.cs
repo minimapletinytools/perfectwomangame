@@ -99,7 +99,8 @@ public class PopupTextObject : FlatElementMultiBase {
 		mElements.Add(mTextOffset);
 		Text = aText;
         PrimaryGameObject = create_primary_from_elements();
-		ColorInterpolationMaxLimit = 0.7f;
+		ColorInterpolationMaxLimit = 4f;
+		ColorInterpolationMinLimit = 0.5f;
 		Depth = aDepth;
     }
 
