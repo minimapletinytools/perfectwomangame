@@ -138,7 +138,7 @@ public class CharacterHeadPopupThingy
 
 					mNames[i] = new FlatElementText(
 						ManagerManager.Manager.mNewRef.genericFont,
-						60,
+						57,
 						ManagerManager.Manager.mGameManager.CharacterHelper.Characters[aChars[i]].CharacterInfo.ShortName.ToUpper(),
 						11);
 					mNames[i].HardPosition = mCharacters[i].HardPosition + nameOffset;

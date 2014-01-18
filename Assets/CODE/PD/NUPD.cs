@@ -225,6 +225,14 @@ namespace NUPD
 			foreach(ChangeSet f in operatingChangeSetList)
 				ci.ChangeSet.Add(f);
 			operatingChangeSetList.Clear();
+
+			//TODO DELETE
+			//this is a hack to set .4-.6 changes to be positive
+			if(ci.ChangeSet.Count > 2)
+			{
+				Debug.Log(ci.ChangeSet[2].UpperThreshold + " " + ci.ChangeSet[4].UpperThreshold);
+				ci.ChangeSet[2].Changes = ci.ChangeSet[4].Changes;
+			}
 			
 			return ci;
 		}

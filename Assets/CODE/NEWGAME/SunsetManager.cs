@@ -91,7 +91,7 @@ public class SunsetManager
 	}
 
 	//this needs to be called in order of characters created....
-	public void show_score(CharacterIndex aIndex, int aScore, float showTime)
+	public void show_score(CharacterIndex aIndex, int aScore, float showTime, float jiggleDelayTime = 0)
 	{
 		int ind = char_to_list_index(aIndex);
 		FlatElementText scoreText = new FlatElementText(mManager.mNewRef.fatFont,40, aScore.ToString(), 21);
@@ -115,7 +115,7 @@ public class SunsetManager
 		System.Func<FlatElementBase,float,bool> scoreJiggleDelegate = 
 			delegate(FlatElementBase aBase, float aTime2) 
 		{
-			aTime2 -= 0.5f;
+			aTime2 -= jiggleDelayTime;
 			if(aTime2 > 0)
 			{
 				aBase.mLocalRotation = Quaternion.AngleAxis(Mathf.Sin(aTime2*Mathf.PI*2*4)*15f,Vector3.forward);
@@ -221,7 +221,7 @@ public class SunsetManager
 			mElement.Add(addMe);
 
 			if(aShowScore)
-				show_score(aChar,(int)mManager.mGameManager.mModeNormalPlay.CurrentPerformanceStat.AdjustedScore,4);
+				show_score(aChar,(int)mManager.mGameManager.mModeNormalPlay.CurrentPerformanceStat.AdjustedScore,4,1.2f);
 
 			set_sky_color(mCharacters.Count);
 		}
@@ -400,7 +400,7 @@ public class SunsetManager
 		float gPreScoreCount = 0.03f;
 		float gScoreCount = 0.2f;
 		float gPostScoreCount = 0.07f;
-		float gRestart = 30;
+		float gRestart = 29;
 		
 		//add the gravestone to the scene
 		add_character(CharacterIndex.sGrave,false);
@@ -423,7 +423,6 @@ public class SunsetManager
 		{
 			if(aStats.Last().Character.Age < (new CharacterIndex(i,0)).Age)
 			{
-
 				PerformanceStats stat = new PerformanceStats(new CharacterIndex(i,Random.Range(0,4)));
 				stat.update_score(0,Random.value);
 				stat.update_score(1,Random.value);
@@ -457,7 +456,7 @@ public class SunsetManager
 		
 		Vector3 graveCenter = mCharacters[mCharacters.Count-1].HardPosition + new Vector3(0, 50, 0);
 		finalScoreText.HardPosition = graveCenter + new Vector3(30,-180,0);
-		perfectPercent.HardPosition = graveCenter + new Vector3(35,23,0);
+		perfectPercent.HardPosition = graveCenter + new Vector3(25,0,0);
 		mElement.Add(finalScoreText);
 		//mElement.Add(perfectEngraving);
 		mElement.Add(perfectPercent);
@@ -674,25 +673,18 @@ public class SunsetManager
 					}
 					
 				}
-			,3);
-			chain = chain.wait(6);
+			,2);
+			//chain = chain.wait(6);
 			//chain = chain.then(skippable_text_bubble_event("YOU ARE THE PERFECT WOMAN!",5,-0.8f,2),0);
 		}
-
-
-
-		//TODO DELET when you switch to side scrolling credits
-		chain = chain.wait(1);
-		
 		
 		//variables for credits animation..
 		float lastTime = 0;
 		FlatElementImage[] logos = new FlatElementImage[3];
 		//PopupTextObject gameOver = null;
 		List<FlatElementText> creditsText = new List<FlatElementText>();
-		float scrollSpeed = 730;
+		float scrollSpeed = 820;
 
-		
 		mGraveCompleteCb = delegate()
 		{
 			Vector3 barYPosition = mFlatCamera.Center + new Vector3(0,-700,0);
@@ -781,7 +773,7 @@ public class SunsetManager
 			}
 			,0).then_one_shot(
 				graveCompleteCb
-				,0);
+			,0);
 		};
 		
 		chain = chain.then_one_shot(
@@ -791,7 +783,7 @@ public class SunsetManager
 				mGraveCompleteCb = null;
 				mGraveChain = null;
 			}
-		);
+		,1);
 		
 		mGraveChain = TED.LastEventKeyAdded;
 		

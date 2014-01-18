@@ -441,6 +441,7 @@ public class NewInterfaceManager {
 	
 	
 	//returns amount of time this will take
+	//TODO move all this stuff into ModeNormalPlay
 	public TimedEventDistributor.TimedEventChain set_for_DEATH(CharacterIndex aChar)
 	{
 
@@ -449,7 +450,10 @@ public class NewInterfaceManager {
 		
 		TimedEventDistributor.TimedEventChain chain = TED.empty_chain();
 
-		if (aChar.LevelIndex == 8)
+		if (aChar.LevelIndex == 7)
+		{
+		}
+		else if (aChar.LevelIndex == 8)
 		{
 			//100!!!
 			//TODO change this stuff, maybe just use cutscene bubble??

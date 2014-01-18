@@ -118,7 +118,8 @@ public class TransitionCameraManager : FakeMonoBehaviour
 		mDepthWarningText.HardColor = new Color(1,1,1,0);	
 		mDepthWarningText.Alignment = TextAlignment.Left;
 		mDepthWarningText.Anchor = TextAnchor.MiddleLeft;
-		mDepthWarningText.HardPosition = mFlatCamera.get_point(1,-1) + new Vector3(-220,70,0) * mFlatCamera.screen_pixel_to_camera_pixel_ratio();
+		mDepthWarningText.HardPosition = mFlatCamera.get_point(1,-1) + new Vector3(-220,75,0) * mFlatCamera.screen_pixel_to_camera_pixel_ratio();
+		mDepthWarningText.ColorInterpolationMaxLimit = 10f;
 		mDepthWarningText.ColorInterpolationMinLimit = 2f;
 		//mDepthWarningText.Alignment = TextAlignment.Left;
 		EnableDepthWarning = false;
