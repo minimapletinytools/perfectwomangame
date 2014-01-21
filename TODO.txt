@@ -1,12 +1,94 @@
-::still another::
+::FUTURE::
 -tiny little white dot in corner next to name (I think it's in the fetus score label image and 
 -fix the aliasing issue on some chars
+-cutscene breaks are too boring
+-fallback on 45-4_b-1
+-head popup icons confusing
+-music looping still broken
+-normal slower??
+-play warning sholud come up sooner?
+-demented but happy good death should have a happy ghost escaping to freedom from the body
+-bmp format
+-make choosing figure come in from bottom and be solid and purple
+-make testing scene play music and set rate to what it should be
+-05-4 music needs to be louder
+-shake score sound effect in sunset, now just grave
+-make cutscenes longer but make "you did medicore..." text shorter
+-update whale hunter to fix music
+-actually shine is disapearing jsut as midgen too fast
+-choice bubble fading is wonk text fades first then bubble fix it...
+-tiny dot next to score in fetus
+-make cutscene bubbles not fly in
+-doing excellent (>.8) is a littel hard?
+-optional arms behind head for chars like dancer
+-disable depth warning during credits
+-do better grace grading right after poses change
+-particles still the wrong color
+-get more differentiated play sounds 
+-kinect should lock in on first track user instead of always using lasttrackeduser	
+-head pop up change sounds should come in +1 +2, -1, -2 varieties
+-still huge delay between early death and cutscenes
 
+::MAJOR FUTURE::
+-redo all the texts
+	-all apostrophes
+-some connection texts will never be triggered because there is no actual connection.
+-particles falling from sky during fever
+-see if you can fix kinect lighting
+-pose change predictor, draw super transparent "next" pose during play
+-if we have time, age 110
+	-when you die at 85 gives special message and then goes to 110
+	-beginning of 110 it says "you lived a very long life. Enjoy what is left"
+	-asteroids you can bump around.......... 
+	-only 10-15 seconds
+	-floating off in space death cutscene
+		-no death text goes straight to sunset
+	-transition to sunset, has starry sky space background with 110 floating in it.
+-characters in sunset have happy and sad based on how well you did
+-dolphin particle for princess
+
+::IGNORE FUTURE::
+-clean up UI folder
+	-delet box
+	-delete angel
+	-delete other stuf
+-text file format for unlockable characters
+	-manually fill out for now
+-cleanup
+	-still have perfect stars floating around somewhere..
+	-cleanup all the PB stuff
+-testing/challenge/simian mode should inherit from interface..
+-make BACKGROUND part of the big image dump instead of an exception case
+-add skip multiple to sunset progress
+-turn miniman into asset bundle for consistency
+	-make the bundle in ggfiles
+	-use mini_loaded_callback and asign it to a new character such as 0-1
+	-delete CharacterBehaviour nonsense in FlatElementImage
+-can delete code for old gravestone
+-unlock badges...
+-PERFECT SIMIAN
+-too much time between premature death and choice
+	-some timing bugs in general..
+-consider making harder/easier for first set of choices random
+	-lul, need to hardcode this...
+-better way to detect if user is not on screen
+-define interface for kinect stuff for when you need to swap in kinect2.0
+
+
+
+
+
+
+::IGF BUILD FINALIZED HERE!!!::
+
+
+
+
+
+::still another::
 DONE-neck on 16-1 sexy girl should be smaller
-
--grave font bigger
--uhh credits not showing up.....
-
+DONE-grave font bigger
+DONE-uhh credits not showing up.....
 DONE-put cashier audio into prechar
 DONE-change call girl cutscene text to say call girl not porn star
 maybe the other ones too)
@@ -31,17 +113,6 @@ DONE-score label needs to come in with delay
 DONE-force different random bubble for cutscenes and sunset
 IGNORE-bad performance -> cutscene text still too long
 DONE-quiet music even louder 
-
--cutscene breaks are too boring
--fallback on 45-4_b-1
--head popup icons confusing
--music looping still broken
--normal slower??
--play warning sholud come up sooner?
-
-
-
-
 
 ::another todo list::
 ????DONE????-selection bug
@@ -76,47 +147,9 @@ DONE-actually the relative position fo depth warning and warning text is resolut
 	-you should really move depth warning image into TCM
 DONE-in code turn poor back to mediocre
 DONE-set good threshold at .4 instead of .6
+IGNORE-really make arms up birth pose
+IGNORE-flip the grave in sunset
 
--really make arms up birth pose
-
--flip the grave in sunset
-
-
--bmp format
--make choosing figure come in from bottom and be solid and purple
--make testing scene play music and set rate to what it should be
--05-4 music needs to be louder
-
-
-
-
-
-::future::
--actually shine is disapearing jsut as midgen too fast
--choice bubble fading is wonk text fades first then bubble fix it...
--tiny dot next to score in fetus
--make cutscene bubbles not fly in
--doing excellent (>.8) is a littel hard?
--optional arms behind head for chars like dancer
--disable depth warning during credits
--do better grace grading right after poses change
--redo all the texts
-	-all apostrophes
--some connection texts will never be triggered because there is no actual connection.
--particles still the wrong color
--particles falling from sky during fever
--see if you can fix kinect lighting
--pose change predictor, draw super transparent "next" pose during play
--if we have time, age 110
-	-when you die at 85 gives special message and then goes to 110
-	-beginning of 110 it says "you lived a very long life. Enjoy what is left"
-	-asteroids you can bump around.......... 
-	-only 10-15 seconds
-	-floating off in space death cutscene
-		-no death text goes straight to sunset
-	-transition to sunset, has starry sky space background with 110 floating in it.
--characters in sunset have happy and sad based on how well you did
--dolphin particle for princess
 
 ::MEETING NOTES::
 DONE-do particles properly
@@ -190,8 +223,8 @@ DONE-particle sizes are wrong
 DONE-color of particles still wrong???
 
 
--make all the score labels disapear at the same time
--make you are the perfect woman bubble smaller
+IGNORE-make all the score labels disapear at the same time
+IGNORE-make you are the perfect woman bubble smaller
 IGNORE-start selection music a little sooner maybe
 
 
@@ -203,13 +236,8 @@ DONE-see if you can fix the body crumpled up problem
 		-we can hard detect this by checking if the player is in a crumpled position..
 	-okay there isa difinitely a difference between when player is gone and just totalyl not tracked but still in frame, openni should be abel to tell you this hopefulyl
 
--get more differentiated play sounds 
--05-3 BPM roundoff makes it too fast I think
--birth pose should be hands up (I think whale hunter has a pose like this??)
--kinect should lock in on first track user instead of always using lasttrackeduser	
--head pop up change sounds should come in +1 +2, -1, -2 varieties
--still huge delay between early death and cutscenes
-
+IGNORE-birth pose should be hands up (I think whale hunter has a pose like this??)
+IGNORE-05-3 BPM roundoff makes it too fast I think
 DONE-have steven fix website, scrolling problem with image. extra bad in safari
 DONE-connection text is too fast, hard to read
 DONE-color stars no thearts
@@ -282,32 +310,7 @@ DONE-make labels disappear same time as streamS (too hard)
 DONE-particles over foreground
 DONE-everything seems to be performance mediocre right now
 
--contact katherine
--clean up UI folder
-	-delet box
-	-delete angel
-	-delete other stuf
--text file format for unlockable characters
-	-manually fill out for now
--cleanup
-	-still have perfect stars floating around somewhere..
-	-cleanup all the PB stuff
--testing/challenge/simian mode should inherit from interface..
--make BACKGROUND part of the big image dump instead of an exception case
--add skip multiple to sunset progress
--turn miniman into asset bundle for consistency
-	-make the bundle in ggfiles
-	-use mini_loaded_callback and asign it to a new character such as 0-1
-	-delete CharacterBehaviour nonsense in FlatElementImage
--can delete code for old gravestone
--unlock badges...
--PERFECT SIMIAN
--too much time between premature death and choice
-	-some timing bugs in general..
--consider making harder/easier for first set of choices random
-	-lul, need to hardcode this...
--better way to detect if user is not on screen
--define interface for kinect stuff for when you need to swap in kinect2.0
+
 
 
 DONE-characters should fade in/out during choosing
