@@ -88,7 +88,8 @@ public class ChoosingManager
 
 		set_for_choosing();
 	}
-	
+
+	//TODO DELETE/CONSOLIDATE
 	//NOTE this function is no longer needed but we still use it to initialize choosing
 	public void fade_choosing_contents(bool small = false)
 	{
@@ -109,7 +110,8 @@ public class ChoosingManager
         mBBQuestionTextPrefix.SoftColor = fullColor*GameConstants.UiRed*2;
 		mBBChoosingBackground.SoftColor = fullColor*(new Color(0.6f,0.6f,1))*1;//0.2f;
 	}
-	
+
+	//TODO DELETE/CONSOLIDATE
 	public void set_for_choosing()
 	{
 		fade_choosing_contents(false);

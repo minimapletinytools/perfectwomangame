@@ -27,7 +27,7 @@ public class NewGameManager : FakeMonoBehaviour
 	public CharacterLoader CurrentCharacterLoader
 	{ get; private set; }
 	public CharacterIndex CurrentCharacterIndex
-	{ get; private set; }
+	{ get; set; } //only public set because of hack in modenormalplay
 	public int CurrentLevel
     { get {return CurrentCharacterIndex.LevelIndex;}}
 	

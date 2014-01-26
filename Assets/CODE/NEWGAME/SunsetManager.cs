@@ -227,6 +227,24 @@ public class SunsetManager
 		}
 	}
 
+	public void remove_last_character()
+	{
+		if(mCharacters.Count > 0)
+		{
+			if(mDiffLabels.Count == mCharacters.Count)
+			{
+				var rdl = mDiffLabels.Last();
+				mElement.Remove(rdl);
+				rdl.destroy();
+				mDiffLabels.Remove(rdl);
+			}
+			var rc = mCharacters.Last();
+			mElement.Remove(rc);
+			rc.destroy();
+			mCharacters.Remove(rc);
+		}
+	}
+
 	public void update()
 	{
 		mFlatCamera.update(Time.deltaTime);
@@ -414,7 +432,7 @@ public class SunsetManager
 			aStats.Insert(0, new PerformanceStats(new CharacterIndex(0,0)));
 
 		//fake it for testing...
-		/*
+		/* TODO DELETE move this into ModeNormalPlay on force kill
 		mCharacters.Last().destroy(); //remove the grave
 		mElement.Remove(mCharacters.Last());
 		mCharacters.RemoveAt(mCharacters.Count -1);

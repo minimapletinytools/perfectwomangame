@@ -230,7 +230,7 @@ namespace NUPD
 			//this is a hack to set .4-.6 changes to be positive
 			if(ci.ChangeSet.Count > 2)
 			{
-				Debug.Log(ci.ChangeSet[2].UpperThreshold + " " + ci.ChangeSet[4].UpperThreshold);
+				//Debug.Log(ci.ChangeSet[2].UpperThreshold + " " + ci.ChangeSet[4].UpperThreshold);
 				ci.ChangeSet[2].Changes = ci.ChangeSet[4].Changes;
 			}
 			

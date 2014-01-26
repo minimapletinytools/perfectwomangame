@@ -57,6 +57,32 @@ public class ModeNormalPlay
 	AdvancedGrading mGrading = new AdvancedGrading();
 
 
+
+
+	//performance stat hacking
+	public void set_last_performance_stat_to_character(CharacterIndex aChar)
+	{
+		//clear out older ages
+		while(mPerformanceStats.Count > 0 && mPerformanceStats.Last().Character.LevelIndex >= aChar.LevelIndex)
+		{
+			mSunsetManager.remove_last_character();
+			mPerformanceStats.RemoveAt(mPerformanceStats.Count - 1);
+		}
+		//fill in yonuger ages randomly
+		while(mPerformanceStats.Count > 0 && mPerformanceStats.Last().Character.LevelIndex < aChar.LevelIndex - 1)
+		{
+			PerformanceStats stat = new PerformanceStats(new CharacterIndex(mPerformanceStats.Last().Character.LevelIndex + 1,Random.Range(0,4)));
+			stat.update_score(0,Random.value);
+			stat.update_score(1,Random.value);
+			stat.Stats = mManager.mGameManager.CharacterHelper.Characters[stat.Character];
+			mPerformanceStats.Add(stat);
+			mSunsetManager.add_character(stat.Character,false);
+		}
+		PerformanceStats realStat = new PerformanceStats(aChar);
+		realStat.Stats = mManager.mGameManager.CharacterHelper.Characters[realStat.Character];
+		mPerformanceStats.Add(realStat);
+
+	}
 	
 	//skipping
 	public bool DoSkipMultipleThisFrame
@@ -157,9 +183,11 @@ public class ModeNormalPlay
 	
 	public void character_loaded()
 	{
-		
-		mPerformanceStats.Add(new PerformanceStats(NGM.CurrentCharacterIndex));
-		CurrentPerformanceStat.Stats = NGM.CharacterHelper.Characters[NGM.CurrentCharacterIndex];
+		//we use the hack version instead that allows us to skip characters
+		set_last_performance_stat_to_character(NGM.CurrentCharacterIndex);
+		//mPerformanceStats.Add(new PerformanceStats(NGM.CurrentCharacterIndex));
+		//CurrentPerformanceStat.Stats = NGM.CharacterHelper.Characters[NGM.CurrentCharacterIndex];
+
 		mInterfaceManager.begin_new_character(CurrentPerformanceStat);
 		//set particle color
 		mParticles.mParticles.set_emitter_particle_color(mManager.mCharacterBundleManager.get_character_stat(NGM.CurrentCharacterIndex).CharacterInfo.CharacterOutlineColor/2f,2);
@@ -217,10 +245,62 @@ public class ModeNormalPlay
 	
 	public void update()
 	{
+		//cheater keys for skipping
 		if(Input.GetKeyDown(KeyCode.Alpha0))
 			DoSkipMultipleThisFrame = true;
 		if(Input.GetKeyDown(KeyCode.Alpha9))
 			DoSkipSingleThisFrame = true;
+		if(Input.GetKeyDown(KeyCode.Alpha8))
+			mManager.mTransparentBodyManager.transition_character_in(GameConstants.UiWhiteTransparent);
+
+
+		if(GS == NormalPlayGameState.CHOICE)
+		{
+			//cheater keys for difficulty
+			if(
+				NGM.CurrentCharacterIndex.LevelIndex < 7 &&
+				(Input.GetKeyDown(KeyCode.Q) ||
+			   Input.GetKeyDown(KeyCode.W) ||
+			   Input.GetKeyDown(KeyCode.E) ||
+			   Input.GetKeyDown(KeyCode.R)))
+			{
+				if(Input.GetKeyDown(KeyCode.Q))
+					NGM.CharacterHelper.Characters[NGM.CurrentCharacterIndex.get_future_neighbor(0)].Difficulty += 1;
+				if(Input.GetKeyDown(KeyCode.W))
+					NGM.CharacterHelper.Characters[NGM.CurrentCharacterIndex.get_future_neighbor(1)].Difficulty += 1;
+				if(Input.GetKeyDown(KeyCode.E))
+					NGM.CharacterHelper.Characters[NGM.CurrentCharacterIndex.get_future_neighbor(2)].Difficulty += 1;
+				if(Input.GetKeyDown(KeyCode.R))
+					NGM.CharacterHelper.Characters[NGM.CurrentCharacterIndex.get_future_neighbor(3)].Difficulty += 1;
+				for(int i = 0; i < 4; i++)
+					NGM.CharacterHelper.Characters[NGM.CurrentCharacterIndex.get_future_neighbor(i)].Difficulty %= 4;
+				mChoosingManager.set_bb_choices(NGM.CurrentCharacterIndex.get_future_neighbor(0).get_neighbors());
+			}
+
+			//level skipping, this will probably break grave btw	
+			KeyCode[] levelKeys = new KeyCode[]{KeyCode.Q,KeyCode.W,KeyCode.E,KeyCode.R,KeyCode.T,KeyCode.Z,KeyCode.U};
+			KeyCode[] choiceKeys = new KeyCode[]{KeyCode.Alpha1,KeyCode.Alpha2,KeyCode.Alpha3,KeyCode.Alpha4};
+			for(int i=0; i < levelKeys.Length; i++)
+			{
+				if(Input.GetKey(levelKeys[i]))
+				{
+					for(int j=0; j < choiceKeys.Length; j++)
+					{
+						if(Input.GetKeyDown(choiceKeys[j]))
+						{
+							slide_image(mChoosingImage,null);
+							slide_image(mSunsetImage,null);
+							mManager.mMusicManager.fade_out_extra_music();
+							mManager.mMusicManager.fade_out();
+							mManager.mAssetLoader.new_load_character((new CharacterIndex(i+1,j)).StringIdentifier,mManager.mCharacterBundleManager);
+
+						}
+					}
+				}
+			}
+		}
+
+
 
 		mInterfaceManager.Update();
 		mSunsetManager.update();
@@ -616,31 +696,39 @@ public class ModeNormalPlay
 		mChoiceHelper.shuffle_and_set_choice_poses(chars.Length,mChoosingManager); 
 		mChoosingManager.set_bb_choices(chars);
 		mSunsetManager.add_character(NGM.CurrentCharacterLoader.Character);
-
-		//switch over to choice screen
-		float gAgeDisplayDur = 7f;
 		slide_image(null,mSunsetImage);
 		mManager.mMusicManager.fade_out(3);
-		TED.add_event(
-			delegate(float aTime){
-				//mSunsetManager.fade_characters(true,true);
-				mSunsetManager.set_sun();
-				return true;
-			}
-		,5);
-		TED.add_event(
-			NGM.CurrentCharacterIndex == CharacterIndex.sFetus ?
-			mSunsetManager.low_skippable_text_bubble_event("Make your first life decision.",gAgeDisplayDur) :
-			mSunsetManager.low_skippable_text_bubble_event("You turn " + NGM.CurrentCharacterIndex.get_future_neighbor(0).Age + ".",gAgeDisplayDur)
-		,2.5f).then_one_shot(
-			delegate(){
-				slide_image(null,mChoosingImage);
-				mManager.mMusicManager.fade_in_extra_music("choiceMusic");
-				GS = NormalPlayGameState.CHOICE;
-			}
-		,0);
 
-
+		if(!Input.GetKey(KeyCode.Alpha0))
+		{
+			//switch over to choice screen
+			float gAgeDisplayDur = 7f;
+			TED.add_event(
+				delegate(float aTime){
+					//mSunsetManager.fade_characters(true,true);
+					mSunsetManager.set_sun();
+					return true;
+				}
+			,5);
+			TED.add_event(
+				NGM.CurrentCharacterIndex == CharacterIndex.sFetus ?
+				mSunsetManager.low_skippable_text_bubble_event("Make your first life decision.",gAgeDisplayDur) :
+				mSunsetManager.low_skippable_text_bubble_event("You turn " + NGM.CurrentCharacterIndex.get_future_neighbor(0).Age + ".",gAgeDisplayDur)
+			,2.5f).then_one_shot(
+				delegate(){
+					slide_image(null,mChoosingImage);
+					mManager.mMusicManager.fade_in_extra_music("choiceMusic");
+					GS = NormalPlayGameState.CHOICE;
+				}
+			,0);
+		}
+		else
+		{
+			mSunsetManager.set_sun();
+			slide_image(null,mChoosingImage);
+			mManager.mMusicManager.fade_in_extra_music("choiceMusic");
+			GS = NormalPlayGameState.CHOICE;
+		}
 
 	}
 	

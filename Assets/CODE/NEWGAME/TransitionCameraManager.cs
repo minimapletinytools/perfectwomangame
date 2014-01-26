@@ -341,6 +341,8 @@ public class TransitionCameraManager : FakeMonoBehaviour
 		{
 			GameConstants.fadingTime = 0.1f;
 			GameConstants.numberRetries = 0;
+			GameConstants.transitionToChoiceDelayTime = 0;
+			GameConstants.preplayTime = 0;
 		}
 		
 		//TODO if user is not roughly in the center of the screen, return false
