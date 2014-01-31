@@ -1,33 +1,54 @@
+::TODO::
+DONE-finish cutting the video
+	-email jfox@dawnrunner.com link to game and video
+-do the gamespot video
+-amke sure age skipping did not break the reward image
+
+DONE-disable shadow
+DONE-disable music when skipping to choosing
+DONE-actually in the super awesome version you should autorefill CurrentPerformanceStat when skipping, should not be too hard. See hack code in sunset grave code.
+DONE-add a button to toggle difficulties for a specific age
+DONE-add a button to skip forward an age or skip back an age
+DONE-have steven update logos on website http://www.igf.com/logos/
+DONE-edit kiosk info on igf site
+DONE-write business plan for perfect woman
+
 ::FUTURE::
--tiny little white dot in corner next to name (I think it's in the fetus score label image and 
--fix the aliasing issue on some chars
--cutscene breaks are too boring
--fallback on 45-4_b-1
--head popup icons confusing
--music looping still broken
--normal slower??
--play warning sholud come up sooner?
--demented but happy good death should have a happy ghost escaping to freedom from the body
--bmp format
--make choosing figure come in from bottom and be solid and purple
--make testing scene play music and set rate to what it should be
--05-4 music needs to be louder
--shake score sound effect in sunset, now just grave
--make cutscenes longer but make "you did medicore..." text shorter
--update whale hunter to fix music
--actually shine is disapearing jsut as midgen too fast
--choice bubble fading is wonk text fades first then bubble fix it...
--tiny dot next to score in fetus
--make cutscene bubbles not fly in
--doing excellent (>.8) is a littel hard?
--optional arms behind head for chars like dancer
+DONE-fix the aliasing issue on some chars
 -disable depth warning during credits
+-optional arms behind head for chars like dancer
 -do better grace grading right after poses change
+-making text last a little longer
+	-get rid of flying
+	-choice bubble fading is wonk text fades first then bubble fix it...
+-tiny little white dot in corner next to name (I think it's in the fetus score label image and 
+	-it's because you use a null texture which defaults to  1x1 white square on the diff label... good job peter
+-make cutscenes longer but make "you did medicore..." text shorter
+-make testing scene play music and set rate to what it should be
+-make choosing figure come in from bottom and be solid and purple
+-shake score sound effect in sunset, now just grave
+-bmp format
 -particles still the wrong color
--get more differentiated play sounds 
--kinect should lock in on first track user instead of always using lasttrackeduser	
--head pop up change sounds should come in +1 +2, -1, -2 varieties
 -still huge delay between early death and cutscenes
+-kinect should lock in on first track user instead of always using lasttrackeduser	
+-get more differentiated play sounds 
+-head pop up change sounds should come in +1 +2, -1, -2 varieties
+
+-fallback on 45-4_b-1
+-05-4 music needs to be louder
+
+
+-play warning sholud come up sooner?
+-normal slower??
+-head popup icons confusing
+-demented but happy good death should have a happy ghost escaping to freedom from the body
+IGNORE-music looping still broken
+	-need to use wav file..
+IGNORE-cutscene breaks are too boring
+IGNORE-update whale hunter to fix music
+IGNORE-actually shine is disapearing jsut as midgen too fast
+IGNORE-doing excellent (>.8) is a littel hard?
+
 
 ::MAJOR FUTURE::
 -redo all the texts
@@ -76,7 +97,8 @@
 
 
 
-
+::BUSINESS PLAN FOR SUPER SWEET GERMAN GAME CONTEST::
+Perfect Woman is a Kinect game currently being built for PC and MAC. With the Kinect 2.0 built into the new Xbox One, we aim to have our game published on this next gen platform before the end of 2014. This is all made possible with the new Xbox ID program and their partnership with Unity to allow independent developers like us publish or games with low financial overhead on their console using Unity3d. We have a strong presence in the indy games community and hope to use this to launch ourselves into mainstream awareness. While our game may present a critical view of woman in society, it does so from approachable and ultimately fun perspective. We've had hundreds of players, the majority of which non gamers, play Perfect Woman at various publish festivals that we have shown at. The feedback from our playtester and press has been overwhelmingly positive. We see Perfect Woman as a game that is incredibly approachable from a wide audience both in content and gameplay. Finally, we plan on releasing the game to a much broader audience by launching a keyboard compatible version shortly after the Xbox One launch. Steam has proven to be a major milestone for independent developers. The content on steam is all of superb quality with Steam's greenlight curation process. As IGF finalists, we are already approved to publish Perfect Woman on Steam.
 
 
 ::IGF BUILD FINALIZED HERE!!!::
