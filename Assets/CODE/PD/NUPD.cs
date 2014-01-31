@@ -85,6 +85,7 @@ namespace NUPD
 		public Color CharacterOutlineColor {get; set;}
 		public float BPM {get; set;}
 		public float BPMOFFSET {get; set;}
+		public int Order {get; set;}
 		
 		public CharacterInformation()
 		{
@@ -96,6 +97,7 @@ namespace NUPD
 			HardConnections = new CharIndexContainerString();
 			EasyConnections = new CharIndexContainerString();
 			CharacterOutlineColor = GameConstants.TransparentBodyDefaultColor;
+			Order = 0;
 		}
 		
 		public static CharacterInformation default_character_info(CharacterIndex aIndex)
@@ -215,6 +217,8 @@ namespace NUPD
 					ci.BPM = (float)System.Convert.ToDouble(sp[1]);
 					if(sp.Length > 2)
 						ci.BPMOFFSET = (float)System.Convert.ToDouble(sp[2]);
+				} else if (first == "ORDER"){
+					ci.Order = System.Convert.ToInt32(sp[1]);
 				}
 				
 				if(keywords.Contains(first))

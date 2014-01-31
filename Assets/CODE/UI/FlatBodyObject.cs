@@ -36,8 +36,14 @@ public class FlatBodyObject : FlatElementBase
 
     public FlatBodyObject(CharacterLoader aChar, int aDepth = -1)
     {
+		//hacky head reorder code
+		bool reorder = false;
+		if(ManagerManager.Manager.mCharacterBundleManager.get_character_helper() != null)
+			if(ManagerManager.Manager.mCharacterBundleManager.get_character_stat(aChar.Character).CharacterInfo.Order != 0)
+					reorder = true;
+
         //TODO fake thread this eventually please..
-        foreach (FlatBodyObject e in load_sequential(aChar.Images, aChar.Sizes))
+        foreach (FlatBodyObject e in load_sequential(aChar.Images, aChar.Sizes, reorder))
             ;
 
         mOffset = (new Vector3(aChar.Sizes.mOffset.x, aChar.Sizes.mOffset.y, 0));
@@ -87,7 +93,11 @@ public class FlatBodyObject : FlatElementBase
         }	
         return p;
 	}
-	
+
+
+	public void reorder_head_first()
+	{
+	}
 
     public void match_body_location_to_projection(ZigManager aManager)
     {
@@ -154,7 +164,7 @@ public class FlatBodyObject : FlatElementBase
     }
 
 
-    public IEnumerable<FlatBodyObject> load_sequential(CharacterData.CharacterDataImages aImages, CharacterData.CharacterDataSizes aSizes)
+    public IEnumerable<FlatBodyObject> load_sequential(CharacterData.CharacterDataImages aImages, CharacterData.CharacterDataSizes aSizes, bool useHeadOrder = false)
     {
         
         GameObject neck = create_object(ZigJointId.Neck, aImages.head, aSizes.mLimbSizes[0], aSizes.mMountingPositions[0]);
@@ -212,6 +222,7 @@ public class FlatBodyObject : FlatElementBase
 
         //these two are special
         torso.transform.position = waist.transform.position;
+		//we don't check if we use headfirst z offset here because it's the same in both cases...
         torso.transform.position += get_Z_offset(ZigJointId.Torso); 
         waist.transform.position += get_Z_offset(ZigJointId.Waist);
 		//torso.GetComponentInChildren<Renderer>().material.renderQueue = (int)(get_Z_offset(ZigJointId.Torso).z*(10));
@@ -248,8 +259,9 @@ public class FlatBodyObject : FlatElementBase
                 jointObject[e.Value].transform.position
                 + get_offset_of_plane(jointObject[e.Value].transform)
                 + get_connection_point_list(e.Key, e.Value, aSizes.mMountingPositions[get_joint_alpha_index(e.Value)])
-                + get_Z_offset(e.Key) 
-                - get_Z_offset(e.Value);
+				+ (useHeadOrder ? 
+						get_headfirst_Z_offset(e.Key) - get_headfirst_Z_offset(e.Value) : 
+						get_Z_offset(e.Key) - get_Z_offset(e.Value));
 			//jointObject[e.Key].GetComponentInChildren<Renderer>().material.renderQueue = (int)(get_Z_offset(e.Key).z*(10));
 			}
 			catch
@@ -607,6 +619,37 @@ public class FlatBodyObject : FlatElementBase
         }
         return Vector3.zero;
     }
+
+	public Vector3 get_headfirst_Z_offset(ZigJointId id)
+    {
+        switch (id)
+        {
+			case ZigJointId.Neck:
+				return new Vector3(0, 0, 0.9f);
+			case ZigJointId.RightElbow:
+				return new Vector3(0, 0, 0.8f);
+			case ZigJointId.LeftElbow:
+				return new Vector3(0, 0, 0.7f);
+			case ZigJointId.RightShoulder:
+				return new Vector3(0, 0, 0.6f);
+			case ZigJointId.LeftShoulder:
+				return new Vector3(0, 0, 0.55f);
+            case ZigJointId.Torso:
+                return new Vector3(0, 0, 0.5f);
+            case ZigJointId.Waist:
+                return new Vector3(0, 0, 0.4f);
+            case ZigJointId.LeftHip:
+                return new Vector3(0, 0, 0.3f);
+            case ZigJointId.RightHip:
+                return new Vector3(0, 0, 0.2f);
+            case ZigJointId.RightKnee:
+                return new Vector3(0, 0, 0.1f);
+            case ZigJointId.LeftKnee:
+                return new Vector3(0, 0, 0.0f);
+        }
+		return Vector3.zero;
+	}
+        
 }
 
 
