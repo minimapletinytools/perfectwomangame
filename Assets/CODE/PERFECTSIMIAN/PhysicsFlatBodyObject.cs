@@ -74,7 +74,7 @@ public class PhysicsFlatBodyObject
 		{
 			mColliders[e.Key].rigidbody.MovePosition(e.Value.transform.position);
 			//mColliders[e.Key].transform.position = (e.Value.transform.position);
-		}
+		}	
 		
 		
 		
