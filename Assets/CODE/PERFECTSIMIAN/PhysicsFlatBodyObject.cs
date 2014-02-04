@@ -1,6 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
-
+using System.Linq;
 public class PhysicsFlatBodyObject 
 {
 	
@@ -10,16 +10,19 @@ public class PhysicsFlatBodyObject
 	
 	public class Stupid
     {
-        public ZigJointId otherEnd;
-        public Stupid(ZigJointId other) { otherEnd = other; }
+        public List<ZigJointId> otherEnds = new List<ZigJointId>();
+        public Stupid(ZigJointId other) { otherEnds.Add(other); }
+		public Stupid(ZigJointId[] other) { otherEnds.AddRange(other); }
     }
+
     public Dictionary<ZigJointId, Stupid> mImportant = new Dictionary<ZigJointId, Stupid>();
 	
 	public PhysicsFlatBodyObject(FlatBodyObject aObject)
 	{
 		mFlat = aObject;
-		
-		
+
+		mImportant[ZigJointId.Torso] = new Stupid(new ZigJointId[]{ZigJointId.LeftShoulder,ZigJointId.RightShoulder,ZigJointId.Waist,ZigJointId.Neck});
+		mImportant[ZigJointId.Waist] = new Stupid(new ZigJointId[]{ZigJointId.LeftHip,ZigJointId.RightHip});
 		mImportant[ZigJointId.LeftShoulder] = new Stupid(ZigJointId.LeftElbow);
         mImportant[ZigJointId.LeftElbow] = new Stupid(ZigJointId.LeftHand);
         mImportant[ZigJointId.LeftHip] = new Stupid(ZigJointId.LeftKnee);
@@ -29,7 +32,6 @@ public class PhysicsFlatBodyObject
         mImportant[ZigJointId.RightHip] = new Stupid(ZigJointId.RightKnee);
         mImportant[ZigJointId.RightKnee] = new Stupid(ZigJointId.RightAnkle);
         mImportant[ZigJointId.Neck] = new Stupid(ZigJointId.Head);
-        mImportant[ZigJointId.Torso] = new Stupid(ZigJointId.Neck);
 	}
 	
 	public void set_target_pose(Pose aPose, bool hard = false)
@@ -82,10 +84,12 @@ public class PhysicsFlatBodyObject
 		Pose np = mFlat.get_pose();
 		foreach(var e in np.mElements)
 		{
-			if(mImportant.ContainsKey(e.joint) && (mImportant[e.joint].otherEnd != ZigJointId.Head))
+			//TODO
+			//if(mImportant.ContainsKey(e.joint) && (mImportant[e.joint].otherEnd != ZigJointId.Head))
 			{
 				//Debug.Log("trying for " + e.joint + " with " + mImportant[e.joint].otherEnd);
-				e.angle = get_relative(mColliders[e.joint].transform.position,mColliders[mImportant[e.joint].otherEnd].transform.position);
+				//e.angle = get_relative(mColliders[e.joint].transform.position,mColliders[mImportant[e.joint].otherEnd].transform.position);
+				//TODO
 			}
 		}
 		mFlat.set_target_pose(np,true);
@@ -110,11 +114,9 @@ public class PhysicsFlatBodyObject
 	public void setup_body_with_physics()
 	{
 		
-		mPhysBodyParent = new GameObject("genPhysBodyParent");
-		mPhysBodyParent.AddComponent<Rigidbody>();
-		
 		foreach (KeyValuePair<ZigJointId, GameObject> e in mFlat.mParts)
         {
+			//compute the endpoint
 			GameObject endpoint = null;
 			for(int i =0; i < e.Value.transform.childCount; i++)
 			{
@@ -124,21 +126,34 @@ public class PhysicsFlatBodyObject
 					break;
 				}
 			}
-			
-			
-			//we do it the ghetto way and only use sphere collidres
 	
+			//add a collider
 			mColliders[e.Key] = new GameObject("genCollider"+e.Key.ToString());
 			var col = mColliders[e.Key].AddComponent<SphereCollider>();
 			col.radius = 50;
 			mColliders[e.Key].transform.position = e.Value.transform.position;
 			mColliders[e.Key].AddComponent<Rigidbody>();
 			mColliders[e.Key].layer =  1 << 3;
-			//add_fixed_joint(mColliders[e.Key]);
-			
-			//var configJoint = mColliders[e.Key].AddComponent<
-			
-			//mColliders[e.Key].transform.parent = mPhysBodyParent;
+
+
+		}
+
+		//create parent attachements and add rigid bodies
+		foreach (ZigJointId e in mImportant.Keys)
+		{
+			foreach(ZigJointId f in mImportant[e].otherEnds)
+				mColliders[f].transform.parent = mColliders[e].transform;
+			var rb = mColliders[e].AddComponent<Rigidbody>();
+			//TODO setup rb
+		}
+		foreach (var e in mImportant.Keys)
+		{
+			//figure out what its attached to
+			var otherEnd = mImportant.First(f=>f.Value.otherEnds.Contains(e));
+
+			//now we want a hinge joint between otherend, e.key anchored at e.key
+			Vector3 anchor = Vector3.zero; //TODO
+			create_hinge_joint(mColliders[e].gameObject,mColliders[otherEnd.Key],anchor);
 		}
 	}
 	
@@ -149,6 +164,14 @@ public class PhysicsFlatBodyObject
 			joint.connectedBody = mPhysBodyParent.rigidbody;
 			joint.breakForce = Mathf.Infinity;
 			joint.breakTorque = Mathf.Infinity;
+	}
+
+	public void create_hinge_joint(GameObject obj1, GameObject obj2, Vector3 anchor)
+	{
+		var joint = obj1.AddComponent<HingeJoint>();
+		joint.connectedBody = obj2.rigidbody; //obj2 will always have a rigidbody 
+		joint.axis = Vector3.forward;
+		joint.anchor = anchor;
 	}
 }
 
