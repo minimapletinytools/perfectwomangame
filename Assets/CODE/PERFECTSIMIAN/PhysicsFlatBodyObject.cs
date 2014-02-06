@@ -58,12 +58,22 @@ public class PhysicsFlatBodyObject
 	
 	public void update()
 	{
-		//force to stay in 2d plane
-		mPhysBodyParent.transform.eulerAngles =  new Vector3(0,0,mPhysBodyParent.transform.eulerAngles.z);
-		mPhysBodyParent.transform.position = new Vector3(mPhysBodyParent.transform.position.x,mPhysBodyParent.transform.position.y,0);
-		mColliders[ZigJointId.Torso].transform.eulerAngles = new Vector3(0,0,mColliders[ZigJointId.Torso].transform.eulerAngles.z);
-		mColliders[ZigJointId.Torso].transform.position = new Vector3(mColliders[ZigJointId.Torso].transform.position.x,mColliders[ZigJointId.Torso].transform.position.y,0);
-		
+		//update mFlat with physics body output from last frame
+		Pose np = mFlat.get_pose();
+		foreach(var e in np.mElements)
+		{
+			//TODO
+			//if(mImportant.ContainsKey(e.joint) && (mImportant[e.joint].otherEnd != ZigJointId.Head))
+			{
+				//Debug.Log("trying for " + e.joint + " with " + mImportant[e.joint].otherEnd);
+				//e.angle = get_relative(mColliders[e.joint].transform.position,mColliders[mImportant[e.joint].otherEnd].transform.position);
+				//TODO
+			}
+		}
+		mFlat.set_target_pose(np,true);
+
+		//update angles with desired body
+
 		//apply gravity to body first
 		mFlat.HardPosition = mColliders[ZigJointId.Torso].transform.position;
 		mFlat.HardFlatRotation = mColliders[ZigJointId.Torso].transform.rotation.flat_rotation();
@@ -81,18 +91,7 @@ public class PhysicsFlatBodyObject
 		
 		
 		//update mflat with physics body info (visuals)
-		Pose np = mFlat.get_pose();
-		foreach(var e in np.mElements)
-		{
-			//TODO
-			//if(mImportant.ContainsKey(e.joint) && (mImportant[e.joint].otherEnd != ZigJointId.Head))
-			{
-				//Debug.Log("trying for " + e.joint + " with " + mImportant[e.joint].otherEnd);
-				//e.angle = get_relative(mColliders[e.joint].transform.position,mColliders[mImportant[e.joint].otherEnd].transform.position);
-				//TODO
-			}
-		}
-		mFlat.set_target_pose(np,true);
+
 		
 		//mFlat.HardPosition = mPhysBodyParent.transform.position;
 		//mFlat.HardFlatRotation = mPhysBodyParent.transform.rotation.flat_rotation();
@@ -151,8 +150,8 @@ public class PhysicsFlatBodyObject
 			//figure out what its attached to
 			var otherEnd = mImportant.First(f=>f.Value.otherEnds.Contains(e));
 
-			//now we want a hinge joint between otherend, e.key anchored at e.key
-			Vector3 anchor = Vector3.zero; //TODO
+			//now we want a hinge joint between otherend
+			Vector3 anchor = Vector3.zero; //pretty sure this is ok
 			create_hinge_joint(mColliders[e].gameObject,mColliders[otherEnd.Key],anchor);
 		}
 	}

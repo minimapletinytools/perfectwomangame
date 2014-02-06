@@ -52,8 +52,6 @@ public static class HikingRigidFunctions
 
 }
 
-
-
 public class HikingPhysics
 {
 	//for cleanup purposes
@@ -94,10 +92,11 @@ public class HikingPhysics
 			//the problem with this is that the system is key points of the system need to remain rigid
 			//you would need some sort of solver to resolve velocities with updated positions..
 
+		//attempt to resolve new positions
 		update_desired_positions();
 
-		//attempt to resolve the new positions
 		//TODO update nodes with collision resolution
+
 
 		//compute new velocities
 		foreach(var e in mRigidComponents)
@@ -119,13 +118,18 @@ public class HikingPhysics
 	}
 
 	//updates given node without moving fixedComponent
-	public void update_node(HikingRigidNode aNode, HikingRigidComponent fixedComponent, int depth)
+	public void update_node(HikingRigidNode aNode, HikingRigidComponent fixedComponent, int depth, int maxDepth = 200)
 	{
 		//foreach connected body
 
 		//TODO if we are OK, then just return
 
 		//TODO max iteration stops here, output error message
+		if(depth > maxDepth)
+		{
+			Debug.Log("reached max depth :(");
+			return;
+		}
 
 
 
