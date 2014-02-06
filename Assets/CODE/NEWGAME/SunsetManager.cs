@@ -130,6 +130,10 @@ public class SunsetManager
 		scoreBg.Events.add_event(scoreJiggleDelegate,0.03f);
 		scoreText.Events.add_event(scoreJiggleDelegate,0.03f);
 
+		//play the counting sound
+		TED.add_one_shot_event(delegate() {mManager.mMusicManager.play_sound_effect("counting");},jiggleDelayTime);
+
+
 
 
 		TED.add_event(
@@ -506,11 +510,7 @@ public class SunsetManager
 				delegate() {
 					show_score(ps.Character,(int)ps.AdjustedScore,gPreScoreCount + gScoreCount + gPostScoreCount + 1.5f);
 				}
-			,gPreScoreCount).then_one_shot(
-				delegate() {
-					mManager.mMusicManager.play_sound_effect("counting");
-				}
-			,0).then(
+			,gPreScoreCount).then(
 				delegate(float aTime)
 				{
 					if(aTime < gScoreCount)
