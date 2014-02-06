@@ -279,13 +279,13 @@ public class SunsetManager
 			//hack fix, don't do this
 			to.HardText = aMsg;
 		}
-		//to.HardPosition = random_position();
+		to.HardPosition = mFlatCamera.get_random_point_off_camera(-2300);
 		to.HardColor = GameConstants.UiWhiteTransparent;
 		to.SoftColor = GameConstants.UiWhite;
-		to.set_text_color(GameConstants.UiWhiteTransparent,true);
-		to.set_text_color(GameConstants.UiRed);
-		to.set_background_color(GameConstants.UiWhiteTransparent,true);
-		to.set_background_color(GameConstants.UiPopupBubble);
+		//to.set_text_color(GameConstants.UiWhiteTransparent,true);
+		to.set_text_color(GameConstants.UiRed,true);
+		//to.set_background_color(GameConstants.UiWhiteTransparent,true);
+		to.set_background_color(GameConstants.UiPopupBubble,true);
 		TED.add_event(
 			delegate(float aTime)
 			{
@@ -294,7 +294,7 @@ public class SunsetManager
 				mElement.Add(to);
 				return true;
 			},
-        0).then(
+        0.1f).then( //bleah hacky delay
 			delegate(float aTime)
 			{
 				if(aTime > duration) 

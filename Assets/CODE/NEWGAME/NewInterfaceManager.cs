@@ -169,7 +169,7 @@ public class NewInterfaceManager {
 			to = new PopupTextObject(aMsg,30);
 		else
 			to = new PopupTextObject(aMsg,30,image.Image,image.Data.Size);
-		to.HardPosition = random_position();
+		to.HardPosition = mFlatCamera.get_random_point_off_camera(-2300);
 		to.HardColor = GameConstants.UiWhiteTransparent;
 		to.SoftColor = GameConstants.UiWhite;
 		to.set_text_color(GameConstants.UiWhiteTransparent,true);
@@ -184,7 +184,7 @@ public class NewInterfaceManager {
 				mElement.Add(to);
 				return true;
 			},
-        0).then(
+        0.1f).then( //bleah, hacky delay
 			delegate(float aTime)
 			{
 				if(aTime > duration) 

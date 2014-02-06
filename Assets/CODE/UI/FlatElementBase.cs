@@ -86,7 +86,7 @@ public class FlatElementBase {
             mTargetPosition = value; 
         }
     }
-	public virtual float PositionInterpolationMaxLimit //in pixels per second
+	public virtual float PositionInterpolationMaxLimit //maximum rate of position change in pixels per second
 	{ get; set; }
 	public virtual float PositionInterpolationMinLimit //in pixels per second
 	{ get; set; }
@@ -133,8 +133,11 @@ public class FlatElementBase {
         get { return mCurrentColor; }
         set { mCurrentColor = mTargetColor = value; }
     }
+
+	//maximum rate of color change in units per second
 	public virtual float ColorInterpolationMaxLimit
 	{ get; set; }
+	//mininum rate of color will change
 	public virtual float ColorInterpolationMinLimit
 	{ get; set; }
 
@@ -250,15 +253,12 @@ public class FlatElementBase {
     public virtual void update_parameters(float aDeltaTime)
     {
         Events.update(aDeltaTime, this);
-		//TODO make this time dependent
 		{
 	        
 	        mCurrentRotation = Quaternion.Slerp(mCurrentRotation, mTargetRotation, SoftInterpolation);
 	        mCurrentScale = (1 - SoftInterpolation) * mCurrentScale + SoftInterpolation * mTargetScale;
 			
 
-
-			//TODO PositionInterpolationMinLimit is bugged
 			if(PositionInterpolationMaxLimit < Mathf.Infinity || PositionInterpolationMinLimit > 0)
 			{
 				float minLimitChange = PositionInterpolationMinLimit * aDeltaTime;
@@ -299,7 +299,7 @@ public class FlatElementBase {
     {
         set_position(mCurrentPosition + mLocalPosition);// + new Vector3(0,0,Depth));
         set_scale(mBaseScale.component_multiply(mCurrentScale).component_multiply(mLocalScale));
-        set_rotation(mCurrentRotation*mLocalRotation);
+        set_rotation(mCurrentRotation * mLocalRotation);
         set_color(mCurrentColor + mLocalColor);
     }
 

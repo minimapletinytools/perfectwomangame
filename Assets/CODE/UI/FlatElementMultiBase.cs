@@ -98,7 +98,7 @@ public class FlatElementMultiBase : FlatElementBase
             foreach (ElementOffset e in mElements)
             {
                 e.Element.SoftInterpolation = value*i;
-                i *= 0.8f;
+				i *= 1;//0.8f;
             }
         }
     }
@@ -167,8 +167,8 @@ public class FlatElementMultiBase : FlatElementBase
         get { return base.SoftColor; }
         set { 
             base.SoftColor = value;
-            foreach (ElementOffset e in mElements)
-                e.Element.SoftColor = value;
+            //foreach (ElementOffset e in mElements)
+            //    e.Element.SoftColor = value;
         }
     }
     public override Color HardColor
@@ -177,8 +177,8 @@ public class FlatElementMultiBase : FlatElementBase
         get { return base.HardColor; }
         set { 
             base.HardColor = value;
-            foreach (ElementOffset e in mElements)
-                e.Element.HardColor = value;
+            //foreach (ElementOffset e in mElements)
+            //    e.Element.HardColor = value;
         }
     }
 
@@ -209,37 +209,27 @@ public class FlatElementMultiBase : FlatElementBase
 
     public override void update_parameters(float aDeltaTime)
     {
+		base.update_parameters(aDeltaTime);
         foreach (ElementOffset e in mElements)
-        {
             e.Element.update_parameters(aDeltaTime);
-        }
-        foreach (ElementOffset e in mElements) //kind of a hack, you should really do virtual properties for local rotation etc.. or do sometig even fancier
-        {
-            e.Element.mLocalColor = mLocalColor;
-            e.Element.mLocalPosition = mLocalPosition;
-            e.Element.mLocalRotation = mLocalRotation;
-            e.Element.mLocalScale = mLocalScale;
-        }
-		Events.update(aDeltaTime, this);
-        foreach (ElementOffset e in mElements) //this is even more hacky... poo poo 
-            e.Element.Events.update(aDeltaTime, e.Element); 
     }
 	
 	
     //TODO do your fancy blending version...
     public virtual new void set_color(Color aColor)
     {
+		//TODO add or multiply mLocalcolor??
 		foreach (ElementOffset e in mElements)
-			e.Element.set_color((aColor*e.Element.HardColor)*2); 
+			e.Element.set_color(aColor*(e.Element.HardColor)*2); 
     }
     
 
     public override void set()
     {
         foreach (ElementOffset e in mElements)
-		{
-            e.Element.set();
-		}
-		//set_color(HardColor + mLocalColor);
+			e.Element.set();
+		//this will override color changes from above
+		//TODO add or multiply mLocalcolor??
+		set_color(HardColor);
     }
 }

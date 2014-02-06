@@ -101,8 +101,12 @@ public class PopupTextObject : FlatElementMultiBase {
         PrimaryGameObject = create_primary_from_elements();
 
 		//make sure it gets applied to text as well...
-		//ColorInterpolationMaxLimit = 10f;
-		//ColorInterpolationMinLimit = 1f;
+		ColorInterpolationMaxLimit = 1.5f;
+		ColorInterpolationMinLimit = 1f;
+		SoftInterpolation = .15f;
+		//PositionInterpolationMinLimit = 500;
+
+
 		Depth = aDepth;
     }
 
@@ -125,10 +129,10 @@ public class PopupTextObject : FlatElementMultiBase {
 	//hack
 	public void fade_out()
 	{
-		Color c = mText.SoftColor;
-		c.a = 0;
+		ColorInterpolationMaxLimit = 4f;
+		ColorInterpolationMinLimit = .5f;
+		SoftInterpolation = .12f;
 		SoftColor = new Color(0.5f,0.5f,0.5f,0);
-		mText.SoftColor = c;
 	}
 	public void set_background_color(Color aColor, bool hard = false)
 	{
@@ -136,16 +140,6 @@ public class PopupTextObject : FlatElementMultiBase {
 			mBackground.SoftColor = aColor;	
 		else mBackground.HardColor = aColor;	
 	}
-	
-	public override Color SoftColor
-    {
-        get { return base.SoftColor; }
-        set { 
-            base.SoftColor = value;
-			//TODO make fading work right
-        }
-    }
-	
 	
 	public static System.Func<float,bool> skip(float displayDur, PopupTextObject po)
 	{
