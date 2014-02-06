@@ -72,16 +72,18 @@ public class ZigManager : FakeMonoBehaviour {
 		mZigCallbackBehaviour = mZigObject.AddComponent<ZigCallbackBehaviour>();
         mZigCallbackBehaviour.mUpdateUserDelegate += this.Zig_UpdateUser;
 
+
+		ForceShow = 0;
         
 	}
 	
 	
-	int forceshow = 0; //0 default, 1 forceshow, 2 noshow
+	public int ForceShow {get;set;} //0 default, 1 forceshow, 2 noshow
 	public override void Update () 
 	{
 		
 		if(Input.GetKeyDown(KeyCode.K))
-			forceshow = (forceshow + 1)%3;
+			ForceShow = (ForceShow + 1)%3;
 		
         if (mZigInput == null)
         {
@@ -90,8 +92,8 @@ public class ZigManager : FakeMonoBehaviour {
                 mZigInput = container.GetComponent<ZigInput>();
         }
 		
-		if(forceshow == 1 || 
-			(forceshow != 2 && (is_reader_connected() == 2 && !is_user_in_screen())))
+		if(ForceShow == 1 || 
+			(ForceShow != 2 && (is_reader_connected() == 2 && !is_user_in_screen())))
 		{
 			DepthView.show_indicator(true);
 			mManager.mTransitionCameraManager.EnableDepthWarning = true;

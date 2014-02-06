@@ -419,6 +419,9 @@ public class SunsetManager
 		float gScoreCount = 0.2f;
 		float gPostScoreCount = 0.07f;
 		float gRestart = 29;
+
+		//disable the depth warning
+		mManager.mZigManager.ForceShow = 2;
 		
 		//add the gravestone to the scene
 		add_character(CharacterIndex.sGrave,false);
