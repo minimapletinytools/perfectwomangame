@@ -220,6 +220,8 @@ public class ManagerManager : MonoBehaviour{
 		GUI.TextArea(new Rect(50,50,300,100),mDebugString,style);
 		//GUI.TextArea(new Rect(50,50,300,100),"WORK IN PROGRESS",style);
 		
+		GUI.Box(new Rect(0,0,Screen.width * mGameManager.mModeNormalPlay.mLastGrade,50),"poop");
+		
     }
 	
 }

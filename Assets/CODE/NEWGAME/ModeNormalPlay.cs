@@ -372,12 +372,23 @@ public class ModeNormalPlay
 			float grade = ProGrading.grade_pose(mManager.mBodyManager.get_current_pose(),mManager.mTransparentBodyManager.get_current_pose());
 			grade = ProGrading.grade_to_perfect(grade);
 
-			//smooth grading, maybe you should only during short interval after does_pose_change_precoginitive
+			//old smooth grading
+			/*
 			float newGrade = mLastGrade*0.95f + grade*0.05f;
 			if(newGrade < mLastGrade)
 				mLastGrade = Mathf.Max(newGrade,mLastGrade - Time.deltaTime/6f);
 			else mLastGrade = newGrade;
-			grade = mLastGrade;
+			grade = mLastGrade;*/
+
+			//new smooth grading, this version gives grace to sudden drops in performance
+			if(grade < mLastGrade)
+			{
+				float newGrade = mLastGrade*0.9f + grade*0.1f;
+				if(newGrade < mLastGrade)
+					grade = Mathf.Max(newGrade,mLastGrade - Time.deltaTime/2f);
+				else grade = newGrade;
+			}
+			mLastGrade = grade;
 
 			if(PercentTimeCompletion > 0.01f)
 			{
