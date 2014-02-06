@@ -1,8 +1,11 @@
 ::TODO::
+DONE-finalize script for lea
+DONE-inform lea about reorder parameter
+DONE-inform lea about AA fix
 DONE-finish cutting the video
 	-email jfox@dawnrunner.com link to game and video
--do the gamespot video
--amke sure age skipping did not break the reward image
+DONE-do the gamespot video
+-make sure age skipping did not break the reward image
 
 DONE-disable shadow
 DONE-disable music when skipping to choosing
@@ -14,19 +17,18 @@ DONE-edit kiosk info on igf site
 DONE-write business plan for perfect woman
 
 ::FUTURE::
-DONE-fix the aliasing issue on some chars
+-tiny little white dot in corner next to name (I think it's in the fetus score label image and 
+	-it's because you use a null texture which defaults to  1x1 white square on the diff label... good job peter
 -disable depth warning during credits
--optional arms behind head for chars like dancer
+-shake score sound effect in sunset, now just grave
 -do better grace grading right after poses change
 -making text last a little longer
 	-get rid of flying
 	-choice bubble fading is wonk text fades first then bubble fix it...
--tiny little white dot in corner next to name (I think it's in the fetus score label image and 
-	-it's because you use a null texture which defaults to  1x1 white square on the diff label... good job peter
 -make cutscenes longer but make "you did medicore..." text shorter
--make testing scene play music and set rate to what it should be
 -make choosing figure come in from bottom and be solid and purple
--shake score sound effect in sunset, now just grave
+
+
 -bmp format
 -particles still the wrong color
 -still huge delay between early death and cutscenes
@@ -37,11 +39,14 @@ DONE-fix the aliasing issue on some chars
 -fallback on 45-4_b-1
 -05-4 music needs to be louder
 
-
 -play warning sholud come up sooner?
 -normal slower??
 -head popup icons confusing
 -demented but happy good death should have a happy ghost escaping to freedom from the body
+
+DONE-fix the aliasing issue on some chars
+DONE-optional arms behind head for chars like dancer
+DONE-make testing scene play music and set rate to what it should be
 IGNORE-music looping still broken
 	-need to use wav file..
 IGNORE-cutscene breaks are too boring
@@ -95,17 +100,73 @@ IGNORE-doing excellent (>.8) is a littel hard?
 -better way to detect if user is not on screen
 -define interface for kinect stuff for when you need to swap in kinect2.0
 
+::Perfect Woman Bio::
+-Peter Lu earned an MA in math at UCLA while simultaneously pursuing his dream to be a game developer. After graduating, he continued to develop games independently with a new focus on experimentation and games as art. He has since released many games including well recieved games like "Cave", "Roulette" and "Burn & Turn". His past work has focused on deconstructing the definiton of game and exploring what new meanings can be achieved through this medium. In 2012, he met Lea Schoenfelder through the UCLA Game Lab and together they started working on "Perfect Woman". Peter currently resides in Los Angeles where he works remotely with Lea. His hobbies include fermentation, mycology, and cats :).
 
+::Perfect Woman Script::
+-This is Mary
+-Mary has it all
+-She's pretty
+-She's athletic/
+-She's an althete
+-She's got two happy children
+-She's got a loving husband/
+-and a loving husband
+-Who's also interesting
+-Mary has an ambitious career
+-But also found her inner peace
+-she's cultural
+-and artistic
+-and wise
+-and humble
+-and talented
+-And she has really good friends/
+-And she has a lot of friends
+-Mary is never stressed out about anything. She's always happy/
+-Mary is always happy
+-Long story short, Mary is perfect/
+-Long story short, Mary is the Perfect Woman
+-And because we know that you want to be perfect too, 
+-let us present to you the...
+-Perfect
+-Woman
+-Life
+-Simulator
+-Given your physical condition is excellent and you have supreme coordination abilities, you too can be the perfect woman/
+-With a modest amount of physical exercise, you too can be the perfect woman/
+-With new cutting edge next generation motion capture technology, you too can be the perfect woman
+-Using the Perfect Woman simulator is easy! Position yourself in front of the kinect so it can track and analyze your movements.
+-Analyze and match the required poses as well as you can/
+-match the required poses as well as you can.
+-In the decision phase, it's your call.
+-At age 60, you can choose to be the minister, the fundraiser, an angry woman, or a call girl/
+-At age 60, you can between the minister, the fundraiser, an angry woman, and the senior call girl
+-You always dreamed of being a foreign minister/
+-You want to be the foreign minister of course
+-But that's going to be extremely difficult
+-You might even think of going for an easier option
+-Call girl doesn't sound so bad after all
+-Well, what an attitude
+-We're here to be perfect
+-and you can do it!
+-Yeah!/
+-Yahooooo!!!
+-So choose the minister and accept the challenge
+-you will manage if you only try hard enough
+-the perfect woman simulator is based on a realistic calculation system of life difficulty/
+-The perfect woman life simulator uses a scientifically accurate algorithm to compute life difficulty/
+-The perfect woman life simulator uses a realistic algorithm to compute life difficulty
+-in the end, you will learn why some times of your perfect life have been more difficult than others.
+-While some people pledge for more openness towards diversity and different life styles--for you only the best is ever good enough
+-and you know now that with the right amount of eagerness and ambition that you too can be the 
+-PERFECT
+-WOMAN
+-(exagerrated wink sound)
 
 ::BUSINESS PLAN FOR SUPER SWEET GERMAN GAME CONTEST::
 Perfect Woman is a Kinect game currently being built for PC and MAC. With the Kinect 2.0 built into the new Xbox One, we aim to have our game published on this next gen platform before the end of 2014. This is all made possible with the new Xbox ID program and their partnership with Unity to allow independent developers like us publish or games with low financial overhead on their console using Unity3d. We have a strong presence in the indy games community and hope to use this to launch ourselves into mainstream awareness. While our game may present a critical view of woman in society, it does so from approachable and ultimately fun perspective. We've had hundreds of players, the majority of which non gamers, play Perfect Woman at various publish festivals that we have shown at. The feedback from our playtester and press has been overwhelmingly positive. We see Perfect Woman as a game that is incredibly approachable from a wide audience both in content and gameplay. Finally, we plan on releasing the game to a much broader audience by launching a keyboard compatible version shortly after the Xbox One launch. Steam has proven to be a major milestone for independent developers. The content on steam is all of superb quality with Steam's greenlight curation process. As IGF finalists, we are already approved to publish Perfect Woman on Steam.
 
-
 ::IGF BUILD FINALIZED HERE!!!::
-
-
-
-
 
 ::still another::
 DONE-neck on 16-1 sexy girl should be smaller
