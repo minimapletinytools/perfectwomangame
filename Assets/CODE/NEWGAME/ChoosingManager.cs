@@ -24,8 +24,9 @@ public class ChoosingManager
 	ColorTextObject mBBQuestionText;
     FlatElementText mBBQuestionTextPrefix;
 	FlatElementImage mBBQuestionBubble;
-	FlatBodyObject mBBMiniMan;
-	Vector3 mBBMiniManBasePosition;
+	Vector3 mBBMiniManBasePositionOffset = new Vector3(0,-300,0);
+
+	FlatBodyObject[] mBBMiniMans;
 
 	CharacterIndex[] mChoices = null;
 	
@@ -71,15 +72,21 @@ public class ChoosingManager
 		mBBQuestionBubble.HardPosition = mFlatCamera.get_point(0,0.75f);
 		mBBQuestionBubble.HardScale = new Vector3(1.3f,1.1f,1);
 		mBBQuestionBubble.HardColor = GameConstants.UiPopupBubble;
-		mBBMiniMan = new FlatBodyObject(miniMan,20);
-		mBBMiniMan.HardScale = miniManScale;
-		mBBMiniManBasePosition = mFlatCamera.get_point(0, -0.8f);
-		mBBMiniMan.HardPosition = mBBMiniManBasePosition;
+
+		mBBMiniMans = new FlatBodyObject[BB_NUM_CHOICES];
+		for(int i = 0; i < BB_NUM_CHOICES; i++)
+		{
+			mBBMiniMans[i] = new FlatBodyObject(miniMan,20);
+			mBBMiniMans[i].HardScale = miniManScale;
+			mBBMiniMans[i].HardColor = GameConstants.UiPurpleTransparent;
+			mBBMiniMans[i].SoftInterpolation = .13f;
+			mElement.Add(mBBMiniMans[i]);
+		}
 		
 		
 		
 		mElement.Add(mBBChoosingBackground);
-		mElement.Add(mBBMiniMan);
+
 		mElement.Add(mBBQuestionText);
         mElement.Add(mBBQuestionTextPrefix);
 		mElement.Add(mBBQuestionBubble);
@@ -93,7 +100,6 @@ public class ChoosingManager
 	//NOTE this function is no longer needed but we still use it to initialize choosing
 	public void fade_choosing_contents(bool small = false)
 	{
-		mBBMiniMan.SoftColor = GameConstants.UiMiniMan;
 		
 		//TODO read out of game constants please
 		//Color smallColor = small ? new Color(0.5f,0.5f,0.5f,1) : new Color(0.5f,0.5f,0.5f,0);
@@ -103,7 +109,6 @@ public class ChoosingManager
 			e.SoftColor =  !small ? GameConstants.uiWhite : GameConstants.UiWhiteTransparent;
 		//foreach(NewChoiceObject e in mBBChoices)
 		//	e.SoftColor = fullColor;
-		mBBMiniMan.SoftColor = fullColor;
 		//foreach(var e in mBBChoices)
 		//	e.SoftColor = fullColor;
 		mBBQuestionText.SoftColor = fullColor;
@@ -115,7 +120,6 @@ public class ChoosingManager
 	public void set_for_choosing()
 	{
 		fade_choosing_contents(false);
-		mBBMiniMan.SoftColor = GameConstants.UiMiniMan;
 		Color fullColor = new Color(0.5f,0.5f,0.5f,1);
 		mBBChoosingBackground.SoftColor = fullColor*(new Color(0.6f,0.6f,1))*1;//0.2f;
 	}
@@ -139,7 +143,8 @@ public class ChoosingManager
 	//called by NewGameManager
 	public void set_bb_decider_pose(Pose aPose)
 	{
-		mBBMiniMan.set_target_pose(aPose);
+		for(int i = 0; i < mBBMiniMans.Length; i++)
+			mBBMiniMans[i].set_target_pose(aPose);
 	}
 	
 	//called by ChoiceHelper
@@ -174,6 +179,8 @@ public class ChoosingManager
 			float xOffset = netWidth/2 - padding/2 - padding*i;
 			mBBChoices[i].HardPosition = mFlatCamera.get_point(0, -0.16f) + new Vector3(xOffset,0,0);
 			mBBChoiceBodies[i].HardPosition = mFlatCamera.get_point(0, -0.16f) + new Vector3(xOffset,-270,0);
+			mBBMiniMans[i].HardPosition = mBBChoiceBodies[i].HardPosition + mBBMiniManBasePositionOffset;
+			mBBMiniMans[i].HardColor = GameConstants.UiPurpleTransparent;
 		}
 	}
 
@@ -184,16 +191,23 @@ public class ChoosingManager
 	{
 		if(aIndex == -1) //no choice
 		{
-			mBBMiniMan.SoftColor = GameConstants.UiPurpleTransparent;
-			mBBMiniMan.SoftPosition = mBBMiniManBasePosition;
+			for(int i = 0; i < mBBMiniMans.Length; i++)
+			{
+				mBBMiniMans[i].SoftPosition = mBBChoiceBodies[i].HardPosition + mBBMiniManBasePositionOffset;
+				mBBMiniMans[i].SoftColor = GameConstants.UiPurpleTransparent;
+			}
+
+
+
 			//mBBQuestionTextPrefix.Text = "Choose your perfect life";
 			mBBQuestionText.set_text(
 				new string[]{("Choose your perfect life at age " + mManager.mGameManager.CurrentCharacterIndex.get_future_neighbor(0).Age) + "!"},
 			new Color[]{GameConstants.UiRed});
 		}
 		else{
-			mBBMiniMan.SoftColor = GameConstants.UiMiniMan;
-			mBBMiniMan.SoftPosition = mBBChoiceBodies[aIndex].SoftPosition;
+			mBBMiniMans[aIndex].SoftPosition = mBBChoiceBodies[aIndex].HardPosition;
+			mBBMiniMans[aIndex].SoftColor = GameConstants.UiMiniMan;
+
 			var nChar = mManager.mGameManager.CurrentCharacterIndex.get_future_neighbor(aIndex);
 			var nCharDiff = mManager.mCharacterBundleManager.get_character_helper().Characters[nChar];
 			var diffPhrases = new string[]{" easy", " normal", " hard", " extreme"};
