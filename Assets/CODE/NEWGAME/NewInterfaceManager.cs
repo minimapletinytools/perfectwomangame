@@ -264,12 +264,14 @@ public class NewInterfaceManager {
 			mBBNameTextFrame.HardPosition = origPos + new Vector3(newWidth/2f,0,0);
 		}
 
-		if(aChar.Character.LevelIndex != 0)
+		if(aChar.Character != CharacterIndex.sFetus && aChar.Character != CharacterIndex.sOneHundred)
 		{
 			string[] labelNames = new string[]{"label_easy_BIG","label_normal_BIG","label_hard_BIG","label_extreme_BIG"};
 			var diffImage = mManager.mCharacterBundleManager.get_image(labelNames[aChar.Stats.Difficulty]);
 			mBBMultiplierImage.set_new_texture(diffImage.Image,diffImage.Data.Size);
-			//mBBMultiplierImage.set_new_texture(mManager.mNewRef.bbChoicePerfectIcons[aChar.Stats.Difficulty]);
+			mBBMultiplierImage.HardColor = GameConstants.UiWhite;
+		}else{
+			mBBMultiplierImage.HardColor = GameConstants.UiWhiteTransparent;
 		}
 	}
 	
