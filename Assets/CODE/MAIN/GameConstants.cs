@@ -30,8 +30,8 @@ public static class GameConstants
 	public static Color ParticleStreamHard { get { return new Color32(255,0,0,255); } }
 	
 	//game stuff
-	public static float maxGradeNorm = 16f; //18 is good for final version, 16 for festival
-	public static float minGradeNorm = 2f;	//use 1.5f for final 
+	public static float maxGradeNorm = 13f; //18 is good for final version, 16 for festival
+	public static float minGradeNorm = 3f;	//use 1.5f for final 
 	public static float astronautCutoff = .1f;
 	public static float playSuperCutoff = 0.9f;
 	public static float playFeverCutoff = 0.7f;
@@ -41,6 +41,7 @@ public static class GameConstants
 	public static float deathPerformanceThreshold = 0.1f;
 	public static float deathRequiredTime = 8f;
 	public static float badPerformanceThreshold = 0.4f;
+	public static float[] difficultyToChangeTime = new float[]{4,2,1.4f,.7f};
 	
 	//grave stuff
 	//public static string[] credits = {"Perfect Woman","created by", "Lea Sch\u00F6enfelder", "Peter Lu"};

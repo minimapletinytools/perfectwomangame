@@ -59,7 +59,7 @@ public class CharacterHeadPopupThingy
 				shine.destroy();
 				//box.destroy();
 			},
-		0.5f);
+		0.7f);
 	}
 
 

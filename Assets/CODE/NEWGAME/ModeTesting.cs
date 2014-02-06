@@ -73,6 +73,24 @@ public class ModeTesting
 				mManager.mBodyManager.transition_character_out();
 				mManager.mTransparentBodyManager.transition_character_out();
 				mManager.mBackgroundManager.load_cutscene(mLastCutscene,NGM.CurrentCharacterLoader);
+
+				//cutscene music
+				if(mLastCutscene == 1)
+				{
+					mManager.mMusicManager.play_sound_effect("cutBad");
+					mManager.mMusicManager.play_cutscene_music(NGM.CurrentCharacterLoader.Images.cutsceneMusic[0]);
+				} else if(mLastCutscene == 0)
+				{
+					mManager.mMusicManager.play_sound_effect("cutGood");
+					mManager.mMusicManager.play_cutscene_music(NGM.CurrentCharacterLoader.Images.cutsceneMusic[1]);
+				}
+				else if(mLastCutscene == 4)
+				{
+					mManager.mMusicManager.play_sound_effect("cutDie");
+					mManager.mMusicManager.play_cutscene_music(NGM.CurrentCharacterLoader.Images.deathMusic);
+				}
+
+
 				ManagerManager.Manager.mDebugString = "loaded cutscene " + mLastCutscene;
 				mManager.mDebugString = "loaded cutscene " + mLastCutscene;
 			}
@@ -108,8 +126,9 @@ public class ModeTesting
 		
 		if(Input.GetKeyDown(KeyCode.Alpha8))
 		{
-			mManager.mDebugString = "set to diff " + ((++mLastDiff)%4);
+			mManager.mDebugString = "Loaded poses for difficulty " + ((++mLastDiff)%4);
 			NGM.CurrentPoseAnimation = new PerformanceType(mManager.mCharacterBundleManager.get_pose(NGM.CurrentCharacterIndex,mLastDiff%4), new CharacterIndex(2,0)); //forces it to be switch
+			NGM.CurrentPoseAnimation.set_change_time(GameConstants.difficultyToChangeTime[mLastDiff%4]);
 		}
 		
 		

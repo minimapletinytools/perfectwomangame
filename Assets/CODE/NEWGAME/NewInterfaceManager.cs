@@ -309,8 +309,8 @@ public class NewInterfaceManager {
 			delegate(){cutsceneCompleteCb();},END_CUTSCENE_DELAY_TIME);
 		return;*/
 		
-		float gStartCutsceneDelay = 3f;
-		float gPerformanceText = 4f;
+		float gStartCutsceneDelay = 2.5f;
+		float gPerformanceText = 3.5f;
 		float gCutsceneText = 5f;
 		float gCutsceneTextIncrement = .3f;
 		float gPreParticle = 1.5f;
