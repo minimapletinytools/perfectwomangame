@@ -131,7 +131,7 @@ public class SunsetManager
 		scoreText.Events.add_event(scoreJiggleDelegate,0.03f);
 
 		//play the counting sound
-		TED.add_one_shot_event(delegate() {mManager.mMusicManager.play_sound_effect("counting");},jiggleDelayTime);
+		TED.add_one_shot_event(delegate(){mManager.mMusicManager.play_sound_effect("counting");},jiggleDelayTime);
 
 
 
@@ -658,7 +658,7 @@ public class SunsetManager
 
 
 
-		if(aStats[aStats.Count-1].Character.LevelIndex >= 7)
+		if(GameConstants.showReward && aStats[aStats.Count-1].Character.LevelIndex >= 7)
 		{
 			FlatElementImage rewardImage = null;
 			FlatElementImage rewardFrame = null;

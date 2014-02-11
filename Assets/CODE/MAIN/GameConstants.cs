@@ -42,6 +42,8 @@ public static class GameConstants
 	public static float deathRequiredTime = 8f;
 	public static float badPerformanceThreshold = 0.4f;
 	public static float[] difficultyToChangeTime = new float[]{4,2,1.4f,.7f};
+
+	public static bool showReward = false;
 	
 	//grave stuff
 	//public static string[] credits = {"Perfect Woman","created by", "Lea Sch\u00F6enfelder", "Peter Lu"};

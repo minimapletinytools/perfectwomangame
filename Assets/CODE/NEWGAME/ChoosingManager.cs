@@ -189,16 +189,16 @@ public class ChoosingManager
 	//called by ChoiceHelper
 	public void set_bb_choice(int aIndex)
 	{
+		//reset choosing state
+		for(int i = 0; i < mBBMiniMans.Length; i++)
+		{
+			mBBMiniMans[i].SoftPosition = mBBChoiceBodies[i].HardPosition + mBBMiniManBasePositionOffset;
+			mBBMiniMans[i].SoftColor = GameConstants.UiPurpleTransparent;
+		}
+
+
 		if(aIndex == -1) //no choice
 		{
-			for(int i = 0; i < mBBMiniMans.Length; i++)
-			{
-				mBBMiniMans[i].SoftPosition = mBBChoiceBodies[i].HardPosition + mBBMiniManBasePositionOffset;
-				mBBMiniMans[i].SoftColor = GameConstants.UiPurpleTransparent;
-			}
-
-
-
 			//mBBQuestionTextPrefix.Text = "Choose your perfect life";
 			mBBQuestionText.set_text(
 				new string[]{("Choose your perfect life at age " + mManager.mGameManager.CurrentCharacterIndex.get_future_neighbor(0).Age) + "!"},

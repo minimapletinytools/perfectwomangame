@@ -1,33 +1,39 @@
-::TODO::
-DONE-finalize script for lea
-DONE-inform lea about reorder parameter
-DONE-inform lea about AA fix
-DONE-finish cutting the video
-	-email jfox@dawnrunner.com link to game and video
-DONE-do the gamespot video
--make sure age skipping did not break the reward image
+::ROAD TO IGF::
+*What's your background in making games?
+PETER: I played Cave Story like... Wow almost ten years ago. The rest is history :). 
 
-DONE-disable shadow
-DONE-disable music when skipping to choosing
-DONE-actually in the super awesome version you should autorefill CurrentPerformanceStat when skipping, should not be too hard. See hack code in sunset grave code.
-DONE-add a button to toggle difficulties for a specific age
-DONE-add a button to skip forward an age or skip back an age
-DONE-have steven update logos on website http://www.igf.com/logos/
-DONE-edit kiosk info on igf site
-DONE-write business plan for perfect woman
+*What development tools did you use to build Perfect Woman?
+PETER: We're using Unity3d right now. This turned out to be the right choice for it's ease of building to multiple platforms. It was also a bad idea for many many reasons. I ended up MacGyvering several features in Unity and .NET to get around certain restrictions to the Unity engine. On the plus side, in the process, I built several time saving tools to help streamline the assets into our game.
+
+*How much time have you spent working on the game?
+PETER: For the last year, I've been spending either no time at all my time or no time at all working on Perfect Woman. Time management is not my forte but somehow things get done.
+
+*How did you come up with the concept?
+-
+
+*Can you talk more about how magazine questionnaires led to a game design — what steps did you take from concept to execution? 
+PETER: That was certainly the original inspiration for the game and I feel like we've completed a full circle. About a year ago the game was still telling the player that some choices were more perfect than others. The gameplay was there but the concept behind it was on rather shaky footing. When we finally got rid of this, suddenly everything we were trying to say with this game came together cohesively. This is the single most important change we made in the game. Now the satire is in the context of the game, not the game itself. The game itself now is just meant to be fun--kind of like a magazine questionnaire eh?
+
+*Why did you go with Kinect/pose-based gameplay? Accessibility, communication of message or ideals, or that and more?
+PETER: I thought making another kinect game (I made one just before starting on Perfect Woman) would be a terrible idea but Lea managed to convince me this game would be pretty simple. I was wrong on both counts.
+
+*Can you describe how the "life narrative" aspect of the game works, and why it's important? 
+-
+
+*Have you played any of the other IGF finalists? Any games you've particularly enjoyed?
+PETER: I'm personaly rooting for Dominique Pamplemousse because it has so much personality. I'm also quite fond of Stanley Parable--its meticulous design and attention to detail gives the satirical nature of the game a narrative of its own. Finally Jazzpunk which I have yet to try looks just delightful. 
+
+*What do you think of the current state of the indie scene?
+PETER: When I first started following the indy game scene, it wasn't unreasonable to know and even play every single game. These days there are literally not enough hours in the year to try every indy game. The quality has certainly gone up and now it's exciting to see popular genres coming out of indy developers. This isn't much of a surprise considering gaming hardware has pretty much stagnated since last gen but for some reason developers still can't seem to solve the mystery to the zombie apocolypse.
+
+
 
 ::FUTURE::
--tiny little white dot in corner next to name (I think it's in the fetus score label image and 
-	-it's because you use a null texture which defaults to  1x1 white square on the diff label... good job peter
--disable depth warning during credits
--shake score sound effect in sunset, now just grave
--do better grace grading right after poses change
--making text last a little longer
-	-get rid of flying
-	-choice bubble fading is wonk text fades first then bubble fix it...
--make cutscenes longer but make "you did medicore..." text shorter
--make choosing figure come in from bottom and be solid and purple
-
+DONE-turn off purple figures when changing from one choice to another directly
+-need to make random people dancing/playing the game (clean out game lab!)
+-make sunset connection recording for video
+-clean out miikl.robotbear.org
+-GERMAN BUILD!!!
 
 -bmp format
 -particles still the wrong color
@@ -44,6 +50,24 @@ DONE-write business plan for perfect woman
 -head popup icons confusing
 -demented but happy good death should have a happy ghost escaping to freedom from the body
 
+IGNORE-fix beach mom text
+DONE-make grace more graceful
+DONE-enable reward?
+DONE??-move dancer hands behind head
+DONE-look through lea's files
+DONE-print partay tickets
+
+DONE-tiny little white dot in corner next to name (I think it's in the fetus score label image and 
+	-it's because you use a null texture which defaults to  1x1 white square on the diff label... good job peter
+DONE-disable depth warning during credits
+DONE-shake score sound effect in sunset, now just grave
+DONE-do better grace grading right after poses change
+DONE-making text last a little longer
+	-get rid of flying
+	-choice bubble fading is wonk text fades first then bubble fix it...
+DONE-make cutscenes longer but make "you did medicore..." text shorter
+DONE-make choosing figure come in from bottom and be solid and purple
+
 DONE-fix the aliasing issue on some chars
 DONE-optional arms behind head for chars like dancer
 DONE-make testing scene play music and set rate to what it should be
@@ -56,6 +80,8 @@ IGNORE-doing excellent (>.8) is a littel hard?
 
 
 ::MAJOR FUTURE::
+-consider switching grading to only check right before the pose changes instead ofthe entirety of the time (or maybe extra weight on the frame right beforechange)
+-consider redoing some of the poses because some of them are impossible on kinect api
 -redo all the texts
 	-all apostrophes
 -some connection texts will never be triggered because there is no actual connection.
@@ -165,6 +191,26 @@ IGNORE-doing excellent (>.8) is a littel hard?
 
 ::BUSINESS PLAN FOR SUPER SWEET GERMAN GAME CONTEST::
 Perfect Woman is a Kinect game currently being built for PC and MAC. With the Kinect 2.0 built into the new Xbox One, we aim to have our game published on this next gen platform before the end of 2014. This is all made possible with the new Xbox ID program and their partnership with Unity to allow independent developers like us publish or games with low financial overhead on their console using Unity3d. We have a strong presence in the indy games community and hope to use this to launch ourselves into mainstream awareness. While our game may present a critical view of woman in society, it does so from approachable and ultimately fun perspective. We've had hundreds of players, the majority of which non gamers, play Perfect Woman at various publish festivals that we have shown at. The feedback from our playtester and press has been overwhelmingly positive. We see Perfect Woman as a game that is incredibly approachable from a wide audience both in content and gameplay. Finally, we plan on releasing the game to a much broader audience by launching a keyboard compatible version shortly after the Xbox One launch. Steam has proven to be a major milestone for independent developers. The content on steam is all of superb quality with Steam's greenlight curation process. As IGF finalists, we are already approved to publish Perfect Woman on Steam.
+
+
+::TODO::
+DONE-finalize script for lea
+DONE-inform lea about reorder parameter
+DONE-inform lea about AA fix
+DONE-finish cutting the video
+	-email jfox@dawnrunner.com link to game and video
+DONE-do the gamespot video
+DONE-make sure age skipping did not break the reward image
+
+DONE-disable shadow
+DONE-disable music when skipping to choosing
+DONE-actually in the super awesome version you should autorefill CurrentPerformanceStat when skipping, should not be too hard. See hack code in sunset grave code.
+DONE-add a button to toggle difficulties for a specific age
+DONE-add a button to skip forward an age or skip back an age
+DONE-have steven update logos on website http://www.igf.com/logos/
+DONE-edit kiosk info on igf site
+DONE-write business plan for perfect woman
+
 
 ::IGF BUILD FINALIZED HERE!!!::
 

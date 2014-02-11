@@ -383,7 +383,7 @@ public class ModeNormalPlay
 			//new smooth grading, this version gives grace to sudden drops in performance
 			if(grade < mLastGrade)
 			{
-				float newGrade = mLastGrade*0.9f + grade*0.1f;
+				float newGrade = mLastGrade*0.95f + grade*0.05f;
 				if(newGrade < mLastGrade)
 					grade = Mathf.Max(newGrade,mLastGrade - Time.deltaTime/2f);
 				else grade = newGrade;
