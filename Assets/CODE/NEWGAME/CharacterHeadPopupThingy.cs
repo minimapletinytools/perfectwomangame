@@ -33,7 +33,8 @@ public class CharacterHeadPopupThingy
 		shine.SoftPosition = targetPos;
 		shine.HardColor = positive ? GameConstants.UiYellowTransparent : GameConstants.UiRedTransparent; 
 		shine.HardColor = positive ? GameConstants.UiYellow : GameConstants.UiRed; 
-		shine.PositionInterpolationMinLimit = 150;
+		shine.PositionInterpolationMinLimit = 250;
+		shine.SoftInterpolation = 0.15f;
 		mElement.Add(shine); 
 
 
@@ -144,44 +145,30 @@ public class CharacterHeadPopupThingy
 					mNames[i].HardPosition = mCharacters[i].HardPosition + nameOffset;
 					mNames[i].SoftPosition = mCharacters[i].SoftPosition + nameOffset;
 					mNames[i].HardColor = (!isGreen) ? GameConstants.UiWhite : GameConstants.UiRed; 
-					
+
+					//set speeds..
+					mCharacters[i].PositionInterpolationMinLimit = 250;
+					mCharacters[i].SoftInterpolation = 0.15f;
+					mBadges[i].PositionInterpolationMinLimit = 250;
+					mBadges[i].SoftInterpolation = 0.15f;
+					mNames[i].PositionInterpolationMinLimit = 250;
+					mNames[i].SoftInterpolation = 0.15f;
+					mBackgrounds[i].PositionInterpolationMinLimit = 250;
+					mBackgrounds[i].SoftInterpolation = 0.15f;
 
 					mElement.Add(mCharacters[i]);
 					mElement.Add(mBadges[i]);
 					mElement.Add(mBackgrounds[i]);
 					mElement.Add(mNames[i]);
+
+					create_shine_over_character(mCharacters[i],isGreen,gBadgeTime*(count)+gTimeAfterBadges+0.5f);
 				}
-				//Shineeee
-				/*
-				TED.add_one_shot_event(
-					delegate(){
-						for(int j = 0; j < count; j++)
-						{
-							int workingIndex = j;
-							//make sure this does not last too long
-							create_shine_over_character(mCharacters[workingIndex],isGreen,(gBadgeTime)*count + 0.5f);
-						}
-					},
-				gTimeBeforeBadges/2);*/
+				
 
 				return true;
 			},
 		gTimeBeforeBadges);
 
-
-		chain = chain.wait(0.2f);
-
-
-		for(int j = 0; j < count; j++)
-		{
-			int workingIndex = j;
-			chain = chain.then_one_shot(
-				delegate() {
-					//shine
-					create_shine_over_character(mCharacters[workingIndex],isGreen,gBadgeTime*(count)+gTimeAfterBadges+0.5f);
-				}
-			,0);
-		}
 
 		chain = chain.wait(0.5f);
 

@@ -172,7 +172,7 @@ public class NewInterfaceManager {
 		to.HardPosition = mFlatCamera.get_random_point_off_camera(-2300);
 		to.HardColor = GameConstants.UiWhiteTransparent;
 		to.SoftColor = GameConstants.UiWhite;
-		to.set_text_color(GameConstants.UiWhiteTransparent,true);
+		to.set_text_color(GameConstants.UiRedTransparent,true);
 		to.set_text_color(GameConstants.UiRed);
 		to.set_background_color(GameConstants.UiWhiteTransparent,true);
 		to.set_background_color(GameConstants.UiPopupBubble);

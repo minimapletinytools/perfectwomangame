@@ -101,9 +101,9 @@ public class PopupTextObject : FlatElementMultiBase {
         PrimaryGameObject = create_primary_from_elements();
 
 		//make sure it gets applied to text as well...
-		ColorInterpolationMaxLimit = 1.5f;
-		ColorInterpolationMinLimit = 1f;
-		SoftInterpolation = .15f;
+		ColorInterpolationMaxLimit = 3f;
+		ColorInterpolationMinLimit = 1.5f;
+		SoftInterpolation = .18f;
 		//PositionInterpolationMinLimit = 500;
 
 
@@ -139,6 +139,13 @@ public class PopupTextObject : FlatElementMultiBase {
 		if(!hard)
 			mBackground.SoftColor = aColor;	
 		else mBackground.HardColor = aColor;	
+	}
+
+	//to get the dual alpha of text and background to fade together correctly
+	public override void set_color(Color aColor)
+	{
+		mBackground.set_color(aColor*(mBackground.HardColor)*2); 
+		mText.set_color(aColor*(mText.HardColor)*Mathf.Pow(aColor.a/GameConstants.UiPopupBubble.a,2)*2);
 	}
 	
 	public static System.Func<float,bool> skip(float displayDur, PopupTextObject po)

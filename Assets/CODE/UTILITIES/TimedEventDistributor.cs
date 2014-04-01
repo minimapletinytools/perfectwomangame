@@ -151,5 +151,10 @@ public class TimedEventDistributor
 	{
 		return add_event(delegate(float time) { return true; }, 0);
 	}
+
+	public bool has_event()
+	{
+		return mEvents.Count > 0;
+	}
     
 }

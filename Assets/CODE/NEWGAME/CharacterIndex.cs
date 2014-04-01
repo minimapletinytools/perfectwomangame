@@ -176,6 +176,12 @@ public struct CharacterIndex : IEquatable<CharacterIndex>
 			set_character(i,Convert.ToInt32(split[1])-1);
 		}
 	}
+
+	public CharacterIndex(CharacterIndex aChar)
+	{
+		LevelIndex = aChar.LevelIndex;
+		Choice = aChar.Choice;
+	}
 	
 	public bool Equals(CharacterIndex other) 
 	{

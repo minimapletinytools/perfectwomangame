@@ -37,7 +37,7 @@ public class NewChoiceObject : FlatElementMultiBase {
 		mSquare = new FlatElementImage(meterImage.Image,meterImage.Data.Size, aDepth);
 		mSquare.HardColor = GameConstants.UiRed;
 		mText = new FlatElementText(newRef.fatFont,48,"",aDepth +2);
-		mDiffImage = new FlatElementImage(null,aDepth +2);
+		mDiffImage = new FlatElementImage(null,aDepth + 3);
 		mDiffImage.HardScale = 1.33f * Vector3.one;
         //mPerfect = new DifficultyObject(ManagerManager.Manager.mNewRef.uiPerfectStar, aDepth);
 		mIcon = new FlatElementImage(null,aDepth +2);
