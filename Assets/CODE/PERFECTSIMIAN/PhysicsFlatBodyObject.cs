@@ -6,15 +6,21 @@ public class PhysicsFlatBodyObject
 	
 	FlatBodyObject mFlat;
 	GameObject mPhysBodyParent = null;
-	Dictionary<ZigJointId,GameObject> mColliders = new Dictionary<ZigJointId, GameObject>();
+	//these are all the rigid bodies
+	Dictionary<ZigJointId,GameObject> mBodies = new Dictionary<ZigJointId, GameObject>();
+	//these are the joint offsets (because hinge joints starting angle is relative)
+	public struct JointOffset{public HingeJoint joint; public Quaternion offset;}
+	Dictionary<ZigJointId,JointOffset> mJointAngleOffset = new Dictionary<ZigJointId, JointOffset>();
 	
 	public class Stupid
     {
         public List<ZigJointId> otherEnds = new List<ZigJointId>();
         public Stupid(ZigJointId other) { otherEnds.Add(other); }
 		public Stupid(ZigJointId[] other) { otherEnds.AddRange(other); }
+		public Stupid(){}
     }
 
+	//key is body, value is list of things attached to body
     public Dictionary<ZigJointId, Stupid> mImportant = new Dictionary<ZigJointId, Stupid>();
 	
 	public PhysicsFlatBodyObject(FlatBodyObject aObject)
@@ -32,13 +38,13 @@ public class PhysicsFlatBodyObject
         mImportant[ZigJointId.RightHip] = new Stupid(ZigJointId.RightKnee);
         mImportant[ZigJointId.RightKnee] = new Stupid(ZigJointId.RightAnkle);
         mImportant[ZigJointId.Neck] = new Stupid(ZigJointId.Head);
+		mImportant[ZigJointId.Head] = new Stupid();
+		mImportant[ZigJointId.LeftHand] = new Stupid();
+		mImportant[ZigJointId.RightHand] = new Stupid();
+		mImportant[ZigJointId.LeftAnkle] = new Stupid();
+		mImportant[ZigJointId.RightAnkle] = new Stupid();
+
 	}
-	
-	public void set_target_pose(Pose aPose, bool hard = false)
-    {
-        mFlat.set_target_pose(aPose, hard);
-    }
-	
 	
 	public Vector3 mNormal = Vector3.forward;
 	public Vector3 mUp = Vector3.up;
@@ -56,53 +62,27 @@ public class PhysicsFlatBodyObject
         return -r;
     }
 	
-	public void update()
+	public void update(ProjectionManager aManager)
 	{
-		//update mFlat with physics body output from last frame
-		Pose np = mFlat.get_pose();
-		foreach(var e in np.mElements)
+
+		//set desired position from projection manager
+		foreach (KeyValuePair<ZigJointId, ProjectionManager.Stupid> e in aManager.mImportant)
 		{
-			//TODO
-			//if(mImportant.ContainsKey(e.joint) && (mImportant[e.joint].otherEnd != ZigJointId.Head))
-			{
-				//Debug.Log("trying for " + e.joint + " with " + mImportant[e.joint].otherEnd);
-				//e.angle = get_relative(mColliders[e.joint].transform.position,mColliders[mImportant[e.joint].otherEnd].transform.position);
-				//TODO
+			//the torso will be skipped because in physics, the torse angle is determined by the waist
+			if(mJointAngleOffset.ContainsKey(e.Key)){
+				set_hinge_position(-mJointAngleOffset[e.Key].offset.eulerAngles.z + e.Value.smoothing.current,mJointAngleOffset[e.Key].joint);
 			}
 		}
-		mFlat.set_target_pose(np,true);
+		set_hinge_position(-mJointAngleOffset[ZigJointId.Waist].offset.eulerAngles.z + aManager.mWaist.current,mJointAngleOffset[ZigJointId.Waist].joint);
 
-		//update angles with desired body
 
-		//apply gravity to body first
-		mFlat.HardPosition = mColliders[ZigJointId.Torso].transform.position;
-		mFlat.HardFlatRotation = mColliders[ZigJointId.Torso].transform.rotation.flat_rotation();
-		mFlat.update_parameters(Time.deltaTime);
-		mFlat.set();
-		
-		
-		//try to move physics body to mFlat to new positions
 		foreach(var e in mFlat.mParts)
 		{
-			mColliders[e.Key].rigidbody.MovePosition(e.Value.transform.position);
-			//mColliders[e.Key].transform.position = (e.Value.transform.position);
-		}	
-		
-		
-		
-		//update mflat with physics body info (visuals)
+			Debug.Log (e.Key);
+			e.Value.transform.position = mBodies[e.Key].transform.position;
+			e.Value.transform.rotation = mBodies[e.Key].transform.rotation ;
+		}
 
-		
-		//mFlat.HardPosition = mPhysBodyParent.transform.position;
-		//mFlat.HardFlatRotation = mPhysBodyParent.transform.rotation.flat_rotation();
-		mFlat.HardPosition = mColliders[ZigJointId.Torso].transform.position;
-		mFlat.HardFlatRotation = mColliders[ZigJointId.Torso].transform.rotation.flat_rotation();
-		mFlat.update_parameters(Time.deltaTime);
-		mFlat.set();
-			
-		//force to stay in 
-		//mPhysBodyParent.rigidbody.MoveRotation(new Vector3(0,0,mPhysBodyParent.transform.eulerAngles.z));
-		//mPhysBodyParent.transfo
 	}
 	
 	public Pose physics_pose()
@@ -112,65 +92,49 @@ public class PhysicsFlatBodyObject
 	
 	public void setup_body_with_physics()
 	{
-		
-		foreach (KeyValuePair<ZigJointId, GameObject> e in mFlat.mParts)
-        {
-			//compute the endpoint
-			GameObject endpoint = null;
-			for(int i =0; i < e.Value.transform.childCount; i++)
+		//construct rigid bodies and colliders
+		foreach(var e in mImportant)
+		{
+			GameObject main = new GameObject("gen"+e.Key.ToString());
+			main.transform.position = mFlat.mParts[e.Key].transform.position;
+			main.AddComponent<Rigidbody>();
+			main.rigidbody.constraints = RigidbodyConstraints.FreezePositionZ & RigidbodyConstraints.FreezeRotationX & RigidbodyConstraints.FreezeRotationY;
+			main.rigidbody.drag = 1;
+			main.rigidbody.angularDrag = 1;
+			//main.rigidbody.useGravity = false;
+			mBodies[e.Key] = main;
+			foreach(var f in e.Value.otherEnds)
 			{
-				if(e.Value.transform.GetChild(i).name.Contains("gen"))
+				GameObject colliderObject = new GameObject("genCollider"+f.ToString());
+				colliderObject.transform.position = mFlat.mParts[f].transform.position;
+				colliderObject.AddComponent<SphereCollider>().radius = 30;
+				colliderObject.transform.parent = main.transform;
+				colliderObject.layer =  1 << 3;
+			}
+		}
+
+		//create joints
+		foreach (var e in mImportant)
+		{
+			foreach(var f in e.Value.otherEnds)
+			{
+				if(mImportant.ContainsKey(f))
 				{
-					endpoint = e.Value.transform.GetChild(i).gameObject;
-					break;
+					//create a joint anchored at f between f and e
+					var joint = mBodies[f].AddComponent<HingeJoint>();
+					joint.anchor = Vector3.zero;
+					joint.connectedBody = mBodies[e.Key].rigidbody;
+					mJointAngleOffset[f] = new JointOffset{joint = joint,offset = mFlat.mParts[f].transform.rotation}; //this should be ok...
 				}
 			}
-	
-			//add a collider
-			mColliders[e.Key] = new GameObject("genCollider"+e.Key.ToString());
-			var col = mColliders[e.Key].AddComponent<SphereCollider>();
-			col.radius = 50;
-			mColliders[e.Key].transform.position = e.Value.transform.position;
-			mColliders[e.Key].AddComponent<Rigidbody>();
-			mColliders[e.Key].layer =  1 << 3;
-
-
-		}
-
-		//create parent attachements and add rigid bodies
-		foreach (ZigJointId e in mImportant.Keys)
-		{
-			foreach(ZigJointId f in mImportant[e].otherEnds)
-				mColliders[f].transform.parent = mColliders[e].transform;
-			var rb = mColliders[e].AddComponent<Rigidbody>();
-			//TODO setup rb
-		}
-		foreach (var e in mImportant.Keys)
-		{
-			//figure out what its attached to
-			var otherEnd = mImportant.First(f=>f.Value.otherEnds.Contains(e));
-
-			//now we want a hinge joint between otherend
-			Vector3 anchor = Vector3.zero; //pretty sure this is ok
-			create_hinge_joint(mColliders[e].gameObject,mColliders[otherEnd.Key],anchor);
 		}
 	}
-	
-	
-	public void add_fixed_joint(GameObject obj)
-	{
-		var joint = obj.AddComponent<FixedJoint>();
-			joint.connectedBody = mPhysBodyParent.rigidbody;
-			joint.breakForce = Mathf.Infinity;
-			joint.breakTorque = Mathf.Infinity;
-	}
 
-	public void create_hinge_joint(GameObject obj1, GameObject obj2, Vector3 anchor)
+	public void set_hinge_position(float position, HingeJoint joint)
 	{
-		var joint = obj1.AddComponent<HingeJoint>();
-		joint.connectedBody = obj2.rigidbody; //obj2 will always have a rigidbody 
-		joint.axis = Vector3.forward;
-		joint.anchor = anchor;
+		var lim = joint.limits;
+		lim.min = lim.max = 0;//lim.min*0.95f + 0.05f*position;
+		joint.limits = lim;
 	}
 }
 

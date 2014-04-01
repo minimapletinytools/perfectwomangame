@@ -36,6 +36,8 @@ public class HikingRigidComponent
 	{
 		mass = nodes.Sum(e=>e.mass);
 	}
+
+	//TODO function to slove rigid system based on forces on RigidNodes
 }
 
 public class HikingRigidConnection

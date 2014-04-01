@@ -34,9 +34,8 @@ public class ModePerfectSimian
 	{
 		Debug.Log("character loaded");
 		FlatBodyObject flatbody = new FlatBodyObject(NGM.CurrentCharacterLoader, -1);
+		flatbody.set_target_pose(NGM.CurrentPose,true);
 		flatbody.HardPosition = Vector3.zero;
-		
-		
         flatbody.update(0);
 		
 		mFlat = new PhysicsFlatBodyObject(flatbody);
@@ -47,10 +46,12 @@ public class ModePerfectSimian
 	
 	public void update () 
 	{
+		//we store the desired position inside of mFlat??
 		if(mFlat  != null)
 		{
-			mFlat.set_target_pose(NGM.CurrentPose);
-			mFlat.update();
+			mFlat.update(mManager.mProjectionManager);
 		}
+
+
 	}
 }
