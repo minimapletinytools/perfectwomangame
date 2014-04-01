@@ -1,55 +1,101 @@
-::ROAD TO IGF::
-*What's your background in making games?
-PETER: I played Cave Story like... Wow almost ten years ago. The rest is history :). 
+-meet with lea at 10 am thursday
+DONE-get final build for difference games
+	-talk to them about hardware
+DONE-package up a trial copy of the game
+DONE-send trial to that minecraft guy
+DONE-contact extreme reality...
 
-*What development tools did you use to build Perfect Woman?
-PETER: We're using Unity3d right now. This turned out to be the right choice for it's ease of building to multiple platforms. It was also a bad idea for many many reasons. I ended up MacGyvering several features in Unity and .NET to get around certain restrictions to the Unity engine. On the plus side, in the process, I built several time saving tools to help streamline the assets into our game.
+::FESTIVALS::
+-difference games
+-gaymerx
 
-*How much time have you spent working on the game?
-PETER: For the last year, I've been spending either no time at all my time or no time at all working on Perfect Woman. Time management is not my forte but somehow things get done.
+::POST GDC TODO::
+DONE-email zigfu guys and see if you can port zigfu for them..
+DONE-connect with stephen totilo from kotaku
+-argentine lady??? Maria Lujan
+-sign up for sony dev
+-email anita maybe
+-soft kinect with hook you up with unity maybe
+-outerbody labs (cool shit)
+-connect with deidra drei
+-connect with itay from mushroom 11
+-connect with the alter ego guy :)
+DONE-kim wallace from game informer kim@gameinformer.com
+DONE-email aureia from luxuria superbia
+DONE-phone meeting with chris charla
 
-*How did you come up with the concept?
--
+::OIP nonsense::
 
-*Can you talk more about how magazine questionnaires led to a game design — what steps did you take from concept to execution? 
-PETER: That was certainly the original inspiration for the game and I feel like we've completed a full circle. About a year ago the game was still telling the player that some choices were more perfect than others. The gameplay was there but the concept behind it was on rather shaky footing. When we finally got rid of this, suddenly everything we were trying to say with this game came together cohesively. This is the single most important change we made in the game. Now the satire is in the context of the game, not the game itself. The game itself now is just meant to be fun--kind of like a magazine questionnaire eh?
 
-*Why did you go with Kinect/pose-based gameplay? Accessibility, communication of message or ideals, or that and more?
-PETER: I thought making another kinect game (I made one just before starting on Perfect Woman) would be a terrible idea but Lea managed to convince me this game would be pretty simple. I was wrong on both counts.
+::GAME TODO NEW::
+-ordering issues with death cutscene in child star 
+-fix depth issues on title screen with unlockables
+	-also the diff colors look stupid
+-unlockables
+	-make easy way to skip to grave..
+	-test it
+	-fill out more examples...
+	-disable characters for testing..
+	-resolve the easier/harder issue for first character when things aren't avail
+	-need to disable all cutscenes for not avail characters??
+	-as well as connections
+	DONE-do it! Need to do announcement
+	DONE-add meta life knowledge sentences to the end of the game
+-design changes
+	-think about new way to do posse--make it more dance like maybe based on extrasolar suggestion
+-text file
+	-fix all typos and apostrophe's etc.
+	-make a diagram of all connections and design some so they are more comprehensive...
+	-don't forget you make a hack fix for having mediocre be good..
+	-some connection texts will never be triggered because there is no equivalent difficulty change
+	-meta life connections
+-visuals
+	-particles falling from sky during fever
+-astronaut
+	-when you die at 85 gives special message and then goes to 110
+	-beginning of 110 it says "you lived a very long life. Enjoy what is left"
+	-asteroids you can bump around.......... 
+	-only 10-15 seconds
+	-floating off in space death cutscene
+		-no death text goes straight to sunset
+	-transition to sunset, has starry sky space background with 110 floating in it.
 
-*Can you describe how the "life narrative" aspect of the game works, and why it's important? 
--
+-tasks for lea
+	-make a list of cutscenes you think should be redone
+		-more dolphins in princess!
+	-astronaut!
+	-characters in sunset have happy and sad based on how well you did
 
-*Have you played any of the other IGF finalists? Any games you've particularly enjoyed?
-PETER: I'm personaly rooting for Dominique Pamplemousse because it has so much personality. I'm also quite fond of Stanley Parable--its meticulous design and attention to detail gives the satirical nature of the game a narrative of its own. Finally Jazzpunk which I have yet to try looks just delightful. 
-
-*What do you think of the current state of the indie scene?
-PETER: When I first started following the indy game scene, it wasn't unreasonable to know and even play every single game. These days there are literally not enough hours in the year to try every indy game. The quality has certainly gone up and now it's exciting to see popular genres coming out of indy developers. This isn't much of a surprise considering gaming hardware has pretty much stagnated since last gen but for some reason developers still can't seem to solve the mystery to the zombie apocolypse.
-
+-other
+	-see if you can fix kinect lighting
+	-pose change predictor, draw super transparent "next" pose during play
 
 
 ::FUTURE::
-DONE-turn off purple figures when changing from one choice to another directly
--need to make random people dancing/playing the game (clean out game lab!)
--make sunset connection recording for video
--clean out miikl.robotbear.org
--GERMAN BUILD!!!
-
 -bmp format
 -particles still the wrong color
 -still huge delay between early death and cutscenes
 -kinect should lock in on first track user instead of always using lasttrackeduser	
 -get more differentiated play sounds 
 -head pop up change sounds should come in +1 +2, -1, -2 varieties
-
 -fallback on 45-4_b-1
 -05-4 music needs to be louder
-
--play warning sholud come up sooner?
--normal slower??
--head popup icons confusing
 -demented but happy good death should have a happy ghost escaping to freedom from the body
 
+DONE-feedback for steven
+	-need winky sound at end!
+	-sound effects in animation, at least a *dink* when the Perfect thing pops up? (like the dinks that you have when it says "PERFECT WOMAN LIFE SIMULATOR"
+	-animation to highlight the EXTREME badge after it says "In the decision phase it's your call" like the one that you use to highlight the kinect.
+	-maybe a little animation to highlight the four different choices when she reads them off.
+DONE-need to make random people dancing/playing the game (clean out game lab!)
+DONE-make sunset connection recording for video
+
+IGNORE-play warning sholud come up sooner?
+IGNORE-normal slower??
+IGNORE-head popup icons confusing
+
+DONE-GERMAN BUILD!!!
+DONE-turn off purple figures when changing from one choice to another directly
 IGNORE-fix beach mom text
 DONE-make grace more graceful
 DONE-enable reward?
@@ -80,24 +126,8 @@ IGNORE-doing excellent (>.8) is a littel hard?
 
 
 ::MAJOR FUTURE::
--consider switching grading to only check right before the pose changes instead ofthe entirety of the time (or maybe extra weight on the frame right beforechange)
--consider redoing some of the poses because some of them are impossible on kinect api
--redo all the texts
-	-all apostrophes
--some connection texts will never be triggered because there is no actual connection.
--particles falling from sky during fever
--see if you can fix kinect lighting
--pose change predictor, draw super transparent "next" pose during play
--if we have time, age 110
-	-when you die at 85 gives special message and then goes to 110
-	-beginning of 110 it says "you lived a very long life. Enjoy what is left"
-	-asteroids you can bump around.......... 
-	-only 10-15 seconds
-	-floating off in space death cutscene
-		-no death text goes straight to sunset
-	-transition to sunset, has starry sky space background with 110 floating in it.
--characters in sunset have happy and sad based on how well you did
--dolphin particle for princess
+DONE-consider switching grading to only check right before the pose changes instead ofthe entirety of the time (or maybe extra weight on the frame right beforechange)
+
 
 ::IGNORE FUTURE::
 -clean up UI folder
@@ -112,6 +142,7 @@ IGNORE-doing excellent (>.8) is a littel hard?
 -testing/challenge/simian mode should inherit from interface..
 -make BACKGROUND part of the big image dump instead of an exception case
 -add skip multiple to sunset progress
+-switch over to coroutines lol
 -turn miniman into asset bundle for consistency
 	-make the bundle in ggfiles
 	-use mini_loaded_callback and asign it to a new character such as 0-1
@@ -126,8 +157,79 @@ IGNORE-doing excellent (>.8) is a littel hard?
 -better way to detect if user is not on screen
 -define interface for kinect stuff for when you need to swap in kinect2.0
 
+
+::ROAD TO IGF::
+*What's your background in making games?
+LEA: I studied at the school of Art and Design in Kassel before and graduated in animation. I never was much of a player before. But during this time we made some experiments on interactive animation. That quickly led me to using game like mechanics for artistic expression.
+PETER: So like... wow almost ten years ago I played a little game called Cave Story. After that, I said "screw the game industry!" and became super determined to acquire the skills and experience to be a game developer. Actually I was studying math pretty seriously in school while making (mainly programming) games on my free time. I churned out game after game experimenting with both artistic and commercial endeavors. Well that was kind of a long time ago. These days I dawdle around and maybe work on Perfect Woman every now and then. It's sort of a matter of perspective though ;).
+
+*What development tools did you use to build Perfect Woman?
+PETER: We're using Unity3d right now. This turned out to be the right choice for it's ease of building to multiple platforms. It was also a bad idea for many many reasons. I ended up MacGyvering several features in Unity and .NET to get around several restrictions in the Unity3d engine. For now, we're ZigFu to handle all the Kinect interfacing.
+
+*How much time have you spent working on the game?
+LEA: Peter and I started working on Perfect Woman during a residency I did at UCLA Game Lab in fall 2012. After I came back to Germany - I’m studying at Filmakademie Baden-Württemberg as graduate student right now - I registered Perfect Woman to be my final thesis. Some other students from my school as well as UCLA joined our team. I’ve been constantly working on Perfect Woman since then - on art, on game design but also on research on the topic of perfectionism, on press stuff and whatever needed to be done. Over such a long period of time, of course you sometimes need distraction as well. So I also worked on some smaller games on the side.
+PETER: I'm pretty chaotic when it comes to time management but somehow things get done. It's hard for me to say what percent of my time I spend working on Perfect Woman but it is my top priority.
+
+*How did you come up with the concept?
+LEA: It was at UCLA in one of Eddo Stern’s events. I had come to Los Angeles for the residency, as mentioned above. My boyfriend would come with me and I was very happy about it. He works from home and wasn’t part of any program though. We wanted to spend time together and experience this for us new country. But I also liked being at University and participating in all the events that happened there. As in the game I felt torn apart between my private life and my professional life. I felt that I had to succeed in both aspects, but I also somehow felt that it was going to be nearly impossible. Making people feel this conflict physically, which is possible through the Kinect controller, seemed to be the perfect metaphor. 
+
+*Can you talk more about how magazine questionnaires led to a game design — what steps did you take from concept to execution? 
+PETER: That was certainly the original inspiration for the game. About a year ago the game defined some choices to be more "perfect" than others. This was the concrete realization of us wanting the player navigate between ideal choices (perfectness) and reality (difficulty). Eventually we realized hard coding perfectness was entirely superfluous. During testing, player's were simply choosing the characters they wanted to be rather than reading into the game's arbitrary definition of perfection. Removing this "feature" was the single most important change we made to the game. Now the satire is in the context of the game, not the game itself. The game itself now is just meant to be fun--kind of like a magazine questionnaire eh?
+
+*Why did you go with Kinect/pose-based gameplay? Accessibility, communication of message or ideals, or that and more?
+PETER: I thought making another kinect game (I made one just before starting on Perfect Woman) would be a terrible idea but Lea managed to convince me this game would be pretty simple to make. I was wrong on both counts.
+LEA: I didn’t try to convince you, that the game was simple!
+As I already mentioned above, using the Kinect was just necessary to bring our "message" across. People should physically feel torn apart between to many poses, representing too many aspects they want to be perfect in. A pro side of the Kinect is definately that it works really good in festival environments: People don’t need to touch a controller, they just come in and begin to play. Additionally it attracts many people around and they want to look who’s dancing there. As the game is right now, we cannot approach a larger audience at home, because of the effort to put it up, unfortunately. That’s why we’d like to get the game on Xbox: to enable more people to play the game at home.
+
+*Can you describe how the "life narrative" aspect of the game works, and why it's important? 
+LEA: Peter actually invented this part of the game - and it’s essential for the whole concept of the game: At each stage of your life, you can choose between 4 different life styles. So for example at age 45, you can choose between being a belly dance teacher, a rich wife, a burned out woman or a whale hunter. These 4 choices are always the same for that age, now what changes is the difficulty of the performance connected to them. And this difficulty is determined by the life you lived so far: If you have been a terrorist before, the whale hunter will be easy to perform, because you’re already used to unethical actions. If you were a princess as a kid, the rich wife will be easy, because it fits you as well. But if you would have been a street kid before, that option would be really hard to perform for you now.
+
+Now the important thing about that mechanic is, that within that system it is almost impossible for the player to always live their "perfect life". It may be okay for a while, but eventually your life history will catch up you will have a real conflict with all the different aspects of your life, that "need to be perfect", such as work, family, friends, individuality, health, to name a few.
+
+*Have you played any of the other IGF finalists? Any games you've particularly enjoyed?
+PETER: I'm personaly rooting for Dominique Pamplemousse because it has so much personality. I'm also quite fond of Stanley Parable--its meticulous design and attention to detail gives the satirical nature of the game a narrative of its own. Finally Jazzpunk, which I have yet to try, looks just delightful.
+LEA: It is a great honor to compete with games like Luxuria Superbia, which I really enjoyed because it made me feel so relaxed, Papers Please and Dominique Pamplemousse, which I admire because of the same reasons that Peter mentioned. I also especially liked one of the honorable mentions in the student contest: Ladylike by Nina Freeman, Emmett Butler, David Coss & Winnie Song. It is a really delicate game about a conversation between mother and daughter with great writing. 
+
+*What do you think of the current state of the indie scene?
+PETER: I've seen indy games just flat out explode in popularity since I started make games. The quality has certainly gone up and now it's exciting to see popular genres coming out of indy developers. This isn't much of a surprise considering gaming hardware has pretty much stagnated since last gen but for some reason developers still can't seem to solve the mystery to the zombie apocolypse. I think it terms of innovation and creativity though, most indy developers including myself struggle to break the mold of established conventions in games which I think is still quite restricting (amazing as it is). Sometimes it's really the non-gamers that make the most interesting games (looking at you Lea).
+
+
+
 ::Perfect Woman Bio::
 -Peter Lu earned an MA in math at UCLA while simultaneously pursuing his dream to be a game developer. After graduating, he continued to develop games independently with a new focus on experimentation and games as art. He has since released many games including well recieved games like "Cave", "Roulette" and "Burn & Turn". His past work has focused on deconstructing the definiton of game and exploring what new meanings can be achieved through this medium. In 2012, he met Lea Schoenfelder through the UCLA Game Lab and together they started working on "Perfect Woman". Peter currently resides in Los Angeles where he works remotely with Lea. His hobbies include fermentation, mycology, and cats :).
+
+
+::PERFECT WOMAN::
+Let me quickly talk about the precursor to Perfect Woman first. Myself and 2 other friends decided to really leverage the Kinect 1.5 facial expression api and started working on a game called "Face Race". In "Face Race" you'd engage in a race with another player to go through a series of facial expressions as fast as possible. It was going to be super awesome and totally disruptive! Well it turns out the Kinect 1.5 simply was not robust enough to be able to do this for a video game. More than a little dismayed, we eventually turned this game into what is now called "Cosmicat Crunchies". In "Cosmicat Crunchies" you move your head around dodging rockets and eat little birds by opening and closing your mouth. It felt like such basic input from the Kinect was already pushing the device close to its limits. In the end though, the game is quite fun and not just because of its novelty. We have a good time taking it to various festivals.
+
+Fast forward a few weeks and Lea for some reason thinks it's a good idea to ask me if I want to work on another Kinect game. Her idea was modest though--a simple choice game where choices are made by physically matching poses of varying difficulties. The concept of the game was to juxtapose the difficulty of these choices with the world's unreasonable expectations of the "ideal" Woman. The simplicity of the idea and my desire to work with someone as talented as Lea Schoenfelder (and Lea herself) eventually convinced me to work on this game. It didn't take long for the idea to start growing. 
+
+It turned out ZigFu was very easy to work with little overhead to getting useful skeleton data from the Kinect. Combined with Unity's ease of mapping any data to game space, we quickly added a key new feature to the game--real time mapping of the user's body to a mannequin in the game. After many discussions we implement another key conceptual change to the game. We realized the gameplay would be better split into a "performance" phase and "choosing" phase. In this case, there was no inherent difficulty in making a choice, but the player would be informed how the choice would affect the difficulty of the following performance. 
+I owe so much to the original simplicity of Lea's idea. The secret to Perfect Woman's gameplay is that it only uses what the ZigFu provides. The character is essentially a 1-1 mapping of the zigfu's output with minimal amounts of smoothing. Honestly the code that outputs the character has hardly changed from its original incarnation that I spent only a fraction of our first week of crunch time writing. In the year that has passed since then, my time has been spent adorning this simple interface. 
+
+It's been over a year since we started working on Perfect Woman now and the game has gone through 3 incarnations--each one bringing a slew of new changes. We've had the luxury of many festivals as deadlines to motivate ourselves to push through. I could go on forever listing all the changes we made to Perfect Woman (my list of completed tasks is about to reach 2000 lines) but there are a few changes that really come to mind:
+
+1. In the first incarnation of the game, the poses to match were static and you were forced to try and hold this for as long as possible. This was quite interesting because the game picked up a strange chaotic yoga-esque quality to it as player engaged in this strange and strenous rapport with the kinect trying to convince it that he or she was doing the right thing. Actually this was quite key to the original concept of the game where we wanted to exploit the disconnect between the expectations of the interface and game rules and the reality of the interface. The idea was to give these "impossible" poses but implicity allow the player to cheat these poses by using props or fooling the Kinect in some other way. We turned away from this idea to deliver a better paced gameplay with more variety of course and this change has really added a lot to the game! I'd like to reincorporate this idea though perhaps in some bonus features to Perfect Woman. 
+
+2. Originally we had two statistics to each character: Perfectness and Difficulty. Straight off the bat we had issues with the former statistic--it wasn't up to us to say whether one lifestyle was more or less perfect than another but this was exactly what the statistic was doing. We came up with all sorts of gauche ways to deal with this including an openning questionnaire that would determine the perfectness of all the characters. Boy I'm glad we didn't do that. One day, Lea realized that Perfectness was simply not necessary. Removing this stat from the characters did not just solve the original issue of saying certain lifestyles are more prefect tha others, it changed the entire narrative. Now every choice is "Perfect" and the performance tells the story. This agency now belonged to the player. This change happened halfway through development of the second incarnation. In retrospect, this change is obvious but at the time, we were so committed to our two stat system it was hard to think outside the box. Still, when Lea cautiously suggested this to me, I knew immediately this was the right decision even though it meant rewriting a large portion of my code. This is the single most important change we made to the game.
+
+3. In the second incarnation of the game, we really spent a lot of time trying to find the right way to effectively communicate the large amounts of information in the game. Getting rid of the Perfectness stat really made this task a lot easier but even then, the player felt overwhelmed. In the second incarnation of the game, there was a massive table (I blame Lea for this ;) of all available choices. I enjoyed this table because it was visually interesting to graph out the player's life. We realized eventually that this information was essentially being ignored by the player and therefore should be removed. I was reluctant to make this change because this was really throwing away a lot of the work I did for what I considered an inconsequential change. The player was already gettig all the important information and the table was not particularly distracting. Eventually, for the better of the game, I implemented the change. Lea also proposed a intermediate screen that summarizes the player's life to replace the history that was in the old graph. We eventually decided on this metaphorical sunset screen where the player sees all his or her past choices together with a sun that moves along to represent the player's age. The final result is really quite spectacular. Our game went from feeling mostly polished when we were showing the second incarnation at Indiecade, to feeling just plain SLICK in its current state. Now only relevent information is shown and all the transitions are smooth. We show this game publicly now with few reservations. 
+
+4. Bits and pieces of new dialog were added to the game overtime. To be frank, I never though that these would make a huge difference. Some of these dialogs were added to enforce or remind the player of certain connections. Some of these dialogs were simply added to reward the player and add more dynamic content to the game. We added these dialogs one at a time and each time we added one it was like wow. Now that I look at the game as a whole with all these changes implemented, I can't imagine the game without any one of them. These changes include the inter-age graphics and text, the unique death graphics, and the connection text at the very end. For game designers out there, there is this magical moment when making a game when something changes. This curious change always sneaks in. Outwardly it may be manifested by actually having fun when testing your own game. In reality, it is the point where the game develops up emergent behaviour, or more specifically in our case, emergent narrative. For us, these new dialogs marks this point. 
+
+5. This one is not so much a change but an on going dialog of how we are trying to direct the gameplay. I was bent on making this game more than just a gimmicky novelty for players to try once and put away. There's basically no reason for this to be the case--the core mechanic has all the qualities of a more traditional game mechanic that can be molded and shaped to create a sequence of increasingly difficult challenges for the player. Likewise, the plethora of content we had could promote replayability. This task was particularly challenging though because we were already using difficulty as a narrative variable in our game. We had some ideas to have two dimenisons of difficulty, one controlled by gameplay pacing and one controlled by the narrative but this idea was eventually scrapped. Instead we added poor performance and death cutscenes to the game which added a significant contribution towards both the gameplay pacing and narrative. In the current state of the game, I think these narrative elements are a sufficient motivator for the player. The narrative is strong enough to drive the goals of the game. The player wont simply choose the easiest path because this isn't the path that he or she wants to role play. There will certainly be difficult choices to make and making all the right ones will likely result in poor performance or death. The next step for us is to really start using well known tactics to even further promote replayability. I sometimes feel this cheapens the experience but forcing the player to unlock new characters I think is really the right decision. Actually we came up with a really seamless way to integrate it with the concept of the game. We're adding these meta-narrative dialogs at the end of the game where the player's simulated life experiences, good or bad, will unveil "new life choices". We wont know how well this works until we do (a lot of) playtesting but I'm very hopeful!
+
+The rest of this article is dedicated to all the technical challenges that I faced when developing Perfect Woman. We chose Unity which was a terrible platform for our game though sadly still the right choice. I say the right choice because Unity's one click distribution is really unprecedented. The amount of time I've spent in past non-Unity projects worrying about how to make a cross platform game is just obscene. Now, with Unity for Xbox One, we only need to do little work to port this game. Now I say Unity was a terrible choice because it was really not designed to make a game like Perfect Woman. To Unity's credit it come from its original niche to mainstream attention quite well with few technical hiccups. Still, I remember the Unity 1.0 days where Unityscript was the language of choice and the engine was designed to entice non-programmers to go into game making. To me, the genius of Unity's engine design though, was the incorporation of the CLR as its scripting platform. I have little to say about the backend of Unity other than it works and does what I need it to, but it's unique approach to scripting I dare say has entirely changed how game development is approached. Instead, an incredibly powerful, debuggable, auto completable, compileable language can be leveraged for scripting and at the same time an incredibly fast to program language can be used for the backend. All the system level nonsense is still in C/C++ though so really there is little performance sacrafice. Having said all that, the engine was originally designed for game designers, not programmers and this is evident in its design. In its current state, I think Unity welcomes both programmers and designers alike, but programmers must intimately be familiar with Unity's idiosynchrasies to not fall into a really really deep spiky pit while developing. Here are some of the technical hurdles I had to jump while programming Perfect Woman:
+
+1. I think this is something that happnes to most Unity developers at some point. Here's the scenario, you're working on the game and everything is fine, and then you reach some critical threshold of assets (2 gigs) and the game grinds to a halt. What happens is all explicit references in the scene in Unity get automatically loaded at the beginning of the game whether they are needed or not. Since that reference is persistent, they also never get unloaded. (Worse, in Unity 3, these assets did not get unloaded in between test runs and I had to constantly restart Unity to clean up the memory). Since we had large 2d assets including mostly blank images to store 2d position data as small black pixels, we very quickly reached this limit. Of course, this was not until after I was comitted to my system and painstakingly added half the characters to the game. Such a thing would never be a problem in any engine that doesn't attempt to usurp resource management so comprehensively as Unity does. 
+
+2. (continuing from above) In fact, it's a common complaint that Unity has no good way to load files by filename. As of Unity 3 (perhaps 4?) Resources.Load does not allow you to set asset import settings which is a gamebreaker if you're doing 2D graphics (because all your textures get aliased and turned to their closest squares). I could have used one scene per character to control memory allocation but that would have many implications in the code architecture (plus I'd have to manage 27 scenes). The solution finally came in the form of an odd feature in Unity designed to allow (presumably mobile) games to stream content to games: Asset Bundles. Asset Bundles are an incredibly high level feature and very gauche to use. A bit of elbow grease though, and I was able to rig these buggers to stream all my content into the game from disc, and unload cleanly afterwards. Now, we have a separate project with editor scripts that automatically builds the necessary bundles from folders of files that follow a strict file naming scheme. This has had the added benefit of allowing Lea to work on an entirely separate project in the repository saving ourselves countless merge conflicts :). I found out afterwards... Well I think there is in fact a function hidden in the depth of Unity's API that may or may not do allow me to clean up the memory (Resources.UnloadUnusedAssets()). Still, if this does what it should do, it would not have resolved the asset referencing issue. Asset bundles resolved both the memory allocation and referencing assets by string issue. I can see myself doing this in the future unless Unity comes up with a more native solution. I think the way Unity forces developers to control all assets within the editor is highly contrary to more familiar development patterns, an overall bad design choice, and in our case a near game breaker. Goodness that was a long rant ;).
+
+3. I had to do a lot of maguyvering to get 2d assets to work. Our images consist of a lot of blank space and there are several images that serve as meta data to position other images. It was essentially impossible to keep all these images as textures within Unity without running out of memory. Now, in our special assets project, I have scripts that reads all the image data (this takes a while unfortunately) and stores it inside of a serializable class. This is written as a textfile alongside all the actual images inside of a single asset bundle. Likewise, I have many many helper functions to create, resize, recolor, order and position all our 2d graphics. It's actually a pretty nice suite of functions that I might put on the asset store (for free) some day. I hear all this is less of an issue now with Unity2D features, but I also hear the fetaures are still a little lackluster. With the scene based memory issues we ran into, I doubt Unity2D would have really done us any good.
+
+4. A better question is to ask what Unity did provide for us? ZigFu is a fantastic plugin that got us off the ground fast and has proved to be perfectly sufficient. I made good use of Unity's RenderTextures which are counterintuitive at first to handle layered scenes but actually turned out to be quite easy to use and effective. Overall though, if there was a good alternative to Unity I think we would have been much better off on that platform instead. Currently, the closest thing is monogame but that comes with its own slew of problems. In addition, .NET has not been officially announced for the Xbox ONE yet either and I sure as hell was not about to program the game in C++. (Developer's note: I'm actually extremely proficient in C++ but its development overhead is just too high. The amount of time I spend setting up my project, hooking up libraries, and figuring out how to cross compile for other systems is just obscene. These days, I really try and avoid the language as much as possible. Eskil Steenberg would kindly like to disagree here. He'd also tell me that I should be using C)
+
+With all that I'll end here. Wow this turned out to be long! I'm really surprised how many of the intimate details I remember and that makes me realize how passionate I must have been throughout the whole process as much as I like to deny it. There are many things I did not say here of course and I am sure Lea has her own story to tell. Thank you all for reading!
 
 ::Perfect Woman Script::
 -This is Mary
