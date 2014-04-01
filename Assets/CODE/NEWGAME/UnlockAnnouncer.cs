@@ -42,6 +42,7 @@ public class FlatUnlockBadge : FlatElementMultiBase
 		var bgImage = ManagerManager.Manager.mCharacterBundleManager.get_image("UNLOCKABLES_PLATE");
 		background = new FlatElementImage(bgImage.Image,bgImage.Data.Size,aDepth);
 		mainIcon = new FlatUnlockIcon(aChar,true,aDepth+1);
+
 		//TODO construct contributors
 		contributors = new FlatUnlockIcon[0];
 
@@ -73,6 +74,12 @@ public class UnlockAnnouncer
 		TED = new TimedEventDistributor();
 	}
 
+	public bool IsAnnouncing{
+		get{
+			return TED.has_event();
+		}
+	}
+
 	
 	public void update()
 	{
@@ -80,7 +87,8 @@ public class UnlockAnnouncer
             e.update(Time.deltaTime);       
 		TED.update(Time.deltaTime);
 	}
-	
+
+	//TODO add text argument
 	public void announce_unlock(CharacterIndex aChar)
 	{
 		float gDisplayTime = 5;
@@ -99,6 +107,6 @@ public class UnlockAnnouncer
 				mElement.Remove(badge);
 				badge.destroy();
 			}
-		,5);
+		,1.5f);
 	}
 }

@@ -42,7 +42,7 @@ public class Unlockables
 			if(e.Choice == 0)
 				unlockedCharacters[e] = 1; //unlocked
 			else if(e.Choice < 4)
-				unlockedCharacters[e] = 1;//2; //hidden
+				unlockedCharacters[e] = 2; //2; //hidden
 			else
 				unlockedCharacters[e] = 0; //unknown
 		}
