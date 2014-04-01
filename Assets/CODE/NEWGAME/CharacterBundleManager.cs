@@ -256,7 +256,8 @@ public class CharacterBundleManager : FakeMonoBehaviour {
 		ChoiceHelper.Shuffle(avail);
 		var changeThisInfo = mCharacterHelper.Characters[CharacterIndex.sFetus].CharacterInfo;
 		changeThisInfo.ChangeSet[0].Changes[1].Changes[avail[0]] = -1;
-		changeThisInfo.ChangeSet[0].Changes[2].Changes[avail[1]] = 1;
+		//TODO so there is a funny problem with 
+		changeThisInfo.ChangeSet[0].Changes[2].Changes[avail[avail.Count() > 1 ? 1 : 0]] = 1; 
 		
 		foreach(CharacterIndex e in CharacterIndex.sAllCharacters)
 		{

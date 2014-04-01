@@ -255,6 +255,7 @@ public class SunsetManager
         foreach (FlatElementBase e in mElement)
             e.update(Time.deltaTime);       
 		TED.update(Time.deltaTime);
+		mUnlockAnnouncer.update();
 	}
 	
 
@@ -658,6 +659,30 @@ public class SunsetManager
 
 
 
+		//TODO do unlockables here
+		foreach(CharacterIndex e in CharacterIndex.sAllCharacters)
+		{
+			if(mManager.mMetaManager.UnlockManager.is_unlocked(e) != 1)
+			{
+				if(UnlockRequirements.requirements.ContainsKey(e) && UnlockRequirements.requirements[e](aStats) != "")
+				{
+					CharacterIndex ce = new CharacterIndex(e);
+					chain = chain.then_one_shot(
+						delegate(){
+							mUnlockAnnouncer.announce_unlock(ce);
+							
+						}
+					,0).then(
+						delegate(float aTime){
+							return !mUnlockAnnouncer.IsAnnouncing;
+						}
+					,0);
+				}
+			}
+		}
+
+		
+		
 		if(GameConstants.showReward && aStats[aStats.Count-1].Character.LevelIndex >= 7)
 		{
 			FlatElementImage rewardImage = null;
@@ -665,39 +690,41 @@ public class SunsetManager
 			mModeNormalPlay.mGiftManager.set_background_for_render();
 			chain = chain.then_one_shot(
 				delegate()  {
-
-					var frameImg = mManager.mCharacterBundleManager.get_image("GIFT_frame");
-					rewardFrame = new FlatElementImage(frameImg.Image,frameImg.Data.Size,24);
-					rewardImage = new FlatElementImage(mModeNormalPlay.mGiftManager.render_gift(0),new Vector2(2001,1128),23);
-
-					//TODO play sound effect
-					rewardImage.HardPosition = mFlatCamera.get_point(0,3);
-					rewardFrame.HardPosition = rewardImage.HardPosition;
-					rewardImage.SoftPosition = mFlatCamera.Center + new Vector3(0,150,0);
-					rewardFrame.SoftPosition = rewardImage.SoftPosition + new Vector3(0,70,0);
-					mElement.Add(rewardImage);
-					mElement.Add(rewardFrame);
-
-					var subChain = TED.empty_chain().wait(4);
-					if(mModeNormalPlay.mGiftManager.gift_count() > 0)
+				
+				var frameImg = mManager.mCharacterBundleManager.get_image("GIFT_frame");
+				rewardFrame = new FlatElementImage(frameImg.Image,frameImg.Data.Size,24);
+				rewardImage = new FlatElementImage(mModeNormalPlay.mGiftManager.render_gift(0),new Vector2(2001,1128),23);
+				
+				//TODO play sound effect
+				rewardImage.HardPosition = mFlatCamera.get_point(0,3);
+				rewardFrame.HardPosition = rewardImage.HardPosition;
+				rewardImage.SoftPosition = mFlatCamera.Center + new Vector3(0,150,0);
+				rewardFrame.SoftPosition = rewardImage.SoftPosition + new Vector3(0,70,0);
+				mElement.Add(rewardImage);
+				mElement.Add(rewardFrame);
+				
+				var subChain = TED.empty_chain().wait(4);
+				if(mModeNormalPlay.mGiftManager.gift_count() > 0)
+				{
+					for(int i = 1; i < 100; i++)
 					{
-						for(int i = 1; i < 100; i++)
-						{
-							int localIndex = i%mModeNormalPlay.mGiftManager.gift_count();
-							subChain = subChain.then_one_shot(
-								delegate(){
-									//TODO sound effect
-									mModeNormalPlay.mGiftManager.render_gift(localIndex);
-								}
-							,1f);
+						int localIndex = i%mModeNormalPlay.mGiftManager.gift_count();
+						subChain = subChain.then_one_shot(
+							delegate(){
+							//TODO sound effect
+							mModeNormalPlay.mGiftManager.render_gift(localIndex);
 						}
+						,1f);
 					}
-					
 				}
+				
+			}
 			,2);
 			//chain = chain.wait(6);
 			//chain = chain.then(skippable_text_bubble_event("YOU ARE THE PERFECT WOMAN!",5,-0.8f,2),0);
 		}
+
+
 		
 		//variables for credits animation..
 		float lastTime = 0;
