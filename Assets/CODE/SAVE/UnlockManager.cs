@@ -8,22 +8,39 @@ using System.Runtime.Serialization.Formatters.Binary;
 
 public static class UnlockRequirements
 {
-	public static Dictionary<CharacterIndex, System.Func<List<PerformanceStats>, string> > 
-		requirements = new Dictionary<CharacterIndex,System.Func<List<PerformanceStats>, string>>()
+	public class UnlockData
+	{
+		public string Sentence{get;set;}
+		public CharacterIndex[] Related{get;set;}
+		public UnlockData()
+		{
+			Related = new CharacterIndex[0];
+			Sentence = "";
+		}
+		public static implicit operator UnlockData(string aString)
+		{
+			return new UnlockData(){Sentence = aString};
+		}
+	}
+	public static Dictionary<CharacterIndex, System.Func<List<PerformanceStats>, UnlockData> > 
+		requirements = new Dictionary<CharacterIndex,System.Func<List<PerformanceStats>, UnlockData>>()
 	{
 		{ new CharacterIndex(1,1), delegate(List<PerformanceStats> aStats)
 			{
-				return "Playing the game once made you realize you can be star even when really young!";
+				return new UnlockData(){
+					Sentence = "Playing the game once made you realize you can be star even when really young!",
+					Related = new CharacterIndex[]{new CharacterIndex(2,1),new CharacterIndex(3,3)}
+				};	
 			}
 		},{ new CharacterIndex(2,1), delegate(List<PerformanceStats> aStats)
 			{
-				return "";
+				return null;
 			}
 		},{	new CharacterIndex(1,2), delegate(List<PerformanceStats> aStats)
 			{
 				if(aStats.Count() > 7)
 					return "Getting very old made you understand that life should not always be fun and games";
-				return "";
+				return null;
 			}
 		}
 	};
@@ -51,7 +68,6 @@ public class Unlockables
 
 public class UnlockManager
 {
-	
 	Unlockables mUnlocked;
 	
 	public UnlockManager()
@@ -68,7 +84,7 @@ public class UnlockManager
 			if(mUnlocked.unlockedCharacters[e] != 1)
 				if(UnlockRequirements.requirements.ContainsKey(e))
 				{
-					string msg = UnlockRequirements.requirements[e](aStats);
+					string msg = UnlockRequirements.requirements[e](aStats).Sentence;
 					if(msg != "")
 						;//TODO
 				}

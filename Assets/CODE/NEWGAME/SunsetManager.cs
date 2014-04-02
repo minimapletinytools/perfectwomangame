@@ -664,19 +664,21 @@ public class SunsetManager
 		{
 			if(mManager.mMetaManager.UnlockManager.is_unlocked(e) != 1)
 			{
-				if(UnlockRequirements.requirements.ContainsKey(e) && UnlockRequirements.requirements[e](aStats) != "")
+				if(UnlockRequirements.requirements.ContainsKey(e))
 				{
-					CharacterIndex ce = new CharacterIndex(e);
-					chain = chain.then_one_shot(
-						delegate(){
-							mUnlockAnnouncer.announce_unlock(ce);
-							
-						}
-					,0).then(
-						delegate(float aTime){
-							return !mUnlockAnnouncer.IsAnnouncing;
-						}
-					,0);
+					var unlockData = UnlockRequirements.requirements[e](aStats);
+					if(unlockData != null){
+						CharacterIndex ce = new CharacterIndex(e);
+						chain = chain.then_one_shot(
+							delegate(){
+								mUnlockAnnouncer.announce_unlock(ce,UnlockRequirements.requirements[ce](aStats));
+							}
+						,0).then(
+							delegate(float aTime){
+								return !mUnlockAnnouncer.IsAnnouncing;
+							}
+						,0);
+					}
 				}
 			}
 		}

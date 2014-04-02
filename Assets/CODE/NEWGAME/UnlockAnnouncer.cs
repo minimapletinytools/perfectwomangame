@@ -14,11 +14,11 @@ public class FlatUnlockIcon : FlatElementMultiBase{
 
 		background = new FlatElementImage(bgImage.Image,bgImage.Data.Size,aDepth);
 		icon = new FlatElementImage(charIcon.Image,charIcon.Data.Size,aDepth+1);
-		name = new FlatElementText(ManagerManager.Manager.mNewRef.genericFont,100,FlatElementText.convert_to_multiline(2,aChar.ShortName.ToUpper()),aDepth + 1);
+		name = new FlatElementText(ManagerManager.Manager.mNewRef.genericFont,50,FlatElementText.convert_to_multiline(2,aChar.ShortName.ToUpper()),aDepth + 1);
 
 		mElements.Add(new FlatElementMultiBase.ElementOffset(background, new Vector3(0,0,0)));
 		mElements.Add(new FlatElementMultiBase.ElementOffset(icon, new Vector3(0,70,0)));
-		mElements.Add(new FlatElementMultiBase.ElementOffset(name, new Vector3(0,-30,0)));
+		mElements.Add(new FlatElementMultiBase.ElementOffset(name, new Vector3(0,-70,0)));
 
 		PrimaryGameObject = create_primary_from_elements();
 		Depth = aDepth; 
@@ -37,22 +37,28 @@ public class FlatUnlockBadge : FlatElementMultiBase
 	FlatUnlockIcon[] contributors;
 
 	
-	public FlatUnlockBadge(CharacterIndex aChar, int aDepth)
+	public FlatUnlockBadge(CharacterIndex aChar, UnlockRequirements.UnlockData aData, int aDepth)
 	{
+		var unlockfont = ManagerManager.Manager.mNewRef.serifFont;
 		var bgImage = ManagerManager.Manager.mCharacterBundleManager.get_image("UNLOCKABLES_PLATE");
 		background = new FlatElementImage(bgImage.Image,bgImage.Data.Size,aDepth);
+		text1 = new FlatElementText(unlockfont,120,"new lifestyle",aDepth +1);
+		text2 = new FlatElementText(unlockfont,200,"UNLOCKED",aDepth +1);
 		mainIcon = new FlatUnlockIcon(aChar,true,aDepth+1);
-
-		//TODO construct contributors
-		contributors = new FlatUnlockIcon[0];
-
+		text3 = new FlatElementText(unlockfont,70,FlatElementText.convert_to_multiline(2,aData.Sentence),aDepth +1);
 
 		mElements.Add(new FlatElementMultiBase.ElementOffset(background, new Vector3(0,0,0)));
-		mElements.Add(new FlatElementMultiBase.ElementOffset(mainIcon, new Vector3(0,70,0)));
-		Vector3 step = new Vector3(-200,0,0);
+		mElements.Add(new FlatElementMultiBase.ElementOffset(text1, new Vector3(0,900,0)));
+		mElements.Add(new FlatElementMultiBase.ElementOffset(text2, new Vector3(0,700,0)));
+		mElements.Add(new FlatElementMultiBase.ElementOffset(mainIcon, new Vector3(0,200,0)));
+		mElements.Add(new FlatElementMultiBase.ElementOffset(text3, new Vector3(0,0,0)));
+
+		contributors = new FlatUnlockIcon[aData.Related.Length];
+		Vector3 step = new Vector3(-900,0,0);
 		Vector3 start = (contributors.Length-1)*(-step)/2f;
 		for(int i = 0; i < contributors.Length; i++)
 		{
+			contributors[i] = new FlatUnlockIcon(aData.Related[i],false,aDepth +1);
 			FlatUnlockIcon e = contributors[i];
 			mElements.Add(new FlatElementMultiBase.ElementOffset(e, start + step*i));
 		}
@@ -89,11 +95,11 @@ public class UnlockAnnouncer
 	}
 
 	//TODO add text argument
-	public void announce_unlock(CharacterIndex aChar)
+	public void announce_unlock(CharacterIndex aChar, UnlockRequirements.UnlockData aData)
 	{
 		float gDisplayTime = 5;
 
-		FlatUnlockBadge badge = new FlatUnlockBadge(aChar,30);
+		FlatUnlockBadge badge = new FlatUnlockBadge(aChar,aData,30);
 		badge.HardPosition = mSunset.mFlatCamera.Center + new Vector3(0,2000,0);
 		badge.SoftPosition = mSunset.mFlatCamera.Center;
 		mElement.Add(badge);

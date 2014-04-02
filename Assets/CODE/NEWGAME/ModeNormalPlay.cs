@@ -251,8 +251,8 @@ public class ModeNormalPlay
 		if(Input.GetKeyDown(KeyCode.Alpha9))
 			DoSkipSingleThisFrame = true;
 		if(Input.GetKeyDown(KeyCode.Alpha8))
-			mManager.mTransparentBodyManager.transition_character_in(GameConstants.UiWhiteTransparent);
-
+			transition_to_TRANSITION_play(new CharacterIndex("999"));
+			//mManager.mTransparentBodyManager.transition_character_in(GameConstants.UiWhiteTransparent);
 
 		if(GS == NormalPlayGameState.CHOICE)
 		{
