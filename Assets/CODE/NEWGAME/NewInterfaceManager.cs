@@ -296,6 +296,22 @@ public class NewInterfaceManager {
 	public void set_for_CUTSCENE(System.Action cutsceneCompleteCb, NUPD.ChangeSet aChanges)
 	{
 
+		List<NUPD.ChangeSubSet> newChanges = new List<NUPD.ChangeSubSet>(aChanges.Changes);
+		for(int i = 0; i < aChanges.Changes.Count; i++)
+		{
+			foreach(CharacterIndex f in CharacterIndex.sAllCharacters)
+				if(mManager.mMetaManager.UnlockManager.is_unlocked(f) != 1)
+					newChanges[i].Changes[f] = 0;
+
+			if(newChanges[i].Changes.is_zero())
+			{
+				newChanges.RemoveAt(i);
+				Debug.Log ("REMOVED CHANGES");
+			}
+		}
+		aChanges.Changes = newChanges;
+
+
 
 		//used for skipping cutscene
 		/*

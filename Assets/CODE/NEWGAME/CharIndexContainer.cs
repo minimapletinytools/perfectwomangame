@@ -58,6 +58,11 @@ public class CharIndexContainerInt
 		}
 		return r;
 	}
+
+	public bool is_zero()
+	{
+		return to_array().Where(e=>e!=0).Count() == 0;
+	}
 }
 
 public class CharIndexContainerCharacterLoader
