@@ -2,12 +2,15 @@ using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
 
+[System.Serializable]
 public class CharacterStats
 {
 	public CharacterIndex Character { get; set; }
 	public int Perfect { get; set; } //TODO DELETE (I'm not actually going to delete this, but it's no longer needed)
 	public int Difficulty { get; set; }
-	public NUPD.CharacterInformation CharacterInfo { get; set; }
+	[System.NonSerialized] //we only serialize this class for game history, not for characterinfo related stuff
+	NUPD.CharacterInformation mCharInfo = null;
+	public NUPD.CharacterInformation CharacterInfo { get {return mCharInfo;} set{mCharInfo = value;} }
 	
 	public CharacterStats()
 	{
@@ -18,21 +21,28 @@ public class CharacterStats
 	}
 }
 
-
+[System.Serializable]
 public class PerformanceStats
 {
-	public CharacterIndex Character {
-		get{
-			return Stats.Character;
-		}
-		set{
-			Stats.Character = value;
-		}
-	}
-	
+
+	public CharacterStats Stats
+	{ get; set; }
+	public bool Finished { get; set; } //did we finish with this character already
+	public float DeathTime { get; set; } //what time (0,1) did this character die
+
+	[System.NonSerialized] //we don't serialize this because it's too big and not needed
+	List<KeyValuePair<float,float>> mScore; //time, score
+	float mTotalScore; //instead the score is stored here so we are fine
+
+	//public PerformanceGraphObject PerformanceGraph { get; private set; }
+
+
+	public CharacterIndex Character {get{return Stats.Character;} set{Stats.Character = value;}}
 	public float Score{
 		get{
 			return mTotalScore;
+
+			//note this version wont work for a deserialized PerformanceState because we don't store serialize mScore
 			/*
 			float r = 0;
 			for(int i = 1; i < mScore.Count; i++)
@@ -49,13 +59,9 @@ public class PerformanceStats
 		}
 	}
 	
-	public bool Finished { get; set; } //did we finish with this character already
-	public float DeathTime { get; set; } //what time (0,1) did this character die
+
 	
-	//public PerformanceGraphObject PerformanceGraph { get; private set; }
-	
-	public CharacterStats Stats
-	{ get; set; }
+
 	
 	public NUPD.ChangeSet CutsceneChangeSet
 	{ 
@@ -96,9 +102,8 @@ public class PerformanceStats
 		mScore = new List<KeyValuePair<float, float>>();
 		update_score(0,0); //this is a dummy point
 	}
-	
-	List<KeyValuePair<float,float>> mScore; //time, score
-	float mTotalScore;
+
+
 	
 	public void update_score(float aTime, float aScore) //time should be between 0 and 1
 	{
