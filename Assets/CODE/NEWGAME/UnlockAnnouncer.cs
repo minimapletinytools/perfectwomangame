@@ -48,14 +48,14 @@ public class FlatUnlockBadge : FlatElementMultiBase
 		text3 = new FlatElementText(unlockfont,70,FlatElementText.convert_to_multiline(2,aData.Sentence),aDepth +1);
 
 		mElements.Add(new FlatElementMultiBase.ElementOffset(background, new Vector3(0,0,0)));
-		mElements.Add(new FlatElementMultiBase.ElementOffset(text1, new Vector3(0,900,0)));
-		mElements.Add(new FlatElementMultiBase.ElementOffset(text2, new Vector3(0,700,0)));
+		mElements.Add(new FlatElementMultiBase.ElementOffset(text1, new Vector3(0,600,0)));
+		mElements.Add(new FlatElementMultiBase.ElementOffset(text2, new Vector3(0,450,0)));
 		mElements.Add(new FlatElementMultiBase.ElementOffset(mainIcon, new Vector3(0,200,0)));
-		mElements.Add(new FlatElementMultiBase.ElementOffset(text3, new Vector3(0,0,0)));
+		mElements.Add(new FlatElementMultiBase.ElementOffset(text3, new Vector3(0,-200,0)));
 
 		contributors = new FlatUnlockIcon[aData.Related.Length];
-		Vector3 step = new Vector3(-900,0,0);
-		Vector3 start = (contributors.Length-1)*(-step)/2f;
+		Vector3 step = new Vector3(-400,0,0);
+		Vector3 start = (contributors.Length-1)*(-step)/2f + new Vector3(0,-700,0);
 		for(int i = 0; i < contributors.Length; i++)
 		{
 			contributors[i] = new FlatUnlockIcon(aData.Related[i],false,aDepth +1);
