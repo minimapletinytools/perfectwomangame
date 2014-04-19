@@ -31,11 +31,14 @@ public class CachedFlatParticles
 	}
 }
 
+
+//man this class is really really dumb..
 public class SparkleStarFlashParticle
 {
 	
 	FlatParticleEmitter mEmitter;
 	FlatParticleEmitter mEmitter2;
+	FlatParticleEmitter mEmitter3;  //use this one for sky particles
 	Dictionary<string, CachedFlatParticles> mCachedParticles = new Dictionary<string, CachedFlatParticles>();
 	public string[] mParticleTypes = new string[]{"gold","silver","glow","red"};
 
@@ -48,10 +51,15 @@ public class SparkleStarFlashParticle
 			mEmitter.StartColor = aColor;
 			mEmitter.EndColor = endColor;
 		}
-		else
+		else if(emitterNum == 2)
 		{
 			mEmitter2.StartColor = aColor;
 			mEmitter2.EndColor = endColor;
+		}
+		else if(emitterNum == 3)
+		{
+			mEmitter3.StartColor = aColor;
+			mEmitter3.EndColor = endColor;
 		}
 
 
@@ -72,6 +80,14 @@ public class SparkleStarFlashParticle
 			StartColor = GameConstants.UiWhite,
 			EndColor = GameConstants.UiWhiteTransparent
 		};
+
+		mEmitter3 = new FlatParticleEmitter()
+		{
+			UseColor = true,
+			StartColor = GameConstants.UiWhite,
+			EndColor = GameConstants.UiWhiteTransparent,
+			Gravity = new Vector3(0,-10000,0)
+		};
 		
 		foreach(string e in mParticleTypes)
 		{
@@ -81,12 +97,7 @@ public class SparkleStarFlashParticle
 	
 	public void create_cached_particles()
 	{
-	}
-	
-	
-	public void emit_rectangle(float grade, Rect position)
-	{
-		
+		//TODO
 	}
 	
 	public void emit_point(int count, Vector3 position, float speed)
@@ -104,6 +115,21 @@ public class SparkleStarFlashParticle
 			                scale,
 			                true
 			                );
+	}
+
+	public void emit_line(string type, int count, Vector3 lineStart, Vector3 lineEnd, float scale)
+	{
+		for(int i = 0; i < count; i++)
+		{
+			float lambda = Random.Range(0f,1f);
+			create_particle(type,
+			                lineStart*lambda + lineEnd*(1-lambda),
+			                Vector3.zero,
+			                new QuTimer(-1f,0.2f),
+			                scale,
+			                true
+			                );
+		}
 	}
 
 	public void emit_continuous(float grade, Vector3 position)
@@ -178,6 +204,10 @@ public class SparkleStarFlashParticle
 			mCachedParticles[e.id].return_particle(e.element);
 		}
 		foreach(var e in mEmitter2.update_particles(aDelta))
+		{
+			mCachedParticles[e.id].return_particle(e.element);
+		}
+		foreach(var e in mEmitter3.update_particles(aDelta))
 		{
 			mCachedParticles[e.id].return_particle(e.element);
 		}

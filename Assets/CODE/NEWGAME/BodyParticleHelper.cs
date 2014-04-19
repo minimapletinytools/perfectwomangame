@@ -137,6 +137,17 @@ public class BodyParticleHelper
 				mParticles.emit_point(count*2/3, activeBody.mFlat.get_body_part_position(ZigJointId.Torso),1000);
 				*/
 		}
+
+		//TODO test this..
+		if(continuous)
+		{
+			//if(man.mGameManager.mModeNormalPlay.IsFever)
+			{
+				//TODO this is the wrong camera lol...
+				FlatCameraManager cam = ManagerManager.Manager.mGameManager.mModeNormalPlay.mFlatCamera;
+				mParticles.emit_line("gold",1,cam.get_point(-1f,1.1f),cam.get_point(1f,1.1f),2);
+			}
+		}
 		
 		
 		
