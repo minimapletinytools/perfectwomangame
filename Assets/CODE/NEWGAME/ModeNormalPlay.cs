@@ -146,6 +146,7 @@ public class ModeNormalPlay
 		mSunsetImage.HardScale = Vector3.one * mFlatCamera.Width/mSunsetImage.mImage.PixelDimension.x;
 		mSunsetImage.HardPosition = mFlatCamera.Center + Vector3.right*mSunsetImage.BoundingBox.width;
 		mSunsetImage.HardShader = mManager.mReferences.mRenderTextureShader;
+		mSunsetImage.PositionInterpolationMinLimit = 10; //so it doesn't take forever to entirely cover the image underneath
 		mElement.Add(mSunsetImage);
 		
 		
@@ -289,7 +290,7 @@ public class ModeNormalPlay
 						if(Input.GetKeyDown(choiceKeys[j]))
 						{
 							slide_image(mChoosingImage,null);
-							slide_image(mSunsetImage,null);
+							slide_image(mSunsetImage,null,false);
 							mManager.mMusicManager.fade_out_extra_music();
 							mManager.mMusicManager.fade_out();
 							mManager.mAssetLoader.new_load_character((new CharacterIndex(i+1,j)).StringIdentifier,mManager.mCharacterBundleManager);
@@ -707,7 +708,7 @@ public class ModeNormalPlay
 		mChoiceHelper.shuffle_and_set_choice_poses(chars.Length,mChoosingManager); 
 		mChoosingManager.set_bb_choices(chars);
 		mSunsetManager.add_character(NGM.CurrentCharacterLoader.Character);
-		slide_image(null,mSunsetImage);
+		slide_image(null,mSunsetImage,false);
 		mManager.mMusicManager.fade_out(3);
 
 		if(!Input.GetKey(KeyCode.Alpha0))
@@ -785,12 +786,12 @@ public class ModeNormalPlay
 					delegate(){
 						if(aNextCharacter != CharacterIndex.sGrave) {
 							mManager.mAssetLoader.new_load_character(aNextCharacter.StringIdentifier,mManager.mCharacterBundleManager);
-							slide_image(mSunsetImage,null);
+							slide_image(mSunsetImage,null,false);
 						} else {
 							mManager.mTransitionCameraManager.fade_in_with_sound();
 							mSunsetManager.add_character(NGM.CurrentCharacterLoader.Character,false);
 							mSunsetManager.set_sun();
-							slide_image(null,mSunsetImage,true);
+							slide_image(null,mSunsetImage,false,true);
 							transition_to_GRAVE();
 						}
 					}
@@ -887,20 +888,20 @@ public class ModeNormalPlay
 		}
 	}
 
-	public void slide_image(FlatElementImage cur, FlatElementImage next, bool instant = false)
+	public void slide_image(FlatElementImage cur, FlatElementImage next, bool right = true, bool instant = false)
 	{
 
 		//TODO set triggers to deactivate the surfaces, maybe not here.. for performance..
 		if(next!=null)
 		{
-			next.HardPosition = mFlatCamera.Center + Vector3.right*next.BoundingBox.width;
+			next.HardPosition = mFlatCamera.Center + (right ? Vector3.right*next.BoundingBox.width : Vector3.down * next.BoundingBox.height);
 			next.SoftPosition = mFlatCamera.Center;
 			if(instant)
 				next.HardPosition = next.SoftPosition;
 		}
 		if(cur != null)
 		{
-			cur.SoftPosition = mFlatCamera.Center - Vector3.right*cur.BoundingBox.width;
+			cur.SoftPosition = mFlatCamera.Center - (right ? Vector3.right*cur.BoundingBox.width : Vector3.down * cur.BoundingBox.height);
 			if(instant)
 				cur.HardPosition = cur.SoftPosition;
 		}
