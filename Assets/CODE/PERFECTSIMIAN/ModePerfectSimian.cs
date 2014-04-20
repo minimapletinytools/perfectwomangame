@@ -1,5 +1,6 @@
 using UnityEngine;
-using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 
 public class ModePerfectSimian
 {
@@ -10,7 +11,7 @@ public class ModePerfectSimian
 	NewGameManager NGM {get; set;}
 	ManagerManager mManager {get; set;}
 	
-	PhysicsFlatBodyObject mFlat = null;
+	FarseerSimian mSimian = null;
 	
 	
 	public ModePerfectSimian(NewGameManager aNgm)
@@ -26,7 +27,6 @@ public class ModePerfectSimian
 	public void initialize() 
 	{
 		mManager.mAssetLoader.new_load_character("05-1",mManager.mCharacterBundleManager);
-		Physics.gravity = new Vector3(0,-10,0);
 	}
 	
 	
@@ -37,9 +37,24 @@ public class ModePerfectSimian
 		flatbody.set_target_pose(NGM.CurrentPose,true);
 		flatbody.HardPosition = Vector3.zero;
         flatbody.update(0);
-		
-		mFlat = new PhysicsFlatBodyObject(flatbody);
-		mFlat.setup_body_with_physics();
+
+		//needed to make debugviewerthing work
+		var cam = mManager.gameObject.AddComponent<Camera>();
+		cam.transform.position = mManager.mCameraManager.MainBodyCamera.transform.position;
+		cam.transform.rotation = mManager.mCameraManager.MainBodyCamera.transform.rotation;
+		cam.fieldOfView = mManager.mCameraManager.MainBodyCamera.fieldOfView;
+		cam.isOrthoGraphic = mManager.mCameraManager.MainBodyCamera.isOrthoGraphic;
+		cam.orthographicSize = mManager.mCameraManager.MainBodyCamera.orthographicSize;
+		cam.depth = 9999999;
+		cam.clearFlags = CameraClearFlags.SolidColor;
+		cam.cullingMask = 0;
+
+		mSimian = new FarseerSimian();
+		mSimian.initialize(mManager.gameObject);
+		mSimian.setup_with_body(flatbody);
+
+		//this is stupid
+		mSimian.add_environment(GameObject.FindObjectsOfType(typeof(Transform)).Where(e=>e.name.StartsWith("FS_")).Select(e=>((Transform)e).gameObject));
 		
 		mManager.mTransitionCameraManager.fade_in_with_sound();
 	}
@@ -47,9 +62,9 @@ public class ModePerfectSimian
 	public void update () 
 	{
 		//we store the desired position inside of mFlat??
-		if(mFlat  != null)
+		if(mSimian  != null)
 		{
-			mFlat.update(mManager.mProjectionManager);
+			mSimian.update(mManager.mProjectionManager);
 		}
 
 

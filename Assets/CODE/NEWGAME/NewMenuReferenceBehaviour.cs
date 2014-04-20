@@ -77,10 +77,10 @@ public class NewMenuReferenceBehaviour : MonoBehaviour {
 	public AudioClip pose4;
 	public AudioClip pose5;
 
-	//TODO more
-	
 	//music
 	public AudioClip startMusic;
 	public AudioClip creditsMusic;
-	
+
+	//farseer
+	public Material farseerMaterial;
 }

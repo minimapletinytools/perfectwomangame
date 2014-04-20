@@ -38,6 +38,7 @@ public class FSDebugDrawComponent : MonoBehaviour
 		cam = GetComponent<Camera>();
 		if(cam == null)
 			return;
+
 		projection = cam.projectionMatrix;
 		debugView = new FarseerDebugViewUnity(FSWorldComponent.PhysicsWorld);
 		debugView.AppendFlags(FarseerPhysics.DebugViewFlags.ContactPoints);
