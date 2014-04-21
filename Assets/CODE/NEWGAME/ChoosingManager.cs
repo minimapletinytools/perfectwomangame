@@ -36,7 +36,7 @@ public class ChoosingManager
 		
 		TED = new TimedEventDistributor();
 		
-		mFlatCamera = new FlatCameraManager(new Vector3(24234,-3535,0),10);
+		mFlatCamera = new FlatCameraManager(new Vector3(24200,-3500,0),10);
 		mFlatCamera.fit_camera_to_game();
 		//mFlatCamera = mModeNormalPlay.mSunsetManager.mFlatCamera;
 		
@@ -59,7 +59,7 @@ public class ChoosingManager
 		
 		mBBChoosingBackground = new FlatElementImage(null,mFlatCamera.Size,0);
 		mBBChoosingBackground.Enabled = false;
-		mBBChoosingBackground.HardPosition = mFlatCamera.Center;
+		mBBChoosingBackground.HardPosition = mFlatCamera.get_point(Vector3.zero);
 		mBBQuestionText = new ColorTextObject(10);
         mBBQuestionTextPrefix = new FlatElementText(newRef.genericFont, 100, "", 10);
 		//mBBQuestionText.HardPosition = mFlatCamera.get_point(0,0.6f) + new Vector3(0,-75,0);

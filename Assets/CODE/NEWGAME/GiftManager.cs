@@ -53,7 +53,7 @@ public class GiftManager
 	{
 		var sizing = mLoader.Sizes.find_static_element(aName);
 		var r = new FlatElementImage(mLoader.Images.staticElements[aName],sizing.Size,aDepth);
-		r.HardPosition = mFlatCamera.Center + sizing.Offset;
+		r.HardPosition = mFlatCamera.get_point(Vector3.zero) + sizing.Offset;
 		return r;
 	}
 

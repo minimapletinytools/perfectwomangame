@@ -119,8 +119,9 @@ public class FarseerSimian
 				//i.e. if f is not connected to anything
 				if(mImportant.ContainsKey(f))
 				{
-					Debug.Log ("created joint");
-					JointFactory.CreateRevoluteJoint(mBodies[e.Key].body,mBodies[f].body,FVector2.Zero);
+					var joint = JointFactory.CreateRevoluteJoint(FSWorldComponent.PhysicsWorld,mBodies[e.Key].body,mBodies[f].body,FVector2.Zero);
+					joint.CollideConnected = false;
+
 					//TODO joint offset??
 				}
 			}

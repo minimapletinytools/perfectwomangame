@@ -60,7 +60,7 @@ public class ImageGameObjectUtility
 
     public void set_new_texture(Texture aTex, System.Nullable<Vector2> aSize = null)
     {
-
+		aSize *= GameConstants.SCALE;
         if (aSize == null)
         {
             if (aTex != null)

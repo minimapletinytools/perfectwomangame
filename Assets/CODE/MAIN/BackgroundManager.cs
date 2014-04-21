@@ -166,7 +166,7 @@ public class BackgroundManager  : FakeMonoBehaviour
 		
         //resize the camera
         foreach (Camera c in mManager.mCameraManager.AllCameras)
-            resize_camera(c, aCharacter.Sizes.mBackSize);
+            resize_camera(c, aCharacter.Sizes.mBackSize * GameConstants.SCALE);
 		
 		
 		//TODO could in theory buffre cutscenes and deaths here.
@@ -185,6 +185,6 @@ public class BackgroundManager  : FakeMonoBehaviour
     //TODO delete this
     public static void resize_camera_against_texture(Camera aCam, Texture aTex, float aDistance = 1)
     {
-        resize_camera(aCam, new Vector2(aTex.width, aTex.height), aDistance);
+		resize_camera(aCam, new Vector2(aTex.width, aTex.height) * GameConstants.SCALE, aDistance);
     }
 }

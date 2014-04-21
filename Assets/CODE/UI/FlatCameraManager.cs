@@ -172,7 +172,7 @@ public class FlatCameraManager{
 		
 		Interpolator.TargetOrthographicHeight = ManagerManager.DESIRED_SCENE_HEIGHT/2f;
 		Camera.orthographicSize = ManagerManager.DESIRED_SCENE_HEIGHT/2f;
-		
+		Interpolator.update(0);
 		//this is for black bars
 		if(hard)
 			fit_camera_to_screen(Camera);
@@ -200,16 +200,20 @@ public class FlatCameraManager{
 
     //other stuff
     //returns world point from coordinates relative to center of screen where screen is (-1,1)x(-1,1)
+	public Vector3 get_point(Vector2 aPos)
+	{
+		return get_point(aPos.x,aPos.y);
+	}
     public Vector3 get_point(float aX, float aY)
     {
-        return Center + new Vector3(aX * Width / 2.0f, aY * Height / 2.0f, 0);
+        return (Center + new Vector3(aX * Width / 2.0f, aY * Height / 2.0f, 0))/GameConstants.SCALE;
     }
 	
 	//this version measures from the entire screen. Not the visible portion
 	//TODO does not account for not centered viewport, i.e. modify by Camera.rect.x/y
 	public Vector3 get_point_total(float aX, float aY)
 	{
-		return Center + new Vector3(aX * Width * (1/Camera.rect.width) / 2.0f, aY * Height * (1/Camera.rect.height) / 2.0f, 0);
+		return (Center + new Vector3(aX * Width * (1/Camera.rect.width) / 2.0f, aY * Height * (1/Camera.rect.height) / 2.0f, 0))/GameConstants.SCALE;
 	}
 
 	public float screen_pixel_to_camera_pixel_ratio()
@@ -220,6 +224,6 @@ public class FlatCameraManager{
 	public Vector3 get_random_point_off_camera(float aBuffer = 300)
 	{
 		float range = Mathf.Max(Width,Height) + aBuffer;
-		return Center + (new Vector3(Random.Range(-1f, 1f), Random.Range(-1f, 1f), 0)).normalized * range;
+		return (Center + (new Vector3(Random.Range(-1f, 1f), Random.Range(-1f, 1f), 0)).normalized * range)/GameConstants.SCALE;
 	}
 }

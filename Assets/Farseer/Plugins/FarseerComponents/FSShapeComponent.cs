@@ -119,6 +119,8 @@ public class FSShapeComponent : MonoBehaviour
 			SphereCollider sc = GetComponent<SphereCollider>();
 			if(sc == null)
 				return null;
+
+			//TODO scale here
 			return new CircleShape(sc.radius*transform.lossyScale.x, Density);
 		}
 		return null;
@@ -135,7 +137,7 @@ public class FSShapeComponent : MonoBehaviour
 			BoxCollider bc = this.GetComponent<BoxCollider>();
 			if(bc == null)
 				return null;
-			
+
 			Vector3 scale = transform.lossyScale;
 			//Debug.Log("SCALE: " + scale);
 			
@@ -158,6 +160,8 @@ public class FSShapeComponent : MonoBehaviour
 			//v02.Scale(scale);
 			Vector3 v03 = isBody ? v03l : FSHelper.LocalTranslatedVec3(v03l, this.transform);
 			//v03.Scale(scale);
+
+			//TODO scale here
 			vs.Add(FSHelper.Vector3ToFVector2(v00));
 			vs.Add(FSHelper.Vector3ToFVector2(v01));
 			vs.Add(FSHelper.Vector3ToFVector2(v02));
@@ -165,6 +169,9 @@ public class FSShapeComponent : MonoBehaviour
 		}
 		else
 		{
+
+			//TODO scale this??
+
 			if(PolygonPoints.Length < 3)
 				return null;
 			//vs = new Vertices();

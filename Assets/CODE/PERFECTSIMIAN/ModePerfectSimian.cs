@@ -1,11 +1,10 @@
 using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.Xna.Framework;
 
 public class ModePerfectSimian
 {
-	
-	
 	
 	
 	NewGameManager NGM {get; set;}
@@ -45,6 +44,7 @@ public class ModePerfectSimian
 		cam.fieldOfView = mManager.mCameraManager.MainBodyCamera.fieldOfView;
 		cam.isOrthoGraphic = mManager.mCameraManager.MainBodyCamera.isOrthoGraphic;
 		cam.orthographicSize = mManager.mCameraManager.MainBodyCamera.orthographicSize;
+		Debug.Log (mManager.mCameraManager.MainBodyCamera.orthographicSize);
 		cam.depth = 9999999;
 		cam.clearFlags = CameraClearFlags.SolidColor;
 		cam.cullingMask = 0;

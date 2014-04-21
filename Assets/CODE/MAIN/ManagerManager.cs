@@ -6,8 +6,8 @@ public class ManagerManager : MonoBehaviour{
 
 	//TODO move to gameconstants
 	//public const float FORCED_ASPECT_RATIO = 16/10f;
-	public const float FORCED_ASPECT_RATIO = 16/9f;
-	public const float DESIRED_SCENE_HEIGHT = 1800;
+	public static float FORCED_ASPECT_RATIO = 16/9f;
+	public static float DESIRED_SCENE_HEIGHT = 1800*GameConstants.SCALE;
 
 
     static ManagerManager sManager = null;

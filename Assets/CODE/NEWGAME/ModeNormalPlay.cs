@@ -138,13 +138,13 @@ public class ModeNormalPlay
 		mChoosingManager.initialize();
 		mChoosingManager.mFlatCamera.set_render_texture_mode(true);
 		
-		mFlatCamera = new FlatCameraManager(new Vector3(-23234,3545,0),10);
+		mFlatCamera = new FlatCameraManager(new Vector3(-23200,3500,0),10);
 		mFlatCamera.Camera.depth = 100;
 		mFlatCamera.fit_camera_to_screen();
 		
 		mSunsetImage = new FlatElementImage(mSunsetManager.mFlatCamera.RT,0);
 		mSunsetImage.HardScale = Vector3.one * mFlatCamera.Width/mSunsetImage.mImage.PixelDimension.x;
-		mSunsetImage.HardPosition = mFlatCamera.Center + Vector3.right*mSunsetImage.BoundingBox.width;
+		mSunsetImage.HardPosition = mFlatCamera.get_point(Vector3.zero) + Vector3.right*mSunsetImage.BoundingBox.width;
 		mSunsetImage.HardShader = mManager.mReferences.mRenderTextureShader;
 		mSunsetImage.PositionInterpolationMinLimit = 10; //so it doesn't take forever to entirely cover the image underneath
 		mElement.Add(mSunsetImage);
@@ -152,7 +152,7 @@ public class ModeNormalPlay
 		
 		mChoosingImage = new FlatElementImage(mChoosingManager.mFlatCamera.RT,1);
 		mChoosingImage.HardScale = Vector3.one * mFlatCamera.Width/mChoosingImage.mImage.PixelDimension.x;
-		mChoosingImage.HardPosition = mFlatCamera.Center + Vector3.right*mChoosingImage.BoundingBox.width;
+		mChoosingImage.HardPosition = mFlatCamera.get_point(Vector3.zero) + Vector3.right*mChoosingImage.BoundingBox.width;
 		//mChoosingImage.HardShader = mManager.mReferences.mRenderTextureShader;
 		mElement.Add(mChoosingImage);
 		
@@ -162,7 +162,7 @@ public class ModeNormalPlay
 		/*
 		mInterfaceImage = new FlatElementImage(mInterfaceManager.mFlatCamera.RT,1);
 		mInterfaceImage.HardScale = Vector3.one * mFlatCamera.Width/mInterfaceImage.mImage.PixelDimension.x;
-		mInterfaceImage.HardPosition = mFlatCamera.Center;
+		mInterfaceImage.HardPosition = mFlatCamera.get_point(Vector3.zero);
 		mElement.Add(mInterfaceImage);*/
 	}
 
@@ -894,14 +894,14 @@ public class ModeNormalPlay
 		//TODO set triggers to deactivate the surfaces, maybe not here.. for performance..
 		if(next!=null)
 		{
-			next.HardPosition = mFlatCamera.Center + (right ? Vector3.right*next.BoundingBox.width : Vector3.down * next.BoundingBox.height);
-			next.SoftPosition = mFlatCamera.Center;
+			next.HardPosition = mFlatCamera.get_point(Vector3.zero) + (right ? Vector3.right*next.BoundingBox.width : Vector3.down * next.BoundingBox.height);
+			next.SoftPosition = mFlatCamera.get_point(Vector3.zero);
 			if(instant)
 				next.HardPosition = next.SoftPosition;
 		}
 		if(cur != null)
 		{
-			cur.SoftPosition = mFlatCamera.Center - (right ? Vector3.right*cur.BoundingBox.width : Vector3.down * cur.BoundingBox.height);
+			cur.SoftPosition = mFlatCamera.get_point(Vector3.zero) - (right ? Vector3.right*cur.BoundingBox.width : Vector3.down * cur.BoundingBox.height);
 			if(instant)
 				cur.HardPosition = cur.SoftPosition;
 		}

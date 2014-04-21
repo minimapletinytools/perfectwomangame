@@ -53,7 +53,7 @@ public class NewInterfaceManager {
     Vector3 random_position()
     {
         //UGG piece of junk...
-        return mFlatCamera.Center + (new Vector3(Random.Range(-1f, 1f), Random.Range(-1f, 1f), 0)).normalized * Random.Range(4000,4000);
+		return mFlatCamera.get_point(Vector3.zero) + (new Vector3(Random.Range(-1f, 1f), Random.Range(-1f, 1f), 0)).normalized * Random.Range(4000,4000);
     }
 
 	FlatElementImage mBBNameTextFrame;
@@ -86,7 +86,7 @@ public class NewInterfaceManager {
 		//mBBWarningText = new FlatElementText(mManager.mNewRef.genericFont,150,"WARNING",12);
 		mBBWarningText = new FlatElementText(mManager.mNewRef.genericFont,400,"WARNING",20);
 		mBBWarningText.HardColor = new Color(0.5f,0.5f,0.5f,0);
-		mBBWarningText.HardPosition = mFlatCamera.Center;
+		mBBWarningText.HardPosition = mFlatCamera.get_point(Vector3.zero);
 
 
 		mBBNameText.HardColor = GameConstants.UiWhite;
@@ -109,7 +109,7 @@ public class NewInterfaceManager {
 
 		var warningImage = mManager.mNewRef.redWarning; //mManager.mCharacterBundleManager.get_image("WARNING");
 		mWarningOverlay = new FlatElementImage(warningImage,mFlatCamera.Size,100);
-		mWarningOverlay.HardPosition = mFlatCamera.Center;
+		mWarningOverlay.HardPosition = mFlatCamera.get_point(Vector3.zero);
 
 
 		mElement.Add(mBBNameText);

@@ -103,6 +103,8 @@ public class FSBodyComponent : MonoBehaviour
 	// Update is called once per frame
 	void Update ()
 	{
+
+		//TODO conversions here
 		Vector3 pos = transform.position;
 		pos.x = body.Position.X;
 		pos.y = body.Position.Y;

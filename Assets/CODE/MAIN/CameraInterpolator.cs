@@ -32,7 +32,7 @@ public class CameraInterpolator
         TargetFOV = c.fieldOfView;
         TargetOrthographicHeight = c.orthographicSize;
         TargetSpatialPosition = new SpatialPosition(c.transform);
-        SoftInterpolation = 0.2f;
+        SoftInterpolation = 1f;
     }
 
     public void update(float aDeltaTime)

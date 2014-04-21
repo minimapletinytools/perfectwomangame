@@ -46,7 +46,7 @@ public class SunsetManager
 	{
 		var sizing = mLoader.Sizes.find_static_element(aName);
 		var r = new FlatElementImage(mLoader.Images.staticElements[aName],sizing.Size,aDepth);
-		r.HardPosition = mFlatCamera.Center + sizing.Offset;
+		r.HardPosition = mFlatCamera.get_point(Vector3.zero) + sizing.Offset;
 		return r;
 	}
 	
@@ -180,8 +180,8 @@ public class SunsetManager
 		mSun.PositionInterpolationMaxLimit = 300;
 
 		//linear arc thing
-		Vector3 sunHigh = mFlatCamera.Center + new Vector3(0,950,0);
-		Vector3 sunLow = mFlatCamera.Center + new Vector3(0,-200,0);
+		Vector3 sunHigh = mFlatCamera.get_point(Vector3.zero) + new Vector3(0,950,0);
+		Vector3 sunLow = mFlatCamera.get_point(Vector3.zero) + new Vector3(0,-200,0);
 		mSun.SoftPosition = lambda <= 0.5f ? 
 			lambda*2*(sunHigh) + (1-lambda*2)*(sunLow) : 
 			(1-(lambda-0.5f)*2)*(sunHigh) + (lambda-0.5f)*2*(sunLow);
@@ -700,7 +700,7 @@ public class SunsetManager
 				//TODO play sound effect
 				rewardImage.HardPosition = mFlatCamera.get_point(0,3);
 				rewardFrame.HardPosition = rewardImage.HardPosition;
-				rewardImage.SoftPosition = mFlatCamera.Center + new Vector3(0,150,0);
+				rewardImage.SoftPosition = mFlatCamera.get_point(Vector3.zero) + new Vector3(0,150,0);
 				rewardFrame.SoftPosition = rewardImage.SoftPosition + new Vector3(0,70,0);
 				mElement.Add(rewardImage);
 				mElement.Add(rewardFrame);
@@ -737,7 +737,7 @@ public class SunsetManager
 
 		mGraveCompleteCb = delegate()
 		{
-			Vector3 barYPosition = mFlatCamera.Center + new Vector3(0,-700,0);
+			Vector3 barYPosition = mFlatCamera.get_point(Vector3.zero) + new Vector3(0,-700,0);
 			TED.add_one_shot_event(
 				delegate()
 				{
@@ -753,7 +753,7 @@ public class SunsetManager
 				delegate()
 				{
 					
-					float lastXPosition = mFlatCamera.Center.x-mFlatCamera.Width/2 - 100;	
+					float lastXPosition = mFlatCamera.get_point(Vector3.zero).x-mFlatCamera.Width/2 - 100;	
 					int counter = 0;
 					foreach(string e in GameConstants.credits)
 					{

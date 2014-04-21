@@ -28,7 +28,7 @@ public class CharacterHeadPopupThingy
 		var shineImage = ManagerManager.Manager.mCharacterBundleManager.get_image("STREAM");
 		FlatElementImage shine = new FlatElementImage(shineImage.Image,shineImage.Data.Size,3);
 		Vector3 targetPos = aHead.SoftPosition + new Vector3(0,shine.BoundingBox.height/2-360,0) + new Vector3(0,500,0);
-		Vector3 storePosition = targetPos + new Vector3((NIM.mFlatCamera.Center.x-targetPos.x)*0.2f,shine.BoundingBox.height - 100,0);
+		Vector3 storePosition = targetPos + new Vector3((NIM.mFlatCamera.get_point(Vector3.zero).x-targetPos.x)*0.2f,shine.BoundingBox.height - 100,0);
 		shine.HardPosition = storePosition;
 		shine.SoftPosition = targetPos;
 		shine.HardColor = positive ? GameConstants.UiYellowTransparent : GameConstants.UiRedTransparent; 

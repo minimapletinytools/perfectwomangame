@@ -20,6 +20,6 @@ public class MiniCharacterHelper
 	
 	public void position_character(FlatCameraManager aCam, Vector3 aPosition)
 	{
-		mBody.SoftPosition = aCam.Center + aPosition;
+		mBody.SoftPosition = aCam.get_point(Vector3.zero) + aPosition;
 	}
 }

@@ -11,11 +11,11 @@ public class FlatElementText : FlatElementBase
     {
         get
         {
-            return mMesh.fontSize;
+            return (int)(mMesh.fontSize/GameConstants.SCALE);
         }
         set
         {
-            mMesh.fontSize = value;
+            mMesh.fontSize = (int)(value*GameConstants.SCALE);
         }
     }
 

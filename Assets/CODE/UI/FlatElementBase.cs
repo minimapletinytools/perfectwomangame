@@ -203,7 +203,7 @@ public class FlatElementBase {
     {
         if (PrimaryGameObject != null)
         {
-            PrimaryGameObject.transform.position = aPos;
+            PrimaryGameObject.transform.position = aPos*GameConstants.SCALE;
         }
     }
     public virtual void set_scale(Vector3 aScale)

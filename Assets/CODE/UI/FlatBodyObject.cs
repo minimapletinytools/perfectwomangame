@@ -435,8 +435,8 @@ public class FlatBodyObject : FlatElementBase
         kid.renderer.material.mainTexture = aTex;
         kid.transform.rotation = Quaternion.AngleAxis(90, Vector3.right) * kid.transform.rotation;
 
-        kid.transform.localScale = new Vector3(BodyManager.convert_units(aDim.x) / 10.0f, 1, BodyManager.convert_units(aDim.y) / 10.0f);
-        kid.transform.position = -aAttach[0];
+        kid.transform.localScale = new Vector3(BodyManager.convert_units(aDim.x) / 10.0f, 1, BodyManager.convert_units(aDim.y) / 10.0f) * GameConstants.SCALE;
+        kid.transform.position = -aAttach[0]*GameConstants.SCALE;
         kid.transform.parent = parent.transform;
 
         mParts[aId] = parent;
@@ -494,7 +494,7 @@ public class FlatBodyObject : FlatElementBase
             if (is_same_color(colors[i], c))
             {
 
-                return index_to_position(i, aTex);
+				return index_to_position(i, aTex);
             }
         }
         //return Vector3.zero;
@@ -521,7 +521,7 @@ public class FlatBodyObject : FlatElementBase
             default:
                 return Vector3.zero;
         }
-        return find_first_color(c, aTex);
+        return find_first_color(c, aTex) * GameConstants.SCALE;
     }
 
 
@@ -587,7 +587,7 @@ public class FlatBodyObject : FlatElementBase
         }
         if(index == -1)
             throw new UnityException("uh oh, can't find attachment point zigjointid map");
-        return aConnect[index];
+        return aConnect[index]*GameConstants.SCALE;
     }
 
     public Vector3 get_Z_offset(ZigJointId id)

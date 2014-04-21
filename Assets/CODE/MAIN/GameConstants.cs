@@ -4,6 +4,12 @@ using System.Linq;
 
 public static class GameConstants
 {
+	//TODO only change this when you're about to load up simian mode
+	//I didn't do the conversion properly on all the classes so it's a super bad half assed change
+	//enough should bechanged such that perfect simian will work
+	//I hope
+	public static float SCALE = 1;
+
 	//public static int CONTENT_WIDTH = 2880;
 	public static int CONTENT_WIDTH = 3200;
 	public static int CONTENT_HEIGHT = 1800;

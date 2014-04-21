@@ -100,8 +100,8 @@ public class UnlockAnnouncer
 		float gDisplayTime = 5;
 
 		FlatUnlockBadge badge = new FlatUnlockBadge(aChar,aData,30);
-		badge.HardPosition = mSunset.mFlatCamera.Center + new Vector3(0,2000,0);
-		badge.SoftPosition = mSunset.mFlatCamera.Center;
+		badge.HardPosition = mSunset.mFlatCamera.get_point(Vector3.zero) + new Vector3(0,2000,0);
+		badge.SoftPosition = mSunset.mFlatCamera.get_point(Vector3.zero);
 		mElement.Add(badge);
 
 		TED.add_one_shot_event(

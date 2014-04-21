@@ -180,7 +180,7 @@ public class TransitionCameraManager : FakeMonoBehaviour
 			sizing.Size = backSize;
 			r = new FlatElementImage(mLoader.Images.background1,backSize,aDepth);
 		}
-		r.HardPosition = mFlatCamera.Center + sizing.Offset;
+		r.HardPosition = mFlatCamera.get_point(Vector3.zero) + sizing.Offset;
 		return r;
 	}
 
@@ -241,7 +241,7 @@ public class TransitionCameraManager : FakeMonoBehaviour
 		mPWLogoImage = new FlatElementImage(refs.perfectWomanLogo,1);
 		mGLLogo = new FlatElementImage(refs.gameLabLogo,1);
 		mFilmLogo = new FlatElementImage(refs.filmAkademieLogo,1);
-		mPWLogoImage.HardPosition = mFlatCamera.Center + new Vector3(0,200,0);
+		mPWLogoImage.HardPosition = mFlatCamera.get_point(Vector3.zero) + new Vector3(0,200,0);
 		mGLLogo.HardPosition = mFlatCamera.get_point(0,-0.5f) + new Vector3(mGLLogo.BoundingBox.width/2 + 50,0,0);
 		mFilmLogo.HardPosition = mFlatCamera.get_point(0,-0.5f) - new Vector3(mFilmLogo.BoundingBox.width/2 + 50,0,0);
 
@@ -252,7 +252,7 @@ public class TransitionCameraManager : FakeMonoBehaviour
 		
 		
 		mMessageText = new FlatElementText(refs.genericFont,60,"",1);
-		mMessageText.HardPosition = mFlatCamera.Center + new Vector3(0,400,0);
+		mMessageText.HardPosition = mFlatCamera.get_point(Vector3.zero) + new Vector3(0,400,0);
 
 		//TODO delete all this stuffeouou
 		/*mElement.Add(mPWLogoImage);
