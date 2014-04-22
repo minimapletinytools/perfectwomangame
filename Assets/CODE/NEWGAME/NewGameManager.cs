@@ -74,6 +74,9 @@ public class NewGameManager : FakeMonoBehaviour
 	
 	public void start_game(CharacterIndex aChar)
 	{
+		//reset the scale in case we were in simian mode
+		//GameConstants.SCALE = 1;
+
 		if(mManager.mSimianMode)
 		{
 			Debug.Log("simian mode hehe");

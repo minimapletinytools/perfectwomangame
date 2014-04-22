@@ -25,6 +25,7 @@ public class ModePerfectSimian
 	
 	public void initialize() 
 	{
+		GameConstants.SCALE = 1/200f;
 		mManager.mAssetLoader.new_load_character("05-1",mManager.mCharacterBundleManager);
 	}
 	
@@ -34,7 +35,7 @@ public class ModePerfectSimian
 		Debug.Log("character loaded");
 		FlatBodyObject flatbody = new FlatBodyObject(NGM.CurrentCharacterLoader, -1);
 		flatbody.set_target_pose(NGM.CurrentPose,true);
-		flatbody.HardPosition = Vector3.zero;
+		flatbody.HardPosition = new Vector3(10,0,0);
         flatbody.update(0);
 
 		//needed to make debugviewerthing work
@@ -46,7 +47,7 @@ public class ModePerfectSimian
 		cam.orthographicSize = mManager.mCameraManager.MainBodyCamera.orthographicSize;
 		Debug.Log (mManager.mCameraManager.MainBodyCamera.orthographicSize);
 		cam.depth = 9999999;
-		cam.clearFlags = CameraClearFlags.SolidColor;
+		cam.clearFlags = CameraClearFlags.Depth;
 		cam.cullingMask = 0;
 
 		mSimian = new FarseerSimian();

@@ -15,6 +15,10 @@ public static class FarseerExt
 	{
 		return new FVector2(vec.x,vec.y);
 	}
+	public static Vector3 toV3(this FVector2 vec)
+	{
+		return new Vector3(vec.X,vec.Y,0);
+	}
 }
 
 public class FarseerSimian 
@@ -23,6 +27,8 @@ public class FarseerSimian
 	{
 		public FarseerPhysics.Dynamics.Body body;
 		public float offset;
+		public float relJointOffset;
+		public FarseerPhysics.Dynamics.Joints.RevoluteJoint joint;
 	}
 	Dictionary<ZigJointId,BodyGroup> mBodies = new Dictionary<ZigJointId, BodyGroup>();
 	FlatBodyObject mFlat;
@@ -72,12 +78,13 @@ public class FarseerSimian
 		{
 			//note this will cerate 'dummy bodies' representing hand/ankle/head
 			BodyGroup bg = new BodyGroup();
+			bg.offset = aBody.mParts[e.Key].transform.rotation.flat_rotation();
 			bg.body = BodyFactory.CreateBody(FSWorldComponent.PhysicsWorld,mFlat.mParts[e.Key].transform.position.toFV2());
 			bg.body.Mass = 1;
 			bg.body.BodyType = FarseerPhysics.Dynamics.BodyType.Dynamic;
 			mBodies[e.Key] = bg;
-
 			new GameObject(e.Key.ToString()).transform.position = mFlat.mParts[e.Key].transform.position;
+
 		}
 
 		//now create fixtures
@@ -115,14 +122,13 @@ public class FarseerSimian
 		{
 			foreach(var f in e.Value.otherEnds)
 			{
-				//TODO this should prune out useless joints
-				//i.e. if f is not connected to anything
-				if(mImportant.ContainsKey(f))
+				if(mImportant[f].otherEnds.Count > 0)
 				{
 					var joint = JointFactory.CreateRevoluteJoint(FSWorldComponent.PhysicsWorld,mBodies[e.Key].body,mBodies[f].body,FVector2.Zero);
 					joint.CollideConnected = false;
-
-					//TODO joint offset??
+					//assosciate the joint with the childed limb
+					mBodies[f].joint = joint;
+					//mBodies[f].relJointOffset = get_relative(mImportant
 				}
 			}
 		}
@@ -134,6 +140,12 @@ public class FarseerSimian
 		//set desired position from projection manager
 		foreach (KeyValuePair<ZigJointId, ProjectionManager.Stupid> e in aManager.mImportant)
 		{
+			if(mBodies.ContainsKey(e.Key))
+			{
+				//mBodies[e.Key].joint.
+				//set desired value to this (we copmutre everything rel. to torseo)
+				//e.Value.smoothing.current-aManager.mImportant[ZigJointId.Torso].smoothing.current;
+			}
 			//the torso will be skipped because in physics, the torse angle is determined by the waist
 			//if(mJointAngleOffset.ContainsKey(e.Key)){
 				//set_hinge_position(-mJointAngleOffset[e.Key].offset.eulerAngles.z + e.Value.smoothing.current,mJointAngleOffset[e.Key].joint);
@@ -141,6 +153,26 @@ public class FarseerSimian
 		}
 		//set_hinge_position(-mJointAngleOffset[ZigJointId.Waist].offset.eulerAngles.z + aManager.mWaist.current,mJointAngleOffset[ZigJointId.Waist].joint);
 
+		//update flat to be what you see
+
+		mFlat.set_target_pose(physics_pose());
+		mFlat.SoftPosition = mBodies[ZigJointId.Torso].body.Position.toV3();
+		//mFlat.HardPosition = mFlat.SoftPosition;
+		mFlat.update(Time.deltaTime);
+		mFlat.set();
+	}
+
+	public Pose physics_pose()
+	{
+		Pose r = new Pose();
+		foreach(var e in mBodies)
+		{
+			PoseElement pe = new PoseElement();
+			pe.joint = e.Key;
+			pe.angle = e.Value.offset + e.Value.body.Rotation/Mathf.PI*180;
+			r.mElements.Add(pe);
+		}
+		return r;
 	}
 
 
@@ -152,5 +184,20 @@ public class FarseerSimian
 		public Stupid(ZigJointId other) { otherEnds.Add(other); }
 		public Stupid(ZigJointId[] other) { otherEnds.AddRange(other); }
 		public Stupid(){}
+	}
+
+
+	public float get_relative(Vector3 A, Vector3 B)
+	{
+		Vector3 right = Vector3.Cross(mUp, mNormal);
+		Vector3 v = B - A;
+		
+		Vector3 projected = Vector3.Exclude(mNormal, v);
+		float r = Vector3.Angle(right, projected);
+		if (Vector3.Dot(Vector3.Cross(right, projected), mNormal) < 0)
+		{
+			r *= -1;
+		}
+		return -r;
 	}
 }
