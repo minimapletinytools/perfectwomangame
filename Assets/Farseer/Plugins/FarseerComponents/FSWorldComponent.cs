@@ -47,14 +47,14 @@ public class FSWorldComponent : MonoBehaviour
 	}
 	
 	// Update is called once per frame
-	void FixedUpdate ()
+	void Update ()
 	{
 		if(pwait > 0)
 		{
 			pwait--;
 			return;
 		}
-		world.Step(Time.fixedDeltaTime);
+		world.Step(Time.deltaTime);
 	}
 	
 	public static World PhysicsWorld

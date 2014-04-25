@@ -142,9 +142,7 @@ public class FarseerSimian
 		{
 			if(mBodies.ContainsKey(e.Key))
 			{
-				//mBodies[e.Key].joint.
-				//set desired value to this (we copmutre everything rel. to torseo)
-				//e.Value.smoothing.current-aManager.mImportant[ZigJointId.Torso].smoothing.current;
+				rotate_body_to(mBodies[e.Key].body,(e.Value.smoothing.current-mBodies[e.Key].offset) * Mathf.PI/180f);
 			}
 			//the torso will be skipped because in physics, the torse angle is determined by the waist
 			//if(mJointAngleOffset.ContainsKey(e.Key)){
@@ -186,18 +184,17 @@ public class FarseerSimian
 		public Stupid(){}
 	}
 
-
-	public float get_relative(Vector3 A, Vector3 B)
+	void rotate_body_to(FarseerPhysics.Dynamics.Body body, float desiredAngle)
 	{
-		Vector3 right = Vector3.Cross(mUp, mNormal);
-		Vector3 v = B - A;
-		
-		Vector3 projected = Vector3.Exclude(mNormal, v);
-		float r = Vector3.Angle(right, projected);
-		if (Vector3.Dot(Vector3.Cross(right, projected), mNormal) < 0)
-		{
-			r *= -1;
-		}
-		return -r;
+		float DEGTORAD = Mathf.PI/180f;
+		float bodyAngle = body.Rotation;
+		float nextAngle = bodyAngle + body.AngularVelocity * Time.deltaTime;
+		float totalRotation = desiredAngle - nextAngle;
+		while ( totalRotation < -180 * DEGTORAD ) totalRotation += 360 * DEGTORAD;
+		while ( totalRotation >  180 * DEGTORAD ) totalRotation -= 360 * DEGTORAD;
+		float desiredAngularVelocity = totalRotation * 60;
+		float impulse = body.Inertia * desiredAngularVelocity;// disregard time factor
+		body.ApplyAngularImpulse( impulse );
 	}
+			
 }
