@@ -32,11 +32,15 @@ public class ModePerfectSimian
 	
 	public void character_loaded()
 	{
-		Debug.Log("character loaded");
 		FlatBodyObject flatbody = new FlatBodyObject(NGM.CurrentCharacterLoader, -1);
+
 		flatbody.set_target_pose(NGM.CurrentPose,true);
 		flatbody.HardPosition = new Vector3(10,0,0);
         flatbody.update(0);
+		flatbody.set_layer (1 << 1);
+
+		flatbody.PrimaryGameObject.name = "SIMIANBODY";
+
 
 		//needed to make debugviewerthing work
 		var cam = mManager.gameObject.AddComponent<Camera>();

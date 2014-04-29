@@ -138,25 +138,7 @@ public class CharacterBundleManager : FakeMonoBehaviour {
 		//TODo don't do this serial
         CharacterLoader loader = new CharacterLoader();
         loader.complete_load_character(aBundle,aBundleName);
-	
-		//TODO potentially want to move this to NewGameManager
-		//here we assume the game wants the new character to be loaded so we load it
-		//set new character in the two body managers and in background manager
-		mManager.mBackgroundManager.character_changed_listener(loader);
-		if(aBundleName != "999"){ //special behaviour for grave
-			mManager.mBodyManager.character_changed_listener(loader);
-			mManager.mTransparentBodyManager.character_changed_listener(loader);
-			//TODO set to actual pose that we want
-			mManager.mTransparentBodyManager.set_target_pose(mManager.mReferences.mCheapPose.to_pose(),true);
-			if(mManager.mZigManager.is_reader_connected() != 2)
-				mManager.mBodyManager.set_target_pose(mManager.mReferences.mCheapPose.to_pose(),true);
-		}
-		else{
-			mManager.mBodyManager.destroy_character();
-			mManager.mTransparentBodyManager.destroy_character();
-		}
-		mManager.mMusicManager.character_changed_listener(loader);
-		
+
 		if(mManager.mGameManager.character_changed_listener(loader))
 			aBundle.Unload(false);
 		else mUnloadAtEnd.Add(aBundle);

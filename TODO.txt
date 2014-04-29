@@ -1,4 +1,25 @@
--meet with lea at 10 am thursday
+-vimeo account
+-do gaymerx flights
+-probaly should try and get something to warren as well
+-contact sam farmer
+
+DONE-send microsoft another email about unity
+DONE-contact guillermo	
+	-include trailer, gameplay and concept art
+IGNORE-get gameplay meeting with lea this week
+DONE-send robert nashak perfect woman descriptiion
+DONE-followup katherine
+DONE-send lea screenflow
+DONE-unity for xbox????
+
+DONE-website updated
+	-AMAZE fest
+	-different games
+DONE-meet with Lea MONDAY 
+DONE-suggest KS to lea
+IGNORE-meet with Lea next Thursday 9:15am 
+
+DONE-meet with lea at 10 am thursday
 DONE-get final build for difference games
 	-talk to them about hardware
 DONE-package up a trial copy of the game
@@ -6,7 +27,7 @@ DONE-send trial to that minecraft guy
 DONE-contact extreme reality...
 
 ::FESTIVALS::
--difference games
+DONE-difference games
 -gaymerx
 
 ::POST GDC TODO::
@@ -27,18 +48,29 @@ DONE-phone meeting with chris charla
 ::OIP nonsense::
 
 
+::UNLOCK::
+
 ::GAME TODO NEW::
+-make a todo list fo lea???
+DONE-sunset should come in from below
+-do perfect simian for reals!
+	-farseer box2d physics please..
+-age on grave should start at 0
 -ordering issues with death cutscene in child star 
 -fix depth issues on title screen with unlockables
 	-also the diff colors look stupid
 -unlockables
-	-make easy way to skip to grave..
-	-test it
+	DONE-make it display the related characters properly
+		DONE-you will need to add this to the static dictionary of requirements/sentences
 	-fill out more examples...
-	-disable characters for testing..
+		-just do it!
+	DONE-disable characters for testing..
 	-resolve the easier/harder issue for first character when things aren't avail
 	-need to disable all cutscenes for not avail characters??
-	-as well as connections
+		-TEST
+	DONE/IGNORE:)-as well as connections
+	DONE-make easy way to skip to grave..
+	DONE-test it
 	DONE-do it! Need to do announcement
 	DONE-add meta life knowledge sentences to the end of the game
 -design changes
@@ -51,6 +83,7 @@ DONE-phone meeting with chris charla
 	-meta life connections
 -visuals
 	-particles falling from sky during fever
+		-LOL fix it
 -astronaut
 	-when you die at 85 gives special message and then goes to 110
 	-beginning of 110 it says "you lived a very long life. Enjoy what is left"

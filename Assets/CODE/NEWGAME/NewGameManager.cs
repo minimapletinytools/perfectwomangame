@@ -101,12 +101,32 @@ public class NewGameManager : FakeMonoBehaviour
 		CurrentCharacterLoader = aCharacter;
 		CurrentCharacterIndex = new CharacterIndex(aCharacter.Name);
 		
-		if(GS == GameState.NORMAL)
-			mModeNormalPlay.character_loaded();
+		if (GS == GameState.NORMAL || GS == GameState.TEST) {
+			mManager.mBackgroundManager.character_changed_listener(aCharacter);
+			if(aCharacter.Character != CharacterIndex.sGrave){ //special behaviour for grave
+				mManager.mBodyManager.character_changed_listener(aCharacter);
+				mManager.mTransparentBodyManager.character_changed_listener(aCharacter);
+				//TODO set to actual pose that we want
+				mManager.mTransparentBodyManager.set_target_pose(mManager.mReferences.mCheapPose.to_pose(),true);
+				if(mManager.mZigManager.is_reader_connected() != 2)
+					mManager.mBodyManager.set_target_pose(mManager.mReferences.mCheapPose.to_pose(),true);
+			}
+			else{
+				mManager.mBodyManager.destroy_character();
+				mManager.mTransparentBodyManager.destroy_character();
+			}
+			mManager.mMusicManager.character_changed_listener(aCharacter);
+
+			if(GS == GameState.NORMAL)
+				mModeTesting.character_loaded();
+			else if(GS == GameState.TEST)
+				mModeNormalPlay.character_loaded();
+		}
 		else if(GS == GameState.SIMIAN)
+		{
+			mManager.mBackgroundManager.character_changed_listener(aCharacter);
 			mModeSimian.character_loaded();
-		else if(GS == GameState.TEST)
-			mModeTesting.character_loaded();
+		}
 		//TODO, challenge
 		
 		if(aCharacter.Name == "0-1") //in this very special case, we keep the bundle to load the death cutscene

@@ -2,6 +2,8 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using System;
+
+//TODO DELETE THIS
 public class EventManager : FakeMonoBehaviour {
 	public EventManager(ManagerManager aManager) : base(aManager) {}
 	

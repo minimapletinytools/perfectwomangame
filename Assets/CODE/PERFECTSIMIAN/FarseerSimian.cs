@@ -95,16 +95,23 @@ public class FarseerSimian
 			{
 				List<FarseerPhysics.Common.Vertices> poly = new List<FarseerPhysics.Common.Vertices>();
 				poly.Add(new FarseerPhysics.Common.Vertices());
-				if(e.Key != ZigJointId.Torso) //torso does not need this point, only exception
+				if(e.Key != ZigJointId.Torso && e.Value.otherEnds.Count == 1) //torso does not need this point
 					poly[0].Add(FVector2.Zero);
 				if(e.Value.otherEnds.Count == 1)
 				{
-					//TODO add girth???
-					//TODO rotation????
-					foreach(var f in e.Value.otherEnds)
-					{
-						poly[0].Add(mFlat.mParts[f].transform.position.toFV2()-mBodies[e.Key].body.Position);
-					}
+					//line version
+					//foreach(var f in e.Value.otherEnds)
+					//	poly[0].Add(mFlat.mParts[f].transform.position.toFV2()-mBodies[e.Key].body.Position);
+
+					//block version
+					FVector2 diff = mFlat.mParts[e.Value.otherEnds[0]].transform.position.toFV2()-mBodies[e.Key].body.Position;
+					FVector2 perp = new FVector2(diff.Y,-diff.X);
+					perp.Normalize();
+					float stretch = .03f;
+					poly[0].Add(perp*stretch);
+					poly[0].Add(diff + perp*stretch);
+					poly[0].Add(diff - perp*stretch);
+					poly[0].Add(-perp*stretch);
 				}
 				else
 				{
@@ -113,7 +120,8 @@ public class FarseerSimian
 						poly[0].Add(mFlat.mParts[f].transform.position.toFV2()-mBodies[e.Key].body.Position);
 					}
 				}
-				FixtureFactory.AttachCompoundPolygon(poly,1,mBodies[e.Key].body);
+				var fixture = FixtureFactory.AttachCompoundPolygon(poly,1,mBodies[e.Key].body);
+				fixture[0].CollisionGroup = 1;
 			}
 		}
 		
@@ -126,9 +134,10 @@ public class FarseerSimian
 				{
 					var joint = JointFactory.CreateRevoluteJoint(FSWorldComponent.PhysicsWorld,mBodies[e.Key].body,mBodies[f].body,FVector2.Zero);
 					joint.CollideConnected = false;
+					joint.LimitEnabled = false;
+					joint.MotorEnabled = false;
 					//assosciate the joint with the childed limb
 					mBodies[f].joint = joint;
-					//mBodies[f].relJointOffset = get_relative(mImportant
 				}
 			}
 		}
@@ -136,28 +145,24 @@ public class FarseerSimian
 
 	public void update(ProjectionManager aManager)
 	{
-		//TODO
 		//set desired position from projection manager
 		foreach (KeyValuePair<ZigJointId, ProjectionManager.Stupid> e in aManager.mImportant)
 		{
 			if(mBodies.ContainsKey(e.Key))
 			{
-				rotate_body_to(mBodies[e.Key].body,(e.Value.smoothing.current-mBodies[e.Key].offset) * Mathf.PI/180f);
+				if(e.Key != ZigJointId.Waist)
+				{
+					rotate_body_to(mBodies[e.Key].body,mBodies[ZigJointId.Waist].body.Rotation + (e.Value.smoothing.current-mBodies[e.Key].offset) * Mathf.PI/180f);
+					//ManagerManager.Manager.mDebugString = (e.Value.smoothing.current-mBodies[e.Key].offset).ToString();
+				}
 			}
-			//the torso will be skipped because in physics, the torse angle is determined by the waist
-			//if(mJointAngleOffset.ContainsKey(e.Key)){
-				//set_hinge_position(-mJointAngleOffset[e.Key].offset.eulerAngles.z + e.Value.smoothing.current,mJointAngleOffset[e.Key].joint);
-			//}
 		}
-		//set_hinge_position(-mJointAngleOffset[ZigJointId.Waist].offset.eulerAngles.z + aManager.mWaist.current,mJointAngleOffset[ZigJointId.Waist].joint);
 
-		//update flat to be what you see
-
+		//update the visual body to match the physics body
 		mFlat.set_target_pose(physics_pose());
 		mFlat.SoftPosition = mBodies[ZigJointId.Torso].body.Position.toV3();
-		//mFlat.HardPosition = mFlat.SoftPosition;
-		mFlat.update(Time.deltaTime);
-		mFlat.set();
+		mFlat.HardPosition = mFlat.SoftPosition;
+		mFlat.update (0);
 	}
 
 	public Pose physics_pose()
@@ -194,7 +199,7 @@ public class FarseerSimian
 		while ( totalRotation >  180 * DEGTORAD ) totalRotation -= 360 * DEGTORAD;
 		float desiredAngularVelocity = totalRotation * 60;
 		float impulse = body.Inertia * desiredAngularVelocity;// disregard time factor
-		body.ApplyAngularImpulse( impulse );
+		body.ApplyAngularImpulse( impulse/3f );
 	}
 			
 }

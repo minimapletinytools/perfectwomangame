@@ -44,15 +44,7 @@ public class BodyManager : FakeMonoBehaviour {
     {
         mLayer = layer;
         if (mFlat != null)
-        {
-            foreach (GameObject e in mFlat.mParts.Values)
-            {
-                foreach (Renderer f in e.GetComponentsInChildren<Renderer>())
-                {
-                    f.gameObject.layer = layer;
-                }
-            }
-        }
+			mFlat.set_layer(mLayer);
     }
 	
 

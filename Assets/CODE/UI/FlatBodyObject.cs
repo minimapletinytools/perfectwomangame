@@ -134,6 +134,18 @@ public class FlatBodyObject : FlatElementBase
 		if(hard)
 			update_parameters_impl(0,1);
     }
+
+	public void set_layer(int layer)
+	{
+		foreach (GameObject e in mParts.Values)
+		{
+			foreach (Renderer f in e.GetComponentsInChildren<Renderer>())
+			{
+				f.gameObject.layer = layer;
+			}
+		}
+	}
+
 	
 	
     public override void update_parameters(float aDeltaTime)
