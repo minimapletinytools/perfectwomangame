@@ -49,7 +49,7 @@ public class FarseerSimian
 	{
 		//hardcode in the desired joints
 		mImportant[ZigJointId.Torso] = new Stupid(new ZigJointId[]{ZigJointId.LeftShoulder,ZigJointId.Neck,ZigJointId.RightShoulder,ZigJointId.Waist});
-		mImportant[ZigJointId.Waist] = new Stupid(new ZigJointId[]{ZigJointId.LeftHip,ZigJointId.RightHip});
+		mImportant[ZigJointId.Waist] = new Stupid(new ZigJointId[]{ZigJointId.RightHip,ZigJointId.LeftHip});
 		mImportant[ZigJointId.LeftShoulder] = new Stupid(ZigJointId.LeftElbow);
 		mImportant[ZigJointId.LeftElbow] = new Stupid(ZigJointId.LeftHand);
 		mImportant[ZigJointId.LeftHip] = new Stupid(ZigJointId.LeftKnee);
@@ -95,7 +95,7 @@ public class FarseerSimian
 			{
 				List<FarseerPhysics.Common.Vertices> poly = new List<FarseerPhysics.Common.Vertices>();
 				poly.Add(new FarseerPhysics.Common.Vertices());
-				if(e.Key != ZigJointId.Torso && e.Value.otherEnds.Count == 1) //torso does not need this point
+				if(e.Key != ZigJointId.Torso || e.Value.otherEnds.Count == 1) //torso does not need this point
 					poly[0].Add(FVector2.Zero);
 				if(e.Value.otherEnds.Count == 1)
 				{
@@ -133,12 +133,16 @@ public class FarseerSimian
 				if(mImportant[f].otherEnds.Count > 0)
 				{
 					var joint = JointFactory.CreateRevoluteJoint(FSWorldComponent.PhysicsWorld,mBodies[e.Key].body,mBodies[f].body,FVector2.Zero);
-					joint.CollideConnected = false;
-					joint.LimitEnabled = false;
-					joint.MotorEnabled = false;
-					//assosciate the joint with the childed limb
 					mBodies[f].joint = joint;
 				}
+			}
+		}
+
+		//clean up the dummy bodies
+		foreach (var e in mImportant) {
+			if (e.Value.otherEnds.Count == 0) {
+				FSWorldComponent.PhysicsWorld.RemoveBody(mBodies[e.Key].body);
+				mBodies.Remove(e.Key);
 			}
 		}
 	}
@@ -150,18 +154,19 @@ public class FarseerSimian
 		{
 			if(mBodies.ContainsKey(e.Key))
 			{
+				//ManagerManager.Manager.mDebugString = mBodies[ZigJointId.Waist].body.Rotation.ToString();
 				if(e.Key != ZigJointId.Waist)
 				{
-					rotate_body_to(mBodies[e.Key].body,mBodies[ZigJointId.Waist].body.Rotation + (e.Value.smoothing.current-mBodies[e.Key].offset) * Mathf.PI/180f);
-					//ManagerManager.Manager.mDebugString = (e.Value.smoothing.current-mBodies[e.Key].offset).ToString();
+					//rotate_body_to(mBodies[e.Key].body,mBodies[ZigJointId.Waist].body.Rotation + (e.Value.smoothing.current-mBodies[e.Key].offset) * Mathf.PI/180f);
 				}
 			}
 		}
 
 		//update the visual body to match the physics body
 		mFlat.set_target_pose(physics_pose());
-		mFlat.SoftPosition = mBodies[ZigJointId.Torso].body.Position.toV3();
-		mFlat.HardPosition = mFlat.SoftPosition;
+		mFlat.SoftInterpolation = .5f;
+		mFlat.SoftPosition = mBodies[ZigJointId.Torso].body.Position.toV3()/GameConstants.SCALE;
+		//mFlat.HardPosition = mFlat.SoftPosition;
 		mFlat.update (0);
 	}
 
