@@ -1,58 +1,7 @@
--vimeo account
--do gaymerx flights
--probaly should try and get something to warren as well
--contact sam farmer
-
-DONE-send microsoft another email about unity
-DONE-contact guillermo	
-	-include trailer, gameplay and concept art
-IGNORE-get gameplay meeting with lea this week
-DONE-send robert nashak perfect woman descriptiion
-DONE-followup katherine
-DONE-send lea screenflow
-DONE-unity for xbox????
-
-DONE-website updated
-	-AMAZE fest
-	-different games
-DONE-meet with Lea MONDAY 
-DONE-suggest KS to lea
-IGNORE-meet with Lea next Thursday 9:15am 
-
-DONE-meet with lea at 10 am thursday
-DONE-get final build for difference games
-	-talk to them about hardware
-DONE-package up a trial copy of the game
-DONE-send trial to that minecraft guy
-DONE-contact extreme reality...
-
-::FESTIVALS::
-DONE-difference games
--gaymerx
-
-::POST GDC TODO::
-DONE-email zigfu guys and see if you can port zigfu for them..
-DONE-connect with stephen totilo from kotaku
--argentine lady??? Maria Lujan
--sign up for sony dev
--email anita maybe
--soft kinect with hook you up with unity maybe
--outerbody labs (cool shit)
--connect with deidra drei
--connect with itay from mushroom 11
--connect with the alter ego guy :)
-DONE-kim wallace from game informer kim@gameinformer.com
-DONE-email aureia from luxuria superbia
-DONE-phone meeting with chris charla
-
-::OIP nonsense::
-
-
-::UNLOCK::
+::NEW TODO::
 
 ::GAME TODO NEW::
 -make a todo list fo lea???
-DONE-sunset should come in from below
 -do perfect simian for reals!
 	-farseer box2d physics please..
 -age on grave should start at 0
@@ -102,7 +51,7 @@ DONE-sunset should come in from below
 -other
 	-see if you can fix kinect lighting
 	-pose change predictor, draw super transparent "next" pose during play
-
+DONE-sunset should come in from below
 
 ::FUTURE::
 -bmp format
@@ -115,6 +64,82 @@ DONE-sunset should come in from below
 -05-4 music needs to be louder
 -demented but happy good death should have a happy ghost escaping to freedom from the body
 
+::IGNORE FUTURE::
+-clean up UI folder
+	-delet box
+	-delete angel
+	-delete other stuf
+-text file format for unlockable characters
+	-manually fill out for now
+-cleanup
+	-still have perfect stars floating around somewhere..
+	-cleanup all the PB stuff
+-testing/challenge/simian mode should inherit from interface..
+-make BACKGROUND part of the big image dump instead of an exception case
+-add skip multiple to sunset progress
+-switch over to coroutines lol
+-turn miniman into asset bundle for consistency
+	-make the bundle in ggfiles
+	-use mini_loaded_callback and asign it to a new character such as 0-1
+	-delete CharacterBehaviour nonsense in FlatElementImage
+-can delete code for old gravestone
+-unlock badges...
+-PERFECT SIMIAN
+-too much time between premature death and choice
+	-some timing bugs in general..
+-consider making harder/easier for first set of choices random
+	-lul, need to hardcode this...
+-better way to detect if user is not on screen
+-define interface for kinect stuff for when you need to swap in kinect2.0
+
+::???::
+-vimeo account
+-do gaymerx flights
+-probaly should try and get something to warren as well
+-contact sam farmer
+
+DONE-follow up with k4w unity stuff
+DONE-send microsoft another email about unity
+DONE-contact guillermo	
+	-include trailer, gameplay and concept art
+IGNORE-get gameplay meeting with lea this week
+DONE-send robert nashak perfect woman descriptiion
+DONE-followup katherine
+DONE-send lea screenflow
+DONE-unity for xbox????
+
+DONE-website updated
+	-AMAZE fest
+	-different games
+DONE-meet with Lea MONDAY 
+DONE-suggest KS to lea
+IGNORE-meet with Lea next Thursday 9:15am 
+
+DONE-meet with lea at 10 am thursday
+DONE-get final build for difference games
+	-talk to them about hardware
+DONE-package up a trial copy of the game
+DONE-send trial to that minecraft guy
+DONE-contact extreme reality...
+
+::FESTIVALS::
+DONE-difference games
+-gaymerx
+
+::POST GDC TODO::
+DONE-email zigfu guys and see if you can port zigfu for them..
+DONE-connect with stephen totilo from kotaku
+-argentine lady??? Maria Lujan
+-sign up for sony dev
+-email anita maybe
+-soft kinect with hook you up with unity maybe
+-outerbody labs (cool shit)
+-connect with deidra drei
+-connect with itay from mushroom 11
+-connect with the alter ego guy :)
+DONE-kim wallace from game informer kim@gameinformer.com
+DONE-email aureia from luxuria superbia
+DONE-phone meeting with chris charla
 DONE-feedback for steven
 	-need winky sound at end!
 	-sound effects in animation, at least a *dink* when the Perfect thing pops up? (like the dinks that you have when it says "PERFECT WOMAN LIFE SIMULATOR"
@@ -160,35 +185,6 @@ IGNORE-doing excellent (>.8) is a littel hard?
 
 ::MAJOR FUTURE::
 DONE-consider switching grading to only check right before the pose changes instead ofthe entirety of the time (or maybe extra weight on the frame right beforechange)
-
-
-::IGNORE FUTURE::
--clean up UI folder
-	-delet box
-	-delete angel
-	-delete other stuf
--text file format for unlockable characters
-	-manually fill out for now
--cleanup
-	-still have perfect stars floating around somewhere..
-	-cleanup all the PB stuff
--testing/challenge/simian mode should inherit from interface..
--make BACKGROUND part of the big image dump instead of an exception case
--add skip multiple to sunset progress
--switch over to coroutines lol
--turn miniman into asset bundle for consistency
-	-make the bundle in ggfiles
-	-use mini_loaded_callback and asign it to a new character such as 0-1
-	-delete CharacterBehaviour nonsense in FlatElementImage
--can delete code for old gravestone
--unlock badges...
--PERFECT SIMIAN
--too much time between premature death and choice
-	-some timing bugs in general..
--consider making harder/easier for first set of choices random
-	-lul, need to hardcode this...
--better way to detect if user is not on screen
--define interface for kinect stuff for when you need to swap in kinect2.0
 
 
 ::ROAD TO IGF::

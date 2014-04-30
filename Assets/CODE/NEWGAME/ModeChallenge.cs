@@ -11,5 +11,16 @@ public class ModeChallenge
 		NGM = aNgm;
 		mManager = aNgm.mManager;
 	}
+
+
 	
+	
+	public void character_loaded()
+	{
+	}
+	
+	public void update () 
+	{
+	}
+
 }
