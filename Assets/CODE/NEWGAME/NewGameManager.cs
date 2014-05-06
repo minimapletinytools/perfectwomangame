@@ -50,7 +50,6 @@ public class NewGameManager : FakeMonoBehaviour
 	ModeChallenge mModeChallenge;
 	public ModeNormalPlay mModeNormalPlay;
 	ModePerfectSimian mModeSimian;
-	
 	public void set_testing()
 	{
 		GS = GameState.TEST;
@@ -118,9 +117,9 @@ public class NewGameManager : FakeMonoBehaviour
 			mManager.mMusicManager.character_changed_listener(aCharacter);
 
 			if(GS == GameState.NORMAL)
-				mModeTesting.character_loaded();
-			else if(GS == GameState.TEST)
 				mModeNormalPlay.character_loaded();
+			else if(GS == GameState.TEST)
+				mModeTesting.character_loaded();
 		}
 		else if(GS == GameState.SIMIAN)
 		{

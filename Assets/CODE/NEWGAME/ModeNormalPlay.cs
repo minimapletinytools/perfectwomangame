@@ -186,6 +186,7 @@ public class ModeNormalPlay
 	{
 		//we use the hack version instead that allows us to skip characters
 		set_last_performance_stat_to_character(NGM.CurrentCharacterIndex);
+
 		//mPerformanceStats.Add(new PerformanceStats(NGM.CurrentCharacterIndex));
 		//CurrentPerformanceStat.Stats = NGM.CharacterHelper.Characters[NGM.CurrentCharacterIndex];
 
