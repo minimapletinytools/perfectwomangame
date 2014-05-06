@@ -1,9 +1,13 @@
-::NEW TODO::
+::5/6 MEETING NOTES::
+-whale bad cutscene could look better
+-do astronaut with another character first
+-turn on head in front of shoulder flag for dancer
+-send lea source code for unlockables list so she can change the text
 
 ::GAME TODO NEW::
--make a todo list fo lea???
--do perfect simian for reals!
-	-farseer box2d physics please..
+DONE-testing_scene crashes, figure out why
+-put customized picture back into the game
+DONE-make a todo list fo lea???
 -age on grave should start at 0
 -ordering issues with death cutscene in child star 
 -fix depth issues on title screen with unlockables
@@ -23,7 +27,7 @@
 	DONE-do it! Need to do announcement
 	DONE-add meta life knowledge sentences to the end of the game
 -design changes
-	-think about new way to do posse--make it more dance like maybe based on extrasolar suggestion
+	-think about new way to do pose--make it more dance like maybe based on extrasolar suggestion
 -text file
 	-fix all typos and apostrophe's etc.
 	-make a diagram of all connections and design some so they are more comprehensive...
@@ -41,17 +45,13 @@
 	-floating off in space death cutscene
 		-no death text goes straight to sunset
 	-transition to sunset, has starry sky space background with 110 floating in it.
-
--tasks for lea
-	-make a list of cutscenes you think should be redone
-		-more dolphins in princess!
-	-astronaut!
-	-characters in sunset have happy and sad based on how well you did
-
 -other
 	-see if you can fix kinect lighting
 	-pose change predictor, draw super transparent "next" pose during play
+	
 DONE-sunset should come in from below
+DONE-do perfect simian for reals!
+	DONE-farseer box2d physics please..
 
 ::FUTURE::
 -bmp format
