@@ -293,7 +293,7 @@ public class NewInterfaceManager {
 	public void set_for_CUTSCENE(System.Action cutsceneCompleteCb, NUPD.ChangeSet aChanges)
 	{
 
-		//first we fix the 
+		//first we remove all characters from cutscene text that are locked
 		List<NUPD.ChangeSubSet> newChanges = new List<NUPD.ChangeSubSet>(aChanges.Changes);
 		for(int i = 0; i < aChanges.Changes.Count; i++)
 		{
@@ -301,6 +301,7 @@ public class NewInterfaceManager {
 				if(mManager.mMetaManager.UnlockManager.is_unlocked(f) != 1)
 					newChanges[i].Changes[f] = 0;
 		}
+        //then we remove text that has no characters assosciated with it
 		aChanges.Changes = newChanges.Where(e=>!e.Changes.is_zero()).ToList();
 
 

@@ -1,31 +1,8 @@
-::5/6 MEETING NOTES::
--whale bad cutscene could look better
--do astronaut with another character first
--turn on head in front of shoulder flag for dancer
--send lea source code for unlockables list so she can change the text
-
 ::GAME TODO NEW::
-DONE-testing_scene crashes, figure out why
--put customized picture back into the game
-DONE-make a todo list fo lea???
--age on grave should start at 0
--ordering issues with death cutscene in child star 
--fix depth issues on title screen with unlockables
-	-also the diff colors look stupid
 -unlockables
-	DONE-make it display the related characters properly
-		DONE-you will need to add this to the static dictionary of requirements/sentences
 	-fill out more examples...
-		-just do it!
-	DONE-disable characters for testing..
-	-resolve the easier/harder issue for first character when things aren't avail
-	-need to disable all cutscenes for not avail characters??
-		-TEST
-	DONE/IGNORE:)-as well as connections
-	DONE-make easy way to skip to grave..
-	DONE-test it
-	DONE-do it! Need to do announcement
-	DONE-add meta life knowledge sentences to the end of the game
+	-send lea source code for unlockables list so she can change the text
+-ordering issues with death cutscene in child star 
 -design changes
 	-think about new way to do pose--make it more dance like maybe based on extrasolar suggestion
 -text file
@@ -49,6 +26,26 @@ DONE-make a todo list fo lea???
 	-see if you can fix kinect lighting
 	-pose change predictor, draw super transparent "next" pose during play
 	
+DONE-disable going back an age at age 5 in testing scene
+DONE-put customized picture back into the game
+DONE-age on grave should start at 0
+DONE-fix depth issues on title screen with unlockables
+	-also the diff colors look stupid
+DONE-unlockables
+	DONE-make it display the related characters properly
+		DONE-you will need to add this to the static dictionary of requirements/sentences
+	
+	DONE-disable characters for testing..
+	DONE-resolve the easier/harder issue for first character when things aren't avail
+	DONE-need to disable all cutscenes for not avail characters??
+		-TEST
+	DONE/IGNORE:)-as well as connections
+	DONE-make easy way to skip to grave..
+	DONE-test it
+	DONE-do it! Need to do announcement
+	DONE-add meta life knowledge sentences to the end of the game
+DONE-testing_scene crashes, figure out why
+DONE-make a todo list fo lea???
 DONE-sunset should come in from below
 DONE-do perfect simian for reals!
 	DONE-farseer box2d physics please..

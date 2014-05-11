@@ -135,6 +135,8 @@ public class ChoiceHelper
 		return -1;
 	}
 	
+
+    //TODO move to some util file instead
     public static void Shuffle<T>(T[] array)
     {
         for (int i = array.Length; i > 1; i--)
