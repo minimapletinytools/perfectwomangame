@@ -466,26 +466,26 @@ public class SunsetManager
 		float scoreIncrementor = 0;
 		FlatElementText finalScoreText = new FlatElementText(mManager.mNewRef.serifFont,70,"0",21);
 		finalScoreText.HardColor = (GameConstants.UiGraveText);
-		FlatElementText perfectPercent = new FlatElementText(mManager.mNewRef.serifFont,50,"0",21);
+		FlatElementText finalAgeText = new FlatElementText(mManager.mNewRef.serifFont,50,"0",21);
 		float ageIncrementer = 0;
-		perfectPercent.HardColor = (GameConstants.UiGraveText);
+		finalAgeText.HardColor = (GameConstants.UiGraveText);
 		//perfectPercent.Text = ((int)(100*aStats.Sum(e=>e.Stats.Perfect+1)/(float)(aStats.Count*3))).ToString() + "%";
 		//TODO why this no work??
-		perfectPercent.Text = aStats.Last().Character.Age.ToString();
+		finalAgeText.Text = "0";//aStats.Last().Character.Age.ToString();
 		
 		//hack to put things into bg camera
 		foreach (Renderer f in finalScoreText.PrimaryGameObject.GetComponentsInChildren<Renderer>())
 			f.gameObject.layer = 4;
-		foreach (Renderer f in perfectPercent.PrimaryGameObject.GetComponentsInChildren<Renderer>())
+		foreach (Renderer f in finalAgeText.PrimaryGameObject.GetComponentsInChildren<Renderer>())
 			f.gameObject.layer = 4;
 		//foreach (Renderer f in perfectEngraving.PrimaryGameObject.GetComponentsInChildren<Renderer>()) f.gameObject.layer = 4;
 		
 		Vector3 graveCenter = mCharacters[mCharacters.Count-1].HardPosition + new Vector3(0, 50, 0);
 		finalScoreText.HardPosition = graveCenter + new Vector3(30,-180,0);
-		perfectPercent.HardPosition = graveCenter + new Vector3(25,0,0);
+		finalAgeText.HardPosition = graveCenter + new Vector3(25,0,0);
 		mElement.Add(finalScoreText);
 		//mElement.Add(perfectEngraving);
-		mElement.Add(perfectPercent);
+		mElement.Add(finalAgeText);
 
 
 		TimedEventDistributor.TimedEventChain chain = TED.empty_chain();
@@ -519,14 +519,14 @@ public class SunsetManager
 						float displayScore = scoreIncrementor + (aTime/gScoreCount)*ps.AdjustedScore;
 						float displayAge = ageIncrementer + (aTime/gScoreCount)*(ps.Character.Age-ageIncrementer);
 						finalScoreText.Text = ""+(int)displayScore;
-						perfectPercent.Text = ""+(int)displayAge;
+						finalAgeText.Text = ""+(int)displayAge;
 					}
 					if(aTime >  gScoreCount + gPostScoreCount)
 					{
 						scoreIncrementor += ps.AdjustedScore;
 						ageIncrementer = ps.Character.Age;
 						finalScoreText.Text = ""+(int)scoreIncrementor;
-						perfectPercent.Text = ""+(int)ageIncrementer;
+						finalAgeText.Text = ""+(int)ageIncrementer;
 						return true;
 					}
 					return false;

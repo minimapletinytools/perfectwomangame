@@ -157,7 +157,8 @@ public class ModeTesting
 			if(shift)
 			{
 				if(NGM.CurrentCharacterIndex.LevelIndex > 0)
-					mManager.mAssetLoader.new_load_character(NGM.CurrentCharacterIndex.get_past_neighbor(choice).StringIdentifier,mManager.mCharacterBundleManager);
+					if(!(NGM.CurrentCharacterIndex.LevelIndex == 1 && choice != 0)) //if we are level 1 make sure we don't go back to an invalid character
+						mManager.mAssetLoader.new_load_character(NGM.CurrentCharacterIndex.get_past_neighbor(choice).StringIdentifier,mManager.mCharacterBundleManager);
 			}
 			else
 			{
