@@ -173,6 +173,7 @@ public class FlatElementBase {
 					e.material.renderQueue = mDepth;
 				}
 	        }
+			//Depth = Depth;
 		}
     }
 	
