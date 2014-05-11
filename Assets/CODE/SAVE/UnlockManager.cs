@@ -65,6 +65,7 @@ public class Unlockables
 				unlockedCharacters[e] = 0; //unknown
 		}
 	}
+
 }
 
 public class UnlockManager
@@ -93,6 +94,16 @@ public class UnlockManager
 
 		write_unlock();
 	}
+
+    
+    public List<CharacterIndex> get_unlocked_characters_at_level(int aLevelIndex)
+    {
+        List<CharacterIndex> r = new List<CharacterIndex> ();
+        foreach (var e in CharacterIndex.sAllCharacters.Where(e=>e.LevelIndex == aLevelIndex))
+            if (mUnlocked.unlockedCharacters [e] == 1)
+                r.Add (e);
+        return r;
+    }
 
 	void read_unlock()
 	{

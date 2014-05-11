@@ -232,13 +232,13 @@ public class CharacterBundleManager : FakeMonoBehaviour {
 
 		//this is a hack
 		//randomize difficulty changes for fetus
-		var avail = CharacterIndex.sAllCharacters
-			.Where(f => f.LevelIndex == 1)
-				.Where(f=>mManager.mMetaManager.UnlockManager.is_unlocked(f) == 1).ToArray();
+        var avail = mManager.mMetaManager.UnlockManager.get_unlocked_characters_at_level(1).ToArray();
 		ChoiceHelper.Shuffle(avail);
 		var changeThisInfo = mCharacterHelper.Characters[CharacterIndex.sFetus].CharacterInfo;
 		changeThisInfo.ChangeSet[0].Changes[1].Changes[avail[0]] = -1;
-		//TODO so there is a funny problem with 
+		//NOTEso there is a funny problem with when we have only one character age Level 1, 
+        //we have to make the same character hard that we just made easy
+        //but what can you do
 		changeThisInfo.ChangeSet[0].Changes[2].Changes[avail[avail.Count() > 1 ? 1 : 0]] = 1; 
 		
 		foreach(CharacterIndex e in CharacterIndex.sAllCharacters)
