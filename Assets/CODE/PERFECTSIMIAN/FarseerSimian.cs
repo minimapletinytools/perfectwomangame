@@ -81,6 +81,7 @@ public class FarseerSimian
 			bg.offset = aBody.mParts[e.Key].transform.rotation.flat_rotation();
 			bg.body = BodyFactory.CreateBody(FSWorldComponent.PhysicsWorld,mFlat.mParts[e.Key].transform.position.toFV2());
 			bg.body.Mass = 1;
+			bg.body.Friction = .5f;
 			bg.body.BodyType = FarseerPhysics.Dynamics.BodyType.Dynamic;
 			mBodies[e.Key] = bg;
 			new GameObject(e.Key.ToString()).transform.position = mFlat.mParts[e.Key].transform.position;
@@ -157,7 +158,7 @@ public class FarseerSimian
 				//ManagerManager.Manager.mDebugString = mBodies[ZigJointId.Waist].body.Rotation.ToString();
 				if(e.Key != ZigJointId.Waist)
 				{
-					//rotate_body_to(mBodies[e.Key].body,mBodies[ZigJointId.Waist].body.Rotation + (e.Value.smoothing.current-mBodies[e.Key].offset) * Mathf.PI/180f);
+					rotate_body_to(mBodies[e.Key].body,mBodies[ZigJointId.Waist].body.Rotation + (e.Value.smoothing.current-mBodies[e.Key].offset) * Mathf.PI/180f);
 				}
 			}
 		}
@@ -204,7 +205,7 @@ public class FarseerSimian
 		while ( totalRotation >  180 * DEGTORAD ) totalRotation -= 360 * DEGTORAD;
 		float desiredAngularVelocity = totalRotation * 60;
 		float impulse = body.Inertia * desiredAngularVelocity;// disregard time factor
-		body.ApplyAngularImpulse( impulse/3f );
+		body.ApplyAngularImpulse( impulse/5f );
 	}
 			
 }

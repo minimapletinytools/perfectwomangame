@@ -1,8 +1,10 @@
 ::GAME TODO NEW::
+-be able to immediately test poses
+-fix the screen capture problem during recording
+-make a new xbox one build
 -unlockables
 	-fill out more examples...
 	-send lea source code for unlockables list so she can change the text
--ordering issues with death cutscene in child star 
 -design changes
 	-think about new way to do pose--make it more dance like maybe based on extrasolar suggestion
 -text file
@@ -25,7 +27,8 @@
 -other
 	-see if you can fix kinect lighting
 	-pose change predictor, draw super transparent "next" pose during play
-	
+
+NOTMP-ordering issues with death cutscene in child star 
 DONE-disable going back an age at age 5 in testing scene
 DONE-put customized picture back into the game
 DONE-age on grave should start at 0
