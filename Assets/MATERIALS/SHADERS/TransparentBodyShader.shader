@@ -41,8 +41,8 @@ Shader "Custom/TransparentBodyShader" {
 				
 				//if(((int)(screenUV.x*100 + screenUV.y*100) % 2 == 0))
 				{
-					//o.Alpha = min(c.a,_Color.a);
-					o.Alpha = _Color.a;
+					o.Alpha = min(c.a,_Color.a);
+					//o.Alpha = _Color.a;
 				
 				}
 			}
