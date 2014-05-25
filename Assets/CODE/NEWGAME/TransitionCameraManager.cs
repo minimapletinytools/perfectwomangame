@@ -82,8 +82,9 @@ public class TransitionCameraManager : FakeMonoBehaviour
 		mFlatCamera.Camera.backgroundColor = new Color32(37,37,37,255);
 		mFlatCamera.fit_camera_to_screen(true);
 		
+        //TODO Find XBONE Replacement
+        /*
         SunShafts shafts = ((GameObject)GameObject.Instantiate(mManager.mReferences.mImageEffectsPrefabs)).GetComponent<SunShafts>();
-		
 		mSunShafts = mFlatCamera.Camera.gameObject.AddComponent<SunShafts>();
 		mSunShafts.maxRadius = shafts.maxRadius;
 		mSunShafts.radialBlurIterations = shafts.radialBlurIterations;
@@ -97,7 +98,7 @@ public class TransitionCameraManager : FakeMonoBehaviour
 		mSunShafts.useDepthTexture = shafts.useDepthTexture;
 		mSunShafts.useSkyBoxAlpha = shafts.useSkyBoxAlpha;
 		//???mSunShafts.sunTransform = shafts.sunTransform;
-		
+		*/
 		
 		
 		//mDepthImage = new FlatElementImage(null,0); 
@@ -387,13 +388,13 @@ public class TransitionCameraManager : FakeMonoBehaviour
     bool fade_in(float time)
 	{
 		float l = (time/GameConstants.fadingTime);
-		mSunShafts.sunShaftIntensity = (1-l)*MAX_FADE + l*0;
+		//mSunShafts.sunShaftIntensity = (1-l)*MAX_FADE + l*0;
 		return l>=1;
 	}
 	bool fade_out(float time)
 	{
 		float l = (time/GameConstants.fadingTime);
-		mSunShafts.sunShaftIntensity = (1-l)*0 + l*MAX_FADE;
+		//mSunShafts.sunShaftIntensity = (1-l)*0 + l*MAX_FADE;
 		return l>=1;
 	}
 }
