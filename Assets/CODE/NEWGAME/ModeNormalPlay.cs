@@ -455,7 +455,6 @@ public class ModeNormalPlay
 		if(TimeRemaining <= 0)
 		{
 			CurrentPerformanceStat.Finished = true;
-			mManager.mCameraManager.set_camera_effects(0);
 			mInterfaceManager.enable_warning_text(false);
 			transition_to_CUTSCENE();
 			
@@ -491,7 +490,6 @@ public class ModeNormalPlay
 			if(NGM.CurrentCharacterIndex != CharacterIndex.sFetus) //this only happens if we try and force die on fetus
 				mGiftManager.capture_player();
 			CurrentPerformanceStat.Finished = true;
-			mManager.mCameraManager.set_camera_effects(0);
 			mInterfaceManager.enable_warning_text(false);
 			transition_to_DEATH();
 		}

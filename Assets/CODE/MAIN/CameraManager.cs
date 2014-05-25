@@ -5,12 +5,11 @@ public class CameraManager : FakeMonoBehaviour {
     public CameraManager(ManagerManager aManager) : base(aManager) { }
 
     public Camera MainBodyCamera { get; private set; } //layer 1
-    public BloomAndLensFlares MainBodyCameraBloomEffect { get; private set; }
     public Camera TransparentBodyCamera { get; private set; } //layer 2
-    public EdgeDetectEffect TransparentBodyCameraEdgeEffect { get; private set; }
     public Camera BackgroundCamera { get; private set; } //layer 3
     public Camera ForegroundCamera { get; private set; } //layer 4
 	
+    public EdgeDetectEffect TransparentBodyCameraEdgeEffect { get; private set; }
     GameObject ImageEffects { get; set; }
 
     public Camera[] AllCameras { get { return new Camera[] { MainBodyCamera,TransparentBodyCamera,BackgroundCamera,ForegroundCamera};} }
@@ -82,15 +81,6 @@ public class CameraManager : FakeMonoBehaviour {
         }
 	}
 	
-	
-	public static float MAX_BLOOM_INTENSITY = 4;
-	public float mBloomIntensity = 0;
-    public void set_camera_effects(float perfect, bool hard = false)
-    {
-        mBloomIntensity = perfect;
-		if(hard)
-			MainBodyCameraBloomEffect.bloomIntensity = perfect;
-    }
     public override void Update()
     {
 		//float interp = 0.1f;

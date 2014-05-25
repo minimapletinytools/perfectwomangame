@@ -44,7 +44,6 @@ public class ModeTesting
 			mManager.mTransparentBodyManager.set_target_pose(NGM.CurrentTargetPose);
 			float grade = ProGrading.grade_pose(NGM.CurrentPose, NGM.CurrentTargetPose);
 			grade = ProGrading.grade_to_perfect(grade);
-			mManager.mCameraManager.set_camera_effects(grade);
 		}
 		
 		if(mManager.mZigManager.is_reader_connected() != 2)
