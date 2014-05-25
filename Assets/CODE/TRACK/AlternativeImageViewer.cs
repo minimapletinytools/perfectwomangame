@@ -48,9 +48,6 @@ public class AlternativeImageViewer : MonoBehaviour
 		//userTexture = new Texture2D(userTextureSize.Width, userTextureSize.Height);
 		//userTexture.wrapMode = TextureWrapMode.Clamp;             
 		userOutputPixels = new Color32[userTextureSize.Width * userTextureSize.Height];
-
-		//already added by depth..
-        //ZigInput.Instance.AddListener(gameObject);
     }
 
 	void UpdateTexture(ZigImage image, ZigLabelMap labelmap)

@@ -25,7 +25,6 @@ public class AlternativeDepthViewer : MonoBehaviour {
         depthHistogramMap = new float[MaxDepth];
         depthToColor = new Color32[MaxDepth];
         outputPixels = new Color32[textureSize.Width * textureSize.Height];
-        ZigInput.Instance.AddListener(gameObject);
 
         if (null != target) {
             target.material.mainTexture = DepthTexture;

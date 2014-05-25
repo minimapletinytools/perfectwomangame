@@ -2,12 +2,7 @@ using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
 public class ZigManager : FakeMonoBehaviour {
-	
-	GameObject mZigObject = null;
-	Zig mZig = null;
-	ZigEngageSingleUser mZigEngageSingleUser = null;
-    ZigCallbackBehaviour mZigCallbackBehaviour = null;
-    ZigInput mZigInput = null;
+    public ZigInterface ZigInterface { get; private set; }
 	public AlternativeDepthViewer DepthView { get; private set; }
 	public AlternativeImageViewer ImageView { get; private set; }
     public Dictionary<ZigJointId, ZigInputJoint> Joints{get; private set;}
@@ -15,6 +10,8 @@ public class ZigManager : FakeMonoBehaviour {
     public ZigTrackedUser LastTrackedUser { get; private set; }
     public ZigManager(ManagerManager aManager) : base(aManager)
 	{
+        ZigInterface = new ZigFuZig();
+        ZigInterface.initialize(this);
 		Joints = new Dictionary<ZigJointId, ZigInputJoint>()
 		{
 			{ZigJointId.Head,new ZigInputJoint(ZigJointId.Head)},
@@ -40,39 +37,9 @@ public class ZigManager : FakeMonoBehaviour {
 
 	// Use this for initialization
 	public override void Start () {
-        mZigObject = mManager.gameObject;
-		
-		//mZigObject.AddComponent<kinectSpecific>();
-		mZig = mZigObject.GetComponent<Zig>();
-
-		/*
-		mZig = mZigObject.AddComponent<Zig>();
-		mZig.inputType = ZigInputType.Auto;
-		mZig.settings.UpdateDepth = true;
-		mZig.settings.UpdateImage = true;
-		mZig.settings.AlignDepthToRGB = false;
-		mZig.settings.OpenNISpecific.Mirror = true;
-		mZigObject.AddComponent<ZigEngageSingleUser>();
-		*/
-
-		DepthView = mZigObject.AddComponent<AlternativeDepthViewer>();
-		ImageView = mZigObject.AddComponent<AlternativeImageViewer>();
-
-
-        
-		
-        
-		//ZigEngageSingleUser scans for all users but only reports results from one of them (the first I guess)
-		//normally this is set in editor initializers but we don't do that here
-		mZigEngageSingleUser = mZigObject.GetComponent<ZigEngageSingleUser>();
-        mZigEngageSingleUser.EngagedUsers = new System.Collections.Generic.List<UnityEngine.GameObject>();
-		mZigEngageSingleUser.EngagedUsers.Add(mManager.gameObject);
-		
-		//this is the only way to get callbacks from ZigEngageSingleUser
-		mZigCallbackBehaviour = mZigObject.AddComponent<ZigCallbackBehaviour>();
-        mZigCallbackBehaviour.mUpdateUserDelegate += this.Zig_UpdateUser;
-
-
+       
+        DepthView = mManager.gameObject.AddComponent<AlternativeDepthViewer>();
+        ImageView = mManager.gameObject.AddComponent<AlternativeImageViewer>();
 		ForceShow = 0;
         
 	}
@@ -84,13 +51,6 @@ public class ZigManager : FakeMonoBehaviour {
 		
 		if(Input.GetKeyDown(KeyCode.K))
 			ForceShow = (ForceShow + 1)%3;
-		
-        if (mZigInput == null)
-        {
-            GameObject container = GameObject.Find("ZigInputContainer");
-            if(container != null)
-                mZigInput = container.GetComponent<ZigInput>();
-        }
 		
 		if(ForceShow == 1 || 
 			(ForceShow != 2 && (is_reader_connected() == 2 && !is_user_in_screen())))
@@ -108,18 +68,18 @@ public class ZigManager : FakeMonoBehaviour {
 	
 	public int is_reader_connected() //0 - not connected, 1 - trying to connect, 2 - connected
 	{
-		if(mZigInput == null)
+        if(ZigInterface.ZigInput == null)
 			return 1;
-		else if(mZigInput.ReaderInited == true)
+        else if(ZigInterface.ZigInput.ReaderInited == true)
 			return 2;
 		else return 0;
 	}
 
     public bool using_nite()
     {
-        if (mZigInput != null)
+        if (ZigInterface.ZigInput != null)
         {
-            return !mZigInput.kinectSDK;
+            return !ZigInterface.ZigInput.kinectSDK;
         }
 
         //default is true because it is a safer choice
@@ -128,7 +88,7 @@ public class ZigManager : FakeMonoBehaviour {
 	
 	public bool has_user()
 	{
-		return mZigEngageSingleUser.engagedTrackedUser != null;
+        return ZigInterface.has_user();
 	}
 
     Quaternion get_relative_rotation(ZigInputJoint A, ZigInputJoint B)
@@ -141,7 +101,8 @@ public class ZigManager : FakeMonoBehaviour {
         return Quaternion.FromToRotation(aRelative, v);
     }
 
-	void Zig_UpdateUser(ZigTrackedUser user)
+
+	public void Zig_UpdateUser(ZigTrackedUser user)
     {
         LastTrackedUser = user;
         if (user.SkeletonTracked)
