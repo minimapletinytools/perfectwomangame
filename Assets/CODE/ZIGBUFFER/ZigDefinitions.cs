@@ -5,6 +5,52 @@ using System.Collections.Generic;
 //NOTE you will still need to remove the zig folder
 
 #if !UNITY_STANDALONE
+
+public class ZigDepth
+{
+    public short[] data;
+    public int yres;
+    public int xres;
+    public ZigDepth (int x, int y)
+    {
+        this.xres = x;
+        this.yres = y;
+        this.data = new short[x * y];
+    }
+}
+
+public class ZigLabelMap
+{
+    public short[] data;
+    public int xres
+    {get;private set;}
+    public int yres
+    {get;private set;}
+
+    public ZigLabelMap (int x, int y)
+    {
+        this.xres = x;
+        this.yres = y;
+        this.data = new short[x * y];
+    }
+}
+public class ZigImage
+{
+    public Color32[] data;
+    public int xres
+    {get;private set;}
+    public int yres
+    {get;private set;}
+
+    public ZigImage (int x, int y)
+    {
+        this.xres = x;
+        this.yres = y;
+        this.data = new Color32[x * y];
+    }
+}
+
+
 public enum ZigJointId
 {
     None,
@@ -140,6 +186,24 @@ public class ResolutionData
         }
         
     }
+}
+
+
+
+
+
+//dummy definitions of monobehaviour stuff that we need
+class ZigInput : MonoBehaviour
+{
+    public ZigDepth Depth {get; set;}
+}
+class ZigEngageSingleUser : MonoBehaviour
+{
+    public bool SkeletonTracked = true;
+    public bool RaiseHand;
+    public List<GameObject> EngagedUsers;
+    public ZigTrackedUser engagedTrackedUser { get; private set; }
+    public void Reset() {}
 }
 
 #endif
