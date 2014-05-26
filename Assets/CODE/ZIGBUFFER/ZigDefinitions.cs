@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
+using System;
 
 //XBONE stuff
 //NOTE you will still need to remove the zig folder
@@ -115,7 +116,7 @@ public class ZigTrackedUser
     public ZigTrackedUser (int aId)
     {
         Id = aId;
-        this.Skeleton = new ZigInputJoint[Enum.GetValues (typeof(ZigJointId)).get_Length ()];
+        this.Skeleton = new ZigInputJoint[Enum.GetValues (typeof(ZigJointId)).Length];
         for (int i = 0; i < this.Skeleton.Length; i++)
         {
             this.Skeleton [i] = new ZigInputJoint ((ZigJointId)i);
@@ -149,7 +150,7 @@ public class ZigInputJoint
         this.Inferred = inferred;
     }
     
-    public ZigInputJoint (ZigJointId id) : this (id, Vector3.get_zero (), Quaternion.get_identity (), false)
+    public ZigInputJoint (ZigJointId id) : this (id, Vector3.zero, Quaternion.identity, false)
     {
         this.GoodPosition = false;
         this.GoodRotation = false;
@@ -193,17 +194,31 @@ public class ResolutionData
 
 
 //dummy definitions of monobehaviour stuff that we need
-class ZigInput : MonoBehaviour
+public class ZigInput : MonoBehaviour
 {
-    public ZigDepth Depth {get; set;}
+    public static ZigDepth Depth {get; set;}
+    public static ZigImage Image {get; set;}
+    public static ZigLabelMap LabelMap {get; set;}
+    public bool ReaderInited {get; set;}
+    public bool kinectSDK = false;
+    public void AddListener(GameObject aOb)
+    {
+    }
 }
-class ZigEngageSingleUser : MonoBehaviour
+
+public class ZigEngageSingleUser : MonoBehaviour
 {
     public bool SkeletonTracked = true;
     public bool RaiseHand;
     public List<GameObject> EngagedUsers;
     public ZigTrackedUser engagedTrackedUser { get; private set; }
     public void Reset() {}
+
+}
+
+public class Zig : MonoBehaviour
+{
+
 }
 
 #endif
