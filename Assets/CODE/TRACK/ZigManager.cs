@@ -10,7 +10,7 @@ public class ZigManager : FakeMonoBehaviour {
     public ZigTrackedUser LastTrackedUser { get; private set; }
     public ZigManager(ManagerManager aManager) : base(aManager)
 	{
-        ZigInterface = new ZigFuZig();
+        ZigInterface = new EmptyZig();
         ZigInterface.initialize(this);
 		Joints = new Dictionary<ZigJointId, ZigInputJoint>()
 		{
