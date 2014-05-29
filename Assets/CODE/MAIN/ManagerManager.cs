@@ -53,6 +53,7 @@ public class ManagerManager : MonoBehaviour{
 
 	void Awake () {
 
+        GameConstants.Log("begin awake");
 		Random.seed = System.Environment.TickCount;
 		Application.targetFrameRate = (int)GameConstants.TARGET_FRAMERATE;
 
@@ -82,8 +83,12 @@ public class ManagerManager : MonoBehaviour{
 		mTransitionCameraManager = new TransitionCameraManager(this);
 		mMetaManager = new MetaManager(this);
 		
-		if(mStartDelegates != null) 
-			mStartDelegates();
+        GameConstants.Log("start delegates");
+
+		if (mStartDelegates != null)
+            mStartDelegates();
+
+        GameConstants.Log("end awake");
 	}
 	
 
