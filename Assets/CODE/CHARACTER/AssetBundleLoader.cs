@@ -13,7 +13,6 @@ public class AssetBundleLoader : FakeMonoBehaviour
 	
     public override void Update()
     {
-
         List<WWW> removal = new System.Collections.Generic.List<WWW>();
         //TODO gets out of sync error here why??
         //not a huge deal since itonly happens in my recording scene. Probbably some stupid threading error...

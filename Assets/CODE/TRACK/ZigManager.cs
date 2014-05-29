@@ -48,7 +48,6 @@ public class ZigManager : FakeMonoBehaviour {
 	public int ForceShow {get;set;} //0 default, 1 forceshow, 2 noshow
 	public override void Update () 
 	{
-		
 		if(Input.GetKeyDown(KeyCode.K))
 			ForceShow = (ForceShow + 1)%3;
 		
