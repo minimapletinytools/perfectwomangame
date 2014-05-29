@@ -240,12 +240,14 @@ public class TransitionCameraManager : FakeMonoBehaviour
 		//mElement.Add(mPWCredits);
 		
 		//logos
+        /*
 		mPWLogoImage = new FlatElementImage(refs.perfectWomanLogo,1);
 		mGLLogo = new FlatElementImage(refs.gameLabLogo,1);
 		mFilmLogo = new FlatElementImage(refs.filmAkademieLogo,1);
 		mPWLogoImage.HardPosition = mFlatCamera.get_point(Vector3.zero) + new Vector3(0,200,0);
 		mGLLogo.HardPosition = mFlatCamera.get_point(0,-0.5f) + new Vector3(mGLLogo.BoundingBox.width/2 + 50,0,0);
 		mFilmLogo.HardPosition = mFlatCamera.get_point(0,-0.5f) - new Vector3(mFilmLogo.BoundingBox.width/2 + 50,0,0);
+  */      
 
 		/*mPWLogo.Enabled = false;
 		mGLLogo.Enabled = false;
@@ -321,9 +323,9 @@ public class TransitionCameraManager : FakeMonoBehaviour
 		//we assume things have faded already so we can just destroy
 		//mPWLogo.destroy();
 		//mPWCredits.destroy();
-		mPWLogoImage.destroy();
-		mGLLogo.destroy();
-		mFilmLogo.destroy();
+		//mPWLogoImage.destroy();
+		//mGLLogo.destroy();
+		//mFilmLogo.destroy();
 		mFlatCamera.Camera.clearFlags = CameraClearFlags.Depth;
 
 		//because it got destoryed at the step above
