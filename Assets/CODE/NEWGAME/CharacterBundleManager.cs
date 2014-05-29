@@ -57,12 +57,15 @@ public class CharacterBundleManager : FakeMonoBehaviour {
 	}
 	public ImageSizePair get_image(string identifier)
 	{
+        GameConstants.Log("getting image " + identifier);
 		ImageSizePair r = new ImageSizePair();
 		r.Image = ImageBundle.Load(identifier) as Texture2D;
 		r.Data = ImageIndex.Find(e => e.Name == identifier); //TODO not finding size data
 
 		if(r.Data == null || r.Image == null)
 			Debug.Log("could not find id " + identifier + " image " + r.Image + " data " + r.Data);
+
+        GameConstants.Log("success");
 		return r;
 	}
 	
@@ -248,6 +251,7 @@ public class CharacterBundleManager : FakeMonoBehaviour {
 
         GameConstants.Log("begin loading pose bundle contents");
 
+
 		foreach(CharacterIndex e in CharacterIndex.sAllCharacters)
 		{
 			for(int i = 0; i < 4; i++)
@@ -259,10 +263,12 @@ public class CharacterBundleManager : FakeMonoBehaviour {
 					{
                         GameConstants.Log("loading " + s);
 						mPoses[s] = (aBundle.Load(s) as TextAsset).to_pose();
+                        GameConstants.Log("finished " + s);
 					}
 				}
 			}
 		}
+
         GameConstants.Log("finished loading pose bundle contents");
         aBundle.Unload(true); //don't need this anymore I don't ithnk...
         GameConstants.Log("unloaded pose bundle");

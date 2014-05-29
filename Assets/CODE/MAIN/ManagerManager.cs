@@ -122,6 +122,7 @@ public class ManagerManager : MonoBehaviour{
 	Vector2 mLastScreenSize = new Vector2();
 	void Update () {
 		
+        GameConstants.Log("begin update");
 		
 		Vector2 newScreenSize = new Vector2(Screen.width,Screen.height);
 		if(mLastScreenSize != newScreenSize)
@@ -132,22 +133,30 @@ public class ManagerManager : MonoBehaviour{
 		
 		
         if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            GameConstants.Log("begin quit");
             Application.Quit();
+        }
         if (Input.GetKeyDown(KeyCode.Backspace))
         {
             restart_game();
         }
 		if(mUpdateDelegates != null) 
 			mUpdateDelegates();
+
+        GameConstants.Log("end update");
 	}
 	
 	void FixedUpdate() {
+
+        GameConstants.Log("begin fixed update");
 		if(mFixedUpdateDelegates != null) mFixedUpdateDelegates();
+        GameConstants.Log("end fixed update");
 	}
 	
     public void restart_game()
     {
-		
+        GameConstants.Log("begin restart");
         mCharacterBundleManager.cleanup();
 		Resources.UnloadUnusedAssets();
 		System.GC.Collect();

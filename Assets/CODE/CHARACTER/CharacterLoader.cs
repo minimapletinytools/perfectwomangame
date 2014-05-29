@@ -27,6 +27,7 @@ public class CharacterLoader {
     }
     public IEnumerable<int> load_character(AssetBundle aBundle, string aName)
     {
+        GameConstants.Log("loading character " + Name);
         Name = aName;
         string output = "Loading character " + aName + "\n";
 		
@@ -45,10 +46,12 @@ public class CharacterLoader {
             Images.waist = aBundle.Load("WAIST_A", typeof(Texture2D)) as Texture2D;
         }
 		
+        GameConstants.Log("loaded body parts");
 		
 		Images.background1 = aBundle.Load("BACKGROUND", typeof(Texture2D)) as Texture2D;
         Images.backgroundMusic = aBundle.Load("AUDIO", typeof(AudioClip)) as AudioClip; //optional
 		
+        GameConstants.Log("loaded audio1");
 		for(int i = 0; i < 10; i++)
 		{
 			AudioClip clip = aBundle.Load("CSAUDIO_" + i, typeof(AudioClip)) as AudioClip;
@@ -65,18 +68,23 @@ public class CharacterLoader {
 		//if(Images.deathMusic == null)
 		//	Debug.Log("no death music for " + Character.StringIdentifier);
 
+        GameConstants.Log("loaded audio 2");
+
         TextAsset cd = aBundle.Load("CD", typeof(TextAsset)) as TextAsset;
         System.IO.MemoryStream stream = new System.IO.MemoryStream(cd.bytes);
         System.Xml.Serialization.XmlSerializer xs = new System.Xml.Serialization.XmlSerializer(typeof(CharacterData.CharacterDataSizes));
         Sizes = xs.Deserialize(stream) as CharacterData.CharacterDataSizes;
         output += "offset " + Sizes.mOffset;
 		
+        GameConstants.Log("loaded CD");
+
 		//new static
+
 		foreach(CharacterData.ImageSizeOffsetAnimationData e in Sizes.mStaticElements)
 		{
 			Images.staticElements.Add(e.Name,aBundle.Load(e.Name) as Texture2D);
 		}
-		
+        GameConstants.Log("loaded images");
 		
 		
         //Debug.Log(output);
