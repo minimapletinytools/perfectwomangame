@@ -49,14 +49,16 @@ public class BuildScripts
     [MenuItem("Custom/build/XBONE")]
     static void build_xbone()
     {
+        /* this doesn't work yet
         string[] scenes = {"Assets/SCENES/kinect_test.unity"};
         
         string buildDir = "C:/Users/theking/Desktop/unitybuilds/GG/" + System.DateTime.Now.ToString("MMMdhmm") + "";
         System.IO.Directory.CreateDirectory(buildDir);
         BuildPipeline.BuildPlayer(scenes , buildDir + "/PW.exe", BuildTarget.XboxOne, BuildOptions.None);
-        
+
         string resourceDstPath = buildDir + "/Data/Resources";
         DirectoryCopy(Application.dataPath + "/Resources", resourceDstPath,false);
+        */
     }
 
 	
