@@ -24,7 +24,7 @@ public class CameraManager : FakeMonoBehaviour {
 		wipeCamera.backgroundColor = new Color(0,0,0);
 		wipeCamera.depth = 0;
 		
-        ImageEffects = (GameObject)GameObject.Instantiate(mManager.mReferences.mImageEffectsPrefabs);
+        //ImageEffects = (GameObject)GameObject.Instantiate(mManager.mReferences.mImageEffectsPrefabs);
 
         MainBodyCamera = (new GameObject("genMainCamera")).AddComponent<Camera>();
         MainBodyCamera.cullingMask = 1 << 1;
