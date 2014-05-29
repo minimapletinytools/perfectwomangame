@@ -46,7 +46,6 @@ public class TransitionCameraManager : FakeMonoBehaviour
 	public TimedEventDistributor TED { get; private set; }
 	
 	
-	public bool mForceStart = false;
     public FlatCameraManager mFlatCamera;
 	SunShafts mSunShafts;
 	
@@ -145,7 +144,6 @@ public class TransitionCameraManager : FakeMonoBehaviour
     
     public override void Update()
     {
-		
 		mFlatCamera.update(Time.deltaTime);
 		foreach (FlatElementBase e in mElement)
             e.update(Time.deltaTime);            
@@ -164,7 +162,6 @@ public class TransitionCameraManager : FakeMonoBehaviour
 	{
 		if(mLoader == null)
 			throw new UnityException("start screen bundle null");
-
 
 		CharacterData.ImageSizeOffsetAnimationData sizing;
 		FlatElementImage r;
@@ -296,7 +293,7 @@ public class TransitionCameraManager : FakeMonoBehaviour
 				if( mManager.mCharacterBundleManager.is_initial_loaded() &&
 			   		((aTime > 5 && mManager.mZigManager.has_user()) ||
 					Input.GetKeyDown(KeyCode.Alpha0) || Input.GetKeyDown(KeyCode.Alpha9) ||
-					mForceStart)){
+					GameConstants.FORCE_START)){
 					go_to_play(); 
 					return true;
 				}	

@@ -9,7 +9,7 @@ public class TestingSceneBehaviour : MonoBehaviour {
 	public void Start()
 	{
 		ManagerManager.Manager.mGameManager.set_testing();
-		ManagerManager.Manager.mTransitionCameraManager.mForceStart = true;
+		GameConstants.FORCE_START = true;
 		//ManagerManager.Manager.mRecordMode = true;
 		GameConstants.fadingTime = 0.01f;
 		

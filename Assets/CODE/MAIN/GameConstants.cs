@@ -15,6 +15,8 @@ public static class GameConstants
 	public static int CONTENT_HEIGHT = 1800;
 
 	public static float TARGET_FRAMERATE = 50;
+
+    public static bool FORCE_START = false;
 	
 	public static int numberAges = 10; //fetus, 5, 16, 27, 34, 45, 60, 85, 100, DEAD
 	public static int[] numberChoices = new int[]{1,10,10,10,10,10,10,10,1,1};
