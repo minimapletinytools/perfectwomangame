@@ -37,13 +37,31 @@ public static class UnlockRequirements
 			}
         },{ new CharacterIndex(2,2), delegate(List<PerformanceStats> aStats, List<List<PerformanceStats> > aHistory)
             {
+                if(PerformanceStats.history_contains(aHistory,new CharacterIndex[]{CharacterIndex.sMother,CharacterIndex.sMarried}))
+                {
+                    return new UnlockData(){
+                        Sentence = "Seeing both ups and downs of married life showed you the importance of family love and support",
+                        Related = new CharacterIndex[]{CharacterIndex.sMother,CharacterIndex.sMarried}
+                    };  
+                }
                 return null;
             }
         },{ new CharacterIndex(2,3), delegate(List<PerformanceStats> aStats, List<List<PerformanceStats> > aHistory)
             {
-                if(aStats.Count() > 7)
-                    return "Getting very old made you understand that life should not always be fun and games";
-                return null;
+                try{
+                    if(aStats.First(e=>e.Character == CharacterIndex.sProf).BadPerformance 
+                        && aStats.First(e=>e.Character == CharacterIndex.sMinister).BadPerformance)
+                    {
+                        return new UnlockData(){
+                            Sentence = "Failing as a Professor and Minister showed you that education should start early!",
+                            Related = new CharacterIndex[]{CharacterIndex.sProf,CharacterIndex.sMinister}
+                        };
+                    }
+                    return null;
+                }
+                catch{
+                    return null;
+                }
             }
         }
 	};
