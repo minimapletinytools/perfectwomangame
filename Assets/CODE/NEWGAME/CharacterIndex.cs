@@ -43,9 +43,6 @@ public struct CharacterIndex : IEquatable<CharacterIndex>
 		"In your mother's womb"
 	};
 	
-	public static CharacterIndex sGrave = new CharacterIndex(9,0);
-	public static CharacterIndex sFetus = new CharacterIndex(0,0);
-	public static CharacterIndex sOneHundred = new CharacterIndex(8,0);
 	
 	public static CharacterIndex RandomCharacter{
 		get{
@@ -208,7 +205,47 @@ public struct CharacterIndex : IEquatable<CharacterIndex>
 	{
 		return LevelIndex * 100 + Choice;
 	}
+
+
+
+    public static CharacterIndex sFetus = new CharacterIndex(0,0);
+    public static CharacterIndex sOneHundred = new CharacterIndex(8,0);
+    public static CharacterIndex sGrave = new CharacterIndex(9,0);
+    
+    public static CharacterIndex sPrincess = new CharacterIndex(1, 0);
+    public static CharacterIndex sStar = new CharacterIndex(1, 1);
+    public static CharacterIndex sGang = new CharacterIndex(1, 2);
+    public static CharacterIndex sSlave = new CharacterIndex(1, 3);
+    
+    public static CharacterIndex sSexy = new CharacterIndex(2, 0);
+    public static CharacterIndex sPunk = new CharacterIndex(2, 1);
+    public static CharacterIndex sSister = new CharacterIndex(2, 2);
+    public static CharacterIndex sSchool = new CharacterIndex(2, 3);
+    
+    public static CharacterIndex sMother = new CharacterIndex(3, 0);
+    public static CharacterIndex sDrunk = new CharacterIndex(3, 1);
+    public static CharacterIndex sTerrorist = new CharacterIndex(3, 2);
+    public static CharacterIndex sGames = new CharacterIndex(3, 3);
 	
+    public static CharacterIndex sProf = new CharacterIndex(4, 0);
+    public static CharacterIndex sBeach = new CharacterIndex(4, 1);
+    public static CharacterIndex sLeukemia = new CharacterIndex(4, 2);
+    public static CharacterIndex sClerk = new CharacterIndex(4, 3);
+
+    public static CharacterIndex sDance = new CharacterIndex(5, 0);
+    public static CharacterIndex sMarried = new CharacterIndex(5, 1);
+    public static CharacterIndex sBurnt = new CharacterIndex(5, 2);
+    public static CharacterIndex sWhale = new CharacterIndex(5, 3);
+
+    public static CharacterIndex sMinister = new CharacterIndex(6, 0);
+    public static CharacterIndex sFundraiser = new CharacterIndex(6, 1);
+    public static CharacterIndex sAngry = new CharacterIndex(6, 2);
+    public static CharacterIndex sPorn = new CharacterIndex(6, 3);
+
+    public static CharacterIndex sGrandma = new CharacterIndex(7, 0);
+    public static CharacterIndex sDemented = new CharacterIndex(7, 1);
+    public static CharacterIndex sPray = new CharacterIndex(7, 2);
+    public static CharacterIndex sTribal = new CharacterIndex(7, 3);
 	
 }
 
