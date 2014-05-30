@@ -22,27 +22,30 @@ public static class UnlockRequirements
 			return new UnlockData(){Sentence = aString};
 		}
 	}
-	public static Dictionary<CharacterIndex, System.Func<List<PerformanceStats>, UnlockData> > 
-		requirements = new Dictionary<CharacterIndex,System.Func<List<PerformanceStats>, UnlockData>>()
+    public static Dictionary<CharacterIndex, System.Func<List<PerformanceStats>, List<List<PerformanceStats> >, UnlockData> > requirements = new Dictionary<CharacterIndex,System.Func<List<PerformanceStats>,List<List<PerformanceStats> >, UnlockData>>()
 	{
-		{ new CharacterIndex(1,1), delegate(List<PerformanceStats> aStats)
+        { new CharacterIndex(2,1), delegate(List<PerformanceStats> aStats, List<List<PerformanceStats> > aHistory)
 			{
-				return new UnlockData(){
-					Sentence = "Playing the game once made you realize you can be star even when really young!",
-					Related = new CharacterIndex[]{new CharacterIndex(2,1),new CharacterIndex(3,3)}
-				};	
+                if(PerformanceStats.history_contains(aHistory,new CharacterIndex[]{CharacterIndex.sStar,CharacterIndex.sGang}))
+                {
+    				return new UnlockData(){
+    					Sentence = "Having been both a Gang Leader and a Child Star when young made you think of combining bad attitude and music!",
+                        Related = new CharacterIndex[]{CharacterIndex.sStar,CharacterIndex.sGang}
+    				};	
+                }
+                return null;
 			}
-		},{ new CharacterIndex(2,1), delegate(List<PerformanceStats> aStats)
-			{
-				return null;
-			}
-		},{	new CharacterIndex(1,2), delegate(List<PerformanceStats> aStats)
-			{
-				if(aStats.Count() > 7)
-					return "Getting very old made you understand that life should not always be fun and games";
-				return null;
-			}
-		}
+        },{ new CharacterIndex(2,2), delegate(List<PerformanceStats> aStats, List<List<PerformanceStats> > aHistory)
+            {
+                return null;
+            }
+        },{ new CharacterIndex(2,3), delegate(List<PerformanceStats> aStats, List<List<PerformanceStats> > aHistory)
+            {
+                if(aStats.Count() > 7)
+                    return "Getting very old made you understand that life should not always be fun and games";
+                return null;
+            }
+        }
 	};
 }
 
@@ -57,12 +60,18 @@ public class Unlockables
 	{
 		foreach(CharacterIndex e in CharacterIndex.sAllCharacters)
 		{
+            //1 unlocked
+            //2 hidden
+            //0 unknown (secret!)
+
 			if(e.Choice == 0)
-				unlockedCharacters[e] = 1; //unlocked
+				unlockedCharacters[e] = 1; 
+            else if(e.LevelIndex == 1)
+                unlockedCharacters[e] = 1;
 			else if(e.Choice < 4)
-				unlockedCharacters[e] = 1; //2; //hidden
+				unlockedCharacters[e] = 2; 
 			else
-				unlockedCharacters[e] = 0; //unknown
+				unlockedCharacters[e] = 0; 
 		}
 	}
 
@@ -79,19 +88,26 @@ public class UnlockManager
 		//read_unlock();
 	}
 	
+    public UnlockRequirements.UnlockData did_unlock(CharacterIndex aChar,List<PerformanceStats> aStats)
+    {
+        return UnlockRequirements.requirements [aChar](aStats, mUnlocked.gameHistory);
+    }
 	public void game_finished(List<PerformanceStats> aStats)
 	{
+        mUnlocked.gameHistory.Add(aStats);
+        //TODO maybe consider pruning after it reaches like over 100 playthroughs
+
+
 		foreach(CharacterIndex e in CharacterIndex.sAllCharacters)
 		{
 			if(mUnlocked.unlockedCharacters[e] != 1)
 				if(UnlockRequirements.requirements.ContainsKey(e))
 				{
-					string msg = UnlockRequirements.requirements[e](aStats).Sentence;
-					if(msg != "")
-						;//TODO
+                    var msg = did_unlock(e,aStats);
+					if(msg != null)
+                        mUnlocked.unlockedCharacters[e] = 1;
 				}
 		}
-
 		write_unlock();
 	}
 

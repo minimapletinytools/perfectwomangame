@@ -94,7 +94,6 @@ public class UnlockAnnouncer
 		TED.update(Time.deltaTime);
 	}
 
-	//TODO add text argument
 	public void announce_unlock(CharacterIndex aChar, UnlockRequirements.UnlockData aData)
 	{
 		float gDisplayTime = 5;
