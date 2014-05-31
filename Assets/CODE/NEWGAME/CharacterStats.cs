@@ -129,5 +129,35 @@ public class PerformanceStats
 		return r;
 	}
 	
-	
+    //TODO TEST
+    public static bool history_contains(List<PerformanceStats> aHistory, CharacterIndex[] aChars)
+    {
+        bool[] r = new bool[aChars.Count()];
+        foreach(var f in aHistory)
+        {
+            for(int i = 0; i < aChars.Count(); i++)
+            {
+                if(aChars[i] == f.Character) 
+                    r[i] = true;
+            }
+        }
+        return r.Aggregate((e,f) => e & f);
+    }
+
+    public static bool history_contains(List<List<PerformanceStats> > aHistory, CharacterIndex[] aChars)
+    {
+        bool[] r = new bool[aChars.Count()];
+        foreach (var e in aHistory)
+        {
+            foreach(var f in e)
+            {
+                for(int i = 0; i < aChars.Count(); i++)
+                {
+                    if(aChars[i] == f.Character) 
+                        r[i] = true;
+                }
+            }
+        }
+        return r.Aggregate((e,f) => e & f);
+    }
 }

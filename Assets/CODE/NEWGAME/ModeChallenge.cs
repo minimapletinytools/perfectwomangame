@@ -17,10 +17,14 @@ public class ModeChallenge
 	
 	public void character_loaded()
 	{
+        mManager.mTransitionCameraManager.fade_in_with_sound();
+        //TODO start PLAY
 	}
 	
 	public void update () 
 	{
+        //TODO if PLAY, then do grade
+        //if CHOOSING 
 	}
 
 }

@@ -657,21 +657,19 @@ public class SunsetManager
 			low_skippable_text_bubble_event(deathSentence,gIntroText)
 		,1);
 
-
-
-		//TODO do unlockables here
+       
 		foreach(CharacterIndex e in CharacterIndex.sAllCharacters)
 		{
 			if(mManager.mMetaManager.UnlockManager.is_unlocked(e) != 1)
 			{
 				if(UnlockRequirements.requirements.ContainsKey(e))
 				{
-					var unlockData = UnlockRequirements.requirements[e](aStats);
+                    var unlockData = mManager.mMetaManager.UnlockManager.did_unlock(e,aStats);
 					if(unlockData != null){
 						CharacterIndex ce = new CharacterIndex(e);
 						chain = chain.then_one_shot(
 							delegate(){
-								mUnlockAnnouncer.announce_unlock(ce,UnlockRequirements.requirements[ce](aStats));
+								mUnlockAnnouncer.announce_unlock(ce,unlockData);
 							}
 						,0).then(
 							delegate(float aTime){

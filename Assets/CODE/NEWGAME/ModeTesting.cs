@@ -121,8 +121,6 @@ public class ModeTesting
 			NGM.CurrentPoseAnimation.ChangeTime = mLastPoseSpeed;
 		}
 		
-			
-		
 		if(Input.GetKeyDown(KeyCode.Alpha8))
 		{
 			mManager.mDebugString = "Loaded poses for difficulty " + ((++mLastDiff)%4);

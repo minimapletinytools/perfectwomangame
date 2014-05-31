@@ -184,12 +184,13 @@ public class ManagerManager : MonoBehaviour{
         Texture2D screenShot = new Texture2D(resWidth, resHeight, TextureFormat.RGB24, false);
         CameraClearFlags ccf = cam.clearFlags;
         cam.clearFlags = CameraClearFlags.SolidColor;
-        cam.backgroundColor = new Color(0, 0, 0, 1);
+        cam.backgroundColor = new Color(1,1,1,0);
         cam.DoClear();
-        cam.clearFlags = ccf;
         cam.Render();
+        cam.clearFlags = ccf;
         RenderTexture.active = rt;
         screenShot.ReadPixels(new Rect(0, 0, resWidth, resHeight), 0, 0);
+        screenShot.Apply();
         cam.targetTexture = null;
         RenderTexture.active = null; // JC: added to avoid errors
         Destroy(rt);
