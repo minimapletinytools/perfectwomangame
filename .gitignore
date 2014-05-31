@@ -6,6 +6,7 @@ Obj/
 UnityGenerated/
 #Library/
 Library/ScriptAssemblies
+Library/Cache
  
 # ===================================== #
 # Visual Studio / MonoDevelop generated #
