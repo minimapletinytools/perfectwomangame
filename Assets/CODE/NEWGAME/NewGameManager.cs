@@ -100,7 +100,7 @@ public class NewGameManager : FakeMonoBehaviour
 		CurrentCharacterLoader = aCharacter;
 		CurrentCharacterIndex = new CharacterIndex(aCharacter.Name);
 		
-		if (GS == GameState.NORMAL || GS == GameState.TEST) {
+		if (GS == GameState.NORMAL || GS == GameState.TEST || GS == GameState.CHALLENGE) {
 			mManager.mBackgroundManager.character_changed_listener(aCharacter);
 			if(aCharacter.Character != CharacterIndex.sGrave){ //special behaviour for grave
 				mManager.mBodyManager.character_changed_listener(aCharacter);
@@ -120,13 +120,15 @@ public class NewGameManager : FakeMonoBehaviour
 				mModeNormalPlay.character_loaded();
 			else if(GS == GameState.TEST)
 				mModeTesting.character_loaded();
+            else if(GS == GameState.CHALLENGE)
+                mModeChallenge.character_loaded();
+               
 		}
 		else if(GS == GameState.SIMIAN)
 		{
 			mManager.mBackgroundManager.character_changed_listener(aCharacter);
 			mModeSimian.character_loaded();
 		}
-		//TODO, challenge
 		
 		if(aCharacter.Name == "0-1") //in this very special case, we keep the bundle to load the death cutscene
 		{
@@ -146,12 +148,14 @@ public class NewGameManager : FakeMonoBehaviour
 		else CurrentPose = mManager.mReferences.mDefaultPose.to_pose();
 		
 		
-		if(GS == GameState.NORMAL)
-			mModeNormalPlay.update();
-		else if (GS == GameState.TEST)
-			mModeTesting.update();
-		else if(GS == GameState.SIMIAN)
-			mModeSimian.update();
+		if (GS == GameState.NORMAL)
+            mModeNormalPlay.update();
+        else if (GS == GameState.TEST)
+            mModeTesting.update();
+        else if (GS == GameState.SIMIAN)
+            mModeSimian.update();
+        else if (GS == GameState.CHALLENGE)
+            mModeChallenge.update();
         
 		
 		if(GS != GameState.SIMIAN)
