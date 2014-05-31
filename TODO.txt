@@ -1,14 +1,33 @@
+::NEW PLAY NOTES::
+-easy
+	-arms only
+	-only one limb changes at once. Note we're talking about absolute changes
+	-9/12/15/18/21 (bad, poor, ok, good, excellent)
+	-4 poses
+-medium
+	-arms and legs only
+	-only one limb changes at once
+	-builds on easy poses
+	-5 poses (2 from easy)
+-hard 
+	-arms, legs, head and torso (all)
+	-two limbs change at once
+	-builds on easy/medium poses
+	-6 poses (1 from easy, 2 from med)
+-extreme
+	-all
+	-no rules on how many limbs change, these poses will follow no particular pattern
+	-7+ poses, maybe some from before maybe not
+
+-challenge mode
+	-can access other play modes...
+
 ::GAME TODO NEW::
 -be able to immediately test poses
--fix the screen capture problem during recording
--make a new xbox one build
--unlockables
-	-fill out more examples...
-	-send lea source code for unlockables list so she can change the text
 -design changes
 	-think about new way to do pose--make it more dance like maybe based on extrasolar suggestion
 -text file
-	-fix all typos and apostrophe's etc.
+	-fix all typos and apostrophe's etc. 
 	-make a diagram of all connections and design some so they are more comprehensive...
 	-don't forget you make a hack fix for having mediocre be good..
 	-some connection texts will never be triggered because there is no equivalent difficulty change
@@ -27,7 +46,11 @@
 -other
 	-see if you can fix kinect lighting
 	-pose change predictor, draw super transparent "next" pose during play
-
+DONE-fix the screen capture problem during recording
+DONE-make a new xbox one build
+DONE-unlockables
+	DONE-fill out more examples...
+	DONE-send lea source code for unlockables list so she can change the text
 NOTMP-ordering issues with death cutscene in child star 
 DONE-disable going back an age at age 5 in testing scene
 DONE-put customized picture back into the game
