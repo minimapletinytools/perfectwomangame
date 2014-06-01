@@ -21,8 +21,58 @@
 
 -challenge mode
 	-can access other play modes...
+::CONTROLS::
+:TESTING:
+-1/2/3/4 jump forward a character
+-shift + 1/2/3/4 jump backwards a character
+-5 toggle cutscenes
+-6 load target poses in the POSETEST folder
+	-POSETEST folder should be next to the executable
+	-subfolders of POSETEST will be a "set" of poses 
+	-see the debug string in the upper left hand corner for details
+-8 load target poses for the current character
+	-pressing multiple times toggles difficulty
+	-see the debug string
+-9 freeze the target pose
+-while a target pose animation is playing
+	-A to toggle the style
+	-S to toggle the speed
+	-see the debug string
+	-this will do nothing if you have disabled the target pose with 9
+-space to capture the pose and take a screenshot
+	-the pose recorded is the character pose not the target pose
+-TZGHBNERUIQWOPCVM,YX.- to manually rotate the limbs 
+	-only works when kinect is not connected
+	-these are laid out on the German keyboard to roughly match the body's layout.
+
+:GAME:
+-during title screen: 
+	-0 to start
+	-9 to start and skip fetus (random character)
+-during play 
+	-A to match the pose (no kinect only)
+	-S to speed the game up by 5x
+	-0 to skip to cutscene 
+		-pressing and holding 0 again immediately will skip to choosing
+	-D to die
+-during cutscenes and grave
+	-0 to skip 
+-during choosing
+	-1/2/3/4 to insta choose
+	-q/w/e/r to toggle difficulties 
+		-this will also enable all locked characters for this age
+	-q/w/e/r/t/z/u + 1/2/3/4 to instantly choose a character and a given age 
+		-jumping ahead will randomly fill in ages in between
+-during dialog boxes
+	-9 to skip (works for most but not all dialog boxes)
+-during whenever
+	-ESC to quit
+	-BKSP to restart
+
 
 ::GAME TODO NEW::
+-transition to death needs audio fading
+	-also should increase the time it takes to transition
 -transition_to_transition_play needs to handle astronaut
 -the cutscene bubbles still look off...
 -be able to immediately test poses

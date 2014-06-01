@@ -14,11 +14,11 @@ public class FlatUnlockIcon : FlatElementMultiBase{
 
 		background = new FlatElementImage(bgImage.Image,bgImage.Data.Size,aDepth);
 		icon = new FlatElementImage(charIcon.Image,charIcon.Data.Size,aDepth+1);
-		name = new FlatElementText(ManagerManager.Manager.mNewRef.genericFont,50,FlatElementText.convert_to_multiline(2,aChar.ShortName.ToUpper()),aDepth + 1);
+		name = new FlatElementText(ManagerManager.Manager.mNewRef.genericFont,50,FlatElementText.convert_to_multiline(1,aChar.ShortName.ToUpper()),aDepth + 1);
 
 		mElements.Add(new FlatElementMultiBase.ElementOffset(background, new Vector3(0,0,0)));
-		mElements.Add(new FlatElementMultiBase.ElementOffset(icon, new Vector3(0,70,0)));
-		mElements.Add(new FlatElementMultiBase.ElementOffset(name, new Vector3(0,-70,0)));
+		mElements.Add(new FlatElementMultiBase.ElementOffset(icon, new Vector3(0,20,0)));
+		mElements.Add(new FlatElementMultiBase.ElementOffset(name, new Vector3(0,-200,0)));
 
 		PrimaryGameObject = create_primary_from_elements();
 		Depth = aDepth; 
@@ -45,12 +45,12 @@ public class FlatUnlockBadge : FlatElementMultiBase
 		text1 = new FlatElementText(unlockfont,120,"new lifestyle",aDepth +1);
 		text2 = new FlatElementText(unlockfont,200,"UNLOCKED",aDepth +1);
 		mainIcon = new FlatUnlockIcon(aChar,true,aDepth+1);
-		text3 = new FlatElementText(unlockfont,70,FlatElementText.convert_to_multiline(2,aData.Sentence),aDepth +1);
+		text3 = new FlatElementText(unlockfont,70,FlatElementText.convert_to_multiline_max(35,aData.Sentence),aDepth +1);
 
 		mElements.Add(new FlatElementMultiBase.ElementOffset(background, new Vector3(0,0,0)));
 		mElements.Add(new FlatElementMultiBase.ElementOffset(text1, new Vector3(0,600,0)));
 		mElements.Add(new FlatElementMultiBase.ElementOffset(text2, new Vector3(0,450,0)));
-		mElements.Add(new FlatElementMultiBase.ElementOffset(mainIcon, new Vector3(0,200,0)));
+		mElements.Add(new FlatElementMultiBase.ElementOffset(mainIcon, new Vector3(0,125,0)));
 		mElements.Add(new FlatElementMultiBase.ElementOffset(text3, new Vector3(0,-200,0)));
 
 		contributors = new FlatUnlockIcon[aData.Related.Length];

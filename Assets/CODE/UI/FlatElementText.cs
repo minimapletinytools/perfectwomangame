@@ -111,7 +111,10 @@ public class FlatElementText : FlatElementBase
 		base.set_color(setMe);
     }
 	
-	
+	public static string convert_to_multiline_max(int max, string aString)
+	{
+		return convert_to_multiline (aString.Length / max + 1, aString);
+	}
 	public static string convert_to_multiline(int numberSplits, string aString)
 	{
 		int[] ideal = Enumerable.Repeat((aString.Length/numberSplits),numberSplits).ToArray();
