@@ -5,7 +5,7 @@ using System.Linq;
 
 public class MusicManager : FakeMonoBehaviour
 {
-	static float FADE_TIME = 5;
+	static float FADE_TIME = 4;
 	static float QUICK_FADE_TIME = 0.2f; //for music to cutscene music
 	static float CHOICE_FADE_TIME = 2;
 	
@@ -189,8 +189,7 @@ public class MusicManager : FakeMonoBehaviour
 	//but not fading out the music from the last character
 	public void character_changed_listener(CharacterLoader aCharacter)
 	{
-		play_music(aCharacter.Images.backgroundMusic,0,true);
-		fade_in();
+		play_music(aCharacter.Images.backgroundMusic,1,true);
 	}
 	
 	

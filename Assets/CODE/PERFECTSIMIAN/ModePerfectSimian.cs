@@ -61,7 +61,6 @@ public class ModePerfectSimian
 		//this is stupid
 		mSimian.add_environment(GameObject.FindObjectsOfType(typeof(Transform)).Where(e=>e.name.StartsWith("FS_")).Select(e=>((Transform)e).gameObject));
 		
-		mManager.mTransitionCameraManager.fade_in_with_sound();
 	}
 	
 	public void update () 

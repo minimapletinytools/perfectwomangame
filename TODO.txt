@@ -23,6 +23,8 @@
 	-can access other play modes...
 
 ::GAME TODO NEW::
+-transition_to_transition_play needs to handle astronaut
+-the cutscene bubbles still look off...
 -be able to immediately test poses
 -design changes
 	-think about new way to do pose--make it more dance like maybe based on extrasolar suggestion
@@ -46,6 +48,11 @@
 -other
 	-see if you can fix kinect lighting
 	-pose change predictor, draw super transparent "next" pose during play
+
+DONE-fix the transitions
+	-after "that's a hard one show us your skills" fade out music, load, transition, fade in music
+DONE-need to properly remove mini chars after choosing
+DONE-should play a sound after succesfully matching the pose in fetus
 DONE-fix the screen capture problem during recording
 DONE-make a new xbox one build
 DONE-unlockables

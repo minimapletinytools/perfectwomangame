@@ -144,7 +144,7 @@ public class ModeNormalPlay
 		
 		mSunsetImage = new FlatElementImage(mSunsetManager.mFlatCamera.RT,0);
 		mSunsetImage.HardScale = Vector3.one * mFlatCamera.Width/mSunsetImage.mImage.PixelDimension.x;
-		mSunsetImage.HardPosition = mFlatCamera.get_point(Vector3.zero) + Vector3.right*mSunsetImage.BoundingBox.width;
+		mSunsetImage.HardPosition = mFlatCamera.get_point(Vector3.zero) + Vector3.up*mSunsetImage.BoundingBox.height;
 		mSunsetImage.HardShader = mManager.mReferences.mRenderTextureShader;
 		mSunsetImage.PositionInterpolationMinLimit = 10; //so it doesn't take forever to entirely cover the image underneath
 		mElement.Add(mSunsetImage);
@@ -184,6 +184,10 @@ public class ModeNormalPlay
 	
 	public void character_loaded()
 	{
+        //reveal the character with sound
+        mManager.mMusicManager.play_sound_effect("transitionOut");
+        slide_image(mSunsetImage,null,false); 
+
 		//we use the hack version instead that allows us to skip characters
 		set_last_performance_stat_to_character(NGM.CurrentCharacterIndex);
 
@@ -293,7 +297,7 @@ public class ModeNormalPlay
 							slide_image(mChoosingImage,null);
 							slide_image(mSunsetImage,null,false);
 							mManager.mMusicManager.fade_out_extra_music();
-							mManager.mMusicManager.fade_out();
+							mManager.mMusicManager.fade_out(0);
 							mManager.mAssetLoader.new_load_character((new CharacterIndex(i+1,j)).StringIdentifier,mManager.mCharacterBundleManager);
 
 						}
@@ -433,6 +437,7 @@ public class ModeNormalPlay
 					//this may or may not work depending on which update gets called first
 					SkipSingle();
 					scoreProp.SetValue(CurrentPerformanceStat,0);
+                    mManager.mMusicManager.play_sound_effect("cutGood");
 					TimeRemaining = 0;
 				}
 			}
@@ -530,6 +535,8 @@ public class ModeNormalPlay
 		TED.add_one_shot_event(
 			delegate() 
 			{	 
+                mManager.mMusicManager.fade_out(3); //fadeout whataver is playing, either the cutscene music or the character music (which plays after cutscene music finishes
+
 				//apply all the diff changes again (in case we skipped and tehy werent applied duringcutscene)
 				if(changes != null){
 			        foreach (var e in changes.Changes)
@@ -546,7 +553,6 @@ public class ModeNormalPlay
 						}
 			        }
 				}
-				mManager.mMusicManager.fade_out();
 			}
 		,0).then_one_shot(
 			delegate() 
@@ -604,7 +610,6 @@ public class ModeNormalPlay
 			chain = chain.then_one_shot(
 				delegate()
 				{
-					mManager.mMusicManager.fade_out();
 					mManager.mBodyManager.transition_character_out();
 					mManager.mTransparentBodyManager.transition_character_out();
 					mManager.mMusicManager.play_sound_effect("cutDie");
@@ -708,7 +713,6 @@ public class ModeNormalPlay
 		mChoosingManager.set_bb_choices(chars);
 		mSunsetManager.add_character(NGM.CurrentCharacterLoader.Character);
 		slide_image(null,mSunsetImage,false);
-		mManager.mMusicManager.fade_out(3);
 
 		if(!Input.GetKey(KeyCode.Alpha0))
 		{
@@ -752,19 +756,22 @@ public class ModeNormalPlay
 		
 		//no target pose means we don't want a transparent body
 		if(NGM.CurrentTargetPose == null)
-			mManager.mTransparentBodyManager.transition_character_out();
+			mManager.mTransparentBodyManager.transition_character_out(true);
 		
 	}
 	
 	//TODO move to sunset
+    //this gets called after choosing
+    //this also gets called when you die/finish the game
+    //also called when you get to age 110
 	public void transition_to_TRANSITION_play(CharacterIndex aNextCharacter)
-	{
-		
-		float gDiffDisplayDur = 5f;
+    {
+        float gDiffDisplayDur = 4f;
 
 
 		GS = NormalPlayGameState.TRANSITION;
 
+        //TODO maybe play a sound "Too Easy" "Ok" "Hard" "That's Impossible!!"
 		var diffPhrases = new string[]{	"That's an easy choice. You should be able to manage that!", 
 										"You made a normal choice. Show how good you are!", 
 										"That's a hard one. Show your skills!", 
@@ -774,29 +781,26 @@ public class ModeNormalPlay
 		TED.add_event(
 			aNextCharacter != CharacterIndex.sGrave 
 			?
-			mSunsetManager.low_skippable_text_bubble_event(diffPhrases[NGM.CharacterHelper.Characters[aNextCharacter].Difficulty],gDiffDisplayDur)
+			mSunsetManager.low_skippable_text_bubble_event(diffPhrases [NGM.CharacterHelper.Characters [aNextCharacter].Difficulty], gDiffDisplayDur)
 			:
 			delegate(float aTime){return true;}
-		).then_one_shot(
-			//TODO before this, till mInterfaceManager to explain what choice the user just made
-			//maybe play a sound "Too Easy" "Ok" "Hard" "That's Impossible!!"
-			delegate(){
-				mManager.mTransitionCameraManager.fade_out_with_sound(
-					delegate(){
-						if(aNextCharacter != CharacterIndex.sGrave) {
-							mManager.mAssetLoader.new_load_character(aNextCharacter.StringIdentifier,mManager.mCharacterBundleManager);
-							slide_image(mSunsetImage,null,false);
-						} else {
-							mManager.mTransitionCameraManager.fade_in_with_sound();
-							mSunsetManager.add_character(NGM.CurrentCharacterLoader.Character,false);
-							mSunsetManager.set_sun();
-							slide_image(null,mSunsetImage,false,true);
-							transition_to_GRAVE();
-						}
-					}
-				);
-			}
-		);
+        ).then_one_shot(
+            delegate()
+            {
+                if (aNextCharacter != CharacterIndex.sGrave){
+                    mManager.mAssetLoader.new_load_character(aNextCharacter.StringIdentifier, mManager.mCharacterBundleManager);
+                } else
+                {
+                    //This can probably stay here
+                    //we just died, so add the last character we just played and set the sun
+                    //normally this will get called right after you make a choice but if we're here that meeans we didn't make a choice because we died
+                    mSunsetManager.add_character(NGM.CurrentCharacterLoader.Character, false);
+                    mSunsetManager.set_sun();
+                    slide_image(null, mSunsetImage, false, false);
+                    transition_to_GRAVE();
+                }
+            }
+        );
 	}
 	
 	
@@ -832,7 +836,8 @@ public class ModeNormalPlay
 					delegate(float aTime){
 						if(mManager.mMusicManager.MusicClip == cutsceneClip)
 						{
-							if(!mManager.mMusicManager.IsMusicSourcePlaying)
+                            //if we're still in the cutscene and the cutscene music has stopped playing
+                            if(!mManager.mMusicManager.IsMusicSourcePlaying && GS == NormalPlayGameState.CUTSCENE)
 							{
 								mManager.mMusicManager.play_music(NGM.CurrentCharacterLoader.Images.backgroundMusic,0,true);	
 								mManager.mMusicManager.fade_in(5,0.2f);

@@ -350,16 +350,13 @@ public class TransitionCameraManager : FakeMonoBehaviour
 			GameConstants.preplayTime = 0;
 		}
 		
-		//TODO if user is not roughly in the center of the screen, return false
-		fade_out_with_sound(
-			delegate()
-			{
-				mManager.mGameManager.start_game(charIndex);
-				destroy_configuration_display();
-			}
-		);
+        mManager.mGameManager.start_game(charIndex);
+        destroy_configuration_display();
+
 		return true;
 	}
+
+    //TODO DELETE we no longer fade
 	public void fade_in_with_sound()
 	{
 		TED.add_one_shot_event(
@@ -370,6 +367,8 @@ public class TransitionCameraManager : FakeMonoBehaviour
 			fade_in,
 		0);
 	}
+
+    //TODO DELETE we no longer fade
 	public void fade_out_with_sound(System.Action aFadeCompleteCb)
 	{
 			

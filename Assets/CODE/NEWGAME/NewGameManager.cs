@@ -100,6 +100,7 @@ public class NewGameManager : FakeMonoBehaviour
 		CurrentCharacterLoader = aCharacter;
 		CurrentCharacterIndex = new CharacterIndex(aCharacter.Name);
 		
+        //TODO should move a lot of this stuff into character_loaded routiens
 		if (GS == GameState.NORMAL || GS == GameState.TEST || GS == GameState.CHALLENGE) {
 			mManager.mBackgroundManager.character_changed_listener(aCharacter);
 			if(aCharacter.Character != CharacterIndex.sGrave){ //special behaviour for grave

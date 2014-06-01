@@ -15,7 +15,6 @@ public class ModeTesting
 
 	public void character_loaded()
 	{
-		mManager.mTransitionCameraManager.fade_in_with_sound();
 	}
 	
 	

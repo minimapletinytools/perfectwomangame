@@ -57,14 +57,17 @@ public class BodyManager : FakeMonoBehaviour {
 			mFlat.SoftPosition = mOffset;
 		}
 	}
-	public void transition_character_out()
+	public void transition_character_out(bool aHard = false)
 	{
 		//fade out
 		//mFlat.SoftColor = new Color(1,1,1,0);
 
 		//fly out
 		mFlat.PositionInterpolationMaxLimit = 5000;
-		mFlat.SoftPosition = mFlat.HardPosition + new Vector3(0,4000,0);
+        if(!aHard)
+		    mFlat.SoftPosition = mFlat.HardPosition + new Vector3(0,4000,0);
+        else
+            mFlat.HardPosition = mFlat.SoftPosition = mFlat.HardPosition + new Vector3(0,4000,0);
 	}
 	
     public void destroy_character()
