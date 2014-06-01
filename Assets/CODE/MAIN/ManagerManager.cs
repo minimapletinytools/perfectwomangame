@@ -32,7 +32,6 @@ public class ManagerManager : MonoBehaviour{
 	public VoidDelegate mUpdateDelegates = null;
 	VoidDelegate mFixedUpdateDelegates = null;
 
-    public EventManager mEventManager;
     public InputManager mInputManager;
     public ZigManager mZigManager;
 	public ProjectionManager mProjectionManager;
@@ -53,7 +52,6 @@ public class ManagerManager : MonoBehaviour{
 
 	void Awake () {
 
-        GameConstants.Log("begin awake");
 		Random.seed = System.Environment.TickCount;
 		Application.targetFrameRate = (int)GameConstants.TARGET_FRAMERATE;
 
@@ -69,7 +67,6 @@ public class ManagerManager : MonoBehaviour{
 
 		mCharacterBundleManager = new CharacterBundleManager(this);
 		mMusicManager = new MusicManager(this);
-        mEventManager = new EventManager(this);
         mInputManager = new InputManager(this);
 		mZigManager = new ZigManager(this);
 		mProjectionManager = new ProjectionManager(this);
@@ -83,12 +80,10 @@ public class ManagerManager : MonoBehaviour{
 		mTransitionCameraManager = new TransitionCameraManager(this);
 		mMetaManager = new MetaManager(this);
 		
-        GameConstants.Log("start delegates");
 
 		if (mStartDelegates != null)
             mStartDelegates();
 
-        GameConstants.Log("end awake");
 	}
 	
 
@@ -122,7 +117,6 @@ public class ManagerManager : MonoBehaviour{
 	Vector2 mLastScreenSize = new Vector2();
 	void Update () {
 		
-        GameConstants.Log("begin update");
 		
 		Vector2 newScreenSize = new Vector2(Screen.width,Screen.height);
 		if(mLastScreenSize != newScreenSize)
@@ -144,14 +138,11 @@ public class ManagerManager : MonoBehaviour{
 		if(mUpdateDelegates != null) 
 			mUpdateDelegates();
 
-        GameConstants.Log("end update");
 	}
 	
 	void FixedUpdate() {
 
-        GameConstants.Log("begin fixed update");
 		if(mFixedUpdateDelegates != null) mFixedUpdateDelegates();
-        GameConstants.Log("end fixed update");
 	}
 	
     public void restart_game()

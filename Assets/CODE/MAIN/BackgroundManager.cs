@@ -15,7 +15,6 @@ public class BackgroundManager  : FakeMonoBehaviour
     public BackgroundManager(ManagerManager aManager) : base(aManager) { }
 
 	public override void Start () {
-        mManager.mEventManager.character_changed_event += character_changed_listener;
 
         mBackground = new FlatElementImage(null, 0);
         mBackground.HardPosition = Vector3.zero;

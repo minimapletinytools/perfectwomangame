@@ -116,12 +116,6 @@ public class BodyManager : FakeMonoBehaviour {
 		return (float)pixelWidth/1.0f; //100 pixels = 1 unit
 	}
 
-	public override void Start () 
-    {
-        
-        mManager.mEventManager.character_changed_event += character_changed_listener;
-	}
-
     public void write_pose(string aFilename, bool aManual)
     {
         if (aManual)
