@@ -166,17 +166,23 @@ public class ChoosingManager
 		float padding = 700;
 		float netWidth = (len)*padding;
 		
-		for(int i = len; i < mBBChoices.Count; i++)
-			mBBChoices[i].Enabled = false;
+		for (int i = len; i < mBBChoices.Count; i++)
+        {
+            mBBChoices [i].Enabled = false;
+            mBBMiniMans[i].Enabled = false;
+            mBBChoiceBodies[i].Enabled = false;
+        }
 		for(int i = 0; i < len; i++)
 		{
 			
 			mBBChoices[i].Enabled = true;
+            mBBMiniMans[i].Enabled = true;
+            mBBChoiceBodies[i].Enabled = true;
+
 			mBBChoices[i].set_actual_character(ch[i]);
 			mBBChoices[i].set_difficulty(mManager.mCharacterBundleManager.get_character_helper().Characters[ch[i]].Difficulty);
 			
-			
-			float xOffset = netWidth/2 - padding/2 - padding*i;
+            var xOffset = netWidth/2 - padding/2 - padding*i;
 			mBBChoices[i].HardPosition = mFlatCamera.get_point(0, -0.16f) + new Vector3(xOffset,0,0);
 			mBBChoiceBodies[i].HardPosition = mFlatCamera.get_point(0, -0.16f) + new Vector3(xOffset,-270,0);
 			mBBMiniMans[i].HardPosition = mBBChoiceBodies[i].HardPosition + mBBMiniManBasePositionOffset;
