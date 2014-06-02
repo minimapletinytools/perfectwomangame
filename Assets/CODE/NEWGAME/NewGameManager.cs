@@ -148,7 +148,6 @@ public class NewGameManager : FakeMonoBehaviour
         	CurrentPose = ProGrading.snap_pose(mManager); 
 		else CurrentPose = mManager.mReferences.mDefaultPose.to_pose();
 		
-		
 		if (GS == GameState.NORMAL)
             mModeNormalPlay.update();
         else if (GS == GameState.TEST)
@@ -157,8 +156,7 @@ public class NewGameManager : FakeMonoBehaviour
             mModeSimian.update();
         else if (GS == GameState.CHALLENGE)
             mModeChallenge.update();
-        
-		
+
 		if(GS != GameState.SIMIAN)
 		{
 			//reader connected and no user

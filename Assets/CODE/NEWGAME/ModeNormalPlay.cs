@@ -220,8 +220,9 @@ public class ModeNormalPlay
 				1.5f);
 				break;
 			case "110":
+                //TODO eventually do physics astronaut here!
 				set_time_for_PLAY(15f);
-				setup_next_poses(true);
+				setup_next_poses(false);
 				transition_to_PLAY();
 				TED.add_event(
 					mInterfaceManager.skippable_text_bubble_event("You lived to be very old. Enjoy what's left of your life.", 4),
@@ -256,8 +257,10 @@ public class ModeNormalPlay
 			DoSkipMultipleThisFrame = true;
 		if(Input.GetKeyDown(KeyCode.Alpha9))
 			DoSkipSingleThisFrame = true;
-		if(Input.GetKeyDown(KeyCode.Alpha8))
-			transition_to_TRANSITION_play(new CharacterIndex("999"));
+
+        //TODO not sure why I put this here but this most most def. does not work
+		//if(Input.GetKeyDown(KeyCode.Alpha8))
+			//transition_to_TRANSITION_play(new CharacterIndex("999"));
 			//mManager.mTransparentBodyManager.transition_character_in(GameConstants.UiWhiteTransparent);
 
 		if(GS == NormalPlayGameState.CHOICE)
@@ -557,25 +560,25 @@ public class ModeNormalPlay
 		,0).then_one_shot(
 			delegate() 
 			{	 
-				if(CurrentPerformanceStat.Character.LevelIndex > 6) //if age 85 or greater ?????? TODO whats going on here
+				if(CurrentPerformanceStat.Character.LevelIndex > 6) //if natural death :)
 				{
 					//TODO set true when you have 110
-					if(false && CurrentPerformanceStat.Character.LevelIndex == 7)
+					if(GameConstants.showAstronaut 
+                    && CurrentPerformanceStat.Character.LevelIndex == 7
+                    && mPerformanceStats.Where(e=>e.Score < GameConstants.astronautCutoff).Count() == 0)
 					{
-						if(mPerformanceStats.Where(e=>e.Score < GameConstants.astronautCutoff).Count() == 0) //if we did well on all stages
-						{
-							transition_to_TRANSITION_play(CharacterIndex.sOneHundred);
-						}
+						transition_to_TRANSITION_play(CharacterIndex.sOneHundred);
 					}
-
-					//natural death
-					mInterfaceManager.set_for_DEATH(CurrentPerformanceStat.Character)
-						.then_one_shot(
-							delegate()
-							{
-								transition_to_TRANSITION_play(new CharacterIndex("999"));
-							}
-						,0);
+                    else{
+    					//natural death
+    					mInterfaceManager.set_for_DEATH(CurrentPerformanceStat.Character)
+    						.then_one_shot(
+    							delegate()
+    							{
+    								transition_to_TRANSITION_play(new CharacterIndex("999"));
+    							}
+    						,0);
+                    }
 				}
 				else
 					transition_to_CHOICE(); 
@@ -779,7 +782,7 @@ public class ModeNormalPlay
 		};
 
 		TED.add_event(
-			aNextCharacter != CharacterIndex.sGrave 
+			aNextCharacter.LevelIndex > 7 //if grave or age 110 
 			?
 			mSunsetManager.low_skippable_text_bubble_event(diffPhrases [NGM.CharacterHelper.Characters [aNextCharacter].Difficulty], gDiffDisplayDur)
 			:
@@ -864,9 +867,6 @@ public class ModeNormalPlay
 		else
 			mManager.mBackgroundManager.load_cutscene(0,NGM.CurrentCharacterLoader);
 	}
-	
-	
-	
 	
 	//this is used by playq
 	//make sure the next character is set before callincg this

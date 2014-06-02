@@ -13,7 +13,6 @@ public static class GameConstants
 	//public static int CONTENT_WIDTH = 2880;
 	public static int CONTENT_WIDTH = 3200;
 	public static int CONTENT_HEIGHT = 1800;
-
 	public static float TARGET_FRAMERATE = 50;
 
     public static bool FORCE_START = false;
@@ -52,6 +51,8 @@ public static class GameConstants
 	public static float[] difficultyToChangeTime = new float[]{4,2,1.4f,.7f};
 
 	public static bool showReward = true;
+
+    public static bool showAstronaut = false;
 	
 	//grave stuff
 	//public static string[] credits = {"Perfect Woman","created by", "Lea Sch\u00F6enfelder", "Peter Lu"};

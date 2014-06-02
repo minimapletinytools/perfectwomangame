@@ -466,8 +466,6 @@ public class NewInterfaceManager {
 		}
 		else if (aChar.LevelIndex == 8)
 		{
-			//100!!!
-			//TODO change this stuff, maybe just use cutscene bubble??
 			chain = TED.add_one_shot_event(
 				delegate()
 				{
@@ -478,7 +476,12 @@ public class NewInterfaceManager {
 				{
 					add_timed_text_bubble("You lived 110 years.",gTextTime);
 				},
-			gTextTime).then_one_shot( //dummy 
+            gTextTime).then_one_shot(
+                delegate()
+                {
+                    add_timed_text_bubble("But everyone must pass.",gTextTime);
+                },
+            gTextTime).then_one_shot( //dummy 
 				delegate(){},gTextTime);
 		}
 		else

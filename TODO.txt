@@ -18,9 +18,9 @@
 	-all
 	-no rules on how many limbs change, these poses will follow no particular pattern
 	-7+ poses, maybe some from before maybe not
-
 -challenge mode
 	-can access other play modes...
+
 ::CONTROLS::
 :TESTING:
 -1/2/3/4 jump forward a character
@@ -71,6 +71,7 @@
 
 
 ::GAME TODO NEW::
+-test without farseer stuff???
 -transition to death needs audio fading
 	-also should increase the time it takes to transition
 -transition_to_transition_play needs to handle astronaut
@@ -88,10 +89,10 @@
 	-particles falling from sky during fever
 		-LOL fix it
 -astronaut
-	-when you die at 85 gives special message and then goes to 110
-	-beginning of 110 it says "you lived a very long life. Enjoy what is left"
-	-asteroids you can bump around.......... 
-	-only 10-15 seconds
+	DONE-when you die at 85 gives special message and then goes to 110
+	DONE-beginning of 110 it says "you lived a very long life. Enjoy what is left"
+	DONE-only 10-15 seconds
+	-asteroids you can bump around..........	
 	-floating off in space death cutscene
 		-no death text goes straight to sunset
 	-transition to sunset, has starry sky space background with 110 floating in it.
