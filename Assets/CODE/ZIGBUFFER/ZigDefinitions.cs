@@ -196,13 +196,25 @@ public class ResolutionData
 //dummy definitions of monobehaviour stuff that we need
 public class ZigInput : MonoBehaviour
 {
+    List<GameObject> mListeners = new List<GameObject>();
     public static ZigDepth Depth {get; set;}
     public static ZigImage Image {get; set;}
     public static ZigLabelMap LabelMap {get; set;}
     public bool ReaderInited {get; set;}
     public bool kinectSDK = false;
+
+    public Action<List<GameObject>> UpdateCallback { get; set; }
+
     public void AddListener(GameObject aOb)
     {
+        mListeners.Add(aOb);
+        //TODO what happens when remove game object???
+    }
+
+    void Update()
+    {
+        if (UpdateCallback != null)
+            UpdateCallback(mListeners);
     }
 }
 

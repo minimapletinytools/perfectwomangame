@@ -91,5 +91,39 @@ public class ZigFuZig : ZigInterface
 }
 
 //TODO
-//public class MicrosoftZig : ZigInterface
+public class MicrosoftZig : ZigInterface
+{
+    ZigInput mZigInput = null;
+    public void initialize(ZigManager aZig)
+    {
+        mZigInput = aZig.mManager.gameObject.AddComponent<ZigInput>();
+        mZigInput.UpdateCallback += update_cb;
+        //do we need to add aZig to mZigInput listeners??
+        //or am I suppose to use that silly callback behaviour class ImadeL??
+    }
+
+    public void update_cb(List<GameObject> aObj)
+    {
+        //TODO finish this
+        ZigTrackedUser user = new ZigTrackedUser(0);
+        foreach (var e in aObj)
+        {
+            e.SendMessage("Zig_UpdateUser",user);
+        }
+    }
+
+    public bool has_user()
+    {
+        return false;
+    }
+    
+    public ZigInput ZigInput
+    {
+        get
+        {
+
+            return null;
+        }
+    }
+}
 
