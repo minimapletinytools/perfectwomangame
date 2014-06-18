@@ -1,3 +1,12 @@
+::ZIG STRUCTURE NOTES::
+-put both Zig_UpdateUser and Zig_Update (ZigInput callback) inside of ZigManager
+-abstract away DepthImage/PixelImage/UserImage into their own classes
+-AlternativeDepthViewer should just produce a texture and pass it to the game to render (rather then render itself in the GUI routine)
+-both AlternativeDepthViewer/ImageViewer should be ZigFu specific, and instead, interface through ZigManager to pass their updated textures to the game
+
+::TODO 1243::
+-write TODO
+
 ::NEW PLAY NOTES::
 -easy
 	-arms only
