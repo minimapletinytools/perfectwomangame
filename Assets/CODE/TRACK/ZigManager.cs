@@ -100,7 +100,7 @@ public class ZigManager : FakeMonoBehaviour {
         return Quaternion.FromToRotation(aRelative, v);
     }
 
-
+    //calls this function whenever user info has been updated
 	public void Zig_UpdateUser(ZigTrackedUser user)
     {
         LastTrackedUser = user;

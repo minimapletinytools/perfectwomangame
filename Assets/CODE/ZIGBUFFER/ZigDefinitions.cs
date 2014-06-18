@@ -194,9 +194,15 @@ public class ResolutionData
 
 
 //dummy definitions of monobehaviour stuff that we need
+//Dummy ZigInput that stores kinect related information.
+//namely, all textures and kinect connection information
+//also contains listeners to update event
 public class ZigInput : MonoBehaviour
 {
+    //these gameobject contain components that define a function "Zig_Update"
+    //not Zig_UpdateUser is not included in this, that needs to be called on ZigManager separately
     List<GameObject> mListeners = new List<GameObject>();
+
     public static ZigDepth Depth {get; set;}
     public static ZigImage Image {get; set;}
     public static ZigLabelMap LabelMap {get; set;}

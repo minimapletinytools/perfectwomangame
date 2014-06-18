@@ -97,7 +97,7 @@ public class AlternativeImageViewer : MonoBehaviour
 
     }
 
-	/*
+	/* this is for real time testing, otherwise UpdateTexture is only called when needed
 	void Zig_Update(ZigInput input)
 	{
 		UpdateTexture(ZigInput.Image,ZigInput.LabelMap);
