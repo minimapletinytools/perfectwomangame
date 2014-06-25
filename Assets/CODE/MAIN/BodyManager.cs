@@ -80,7 +80,7 @@ public class BodyManager : FakeMonoBehaviour {
     }
 
     //TODO should call this directly and get rid of that stupid callback thing in events
-    public void character_changed_listener(CharacterLoader aCharacter)
+    public void load_character(CharacterLoader aCharacter)
     {
         destroy_character();
 

@@ -12,9 +12,6 @@ public class ModeChallenge
 		mManager = aNgm.mManager;
 	}
 
-
-	
-	
 	public void character_loaded()
     {
         //TODO start PLAY

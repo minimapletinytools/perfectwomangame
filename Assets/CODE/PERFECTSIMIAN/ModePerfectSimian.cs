@@ -30,9 +30,9 @@ public class ModePerfectSimian
 	}
 	
 	
-	public void character_loaded()
+	public void load_character(CharacterLoader aLoader)
 	{
-		FlatBodyObject flatbody = new FlatBodyObject(NGM.CurrentCharacterLoader, -1);
+		FlatBodyObject flatbody = new FlatBodyObject(aLoader, -1);
 
 		flatbody.set_target_pose(NGM.CurrentPose,true);
 		flatbody.HardPosition = new Vector3(10,0,0);

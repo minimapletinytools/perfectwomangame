@@ -145,7 +145,7 @@ public class BackgroundManager  : FakeMonoBehaviour
 		set_foreground_layer(mForegroundLayer);
 	}
 	
-    public void character_changed_listener(CharacterLoader aCharacter)
+    public void load_character(CharacterLoader aCharacter)
     {
 		
 		foreach (FlatElementImage e in mForegroundElements)

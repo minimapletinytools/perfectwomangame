@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -91,7 +91,7 @@ public class GiftManager
 
 	public void set_background_for_render()
 	{
-		mManager.mBackgroundManager.character_changed_listener(mManager.mGameManager.CurrentCharacterLoader);
+		mManager.mBackgroundManager.load_character(mManager.mGameManager.CurrentCharacterLoader);
 		int[] depthMap = (new int[]{1,-1,4,2,-2,3,5}).Reverse().ToArray();
 		for(int i = 0; i < mStages.Count-1; i++)
 		{

@@ -50,6 +50,8 @@ public class NewGameManager : FakeMonoBehaviour
 	ModeChallenge mModeChallenge;
 	public ModeNormalPlay mModeNormalPlay;
 	ModePerfectSimian mModeSimian;
+
+    //must be called before calling start_game
 	public void set_testing()
 	{
 		GS = GameState.TEST;
@@ -93,6 +95,7 @@ public class NewGameManager : FakeMonoBehaviour
 		}
 	}
 	
+    //return determines if character bundle is unloaded or not
 	public bool character_changed_listener(CharacterLoader aCharacter)
 	{
 		//at this point, we can assume both body manager, music and background managers have been set accordingly
@@ -102,10 +105,10 @@ public class NewGameManager : FakeMonoBehaviour
 		
         //TODO should move a lot of this stuff into character_loaded routiens
 		if (GS == GameState.NORMAL || GS == GameState.TEST || GS == GameState.CHALLENGE) {
-			mManager.mBackgroundManager.character_changed_listener(aCharacter);
+			mManager.mBackgroundManager.load_character(aCharacter);
 			if(aCharacter.Character != CharacterIndex.sGrave){ //special behaviour for grave
-				mManager.mBodyManager.character_changed_listener(aCharacter);
-				mManager.mTransparentBodyManager.character_changed_listener(aCharacter);
+				mManager.mBodyManager.load_character(aCharacter);
+				mManager.mTransparentBodyManager.load_character(aCharacter);
 				//TODO set to actual pose that we want
 				mManager.mTransparentBodyManager.set_target_pose(mManager.mReferences.mCheapPose.to_pose(),true);
 				if(mManager.mZigManager.is_reader_connected() != 2)
@@ -115,7 +118,7 @@ public class NewGameManager : FakeMonoBehaviour
 				mManager.mBodyManager.destroy_character();
 				mManager.mTransparentBodyManager.destroy_character();
 			}
-			mManager.mMusicManager.character_changed_listener(aCharacter);
+			mManager.mMusicManager.load_character(aCharacter);
 
 			if(GS == GameState.NORMAL)
 				mModeNormalPlay.character_loaded();
@@ -127,8 +130,8 @@ public class NewGameManager : FakeMonoBehaviour
 		}
 		else if(GS == GameState.SIMIAN)
 		{
-			mManager.mBackgroundManager.character_changed_listener(aCharacter);
-			mModeSimian.character_loaded();
+			mManager.mBackgroundManager.load_character(aCharacter);
+			mModeSimian.load_character(aCharacter);
 		}
 		
 		if(aCharacter.Name == "0-1") //in this very special case, we keep the bundle to load the death cutscene

@@ -187,7 +187,7 @@ public class MusicManager : FakeMonoBehaviour
 	}
 	//MusicManager assumes responsibility for fading in the music for the next character
 	//but not fading out the music from the last character
-	public void character_changed_listener(CharacterLoader aCharacter)
+	public void load_character(CharacterLoader aCharacter)
 	{
 		play_music(aCharacter.Images.backgroundMusic,1,true);
 	}
