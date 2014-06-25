@@ -1,13 +1,13 @@
 using UnityEngine;
 using System.Collections.Generic;
 
-public class CharacterHelper 
+public class CharDifficultyHelper 
 {
 	
 	public CharIndexContainerCharacterStats Characters
 	{ get; private set; }
 	
-	public CharacterHelper()
+	public CharDifficultyHelper()
 	{
 		
 		Characters = new CharIndexContainerCharacterStats();

@@ -154,7 +154,7 @@ public class CharacterBundleManager : FakeMonoBehaviour {
 	//----------
 	bool mPosesLoaded = false;
 	Dictionary<string, Pose> mPoses = new Dictionary<string, Pose>();
-	CharacterHelper mCharacterHelper = new CharacterHelper();
+	CharDifficultyHelper mCharacterHelper = new CharDifficultyHelper();
 	public string construct_pose_string(CharacterIndex aIndex, int aDiff, int aStage)
 	{
 		string r = "";
@@ -165,7 +165,7 @@ public class CharacterBundleManager : FakeMonoBehaviour {
 		r += aStage;
 		return r;
 	}
-    public CharacterHelper get_character_helper() //this is just to save some time for refractoring, othrewise should aways use the routine below...
+    public CharDifficultyHelper get_character_helper() //this is just to save some time for refractoring, othrewise should aways use the routine below...
     {
         return mCharacterHelper;
     }

@@ -32,7 +32,6 @@ public class ManagerManager : MonoBehaviour{
 	public VoidDelegate mUpdateDelegates = null;
 	VoidDelegate mFixedUpdateDelegates = null;
 
-    public InputManager mInputManager;
     public ZigManager mZigManager;
 	public ProjectionManager mProjectionManager;
     public BodyManager mBodyManager;
@@ -67,7 +66,6 @@ public class ManagerManager : MonoBehaviour{
 
 		mCharacterBundleManager = new CharacterBundleManager(this);
 		mMusicManager = new MusicManager(this);
-        mInputManager = new InputManager(this);
 		mZigManager = new ZigManager(this);
 		mProjectionManager = new ProjectionManager(this);
         mBodyManager = new BodyManager(this);

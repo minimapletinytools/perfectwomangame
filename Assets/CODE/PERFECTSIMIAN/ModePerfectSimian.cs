@@ -25,6 +25,7 @@ public class ModePerfectSimian
 	
 	public void initialize() 
 	{
+        //SO BAD
 		GameConstants.SCALE = 1/200f;
 		mManager.mAssetLoader.new_load_character("05-1",mManager.mCharacterBundleManager);
 	}
@@ -32,6 +33,8 @@ public class ModePerfectSimian
 	
 	public void load_character(CharacterLoader aLoader)
 	{
+        NGM.mManager.mBackgroundManager.load_character(aLoader);
+
 		FlatBodyObject flatbody = new FlatBodyObject(aLoader, -1);
 
 		flatbody.set_target_pose(NGM.CurrentPose,true);

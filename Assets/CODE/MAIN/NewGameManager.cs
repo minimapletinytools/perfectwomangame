@@ -17,7 +17,7 @@ public class NewGameManager : FakeMonoBehaviour
 	
 	
 	
-	public CharacterHelper CharacterHelper
+	public CharDifficultyHelper CharacterHelper
     { get{return mManager.mCharacterBundleManager.get_character_helper();} }
 	
 	
@@ -103,13 +103,15 @@ public class NewGameManager : FakeMonoBehaviour
 		CurrentCharacterLoader = aCharacter;
 		CurrentCharacterIndex = new CharacterIndex(aCharacter.Name);
 		
-        //TODO should move a lot of this stuff into character_loaded routiens
+
 		if (GS == GameState.NORMAL || GS == GameState.TEST || GS == GameState.CHALLENGE) {
+
+            //TODO should move a lot of this stuff into character_loaded routiens
+            //TODO make a base class for game modes and put this in a "default_load" routine inside or something
 			mManager.mBackgroundManager.load_character(aCharacter);
 			if(aCharacter.Character != CharacterIndex.sGrave){ //special behaviour for grave
 				mManager.mBodyManager.load_character(aCharacter);
 				mManager.mTransparentBodyManager.load_character(aCharacter);
-				//TODO set to actual pose that we want
 				mManager.mTransparentBodyManager.set_target_pose(mManager.mReferences.mCheapPose.to_pose(),true);
 				if(mManager.mZigManager.is_reader_connected() != 2)
 					mManager.mBodyManager.set_target_pose(mManager.mReferences.mCheapPose.to_pose(),true);
@@ -130,7 +132,6 @@ public class NewGameManager : FakeMonoBehaviour
 		}
 		else if(GS == GameState.SIMIAN)
 		{
-			mManager.mBackgroundManager.load_character(aCharacter);
 			mModeSimian.load_character(aCharacter);
 		}
 		
