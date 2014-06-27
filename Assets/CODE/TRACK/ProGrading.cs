@@ -1,6 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
-
+using System.Xml.Linq;
 public class ProGrading {
     public static List<KeyValuePair<ZigJointId, ZigJointId>> sPairs;
     static ProGrading()
@@ -114,12 +114,86 @@ public class ProGrading {
         p = (Pose)xs.Deserialize(stream);
         return p;
 	}
+
+    public static ZigJointId parse_ZigJointId_string(string aString)
+    {
+        if (aString == "Head")
+            return ZigJointId.Head;
+        else if (aString == "Neck")
+            return ZigJointId.Neck;
+        else if (aString == "Torso")
+            return ZigJointId.Torso;
+        else if (aString == "Waist")
+            return ZigJointId.Waist;
+        else if (aString == "LeftCollar")
+            return ZigJointId.LeftCollar;
+        else if (aString == "LeftShoulder")
+            return ZigJointId.LeftShoulder;
+        else if (aString == "LeftElbow")
+            return ZigJointId.LeftElbow;
+        else if (aString == "LeftWrist")
+            return ZigJointId.LeftWrist;
+        else if (aString == "LeftHand")
+            return ZigJointId.LeftHand;
+        else if (aString == "LeftFingertip")
+            return ZigJointId.LeftFingertip;
+        else if (aString == "RightCollar")
+            return ZigJointId.RightCollar;
+        else if (aString == "RightShoulder")
+            return ZigJointId.RightShoulder;
+        else if (aString == "RightElbow")
+            return ZigJointId.RightElbow;
+        else if (aString == "RightWrist")
+            return ZigJointId.RightWrist;
+        else if (aString == "RightHand")
+            return ZigJointId.RightHand;
+        else if (aString == "RightFingertip")
+            return ZigJointId.RightFingertip;
+        else if (aString == "LeftHip")
+            return ZigJointId.LeftHip;
+        else if (aString == "LeftKnee")
+            return ZigJointId.LeftKnee;
+        else if (aString == "LeftAnkle")
+            return ZigJointId.LeftAnkle;
+        else if (aString == "LeftFoot")
+            return ZigJointId.LeftFoot;
+        else if (aString == "RightHip")
+            return ZigJointId.RightHip;
+        else if (aString == "RightKnee")
+            return ZigJointId.RightKnee;
+        else if (aString == "RightAnkle")
+            return ZigJointId.RightAnkle;
+        else if (aString == "RightFoot")
+            return ZigJointId.RightFoot;
+        else
+            throw new UnityException("no such joint " + aString);
+    }
     public static Pose read_pose(TextAsset aText)
     {
         Pose p = new Pose();
-        System.IO.MemoryStream stream = new System.IO.MemoryStream(aText.bytes);
-        System.Xml.Serialization.XmlSerializer xs = new System.Xml.Serialization.XmlSerializer(typeof(Pose));
-        p = (Pose)xs.Deserialize(stream);
+        //System.IO.MemoryStream stream = new System.IO.MemoryStream(aText.bytes);
+        var tr = new System.IO.StringReader(aText.text); 
+        var xr = System.Xml.XmlReader.Create(tr);
+        var xd = new System.Xml.XmlDocument();
+        xd.Load(xr);
+
+        var elts = xd.ChildNodes [1].FirstChild;
+        for(int i = 0; i < elts.ChildNodes.Count; i++)
+        {
+            var active = elts.ChildNodes[i];
+            var activeElement = new PoseElement();
+            for(int j = 0; j < active.ChildNodes.Count; j++)
+            {
+                if(active.ChildNodes[j].Name == "joint")
+                    activeElement.joint = parse_ZigJointId_string(active.ChildNodes[j].InnerXml);
+                else if(active.ChildNodes[j].Name == "angle")
+                    activeElement.angle = float.Parse(active.ChildNodes[j].InnerXml);
+            }
+            p.mElements.Add(activeElement);
+        }
+        //System.Xml.Serialization.XmlSerializer xs = new System.Xml.Serialization.XmlSerializer(typeof(Pose));
+        //p = (Pose)xs.Deserialize(stream);
+        //p = (Pose)xs.Deserialize(tr);
         return p;
     }
     public static void write_pose_to_file(Pose p, string aFile)
