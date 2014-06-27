@@ -27,7 +27,7 @@ public class CharacterLoader {
     }
     public IEnumerable<int> load_character(AssetBundle aBundle, string aName)
     {
-        GameConstants.Log("loading character " + Name);
+        GameConstants.Log("loading character " + aName);
         Name = aName;
         string output = "Loading character " + aName + "\n";
 		

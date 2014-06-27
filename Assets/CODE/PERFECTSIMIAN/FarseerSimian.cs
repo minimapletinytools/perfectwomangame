@@ -1,24 +1,66 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
-using FarseerPhysics.Factories;
-using Microsoft.Xna.Framework;
+
+public class FarseerSimian 
+{
+    public void add_environment(IEnumerable<GameObject> aObjects)
+    {
+
+    }
+    
+    public void initialize(GameObject useMe)
+    {
+
+    }
+    
+    public void setup_with_body(FlatBodyObject aBody)
+    {
+      
+    }
+    
+    public void update(ProjectionManager aManager)
+    {
+
+    }
+    
+    public Pose physics_pose()
+    {
+        return null;
+    }
+    
+    
+    //stupid stuff needed for construction
+    public Dictionary<ZigJointId, Stupid> mImportant = new Dictionary<ZigJointId, Stupid>();
+    public class Stupid
+    {
+        public List<ZigJointId> otherEnds = new List<ZigJointId>();
+        public Stupid(ZigJointId other) { otherEnds.Add(other); }
+        public Stupid(ZigJointId[] other) { otherEnds.AddRange(other); }
+        public Stupid(){}
+    }
+
+}
+
+/*
+ * 
+ * using Microsoft.Xna.Framework;
 using FarseerPhysics.Collision.Shapes;
 
 public static class FarseerExt
 {
-	public static FVector2 toFV2(this Vector2 vec)
-	{
-		return new FVector2(vec.x,vec.y);
-	}
-	public static FVector2 toFV2(this Vector3 vec)
-	{
-		return new FVector2(vec.x,vec.y);
-	}
-	public static Vector3 toV3(this FVector2 vec)
-	{
-		return new Vector3(vec.X,vec.Y,0);
-	}
+    public static FVector2 toFV2(this Vector2 vec)
+    {
+        return new FVector2(vec.x,vec.y);
+    }
+    public static FVector2 toFV2(this Vector3 vec)
+    {
+        return new FVector2(vec.x,vec.y);
+    }
+    public static Vector3 toV3(this FVector2 vec)
+    {
+        return new Vector3(vec.X,vec.Y,0);
+    }
 }
 
 public class FarseerSimian 
@@ -208,4 +250,4 @@ public class FarseerSimian
 		body.ApplyAngularImpulse( impulse/5f );
 	}
 			
-}
+}*/
