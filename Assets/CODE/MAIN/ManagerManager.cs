@@ -114,8 +114,6 @@ public class ManagerManager : MonoBehaviour{
 	//for screen resolution callback
 	Vector2 mLastScreenSize = new Vector2();
 	void Update () {
-		
-		
 		Vector2 newScreenSize = new Vector2(Screen.width,Screen.height);
 		if(mLastScreenSize != newScreenSize)
 		{
@@ -136,6 +134,8 @@ public class ManagerManager : MonoBehaviour{
 		if(mUpdateDelegates != null) 
 			mUpdateDelegates();
 
+
+        mDebugString = ((int)(1 / Time.deltaTime)).ToString();
 	}
 	
 	void FixedUpdate() {
@@ -212,6 +212,7 @@ public class ManagerManager : MonoBehaviour{
     }
 	
 	public string mDebugString = "";//"WORK IN PROGRESS";
+    public string mDebugString2 = "";
 	void OnGUI()
     {
         GUI.depth = int.MinValue;
@@ -221,7 +222,8 @@ public class ManagerManager : MonoBehaviour{
 		//GUI.Box(new Rect(0,0,Screen.width,Screen.height),MainRenderTexture,style);
 		style.fontSize = 20;
 		style.normal.textColor = new Color(1,1,1,1);
-		GUI.TextArea(new Rect(50,50,300,100),mDebugString,style);
+		GUI.TextArea(new Rect(10,10,300,70),mDebugString,style);
+        GUI.TextArea(new Rect(10,80,300,70),mDebugString2,style);
 		//GUI.TextArea(new Rect(50,50,300,100),"WORK IN PROGRESS",style);
 		
 		//GUI.Box(new Rect(0,0,Screen.width * mGameManager.mModeNormalPlay.mLastGrade,50),"");
