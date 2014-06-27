@@ -123,7 +123,10 @@ public class FlatElementText : FlatElementBase
 	
 	public static float grade_words(int ideal, string[] words)
 	{
-		return Mathf.Pow((ideal - (words.Sum(e => e.Length) + words.Length - 1)),2);
+        var totalWordLength = 0;
+        foreach (var e in words)
+            totalWordLength += e.Length;
+		return Mathf.Pow((ideal - (totalWordLength + words.Length - 1)),2);
 	}
 	
 	public static int[] best_fit(int[] ideal, string[] words, out float aScore)
