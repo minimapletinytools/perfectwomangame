@@ -26,7 +26,14 @@ public class ModeNormalPlay
 	public PerformanceStats CurrentPerformanceStat 
 	{ get { return mPerformanceStats[mPerformanceStats.Count-1]; } }
 	public float TotalScore
-	{ get{ return mPerformanceStats.Sum(delegate (PerformanceStats e) { return e.AdjustedScore; }); } }
+	{ 
+        get{ 
+            var scoreSum = 0f;
+            foreach(var e in mPerformanceStats)
+                scoreSum += e.AdjustedScore;
+            return scoreSum;
+        } 
+    }
 	public bool IsFever
 	{ 
 		get{ 
