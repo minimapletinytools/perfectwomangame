@@ -47,7 +47,6 @@ public class TransitionCameraManager : FakeMonoBehaviour
 	
 	
     public FlatCameraManager mFlatCamera;
-	SunShafts mSunShafts;
 	
 	
     HashSet<FlatElementBase> mElement = new HashSet<FlatElementBase>();
@@ -75,7 +74,7 @@ public class TransitionCameraManager : FakeMonoBehaviour
 	public override void Start()
 	{
 		mFlatCamera = new FlatCameraManager(new Vector3(10000, 10000, 0), 10);
-		mFlatCamera.Camera.depth = 101; //we want this on top always
+		mFlatCamera.Camera.depth = 99; //we want this on top always
 		//mFlatCamera.Camera.clearFlags = CameraClearFlags.SolidColor;
 		mFlatCamera.Camera.clearFlags = CameraClearFlags.Depth;
 		mFlatCamera.Camera.backgroundColor = new Color32(37,37,37,255);
@@ -103,8 +102,10 @@ public class TransitionCameraManager : FakeMonoBehaviour
 		//mDepthImage = new FlatElementImage(null,0); 
 		//mElement.Add(mDepthImage);
 		
-		start_configuration_display();
-		initialize_depth_warning();
+
+        initialize_depth_warning();
+
+
 
 		mManager.mAssetLoader.new_load_asset_bundle("START",delegate(AssetBundle aBundle){start_screen_loaded_callback(aBundle,"START");});
 		
@@ -222,6 +223,11 @@ public class TransitionCameraManager : FakeMonoBehaviour
 		}
 
 		mManager.mCharacterBundleManager.add_bundle_to_unload(mBundle);
+
+        
+        
+        start_configuration_display();
+
 	}
 	
 	public void start_configuration_display()
