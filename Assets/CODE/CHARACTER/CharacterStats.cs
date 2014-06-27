@@ -24,6 +24,15 @@ public class CharacterStats
 [System.Serializable]
 public class PerformanceStats
 {
+    public class TimeScorePair
+    {
+        public float Key;
+        public float Value;
+        public TimeScorePair(float aKey,float aValue)
+        {
+            Key = aKey; Value = aValue;
+        }
+    }
 
 	public CharacterStats Stats
 	{ get; set; }
@@ -31,7 +40,7 @@ public class PerformanceStats
 	public float DeathTime { get; set; } //what time (0,1) did this character die
 
 	[System.NonSerialized] //we don't serialize this because it's too big and not needed
-	List<KeyValuePair<float,float>> mScore; //time, score
+	List<TimeScorePair> mScore; //time, score
 	float mTotalScore; //instead the score is stored here so we are fine
 
 	//public PerformanceGraphObject PerformanceGraph { get; private set; }
@@ -99,7 +108,7 @@ public class PerformanceStats
 		
 		//PerformanceGraph = new PerformanceGraphObject(11);
 		
-		mScore = new List<KeyValuePair<float, float>>();
+		mScore = new List<TimeScorePair>();
 		update_score(0,0); //this is a dummy point
 	}
 
@@ -109,7 +118,7 @@ public class PerformanceStats
 	{
 		if(mScore.Count > 0)
 			mTotalScore += (aTime-mScore.Last().Key)*aScore;
-		mScore.Add(new KeyValuePair<float,float>(aTime,aScore));
+		mScore.Add(new TimeScorePair(aTime,aScore));
 		//PerformanceGraph.update_graph(aTime,aScore);
 	}
 	
