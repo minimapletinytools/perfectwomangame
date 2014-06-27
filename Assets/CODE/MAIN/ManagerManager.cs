@@ -114,28 +114,36 @@ public class ManagerManager : MonoBehaviour{
 	//for screen resolution callback
 	Vector2 mLastScreenSize = new Vector2();
 	void Update () {
-		Vector2 newScreenSize = new Vector2(Screen.width,Screen.height);
-		if(mLastScreenSize != newScreenSize)
-		{
-			//TODO screen sized changed callback
-		}
-		mLastScreenSize = newScreenSize;
-		
-		
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            GameConstants.Log("begin quit");
-            Application.Quit();
-        }
-        if (Input.GetKeyDown(KeyCode.Backspace))
-        {
-            restart_game();
-        }
-		if(mUpdateDelegates != null) 
-			mUpdateDelegates();
+
+        try{
+    		Vector2 newScreenSize = new Vector2(Screen.width,Screen.height);
+    		if(mLastScreenSize != newScreenSize)
+    		{
+    			//TODO screen sized changed callback
+    		}
+    		mLastScreenSize = newScreenSize;
+    		
+    		
+            if (Input.GetKeyDown(KeyCode.Escape))
+            {
+                GameConstants.Log("begin quit");
+                Application.Quit();
+            }
+            if (Input.GetKeyDown(KeyCode.Backspace))
+            {
+                restart_game();
+            }
+    		if(mUpdateDelegates != null) 
+    			mUpdateDelegates();
 
 
-        mDebugString = ((int)(1 / Time.deltaTime)).ToString();
+            mDebugString = ((int)(1 / Time.deltaTime)).ToString();
+        } 
+        catch(System.Exception e)
+        {
+            mDebugString2 = e.StackTrace;
+            throw e;
+        }
 	}
 	
 	void FixedUpdate() {
