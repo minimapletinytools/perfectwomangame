@@ -63,28 +63,6 @@ Category {
 			}
 			ENDCG 
 		}
-	} 	
-	
-	// ---- Dual texture cards
-	SubShader {
-		Pass {
-			SetTexture [_MainTex] {
-				constantColor [_TintColor]
-				combine constant * primary
-			}
-			SetTexture [_MainTex] {
-				combine texture * previous DOUBLE
-			}
-		}
-	}
-	
-	// ---- Single texture cards (does not do color tint)
-	SubShader {
-		Pass {
-			SetTexture [_MainTex] {
-				combine texture * primary
-			}
-		}
-	}
+	} 
 }
 }
