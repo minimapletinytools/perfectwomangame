@@ -160,7 +160,8 @@ public class ChoosingManager
 	{
 		mChoices = aChoices;
 
-		var ch = aChoices.OrderBy(e => e.Choice).ToArray();
+        //JIT/AOT hard fix. I think aChoices is always passed into here in order anyways so it's not a problem
+        var ch = aChoices;//aChoices.OrderBy(e => e.Choice).ToArray();
 		int len = ch.Count();
 		
 		float padding = 700;
