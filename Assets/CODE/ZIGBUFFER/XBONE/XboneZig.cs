@@ -17,7 +17,11 @@ public class MicrosoftZig : ZigInterface
         {ZigJointId.RightKnee,Windows.Kinect.JointType.KneeRight},
         {ZigJointId.Neck,Windows.Kinect.JointType.Neck},
         {ZigJointId.Torso,Windows.Kinect.JointType.SpineMid},
-        {ZigJointId.Waist,Windows.Kinect.JointType.SpineBase}
+        {ZigJointId.Waist,Windows.Kinect.JointType.SpineBase},
+        {ZigJointId.Head,Windows.Kinect.JointType.Head},
+        {ZigJointId.LeftHand,Windows.Kinect.JointType.HandLeft},
+        {ZigJointId.RightHand,Windows.Kinect.JointType.HandRight},
+
     };
     private static Vector3 GetVector3FromJoint(Windows.Kinect.Joint joint)
     {
@@ -43,6 +47,11 @@ public class MicrosoftZig : ZigInterface
 	//TODO this function needs to be called
 	public void update()
 	{
+
+        //TODO you will need to call this whenever a player does something like a T gesture 
+        //or fuck just call it all the time when your in play mode...
+        //Windows::Xbox::Input::InputManager::DeferSystemGestures().
+
 		//TODO update ZigTrackedUser
 		//TODO update ZigInput
 
