@@ -63,6 +63,7 @@ public class ZigManager : FakeMonoBehaviour {
 			mManager.mTransitionCameraManager.EnableDepthWarning = false;
 		}
 		
+        ZigInterface.update();
 	}
 	
 	public int is_reader_connected() //0 - not connected, 1 - trying to connect, 2 - connected
@@ -111,16 +112,6 @@ public class ZigManager : FakeMonoBehaviour {
             {
                 //if(joint.GoodPosition && joint.GoodRotation)
                 {
-					
-					ZigInputJoint j;
-					if(Joints.TryGetValue(joint.Id,out j))
-					{
-						if(joint.Position == j.Position)
-							output += "p " + joint.Id + ", ";
-						if(joint.Rotation == j.Rotation)
-							output += "q " + joint.Id + ", ";
-					}
-							
 					
 					Joints[joint.Id] = joint;
                 }

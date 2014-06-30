@@ -98,7 +98,7 @@ public class ZigTrackedUser
     public bool PositionTracked
     {
         get;
-        private set;
+        set;
     }
     
     public ZigInputJoint[] Skeleton
@@ -110,7 +110,7 @@ public class ZigTrackedUser
     public bool SkeletonTracked
     {
         get;
-        private set;
+        set;
     }
 
     public ZigTrackedUser (int aId)
@@ -219,8 +219,9 @@ public class ZigInput : MonoBehaviour
 
     void Update()
     {
-        if (UpdateCallback != null)
-            UpdateCallback(mListeners);
+        //TODO this should only call updated if there is actually something to update
+        //if (UpdateCallback != null)
+            //UpdateCallback(mListeners);
     }
 }
 

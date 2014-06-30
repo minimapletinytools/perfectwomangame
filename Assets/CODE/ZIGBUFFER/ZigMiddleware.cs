@@ -7,6 +7,8 @@ public interface ZigInterface
     void initialize(ZigManager aZig);
     ZigInput ZigInput{get;}
     bool has_user();
+    void update();
+       
 }
 
 public class EmptyZig : ZigInterface
@@ -20,7 +22,12 @@ public class EmptyZig : ZigInterface
     {
         return false;
     }
-    
+
+    public void update()
+    {
+
+    }
+
     public ZigInput ZigInput
     {
         get
