@@ -8,6 +8,30 @@ using System.Runtime.Serialization.Formatters.Binary;
 
 public static class UnlockRequirements
 {
+    public class FakeCharIndex 
+    {
+        public int Level{get;set;}
+        public int Choice{get;set;}
+        public FakeCharIndex(int aLevel, int aChoice)
+        {
+            Level = aLevel;
+            Choice = aChoice;
+        }
+        public FakeCharIndex(CharacterIndex aIndex):this(aIndex.LevelIndex,aIndex.Choice)
+        {}
+    }
+
+    public class FakeCharIndexComparer : IEqualityComparer<FakeCharIndex>
+    {
+        public bool Equals(FakeCharIndex b1, FakeCharIndex b2)
+        {
+            return b1.Level == b2.Level && b1.Choice == b2.Choice;
+        }
+        public int GetHashCode(FakeCharIndex bx)
+        {
+            return bx.GetHashCode();
+        }
+    }
 	public class UnlockData
 	{
 		public string Sentence{get;set;}
@@ -22,9 +46,11 @@ public static class UnlockRequirements
 			return new UnlockData(){Sentence = aString};
 		}
 	}
-    public static Dictionary<CharacterIndex, System.Func<List<PerformanceStats>, List<List<PerformanceStats> >, UnlockData> > requirements = new Dictionary<CharacterIndex,System.Func<List<PerformanceStats>,List<List<PerformanceStats> >, UnlockData>>()
+    public static Dictionary<FakeCharIndex, System.Func<List<PerformanceStats>, List<List<PerformanceStats> >, UnlockData> > 
+        requirements = new Dictionary<FakeCharIndex,System.Func<List<PerformanceStats>,List<List<PerformanceStats> >, UnlockData>>
+            (new FakeCharIndexComparer())
 	{
-        { new CharacterIndex(2,1), delegate(List<PerformanceStats> aStats, List<List<PerformanceStats> > aHistory)
+        { new FakeCharIndex(2,1), delegate(List<PerformanceStats> aStats, List<List<PerformanceStats> > aHistory)
 			{
                 if(PerformanceStats.history_contains(aHistory,new CharacterIndex[]{CharacterIndex.sStar,CharacterIndex.sGang}))
                 {
@@ -35,7 +61,7 @@ public static class UnlockRequirements
                 }
                 return null;
 			}
-        },{ new CharacterIndex(2,2), delegate(List<PerformanceStats> aStats, List<List<PerformanceStats> > aHistory)
+        },{ new FakeCharIndex(2,2), delegate(List<PerformanceStats> aStats, List<List<PerformanceStats> > aHistory)
             {
                 if(PerformanceStats.history_contains(aHistory,new CharacterIndex[]{CharacterIndex.sMother,CharacterIndex.sMarried}))
                 {
@@ -46,7 +72,7 @@ public static class UnlockRequirements
                 }
                 return null;
             }
-        },{ new CharacterIndex(2,3), delegate(List<PerformanceStats> aStats, List<List<PerformanceStats> > aHistory)
+        },{ new FakeCharIndex(2,3), delegate(List<PerformanceStats> aStats, List<List<PerformanceStats> > aHistory)
             {
                 try{
                     if(aStats.First(e=>e.Character == CharacterIndex.sProf).BadPerformance 
@@ -63,7 +89,7 @@ public static class UnlockRequirements
                     return null;
                 }
             }
-        },{ new CharacterIndex(3,1), delegate(List<PerformanceStats> aStats, List<List<PerformanceStats> > aHistory)
+        },{ new FakeCharIndex(3,1), delegate(List<PerformanceStats> aStats, List<List<PerformanceStats> > aHistory)
             {
                 try{
                     if(aStats.First(e=>e.Character == CharacterIndex.sProf).BadPerformance)
@@ -79,7 +105,7 @@ public static class UnlockRequirements
                     return null;
                 }
             }
-        },{ new CharacterIndex(3,2), delegate(List<PerformanceStats> aStats, List<List<PerformanceStats> > aHistory)
+        },{ new FakeCharIndex(3,2), delegate(List<PerformanceStats> aStats, List<List<PerformanceStats> > aHistory)
             {
                 try{
                     if(aStats.First(e=>e.Character == CharacterIndex.sMinister).BadPerformance)
@@ -95,7 +121,7 @@ public static class UnlockRequirements
                     return null;
                 }
             }
-        },{ new CharacterIndex(3,3), delegate(List<PerformanceStats> aStats, List<List<PerformanceStats> > aHistory)
+        },{ new FakeCharIndex(3,3), delegate(List<PerformanceStats> aStats, List<List<PerformanceStats> > aHistory)
             {
                 if(aHistory.Count > 1 && aHistory.Max(e=>e.Sum(f=>f.Score)) < aStats.Sum(f=>f.Score))
                 {
@@ -105,13 +131,13 @@ public static class UnlockRequirements
                 }
                 return null;
             }
-        },{ new CharacterIndex(4,1), delegate(List<PerformanceStats> aStats, List<List<PerformanceStats> > aHistory)
+        },{ new FakeCharIndex(4,1), delegate(List<PerformanceStats> aStats, List<List<PerformanceStats> > aHistory)
             {
                 return new UnlockData(){
                     Sentence = "Playing the game once showed you that life doesn't need to be so serious"
                 };
             }
-        },{ new CharacterIndex(4,2), delegate(List<PerformanceStats> aStats, List<List<PerformanceStats> > aHistory)
+        },{ new FakeCharIndex(4,2), delegate(List<PerformanceStats> aStats, List<List<PerformanceStats> > aHistory)
             {
                 if(aStats.Count < 5)
                 {
@@ -121,7 +147,7 @@ public static class UnlockRequirements
                 }
                 return null;
             }
-        },{ new CharacterIndex(4,3), delegate(List<PerformanceStats> aStats, List<List<PerformanceStats> > aHistory)
+        },{ new FakeCharIndex(4,3), delegate(List<PerformanceStats> aStats, List<List<PerformanceStats> > aHistory)
             {
                 if(PerformanceStats.history_contains(aStats,new CharacterIndex[]{CharacterIndex.sBeach}))
                 {
@@ -132,7 +158,7 @@ public static class UnlockRequirements
                 }
                 return null;
             }
-        },{ new CharacterIndex(5,1), delegate(List<PerformanceStats> aStats, List<List<PerformanceStats> > aHistory)
+        },{ new FakeCharIndex(5,1), delegate(List<PerformanceStats> aStats, List<List<PerformanceStats> > aHistory)
             {
                 if(PerformanceStats.history_contains(aHistory,new CharacterIndex[]{CharacterIndex.sMother,CharacterIndex.sLeukemia,CharacterIndex.sSister}))
                 {
@@ -143,7 +169,7 @@ public static class UnlockRequirements
                 }
                 return null;
             }
-        },{ new CharacterIndex(5,2), delegate(List<PerformanceStats> aStats, List<List<PerformanceStats> > aHistory)
+        },{ new FakeCharIndex(5,2), delegate(List<PerformanceStats> aStats, List<List<PerformanceStats> > aHistory)
             {
                 if(aStats.Where(e=>e.BadPerformance).Count() == aStats.Count)
                 {
@@ -153,7 +179,7 @@ public static class UnlockRequirements
                 }
                 return null;
             }
-        },{ new CharacterIndex(5,3), delegate(List<PerformanceStats> aStats, List<List<PerformanceStats> > aHistory)
+        },{ new FakeCharIndex(5,3), delegate(List<PerformanceStats> aStats, List<List<PerformanceStats> > aHistory)
             {
                 if(aStats.Last().Character == CharacterIndex.sOneHundred)
                 {
@@ -164,7 +190,7 @@ public static class UnlockRequirements
                 }
                 return null;
             }
-        },{ new CharacterIndex(6,1), delegate(List<PerformanceStats> aStats, List<List<PerformanceStats> > aHistory)
+        },{ new FakeCharIndex(6,1), delegate(List<PerformanceStats> aStats, List<List<PerformanceStats> > aHistory)
             {
                 if(PerformanceStats.history_contains(aStats,new CharacterIndex[]{CharacterIndex.sSlave,CharacterIndex.sSister}))
                 {
@@ -175,7 +201,7 @@ public static class UnlockRequirements
                 }
                 return null;
             }
-        },{ new CharacterIndex(6,2), delegate(List<PerformanceStats> aStats, List<List<PerformanceStats> > aHistory)
+        },{ new FakeCharIndex(6,2), delegate(List<PerformanceStats> aStats, List<List<PerformanceStats> > aHistory)
             {
                 if(PerformanceStats.history_contains(aStats,new CharacterIndex[]{CharacterIndex.sPunk,CharacterIndex.sMother}))
                 {
@@ -186,7 +212,7 @@ public static class UnlockRequirements
                 }
                 return null;
             }
-        },{ new CharacterIndex(6,3), delegate(List<PerformanceStats> aStats, List<List<PerformanceStats> > aHistory)
+        },{ new FakeCharIndex(6,3), delegate(List<PerformanceStats> aStats, List<List<PerformanceStats> > aHistory)
             {
                 if(PerformanceStats.history_contains(aStats,new CharacterIndex[]{CharacterIndex.sSexy,CharacterIndex.sPunk,CharacterIndex.sFundraiser}))
                 {
@@ -197,7 +223,7 @@ public static class UnlockRequirements
                 }
                 return null;
             }
-        },{ new CharacterIndex(7,1), delegate(List<PerformanceStats> aStats, List<List<PerformanceStats> > aHistory)
+        },{ new FakeCharIndex(7,1), delegate(List<PerformanceStats> aStats, List<List<PerformanceStats> > aHistory)
             {
                 if(aHistory.Count > 10)
                 {
@@ -207,7 +233,7 @@ public static class UnlockRequirements
                 }
                 return null;
             }
-        },{ new CharacterIndex(7,2), delegate(List<PerformanceStats> aStats, List<List<PerformanceStats> > aHistory)
+        },{ new FakeCharIndex(7,2), delegate(List<PerformanceStats> aStats, List<List<PerformanceStats> > aHistory)
             {
                 if(PerformanceStats.history_contains(aStats,new CharacterIndex[]{CharacterIndex.sDemented}))
                 {
@@ -218,7 +244,7 @@ public static class UnlockRequirements
                 }
                 return null;
             }
-        },{ new CharacterIndex(7,3), delegate(List<PerformanceStats> aStats, List<List<PerformanceStats> > aHistory)
+        },{ new FakeCharIndex(7,3), delegate(List<PerformanceStats> aStats, List<List<PerformanceStats> > aHistory)
             {
                 if(aStats.Last().Character == CharacterIndex.sPray && aStats.Last().DeathTime != -1)
                 {
@@ -274,7 +300,7 @@ public class UnlockManager
 	
     public UnlockRequirements.UnlockData did_unlock(CharacterIndex aChar,List<PerformanceStats> aStats)
     {
-        return UnlockRequirements.requirements [aChar](aStats, mUnlocked.gameHistory);
+        return UnlockRequirements.requirements [new UnlockRequirements.FakeCharIndex(aChar.LevelIndex,aChar.Choice)](aStats, mUnlocked.gameHistory);
     }
 	public void game_finished(List<PerformanceStats> aStats)
 	{
@@ -285,7 +311,7 @@ public class UnlockManager
 		foreach(CharacterIndex e in CharacterIndex.sAllCharacters)
 		{
 			if(mUnlocked.unlockedCharacters[e] != 1)
-				if(UnlockRequirements.requirements.ContainsKey(e))
+				if(UnlockRequirements.requirements.ContainsKey(new UnlockRequirements.FakeCharIndex(e)))
 				{
                     var msg = did_unlock(e,aStats);
 					if(msg != null)

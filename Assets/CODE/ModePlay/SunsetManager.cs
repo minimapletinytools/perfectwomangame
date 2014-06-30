@@ -662,7 +662,7 @@ public class SunsetManager
 		{
 			if(mManager.mMetaManager.UnlockManager.is_unlocked(e) != 1)
 			{
-				if(UnlockRequirements.requirements.ContainsKey(e))
+                if(UnlockRequirements.requirements.ContainsKey(new UnlockRequirements.FakeCharIndex(e)))
 				{
                     var unlockData = mManager.mMetaManager.UnlockManager.did_unlock(e,aStats);
 					if(unlockData != null){
