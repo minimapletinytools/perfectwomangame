@@ -1,87 +1,18 @@
-::ZIG STRUCTURE NOTES::
--put both Zig_UpdateUser and Zig_Update (ZigInput callback) inside of ZigManager
--abstract away DepthImage/PixelImage/UserImage into their own classes
--AlternativeDepthViewer should just produce a texture and pass it to the game to render (rather then render itself in the GUI routine)
--both AlternativeDepthViewer/ImageViewer should be ZigFu specific, and instead, interface through ZigManager to pass their updated textures to the game
-
-::TODO 1243::
--write TODO
-
-::NEW PLAY NOTES::
--easy
-	-arms only
-	-only one limb changes at once. Note we're talking about absolute changes
-	-9/12/15/18/21 (bad, poor, ok, good, excellent)
-	-4 poses
--medium
-	-arms and legs only
-	-only one limb changes at once
-	-builds on easy poses
-	-5 poses (2 from easy)
--hard 
-	-arms, legs, head and torso (all)
-	-two limbs change at once
-	-builds on easy/medium poses
-	-6 poses (1 from easy, 2 from med)
--extreme
-	-all
-	-no rules on how many limbs change, these poses will follow no particular pattern
-	-7+ poses, maybe some from before maybe not
--challenge mode
-	-can access other play modes...
-
-::CONTROLS::
-:TESTING:
--1/2/3/4 jump forward a character
--shift + 1/2/3/4 jump backwards a character
--5 toggle cutscenes
--6 load target poses in the POSETEST folder
-	-POSETEST folder should be next to the executable
-	-subfolders of POSETEST will be a "set" of poses 
-	-see the debug string in the upper left hand corner for details
--8 load target poses for the current character
-	-pressing multiple times toggles difficulty
-	-see the debug string
--9 freeze the target pose
--while a target pose animation is playing
-	-A to toggle the style
-	-S to toggle the speed
-	-see the debug string
-	-this will do nothing if you have disabled the target pose with 9
--space to capture the pose and take a screenshot
-	-the pose recorded is the character pose not the target pose
--TZGHBNERUIQWOPCVM,YX.- to manually rotate the limbs 
-	-only works when kinect is not connected
-	-these are laid out on the German keyboard to roughly match the body's layout.
-
-:GAME:
--during title screen: 
-	-0 to start
-	-9 to start and skip fetus (random character)
--during play 
-	-A to match the pose (no kinect only)
-	-S to speed the game up by 5x
-	-0 to skip to cutscene 
-		-pressing and holding 0 again immediately will skip to choosing
-	-D to die
--during cutscenes and grave
-	-0 to skip 
--during choosing
-	-1/2/3/4 to insta choose
-	-q/w/e/r to toggle difficulties 
-		-this will also enable all locked characters for this age
-	-q/w/e/r/t/z/u + 1/2/3/4 to instantly choose a character and a given age 
-		-jumping ahead will randomly fill in ages in between
--during dialog boxes
-	-9 to skip (works for most but not all dialog boxes)
--during whenever
-	-ESC to quit
-	-BKSP to restart
 
 
 ::GAME TODO NEW::
--test without farseer stuff???
+-make new files and stop shoving it all inside of the TODO
+-figure out why there is the no rendering issue
+-ask about publishing for free. Get yourself a new contact
+-email SONY please
+-write e3 soft kinect followup
+-write gaymerx followup
+	-people cheering, yay.
+	-really noticed a lot of small things abotu the dialog that was a little off/needed changing. Too bad I didn't take notes.
+	-Actually, I felt the connections in general treats religion in a fairly one dimensional way (i.e. conservative, and in generally a negative way). This is also true for some of the other things but I think that's a necessary sacrafice since the game is about satirizing stereotypes. For regilion though, I think it's much better if it's treated with a little more depth or at least in a more positive way. 
+-UCLA rights, call katherine
 -transition to death needs audio fading
+	-I think this is okay actually???
 	-also should increase the time it takes to transition
 -transition_to_transition_play needs to handle astronaut
 -the cutscene bubbles still look off...
@@ -108,7 +39,7 @@
 -other
 	-see if you can fix kinect lighting
 	-pose change predictor, draw super transparent "next" pose during play
-
+DONE-test without farseer stuff???
 DONE-fix the transitions
 	-after "that's a hard one show us your skills" fade out music, load, transition, fade in music
 DONE-need to properly remove mini chars after choosing
