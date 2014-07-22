@@ -304,7 +304,7 @@ public class TransitionCameraManager : FakeMonoBehaviour
 					*/
 				if( mManager.mCharacterBundleManager.is_initial_loaded() &&
 			   		((aTime > 5 && mManager.mZigManager.has_user()) ||
-					Input.GetKeyDown(KeyCode.Alpha0) || Input.GetKeyDown(KeyCode.Alpha9) ||
+                    KeyMan.GetKey("HardSkip") || KeyMan.GetKey("SoftSkip") ||
 					GameConstants.FORCE_START)){
 					go_to_play(); 
 					return true;

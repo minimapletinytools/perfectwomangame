@@ -5,6 +5,9 @@ using System;
 //XBONE stuff
 //NOTE you will still need to remove the zig folder
 
+//TODO maybe should use UNITY_XBOXONE instead??
+//but I need these definitions here in the editor because I took out the zig fu stuff
+//correct solution would be to put these directives in all the zig fu scripts...
 #if !UNITY_STANDALONE
 
 public class ZigDepth

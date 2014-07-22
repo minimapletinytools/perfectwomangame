@@ -260,9 +260,9 @@ public class ModeNormalPlay
 	public void update()
 	{
 		//cheater keys for skipping
-		if(Input.GetKeyDown(KeyCode.Alpha0))
+        if(KeyMan.GetKeyDown("HardSkip"))
 			DoSkipMultipleThisFrame = true;
-		if(Input.GetKeyDown(KeyCode.Alpha9))
+        if(KeyMan.GetKeyDown("SoftSkip"))
 			DoSkipSingleThisFrame = true;
 
         //TODO not sure why I put this here but this most most def. does not work
@@ -338,7 +338,7 @@ public class ModeNormalPlay
 			//	mParticles.create_particles(mGrading);
 	
 			update_PLAY();
-			if(Input.GetKeyDown(KeyCode.Alpha0))
+            if(KeyMan.GetKeyDown("HardSkip"))
 				TimeRemaining = -5; //0;
 		}
 		else if(GS == NormalPlayGameState.CHOICE) 
@@ -367,14 +367,15 @@ public class ModeNormalPlay
 	
 	public void update_PLAY()
 	{
-		TimeRemaining -= Input.GetKey(KeyCode.O) ? Time.deltaTime * 5 : Time.deltaTime;
+        TimeRemaining -= KeyMan.GetKeyDown("Fast") ? Time.deltaTime * 5 : Time.deltaTime;
 		
 		if(NGM.CurrentPose != null) //this should never happen but just in case
 		{
-			if(!Input.GetKey(KeyCode.A))
-				mManager.mBodyManager.set_target_pose(NGM.CurrentPose);
-			else 
-				mManager.mBodyManager.set_target_pose(NGM.CurrentTargetPose);
+            if(KeyMan.GetKeyDown("Perfect"))
+                mManager.mBodyManager.set_target_pose(NGM.CurrentTargetPose);
+			else
+                mManager.mBodyManager.set_target_pose(NGM.CurrentPose);
+				
 		}
 		
 		
@@ -724,7 +725,7 @@ public class ModeNormalPlay
 		mSunsetManager.add_character(NGM.CurrentCharacterLoader.Character);
 		slide_image(null,mSunsetImage,false);
 
-		if(!Input.GetKey(KeyCode.Alpha0))
+        if(!KeyMan.GetKey("HardSkip")) //if we are still holding the skip key at this point, go straight to choosing
 		{
 			//switch over to choice screen
 			float gAgeDisplayDur = 7f;

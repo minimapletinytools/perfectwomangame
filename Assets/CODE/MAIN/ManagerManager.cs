@@ -123,13 +123,12 @@ public class ManagerManager : MonoBehaviour{
     		}
     		mLastScreenSize = newScreenSize;
     		
-    		
-            if (Input.GetKeyDown(KeyCode.Escape))
+            if (KeyMan.GetKeyDown("Quit"))
             {
                 GameConstants.Log("begin quit");
                 Application.Quit();
             }
-            if (Input.GetKeyDown(KeyCode.Backspace))
+            if (KeyMan.GetKeyDown("Restart"))
             {
                 restart_game();
             }

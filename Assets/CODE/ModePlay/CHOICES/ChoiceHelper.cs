@@ -80,22 +80,22 @@ public class ChoiceHelper
 		float growthRate = CHOOSING_PERCENTAGE_GROWTH_RATE;
 		
 		//hack choice testing
-		if(Input.GetKey(KeyCode.Alpha1))
+        if(KeyMan.GetKey("Choice1"))
 		{
 			NextContendingChoice = 0;
 			growthRate = 1;
 		}
-		else if(Input.GetKey(KeyCode.Alpha2))
+        else if(KeyMan.GetKey("Choice2"))
 		{
 			NextContendingChoice = 1;
 			growthRate = 1;
 		}
-		else if(Input.GetKey(KeyCode.Alpha3))
+        else if(KeyMan.GetKey("Choice3"))
 		{
 			NextContendingChoice = 2;
 			growthRate = 1;
 		}
-		else if(Input.GetKey(KeyCode.Alpha4))
+        else if(KeyMan.GetKey("Choice4"))
 		{
 			NextContendingChoice = 3;
 			growthRate = 1;
