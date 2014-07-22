@@ -50,7 +50,6 @@ public class ManagerManager : MonoBehaviour{
 	public NewMenuReferenceBehaviour mNewRef;
 
 	void Awake () {
-
 		Random.seed = System.Environment.TickCount;
 		Application.targetFrameRate = (int)GameConstants.TARGET_FRAMERATE;
 
@@ -78,9 +77,21 @@ public class ManagerManager : MonoBehaviour{
 		mTransitionCameraManager = new TransitionCameraManager(this);
 		mMetaManager = new MetaManager(this);
 		
-
 		if (mStartDelegates != null)
+        {
+            /* CAN DELETE
+            var time = Time.time;
+            string output = "";
+            foreach(var e in mStartDelegates.GetInvocationList())
+            {
+                e.DynamicInvoke();
+                output += e.ToString() + " took: " + (Time.time - time) + "\n";
+                time = Time.time;
+            }
+            Debug.Log(output);*/
+
             mStartDelegates();
+        }
 
 	}
 	
@@ -125,7 +136,6 @@ public class ManagerManager : MonoBehaviour{
     		
             if (KeyMan.GetKeyDown("Quit"))
             {
-                GameConstants.Log("begin quit");
                 Application.Quit();
             }
             if (KeyMan.GetKeyDown("Restart"))
@@ -152,7 +162,6 @@ public class ManagerManager : MonoBehaviour{
 	
     public void restart_game()
     {
-        GameConstants.Log("begin restart");
         mCharacterBundleManager.cleanup();
 		Resources.UnloadUnusedAssets();
 		System.GC.Collect();

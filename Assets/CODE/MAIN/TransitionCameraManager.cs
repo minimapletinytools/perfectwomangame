@@ -199,16 +199,12 @@ public class TransitionCameraManager : FakeMonoBehaviour
 		mLoader = loader;
 
 
-        GameConstants.Log("loading FG and BG");
 		mElement.Add(construct_flat_image("BACKGROUND",0));
 		mElement.Add(construct_flat_image("FG-1",30));
-        GameConstants.Log("success");
 
 		for(int i = 2; i < 30; i++)
 		{
-            GameConstants.Log("loading image " + "BG-" + i);
 			var img = construct_flat_image("BG-"+i,30-i);
-            GameConstants.Log("sucess");
 			if(mManager.mMetaManager.UnlockManager.is_unlocked(sCharOrderList[i-2]) != 1)
 			{
 				img.HardShader = mManager.mReferences.mTransparentCharacaterShader;

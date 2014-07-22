@@ -57,15 +57,12 @@ public class CharacterBundleManager : FakeMonoBehaviour {
 	}
 	public ImageSizePair get_image(string identifier)
 	{
-        GameConstants.Log("getting image " + identifier);
 		ImageSizePair r = new ImageSizePair();
 		r.Image = ImageBundle.Load(identifier) as Texture2D;
 		r.Data = ImageIndex.Find(e => e.Name == identifier); //TODO not finding size data
 
 		if(r.Data == null || r.Image == null)
 			Debug.Log("could not find id " + identifier + " image " + r.Image + " data " + r.Data);
-
-        GameConstants.Log("success");
 		return r;
 	}
 	
@@ -210,9 +207,6 @@ public class CharacterBundleManager : FakeMonoBehaviour {
 	}
 	public void pose_bundle_loaded_callback(AssetBundle aBundle)
     {
-	
-        GameConstants.Log("begin loading char info");
-
 		foreach(CharacterIndex e in CharacterIndex.sAllCharacters)
 		{
 			string txtName = "info_"+e.StringIdentifier;
@@ -235,8 +229,6 @@ public class CharacterBundleManager : FakeMonoBehaviour {
 			}
 		}
 
-        GameConstants.Log("finished loading char info");
-
 		//this is a hack
 		//randomize difficulty changes for fetus
         var avail = mManager.mMetaManager.UnlockManager.get_unlocked_characters_at_level(1).ToArray();
@@ -249,9 +241,6 @@ public class CharacterBundleManager : FakeMonoBehaviour {
 		changeThisInfo.ChangeSet[0].Changes[2].Changes[avail[avail.Count() > 1 ? 1 : 0]] = 1; 
 		
 
-        GameConstants.Log("begin loading pose bundle contents");
-
-
 		foreach(CharacterIndex e in CharacterIndex.sAllCharacters)
 		{
 			for(int i = 0; i < 4; i++)
@@ -261,17 +250,12 @@ public class CharacterBundleManager : FakeMonoBehaviour {
 					string s = construct_pose_string(e,i,j);
 					if(aBundle.Contains(s))
 					{
-                        GameConstants.Log("loading " + s);
 						mPoses[s] = (aBundle.Load(s) as TextAsset).to_pose();
-                        GameConstants.Log("finished " + s);
 					}
 				}
 			}
 		}
-
-        GameConstants.Log("finished loading pose bundle contents");
         aBundle.Unload(true); //don't need this anymore I don't ithnk...
-        GameConstants.Log("unloaded pose bundle");
 		mPosesLoaded = true;
     }
 	

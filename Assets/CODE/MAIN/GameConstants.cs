@@ -106,18 +106,6 @@ public static class GameConstants
 	public static Color TransparentBodyDefaultColor {get {return new Color(0,0.317f,.898f,1);}}
 	
 
-
-    public static void Log(object aMsg)
-    {
-        Debug.Log(aMsg.ToString());
-    }
-
-
-
-
-
-
-
 	//TODO DELETE
 	//characters
 	//oddly enough, these are not constant :)

@@ -20,10 +20,8 @@ public class AssetBundleLoader : FakeMonoBehaviour
         {
             if (e.Key.isDone)
             {
-                GameConstants.Log("begin bundle " + e.Key.url);
                 removal.Add(e.Key);
                 e.Value(e.Key.assetBundle);
-                GameConstants.Log("finished bundle " + e.Key.url);
             }
         }
         foreach (WWW e in removal)
