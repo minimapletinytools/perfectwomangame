@@ -1,8 +1,27 @@
+::PORT TODO::
+-figure out transparency issue with the flat color shader??
+    DONE-enable all characters again and see if it happens with regular shader
+        -shit works fine
+    -maybe this will help?? http://forum.unity3d.com/threads/shaders-for-2d-games.71748/
 
+DONE/IGNORE/NOTMP-figure out why startup is taking so long
+    -run directly from unity (no asset bundles) and see what debug info u can get
+    -compare load times of testing and regular scene
+    -compare loading times of debug vs regular
+DONE-figure out whats up with all those warning at startup
+DONE-resolve elbow/hand issues
+-figure out why restarting is taking so long
+    -add in character skipping plz.
+    -some waitforasyncoperationtocomplete thing is taking forevs... based on how many characters have been loaded or how long the game has been played for I think
+        -should test this in testing scene....
+    -it magically resolved itself, was this related to unlockables maybe???
+-clean out camera effects tuff
+-clean out all your debug statements LOOOL
 
 ::GAME TODO NEW::
--make new files and stop shoving it all inside of the TODO
--figure out why there is the no rendering issue
+-something to mask graphical artifacts on restart
+-sliding transitions need to be fixed. They look awkward towards the very end b/c of stupid interpolation
+DONE-make new files and stop shoving it all inside of the TODO
 -ask about publishing for free. Get yourself a new contact
 -email SONY please
 -write e3 soft kinect followup
