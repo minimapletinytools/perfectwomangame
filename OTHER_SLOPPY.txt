@@ -1,0 +1,69 @@
+
+::ZIG STRUCTURE NOTES::
+-put both Zig_UpdateUser and Zig_Update (ZigInput callback) inside of ZigManager
+-abstract away DepthImage/PixelImage/UserImage into their own classes
+-AlternativeDepthViewer should just produce a texture and pass it to the game to render (rather then render itself in the GUI routine)
+-both AlternativeDepthViewer/ImageViewer should be ZigFu specific, and instead, interface through ZigManager to pass their updated textures to the game
+
+::NEW PLAY NOTES::
+-easy
+	-arms only
+	-only one limb changes at once. Note we're talking about absolute changes
+	-9/12/15/18/21 (bad, poor, ok, good, excellent)
+	-4 poses
+-medium
+	-arms and legs only
+	-only one limb changes at once
+	-builds on easy poses
+	-5 poses (2 from easy)
+-hard 
+	-arms, legs, head and torso (all)
+	-two limbs change at once
+	-builds on easy/medium poses
+	-6 poses (1 from easy, 2 from med)
+-extreme
+	-all
+	-no rules on how many limbs change, these poses will follow no particular pattern
+	-7+ poses, maybe some from before maybe not
+-challenge mode
+	-can access other play modes...
+
+::XB1 REQUIREMENTS::
+-run the submission validator makepkg /L or /LT
+-must respond to suspend event and return within 1 second 
+	-Does unity take care of this??
+	-this happens when user switches titles. Is this not the same as quitting?
+	-if not... 
+	-ok.. need to register XboxOnePLM.OnSuspendingEvent and save current game state data
+		-need to call  XboxOnePLM.AmReadyToSuspendNow() within .9 seconds
+		-I guess you can have title screen go straight into last character??
+		-check XboxOnePLM.AmResumingFromTerminatedState() to see if resuming
+-virtual keyboard needs to support smartglass as well 
+	-may need this eventually for social network connection etc... but not now
+-all xb1 brand assets need to fit https://developer.xboxlive.com/en-us/platform/publishing/Pages/Xbox_One_Brand_Assets.aspx
+-you'll need to get a game rating (ESRB??)
+-menu accesible via menu button
+	-(restart game, reset game, challenge mode, etc)
+	-does this mean I need to pause the game??? crap
+-can not pause for more than 5 seconds without an onscreen loading animation
+-xbox help function???? 
+	-basic game info, contact info
+-if sharing kinect related stuff, must provide preview of what is being shared
+	-can't share expression/face tracking info for whatever reason
+-The title performs a language/locale check to determine whether the current setting matches the speech.
+	-Every title must match its acoustic model to the user’s console locale. Titles must gracefully handle. scenarios where the title does not support all of the locales and languages that are supported on the console.
+-Titles must adhere to the events raised by Xbox One global speech commands if their title supports the functions associated with those commands. specifically Xbox Show Menu/Change View/Pause/Play/Go Back
+-must not use Windows::Xbox::Input::InputManager::DeferSystemGestures() during menus
+-title must support streaming install with initial chunk no bigger than 3gb (not a prob) (but we could stream the unused character bundles..)
+-must be able to install DLC without restatring game
+-active user nonsense
+	-can I just have it based on system not user?
+		-don't hink so. connected storage autamitaclly assosciates with a user
+	-suppose to recognize when controller is disconnected but do I really need this?
+	-LOOK MORE INTO THIS ONE...
+-should probably pause the game if user walks off screen lol...
+-achievements
+-system stats
+	-game progress percentage
+	-hero stats if using achievements??
+	-
