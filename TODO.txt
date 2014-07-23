@@ -1,5 +1,29 @@
 ::PORT TODO::
--figure out transparency issue with the flat color shader??
+-startup
+	-do startup timings for an empty project
+		-development 9 spash, 9.5 game
+		-master 7 splash, 7.5 game
+		-debug 8 splash, 8.5 game
+	-do startup timings for PW
+		-master 8 slpash, 11 game
+		-debug 9 splash, 12 game
+	-post a question on Unity to make sure this is OK
+	-get rid of all timing debug statements, no longer needed I guess.
+-clean out camera effects tuff
+-something to mask graphical artifacts on restart
+-reFACtor your code
+-do depth color and body images
+	-uggg
+DONE-figure out why restarting is taking so long
+    -add in character skipping plz.
+    -some waitforasyncoperationtocomplete thing is taking forevs... based on how many characters have been loaded or how long the game has been played for I think
+        -should test this in testing scene....
+    -it magically resolved itself, was this related to unlockables maybe???
+DONE-clean out all your debug statements LOOOL
+
+DONE-make generalized class to handle all skipping
+DONE-foot tracking is not working
+DONE-figure out transparency issue with the flat color shader??
     DONE-enable all characters again and see if it happens with regular shader
         -shit works fine
     -maybe this will help?? http://forum.unity3d.com/threads/shaders-for-2d-games.71748/
@@ -10,18 +34,9 @@ DONE/IGNORE/NOTMP-figure out why startup is taking so long
     -compare loading times of debug vs regular
 DONE-figure out whats up with all those warning at startup
 DONE-resolve elbow/hand issues
--figure out why restarting is taking so long
-    -add in character skipping plz.
-    -some waitforasyncoperationtocomplete thing is taking forevs... based on how many characters have been loaded or how long the game has been played for I think
-        -should test this in testing scene....
-    -it magically resolved itself, was this related to unlockables maybe???
--clean out camera effects tuff
--clean out all your debug statements LOOOL
 
 ::GAME TODO NEW::
--something to mask graphical artifacts on restart
 -sliding transitions need to be fixed. They look awkward towards the very end b/c of stupid interpolation
-DONE-make new files and stop shoving it all inside of the TODO
 -ask about publishing for free. Get yourself a new contact
 -email SONY please
 -write e3 soft kinect followup
@@ -58,6 +73,7 @@ DONE-make new files and stop shoving it all inside of the TODO
 -other
 	-see if you can fix kinect lighting
 	-pose change predictor, draw super transparent "next" pose during play
+DONE-make new files and stop shoving it all inside of the TODO
 DONE-test without farseer stuff???
 DONE-fix the transitions
 	-after "that's a hard one show us your skills" fade out music, load, transition, fade in music
