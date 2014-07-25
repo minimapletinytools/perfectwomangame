@@ -371,7 +371,7 @@ public class ModeNormalPlay
 		
 		if(NGM.CurrentPose != null) //this should never happen but just in case
 		{
-            if(KeyMan.GetKeyDown("Perfect"))
+            if(KeyMan.GetKey("Perfect"))
                 mManager.mBodyManager.set_target_pose(NGM.CurrentTargetPose);
 			else
                 mManager.mBodyManager.set_target_pose(NGM.CurrentPose);
