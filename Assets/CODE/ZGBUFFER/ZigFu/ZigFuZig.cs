@@ -109,14 +109,18 @@ public class ZigFuZig : ZgInterface
                 GameObject container = GameObject.Find("ZigInputContainer");
                 if (container != null)
                     mZigInput = container.GetComponent<ZigInput>();
+				else return null;
                 
                 //this is important!, this is the only way to get output from ZigInput via mZigCallbackBehaviour
                 mZigInput.AddListener(ManagerManager.Manager.gameObject);
             }
 			ZgInput r = new ZgInput();
-			ZgInput.Depth = new ZgDepth(ZigInput.Depth.xres,ZigInput.Depth.yres,ZigInput.Depth.data);
-			ZgInput.Image = new ZgImage(ZigInput.Image.xres,ZigInput.Image.yres,ZigInput.Image.data);
-			ZgInput.LabelMap = new ZgLabelMap(ZigInput.LabelMap.xres,ZigInput.LabelMap.yres,ZigInput.LabelMap.data);
+			if(ZigInput.Depth != null)
+				ZgInput.Depth = new ZgDepth(ZigInput.Depth.xres,ZigInput.Depth.yres,ZigInput.Depth.data);
+			if(ZigInput.Image != null)
+				ZgInput.Image = new ZgImage(ZigInput.Image.xres,ZigInput.Image.yres,ZigInput.Image.data);
+			if(ZigInput.LabelMap != null)
+				ZgInput.LabelMap = new ZgLabelMap(ZigInput.LabelMap.xres,ZigInput.LabelMap.yres,ZigInput.LabelMap.data);
 			r.kinectSDK = mZigInput.kinectSDK;
 			r.ReaderInited = mZigInput.ReaderInited;
 			return r;
