@@ -14,6 +14,7 @@
 -reFACtor your code
 -do depth color and body images
 	-uggg
+-check texture sizes and see if you can reduce the 'long thread activation time' thing.
 DONE-figure out why restarting is taking so long
     -add in character skipping plz.
     -some waitforasyncoperationtocomplete thing is taking forevs... based on how many characters have been loaded or how long the game has been played for I think
@@ -38,7 +39,7 @@ DONE-resolve elbow/hand issues
 ::GAME TODO NEW::
 -sliding transitions need to be fixed. They look awkward towards the very end b/c of stupid interpolation
 -ask about publishing for free. Get yourself a new contact
--email SONY please
+DONE-email SONY please
 -write e3 soft kinect followup
 -write gaymerx followup
 	-people cheering, yay.
