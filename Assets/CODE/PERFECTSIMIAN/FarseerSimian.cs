@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -31,12 +31,12 @@ public class FarseerSimian
     
     
     //stupid stuff needed for construction
-    public Dictionary<ZigJointId, Stupid> mImportant = new Dictionary<ZigJointId, Stupid>();
+    public Dictionary<ZgJointId, Stupid> mImportant = new Dictionary<ZgJointId, Stupid>();
     public class Stupid
     {
-        public List<ZigJointId> otherEnds = new List<ZigJointId>();
-        public Stupid(ZigJointId other) { otherEnds.Add(other); }
-        public Stupid(ZigJointId[] other) { otherEnds.AddRange(other); }
+        public List<ZgJointId> otherEnds = new List<ZgJointId>();
+        public Stupid(ZgJointId other) { otherEnds.Add(other); }
+        public Stupid(ZgJointId[] other) { otherEnds.AddRange(other); }
         public Stupid(){}
     }
 

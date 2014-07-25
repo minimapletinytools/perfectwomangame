@@ -7,8 +7,8 @@ public class AdvancedGrading
 {
 	
 	const float GRADE_INTERP = 0f; //0.9f;
-	Dictionary<ZigJointId,float> mLastScore = null;
-	Dictionary<ZigJointId,float> mCurrentScore = null;
+	Dictionary<ZgJointId,float> mLastScore = null;
+	Dictionary<ZgJointId,float> mCurrentScore = null;
 	
 	public AdvancedGrading()
 	{
@@ -20,12 +20,12 @@ public class AdvancedGrading
 		
 		//TODO make global??
 		float lambda = GRADE_INTERP;
-		Dictionary<ZigJointId,float> newScore = ProGrading.advanced_grade_pose(aCurrent, aTarget);
+		Dictionary<ZgJointId,float> newScore = ProGrading.advanced_grade_pose(aCurrent, aTarget);
 		if(mCurrentScore == null)
 			mCurrentScore = newScore;
 		mLastScore = mCurrentScore;
-		mCurrentScore = new Dictionary<ZigJointId, float>(newScore);
-		foreach(KeyValuePair<ZigJointId,float> e in newScore)
+		mCurrentScore = new Dictionary<ZgJointId, float>(newScore);
+		foreach(KeyValuePair<ZgJointId,float> e in newScore)
 		{
 			mCurrentScore[e.Key] = mLastScore[e.Key]*lambda + newScore[e.Key]*(1-lambda);
 		}
@@ -36,22 +36,22 @@ public class AdvancedGrading
 	{
 		float lambda = GRADE_INTERP;
 		mLastScore = mCurrentScore;
-		mCurrentScore = new Dictionary<ZigJointId, float>();
-		foreach(KeyValuePair<ZigJointId,float> e in mLastScore)
+		mCurrentScore = new Dictionary<ZgJointId, float>();
+		foreach(KeyValuePair<ZgJointId,float> e in mLastScore)
 		{
 			mCurrentScore[e.Key] = mLastScore[e.Key]*lambda + aGrade*(1-lambda);
 		}
 	}
 	
-	public float joint_score(ZigJointId aJoint)
+	public float joint_score(ZgJointId aJoint)
 	{
 		return mCurrentScore[aJoint];
 	}
 	
-	public float joint_aggregate_score(ZigJointId[] aJoints)
+	public float joint_aggregate_score(ZgJointId[] aJoints)
 	{
 		float r = 0;
-		foreach(ZigJointId e in aJoints)
+		foreach(ZgJointId e in aJoints)
 		{
 			r += mCurrentScore[e]*mCurrentScore[e];	
 		}

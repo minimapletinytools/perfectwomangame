@@ -66,43 +66,43 @@ public class ProjectionManager : FakeMonoBehaviour {
 
     public class Stupid
     {
-        public ZigJointId otherEnd;
+        public ZgJointId otherEnd;
         public Smoothing smoothing = new Smoothing();
         public float weight = 1;
-        public Stupid(ZigJointId other) { otherEnd = other; }
+        public Stupid(ZgJointId other) { otherEnd = other; }
     }
-    public Dictionary<ZigJointId, Stupid> mImportant = new Dictionary<ZigJointId, Stupid>();
+    public Dictionary<ZgJointId, Stupid> mImportant = new Dictionary<ZgJointId, Stupid>();
 	public override void Start () 
     {
-        mImportant[ZigJointId.LeftShoulder] = new Stupid(ZigJointId.LeftElbow);
-        mImportant[ZigJointId.LeftElbow] = new Stupid(ZigJointId.LeftHand);
-        mImportant[ZigJointId.LeftHip] = new Stupid(ZigJointId.LeftKnee);
-        mImportant[ZigJointId.LeftKnee] = new Stupid(ZigJointId.LeftAnkle);
-        mImportant[ZigJointId.RightShoulder] = new Stupid(ZigJointId.RightElbow);
-        mImportant[ZigJointId.RightElbow] = new Stupid(ZigJointId.RightHand);
-        mImportant[ZigJointId.RightHip] = new Stupid(ZigJointId.RightKnee);
-        mImportant[ZigJointId.RightKnee] = new Stupid(ZigJointId.RightAnkle);
-        mImportant[ZigJointId.Neck] = new Stupid(ZigJointId.Head);
-        mImportant[ZigJointId.Torso] = new Stupid(ZigJointId.Neck);
+        mImportant[ZgJointId.LeftShoulder] = new Stupid(ZgJointId.LeftElbow);
+        mImportant[ZgJointId.LeftElbow] = new Stupid(ZgJointId.LeftHand);
+        mImportant[ZgJointId.LeftHip] = new Stupid(ZgJointId.LeftKnee);
+        mImportant[ZgJointId.LeftKnee] = new Stupid(ZgJointId.LeftAnkle);
+        mImportant[ZgJointId.RightShoulder] = new Stupid(ZgJointId.RightElbow);
+        mImportant[ZgJointId.RightElbow] = new Stupid(ZgJointId.RightHand);
+        mImportant[ZgJointId.RightHip] = new Stupid(ZgJointId.RightKnee);
+        mImportant[ZgJointId.RightKnee] = new Stupid(ZgJointId.RightAnkle);
+        mImportant[ZgJointId.Neck] = new Stupid(ZgJointId.Head);
+        mImportant[ZgJointId.Torso] = new Stupid(ZgJointId.Neck);
 	}
     public Smoothing mWaist = new Smoothing();
 	public Vector3 mNormal = Vector3.forward;
 	public Vector3 mUp = Vector3.up;
     public float mSmoothing = 0.5f;
 	
-	public float get_smoothed_relative(ZigJointId A, ZigJointId B)
+	public float get_smoothed_relative(ZgJointId A, ZgJointId B)
 	{
 		return mImportant[A].smoothing.current;
 	}
-	public float get_relative(ZigInputJoint A, ZigInputJoint B)
+	public float get_relative(ZgInputJoint A, ZgInputJoint B)
 	{
 		float r = 0;
-		if(A.Id == ZigJointId.None)
+		if(A.Id == ZgJointId.None)
 			return 0;
 		if(!B.GoodPosition)
 		{
-			if(B.Id == ZigJointId.LeftElbow 
-			   || B.Id == ZigJointId.RightElbow )
+			if(B.Id == ZgJointId.LeftElbow 
+			   || B.Id == ZgJointId.RightElbow )
 			   //|| B.Id == ZigJointId.LeftHand 
 			   //|| B.Id == ZigJointId.RightHand)
 			{
@@ -116,24 +116,24 @@ public class ProjectionManager : FakeMonoBehaviour {
 
 
 		//openni fix to solve head being set to -90 angle problem
-		if(B.Id == ZigJointId.Head)
+		if(B.Id == ZgJointId.Head)
 			if(!B.GoodPosition)
 				r = -90;
 
 
 
-		if(B.Id == ZigJointId.LeftHand)
+		if(B.Id == ZgJointId.LeftHand)
 			if(!B.GoodPosition)
-				r = mImportant[ZigJointId.LeftShoulder].smoothing.current;
+				r = mImportant[ZgJointId.LeftShoulder].smoothing.current;
 
-		if(B.Id == ZigJointId.RightHand)
+		if(B.Id == ZgJointId.RightHand)
 			if(!B.GoodPosition)
-				r = mImportant[ZigJointId.RightShoulder].smoothing.current;
+				r = mImportant[ZgJointId.RightShoulder].smoothing.current;
 
         return r;
 	}
 
-    public float get_waist(ZigInputJoint waist, ZigInputJoint L, ZigInputJoint R)
+    public float get_waist(ZgInputJoint waist, ZgInputJoint L, ZgInputJoint R)
     {
 
 		float r = 0;
@@ -198,11 +198,11 @@ public class ProjectionManager : FakeMonoBehaviour {
 			Pose targetPose = mManager.mGameManager.CurrentTargetPose;
 			Pose currentPose = mManager.mGameManager.CurrentPose; //this may have one frame of lag but oh well
 			
-            foreach (KeyValuePair<ZigJointId,Stupid> e in mImportant)
+            foreach (KeyValuePair<ZgJointId,Stupid> e in mImportant)
             {
-                if (e.Key != ZigJointId.None && e.Key != ZigJointId.Waist)
+                if (e.Key != ZgJointId.None && e.Key != ZgJointId.Waist)
                 {
-                    ZigJointId parentJoint = BodyManager.get_parent(e.Key);
+                    ZgJointId parentJoint = BodyManager.get_parent(e.Key);
                     try
                     {
                         /* note, if you do snapping, you need to turn it off for baby
@@ -226,7 +226,7 @@ public class ProjectionManager : FakeMonoBehaviour {
             try
             {
 				
-				float waistAngle = get_waist(mManager.mZigManager.Joints[ZigJointId.Torso], mManager.mZigManager.Joints[ZigJointId.LeftKnee], mManager.mZigManager.Joints[ZigJointId.RightKnee]);
+				float waistAngle = get_waist(mManager.mZigManager.Joints[ZgJointId.Torso], mManager.mZigManager.Joints[ZgJointId.LeftKnee], mManager.mZigManager.Joints[ZgJointId.RightKnee]);
 				//waist smoothing angle hack
 				/*
 				if(!mManager.mZigManager.using_nite() && targetPose != null)

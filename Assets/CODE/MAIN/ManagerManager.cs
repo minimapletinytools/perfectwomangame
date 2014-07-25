@@ -32,7 +32,7 @@ public class ManagerManager : MonoBehaviour{
 	public VoidDelegate mUpdateDelegates = null;
 	VoidDelegate mFixedUpdateDelegates = null;
 
-    public ZigManager mZigManager;
+    public ZgManager mZigManager;
 	public ProjectionManager mProjectionManager;
     public BodyManager mBodyManager;
     public BodyManager mTransparentBodyManager;
@@ -65,7 +65,7 @@ public class ManagerManager : MonoBehaviour{
 
 		mCharacterBundleManager = new CharacterBundleManager(this);
 		mMusicManager = new MusicManager(this);
-		mZigManager = new ZigManager(this);
+		mZigManager = new ZgManager(this);
 		mProjectionManager = new ProjectionManager(this);
         mBodyManager = new BodyManager(this);
         mTransparentBodyManager = new BodyManager(this);
@@ -146,7 +146,7 @@ public class ManagerManager : MonoBehaviour{
     			mUpdateDelegates();
 
 
-            mDebugString = ((int)(1 / Time.deltaTime)).ToString();
+            //mDebugString = ((int)(1 / Time.deltaTime)).ToString();
         } 
         catch(System.Exception e)
         {
@@ -242,7 +242,11 @@ public class ManagerManager : MonoBehaviour{
         GUI.TextArea(new Rect(10,80,300,70),mDebugString2,style);
 		//GUI.TextArea(new Rect(50,50,300,100),"WORK IN PROGRESS",style);
 		
-		//GUI.Box(new Rect(0,0,Screen.width * mGameManager.mModeNormalPlay.mLastGrade,50),"");
+		//GUI.Box(new Rect(0,0,Screen.width * mGameManager.mModeNormalPlay.mLastGrade,50),""); 
+
+
+		//TODO DELETE
+		mZigManager.DepthView.OnGUI ();
 		
     }
 	

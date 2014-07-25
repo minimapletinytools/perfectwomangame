@@ -279,7 +279,7 @@ public class Unlockables
             else if(e.LevelIndex == 1)
                 unlockedCharacters[e] = 1;
 			else if(e.Choice < 4)
-				unlockedCharacters[e] = 2; 
+				unlockedCharacters[e] = 1; //2 - locked, 1 - avail
 			else
 				unlockedCharacters[e] = 0; 
 		}

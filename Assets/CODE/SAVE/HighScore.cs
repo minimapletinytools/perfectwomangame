@@ -32,7 +32,7 @@ public class HighScore
 	{
 		Scores = new List<ScoreEntry>();
 	}
-	public ScoreEntry record_score(float aScore, AlternativeImageViewer aIV)
+	public ScoreEntry record_score(float aScore, ZgImageViewer aIV)
 	{
 		ScoreEntry score = new ScoreEntry();
 		score.score = aScore;

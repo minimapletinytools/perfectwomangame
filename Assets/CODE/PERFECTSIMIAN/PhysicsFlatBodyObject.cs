@@ -7,42 +7,42 @@ public class PhysicsFlatBodyObject
 	FlatBodyObject mFlat;
 	GameObject mPhysBodyParent = null;
 	//these are all the rigid bodies
-	Dictionary<ZigJointId,GameObject> mBodies = new Dictionary<ZigJointId, GameObject>();
+	Dictionary<ZgJointId,GameObject> mBodies = new Dictionary<ZgJointId, GameObject>();
 	//these are the joint offsets (because hinge joints starting angle is relative)
 	public struct JointOffset{public HingeJoint joint; public Quaternion offset;}
-	Dictionary<ZigJointId,JointOffset> mJointAngleOffset = new Dictionary<ZigJointId, JointOffset>();
+	Dictionary<ZgJointId,JointOffset> mJointAngleOffset = new Dictionary<ZgJointId, JointOffset>();
 	
 	public class Stupid
     {
-        public List<ZigJointId> otherEnds = new List<ZigJointId>();
-        public Stupid(ZigJointId other) { otherEnds.Add(other); }
-		public Stupid(ZigJointId[] other) { otherEnds.AddRange(other); }
+        public List<ZgJointId> otherEnds = new List<ZgJointId>();
+        public Stupid(ZgJointId other) { otherEnds.Add(other); }
+		public Stupid(ZgJointId[] other) { otherEnds.AddRange(other); }
 		public Stupid(){}
     }
 
 	//key is body, value is list of things attached to body
-    public Dictionary<ZigJointId, Stupid> mImportant = new Dictionary<ZigJointId, Stupid>();
+    public Dictionary<ZgJointId, Stupid> mImportant = new Dictionary<ZgJointId, Stupid>();
 	
 	public PhysicsFlatBodyObject(FlatBodyObject aObject)
 	{
 		mFlat = aObject;
 
-		mImportant[ZigJointId.Torso] = new Stupid(new ZigJointId[]{ZigJointId.LeftShoulder,ZigJointId.RightShoulder,ZigJointId.Waist,ZigJointId.Neck});
-		mImportant[ZigJointId.Waist] = new Stupid(new ZigJointId[]{ZigJointId.LeftHip,ZigJointId.RightHip});
-		mImportant[ZigJointId.LeftShoulder] = new Stupid(ZigJointId.LeftElbow);
-        mImportant[ZigJointId.LeftElbow] = new Stupid(ZigJointId.LeftHand);
-        mImportant[ZigJointId.LeftHip] = new Stupid(ZigJointId.LeftKnee);
-        mImportant[ZigJointId.LeftKnee] = new Stupid(ZigJointId.LeftAnkle);
-        mImportant[ZigJointId.RightShoulder] = new Stupid(ZigJointId.RightElbow);
-        mImportant[ZigJointId.RightElbow] = new Stupid(ZigJointId.RightHand);
-        mImportant[ZigJointId.RightHip] = new Stupid(ZigJointId.RightKnee);
-        mImportant[ZigJointId.RightKnee] = new Stupid(ZigJointId.RightAnkle);
-        mImportant[ZigJointId.Neck] = new Stupid(ZigJointId.Head);
-		mImportant[ZigJointId.Head] = new Stupid();
-		mImportant[ZigJointId.LeftHand] = new Stupid();
-		mImportant[ZigJointId.RightHand] = new Stupid();
-		mImportant[ZigJointId.LeftAnkle] = new Stupid();
-		mImportant[ZigJointId.RightAnkle] = new Stupid();
+		mImportant[ZgJointId.Torso] = new Stupid(new ZgJointId[]{ZgJointId.LeftShoulder,ZgJointId.RightShoulder,ZgJointId.Waist,ZgJointId.Neck});
+		mImportant[ZgJointId.Waist] = new Stupid(new ZgJointId[]{ZgJointId.LeftHip,ZgJointId.RightHip});
+		mImportant[ZgJointId.LeftShoulder] = new Stupid(ZgJointId.LeftElbow);
+        mImportant[ZgJointId.LeftElbow] = new Stupid(ZgJointId.LeftHand);
+        mImportant[ZgJointId.LeftHip] = new Stupid(ZgJointId.LeftKnee);
+        mImportant[ZgJointId.LeftKnee] = new Stupid(ZgJointId.LeftAnkle);
+        mImportant[ZgJointId.RightShoulder] = new Stupid(ZgJointId.RightElbow);
+        mImportant[ZgJointId.RightElbow] = new Stupid(ZgJointId.RightHand);
+        mImportant[ZgJointId.RightHip] = new Stupid(ZgJointId.RightKnee);
+        mImportant[ZgJointId.RightKnee] = new Stupid(ZgJointId.RightAnkle);
+        mImportant[ZgJointId.Neck] = new Stupid(ZgJointId.Head);
+		mImportant[ZgJointId.Head] = new Stupid();
+		mImportant[ZgJointId.LeftHand] = new Stupid();
+		mImportant[ZgJointId.RightHand] = new Stupid();
+		mImportant[ZgJointId.LeftAnkle] = new Stupid();
+		mImportant[ZgJointId.RightAnkle] = new Stupid();
 
 	}
 	
@@ -66,14 +66,14 @@ public class PhysicsFlatBodyObject
 	{
 
 		//set desired position from projection manager
-		foreach (KeyValuePair<ZigJointId, ProjectionManager.Stupid> e in aManager.mImportant)
+		foreach (KeyValuePair<ZgJointId, ProjectionManager.Stupid> e in aManager.mImportant)
 		{
 			//the torso will be skipped because in physics, the torse angle is determined by the waist
 			if(mJointAngleOffset.ContainsKey(e.Key)){
 				set_hinge_position(-mJointAngleOffset[e.Key].offset.eulerAngles.z + e.Value.smoothing.current,mJointAngleOffset[e.Key].joint);
 			}
 		}
-		set_hinge_position(-mJointAngleOffset[ZigJointId.Waist].offset.eulerAngles.z + aManager.mWaist.current,mJointAngleOffset[ZigJointId.Waist].joint);
+		set_hinge_position(-mJointAngleOffset[ZgJointId.Waist].offset.eulerAngles.z + aManager.mWaist.current,mJointAngleOffset[ZgJointId.Waist].joint);
 
 
 		foreach(var e in mFlat.mParts)

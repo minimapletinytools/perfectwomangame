@@ -4,30 +4,30 @@ using System.Linq;
 public class BodyParticleHelper 
 {
 	
-	static Dictionary<ZigJointId,ZigJointId[]> sConnectedGroups = new Dictionary<ZigJointId, ZigJointId[]>
+	static Dictionary<ZgJointId,ZgJointId[]> sConnectedGroups = new Dictionary<ZgJointId, ZgJointId[]>
 	{
-		{ZigJointId.LeftShoulder,new ZigJointId[]{ZigJointId.LeftElbow}},
-		{ZigJointId.LeftElbow,new ZigJointId[]{ZigJointId.LeftHand}},
-		{ZigJointId.LeftHip,new ZigJointId[]{ZigJointId.LeftKnee}},
-		{ZigJointId.LeftKnee,new ZigJointId[]{ZigJointId.LeftAnkle}},
+		{ZgJointId.LeftShoulder,new ZgJointId[]{ZgJointId.LeftElbow}},
+		{ZgJointId.LeftElbow,new ZgJointId[]{ZgJointId.LeftHand}},
+		{ZgJointId.LeftHip,new ZgJointId[]{ZgJointId.LeftKnee}},
+		{ZgJointId.LeftKnee,new ZgJointId[]{ZgJointId.LeftAnkle}},
 		
-		{ZigJointId.RightShoulder,new ZigJointId[]{ZigJointId.RightElbow}},
-		{ZigJointId.RightElbow,new ZigJointId[]{ZigJointId.RightHand}},
-		{ZigJointId.RightHip,new ZigJointId[]{ZigJointId.RightKnee}},
-		{ZigJointId.RightKnee,new ZigJointId[]{ZigJointId.RightAnkle}},
+		{ZgJointId.RightShoulder,new ZgJointId[]{ZgJointId.RightElbow}},
+		{ZgJointId.RightElbow,new ZgJointId[]{ZgJointId.RightHand}},
+		{ZgJointId.RightHip,new ZgJointId[]{ZgJointId.RightKnee}},
+		{ZgJointId.RightKnee,new ZgJointId[]{ZgJointId.RightAnkle}},
 		
-		{ZigJointId.Neck,new ZigJointId[]{ZigJointId.Head}},
-		{ZigJointId.Torso,new ZigJointId[]{ZigJointId.LeftShoulder,ZigJointId.RightShoulder}},
-		{ZigJointId.Waist,new ZigJointId[]{ZigJointId.LeftHip,ZigJointId.RightHip}},
+		{ZgJointId.Neck,new ZgJointId[]{ZgJointId.Head}},
+		{ZgJointId.Torso,new ZgJointId[]{ZgJointId.LeftShoulder,ZgJointId.RightShoulder}},
+		{ZgJointId.Waist,new ZgJointId[]{ZgJointId.LeftHip,ZgJointId.RightHip}},
 	};
 	
-	static Dictionary<ZigJointId,ZigJointId[]> sJointGroups = new Dictionary<ZigJointId, ZigJointId[]>
+	static Dictionary<ZgJointId,ZgJointId[]> sJointGroups = new Dictionary<ZgJointId, ZgJointId[]>
 	{
-		{ZigJointId.LeftHand,new ZigJointId[]{ZigJointId.LeftElbow,ZigJointId.LeftShoulder,ZigJointId.Torso}},
-		{ZigJointId.RightHand,new ZigJointId[]{ZigJointId.RightElbow,ZigJointId.RightShoulder,ZigJointId.Torso}},
-		{ZigJointId.LeftAnkle,new ZigJointId[]{ZigJointId.LeftKnee,ZigJointId.LeftHip,ZigJointId.Waist}},
-		{ZigJointId.RightAnkle,new ZigJointId[]{ZigJointId.RightKnee,ZigJointId.RightHip,ZigJointId.Waist}},
-		{ZigJointId.Head,new ZigJointId[]{ZigJointId.Neck,ZigJointId.Torso,ZigJointId.Waist}},
+		{ZgJointId.LeftHand,new ZgJointId[]{ZgJointId.LeftElbow,ZgJointId.LeftShoulder,ZgJointId.Torso}},
+		{ZgJointId.RightHand,new ZgJointId[]{ZgJointId.RightElbow,ZgJointId.RightShoulder,ZgJointId.Torso}},
+		{ZgJointId.LeftAnkle,new ZgJointId[]{ZgJointId.LeftKnee,ZgJointId.LeftHip,ZgJointId.Waist}},
+		{ZgJointId.RightAnkle,new ZgJointId[]{ZgJointId.RightKnee,ZgJointId.RightHip,ZgJointId.Waist}},
+		{ZgJointId.Head,new ZgJointId[]{ZgJointId.Neck,ZgJointId.Torso,ZgJointId.Waist}},
 	};
 	
 	public SparkleStarFlashParticle mParticles;
@@ -102,28 +102,28 @@ public class BodyParticleHelper
 			if(inc >= 2 && inc < 3)
 			{
 				//mParticles.emit_ring("silver",5,activeBody.mFlat.get_body_part_position(ZigJointId.Torso),600, 1.5f);
-				mParticles.emit_ring("silver",7,activeBody.mFlat.get_body_part_position(ZigJointId.Torso),900, 1.5f);
+				mParticles.emit_ring("silver",7,activeBody.mFlat.get_body_part_position(ZgJointId.Torso),900, 1.5f);
 			}
 			if(inc >= 3  && inc <4)
 			{
-				mParticles.emit_ring("silver",5,activeBody.mFlat.get_body_part_position(ZigJointId.Torso),700,1.5f);
-				mParticles.emit_ring("gold",7,activeBody.mFlat.get_body_part_position(ZigJointId.Torso),1000, 2f);
+				mParticles.emit_ring("silver",5,activeBody.mFlat.get_body_part_position(ZgJointId.Torso),700,1.5f);
+				mParticles.emit_ring("gold",7,activeBody.mFlat.get_body_part_position(ZgJointId.Torso),1000, 2f);
 			}
 			if(inc == 4)
 			{
 				if(grade > GameConstants.playSuperCutoff && fever)
 				{
-					mParticles.emit_ring("gold",20,activeBody.mFlat.get_body_part_position(ZigJointId.Torso),2500,2f);
+					mParticles.emit_ring("gold",20,activeBody.mFlat.get_body_part_position(ZgJointId.Torso),2500,2f);
 					//mParticles.emit_ring("gold",15,activeBody.mFlat.get_body_part_position(ZigJointId.Torso),1500,3f);
-					mParticles.emit_ring("silver",12,activeBody.mFlat.get_body_part_position(ZigJointId.Torso),1900, 3f);
-					mParticles.emit_ring("gold",7,activeBody.mFlat.get_body_part_position(ZigJointId.Torso),1200,4f);
-					mParticles.emit_ring("silver",10,activeBody.mFlat.get_body_part_position(ZigJointId.Torso),600,1.5f);
+					mParticles.emit_ring("silver",12,activeBody.mFlat.get_body_part_position(ZgJointId.Torso),1900, 3f);
+					mParticles.emit_ring("gold",7,activeBody.mFlat.get_body_part_position(ZgJointId.Torso),1200,4f);
+					mParticles.emit_ring("silver",10,activeBody.mFlat.get_body_part_position(ZgJointId.Torso),600,1.5f);
 				}
 				else
 				{
-					mParticles.emit_ring("gold",12,activeBody.mFlat.get_body_part_position(ZigJointId.Torso),1900, 4f);
-					mParticles.emit_ring("silver",7,activeBody.mFlat.get_body_part_position(ZigJointId.Torso),1200,1.5f);
-					mParticles.emit_ring("gold",10,activeBody.mFlat.get_body_part_position(ZigJointId.Torso),600,3f);
+					mParticles.emit_ring("gold",12,activeBody.mFlat.get_body_part_position(ZgJointId.Torso),1900, 4f);
+					mParticles.emit_ring("silver",7,activeBody.mFlat.get_body_part_position(ZgJointId.Torso),1200,1.5f);
+					mParticles.emit_ring("gold",10,activeBody.mFlat.get_body_part_position(ZgJointId.Torso),600,3f);
 				}
 			}
 

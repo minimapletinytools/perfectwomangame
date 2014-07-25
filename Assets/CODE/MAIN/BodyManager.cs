@@ -206,20 +206,20 @@ public class BodyManager : FakeMonoBehaviour {
 			};*/
 			//GERMAN
 			var keyBindings = new[]{
-				new { k = ZigJointId.Neck, u = KeyCode.T, d = KeyCode.Z },
-				new { k = ZigJointId.Torso, u = KeyCode.G, d = KeyCode.H },
-				new { k = ZigJointId.Waist, u = KeyCode.B, d = KeyCode.N },
-				new { k = ZigJointId.LeftShoulder, u = KeyCode.E, d = KeyCode.R },
-				new { k = ZigJointId.RightShoulder, u = KeyCode.U, d = KeyCode.I },
-				new { k = ZigJointId.LeftElbow, u = KeyCode.Q, d = KeyCode.W },
-				new { k = ZigJointId.RightElbow, u = KeyCode.O, d = KeyCode.P },
-				new { k = ZigJointId.LeftHip, u = KeyCode.C, d = KeyCode.V },
-				new { k = ZigJointId.RightHip, u = KeyCode.M, d = KeyCode.Comma },
-				new { k = ZigJointId.LeftKnee, u = KeyCode.Y, d = KeyCode.X },
-				new { k = ZigJointId.RightKnee, u = KeyCode.Period, d = KeyCode.Minus }
+				new { k = ZgJointId.Neck, u = KeyCode.T, d = KeyCode.Z },
+				new { k = ZgJointId.Torso, u = KeyCode.G, d = KeyCode.H },
+				new { k = ZgJointId.Waist, u = KeyCode.B, d = KeyCode.N },
+				new { k = ZgJointId.LeftShoulder, u = KeyCode.E, d = KeyCode.R },
+				new { k = ZgJointId.RightShoulder, u = KeyCode.U, d = KeyCode.I },
+				new { k = ZgJointId.LeftElbow, u = KeyCode.Q, d = KeyCode.W },
+				new { k = ZgJointId.RightElbow, u = KeyCode.O, d = KeyCode.P },
+				new { k = ZgJointId.LeftHip, u = KeyCode.C, d = KeyCode.V },
+				new { k = ZgJointId.RightHip, u = KeyCode.M, d = KeyCode.Comma },
+				new { k = ZgJointId.LeftKnee, u = KeyCode.Y, d = KeyCode.X },
+				new { k = ZgJointId.RightKnee, u = KeyCode.Period, d = KeyCode.Minus }
 			};
 			Pose p = new Pose();
-		    foreach (KeyValuePair<ZigJointId, GameObject> e in mFlat.mParts)
+		    foreach (KeyValuePair<ZgJointId, GameObject> e in mFlat.mParts)
 		    {
 		        PoseElement pe = new PoseElement();
 		        pe.joint = e.Key;
@@ -239,30 +239,30 @@ public class BodyManager : FakeMonoBehaviour {
 		}
 	}
 
-    public static ZigJointId get_parent(ZigJointId joint)
+    public static ZgJointId get_parent(ZgJointId joint)
     {
         switch (joint)
         {
-            case ZigJointId.LeftKnee:
-                return ZigJointId.LeftHip;
-            case ZigJointId.RightKnee:
-                return ZigJointId.RightHip;
-            case ZigJointId.LeftHip:
-                return ZigJointId.Waist;
-            case ZigJointId.RightHip:
-                return ZigJointId.Waist;
-            case ZigJointId.LeftElbow:
-                return ZigJointId.LeftShoulder;
-            case ZigJointId.RightElbow:
-                return ZigJointId.RightShoulder;
-            case ZigJointId.LeftShoulder:
-                return ZigJointId.Torso;
-            case ZigJointId.RightShoulder:
-                return ZigJointId.Torso;
-            case ZigJointId.Neck:
-                return ZigJointId.Torso;
+            case ZgJointId.LeftKnee:
+                return ZgJointId.LeftHip;
+            case ZgJointId.RightKnee:
+                return ZgJointId.RightHip;
+            case ZgJointId.LeftHip:
+                return ZgJointId.Waist;
+            case ZgJointId.RightHip:
+                return ZgJointId.Waist;
+            case ZgJointId.LeftElbow:
+                return ZgJointId.LeftShoulder;
+            case ZgJointId.RightElbow:
+                return ZgJointId.RightShoulder;
+            case ZgJointId.LeftShoulder:
+                return ZgJointId.Torso;
+            case ZgJointId.RightShoulder:
+                return ZgJointId.Torso;
+            case ZgJointId.Neck:
+                return ZgJointId.Torso;
             default:
-                return ZigJointId.None;
+                return ZgJointId.None;
         }
     }
 }

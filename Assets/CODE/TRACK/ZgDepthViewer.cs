@@ -1,45 +1,37 @@
-using UnityEngine;
+﻿using UnityEngine;
 using System.Collections;
 
-public class AlternativeDepthViewer : MonoBehaviour {
-    public Renderer target;
-    public ZigResolution TextureSize = ZigResolution.QQVGA_160x120;
+public class ZgDepthViewer
+{
+    public ZgResolution TextureSize = ZgResolution.QQVGA_160x120;
     Color32 BackgroundColor = Color.white;
     Color32 BaseColor = Color.gray;
     public bool UseHistogram = true;
     public Texture2D DepthTexture {get; private set;}
-    ResolutionData textureSize;
-
+    ZgResolutionData textureSize;
+    
     float[] depthHistogramMap;
     Color32[] depthToColor;
     Color32[] outputPixels;
     public int MaxDepth = 10000; //DO NOT MODIFY IN RUNTIME!!
-	// Use this for initialization
-	void Start () {
-        if (target == null) {
-            target = renderer;
-        }
-        textureSize = ResolutionData.FromZigResolution(TextureSize);
+    // Use this for initialization
+	public ZgDepthViewer () {
+
+        textureSize = ZgResolutionData.FromZgResolution(TextureSize);
         DepthTexture = new Texture2D(textureSize.Width, textureSize.Height);
         DepthTexture.wrapMode = TextureWrapMode.Clamp;
         depthHistogramMap = new float[MaxDepth];
         depthToColor = new Color32[MaxDepth];
         outputPixels = new Color32[textureSize.Width * textureSize.Height];
-
-        if (null != target) {
-            target.material.mainTexture = DepthTexture;
-        }
-
-
-	}
-
-    void UpdateHistogram(ZigDepth depth)
+    }
+    
+    void UpdateHistogram(ZgDepth depth)
     {
         int i, numOfPoints = 0;
-
+        
         System.Array.Clear(depthHistogramMap, 0, depthHistogramMap.Length);
         short[] rawDepthMap = depth.data;
-
+        
         int depthIndex = 0;
         // assume only downscaling
         // calculate the amount of source pixels to move per column and row in
@@ -71,10 +63,10 @@ public class AlternativeDepthViewer : MonoBehaviour {
             }
         }
         
-
+        
     }
-
-    void UpdateTexture(ZigDepth depth)
+    
+    void UpdateTexture(ZgDepth depth)
     {
         short[] rawDepthMap = depth.data;
         int depthIndex = 0;
@@ -90,11 +82,11 @@ public class AlternativeDepthViewer : MonoBehaviour {
         DepthTexture.SetPixels32(outputPixels);
         DepthTexture.Apply();
     }
-
-    void Zig_Update(ZigInput input)
+    
+    public void Zig_Update(ZgInput input)
     {
         if (UseHistogram) {
-            UpdateHistogram(ZigInput.Depth);
+            UpdateHistogram(ZgInput.Depth);
         }
         else {
             //TODO: don't repeat this every frame
@@ -108,26 +100,26 @@ public class AlternativeDepthViewer : MonoBehaviour {
                 depthToColor[i].a = 255;//(byte)(BaseColor.a * intensity);
             }
         }
-        UpdateTexture(ZigInput.Depth);
+        UpdateTexture(ZgInput.Depth);
     }
-
-
+    
+    
     Rect targetRect = new Rect(20, Screen.height - 120 - 20, 160, 120);
-	Rect currentRect = new Rect(20, Screen.height - 120 - 20, 160, 120);
-
-	public void show_indicator(bool show)
-	{
-		Vector2 give = FlatCameraManager.get_fit_difference();
-		targetRect = new Rect(-400, Screen.height - 120 - 20 - give.y/2, 160, 120);
-		currentRect.y = Screen.height - 120 - 20 - give.y/2;
-		if(!show)
-		{
-			targetRect.x = -400;
-		}
-		else targetRect.x = 20 + give.x/2;
-
-
-	}
+    Rect currentRect = new Rect(20, Screen.height - 120 - 20, 160, 120);
+    
+    public void show_indicator(bool show)
+    {
+        Vector2 give = FlatCameraManager.get_fit_difference();
+        targetRect = new Rect(-400, Screen.height - 120 - 20 - give.y/2, 160, 120);
+        currentRect.y = Screen.height - 120 - 20 - give.y/2;
+        if(!show)
+        {
+            targetRect.x = -400;
+        }
+        else targetRect.x = 20 + give.x/2;
+        
+        
+    }
     void Update()
     {
         float lambda = 0.1f;
@@ -136,23 +128,21 @@ public class AlternativeDepthViewer : MonoBehaviour {
         currentRect.width = (1 - lambda) * currentRect.width + lambda * targetRect.width;
         currentRect.height = (1 - lambda) * currentRect.height + lambda * targetRect.height;
     }
-
-	public string Message{get;set;}
-	
-    void OnGUI() {
-        GUI.depth = int.MinValue;
-        if (null == target) {
-            //GUI.DrawTexture(new Rect(Screen.width - texture.width - 10, Screen.height - texture.height - 10, texture.width, texture.height), texture);
     
-			GUI.DrawTexture(currentRect, DepthTexture);
-			GUI.DrawTexture(currentRect.expand(4),ManagerManager.Manager.mNewRef.depthBorder);
+    public string Message{get;set;}
+    
+    public void OnGUI() {
+        GUI.depth = int.MinValue;
+		//GUI.DrawTexture(new Rect(Screen.width - texture.width - 10, Screen.height - texture.height - 10, texture.width, texture.height), texture);
 
-        }
-		
-		var style = new GUIStyle();
-		style.font = ManagerManager.Manager.mNewRef.genericFont;
-		style.alignment = TextAnchor.MiddleCenter;
-		style.fontSize = 100;
-		GUI.Box(new Rect(0,0,Screen.width,Screen.height),Message,style);
+		GUI.DrawTexture(currentRect, DepthTexture);
+		GUI.DrawTexture(currentRect.expand(4),ManagerManager.Manager.mNewRef.depthBorder);
+            
+        
+        var style = new GUIStyle();
+        style.font = ManagerManager.Manager.mNewRef.genericFont;
+        style.alignment = TextAnchor.MiddleCenter;
+        style.fontSize = 100;
+        GUI.Box(new Rect(0,0,Screen.width,Screen.height),Message,style);
     }
 }

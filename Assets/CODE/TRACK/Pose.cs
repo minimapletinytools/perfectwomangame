@@ -6,7 +6,7 @@ using System.Linq;
 [System.Serializable]
 public class PoseElement
 {
-    public ZigJointId joint;
+    public ZgJointId joint;
     public float angle;
     public float weight = 1;
     public bool important = true; //this means we care about angle
@@ -17,7 +17,7 @@ public class PoseElement
 public class Pose
 {
     public List<PoseElement> mElements = new List<PoseElement>();
-    public PoseElement find_element(ZigJointId id)
+    public PoseElement find_element(ZgJointId id)
     {
         foreach (PoseElement e in mElements)
             if (e.joint == id)

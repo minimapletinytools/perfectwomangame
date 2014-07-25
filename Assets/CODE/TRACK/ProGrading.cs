@@ -2,20 +2,20 @@ using UnityEngine;
 using System.Collections.Generic;
 using System.Xml.Linq;
 public class ProGrading {
-    public static List<KeyValuePair<ZigJointId, ZigJointId>> sPairs;
+    public static List<KeyValuePair<ZgJointId, ZgJointId>> sPairs;
     static ProGrading()
     {
-        sPairs = new List<KeyValuePair<ZigJointId, ZigJointId>>();
-        sPairs.Add(new KeyValuePair<ZigJointId, ZigJointId>(ZigJointId.LeftShoulder, ZigJointId.LeftElbow));
-        sPairs.Add(new KeyValuePair<ZigJointId, ZigJointId>(ZigJointId.LeftElbow, ZigJointId.LeftHand));
-        sPairs.Add(new KeyValuePair<ZigJointId, ZigJointId>(ZigJointId.LeftHip, ZigJointId.LeftKnee));
-        sPairs.Add(new KeyValuePair<ZigJointId, ZigJointId>(ZigJointId.LeftKnee, ZigJointId.LeftAnkle));
-        sPairs.Add(new KeyValuePair<ZigJointId, ZigJointId>(ZigJointId.RightShoulder, ZigJointId.RightElbow));
-        sPairs.Add(new KeyValuePair<ZigJointId, ZigJointId>(ZigJointId.RightElbow, ZigJointId.RightHand));
-        sPairs.Add(new KeyValuePair<ZigJointId, ZigJointId>(ZigJointId.RightHip, ZigJointId.RightKnee));
-        sPairs.Add(new KeyValuePair<ZigJointId, ZigJointId>(ZigJointId.RightKnee, ZigJointId.RightAnkle));
-        sPairs.Add(new KeyValuePair<ZigJointId, ZigJointId>(ZigJointId.Neck, ZigJointId.Head));
-        sPairs.Add(new KeyValuePair<ZigJointId, ZigJointId>(ZigJointId.Torso, ZigJointId.Neck));
+        sPairs = new List<KeyValuePair<ZgJointId, ZgJointId>>();
+        sPairs.Add(new KeyValuePair<ZgJointId, ZgJointId>(ZgJointId.LeftShoulder, ZgJointId.LeftElbow));
+        sPairs.Add(new KeyValuePair<ZgJointId, ZgJointId>(ZgJointId.LeftElbow, ZgJointId.LeftHand));
+        sPairs.Add(new KeyValuePair<ZgJointId, ZgJointId>(ZgJointId.LeftHip, ZgJointId.LeftKnee));
+        sPairs.Add(new KeyValuePair<ZgJointId, ZgJointId>(ZgJointId.LeftKnee, ZgJointId.LeftAnkle));
+        sPairs.Add(new KeyValuePair<ZgJointId, ZgJointId>(ZgJointId.RightShoulder, ZgJointId.RightElbow));
+        sPairs.Add(new KeyValuePair<ZgJointId, ZgJointId>(ZgJointId.RightElbow, ZgJointId.RightHand));
+        sPairs.Add(new KeyValuePair<ZgJointId, ZgJointId>(ZgJointId.RightHip, ZgJointId.RightKnee));
+        sPairs.Add(new KeyValuePair<ZgJointId, ZgJointId>(ZgJointId.RightKnee, ZgJointId.RightAnkle));
+        sPairs.Add(new KeyValuePair<ZgJointId, ZgJointId>(ZgJointId.Neck, ZgJointId.Head));
+        sPairs.Add(new KeyValuePair<ZgJointId, ZgJointId>(ZgJointId.Torso, ZgJointId.Neck));
         //global waist angle??
     }
 
@@ -29,7 +29,7 @@ public class ProGrading {
         return Mathf.Clamp((maxgn - aGrade - mingn) / (maxgn-mingn), 0, 1);
     }
 	
-	public static float grade_joint(Pose A, Pose B, ZigJointId aJoint)
+	public static float grade_joint(Pose A, Pose B, ZgJointId aJoint)
 	{
 		PoseElement e = A.find_element(aJoint);
 		PoseElement bPose = B.find_element(aJoint);
@@ -41,9 +41,9 @@ public class ProGrading {
 		return diff;
 	}
 	
-	public static Dictionary<ZigJointId,float> advanced_grade_pose(Pose A, Pose B)
+	public static Dictionary<ZgJointId,float> advanced_grade_pose(Pose A, Pose B)
 	{
-		Dictionary<ZigJointId,float> r = new Dictionary<ZigJointId, float>();
+		Dictionary<ZgJointId,float> r = new Dictionary<ZgJointId, float>();
 		
 		float weightSum = 0;
         float gradesum = 0;
@@ -87,7 +87,7 @@ public class ProGrading {
     public static Pose snap_pose(ManagerManager manager)
     {
         Pose p = new Pose();
-        foreach (KeyValuePair<ZigJointId, ZigJointId> e in sPairs)
+        foreach (KeyValuePair<ZgJointId, ZgJointId> e in sPairs)
         {
             PoseElement pe = new PoseElement();
             //ZigInputJoint A = manager.mZigManager.Joints[e.Key];
@@ -101,7 +101,7 @@ public class ProGrading {
         PoseElement waist = new PoseElement();
         waist.angle = manager.mProjectionManager.mWaist.current;
         //waist.angle = manager.mProjectionManager.get_waist(manager.mZigManager.Joints[ZigJointId.Waist], manager.mZigManager.Joints[ZigJointId.LeftHip], manager.mZigManager.Joints[ZigJointId.RightHip]);
-        waist.joint = ZigJointId.Waist;
+        waist.joint = ZgJointId.Waist;
         p.mElements.Add(waist);
         return p;
     }
@@ -115,56 +115,56 @@ public class ProGrading {
         return p;
 	}
 
-    public static ZigJointId parse_ZigJointId_string(string aString)
+    public static ZgJointId parse_ZigJointId_string(string aString)
     {
         if (aString == "Head")
-            return ZigJointId.Head;
+            return ZgJointId.Head;
         else if (aString == "Neck")
-            return ZigJointId.Neck;
+            return ZgJointId.Neck;
         else if (aString == "Torso")
-            return ZigJointId.Torso;
+            return ZgJointId.Torso;
         else if (aString == "Waist")
-            return ZigJointId.Waist;
+            return ZgJointId.Waist;
         else if (aString == "LeftCollar")
-            return ZigJointId.LeftCollar;
+            return ZgJointId.LeftCollar;
         else if (aString == "LeftShoulder")
-            return ZigJointId.LeftShoulder;
+            return ZgJointId.LeftShoulder;
         else if (aString == "LeftElbow")
-            return ZigJointId.LeftElbow;
+            return ZgJointId.LeftElbow;
         else if (aString == "LeftWrist")
-            return ZigJointId.LeftWrist;
+            return ZgJointId.LeftWrist;
         else if (aString == "LeftHand")
-            return ZigJointId.LeftHand;
+            return ZgJointId.LeftHand;
         else if (aString == "LeftFingertip")
-            return ZigJointId.LeftFingertip;
+            return ZgJointId.LeftFingertip;
         else if (aString == "RightCollar")
-            return ZigJointId.RightCollar;
+            return ZgJointId.RightCollar;
         else if (aString == "RightShoulder")
-            return ZigJointId.RightShoulder;
+            return ZgJointId.RightShoulder;
         else if (aString == "RightElbow")
-            return ZigJointId.RightElbow;
+            return ZgJointId.RightElbow;
         else if (aString == "RightWrist")
-            return ZigJointId.RightWrist;
+            return ZgJointId.RightWrist;
         else if (aString == "RightHand")
-            return ZigJointId.RightHand;
+            return ZgJointId.RightHand;
         else if (aString == "RightFingertip")
-            return ZigJointId.RightFingertip;
+            return ZgJointId.RightFingertip;
         else if (aString == "LeftHip")
-            return ZigJointId.LeftHip;
+            return ZgJointId.LeftHip;
         else if (aString == "LeftKnee")
-            return ZigJointId.LeftKnee;
+            return ZgJointId.LeftKnee;
         else if (aString == "LeftAnkle")
-            return ZigJointId.LeftAnkle;
+            return ZgJointId.LeftAnkle;
         else if (aString == "LeftFoot")
-            return ZigJointId.LeftFoot;
+            return ZgJointId.LeftFoot;
         else if (aString == "RightHip")
-            return ZigJointId.RightHip;
+            return ZgJointId.RightHip;
         else if (aString == "RightKnee")
-            return ZigJointId.RightKnee;
+            return ZgJointId.RightKnee;
         else if (aString == "RightAnkle")
-            return ZigJointId.RightAnkle;
+            return ZgJointId.RightAnkle;
         else if (aString == "RightFoot")
-            return ZigJointId.RightFoot;
+            return ZgJointId.RightFoot;
         else
             throw new UnityException("no such joint " + aString);
     }
