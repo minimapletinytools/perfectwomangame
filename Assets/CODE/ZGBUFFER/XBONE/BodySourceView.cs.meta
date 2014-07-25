@@ -1,0 +1,10 @@
+fileFormatVersion: 2
+guid: 08d9d91c215b4f7488f24400c7e3139e
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences:
+  - BoneMaterial: {fileID: 2100000, guid: b0d52ade6a0365f4a95d6a4849171110, type: 2}
+  - BodySourceManager: {instanceID: 0}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
