@@ -9,8 +9,8 @@ public class CameraManager : FakeMonoBehaviour {
     public Camera BackgroundCamera { get; private set; } //layer 3
     public Camera ForegroundCamera { get; private set; } //layer 4
 	
-    public EdgeDetectEffect TransparentBodyCameraEdgeEffect { get; private set; }
-    GameObject ImageEffects { get; set; }
+    //public EdgeDetectEffect TransparentBodyCameraEdgeEffect { get; private set; }
+    //GameObject ImageEffects { get; set; }
 
     public Camera[] AllCameras { get { return new Camera[] { MainBodyCamera,TransparentBodyCamera,BackgroundCamera,ForegroundCamera};} }
 	
@@ -37,8 +37,6 @@ public class CameraManager : FakeMonoBehaviour {
         TransparentBodyCamera.cullingMask = 1 << 2;
         TransparentBodyCamera.depth = 3;
         TransparentBodyCamera.clearFlags = CameraClearFlags.Depth;
-        TransparentBodyCameraEdgeEffect = TransparentBodyCamera.gameObject.AddComponent<EdgeDetectEffect>();
-		TransparentBodyCameraEdgeEffect.enabled = false;
         mManager.mTransparentBodyManager.set_layer(2);
 
         BackgroundCamera = (new GameObject("genBackgroundCamera")).AddComponent<Camera>();
