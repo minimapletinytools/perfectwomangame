@@ -1,7 +1,5 @@
 ::PORT TODO::
--delete all the assets in ZigFu
--look into cleaning out assets in the main project as well..
-	-maybe move some more into asset bundles
+-look into a cleaner solution for Box2d stuff
 -startup
 	-do startup timings for an empty project
 		-development 9 spash, 9.5 game
@@ -14,10 +12,14 @@
 	-get rid of all timing debug statements, no longer needed I guess.
 -clean out camera effects tuff
 -something to mask graphical artifacts on restart
--reFACtor your code
 -do depth color and body images
 	-uggg
 -check texture sizes and see if you can reduce the 'long thread activation time' thing.
+
+DONE-delete all the assets in ZigFu
+DONE-look into cleaning out assets in the main project as well..
+	-maybe move some more into asset bundles
+DONE-reFACtor your code
 DONE-figure out why restarting is taking so long
     -add in character skipping plz.
     -some waitforasyncoperationtocomplete thing is taking forevs... based on how many characters have been loaded or how long the game has been played for I think
