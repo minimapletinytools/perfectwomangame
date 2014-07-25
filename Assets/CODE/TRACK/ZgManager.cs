@@ -13,8 +13,13 @@ public class ZgManager : FakeMonoBehaviour {
     public ZgManager(ManagerManager aManager) : base(aManager)
 	{
         //ZigInterface = new EmptyZig();
-        //ZgInterface = new MicrosoftZig();
+#if UNITY_XBOXONE && !UNITY_EDITOR
+		ZgInterface = new MicrosoftZig();
+#else
 		ZgInterface = new ZigFuZig();
+#endif
+
+
         ZgInterface.initialize(this);
 		Joints = new Dictionary<ZgJointId, ZgInputJoint>()
 		{
