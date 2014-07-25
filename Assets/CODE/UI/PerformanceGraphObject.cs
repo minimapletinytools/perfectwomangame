@@ -7,16 +7,19 @@ public class PerformanceGraphObject  : FlatElementMultiBase {
 	GameObject mStupidDot;
 	public PerformanceGraphObject(int aDepth)
 	{
+		//NOTE these assets were removed since this class is no longer being used.
 		//mBackground = new FlatGraphElement(ManagerManager.Manager.mNewRef.bbGraphBackground,aDepth);	
-		mBackground = new FlatRenderTextureGraphElement(ManagerManager.Manager.mNewRef.bbGraphBackground,aDepth);	
-		mForeground = new FlatElementImage(ManagerManager.Manager.mNewRef.bbGraphFrame,aDepth+1);
+		//mBackground = new FlatRenderTextureGraphElement(ManagerManager.Manager.mNewRef.bbGraphBackground,aDepth);	
+		//mForeground = new FlatElementImage(ManagerManager.Manager.mNewRef.bbGraphFrame,aDepth+1);
+
 		mElements.Add(new FlatElementMultiBase.ElementOffset(mBackground, new Vector3(0,0,0)));
 		mElements.Add(new FlatElementMultiBase.ElementOffset(mForeground, new Vector3(0,0,0)));
         PrimaryGameObject = create_primary_from_elements();
 		Depth = aDepth;
 		
-		
-		mStupidDot = ImageGameObjectUtility.create(ManagerManager.Manager.mNewRef.bbGraphDot);
+
+		//NOTE these assets were removed since this class is no longer being used.
+		//mStupidDot = ImageGameObjectUtility.create(ManagerManager.Manager.mNewRef.bbGraphDot);
 		mStupidDot.GetComponentInChildren<Renderer>().material.color = new Color(0,0,0,1);
 		mStupidDot.GetComponentInChildren<Renderer>().material.shader = ManagerManager.Manager.mReferences.mGraphShader;
 	}

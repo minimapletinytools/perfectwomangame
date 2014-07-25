@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections;
 
+//TODO DELETE
 //position is source, need to use separate function to set target
 public class ParticleStreamObject  : FlatElementBase {
 	ParticleSystem mParticles;
@@ -8,7 +9,8 @@ public class ParticleStreamObject  : FlatElementBase {
 	public Vector3 Target { get; set; }
     public ParticleStreamObject(int aDepth, Vector3 aTarget)
     {
-		mParticleGameObject = GameObject.Instantiate(ManagerManager.Manager.mNewRef.uiParticlePrefab) as GameObject;
+		//NOTE these assets were removed since this class is no longer being used.
+		//mParticleGameObject = GameObject.Instantiate(ManagerManager.Manager.mNewRef.uiParticlePrefab) as GameObject;
 		PrimaryGameObject = new GameObject("genParticleStreamParent");
 		mParticles = mParticleGameObject.GetComponent<ParticleSystem>();
 		mParticleGameObject.transform.parent = PrimaryGameObject.transform;

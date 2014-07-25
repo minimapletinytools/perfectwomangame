@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections;
 
+//TODO DELETE
 public class CharacterIconObject : FlatElementMultiBase {
 	FlatElementImage mBackground;
 	DifficultyObject mDifficultyStars;
@@ -11,8 +12,10 @@ public class CharacterIconObject : FlatElementMultiBase {
 	
     public CharacterIconObject(CharacterIndex aIndex, int aDepth)
     {
-		mBackground = new FlatElementImage(ManagerManager.Manager.mNewRef.pbCharacterIconBackground,aDepth);
-		mDifficultyStars = new DifficultyObject(ManagerManager.Manager.mNewRef.uiPerfectStar,aDepth+1);
+
+		//NOTE these assets were removed since this class is no longer being used.
+		//mBackground = new FlatElementImage(ManagerManager.Manager.mNewRef.pbCharacterIconBackground,aDepth);
+		//mDifficultyStars = new DifficultyObject(ManagerManager.Manager.mNewRef.uiPerfectStar,aDepth+1);
 		mIcon = new FlatElementImage(null,aDepth+3);
 		if(aIndex.LevelIndex != -1)
 		{

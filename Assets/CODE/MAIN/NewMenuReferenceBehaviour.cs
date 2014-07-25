@@ -12,28 +12,30 @@ public class NewMenuReferenceBehaviour : MonoBehaviour {
 	public Font serifFont;
 	
 	//configurator
-	public Texture2D perfectWomanLogo;
-	public Texture2D gameLabLogo;
-	public Texture2D filmAkademieLogo;
+	//TODO DELETE
+	//public Texture2D perfectWomanLogo;
+	//public Texture2D gameLabLogo;
+	//public Texture2D filmAkademieLogo;
 	public Texture2D depthBorder;
 	public Texture2D redWarning;
 
-	//ui
-	public Texture2D uiPerfectStar;
-	public GameObject uiParticlePrefab;
+
 	
 	//partices
 	public Texture2D partGold;
 	public Texture2D partSilver;
 	public Texture2D partSilver2;
-	
+
+	//these assets are no longer being used
+	//ui
+	//public Texture2D uiPerfectStar;
+	//public GameObject uiParticlePrefab;
 	//blue bar
-	public Texture2D bbGraphBackground;
-	public Texture2D bbGraphFrame;
-	public Texture2D bbGraphDot;
-	
+	//public Texture2D bbGraphBackground;
+	//public Texture2D bbGraphFrame;
+	//public Texture2D bbGraphDot;
 	//pink bar
-	public Texture2D pbCharacterIconBackground;
+	//public Texture2D pbCharacterIconBackground;
 	
 	
 	//text
