@@ -1,4 +1,7 @@
 ::PORT TODO::
+-delete all the assets in ZigFu
+-look into cleaning out assets in the main project as well..
+	-maybe move some more into asset bundles
 -startup
 	-do startup timings for an empty project
 		-development 9 spash, 9.5 game
