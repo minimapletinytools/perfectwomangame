@@ -1,4 +1,15 @@
 ::PORT TODO::
+-validation
+	-contact release manager/account manage
+	-run submission validator
+		-this happens automagically when makepkg is called  with /L or /LT switches
+	-build submission package with amkepkg??
+	-binscope.exe?
+	-exceptions to XR!!	
+
+-follow up with matt kesseler from sony and tell him the bad news
+-followup with kat again ugg
+-followup with the microsoft rep guys about certification
 -look into a cleaner solution for Box2d stuff
 -startup
 	-post a question on Unity to make sure this is OK
