@@ -6,10 +6,11 @@
 	-build submission package with amkepkg??
 	-binscope.exe?
 	-exceptions to XR!!	
-
+-make a question on how to run submission validator
+	-ask if workbooks are something you submit??
 -follow up with matt kesseler from sony and tell him the bad news
 -followup with kat again ugg
--followup with the microsoft rep guys about certification
+DONE-followup with the microsoft rep guys about certification
 -look into a cleaner solution for Box2d stuff
 -startup
 	-post a question on Unity to make sure this is OK
