@@ -1,3 +1,58 @@
+::USER LOGIN PLAN::
+-game start
+-if user is logged in, proceed with current user
+-if there is no user logged in
+	-prompty user to log in?
+	-proceed as guest user??
+-load save data from user
+	-generate menus, and game state, etc
+	-do not start game until character is loaded
+	-if error (as in, save exists but it's corrupted or something)
+		-prompt user that there was an error, but offer them to keep playing I guess?
+		-start a new game with a new save
+		-try and read the save again at end of game rather than overwriting it right away...
+			-or not, spelunky screwed me over like that :\
+-play game
+-on user change/logout event
+	-pause game
+	-prompt user to sign back in and resume the game
+	-or allow them to sign out and restart the game
+-on suspend event
+	-pause the game
+		-do I need to save the game state? This could be as easy as saving the current character your at I guess
+		-that would allow for cheating though (i.e. infinite retries)
+-on resume event
+	-if user is the same, continue the game
+	-if not, proceed as in OnUserChange/logout event
+-game finished (last character played)
+	-try and save the game under the current user
+	-if error??? whatever
+	-update leaderboards with current character
+
+
+::ADDITIONAL FEATURES NEEDED::
+-stats 
+	-waiting on unity for this
+-rich presence string
+	-I believe I can do this with the RTA plugin but maybe not and it may not be finished either
+-achievement notification
+	-do those annoying popups happen automatically? If not, then I'll have to do it myself.
+-leaderboards
+	-ugg, maybe not
+
+
+::Unity questions::
+-How do I run the submission validator as it is part of makepkg which is run by Unity
+	-I can run it on the directory and several tests can't be run/fail due to the following error
+		-The path and name of the title layout XML file must be set before calling MakePkg, checking files in root directory structure only: 
+-Do I need to run binscope 
+	-I fail a whole bunch of the tests, is this ok?
+		-mostly stuff in Data/Managed but also some other DLLs such as Microsoft.Kinect.dll
+		-pretty much all stuff that is meant to make unity work properly (i.e. none of my own dlls)
+-As the Alpha has 99% of features that we currently need, is it possible to release a game with Unity Alpha?
+-It seems Hero Stats, Achievements, and Gamerscore (and therefore Events and User Stats) are required by XR-055 and XR-063. Is this correct? None of these are possible without events which currently seem unsupported in the plugins. Is there an ETA for this or does anyone has anyone tried to add this themselves/potential pitfalls. The API itself seems pretty innocent, but the documentation states you're suppose to run XCETool.exe on your appmanifest.xml to generate a header file (that must be linked against etwplus.lib) and call functions in there to send events. 
+
+
 ::API NOTES::
 -UserPlugin has three functions to get user info
 	-UserManager

@@ -1,16 +1,10 @@
 ::PORT TODO::
--validation
-	-contact release manager/account manage
-	-run submission validator
-		-this happens automagically when makepkg is called  with /L or /LT switches
-	-build submission package with amkepkg??
-	-binscope.exe?
-	-exceptions to XR!!	
--make a question on how to run submission validator
-	-ask if workbooks are something you submit??
--follow up with matt kesseler from sony and tell him the bad news
--followup with kat again ugg
-DONE-followup with the microsoft rep guys about certification
+-implement users
+	-see other_sloppy.txt
+-implement game saves
+	-figure out connected storage api (does this work offline???, I guess it's not something I need to worry about)
+-implement stats
+	-ask unity about this one
 -look into a cleaner solution for Box2d stuff
 -startup
 	-post a question on Unity to make sure this is OK
@@ -28,6 +22,21 @@ DONE-followup with the microsoft rep guys about certification
 	-uggg
 	-wait for native plugins..
 
+
+DONE-validation 
+	DONE-contact release manager/account manage
+	DONE-run submission validator
+		-this happens automagically when makepkg is called  with /L or /LT switches
+		-ok, I think it's different now, you run it separately for validation, it didn't really wokr though, ask unity
+	IGNORE-build submission package with amkepkg??
+	DONE-binscope.exe?
+		-done, failed a bunch of tessts ask unity
+	IGNORE-exceptions to XR!!	
+IGNORE-make a question on how to run submission validator
+	-ask if workbooks are something you submit??
+IGNORE-follow up with matt kesseler from sony and tell him the bad news
+IGNORE-followup with kat again ugg
+DONE-followup with the microsoft rep guys about certification
 DONE/FAIL-check texture sizes and see if you can reduce the 'long thread activation time' thing.
 DONE-clean out camera effects tuff
 DONE-delete all the assets in ZigFu
