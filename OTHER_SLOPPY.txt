@@ -1,3 +1,112 @@
+::API NOTES::
+-UserPlugin has three functions to get user info
+	-UserManager
+		-Create()/Destroy()/Inst (singleton)
+		-Events (set of active user changes, newusersignsin, soemtign about user changed, signin complete (when the dialog closes), signout started (save the game))
+		-sign out started
+			-create signoutdeferral and then complete to establish enough time to save the game using connected storage
+		-request sign in
+			-probably don't need
+		-issomeone signed in
+			-if not, either start in no user mode, or requst someone sign in
+	-User
+		-acess from UsersManager
+		-can check the IsSignedIn property
+		-how do I tell if this is the main user???
+		-I guess just take index 0
+		-be sure to manually refresh???
+-DataPlatform just has initialization functions
+	-pretty sure this is read only stuff and we don't need it, SCID will take care of it, we just need to update stats
+	-initialization is asynch so make sure you wait for it
+-StatsisticsPlugin/StatisticsManager
+	-Statistics.Create() (one frame delay for plugins to pass interfaces to each other)
+	-GetSingleUserStatisticsAsync
+	-what are multiple stats?
+	-how do I set stats??
+-Storage Plugin
+	-ConnectedStorage (online storage)	
+		-should use for game saves
+	-TtileStorage  (offline storage? more flexible)
+	-StorageManager::Create() (allows storage manager to find User Plugin)
+	-ConnectedStorage::CreateAsync(callback)
+	-Connected Storage
+		-CreateAsync
+		-OpenOrCreateContainer
+		-ContainerContextPlugin
+			-GetASync, returns IMapView with immutable keys 
+				-need to convert DataMapView into a DataMap to edit??
+			-ReadAsync????
+			-SubmitUpdatesAsync
+				-pass in an updated DataMap
+		-DataMapView
+			-convert to Data Map using CreateFromDataMapView
+			-Add/UpdateBuffer functions...
+
+::SCID notes::
+-see https://developer.xboxlive.com/en-us/platform/development/documentation/xdp/Pages/IntroducingTheServiceConfig_xdpdocs.aspx
+-Events, these are things that happen during a game
+	-how to generate an event?
+	-examples	
+		-started the game
+		-finished ____ character
+		-beat the game
+-Stats, these are stats related to the game, e.g. number of zombies killed
+	-how to update stats?
+	-there are single stat instances, an a 'stat template' but I think we will only use single stat instances
+	-examples	
+		-number of characters played
+			-number of unique characters played
+		-number of games beaten
+		-number of deaths
+-Hero Stats, need 3-10, these are 'most representative' stats
+	-how to set these stats
+		-I imagine it's something I do in the SCID workbook and not via code
+-Real-Time Activities (just means updating stats in real time???)
+-Achievements, a collection of specific stat instances where once they reach a threshold result in a reward
+	-defined using a set of rules
+	-rewards
+		-artwork?? (can be downloaded??)
+		-gamerscore increase (easy)
+		-in-app rewards
+	-can hide or show achievements in the achievement list
+	-how to create achievements
+		-again, I imagine this is something done in the SCID workbook
+		-which also means that I don't need to mess around with the achievement API assuming I I don't need something like an in game achievement list.
+-Challenges, achievements availble only during a specific time frame
+	-lets not do challenges
+-Leaderboards, xblive high score service. 
+	-is this available to non-live subscribers? probably
+	-do we want a leader board
+	-how to make a leaderboard???
+-Multiplayer Session templates
+	-NA
+-Matchmaking Hoppers
+	-NA
+-Rich Present Strings, a string describing what the player is doing
+	-how to set?
+	-examples
+		-"floating in space as a 110 year old astronaut"
+		-"out in the antartic as a whale hunter"
+		-"reminiscing on my life"
+-Game DVR strings
+	-NA
+Localized Strings
+	-provide all localization of strings in the SCID here
+-Sets, allows dynamically updated rich presence strings based on stats.
+	-NA
+-Storage, cloud storgae, can be global or segregated (by user, session or device)
+	-local user storage is probably fine but cloud storage would also be cool
+	-binary, json and config format all ok.
+		-obv. binary, then I can just use C# serialization
+-Network security authorization list
+	-NA
+-Access Policies ????
+	-???
+
+
+
+
+
 
 ::ZIG STRUCTURE NOTES::
 -put both Zig_UpdateUser and Zig_Update (ZigInput callback) inside of ZigManager
