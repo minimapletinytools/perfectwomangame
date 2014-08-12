@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 
 
+//TODO you'll want to switch this over to the Unity pulgins eventually
+
 public class MicrosoftZig : ZgInterface
 {
     public static Dictionary<ZgJointId,Windows.Kinect.JointType> sJointTypeMap = new Dictionary<ZgJointId,Windows.Kinect.JointType>()
@@ -29,16 +31,24 @@ public class MicrosoftZig : ZgInterface
         return new Vector3(joint.Position.X * 10, joint.Position.Y * 10, joint.Position.Z * 10);
     }
 
+
+
     bool mIsTracking = false; //are we tracking
     ulong mTrackingId = 0; //body id being tracked
     BodySourceManager mSource = null;
     ZgManager mZig;
+	XbonePlugins mPlugins;
+
 	public void initialize(ZgManager aZig)
 	{
         mZig = aZig;
         mSource = ManagerManager.Manager.gameObject.AddComponent<BodySourceManager>();
         //var view = ManagerManager.Manager.gameObject.AddComponent<BodySourceView>();
         //view.BodySourceManager = mSource.gameObject;
+
+		//handle plugnis
+		mPlugins = new XbonePlugins ();
+		mPlugins.initialize_plugins ();
 	}
 	
 	public void update()
