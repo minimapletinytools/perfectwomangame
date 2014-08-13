@@ -1,3 +1,10 @@
+::WORDS::
+Perfect Woman is played using motion controls detected via the Kinect. The player must navigate through 7 different stages of a woman's life. At each stage, the player must 'perform' their character's role by matching poses on the screen using their own physical body. Based on what role and the player's performance at a given stage, the difficulties of future choices are adjusted. For example, being a successful 'child star' at age 9 will make being a charity speaker at age 55 easier, but it will make being a responsible mother harder at age 27. Dynamic narrative fragments string all the characters together. At the very end, a summary of the player's life is shown explaining why some roles were easy and some were hard. 
+
+In Perfect Woman, difficulty is treated primarily as a narrative element (as oppose to a gameplay element). If a player performs poorly, his or her choices will altar or the player's character may even die. These are just 'facts of life' to the game though and never are any of these outcomes intrinsicly 'bad' to the game. Whether theplayer transcends life (figuratively and literally) as a 110 year old astronaut or dies at the age of 9 overdosing on the streets, it is just one of infinitely many paths their life could have taken.
+
+The main 'point' of this game is the underlying statement on the labels roles we are defined to be in society. The message, while critical, is ultimately told with love. We do not say "this is wrong" but rather "this is how it is". Most players pick up on this and enjoy their fictional lives to the fullest when they play Perfect Woman. The game has been shown in many places include IGF, Indiecade, GaymerX, AMAZE, ZKM, and many more. While we plan to release on home console, the user experience has always been designed for such 'festival' settings. It's not uncommon to see a large crowd cheer on the player vicariously enjoying his or her life as a Woman. 
+
 
 ::CONTROLS::
 :TESTING:
