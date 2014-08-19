@@ -30,7 +30,7 @@ public class XbonePlugins
 			//TODO
 			//container.ReadAsync
 			//TODO update the Datamap in the container...
-		}
+		//}
 
 		//for rich presence???
 		//var rta = DataPlatform.RTAManager.CreateAsync (Users.UsersManager.Inst.Users [0].Id, null);

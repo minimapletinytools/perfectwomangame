@@ -490,7 +490,7 @@ public class ModeNormalPlay
 		
 		//early death
 		bool die = false;
-		die |= Input.GetKeyDown(KeyCode.D);
+		die |= KeyMan.GetKeyDown ("Die");
 		//if (NGM.CurrentPoseAnimation != null && mManager.mZigManager.has_user() && NGM.CurrentCharacterIndex.LevelIndex != 0)
 		if (NGM.CurrentPoseAnimation != null && mManager.mZigManager.is_reader_connected() == 2 && NGM.CurrentCharacterIndex.LevelIndex != 0)
 		{
