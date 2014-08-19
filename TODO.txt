@@ -1,4 +1,14 @@
 ::PORT TODO::
+-double check if build package -> build and run actually updates the right packaged
+	-hint I don't think it does..
+DONE-add D to controls
+DONE-fill out xb1 controls in other_official
+DONE-I think you used the A key for skip and for perfect performance lol
+DONE-see if you can upload a package
+	-copy in proper unity3d package files aand see if it works automagically
+DONE/FAIL-run binscope on the package
+-you broke normal mode again. figure out why/how
+	-????? this is dumb
 -implement users
 	-see other_sloppy.txt
 -implement game saves
@@ -65,10 +75,12 @@ DONE-figure out whats up with all those warning at startup
 DONE-resolve elbow/hand issues
 
 ::GAME TODO NEW::
+DONE-rebuild pakcages with durango and see if it fixes makepkg errors
+DONE-delete mini characters from repo
 -sliding transitions need to be fixed. They look awkward towards the very end b/c of stupid interpolation
 -ask about publishing for free. Get yourself a new contact
 DONE-email SONY please
--write e3 soft kinect followup
+IGNORE-write e3 soft kinect followup
 -write gaymerx followup
 	-people cheering, yay.
 	-really noticed a lot of small things abotu the dialog that was a little off/needed changing. Too bad I didn't take notes.

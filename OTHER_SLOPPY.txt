@@ -1,3 +1,7 @@
+::Unity questions::
+-confirm if pressing button in middle is the same as suspend and if there is any easy way to handle this
+
+
 ::USER LOGIN PLAN::
 -game start
 -if user is logged in, proceed with current user
@@ -39,18 +43,6 @@
 	-do those annoying popups happen automatically? If not, then I'll have to do it myself.
 -leaderboards
 	-ugg, maybe not
-
-
-::Unity questions::
--How do I run the submission validator as it is part of makepkg which is run by Unity
-	-I can run it on the directory and several tests can't be run/fail due to the following error
-		-The path and name of the title layout XML file must be set before calling MakePkg, checking files in root directory structure only: 
--Do I need to run binscope 
-	-I fail a whole bunch of the tests, is this ok?
-		-mostly stuff in Data/Managed but also some other DLLs such as Microsoft.Kinect.dll
-		-pretty much all stuff that is meant to make unity work properly (i.e. none of my own dlls)
--As the Alpha has 99% of features that we currently need, is it possible to release a game with Unity Alpha?
--It seems Hero Stats, Achievements, and Gamerscore (and therefore Events and User Stats) are required by XR-055 and XR-063. Is this correct? None of these are possible without events which currently seem unsupported in the plugins. Is there an ETA for this or does anyone has anyone tried to add this themselves/potential pitfalls. The API itself seems pretty innocent, but the documentation states you're suppose to run XCETool.exe on your appmanifest.xml to generate a header file (that must be linked against etwplus.lib) and call functions in there to send events. 
 
 
 ::API NOTES::

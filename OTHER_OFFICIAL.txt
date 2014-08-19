@@ -27,13 +27,14 @@
 	-0 to start
 	-9 to start and skip fetus (random character)
 -during play 
-	-A to match the pose (no kinect only)
+	-A to match the pose
 	-S to speed the game up by 5x
 	-0 to skip to cutscene 
 		-pressing and holding 0 again immediately will skip to choosing
 	-D to die
 -during cutscenes and grave
 	-0 to skip 
+	-9 to skip single dialog (may mess up graphics a little)
 -during choosing
 	-1/2/3/4 to insta choose
 	-q/w/e/r to toggle difficulties 
@@ -46,4 +47,20 @@
 	-ESC to quit
 	-BKSP to restart
 :XB1:
--TODO
+-during title screen: 
+	-A to start
+	-X to start and skip fetus (random character)
+-during play 
+	-B to match the pose
+	-Y to speed the game up by 5x
+	-A to skip to cutscene 
+		-pressing and holding 0 again immediately will skip to choosing
+-during cutscenes and grave
+	-A to skip 
+	-X to skip single dialog
+-during choosing
+	-up/down/left/right to insta choose
+-during dialog boxes
+	-X to skip (works for most but not all dialog boxes)
+-during whenever
+	-VIEW to restart
