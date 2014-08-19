@@ -60,19 +60,19 @@ public static class KeyMan
     {
         if (keyMap [aKey] == null)
             return false;
-        return XboxOneInput.GetKey((XboxOneKeyCode)keyMap[aKey]);
+        return Input.GetKey((KeyCode)keyMap[aKey]);
     }
     public static bool GetKeyDown(string aKey)
     {
         if (keyMap [aKey] == null)
             return false;
-        return XboxOneInput.GetKeyDown((XboxOneKeyCode)keyMap[aKey]);
+        return Input.GetKeyDown((KeyCode)keyMap[aKey]);
     }
     public static bool GetKeyUp(string aKey)
     {
         if (keyMap [aKey] == null)
             return false;
-        return XboxOneInput.GetKeyUp((XboxOneKeyCode)keyMap[aKey]);
+        return Input.GetKeyUp((KeyCode)keyMap[aKey]);
     }
 #endif
 }
