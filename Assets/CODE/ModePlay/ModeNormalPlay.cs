@@ -63,6 +63,8 @@ public class ModeNormalPlay
 	
 	AdvancedGrading mGrading = new AdvancedGrading();
 
+    AstronautPlay mAstronaut;
+
 
 
 
@@ -111,6 +113,7 @@ public class ModeNormalPlay
 		GS = NormalPlayGameState.NONE;
 		TED = new TimedEventDistributor();
 		mChoiceHelper = new ChoiceHelper();
+        mAstronaut = new AstronautPlay(this);
 
 		DoSkipSingleThisFrame = false;
 		DoSkipMultipleThisFrame = false;
@@ -227,9 +230,9 @@ public class ModeNormalPlay
 				1.5f);
 				break;
 			case "110":
-                //TODO eventually do physics astronaut here!
-				set_time_for_PLAY(15f);
-				setup_next_poses(false);
+				set_time_for_PLAY(15f); //astronaut scene is shorter
+				setup_next_poses(false); //astronaut scene has no background
+                mAstronaut.start_astro();
 				transition_to_PLAY();
 				TED.add_event(
 					mInterfaceManager.skippable_text_bubble_event("You lived to be very old. Enjoy what's left of your life.", 4),
@@ -382,78 +385,83 @@ public class ModeNormalPlay
 		//this basically means we aren't 0 or 100 or 999
 		if (NGM.CurrentPoseAnimation != null && NGM.CurrentCharacterIndex.LevelIndex != 0)
         {
-			NGM.CurrentTargetPose = NGM.CurrentPoseAnimation.get_pose(Time.time);
-			mManager.mTransparentBodyManager.set_target_pose(NGM.CurrentTargetPose);
+            NGM.CurrentTargetPose = NGM.CurrentPoseAnimation.get_pose(Time.time);
+            mManager.mTransparentBodyManager.set_target_pose(NGM.CurrentTargetPose);
 
-			mGrading.update(mManager.mBodyManager.get_current_pose(),mManager.mTransparentBodyManager.get_current_pose());
-			float grade = ProGrading.grade_pose(mManager.mBodyManager.get_current_pose(),mManager.mTransparentBodyManager.get_current_pose());
-			grade = ProGrading.grade_to_perfect(grade);
+            mGrading.update(mManager.mBodyManager.get_current_pose(), mManager.mTransparentBodyManager.get_current_pose());
+            float grade = ProGrading.grade_pose(mManager.mBodyManager.get_current_pose(), mManager.mTransparentBodyManager.get_current_pose());
+            grade = ProGrading.grade_to_perfect(grade);
 
-			//old smooth grading
-			/*
+            //old smooth grading
+            /*
 			float newGrade = mLastGrade*0.95f + grade*0.05f;
 			if(newGrade < mLastGrade)
 				mLastGrade = Mathf.Max(newGrade,mLastGrade - Time.deltaTime/6f);
 			else mLastGrade = newGrade;
 			grade = mLastGrade;*/
 
-			//new smooth grading, this version gives grace to sudden drops in performance
-			if(grade < mLastGrade)
-			{
-				float newGrade = mLastGrade*0.95f + grade*0.05f;
-				if(newGrade < mLastGrade)
-					grade = Mathf.Max(newGrade,mLastGrade - Time.deltaTime/2f);
-				else grade = newGrade;
-			}
-			mLastGrade = grade;
+            //new smooth grading, this version gives grace to sudden drops in performance
+            if (grade < mLastGrade)
+            {
+                float newGrade = mLastGrade * 0.95f + grade * 0.05f;
+                if (newGrade < mLastGrade)
+                    grade = Mathf.Max(newGrade, mLastGrade - Time.deltaTime / 2f);
+                else
+                    grade = newGrade;
+            }
+            mLastGrade = grade;
 
-			if(PercentTimeCompletion > 0.01f)
-			{
-				mParticles.create_particles(mGrading,true);
-				if(NGM.CurrentPoseAnimation.does_pose_change_precoginitive(Time.time,Time.deltaTime,0.07f))
-				{
-					mGiftManager.capture_player();
-					mParticles.create_particles(mGrading);
-					if(grade > GameConstants.playSuperCutoff && IsFever)
-						mManager.mMusicManager.play_sound_effect("pose5",0.6f);
-					else
-						mManager.mMusicManager.play_sound_effect("pose" + Mathf.Clamp((int)(5*grade),0,4),0.8f);
-				}
-			}
+            if (PercentTimeCompletion > 0.01f)
+            {
+                mParticles.create_particles(mGrading, true);
+                if (NGM.CurrentPoseAnimation.does_pose_change_precoginitive(Time.time, Time.deltaTime, 0.07f))
+                {
+                    mGiftManager.capture_player();
+                    mParticles.create_particles(mGrading);
+                    if (grade > GameConstants.playSuperCutoff && IsFever)
+                        mManager.mMusicManager.play_sound_effect("pose5", 0.6f);
+                    else
+                        mManager.mMusicManager.play_sound_effect("pose" + Mathf.Clamp((int)(5 * grade), 0, 4), 0.8f);
+                }
+            }
 			
 
 
 			
-			if(TimeRemaining > 0) //insurance, something funny could happen if music runs slightly longer than it should.
-				CurrentPerformanceStat.update_score(PercentTimeCompletion,grade);			
+            if (TimeRemaining > 0) //insurance, something funny could happen if music runs slightly longer than it should.
+                CurrentPerformanceStat.update_score(PercentTimeCompletion, grade);			
 			
-			//mManager.mCameraManager.set_camera_effects(grade);
-			//update score
-			mInterfaceManager.update_bb_score(TotalScore);	
-        }
-		else if(NGM.CurrentCharacterIndex.LevelIndex == 0 && true) //fetus
-		{
-			if(NGM.CurrentTargetPose != null){
-				mManager.mTransparentBodyManager.set_target_pose(NGM.CurrentTargetPose);
-	            float grade = ProGrading.grade_pose(mManager.mBodyManager.get_current_pose(),NGM.CurrentTargetPose); //should be mManager.mTransparentBodyManager.get_current_pose() but it does not matter
-				grade = ProGrading.grade_to_perfect(grade);
+            //mManager.mCameraManager.set_camera_effects(grade);
+            //update score
+            mInterfaceManager.update_bb_score(TotalScore);	
+        } else if (NGM.CurrentCharacterIndex.LevelIndex == 0 && true) //fetus
+        {
+            if (NGM.CurrentTargetPose != null)
+            {
+                mManager.mTransparentBodyManager.set_target_pose(NGM.CurrentTargetPose);
+                float grade = ProGrading.grade_pose(mManager.mBodyManager.get_current_pose(), NGM.CurrentTargetPose); //should be mManager.mTransparentBodyManager.get_current_pose() but it does not matter
+                grade = ProGrading.grade_to_perfect(grade);
 				
-				//this is a total hack, but we don't use mTotalScore for the fetus anyways
-				FieldInfo scoreProp = typeof(PerformanceStats).GetField("mTotalScore",BindingFlags.NonPublic | BindingFlags.Instance);
-				float oldGrade = (float)scoreProp.GetValue(CurrentPerformanceStat);
-				float newGrade = oldGrade*0.93f + grade*0.07f;
-				scoreProp.SetValue(CurrentPerformanceStat,newGrade);
-				if(newGrade > GameConstants.playFetusPassThreshold)
-				{
-					//this may or may not work depending on which update gets called first
-					SkipSingle();
-					scoreProp.SetValue(CurrentPerformanceStat,0);
+                //this is a total hack, but we don't use mTotalScore for the fetus anyways
+                FieldInfo scoreProp = typeof(PerformanceStats).GetField("mTotalScore", BindingFlags.NonPublic | BindingFlags.Instance);
+                float oldGrade = (float)scoreProp.GetValue(CurrentPerformanceStat);
+                float newGrade = oldGrade * 0.93f + grade * 0.07f;
+                scoreProp.SetValue(CurrentPerformanceStat, newGrade);
+                if (newGrade > GameConstants.playFetusPassThreshold)
+                {
+                    //this may or may not work depending on which update gets called first
+                    SkipSingle();
+                    scoreProp.SetValue(CurrentPerformanceStat, 0);
                     mManager.mMusicManager.play_sound_effect("cutGood");
-					TimeRemaining = 0;
-				}
-			}
-		}
-		else
+                    TimeRemaining = 0;
+                }
+            }
+        } 
+        else if (NGM.CurrentCharacterIndex == CharacterIndex.sOneHundred)
+        {
+            mAstronaut.update_astro();
+        }
+        else
 			CurrentPerformanceStat.update_score(PercentTimeCompletion,0.5f);
 		
 		//warning
@@ -478,6 +486,10 @@ public class ModeNormalPlay
 			//if(CurrentPerformanceStat.Character.Index != 0)
 			//	transition_to_CUTSCENE();
 			//else transition_to_CHOICE();
+
+            //handle astronaut
+            if(NGM.CurrentCharacterIndex == CharacterIndex.sOneHundred)
+                mAstronaut.finish_astro();
 			
 			return;
 		}
@@ -501,7 +513,7 @@ public class ModeNormalPlay
 					die |= true;
 			}
 		}
-		if(die)
+		if(die && NGM.CurrentCharacterIndex != CharacterIndex.sOneHundred) //can't die as astronaut, even if we want to
 		{
 			if(NGM.CurrentCharacterIndex != CharacterIndex.sFetus) //this only happens if we try and force die on fetus
 				mGiftManager.capture_player();
@@ -570,7 +582,6 @@ public class ModeNormalPlay
 			{	 
 				if(CurrentPerformanceStat.Character.LevelIndex > 6) //if natural death :)
 				{
-					//TODO set true when you have 110
 					if(GameConstants.showAstronaut 
                     && CurrentPerformanceStat.Character.LevelIndex == 7
                     && mPerformanceStats.Where(e=>e.Score < GameConstants.astronautCutoff).Count() == 0)

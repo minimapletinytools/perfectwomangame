@@ -79,6 +79,8 @@ public class FarseerSimian
 	FlatBodyObject mFlat;
 	FSWorldComponent mWorld;
 
+
+
 	public void add_environment(IEnumerable<GameObject> aObjects)
 	{
 		foreach(var e in aObjects)
@@ -110,12 +112,20 @@ public class FarseerSimian
 		mImportant[ZgJointId.LeftAnkle] = new Stupid();
 		mImportant[ZgJointId.RightAnkle] = new Stupid();
 
+
+        //initialize FarseerPhysics
 		mWorld = useMe.AddComponent<FSWorldComponent>();
+
 		var debug = useMe.AddComponent<FSDebugDrawComponent>();
 		debug.GLMaterial = useMe.GetComponent<NewMenuReferenceBehaviour>().farseerMaterial;
 	}
 
-	public void setup_with_body(FlatBodyObject aBody)
+    public void destroy()
+    {
+        GameObject.Destroy(mWorld);
+    }
+
+    public void setup_with_body(FlatBodyObject aBody, bool aUseGravity = true)
 	{
 		mFlat = aBody;
 		//construct the bodies
@@ -127,9 +137,12 @@ public class FarseerSimian
 			bg.body = BodyFactory.CreateBody(FSWorldComponent.PhysicsWorld,mFlat.mParts[e.Key].transform.position.toFV2());
 			bg.body.Mass = 1;
 			bg.body.Friction = .5f;
+            bg.body.IgnoreGravity = !aUseGravity;
 			bg.body.BodyType = FarseerPhysics.Dynamics.BodyType.Dynamic;
 			mBodies[e.Key] = bg;
-			new GameObject(e.Key.ToString()).transform.position = mFlat.mParts[e.Key].transform.position;
+			
+            //TODO why do I still have this? can probably delete
+            //new GameObject(e.Key.ToString()).transform.position = mFlat.mParts[e.Key].transform.position;
 
 		}
 
@@ -201,10 +214,10 @@ public class FarseerSimian
 			if(mBodies.ContainsKey(e.Key))
 			{
 				//ManagerManager.Manager.mDebugString = mBodies[ZgJointId.Waist].body.Rotation.ToString();
-				if(e.Key != ZgJointId.Waist)
+				if(e.Key != ZgJointId.Waist) //pretty sure this is because waist is controlled by torso, i.e. the degree of freedom we give up to allow the body to move around freely
 				{
 					rotate_body_to(mBodies[e.Key].body,mBodies[ZgJointId.Waist].body.Rotation + (e.Value.smoothing.current-mBodies[e.Key].offset) * Mathf.PI/180f);
-				}
+				} 
 			}
 		}
 

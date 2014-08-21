@@ -52,6 +52,8 @@ public static class GameConstants
 
 	public static bool showReward = true;
 
+    
+    //TODO set true when you have 110
     public static bool showAstronaut = false;
 	
 	//grave stuff
