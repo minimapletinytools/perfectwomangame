@@ -21,5 +21,9 @@ public class PrefabReferenceBehaviour : MonoBehaviour {
 	public TextAsset[] mPossiblePoses;
     //public GameObject[] mCharacters; //29, 0 is fetus, row major (or was it collumn?)
     //public TextAsset[] mDefaultTargetPoses;
-        
+
+
+	
+	
+	public Object[] mInclusions;        
 }
