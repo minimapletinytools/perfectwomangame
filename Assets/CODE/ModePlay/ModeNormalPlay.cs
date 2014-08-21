@@ -488,6 +488,7 @@ public class ModeNormalPlay
 			//else transition_to_CHOICE();
 
             //handle astronaut
+            //note maybe we want to use physics for cutscene as well in which case we should move this into transition_to_CUTSCENE
             if(NGM.CurrentCharacterIndex == CharacterIndex.sOneHundred)
                 mAstronaut.finish_astro();
 			
@@ -540,6 +541,7 @@ public class ModeNormalPlay
 	}
 	public void transition_to_CUTSCENE()
 	{
+        //TODO astronaut special???
 		GS = NormalPlayGameState.CUTSCENE;
 
         NUPD.ChangeSet changes = CurrentPerformanceStat.CutsceneChangeSet;
@@ -801,7 +803,7 @@ public class ModeNormalPlay
 		};
 
 		TED.add_event(
-			aNextCharacter.LevelIndex > 7 //if grave or age 110 
+			aNextCharacter.LevelIndex < 7 //if grave or age 110 
 			?
 			mSunsetManager.low_skippable_text_bubble_event(diffPhrases [NGM.CharacterHelper.Characters [aNextCharacter].Difficulty], gDiffDisplayDur)
 			:
