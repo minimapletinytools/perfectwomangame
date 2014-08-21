@@ -6,11 +6,16 @@ public class ModeTesting
 	
 	NewGameManager NGM {get; set;}
 	ManagerManager mManager {get; set;}
-	
+    AuthoringGuiBehaviour Gui { get; set; }
 	public ModeTesting(NewGameManager aNgm)
 	{
 		NGM = aNgm;
 		mManager = aNgm.mManager;
+
+        //create the gui
+        Gui = mManager.gameObject.AddComponent<AuthoringGuiBehaviour>();
+        Gui.mTesting = this;
+
 	}
 
 	public void character_loaded()
