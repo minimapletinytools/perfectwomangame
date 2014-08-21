@@ -2,6 +2,10 @@ using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
 
+//empty implementation for removing farseer stuff
+//TODO CAN DELETE
+/*
+
 public class FarseerSimian 
 {
     public void add_environment(IEnumerable<GameObject> aObjects)
@@ -40,12 +44,11 @@ public class FarseerSimian
         public Stupid(){}
     }
 
-}
+}*/
 
-/*
- * 
- * using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework;
 using FarseerPhysics.Collision.Shapes;
+using FarseerPhysics.Factories;
 
 public static class FarseerExt
 {
@@ -72,7 +75,7 @@ public class FarseerSimian
 		public float relJointOffset;
 		public FarseerPhysics.Dynamics.Joints.RevoluteJoint joint;
 	}
-	Dictionary<ZigJointId,BodyGroup> mBodies = new Dictionary<ZigJointId, BodyGroup>();
+	Dictionary<ZgJointId,BodyGroup> mBodies = new Dictionary<ZgJointId, BodyGroup>();
 	FlatBodyObject mFlat;
 	FSWorldComponent mWorld;
 
@@ -90,22 +93,22 @@ public class FarseerSimian
 	public void initialize(GameObject useMe)
 	{
 		//hardcode in the desired joints
-		mImportant[ZigJointId.Torso] = new Stupid(new ZigJointId[]{ZigJointId.LeftShoulder,ZigJointId.Neck,ZigJointId.RightShoulder,ZigJointId.Waist});
-		mImportant[ZigJointId.Waist] = new Stupid(new ZigJointId[]{ZigJointId.RightHip,ZigJointId.LeftHip});
-		mImportant[ZigJointId.LeftShoulder] = new Stupid(ZigJointId.LeftElbow);
-		mImportant[ZigJointId.LeftElbow] = new Stupid(ZigJointId.LeftHand);
-		mImportant[ZigJointId.LeftHip] = new Stupid(ZigJointId.LeftKnee);
-		mImportant[ZigJointId.LeftKnee] = new Stupid(ZigJointId.LeftAnkle);
-		mImportant[ZigJointId.RightShoulder] = new Stupid(ZigJointId.RightElbow);
-		mImportant[ZigJointId.RightElbow] = new Stupid(ZigJointId.RightHand);
-		mImportant[ZigJointId.RightHip] = new Stupid(ZigJointId.RightKnee);
-		mImportant[ZigJointId.RightKnee] = new Stupid(ZigJointId.RightAnkle);
-		mImportant[ZigJointId.Neck] = new Stupid(ZigJointId.Head);
-		mImportant[ZigJointId.Head] = new Stupid();
-		mImportant[ZigJointId.LeftHand] = new Stupid();
-		mImportant[ZigJointId.RightHand] = new Stupid();
-		mImportant[ZigJointId.LeftAnkle] = new Stupid();
-		mImportant[ZigJointId.RightAnkle] = new Stupid();
+		mImportant[ZgJointId.Torso] = new Stupid(new ZgJointId[]{ZgJointId.LeftShoulder,ZgJointId.Neck,ZgJointId.RightShoulder,ZgJointId.Waist});
+		mImportant[ZgJointId.Waist] = new Stupid(new ZgJointId[]{ZgJointId.RightHip,ZgJointId.LeftHip});
+		mImportant[ZgJointId.LeftShoulder] = new Stupid(ZgJointId.LeftElbow);
+		mImportant[ZgJointId.LeftElbow] = new Stupid(ZgJointId.LeftHand);
+		mImportant[ZgJointId.LeftHip] = new Stupid(ZgJointId.LeftKnee);
+		mImportant[ZgJointId.LeftKnee] = new Stupid(ZgJointId.LeftAnkle);
+		mImportant[ZgJointId.RightShoulder] = new Stupid(ZgJointId.RightElbow);
+		mImportant[ZgJointId.RightElbow] = new Stupid(ZgJointId.RightHand);
+		mImportant[ZgJointId.RightHip] = new Stupid(ZgJointId.RightKnee);
+		mImportant[ZgJointId.RightKnee] = new Stupid(ZgJointId.RightAnkle);
+		mImportant[ZgJointId.Neck] = new Stupid(ZgJointId.Head);
+		mImportant[ZgJointId.Head] = new Stupid();
+		mImportant[ZgJointId.LeftHand] = new Stupid();
+		mImportant[ZgJointId.RightHand] = new Stupid();
+		mImportant[ZgJointId.LeftAnkle] = new Stupid();
+		mImportant[ZgJointId.RightAnkle] = new Stupid();
 
 		mWorld = useMe.AddComponent<FSWorldComponent>();
 		var debug = useMe.AddComponent<FSDebugDrawComponent>();
@@ -138,7 +141,7 @@ public class FarseerSimian
 			{
 				List<FarseerPhysics.Common.Vertices> poly = new List<FarseerPhysics.Common.Vertices>();
 				poly.Add(new FarseerPhysics.Common.Vertices());
-				if(e.Key != ZigJointId.Torso || e.Value.otherEnds.Count == 1) //torso does not need this point
+				if(e.Key != ZgJointId.Torso || e.Value.otherEnds.Count == 1) //torso does not need this point
 					poly[0].Add(FVector2.Zero);
 				if(e.Value.otherEnds.Count == 1)
 				{
@@ -193,14 +196,14 @@ public class FarseerSimian
 	public void update(ProjectionManager aManager)
 	{
 		//set desired position from projection manager
-		foreach (KeyValuePair<ZigJointId, ProjectionManager.Stupid> e in aManager.mImportant)
+		foreach (KeyValuePair<ZgJointId, ProjectionManager.Stupid> e in aManager.mImportant)
 		{
 			if(mBodies.ContainsKey(e.Key))
 			{
-				//ManagerManager.Manager.mDebugString = mBodies[ZigJointId.Waist].body.Rotation.ToString();
-				if(e.Key != ZigJointId.Waist)
+				//ManagerManager.Manager.mDebugString = mBodies[ZgJointId.Waist].body.Rotation.ToString();
+				if(e.Key != ZgJointId.Waist)
 				{
-					rotate_body_to(mBodies[e.Key].body,mBodies[ZigJointId.Waist].body.Rotation + (e.Value.smoothing.current-mBodies[e.Key].offset) * Mathf.PI/180f);
+					rotate_body_to(mBodies[e.Key].body,mBodies[ZgJointId.Waist].body.Rotation + (e.Value.smoothing.current-mBodies[e.Key].offset) * Mathf.PI/180f);
 				}
 			}
 		}
@@ -208,7 +211,7 @@ public class FarseerSimian
 		//update the visual body to match the physics body
 		mFlat.set_target_pose(physics_pose());
 		mFlat.SoftInterpolation = .5f;
-		mFlat.SoftPosition = mBodies[ZigJointId.Torso].body.Position.toV3()/GameConstants.SCALE;
+		mFlat.SoftPosition = mBodies[ZgJointId.Torso].body.Position.toV3()/GameConstants.SCALE;
 		//mFlat.HardPosition = mFlat.SoftPosition;
 		mFlat.update (0);
 	}
@@ -228,12 +231,12 @@ public class FarseerSimian
 
 
 	//stupid stuff needed for construction
-	public Dictionary<ZigJointId, Stupid> mImportant = new Dictionary<ZigJointId, Stupid>();
+	public Dictionary<ZgJointId, Stupid> mImportant = new Dictionary<ZgJointId, Stupid>();
 	public class Stupid
 	{
-		public List<ZigJointId> otherEnds = new List<ZigJointId>();
-		public Stupid(ZigJointId other) { otherEnds.Add(other); }
-		public Stupid(ZigJointId[] other) { otherEnds.AddRange(other); }
+		public List<ZgJointId> otherEnds = new List<ZgJointId>();
+		public Stupid(ZgJointId other) { otherEnds.Add(other); }
+		public Stupid(ZgJointId[] other) { otherEnds.AddRange(other); }
 		public Stupid(){}
 	}
 
@@ -250,4 +253,4 @@ public class FarseerSimian
 		body.ApplyAngularImpulse( impulse/5f );
 	}
 			
-}*/
+}
