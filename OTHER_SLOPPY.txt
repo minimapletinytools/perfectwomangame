@@ -2,6 +2,8 @@
 -confirm if pressing button in middle is the same as suspend and if there is any easy way to handle this
 
 
+
+
 ::USER LOGIN PLAN::
 -game start
 -if user is logged in, proceed with current user
@@ -43,6 +45,56 @@
 	-do those annoying popups happen automatically? If not, then I'll have to do it myself.
 -leaderboards
 	-ugg, maybe not
+
+
+::UNITY XB1 API NOTES::
+
+-add a suspnend event
+	-XboxOnePLM.OnSuspendingEvent                  += Suspending;
+	-.... XboxOnePLM.AmReadyToSuspendNow();
+	-this should do a panic save within 1 second ( or not save at all )
+-resource availability changed
+	-when does this get called??
+	-XboxOnePLM.OnResourceAvailabilityChangedEvent += ResourceAvailabilityChangedEvent;
+	-mute audio. Maybe this happens when you shrink the screen.
+	-could also pause
+	-this will tell me which mode I am in now
+-resuming
+	- XboxOnePLM.OnResumingEvent                    += Resuming;
+	-do we need to do anything here?
+	-need to check if user has changed
+-activation
+	- XboxOnePLM.OnActivationEvent                  += Activation;
+	-void Activation(ActivatedEventArgs args)
+	-check PreviousExecutionState if we should attemp to reload our panic save
+		-if (XboxOneApplicationExecutionState.Terminated == XboxOnePLM.GetPreviousExecutionState()) 
+		-you could also do this in the Start() routine or whenever. Probably better not to do it in theh callback b/c you don't know when it will get called.
+	-args.Kind == Portocol or Launch. Do not know what this means
+		-it means whether it was launched from a protocol or regularly, don't need to worry about this
+	-apparently I'm suppose to respond to this to get out of constrained mode
+-view states
+	-full
+	-fill  (htis is the window in the menu)
+	-not visible
+	-is there a callback for this???
+-storage
+	-connected storage
+		-for save data that's meant to go between consolse
+		-apps can quickly save 16mb that goes into a buffer
+		-automatic handling fo crashes and stuff etc...
+		-there is USER storage and MACHINE storage
+			-machine storage can be accessed by anyone, even if there is no user signed in
+		-you can delete storage via
+			-xbstorage reset /force
+	-XB live title storage
+		-???
+	-Local Temporary Storage
+		-contents may be evicted when app is not running
+		-do NOT use for game saves (obviosuly)
+	-presistent local storage
+		-use it for resume events I guess, or can you get away with using local temp storage or connected storage?
+		-do NOT use for game saves
+		-used for stuff like video recordings and other unimportant stuff.
 
 
 ::API NOTES::

@@ -1,5 +1,50 @@
+::LEA TODO::
+-icons
+	-100x100 (notification in companion center)
+	-208x208 (shown in the pinned item section)
+	-480x480 (shown in collection and notification center)
+-splash image
+	-1920x1080
+
 ::PORT TODO::
--double check if build package -> build and run actually updates the right packaged
+-add structure for such callbacks...
+-add suspend event
+-add resource availability changed event
+-add resume event
+-add activation event
+-add storage	
+	-ConnectedStorage.CreateAsync(mUserId, "MyContainer", OnConnectedStorageCreated, mFlags);
+		-mUserId -1 is for machine storage
+	-mDataToSave = DataMap.Create();
+	-mDataToSave.AddOrReplaceBuffer("NewBuffer", data);
+		-where data is a byte[]
+	-mConnectedStorage.SubmitUpdatesAsync(mDataToSave, null, OnSubmitDone);
+	-reading
+		mReadAsyncMap = DataMap.Create();
+		mReadAsyncMap.AddNewBuffer("NewBuffer", kBufferSize);
+		mConnectedStorage.ReadAsync(mReadAsyncMap, ReadAsyncReturns);
+	-diff betwene getasyn and readasyn???
+	-mConnectedStorage.QueryRemainingQuotaAsync(QueryRemainingQuotaReturns);
+	-mConnectedStorage.QueryContainerInfoAsync("",QueryContainerInfoAsyncReturns);
+-add users
+	-run the users example
+-kinect
+	-run the kinect examples...
+-events
+	-run the dataplatform example
+-input
+	-you can use the standard input and convert keycode to xboxonekeycode instead
+	-switch te gamepad0/joystick0 which is the union of all gamepads
+-try out code stripping and see if it works
+	-you can tell it not to strip code by including a link.xml file in the assets folder. see xboxone-aot.html documentation
+
+
+
+
+
+
+
+DONE=-double check if build package -> build and run actually updates the right packaged
 	-hint I don't think it does..
 DONE-add D to controls
 DONE-fill out xb1 controls in other_official
@@ -75,16 +120,8 @@ DONE-figure out whats up with all those warning at startup
 DONE-resolve elbow/hand issues
 
 ::GAME TODO NEW::
-DONE-rebuild pakcages with durango and see if it fixes makepkg errors
-DONE-delete mini characters from repo
+-check if head ordering is ok
 -sliding transitions need to be fixed. They look awkward towards the very end b/c of stupid interpolation
--ask about publishing for free. Get yourself a new contact
-DONE-email SONY please
-IGNORE-write e3 soft kinect followup
--write gaymerx followup
-	-people cheering, yay.
-	-really noticed a lot of small things abotu the dialog that was a little off/needed changing. Too bad I didn't take notes.
-	-Actually, I felt the connections in general treats religion in a fairly one dimensional way (i.e. conservative, and in generally a negative way). This is also true for some of the other things but I think that's a necessary sacrafice since the game is about satirizing stereotypes. For regilion though, I think it's much better if it's treated with a little more depth or at least in a more positive way. 
 -UCLA rights, call katherine
 -transition to death needs audio fading
 	-I think this is okay actually???
@@ -114,6 +151,17 @@ IGNORE-write e3 soft kinect followup
 -other
 	-see if you can fix kinect lighting
 	-pose change predictor, draw super transparent "next" pose during play
+
+
+DONE-rebuild pakcages with durango and see if it fixes makepkg errors
+DONE-delete mini characters from repo
+DONE-email SONY please
+IGNORE-write e3 soft kinect followup
+IGNORE-ask about publishing for free. Get yourself a new contact
+IGNORE-write gaymerx followup
+	-people cheering, yay.
+	-really noticed a lot of small things abotu the dialog that was a little off/needed changing. Too bad I didn't take notes.
+	-Actually, I felt the connections in general treats religion in a fairly one dimensional way (i.e. conservative, and in generally a negative way). This is also true for some of the other things but I think that's a necessary sacrafice since the game is about satirizing stereotypes. For regilion though, I think it's much better if it's treated with a little more depth or at least in a more positive way. 
 DONE-make new files and stop shoving it all inside of the TODO
 DONE-test without farseer stuff???
 DONE-fix the transitions
