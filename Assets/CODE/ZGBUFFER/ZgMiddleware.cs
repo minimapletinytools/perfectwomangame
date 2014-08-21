@@ -8,7 +8,12 @@ public interface ZgInterface
     ZgInput ZgInput{get;}
     bool has_user();
     void update();
-       
+
+    //TODO
+    //void write_data(byte[] aData, string aName);
+    //byte[] read_data{aData, string aName);
+
+
 }
 
 public class EmptyZg : ZgInterface
