@@ -39,27 +39,9 @@
 	-you can tell it not to strip code by including a link.xml file in the assets folder. see xboxone-aot.html documentation
 
 
-
-
-
-
-
-DONE=-double check if build package -> build and run actually updates the right packaged
-	-hint I don't think it does..
-DONE-add D to controls
-DONE-fill out xb1 controls in other_official
-DONE-I think you used the A key for skip and for perfect performance lol
-DONE-see if you can upload a package
-	-copy in proper unity3d package files aand see if it works automagically
-DONE/FAIL-run binscope on the package
--you broke normal mode again. figure out why/how
-	-????? this is dumb
--implement users
-	-see other_sloppy.txt
 -implement game saves
-	-figure out connected storage api (does this work offline???, I guess it's not something I need to worry about)
--implement stats
-	-ask unity about this one
+	DONE-figure out connected storage api (does this work offline???, I guess it's not something I need to worry about)
+	-generalize inside of ZgInterface
 -look into a cleaner solution for Box2d stuff
 -startup
 	-post a question on Unity to make sure this is OK
@@ -78,6 +60,19 @@ DONE/FAIL-run binscope on the package
 	-wait for native plugins..
 
 
+DONE-double check if build package -> build and run actually updates the right packaged
+	-hint I don't think it does..
+DONE-add D to controls
+DONE-fill out xb1 controls in other_official
+DONE-I think you used the A key for skip and for perfect performance lol
+DONE-see if you can upload a package
+	-copy in proper unity3d package files aand see if it works automagically
+DONE/FAIL-run binscope on the package
+IGNORE-implement stats
+	DONE-ask unity about this one
+IGNORE-you broke normal mode again. figure out why/how
+	-????? this is dumb
+	DONE-ask unity
 DONE-validation 
 	DONE-contact release manager/account manage
 	DONE-run submission validator
@@ -120,7 +115,13 @@ DONE-figure out whats up with all those warning at startup
 DONE-resolve elbow/hand issues
 
 ::GAME TODO NEW::
+-new testing scene
+	-see notes
+-implement pausing
+	-how???
+DONE-why did testing_scene break
 -check if head ordering is ok
+	-you need to rebuild the bundle for the dancer..
 -sliding transitions need to be fixed. They look awkward towards the very end b/c of stupid interpolation
 -UCLA rights, call katherine
 -transition to death needs audio fading
