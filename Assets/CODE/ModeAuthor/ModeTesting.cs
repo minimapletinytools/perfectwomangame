@@ -1,10 +1,11 @@
 using UnityEngine;
-using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 
 public class ModeTesting
 {
 	
-	NewGameManager NGM {get; set;}
+	public NewGameManager NGM {get; set;}
 	ManagerManager mManager {get; set;}
     AuthoringGuiBehaviour Gui { get; set; }
 	public ModeTesting(NewGameManager aNgm)
@@ -23,6 +24,30 @@ public class ModeTesting
 	}
 	
 	
+
+    PoseAnimation mCurrentPoseAnimation = null;
+    public void load_char_from_folder(CharacterIndex aChar, int aDiff)
+    {
+        var aFolder = aChar.ShortName + "_" + aDiff;
+        string[] dirs = System.IO.Directory.GetDirectories("POSETEST");
+        string dir = System.IO.Directory.GetDirectories("POSETEST").FirstOrDefault(e => e == aFolder);
+
+        mCurrentPoseAnimation = PoseAnimation.load_from_folder(dir);
+
+
+        NGM.CurrentPoseAnimation = new PerformanceType(mCurrentPoseAnimation,new CharacterIndex(2,0));
+        NGM.CurrentPoseAnimation.PT = mLastPoseMode;
+        NGM.CurrentPoseAnimation.ChangeTime = mLastPoseSpeed;
+       
+    }
+
+    public void write_poses_to_folder(CharacterIndex aChar, int aDiff)
+    {
+        //TODO whats the best way to do this???
+    }
+
+
+
 	public int mLastDiff = 0;
 	public int mLastWrite = 0;
 	public int mLastCutscene = 0;
