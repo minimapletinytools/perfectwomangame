@@ -15,7 +15,8 @@ public class AstronautPlay
 
     public void start_astro()
     {
-        GameConstants.SCALE = 1 / 200f;
+        //TODO this wont work, you need to do manual rescaling...
+        //GameConstants.SCALE = 1 / 200f;
 
         mSimian = new FarseerSimian();
         mSimian.initialize(mMode.NGM.mManager.gameObject);

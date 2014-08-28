@@ -159,7 +159,7 @@ public struct CharacterIndex : IEquatable<CharacterIndex>
 		Choice = 0;
 		if(aBundleName == "0-1")
 			set_character(0,0);
-		else if(aBundleName == "100")
+		else if(aBundleName == "110")
 			set_character(8,0);
 		else if(aBundleName == "999")
 			set_character(9,0);

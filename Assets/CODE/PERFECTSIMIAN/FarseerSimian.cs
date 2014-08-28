@@ -116,8 +116,8 @@ public class FarseerSimian
         //initialize FarseerPhysics
 		mWorld = useMe.AddComponent<FSWorldComponent>();
 
-		var debug = useMe.AddComponent<FSDebugDrawComponent>();
-		debug.GLMaterial = useMe.GetComponent<NewMenuReferenceBehaviour>().farseerMaterial;
+		//var debug = Camera.allCameras[0].gameObject.AddComponent<FSDebugDrawComponent>();
+		//debug.GLMaterial = useMe.GetComponent<NewMenuReferenceBehaviour>().farseerMaterial;
 	}
 
     public void destroy()
@@ -135,7 +135,7 @@ public class FarseerSimian
 			BodyGroup bg = new BodyGroup();
 			bg.offset = aBody.mParts[e.Key].transform.rotation.flat_rotation();
 			bg.body = BodyFactory.CreateBody(FSWorldComponent.PhysicsWorld,mFlat.mParts[e.Key].transform.position.toFV2());
-			bg.body.Mass = 1;
+			bg.body.Mass = 25;
 			bg.body.Friction = .5f;
             bg.body.IgnoreGravity = !aUseGravity;
 			bg.body.BodyType = FarseerPhysics.Dynamics.BodyType.Dynamic;
@@ -180,7 +180,7 @@ public class FarseerSimian
 					}
 				}
 				var fixture = FixtureFactory.AttachCompoundPolygon(poly,1,mBodies[e.Key].body);
-				fixture[0].CollisionGroup = 1;
+                fixture[0].CollisionGroup = -8; //negative indices never self collide
 			}
 		}
 		

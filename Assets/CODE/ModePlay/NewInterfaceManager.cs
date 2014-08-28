@@ -252,14 +252,17 @@ public class NewInterfaceManager {
 
 
 
-		if(!(aChar.Character == CharacterIndex.sFetus || aChar.Character == CharacterIndex.sOneHundred))
-		{
-			mBBNameText.Text = aChar.Character.Description.ToUpper() + " (" + aChar.Character.Age.ToString() + ")";
-			var origPos = mBBNameTextFrame.SoftPosition - new Vector3(mBBNameTextFrame.BoundingBox.width/2f,0,0);
-			float newWidth = mBBNameText.BoundingBox.width+300;
-			mBBNameTextFrame.mImage.pixel_crop(new Rect(0,0,newWidth,mBBNameTextFrame.mImage.BaseDimension.y));
-			mBBNameTextFrame.HardPosition = origPos + new Vector3(newWidth/2f,0,0);
-		}
+		if (!(aChar.Character == CharacterIndex.sFetus || aChar.Character == CharacterIndex.sOneHundred))
+        {
+            mBBNameText.Text = aChar.Character.Description.ToUpper() + " (" + aChar.Character.Age.ToString() + ")";
+            var origPos = mBBNameTextFrame.SoftPosition - new Vector3(mBBNameTextFrame.BoundingBox.width / 2f, 0, 0);
+            float newWidth = mBBNameText.BoundingBox.width + 300;
+            mBBNameTextFrame.mImage.pixel_crop(new Rect(0, 0, newWidth, mBBNameTextFrame.mImage.BaseDimension.y));
+            mBBNameTextFrame.HardPosition = origPos + new Vector3(newWidth / 2f, 0, 0);
+        } else
+        {
+            mBBNameText.Text = "";
+        }
 
 		if(aChar.Character != CharacterIndex.sFetus && aChar.Character != CharacterIndex.sOneHundred)
 		{
@@ -272,6 +275,14 @@ public class NewInterfaceManager {
 		}
 	}
 	
+    public void hide_interface()
+    {
+        mBBScoreFrame.Enabled = false;
+        mBBScoreText.Enabled = false;
+        mBBNameTextFrame.Enabled = false;
+        mBBNameText.Enabled = false;
+        mBBMultiplierImage.Enabled = false;
+    }
 
 
 
@@ -469,19 +480,9 @@ public class NewInterfaceManager {
 			chain = TED.add_one_shot_event(
 				delegate()
 				{
-					add_timed_text_bubble("CONGRAGULATIONS",gTextTime);
-				},
-	        0).then_one_shot(
-				delegate()
-				{
-					add_timed_text_bubble("You lived 110 years.",gTextTime);
-				},
-            gTextTime).then_one_shot(
-                delegate()
-                {
                     add_timed_text_bubble("But everyone must pass.",gTextTime);
-                },
-            gTextTime).then_one_shot( //dummy 
+				},
+	        0).then_one_shot( //dummy 
 				delegate(){},gTextTime);
 		}
 		else

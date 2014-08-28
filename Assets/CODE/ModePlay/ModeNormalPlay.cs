@@ -230,9 +230,10 @@ public class ModeNormalPlay
 				1.5f);
 				break;
 			case "110":
-				set_time_for_PLAY(15f); //astronaut scene is shorter
-				setup_next_poses(false); //astronaut scene has no background
+				set_time_for_PLAY(GameConstants.playAstronautPlayTime); //astronaut scene is shorter
+				setup_next_poses(true); //astronaut scene has no background
                 mAstronaut.start_astro();
+                mInterfaceManager.hide_interface();
 				transition_to_PLAY();
 				TED.add_event(
 					mInterfaceManager.skippable_text_bubble_event("You lived to be very old. Enjoy what's left of your life.", 4),
@@ -541,11 +542,10 @@ public class ModeNormalPlay
 	}
 	public void transition_to_CUTSCENE()
 	{
-        //TODO astronaut special???
 		GS = NormalPlayGameState.CUTSCENE;
-
         NUPD.ChangeSet changes = CurrentPerformanceStat.CutsceneChangeSet;
 		
+        //TODO astronaut special???
 		load_CUTSCENE(changes);
 		
 		mInterfaceManager.set_for_CUTSCENE(
@@ -561,21 +561,15 @@ public class ModeNormalPlay
 			delegate() 
 			{	 
                 mManager.mMusicManager.fade_out(3); //fadeout whataver is playing, either the cutscene music or the character music (which plays after cutscene music finishes
-
 				//apply all the diff changes again (in case we skipped and tehy werent applied duringcutscene)
 				if(changes != null){
 			        foreach (var e in changes.Changes)
 			        {
 			            CharIndexContainerInt diffChanges = e.Changes;
 			            //string changeMsg = e.Description;
-					
 						foreach(CharacterIndex cchar in CharacterIndex.sAllCharacters)
-						{
 							if(diffChanges[cchar] != 0)
-							{
 			                	mManager.mGameManager.change_character_difficulty(cchar, diffChanges[cchar]);
-							}
-						}
 			        }
 				}
 			}
@@ -588,7 +582,7 @@ public class ModeNormalPlay
                     && CurrentPerformanceStat.Character.LevelIndex == 7
                     && mPerformanceStats.Where(e=>e.Score < GameConstants.astronautCutoff).Count() == 0)
 					{
-						transition_to_TRANSITION_play(CharacterIndex.sOneHundred);
+                        transition_to_ASTRONAUT();
 					}
                     else{
     					//natural death
@@ -725,18 +719,37 @@ public class ModeNormalPlay
 		}
 		return r.ToArray();
 	}
+
+
+    public void transition_to_ASTRONAUT()
+    {
+        mSunsetManager.add_character(NGM.CurrentCharacterLoader.Character);
+        slide_image(null,mSunsetImage,false);
+
+        TED.add_event(
+            delegate(float aTime){
+            //mSunsetManager.fade_characters(true,true);
+            mSunsetManager.set_sun();
+            return true;
+        }
+        ,4).then(
+            mSunsetManager.low_skippable_text_bubble_event("You turn 110",4)
+        ,4).then_one_shot(
+            delegate(){
+                transition_to_TRANSITION_play(CharacterIndex.sOneHundred);
+            }
+        ,0);
+    }
 	
 	public void transition_to_CHOICE()
 	{
 		GS = NormalPlayGameState.PRECHOICE;
 
-
-		//TODO what happens when there is no future???
-		CharacterIndex[] chars = available_choices(NGM.CurrentCharacterIndex.get_future_neighbor(0));
-		mChoiceHelper.shuffle_and_set_choice_poses(chars.Length,mChoosingManager); 
-		mChoosingManager.set_bb_choices(chars);
 		mSunsetManager.add_character(NGM.CurrentCharacterLoader.Character);
 		slide_image(null,mSunsetImage,false);
+        CharacterIndex[] chars = available_choices(NGM.CurrentCharacterIndex.get_future_neighbor(0));
+        mChoiceHelper.shuffle_and_set_choice_poses(chars.Length,mChoosingManager); 
+        mChoosingManager.set_bb_choices(chars);
 
         if(!KeyMan.GetKey("HardSkip")) //if we are still holding the skip key at this point, go straight to choosing
 		{
@@ -803,7 +816,7 @@ public class ModeNormalPlay
 		};
 
 		TED.add_event(
-			aNextCharacter.LevelIndex < 7 //if grave or age 110 
+			aNextCharacter.LevelIndex < 7 //if not grave or age 110 
 			?
 			mSunsetManager.low_skippable_text_bubble_event(diffPhrases [NGM.CharacterHelper.Characters [aNextCharacter].Difficulty], gDiffDisplayDur)
 			:
@@ -821,6 +834,10 @@ public class ModeNormalPlay
                     mSunsetManager.add_character(NGM.CurrentCharacterLoader.Character, false);
                     mSunsetManager.set_sun();
                     slide_image(null, mSunsetImage, false, false);
+
+                    if(NGM.CurrentCharacterIndex == CharacterIndex.sOneHundred)
+                        mSunsetManager.ShowBackground = false;
+
                     transition_to_GRAVE();
                 }
             }
@@ -837,7 +854,7 @@ public class ModeNormalPlay
 		
         if(changes == null)
         {
-            Debug.Log("could not find change in thershold with performance: " + CurrentPerformanceStat);
+            Debug.Log("could not find change in threshold with performance: " + CurrentPerformanceStat);
             changes = new NUPD.ChangeSet();
             changes.Changes.Add(new NUPD.ChangeSubSet() { Description = "No changes available!!" });
         } else changeIndex = changes.Index;
@@ -849,9 +866,8 @@ public class ModeNormalPlay
 			//if(CurrentCharacterLoader.Images.cutsceneMusic.Count > changeIndex)
 			if(NGM.CurrentCharacterLoader.Images.cutsceneMusic.Count > 1)
 			{
-				//mManager.mMusicManager.fade_in_cutscene_music(CurrentCharacterLoader.Images.cutsceneMusic[changeIndex]);
-				//mManager.mMusicManager.play_cutscene_music(CurrentCharacterLoader.Images.cutsceneMusic[changeIndex]);
-				mManager.mMusicManager.play_sound_effect(CurrentPerformanceStat.BadPerformance ? "cutBad" : "cutGood");
+                if(NGM.CurrentCharacterIndex != CharacterIndex.sOneHundred)
+				    mManager.mMusicManager.play_sound_effect(CurrentPerformanceStat.BadPerformance ? "cutBad" : "cutGood");
 				AudioClip cutsceneClip = NGM.CurrentCharacterLoader.Images.cutsceneMusic[CurrentPerformanceStat.BadPerformance ? 0 : 1];
 				mManager.mMusicManager.play_cutscene_music(cutsceneClip);
 				//mManager.mMusicManager.fade_in_cutscene_music(CurrentCharacterLoader.Images.cutsceneMusic[changes.UpperThreshold <= 0.5 ? 0 : 1]);
@@ -883,7 +899,8 @@ public class ModeNormalPlay
 		mManager.mBodyManager.transition_character_out();
 		mManager.mTransparentBodyManager.transition_character_out();
 
-		if(CurrentPerformanceStat.BadPerformance && NGM.CurrentCharacterLoader.has_cutscene(1))
+        //if bad performance, has cutscene and is NOT astronaut
+        if(CurrentPerformanceStat.BadPerformance && NGM.CurrentCharacterLoader.has_cutscene(1) && NGM.CurrentCharacterIndex != CharacterIndex.sOneHundred)
 			mManager.mBackgroundManager.load_cutscene(1,NGM.CurrentCharacterLoader);
 		else
 			mManager.mBackgroundManager.load_cutscene(0,NGM.CurrentCharacterLoader);

@@ -209,6 +209,8 @@ public class CharacterBundleManager : FakeMonoBehaviour {
     {
 		foreach(CharacterIndex e in CharacterIndex.sAllCharacters)
 		{
+            if(e == CharacterIndex.sGrave)
+                continue;
 			string txtName = "info_"+e.StringIdentifier;
 			if(aBundle.Contains(txtName))
 			{
@@ -224,6 +226,8 @@ public class CharacterBundleManager : FakeMonoBehaviour {
 			}
 			else
 			{
+
+                throw new UnityException("No info found for " + txtName);
 				//Debug.Log ("no info found for " + txtName);
 				mCharacterHelper.Characters[e].CharacterInfo = NUPD.CharacterInformation.default_character_info(e);
 			}

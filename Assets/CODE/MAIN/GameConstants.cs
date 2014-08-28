@@ -39,11 +39,12 @@ public static class GameConstants
 	//game stuff
 	public static float maxGradeNorm = 13f; //18 is good for final version, 16 for festival
 	public static float minGradeNorm = 3f;	//use 1.5f for final 
-	public static float astronautCutoff = .1f;
+    public static float astronautCutoff = 0; //eventually something like .6f
 	public static float playSuperCutoff = 0.9f;
 	public static float playFeverCutoff = 0.7f;
 	public static float playFeverRequiredTime = 5f;
 	public static float playDefaultPlayTime = 35f;
+    public static float playAstronautPlayTime = 15f;
 	public static float playFetusPassThreshold = 0.6f;
 	public static float deathPerformanceThreshold = 0.1f;
 	public static float deathRequiredTime = 8f;
@@ -54,7 +55,7 @@ public static class GameConstants
 
     
     //TODO set true when you have 110
-    public static bool showAstronaut = false;
+    public static bool showAstronaut = true;
 	
 	//grave stuff
 	//public static string[] credits = {"Perfect Woman","created by", "Lea Sch\u00F6enfelder", "Peter Lu"};

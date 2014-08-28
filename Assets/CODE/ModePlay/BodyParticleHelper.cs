@@ -144,8 +144,8 @@ public class BodyParticleHelper
 			//if(man.mGameManager.mModeNormalPlay.IsFever)
 			{
 				//TODO this is the wrong camera lol...
-				FlatCameraManager cam = ManagerManager.Manager.mGameManager.mModeNormalPlay.mFlatCamera;
-				mParticles.emit_line("gold",1,cam.get_point(-1f,1.1f),cam.get_point(1f,1.1f),2);
+				//FlatCameraManager cam = ManagerManager.Manager.mGameManager.mModeNormalPlay.mFlatCamera;
+				//mParticles.emit_line("gold",1,cam.get_point(-1f,1.1f),cam.get_point(1f,1.1f),2);
 			}
 		}
 		

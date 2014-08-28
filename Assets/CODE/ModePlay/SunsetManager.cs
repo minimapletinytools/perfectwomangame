@@ -41,7 +41,8 @@ public class SunsetManager
 	
 	public bool IsLoaded{get; private set;}
 	
-	
+    public bool ShowBackground{ get { return mBackground.Enabled; } set { mBackground.Enabled = value; } }
+
 	FlatElementImage construct_flat_image(string aName, int aDepth)
 	{
 		var sizing = mLoader.Sizes.find_static_element(aName);

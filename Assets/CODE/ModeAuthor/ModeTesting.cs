@@ -13,9 +13,7 @@ public class ModeTesting
 		NGM = aNgm;
 		mManager = aNgm.mManager;
 
-        //create the gui
-        Gui = mManager.gameObject.AddComponent<AuthoringGuiBehaviour>();
-        Gui.mTesting = this;
+
 
 	}
 
@@ -57,6 +55,16 @@ public class ModeTesting
 	
 	public void update()
 	{
+
+        //create the gui
+        if (Gui == null)
+        {
+            Gui = mManager.gameObject.AddComponent<AuthoringGuiBehaviour>();
+            Gui.mTesting = this;
+        }
+
+
+
 		
 		if(NGM.CurrentPose != null && mManager.mBodyManager.mFlat != null) //make sure a character is in fact loaded, this can apparently happen in testing scene.
 		{
