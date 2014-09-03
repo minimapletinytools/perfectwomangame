@@ -27,7 +27,7 @@ public class AstronautPlay
 
         ZgJointId[] colliders = new ZgJointId[]
         {
-            ZgJointId.Head,
+            //ZgJointId.Head,
             ZgJointId.LeftHand,
             ZgJointId.RightHand,
             ZgJointId.LeftAnkle,
