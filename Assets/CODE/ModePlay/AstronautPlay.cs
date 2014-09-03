@@ -5,8 +5,10 @@ using System.Linq;
 public class AstronautPlay
 {
     ModeNormalPlay mMode;
+    //FarseerSimian mSimian;
 
-    FarseerSimian mSimian;
+    List<GameObject> mAsteroids = new List<GameObject>();
+    Dictionary<ZgJointId,GameObject> mParts = new Dictionary<ZgJointId, GameObject>();
 
     public AstronautPlay(ModeNormalPlay aMode)
     {
@@ -17,24 +19,87 @@ public class AstronautPlay
     {
         //TODO this wont work, you need to do manual rescaling...
         //GameConstants.SCALE = 1 / 200f;
-
-        mSimian = new FarseerSimian();
-        mSimian.initialize(mMode.NGM.mManager.gameObject);
-        mSimian.setup_with_body(mMode.NGM.mManager.mBodyManager.mFlat,false);
-        
+        //mSimian = new FarseerSimian();
+        //mSimian.initialize(mMode.NGM.mManager.gameObject);
+        //mSimian.setup_with_body(mMode.NGM.mManager.mBodyManager.mFlat,false);
         //TODO add the asteroids
         //mSimian.add_environment(GameObject.FindObjectsOfType(typeof(Transform)).Where(e=>e.name.StartsWith("FS_")).Select(e=>((Transform)e).gameObject));
+
+        ZgJointId[] colliders = new ZgJointId[]
+        {
+            ZgJointId.Head,
+            ZgJointId.LeftHand,
+            ZgJointId.RightHand,
+            ZgJointId.LeftAnkle,
+            ZgJointId.RightAnkle
+        };
+        foreach (var e in colliders)
+        {
+            mParts[e] = new GameObject("genCollider"+e.ToString());
+            mParts[e].AddComponent<Rigidbody>().isKinematic = true;
+            mParts[e].AddComponent<SphereCollider>();
+            mParts[e].transform.localScale = Vector3.one * (e == ZgJointId.Head ? 350:150);
+            if(e == ZgJointId.Head)
+
+            mParts[e].transform.position = mMode.NGM.mManager.mBodyManager.mFlat.mParts[ZgJointId.Head].transform.position;
+        }
+
+
+
+
+    }
+
+    public void spawn_asteroid(Vector3 aPos, Vector3 aVel)
+    {
+        var ast = new ImageGameObjectUtility(mMode.NGM.mManager.mNewRef.partGold,new Vector2(300,300)).ParentObject;
+        foreach (Renderer e in ast.GetComponentsInChildren<Renderer>())
+        {
+            e.material.renderQueue = 100;
+            e.gameObject.layer = 1; //this is the mainbodycamera layer
+        }
+        ast.AddComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePositionZ & RigidbodyConstraints.FreezeRotationX & RigidbodyConstraints.FreezeRotationY;
+        ast.AddComponent<SphereCollider>().radius = 140;
+        ast.transform.position = aPos;
+        ast.rigidbody.velocity = aVel;
+        ast.rigidbody.useGravity = false;
+
+        mAsteroids.Add(ast);
     }
 
     public void finish_astro()
     {
-        mSimian.destroy();
-        mSimian = null;
-        GameConstants.SCALE = 1;
+        //mSimian.destroy();
+        //mSimian = null;
+        //GameConstants.SCALE = 1;
+
+        //TODO 
+        //should really fade out the asteroids but meh, 
+        mAsteroids.Clear();
+
+        foreach (var e in mParts)
+            GameObject.Destroy(e.Value);
+        mParts.Clear();
+
     }
 
     public void update_astro()
     {
-        mSimian.update(mMode.NGM.mManager.mProjectionManager);
+        //mSimian.update(mMode.NGM.mManager.mProjectionManager);
+
+        foreach (var e in mParts)
+        {
+            e.Value.rigidbody.MovePosition(mMode.NGM.mManager.mBodyManager.mFlat.mParts[e.Key].transform.position);
+        }
+
+        if (Random.Range(0f, 1f) < Time.deltaTime / 3f) //about every 3 seconds
+        {
+            float rad = Random.Range(0,Mathf.PI*2);
+            float rad2 = Random.Range(0,Mathf.PI*2);
+            var pos = new Vector3(Mathf.Cos(rad),Mathf.Sin(rad)*9/16f,0)*2500;
+            var vel = (-pos.normalized + new Vector3(Mathf.Cos(rad2),Mathf.Sin(rad2),0)*.15f)*Random.Range(200,300); //send it flying towards the center of the screen
+            spawn_asteroid(pos,vel);
+            Debug.Log("spawned asteroid");
+        }
+
     }
 }
