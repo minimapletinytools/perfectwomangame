@@ -6,52 +6,67 @@ public class ModeTesting
 {
 	
 	public NewGameManager NGM {get; set;}
-	ManagerManager mManager {get; set;}
+	public ManagerManager mManager {get; set;}
     AuthoringGuiBehaviour Gui { get; set; }
 	public ModeTesting(NewGameManager aNgm)
 	{
 		NGM = aNgm;
 		mManager = aNgm.mManager;
-
-
-
 	}
-
-	public void character_loaded()
-	{
-	}
+	public void character_loaded(){}
 	
 	
+
+
+
+    public int mLastDiff = 0;
+    public int mLastWrite = 0;
+    public int mLastCutscene = 0;
+    public int mLastPoseFolder = 0;
+    public PerformanceType.PType mLastPoseMode = PerformanceType.PType.SLOW;
+    public float mLastPoseSpeed = 5;
 
     PoseAnimation mCurrentPoseAnimation = null;
+
+    //functions for AuthoringGuiBehaviour to call
     public void load_char_from_folder(CharacterIndex aChar, int aDiff)
     {
-        var aFolder = aChar.ShortName + "_" + aDiff;
+        var aFolder = aChar.StringIdentifier + "_" + aDiff;
         string[] dirs = System.IO.Directory.GetDirectories("POSETEST");
         string dir = System.IO.Directory.GetDirectories("POSETEST").FirstOrDefault(e => e == aFolder);
-
-        mCurrentPoseAnimation = PoseAnimation.load_from_folder(dir);
-
-
-        NGM.CurrentPoseAnimation = new PerformanceType(mCurrentPoseAnimation,new CharacterIndex(2,0));
-        NGM.CurrentPoseAnimation.PT = mLastPoseMode;
-        NGM.CurrentPoseAnimation.ChangeTime = mLastPoseSpeed;
+        if(dir != "")
+            set_pose_animation(PoseAnimation.load_from_folder(dir), aDiff);
+        //TODO else error message
        
     }
-
+    public void load_char_default_poses(CharacterIndex aChar, int aDiff)
+    {
+        if(CharacterIndex.sAllCharacters.Contains(aChar) && aChar != CharacterIndex.sGrave && aChar != CharacterIndex.sFetus && aChar != CharacterIndex.sOneHundred)
+            set_pose_animation(mManager.mCharacterBundleManager.get_pose(aChar,aDiff),aDiff);
+        //TODO eles error message
+    }
+    public void set_pose_animation(PoseAnimation aAnim, int aDiff)
+    {
+        mCurrentPoseAnimation = aAnim;
+        NGM.CurrentPoseAnimation = new PerformanceType(aAnim, new CharacterIndex(2,0)); //forces it to be switch
+        NGM.CurrentPoseAnimation.set_change_time(GameConstants.difficultyToChangeTime[aDiff]);
+        NGM.CurrentPoseAnimation.PT = mLastPoseMode;
+        NGM.CurrentPoseAnimation.ChangeTime = mLastPoseSpeed;
+    }
     public void write_poses_to_folder(CharacterIndex aChar, int aDiff)
     {
-        //TODO whats the best way to do this???
+        mCurrentPoseAnimation.save_to_folder("POSETEST/" + aChar.StringIdentifier + "_" + aDiff,aChar.StringIdentifier + "_" + aDiff);
+    }
+    public void load_character(CharacterIndex aChar)
+    {
+        if(CharacterIndex.sAllCharacters.Contains(aChar) && aChar != CharacterIndex.sGrave)
+            mManager.mAssetLoader.new_load_character(aChar.StringIdentifier,mManager.mCharacterBundleManager);
+        //TODO else error message
     }
 
 
 
-	public int mLastDiff = 0;
-	public int mLastWrite = 0;
-	public int mLastCutscene = 0;
-	public int mLastPoseFolder = 0;
-	public PerformanceType.PType mLastPoseMode = PerformanceType.PType.SLOW;
-	public float mLastPoseSpeed = 5;
+	
 	
 	public void update()
 	{
@@ -63,29 +78,30 @@ public class ModeTesting
             Gui.mTesting = this;
         }
 
-
-
-		
+        //update the character
 		if(NGM.CurrentPose != null && mManager.mBodyManager.mFlat != null) //make sure a character is in fact loaded, this can apparently happen in testing scene.
-		{
 			mManager.mBodyManager.set_target_pose(NGM.CurrentPose);
-		}
-		
+        else if(mManager.mZigManager.is_reader_connected() != 2) //via keyboard if there is no kinect
+            mManager.mBodyManager.keyboard_update();
+        if(NGM.CurrentPoseAnimation != null)
+        {
+            NGM.CurrentTargetPose = NGM.CurrentPoseAnimation.get_pose(Time.time);
+            mManager.mTransparentBodyManager.set_target_pose(NGM.CurrentTargetPose);
+            float grade = ProGrading.grade_pose(NGM.CurrentPose, NGM.CurrentTargetPose);
+            grade = ProGrading.grade_to_perfect(grade);
+            //TODO do something with grade
+        }
+
 		//if we are annoyed by the pose..
-		if(Input.GetKeyDown(KeyCode.Alpha9))
-			NGM.CurrentPoseAnimation = null;
+		if (Input.GetKeyDown(KeyCode.Alpha9))
+        {
+            if(NGM.CurrentPoseAnimation == null)
+                NGM.CurrentPoseAnimation = new PerformanceType(mCurrentPoseAnimation,mLastPoseMode);
+            else 
+                NGM.CurrentPoseAnimation = null;
+        }
 		
-		if(NGM.CurrentPoseAnimation != null)
-		{
-			NGM.CurrentTargetPose = NGM.CurrentPoseAnimation.get_pose(Time.time);
-			mManager.mTransparentBodyManager.set_target_pose(NGM.CurrentTargetPose);
-			float grade = ProGrading.grade_pose(NGM.CurrentPose, NGM.CurrentTargetPose);
-			grade = ProGrading.grade_to_perfect(grade);
-		}
-		
-		if(mManager.mZigManager.is_reader_connected() != 2)
-			mManager.mBodyManager.keyboard_update();
-		
+		//TODO DELETE
 		if(Input.GetKeyDown(KeyCode.Space))
 		{
 			string folderPrefix = "";
@@ -101,7 +117,7 @@ public class ModeTesting
 			mLastWrite++;		
 		}
 		
-		
+		//switch to cutscene, note, this hides all the character stuff, not disable it
 		if(Input.GetKeyDown(KeyCode.Alpha5))
 		{
 			if(NGM.CurrentCharacterLoader.has_cutscene(mLastCutscene))
@@ -134,6 +150,7 @@ public class ModeTesting
 			mLastCutscene = (mLastCutscene+1) % 5;
 		}
 		
+        //TODO DELETE
 		if(Input.GetKeyDown(KeyCode.Alpha6))
 		{
 			string[] dirs = System.IO.Directory.GetDirectories("POSETEST");
@@ -158,6 +175,7 @@ public class ModeTesting
 			NGM.CurrentPoseAnimation.ChangeTime = mLastPoseSpeed;
 		}
 		
+        //TODO DELETE
 		if(Input.GetKeyDown(KeyCode.Alpha8))
 		{
 			mManager.mDebugString = "Loaded poses for difficulty " + ((++mLastDiff)%4);
@@ -166,7 +184,7 @@ public class ModeTesting
 		}
 		
 		
-		
+		//TODO DELETE
 		int choice = -1;
 		if(Input.GetKeyDown(KeyCode.Alpha1))
 		{

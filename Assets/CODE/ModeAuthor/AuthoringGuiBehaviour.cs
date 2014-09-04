@@ -51,33 +51,30 @@ public class AuthoringGuiBehaviour : MonoBehaviour {
         if (GUI.Button(new Rect(Screen.width - longButWidth - padding, rightTop, longButWidth, butHeight), "Choose Character"))
         {
             int[] split = charText.Split(' ').Select(e=>int.Parse(e)).ToArray();
-            if(split.Count() > 2)
+            if(split.Count() == 2)
             {
                 CharacterIndex next = new CharacterIndex(split[0],split[1]);
                 if(CharacterIndex.sAllCharacters.Contains(next) && next.LevelIndex < 9) //if it's a real character and not the grave
-                {
-                    //TODO 
-                    //mTesting.
-                }
+                    mTesting.load_character(next);
             }
         }
         rightTop += butHeight + padding;
 
         if (GUI.Button(new Rect(Screen.width - longButWidth - padding, rightTop, longButWidth, butHeight), "Load Default Poses"))
         {
-            //TODO
+            mTesting.load_char_default_poses(mTesting.NGM.CurrentCharacterIndex,saveDiff);
         }
 
         rightTop += butHeight + padding;
 
         if (GUI.Button(new Rect(Screen.width - longButWidth - padding, rightTop, longButWidth, butHeight), "Load Working Poses"))
         {
-            //TODO
+            mTesting.load_char_from_folder(mTesting.NGM.CurrentCharacterIndex,saveDiff);
         }
 
         rightTop += butHeight + padding;
 
-        //TODO go through each pose
+        //TODO go through each pose and draw some buttons
         //foreach()
         {
         }
