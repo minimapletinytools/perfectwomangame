@@ -102,6 +102,7 @@ public class ModeTesting
         }
 		
 		//TODO DELETE
+        /*
 		if(Input.GetKeyDown(KeyCode.Space))
 		{
 			string folderPrefix = "";
@@ -115,7 +116,7 @@ public class ModeTesting
 			}
 			mManager.take_screenshot(folderPrefix + output+".png",mManager.mCameraManager.MainBodyCamera);
 			mLastWrite++;		
-		}
+		}*/
 		
 		//switch to cutscene, note, this hides all the character stuff, not disable it
 		if(Input.GetKeyDown(KeyCode.Alpha5))
@@ -151,6 +152,7 @@ public class ModeTesting
 		}
 		
         //TODO DELETE
+        /*
 		if(Input.GetKeyDown(KeyCode.Alpha6))
 		{
 			string[] dirs = System.IO.Directory.GetDirectories("POSETEST");
@@ -160,7 +162,7 @@ public class ModeTesting
 			
 			NGM.CurrentPoseAnimation.PT = mLastPoseMode;
 			NGM.CurrentPoseAnimation.ChangeTime = mLastPoseSpeed;
-		}
+		}*/
 		
 		if(Input.GetKeyDown(KeyCode.A) && NGM.CurrentPoseAnimation != null)
 		{
@@ -176,6 +178,7 @@ public class ModeTesting
 		}
 		
         //TODO DELETE
+        /*
 		if(Input.GetKeyDown(KeyCode.Alpha8))
 		{
 			mManager.mDebugString = "Loaded poses for difficulty " + ((++mLastDiff)%4);
@@ -217,6 +220,6 @@ public class ModeTesting
 				if(NGM.CurrentCharacterIndex.LevelIndex < 7)
 					mManager.mAssetLoader.new_load_character(NGM.CurrentCharacterIndex.get_future_neighbor(choice).StringIdentifier,mManager.mCharacterBundleManager);
 			}
-		}
+		}*/
 	}
 }
