@@ -7,6 +7,7 @@ public class AuthoringGuiBehaviour : MonoBehaviour {
 
     public ModeTesting mTesting;
 
+    public string ErrorMessage{get;set;}
 
     string charText = "0 1";
     int saveDiff = 0;
@@ -27,6 +28,8 @@ public class AuthoringGuiBehaviour : MonoBehaviour {
         output += "\nMODE: " + ((mTesting.NGM.CurrentPose != null) ? "KINECT" : "MANUAL");
         //TODO
         output += "\nPLAYING: " + "TODO";
+        if (ErrorMessage != "")
+            output += "\n" + ErrorMessage;
         //TODO other stuff
         GUIStyle style = new GUIStyle();
         GUI.TextArea(new Rect(padding, leftTop, infoSize,infoSize), output, style);
@@ -45,18 +48,18 @@ public class AuthoringGuiBehaviour : MonoBehaviour {
         //if (GUI.Button(new Rect(0, leftTop, 150, 100), "SPEED"))
 
 
-
-        //TODO button display
         charText = GUI.TextArea(new Rect(Screen.width - longButWidth - padding*2 - 50, rightTop, 50, butHeight), charText);
         if (GUI.Button(new Rect(Screen.width - longButWidth - padding, rightTop, longButWidth, butHeight), "Choose Character"))
         {
-            int[] split = charText.Split(' ').Select(e=>int.Parse(e)).ToArray();
-            if(split.Count() == 2)
-            {
-                CharacterIndex next = new CharacterIndex(split[0],split[1]);
-                if(CharacterIndex.sAllCharacters.Contains(next) && next.LevelIndex < 9) //if it's a real character and not the grave
+            try{
+                int[] split = charText.Split(' ').Select(e=>int.Parse(e)).ToArray();
+                if(split.Count() == 2)
+                {
+                    CharacterIndex next = new CharacterIndex(split[0],split[1]);
                     mTesting.load_character(next);
+                }
             }
+            catch{ErrorMessage = "ERROR: character choice is not formatted correctly";}
         }
         rightTop += butHeight + padding;
 

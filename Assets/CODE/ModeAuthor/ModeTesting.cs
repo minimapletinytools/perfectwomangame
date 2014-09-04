@@ -36,14 +36,16 @@ public class ModeTesting
         string dir = System.IO.Directory.GetDirectories("POSETEST").FirstOrDefault(e => e == aFolder);
         if(dir != "")
             set_pose_animation(PoseAnimation.load_from_folder(dir), aDiff);
-        //TODO else error message
+        else 
+            Gui.ErrorMessage = "ERROR: poses do not exist for " + aChar.StringIdentifier;
        
     }
     public void load_char_default_poses(CharacterIndex aChar, int aDiff)
     {
         if(CharacterIndex.sAllCharacters.Contains(aChar) && aChar != CharacterIndex.sGrave && aChar != CharacterIndex.sFetus && aChar != CharacterIndex.sOneHundred)
             set_pose_animation(mManager.mCharacterBundleManager.get_pose(aChar,aDiff),aDiff);
-        //TODO eles error message
+        else
+            Gui.ErrorMessage = "ERROR: default poses do not exist for " + aChar.StringIdentifier;
     }
     public void set_pose_animation(PoseAnimation aAnim, int aDiff)
     {
@@ -61,7 +63,8 @@ public class ModeTesting
     {
         if(CharacterIndex.sAllCharacters.Contains(aChar) && aChar != CharacterIndex.sGrave)
             mManager.mAssetLoader.new_load_character(aChar.StringIdentifier,mManager.mCharacterBundleManager);
-        //TODO else error message
+        else
+            Gui.ErrorMessage = "ERROR: character is invalid";
     }
 
 
