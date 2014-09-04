@@ -26,18 +26,20 @@ public class ModeTesting
     public PerformanceType.PType mLastPoseMode = PerformanceType.PType.SLOW;
     public float mLastPoseSpeed = 5;
 
-    PoseAnimation mCurrentPoseAnimation = null;
+    public int mCurrentPoseIndex = 0;
+    public PoseAnimation mCurrentPoseAnimation = null;
 
     //functions for AuthoringGuiBehaviour to call
     public void load_char_from_folder(CharacterIndex aChar, int aDiff)
     {
-        var aFolder = aChar.StringIdentifier + "_" + aDiff;
-        string[] dirs = System.IO.Directory.GetDirectories("POSETEST");
-        string dir = System.IO.Directory.GetDirectories("POSETEST").FirstOrDefault(e => e == aFolder);
-        if(dir != "")
-            set_pose_animation(PoseAnimation.load_from_folder(dir), aDiff);
+        var aFolder = "POSETEST/"+aChar.StringIdentifier + "_" + aDiff;
+        //string[] dirs = System.IO.Directory.GetDirectories("POSETEST");
+        //string dir = System.IO.Directory.GetDirectories("POSETEST").FirstOrDefault(e => e == aFolder);
+        //if(dir != null && dir != "")
+        if(System.IO.Directory.Exists(aFolder))
+            set_pose_animation(PoseAnimation.load_from_folder(aFolder), aDiff);
         else 
-            Gui.ErrorMessage = "ERROR: poses do not exist for " + aChar.StringIdentifier;
+            Gui.ErrorMessage = "ERROR: poses do not exist for " + aChar.StringIdentifier + " diff " + aDiff;
        
     }
     public void load_char_default_poses(CharacterIndex aChar, int aDiff)
@@ -49,15 +51,23 @@ public class ModeTesting
     }
     public void set_pose_animation(PoseAnimation aAnim, int aDiff)
     {
-        mCurrentPoseAnimation = aAnim;
-        NGM.CurrentPoseAnimation = new PerformanceType(aAnim, new CharacterIndex(2,0)); //forces it to be switch
-        NGM.CurrentPoseAnimation.set_change_time(GameConstants.difficultyToChangeTime[aDiff]);
-        NGM.CurrentPoseAnimation.PT = mLastPoseMode;
-        NGM.CurrentPoseAnimation.ChangeTime = mLastPoseSpeed;
+        if (aAnim.poses.Count > 0)
+        {
+            mCurrentPoseAnimation = aAnim.Clone();
+            NGM.CurrentPoseAnimation = new PerformanceType(aAnim, new CharacterIndex(2, 0)); //forces it to be switch
+            NGM.CurrentPoseAnimation.set_change_time(GameConstants.difficultyToChangeTime [aDiff]);
+            NGM.CurrentPoseAnimation.PT = mLastPoseMode;
+            NGM.CurrentPoseAnimation.ChangeTime = mLastPoseSpeed;
+            set_pose_index(0);
+        } else
+            Gui.ErrorMessage = "ERROR: trying to set pose animation with no poses. Report to Peter if you get this message!";
     }
     public void write_poses_to_folder(CharacterIndex aChar, int aDiff)
     {
-        mCurrentPoseAnimation.save_to_folder("POSETEST/" + aChar.StringIdentifier + "_" + aDiff,aChar.StringIdentifier + "_" + aDiff);
+        var dirName = "POSETEST/" + aChar.StringIdentifier + "_" + aDiff;
+        System.IO.Directory.Delete(dirName, true);
+        System.IO.Directory.CreateDirectory(dirName);
+        mCurrentPoseAnimation.save_to_folder(aChar.StringIdentifier + "_" + aDiff,"POSETEST/" + aChar.StringIdentifier + "_" + aDiff);
     }
     public void load_character(CharacterIndex aChar)
     {
@@ -65,6 +75,11 @@ public class ModeTesting
             mManager.mAssetLoader.new_load_character(aChar.StringIdentifier,mManager.mCharacterBundleManager);
         else
             Gui.ErrorMessage = "ERROR: character is invalid";
+    }
+    public void set_pose_index(int aIndex)
+    {
+        mCurrentPoseIndex = aIndex % mCurrentPoseAnimation.poses.Count;
+        mManager.mBodyManager.set_target_pose(mCurrentPoseAnimation.get_pose(mCurrentPoseIndex),true);
     }
 
 
@@ -82,9 +97,9 @@ public class ModeTesting
         }
 
         //update the character
-		if(NGM.CurrentPose != null && mManager.mBodyManager.mFlat != null) //make sure a character is in fact loaded, this can apparently happen in testing scene.
+		if(Gui.useKinect && NGM.mManager.mZigManager.is_reader_connected() == 2 && NGM.CurrentPose != null && mManager.mBodyManager.mFlat != null) //make sure a character is in fact loaded, this can apparently happen in testing scene.
 			mManager.mBodyManager.set_target_pose(NGM.CurrentPose);
-        else if(mManager.mZigManager.is_reader_connected() != 2) //via keyboard if there is no kinect
+        else if(!Gui.useKinect)
             mManager.mBodyManager.keyboard_update();
         if(NGM.CurrentPoseAnimation != null)
         {

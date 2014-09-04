@@ -43,6 +43,7 @@ public class Pose
 	//TODO copy operation
 }
 
+[System.Serializable]
 public class PoseAnimation
 {
 	public List<Pose> poses = new List<Pose>();
@@ -66,8 +67,19 @@ public class PoseAnimation
         int i = 1;
         foreach (var e in poses)
         {
-            ProGrading.write_pose_to_file(e,aFolder+"/"+aPrefix+"_"+i);
+            ProGrading.write_pose_to_file(e,aFolder+"/"+aPrefix+"_"+i+".txt");
             i++;
+        }
+    }
+
+    public PoseAnimation Clone()
+    {
+        using (var ms = new MemoryStream())
+        {
+            var formatter = new System.Runtime.Serialization.Formatters.Binary.BinaryFormatter();
+            formatter.Serialize(ms, this);
+            ms.Position = 0;
+            return (PoseAnimation) formatter.Deserialize(ms);
         }
     }
 }

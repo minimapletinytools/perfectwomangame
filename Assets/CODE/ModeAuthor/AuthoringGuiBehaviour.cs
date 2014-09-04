@@ -11,6 +11,7 @@ public class AuthoringGuiBehaviour : MonoBehaviour {
 
     string charText = "0 1";
     int saveDiff = 0;
+    public bool useKinect = false;
     public void OnGUI()
     {
         int butHeight = 30;
@@ -36,12 +37,15 @@ public class AuthoringGuiBehaviour : MonoBehaviour {
         leftTop += infoSize + padding;
 
         //save difficulty
+        if (GUI.Button(new Rect(10, leftTop, shortButWidth, butHeight), "MAN: " + !useKinect))
+            useKinect = !useKinect;
+        leftTop += butHeight + padding;
         if (GUI.Button(new Rect(10, leftTop, shortButWidth, butHeight), "DIFF " + saveDiff))
             saveDiff = (saveDiff + 1) % 4;
         leftTop += butHeight + padding;
-        if (GUI.Button(new Rect(10, leftTop, shortButWidth, butHeight), "SAVE"))
+        if (GUI.Button(new Rect(10, leftTop, longButWidth, butHeight), "WRITE TO FILE"))
         {
-            //TODO
+            mTesting.write_poses_to_folder(mTesting.NGM.CurrentCharacterIndex,saveDiff);
         }
         leftTop += butHeight + padding;
         //TODO  SPEEd/MODE/GRADING
@@ -77,14 +81,29 @@ public class AuthoringGuiBehaviour : MonoBehaviour {
 
         rightTop += butHeight + padding;
 
-        //TODO go through each pose and draw some buttons
-        //foreach()
-        {
-        }
 
-        if (GUI.Button(new Rect(Screen.width - shortButWidth - padding, rightTop, shortButWidth, butHeight), "NEW POSE"))
+        var rightShortX = Screen.width - shortButWidth - padding;
+        if (mTesting.mCurrentPoseAnimation != null)
         {
-            //TODO
+            for(int i = 0; i < mTesting.mCurrentPoseAnimation.poses.Count; i++)
+            {
+                if(i == mTesting.mCurrentPoseIndex)
+                {
+                    GUI.Label(new Rect(rightShortX, rightTop, shortButWidth, butHeight), "POSE: " + i);
+                    if(GUI.Button(new Rect(rightShortX - shortButWidth - padding,rightTop,shortButWidth,butHeight),"SAVE"))
+                        mTesting.mCurrentPoseAnimation.poses[mTesting.mCurrentPoseIndex] = mTesting.NGM.mManager.mBodyManager.get_current_pose();
+                }
+                else if (GUI.Button(new Rect(rightShortX, rightTop, shortButWidth, butHeight), "POSE: " + i))
+                    mTesting.set_pose_index(i);
+                rightTop += butHeight + padding;
+            }
+        }
+        if (GUI.Button(new Rect(rightShortX, rightTop, shortButWidth, butHeight), "NEW POSE"))
+        {
+            if(mTesting.mCurrentPoseAnimation == null)
+                mTesting.mCurrentPoseAnimation = new PoseAnimation();
+            mTesting.mCurrentPoseAnimation.poses.Add(mTesting.NGM.mManager.mBodyManager.get_current_pose());
+            mTesting.set_pose_index(mTesting.mCurrentPoseAnimation.poses.Count -1);
         }
 
 
