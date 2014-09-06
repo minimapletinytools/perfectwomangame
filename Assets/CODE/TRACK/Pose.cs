@@ -136,7 +136,7 @@ public class PerformanceType
 		
 	}
 	
-	
+
 	public void set_change_time(float aTarget)
 	{
 		if(BPM == 0)

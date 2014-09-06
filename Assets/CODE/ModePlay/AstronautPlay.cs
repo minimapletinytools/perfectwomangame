@@ -43,10 +43,6 @@ public class AstronautPlay
 
             mParts[e].transform.position = mMode.NGM.mManager.mBodyManager.mFlat.mParts[ZgJointId.Head].transform.position;
         }
-
-
-
-
     }
 
     public void spawn_asteroid(Vector3 aPos, Vector3 aVel)
