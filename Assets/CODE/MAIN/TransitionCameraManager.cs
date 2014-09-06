@@ -210,7 +210,8 @@ public class TransitionCameraManager : FakeMonoBehaviour
 				img.HardShader = mManager.mReferences.mTransparentCharacaterShader;
 				img.HardColor = //new Color(0.75f,0,0,1);
 					//actually can't read this data yet because it's not loaded fast enough I guess...
-					mManager.mCharacterBundleManager.get_character_stat(sCharOrderList[i-2]).CharacterInfo.CharacterOutlineColor;
+					//mManager.mCharacterBundleManager.get_character_stat(sCharOrderList[i-2]).CharacterInfo.CharacterOutlineColor;
+                    GameConstants.StartScreenLockedGray;
 
 			}
 

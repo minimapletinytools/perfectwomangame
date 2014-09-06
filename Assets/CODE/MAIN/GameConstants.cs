@@ -107,6 +107,7 @@ public static class GameConstants
 	public static Color UiGraveText {get{return uiGraveText*0.5f;}}
 	
 	public static Color TransparentBodyDefaultColor {get {return new Color(0,0.317f,.898f,1);}}
+    public static Color StartScreenLockedGray {get{return new Color(0,0,0,.2f);}}
 	
 
 	//TODO DELETE
