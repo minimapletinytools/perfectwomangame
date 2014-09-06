@@ -25,14 +25,15 @@ public class AuthoringGuiBehaviour : MonoBehaviour {
         float rightTop = padding;
 
         string output = "";
-        output += "CHAR: " + mTesting.NGM.CurrentCharacterIndex.FullName;
-        output += "\nMODE: " + ((mTesting.NGM.CurrentPose != null) ? "KINECT" : "MANUAL");
+        output += "CHAR: " + mTesting.NGM.CurrentCharacterIndex.StringIdentifier;
+        //output += "\nMODE: " + ((mTesting.NGM.CurrentPose != null) ? "KINECT" : "MANUAL");
         //TODO
-        output += "\nPLAYING: " + "TODO";
+        //output += "\nPLAYING: " + "TODO";
         if (ErrorMessage != "")
             output += "\n" + ErrorMessage;
         //TODO other stuff
         GUIStyle style = new GUIStyle();
+        style.normal.textColor = Color.white;
         GUI.TextArea(new Rect(padding, leftTop, infoSize,infoSize), output, style);
         leftTop += infoSize + padding;
 
@@ -74,7 +75,7 @@ public class AuthoringGuiBehaviour : MonoBehaviour {
 
         rightTop += butHeight + padding;
 
-        if (GUI.Button(new Rect(Screen.width - longButWidth - padding, rightTop, longButWidth, butHeight), "Load Working Poses"))
+        if (GUI.Button(new Rect(Screen.width - longButWidth - padding, rightTop, longButWidth, butHeight), "Load Saved Poses"))
         {
             mTesting.load_char_from_folder(mTesting.NGM.CurrentCharacterIndex,saveDiff);
         }
@@ -90,6 +91,18 @@ public class AuthoringGuiBehaviour : MonoBehaviour {
                 if(i == mTesting.mCurrentPoseIndex)
                 {
                     GUI.Label(new Rect(rightShortX, rightTop, shortButWidth, butHeight), "POSE: " + i);
+                    if(GUI.Button(new Rect(rightShortX - shortButWidth*2 - padding*2,rightTop,shortButWidth,butHeight),"DELETE"))
+                    {
+                        mTesting.mCurrentPoseAnimation.poses.RemoveAt(mTesting.mCurrentPoseIndex);
+                        if(mTesting.mCurrentPoseAnimation.poses.Count > 0)
+                            mTesting.set_pose_index(Mathf.Clamp(mTesting.mCurrentPoseIndex-1,0,9999999));
+                        else
+                        {
+                            mTesting.mCurrentPoseAnimation = null;
+                            mTesting.mCurrentPoseIndex = 0;
+                            break;
+                        }
+                    }
                     if(GUI.Button(new Rect(rightShortX - shortButWidth - padding,rightTop,shortButWidth,butHeight),"SAVE"))
                         mTesting.mCurrentPoseAnimation.poses[mTesting.mCurrentPoseIndex] = mTesting.NGM.mManager.mBodyManager.get_current_pose();
                 }

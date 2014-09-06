@@ -64,10 +64,15 @@ public class ModeTesting
     }
     public void write_poses_to_folder(CharacterIndex aChar, int aDiff)
     {
-        var dirName = "POSETEST/" + aChar.StringIdentifier + "_" + aDiff;
-        System.IO.Directory.Delete(dirName, true);
-        System.IO.Directory.CreateDirectory(dirName);
-        mCurrentPoseAnimation.save_to_folder(aChar.StringIdentifier + "_" + aDiff,"POSETEST/" + aChar.StringIdentifier + "_" + aDiff);
+        if (mCurrentPoseAnimation != null && mCurrentPoseAnimation.poses.Count > 0)
+        {
+            var dirName = "POSETEST/" + aChar.StringIdentifier + "_" + aDiff;
+            if (System.IO.Directory.Exists(dirName))
+                System.IO.Directory.Delete(dirName, true);
+            System.IO.Directory.CreateDirectory(dirName);
+            mCurrentPoseAnimation.save_to_folder(aChar.StringIdentifier + "_" + aDiff, "POSETEST/" + aChar.StringIdentifier + "_" + aDiff);
+        } else
+            Gui.ErrorMessage = "ERROR: trying to save when there are no poses OR when poses are hidden.";
     }
     public void load_character(CharacterIndex aChar)
     {
@@ -79,6 +84,7 @@ public class ModeTesting
     public void set_pose_index(int aIndex)
     {
         mCurrentPoseIndex = aIndex % mCurrentPoseAnimation.poses.Count;
+
         mManager.mBodyManager.set_target_pose(mCurrentPoseAnimation.get_pose(mCurrentPoseIndex),true);
     }
 
