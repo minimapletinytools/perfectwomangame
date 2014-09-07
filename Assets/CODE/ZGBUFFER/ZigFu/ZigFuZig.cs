@@ -95,6 +95,11 @@ public class ZigFuZig : ZgInterface
         return mZigEngageSingleUser.engagedTrackedUser != null;
     }
 
+	public bool can_start()
+	{
+		return true;
+	}
+
     public void update()
     {
     }

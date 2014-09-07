@@ -15,6 +15,8 @@ public class MicrosoftZig : ZgInterface
 	XboneStorage mStorage;
 	XboneEvents mEvents;
 
+	bool Initialized { get; set; }
+	
 	public void initialize(ZgManager aZig)
 	{
         mZig = aZig;
@@ -30,6 +32,8 @@ public class MicrosoftZig : ZgInterface
 		mUsers.Start ();
 		mStorage.Start ();
 		mEvents.Start();
+
+		Initialized = true;
 	}
 	
 	public void update()
@@ -41,6 +45,14 @@ public class MicrosoftZig : ZgInterface
 	public bool has_user()
 	{
 		return mKinect.IsTracking;
+	}
+
+	//TODO should check for users
+	public bool can_start()
+	{
+		if(Initialized)
+			return true;
+		return false;
 	}
 	
 	public ZgInput ZgInput

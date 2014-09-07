@@ -9,6 +9,8 @@ public interface ZgInterface
     bool has_user();
     void update();
 
+	bool can_start();
+
     //TODO
     //void write_data(byte[] aData, string aName);
     //byte[] read_data{aData, string aName);
@@ -32,6 +34,11 @@ public class EmptyZg : ZgInterface
     {
 
     }
+
+	public bool can_start()
+	{
+		return true;
+	}
 
     public ZgInput ZgInput
     {

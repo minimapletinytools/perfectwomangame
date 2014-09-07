@@ -300,6 +300,7 @@ public class TransitionCameraManager : FakeMonoBehaviour
 					dState = 2;
 					*/
 				if( mManager.mCharacterBundleManager.is_initial_loaded() &&
+			   		mManager.mZigManager.ZgInterface.can_start() &&
 			   		((aTime > 5 && mManager.mZigManager.has_user()) ||
                     KeyMan.GetKey("HardSkip") || KeyMan.GetKey("SoftSkip") ||
 					GameConstants.FORCE_START)){
