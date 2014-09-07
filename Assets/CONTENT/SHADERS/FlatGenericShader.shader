@@ -6,9 +6,10 @@ Properties {
 
 Category {
 	Tags { "Queue"="Transparent +100" "IgnoreProjector"="True" "RenderType"="Transparent" }
-	//Blend SrcAlpha OneMinusSrcAlpha
-	Blend SrcAlpha OneMinusSrcAlpha
+	
+	Blend SrcAlpha OneMinusSrcAlpha, One One
 	//Blend One Zero
+
 	AlphaTest Greater .01
 	ColorMask RGBA
 	Cull Off Lighting Off ZWrite Off Fog { Color (0,0,0,0) }
@@ -60,6 +61,12 @@ Category {
 			{
 				float4 c = 2.0f * i.color * _TintColor * tex2D(_MainTex, i.texcoord);
 				return c;
+				
+				/*float4 tc = 2.0f * _TintColor * tex2D(_MainTex, i.texcoord);
+				float4 c;
+				c.rgb = i.color.rgb * (1-tc.a) + tc.rgb * tc.a;
+				c.a = max(i.color.a,c.a);
+				return c;*/
 			}
 			ENDCG 
 		}

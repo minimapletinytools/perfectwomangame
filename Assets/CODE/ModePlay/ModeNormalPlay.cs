@@ -153,7 +153,10 @@ public class ModeNormalPlay
 		mFlatCamera.fit_camera_to_screen();
 		
 		mSunsetImage = new FlatElementImage(mSunsetManager.mFlatCamera.RT,0);
-		mSunsetImage.HardScale = Vector3.one * mFlatCamera.Width/mSunsetImage.mImage.PixelDimension.x;
+        var hs = Vector3.one * mFlatCamera.Width/mSunsetImage.mImage.PixelDimension.x;
+        //TODO extra space for rounded edges
+        //hs.y += 600; //additional 300 pixels..
+        mSunsetImage.HardScale = hs;
 		mSunsetImage.HardPosition = mFlatCamera.get_point(Vector3.zero) + Vector3.up*mSunsetImage.BoundingBox.height;
 		mSunsetImage.HardShader = mManager.mReferences.mRenderTextureShader;
 		mSunsetImage.PositionInterpolationMinLimit = 10; //so it doesn't take forever to entirely cover the image underneath

@@ -43,6 +43,7 @@ public class Pose
 	//TODO copy operation
 }
 
+[System.Serializable]
 public class PoseAnimation
 {
 	public List<Pose> poses = new List<Pose>();
@@ -50,15 +51,37 @@ public class PoseAnimation
 	
 	public static PoseAnimation load_from_folder(string aFolder)
 	{
+        Debug.Log("trying to load poses from folder " + aFolder);
 		PoseAnimation r = new PoseAnimation();
 		//Debug.Log(Directory.GetFiles(aFolder).Where(e => Path.GetExtension(e) == ".txt").Count());
-		foreach(string e in Directory.GetFiles(aFolder).Where(e => Path.GetExtension(e) == ".txt"))
+		foreach(string e in Directory.GetFiles(aFolder).Where(e => System.IO.Path.GetExtension(e) == ".txt"))
 		{
 			//string text = (new StreamReader(e)).ReadToEnd();
 			r.poses.Add(ProGrading.from_file(e));
 		}
 		return r;
 	}
+
+    public void save_to_folder(string aPrefix,string aFolder)
+    {
+        int i = 1;
+        foreach (var e in poses)
+        {
+            ProGrading.write_pose_to_file(e,aFolder+"/"+aPrefix+"_"+i+".txt");
+            i++;
+        }
+    }
+
+    public PoseAnimation Clone()
+    {
+        using (var ms = new MemoryStream())
+        {
+            var formatter = new System.Runtime.Serialization.Formatters.Binary.BinaryFormatter();
+            formatter.Serialize(ms, this);
+            ms.Position = 0;
+            return (PoseAnimation) formatter.Deserialize(ms);
+        }
+    }
 }
 
 public class PerformanceType
@@ -113,7 +136,7 @@ public class PerformanceType
 		
 	}
 	
-	
+
 	public void set_change_time(float aTarget)
 	{
 		if(BPM == 0)

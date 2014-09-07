@@ -278,10 +278,11 @@ public class Unlockables
 				unlockedCharacters[e] = 1; 
             else if(e.LevelIndex == 1)
                 unlockedCharacters[e] = 1;
-			else if(e.Choice < 4)
-				unlockedCharacters[e] = 1; //2 - locked, 1 - avail
+			//else if(e.Choice < 4)
+            else if(e.Choice == 3)
+				unlockedCharacters[e] = 2; //2 - locked, 1 - avail
 			else
-				unlockedCharacters[e] = 0; 
+				unlockedCharacters[e] = 1; 
 		}
 	}
 

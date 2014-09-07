@@ -8,25 +8,34 @@ The main 'point' of this game is the underlying statement on the labels roles we
 
 ::CONTROLS::
 :TESTING:
--1/2/3/4 jump forward a character
--shift + 1/2/3/4 jump backwards a character
+-terminology
+	-WORKING POSES are the set of poses you are currently working on. When you save, it will write these poses for the current character you are on and difficulty you have chosen. It will overwrite whatever is there. Note the working poses are the solid color target poses that render behind the main character. The working poses will automatically cycle through like you were playing the game though. 
+	-DEFAULT POSES are the poses that are currently in the game. They pull these out of the pose files built into the game and they can not be overwridden. These are just for reference.
+-LEFT UI
+	-MAN switches between manual and kinect mode.
+	-DIFF sets difficulty we are working with. Note this determines what difficulty we save, and what difficulties we read when loading default or working poses 
+	-WRITE TO FILE writes current set of poses for the current difficulty. This will OVERRIDE whatever was already there.
+-RIGHT UI
+	-CHOOSE CHARACTER chooses a new character, format should be <LEVEL> space <CHOICE> e.g. '3 0' would be level 3 choice 0. 
+		-note this will not load a new set of working poses. If you hit write to file, it will save the set of working poses for your new character and not the old character one they came from.
+	-LOAD DEFAULT POSES will load the default set of poses for the current char/diff so you can work on them. Note, this will remove any changes you are currently working on so make sure you write to file first if you want to keep them.
+	-LOAD WRITTEN POSES will load the set of working poses you last saved to file for the current char/diff. You can explore these in your file browser inside of the POSETEST folder. Note, this will remove any changes you are currently working on.
+	-NEW POSE adds a new pose to your set of working poses
+	-POSE# will switch the pose you are currently working on to this one
+	-SAVE will save the pose you are working on into your set of working poses.
+		-note, this wont write to file. You can always undo your changes by clikicng on 
+	-DELETE will remove the pose you are currently working on.
 -5 toggle cutscenes
--6 load target poses in the POSETEST folder
-	-POSETEST folder should be next to the executable
-	-subfolders of POSETEST will be a "set" of poses 
-	-see the debug string in the upper left hand corner for details
--8 load target poses for the current character
-	-pressing multiple times toggles difficulty
-	-see the debug string
--9 freeze the target pose
+	-this will only hide not disable pose recording so you could in theory continue to use the interface to record poses but you wont be able to see what you're doing.
+	-reload the character to resume pose recording
+-9 turns off visualization of current set of poses (if you find it annoying)
 -while a target pose animation is playing
 	-A to toggle the style
 	-S to toggle the speed
 	-see the debug string
 	-this will do nothing if you have disabled the target pose with 9
--space to capture the pose and take a screenshot
-	-the pose recorded is the character pose not the target pose
--TZGHBNERUIQWOPCVM,YX.- to manually rotate the limbs 
+	-there is no way to make the debug string go away by the way.
+-TZGHBNERUIQWOPCVM,YX.- to manually rotate the limbs when in manual mode 
 	-only works when kinect is not connected
 	-these are laid out on the German keyboard to roughly match the body's layout.
 :GAME:

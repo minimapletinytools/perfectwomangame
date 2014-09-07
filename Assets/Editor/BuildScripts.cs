@@ -5,10 +5,10 @@ using System.IO;
 using System.IO.Compression;
 public class BuildScripts
 {
-	[MenuItem("Custom/build/TESTING_OSX")]
+	[MenuItem("Custom/build/RECORDING_OSX")]
     static void build_testing_osx()
     {
-		string[] scenes = {"Assets/SCENES/testing_scene.unity"};
+		string[] scenes = {"Assets/SCENES/recording.unity"};
  
 		string buildDir = "/Users/user/Desktop/unitybuilds/lea/" + System.DateTime.Now.ToString("MMMdhmm") +"_testing_osx.app";
 		System.IO.Directory.CreateDirectory(buildDir);
