@@ -5,7 +5,13 @@ using System.Linq;
 public interface ZgInterface
 {
     void initialize(ZgManager aZig);
-    ZgInput ZgInput{get;}
+    ZgInput ZgInput{get;} //TODO probably get rid of this and split its function out
+	ZgDepth DepthImage{get;}
+	ZgImage ColorImage{get;}
+	ZgLabelMap LabelMap{get;}
+	bool ReaderInitialized { get; }
+	bool IsMicrosoftKinectSDK { get; }
+
     bool has_user();
     void update();
 
@@ -13,7 +19,8 @@ public interface ZgInterface
 
     //TODO
     //void write_data(byte[] aData, string aName);
-    //byte[] read_data{aData, string aName);
+	//TODO this needs to be async...
+    //byte[] read_data(string aName);
 
 
 }
@@ -47,5 +54,11 @@ public class EmptyZg : ZgInterface
             return null;
         }
     }
+	public ZgDepth DepthImage{get{ return null; }}
+	public ZgImage ColorImage{get{ return null; }}
+	public ZgLabelMap LabelMap{get{ return null; }}
+	public bool ReaderInitialized { get{ return false; } }
+	public bool IsMicrosoftKinectSDK { get{ return false; } }
+
 }
 

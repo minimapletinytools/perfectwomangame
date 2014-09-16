@@ -1,18 +1,19 @@
 ::LEA TODO::
--icons
+DONE-icons
 	-100x100 (notification in companion center)
 	-208x208 (shown in the pinned item section)
 	-480x480 (shown in collection and notification center)
--splash image
+DONE-splash image
 	-1920x1080
 
 ::PORT TODO::
--add structure for such callbacks...
--add suspend event
--add resource availability changed event
--add resume event
--add activation event
--add storage	
+DONE-add structure for such callbacks...
+-PLM
+	-add suspend event
+	-add resource availability changed event
+	-add resume event
+	-add activation event
+-STORAGE
 	-ConnectedStorage.CreateAsync(mUserId, "MyContainer", OnConnectedStorageCreated, mFlags);
 		-mUserId -1 is for machine storage
 	-mDataToSave = DataMap.Create();
@@ -27,9 +28,9 @@
 	-mConnectedStorage.QueryRemainingQuotaAsync(QueryRemainingQuotaReturns);
 	-mConnectedStorage.QueryContainerInfoAsync("",QueryContainerInfoAsyncReturns);
 -add users
-	-run the users example
+	DONE-run the users example
 -kinect
-	-run the kinect examples...
+	DONE-run the kinect examples...
 -events
 	-run the dataplatform example
 -input

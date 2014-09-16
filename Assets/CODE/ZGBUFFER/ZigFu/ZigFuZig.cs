@@ -131,4 +131,10 @@ public class ZigFuZig : ZgInterface
 			return r;
         }
     }
+
+	public ZgDepth DepthImage{get{ return ZgInput.Depth; }}
+	public ZgImage ColorImage{get{ return ZgInput.Image; }}
+	public ZgLabelMap LabelMap{get{ return ZgInput.LabelMap; }}
+	public bool ReaderInitialized { get{ return ZgInput.ReaderInited; } }
+	public bool IsMicrosoftKinectSDK { get{ return ZgInput.kinectSDK; } }
 }
