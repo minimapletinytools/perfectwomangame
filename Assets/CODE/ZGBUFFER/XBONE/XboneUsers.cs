@@ -1,17 +1,54 @@
 ﻿using UnityEngine;
 using System.Collections;
+using Users;
 
 public class XboneUsers {
 
 
 	public void Start () {
-		Users.UsersManager.Create();
-		
-		
-		//access with Users.UsersManager.Inst.Users;
-		//listen to event Users.UsersManager.Inst.OnUserSignOut 
+		UsersManager.Create();
+		UsersManager.OnUsersChanged       += OnUsersChanged;
+		UsersManager.OnUserSignIn         += OnUserSignIn;
+		UsersManager.OnUserSignOut        += OnUserSignOut;
+		UsersManager.OnSignOutStarted     += OnUserSignOutStarted;
+		UsersManager.OnDisplayInfoChanged += OnUserDisplayInfoChange;
+
 		//if (!Users.UsersManager.Inst.IsSomeoneSignedIn)
 		//	Users.UsersManager.Inst.RequestSignIn (Users.AccountPickerOptions.AllowGuests);
+
+	}
+
+	void OnUsersChanged(int id,bool wasAdded)
+	{
+
+	}
+	
+	void OnUserSignIn(int id)
+	{
+
+	}
+	
+	void OnUserSignOut(int id)
+	{
+
+	}
+	
+	void OnUserSignOutStarted(int id, System.IntPtr deferred)
+	{
+		var deferral = new SignOutDeferral(deferred);
+		var dummy = (new GameObject ("genDummy")).AddComponent<DummyBehaviour> ();
+		dummy.StartCoroutine (deferral_thread (dummy.gameObject,deferral));
+	}
+
+	IEnumerator deferral_thread(GameObject aDestroy,SignOutDeferral aDef)
+	{
+		yield return null; 
+		aDef.Complete ();
+		GameObject.Destroy (aDestroy);
+	}
+	
+	void OnUserDisplayInfoChange(int id)
+	{
 
 	}
 }
