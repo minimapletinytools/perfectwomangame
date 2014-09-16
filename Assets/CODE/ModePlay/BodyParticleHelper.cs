@@ -4,7 +4,7 @@ using System.Linq;
 public class BodyParticleHelper 
 {
 	
-	static Dictionary<ZgJointId,ZgJointId[]> sConnectedGroups = new Dictionary<ZgJointId, ZgJointId[]>
+	/*static Dictionary<ZgJointId,ZgJointId[]> sConnectedGroups = new Dictionary<ZgJointId, ZgJointId[]>
 	{
 		{ZgJointId.LeftShoulder,new ZgJointId[]{ZgJointId.LeftElbow}},
 		{ZgJointId.LeftElbow,new ZgJointId[]{ZgJointId.LeftHand}},
@@ -28,7 +28,7 @@ public class BodyParticleHelper
 		{ZgJointId.LeftAnkle,new ZgJointId[]{ZgJointId.LeftKnee,ZgJointId.LeftHip,ZgJointId.Waist}},
 		{ZgJointId.RightAnkle,new ZgJointId[]{ZgJointId.RightKnee,ZgJointId.RightHip,ZgJointId.Waist}},
 		{ZgJointId.Head,new ZgJointId[]{ZgJointId.Neck,ZgJointId.Torso,ZgJointId.Waist}},
-	};
+	};*/
 	
 	public SparkleStarFlashParticle mParticles;
 	public BodyParticleHelper()
@@ -128,8 +128,8 @@ public class BodyParticleHelper
 			}
 
 
-			float ag = (grade-0.4f)*(grade-0.4f);
-			int count = (int)(100*ag);
+			//float ag = (grade-0.4f)*(grade-0.4f);
+			//int count = (int)(100*ag);
 			/*
 			if(grade > 0.6f)
 				mParticles.emit_point(count*1/3, activeBody.mFlat.get_body_part_position(ZigJointId.Torso),700);

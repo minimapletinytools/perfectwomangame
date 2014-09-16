@@ -46,8 +46,6 @@ public class ProGrading {
 		Dictionary<ZgJointId,float> r = new Dictionary<ZgJointId, float>();
 		
 		float weightSum = 0;
-        float gradesum = 0;
-        string output = "";
 		foreach (PoseElement e in A.mElements)
             weightSum += B.find_element(e.joint).weight;
         foreach (PoseElement e in A.mElements)

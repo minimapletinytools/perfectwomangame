@@ -229,7 +229,7 @@ public class CharacterBundleManager : FakeMonoBehaviour {
 
                 throw new UnityException("No info found for " + txtName);
 				//Debug.Log ("no info found for " + txtName);
-				mCharacterHelper.Characters[e].CharacterInfo = NUPD.CharacterInformation.default_character_info(e);
+				//mCharacterHelper.Characters[e].CharacterInfo = NUPD.CharacterInformation.default_character_info(e);
 			}
 		}
 

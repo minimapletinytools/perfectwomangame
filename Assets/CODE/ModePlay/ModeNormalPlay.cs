@@ -258,7 +258,7 @@ public class ModeNormalPlay
 		aCam.Camera.targetTexture = aCam.RT;
 		aCam.Camera.backgroundColor = new Color(1,1,1,0);
 		aCam.Camera.clearFlags = CameraClearFlags.SolidColor;
-		aCam.Camera.DoClear();
+		//aCam.Camera.DoClear();
 		aCam.Camera.Render();
 		RenderTexture.active = null;
 		//aCam.Camera.enabled = false;

@@ -20,7 +20,7 @@ public class NewInterfaceManager {
 
 	CharacterHeadPopupThingy mHeadPop;
 	
-    CharacterTextureBehaviour mMiniMan;
+    //CharacterTextureBehaviour mMiniMan;
 	FlatBodyObject mCurrentBody = null;
 
 	
@@ -30,7 +30,7 @@ public class NewInterfaceManager {
         mFlatCamera = new FlatCameraManager(new Vector3(-50000, 10000, 0), 9);
 		mFlatCamera.fit_camera_to_screen();
 		//mFlatCamera.fit_camera_to_game();
-        mMiniMan = ((GameObject)GameObject.Instantiate(ManagerManager.Manager.mReferences.mMiniChar)).GetComponent<CharacterTextureBehaviour>();        
+        //mMiniMan = ((GameObject)GameObject.Instantiate(ManagerManager.Manager.mReferences.mMiniChar)).GetComponent<CharacterTextureBehaviour>();        
 		//mMiniMan = //TODO something like this: mManager.mCharacterBundleManager.get_mini_character(new CharacterIndex(0,1));
 
 		mHeadPop = new CharacterHeadPopupThingy(this);

@@ -137,11 +137,11 @@ public class ProjectionManager : FakeMonoBehaviour {
     {
 
 		float r = 0;
-        if(false && !mManager.mZigManager.using_nite()) //TODO some problems with this lockngi... Should default to below if that happens
+        //TODO some problems with this lockngi... Should default to below if that happens
 		//if(!mManager.mZigManager.using_nite())
             r = -waist.Rotation.flat_rotation() + 90;    
-        else
-            r = get_relative(waist.Position, L.Position * 0.5f + R.Position * 0.5f);
+        //else
+            //r = get_relative(waist.Position, L.Position * 0.5f + R.Position * 0.5f);
 
 		return r;
     }
@@ -195,14 +195,14 @@ public class ProjectionManager : FakeMonoBehaviour {
 	public override void Update () {
         if (mManager.mZigManager.has_user())
         {
-			Pose targetPose = mManager.mGameManager.CurrentTargetPose;
-			Pose currentPose = mManager.mGameManager.CurrentPose; //this may have one frame of lag but oh well
+			//Pose targetPose = mManager.mGameManager.CurrentTargetPose;
+			//Pose currentPose = mManager.mGameManager.CurrentPose; //this may have one frame of lag but oh well
 			
             foreach (KeyValuePair<ZgJointId,Stupid> e in mImportant)
             {
                 if (e.Key != ZgJointId.None && e.Key != ZgJointId.Waist)
                 {
-                    ZgJointId parentJoint = BodyManager.get_parent(e.Key);
+                    //ZgJointId parentJoint = BodyManager.get_parent(e.Key);
                     try
                     {
                         /* note, if you do snapping, you need to turn it off for baby

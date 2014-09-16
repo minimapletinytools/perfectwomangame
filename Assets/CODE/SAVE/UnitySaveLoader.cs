@@ -38,7 +38,7 @@ public class UnitySaveLoader
 			if(Path.GetExtension(e) != ".png")
 				continue;
 			Debug.Log(e);
-			var tex = Resources.Load(e) as Texture2D;
+			//var tex = Resources.Load(e) as Texture2D;
 		}
 	}
 	

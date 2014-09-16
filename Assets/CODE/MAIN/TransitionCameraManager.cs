@@ -37,7 +37,7 @@ public class TransitionCameraManager : FakeMonoBehaviour
 		new CharacterIndex("16-3")
 	};
 
-	static float MAX_FADE = 30;
+	//static float MAX_FADE = 30;
 	
 	
 	//render to this guy someday eventually ha ha...

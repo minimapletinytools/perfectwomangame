@@ -133,26 +133,12 @@ public class BodyManager : FakeMonoBehaviour {
             }
         }
     }
-	
-	
-	ParticleSystem mParticles;
-	public void create_particle_system()
-	{
-		mParticles = (new GameObject("genParticles")).AddComponent<ParticleSystem>();
-		//mParticles.
-	}
-	
-	//rating between [0,1]
-	public void particle_explosion(float rating)
-	{
-		
-	}
+
 
     public override void Update()
     {
         if (mFlat != null)
         {
-			
 			/* TODO DELETE we set the pose elsewhere now
             //if were not in record mode for the tranpsarent one
             if ( mMode == 1)

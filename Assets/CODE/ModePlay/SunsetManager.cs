@@ -53,8 +53,6 @@ public class SunsetManager
 	
 	public void sunset_loaded_callback(AssetBundle aBundle, string aBundleName)
 	{
-		NewMenuReferenceBehaviour refs = mManager.mNewRef;
-		
 		mLoader = new CharacterLoader();
         mLoader.complete_load_character(aBundle,aBundleName);
 
@@ -177,7 +175,7 @@ public class SunsetManager
 		
 		float gTotalIndices = 8;
 		float lambda = index/gTotalIndices;
-		float ttt = Mathf.PI*lambda;
+
 		mSun.PositionInterpolationMaxLimit = 300;
 
 		//linear arc thing
@@ -187,6 +185,7 @@ public class SunsetManager
 			lambda*2*(sunHigh) + (1-lambda*2)*(sunLow) : 
 			(1-(lambda-0.5f)*2)*(sunHigh) + (lambda-0.5f)*2*(sunLow);
 		//circle arc
+		//float ttt = Mathf.PI*lambda;
 		//mSun.SoftPosition = mFlatCamera.Center + new Vector3(50*Mathf.Cos(ttt),700*Mathf.Sin(ttt),0);
 
 		if(hard) mSun.HardPosition = mSun.SoftPosition;

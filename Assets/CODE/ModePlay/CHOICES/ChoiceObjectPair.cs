@@ -4,8 +4,8 @@ using System.Collections;
 //TODO DELETE 
 public class ChoiceObjectPair : FlatElementMultiBase {
     public FlatElementImage mSquare;
-    DifficultyObject mDifficultyStars;
-    DifficultyObject mDifficultyBalls;
+    DifficultyObject mDifficultyStars = null;
+    DifficultyObject mDifficultyBalls = null;
     public FlatBodyObject mBody = null;
     public MeterImageObject mMeter = null;
 
@@ -18,6 +18,7 @@ public class ChoiceObjectPair : FlatElementMultiBase {
 		//NOTE these assets were removed since this class is no longer being used.
         //mDifficultyStars = new DifficultyObject(ManagerManager.Manager.mNewRef.uiPerfectStar, aDepth);
         //mDifficultyBalls = new DifficultyObject(ManagerManager.Manager.mNewRef.uiPerfectStar, aDepth);
+		//just to get rid of warnings...
 
         mElements.Add(new FlatElementMultiBase.ElementOffset(mSquare, new Vector3(mSide, 0, 0)));
         mElements.Add(new FlatElementMultiBase.ElementOffset(mDifficultyStars, new Vector3(-mSide, mRightBot, 0)));

@@ -57,7 +57,7 @@ public static class HikingRigidFunctions
 public class HikingPhysics
 {
 	//for cleanup purposes
-	List<GameObject> mColliders = new List<GameObject>();
+	//List<GameObject> mColliders = new List<GameObject>();
 	List<HikingRigidComponent> mRigidComponents = new List<HikingRigidComponent>();
 
 	public HikingPhysics()

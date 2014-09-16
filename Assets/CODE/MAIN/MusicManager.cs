@@ -7,7 +7,7 @@ public class MusicManager : FakeMonoBehaviour
 {
 	static float FADE_TIME = 4;
 	static float QUICK_FADE_TIME = 0.2f; //for music to cutscene music
-	static float CHOICE_FADE_TIME = 2;
+	//static float CHOICE_FADE_TIME = 2;
 	
 	static float MAX_MUSIC_VOLUME = 0.8f;
 	

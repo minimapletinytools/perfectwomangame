@@ -5,7 +5,7 @@ public class PhysicsFlatBodyObject
 {
 	
 	FlatBodyObject mFlat;
-	GameObject mPhysBodyParent = null;
+	//GameObject mPhysBodyParent = null;
 	//these are all the rigid bodies
 	Dictionary<ZgJointId,GameObject> mBodies = new Dictionary<ZgJointId, GameObject>();
 	//these are the joint offsets (because hinge joints starting angle is relative)

@@ -116,7 +116,6 @@ public class ZgManager : FakeMonoBehaviour {
         LastTrackedUser = user;
         if (user.SkeletonTracked)
         {
-			string output = "";
             foreach (ZgInputJoint joint in user.Skeleton)
             {
                 //if(joint.GoodPosition && joint.GoodRotation)
@@ -125,7 +124,6 @@ public class ZgManager : FakeMonoBehaviour {
 					Joints[joint.Id] = joint;
                 }
             }
-			//Debug.Log(output);
         }
 		
 		

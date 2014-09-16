@@ -4,7 +4,7 @@ using System.Collections;
 public class PerformanceGraphObject  : FlatElementMultiBase {
     public FlatRenderTextureGraphElement mBackground;
 	public FlatElementImage mForeground;
-	GameObject mStupidDot;
+	GameObject mStupidDot = null;
 	public PerformanceGraphObject(int aDepth)
 	{
 		//NOTE these assets were removed since this class is no longer being used.

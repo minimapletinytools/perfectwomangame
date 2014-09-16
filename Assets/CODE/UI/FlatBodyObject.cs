@@ -43,8 +43,8 @@ public class FlatBodyObject : FlatElementBase
 					reorder = true;
 
         //TODO fake thread this eventually please..
-        foreach (FlatBodyObject e in load_sequential(aChar.Images, aChar.Sizes, reorder))
-            ;
+		foreach (FlatBodyObject e in load_sequential(aChar.Images, aChar.Sizes, reorder))
+			;
 
         mOffset = (new Vector3(aChar.Sizes.mOffset.x, aChar.Sizes.mOffset.y, 0));
 
@@ -213,7 +213,7 @@ public class FlatBodyObject : FlatElementBase
 
         //order things
         Dictionary<ZgJointId, GameObject> jointObject = new Dictionary<ZgJointId, GameObject>();
-        Dictionary<ZgJointId, Texture2D> jointTexture = new Dictionary<ZgJointId, Texture2D>();
+        //Dictionary<ZgJointId, Texture2D> jointTexture = new Dictionary<ZgJointId, Texture2D>();
         jointObject[ZgJointId.Torso] = torso;
         jointObject[ZgJointId.Waist] = waist;
         jointObject[ZgJointId.Neck] = neck;
@@ -307,7 +307,7 @@ public class FlatBodyObject : FlatElementBase
             GameObject tempParent = new GameObject("genTempParent");
             tempParent.transform.position = e.Key.transform.position;
             List<Transform> children = new List<Transform>();
-            for (int i = 0; i < e.Key.transform.GetChildCount(); i++)
+            for (int i = 0; i < e.Key.transform.childCount; i++)
                 if (e.Key.transform.GetChild(i).parent == e.Key.transform)
                     children.Add(e.Key.transform.GetChild(i));
             foreach (Transform f in children)
@@ -417,7 +417,7 @@ public class FlatBodyObject : FlatElementBase
             GameObject tempParent = new GameObject("genTempParent");
             tempParent.transform.position = e.Key.transform.position;
             List<Transform> children = new List<Transform>();
-            for (int i = 0; i < e.Key.transform.GetChildCount(); i++)
+            for (int i = 0; i < e.Key.transform.childCount; i++)
                 if (e.Key.transform.GetChild(i).parent == e.Key.transform)
                     children.Add(e.Key.transform.GetChild(i));
             foreach (Transform f in children)

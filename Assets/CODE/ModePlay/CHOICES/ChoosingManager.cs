@@ -5,10 +5,10 @@ using System.Linq;
 public class ChoosingManager 
 {
 	ManagerManager mManager;
-	ModeNormalPlay mModeNormalPlay;
+	//ModeNormalPlay mModeNormalPlay;
     public ChoosingManager(ManagerManager aManager, ModeNormalPlay aModeNormalPlay)
 	{
-		mModeNormalPlay = aModeNormalPlay;
+		//mModeNormalPlay = aModeNormalPlay;
 		mManager = aManager;
 	}
 
@@ -28,7 +28,7 @@ public class ChoosingManager
 
 	FlatBodyObject[] mBBMiniMans;
 
-	CharacterIndex[] mChoices = null;
+	//CharacterIndex[] mChoices = null;
 	
 
 	public void initialize()
@@ -158,7 +158,7 @@ public class ChoosingManager
 	
 	public void set_bb_choices(CharacterIndex[] aChoices)
 	{
-		mChoices = aChoices;
+		//mChoices = aChoices;
 
         //JIT/AOT hard fix. I think aChoices is always passed into here in order anyways so it's not a problem
         var ch = aChoices;//aChoices.OrderBy(e => e.Choice).ToArray();

@@ -5,7 +5,7 @@ using System.Collections;
 //position is source, need to use separate function to set target
 public class ParticleStreamObject  : FlatElementBase {
 	ParticleSystem mParticles;
-	GameObject mParticleGameObject;
+	GameObject mParticleGameObject = null;
 	public Vector3 Target { get; set; }
     public ParticleStreamObject(int aDepth, Vector3 aTarget)
     {

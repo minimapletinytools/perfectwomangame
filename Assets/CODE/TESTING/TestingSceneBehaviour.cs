@@ -5,7 +5,7 @@ using System.Linq;
 public class TestingSceneBehaviour : MonoBehaviour {
 	
 	Texture2D mImage = null;
-	CharacterIndex mLastCharacter = new CharacterIndex(-1,0);
+	//CharacterIndex mLastCharacter = new CharacterIndex(-1,0);
 	public void Start()
 	{
 		ManagerManager.Manager.mGameManager.set_testing();

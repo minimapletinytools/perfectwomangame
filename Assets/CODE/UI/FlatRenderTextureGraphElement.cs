@@ -39,7 +39,7 @@ public class FlatRenderTextureGraphElement : FlatElementImage {
 		{
 			cam.clearFlags = CameraClearFlags.SolidColor;
 			cam.backgroundColor = new Color(0,0,0,0);
-			cam.DoClear();
+			//cam.DoClear();
 		}
 		else
 		{

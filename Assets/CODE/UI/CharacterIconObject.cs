@@ -3,8 +3,8 @@ using System.Collections;
 
 //TODO DELETE
 public class CharacterIconObject : FlatElementMultiBase {
-	FlatElementImage mBackground;
-	DifficultyObject mDifficultyStars;
+	FlatElementImage mBackground = null;
+	DifficultyObject mDifficultyStars = null;
 	FlatElementMultiBase.ElementOffset mText = null;
 	FlatElementImage mIcon = null;
     //public FlatBodyObject mBody = null;

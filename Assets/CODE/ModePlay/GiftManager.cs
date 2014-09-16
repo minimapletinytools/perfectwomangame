@@ -6,10 +6,10 @@ using System.Linq;
 public class GiftManager 
 {
 	ManagerManager mManager;
-	ModeNormalPlay mModeNormalPlay;
+	//ModeNormalPlay mModeNormalPlay;
 	public GiftManager(ManagerManager aManager,ModeNormalPlay aNormalPlay)
 	{
-		mModeNormalPlay = aNormalPlay;
+		//mModeNormalPlay = aNormalPlay;
 		mManager = aManager;
 	}
 
@@ -41,7 +41,6 @@ public class GiftManager
 	
 	public void gift_loaded_callback(AssetBundle aBundle, string aBundleName)
 	{
-		NewMenuReferenceBehaviour refs = mManager.mNewRef;
 		mLoader = new CharacterLoader();
 		mLoader.complete_load_character(aBundle,aBundleName);
 		mManager.mCharacterBundleManager.add_bundle_to_unload(aBundle);

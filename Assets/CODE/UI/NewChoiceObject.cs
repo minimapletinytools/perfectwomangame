@@ -12,8 +12,8 @@ public class NewChoiceObject : FlatElementMultiBase {
 	//FlatBodyObject mBody = null;
 	FlatElementImage mIcon = null;
 
-    float mSide = 45;
-    float mRightBot = -80;
+    //float mSide = 45;
+    //float mRightBot = -80;
 	
 	public float Percentage
 	{

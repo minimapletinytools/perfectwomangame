@@ -190,7 +190,7 @@ public class ManagerManager : MonoBehaviour{
         CameraClearFlags ccf = cam.clearFlags;
         cam.clearFlags = CameraClearFlags.SolidColor;
         cam.backgroundColor = new Color(1,1,1,0);
-        cam.DoClear();
+        //cam.DoClear();
         cam.Render();
         cam.clearFlags = ccf;
         RenderTexture.active = rt;
