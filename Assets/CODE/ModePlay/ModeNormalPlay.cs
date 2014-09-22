@@ -85,7 +85,7 @@ public class ModeNormalPlay
 			stat.update_score(1,Random.value);
 			stat.Stats = mManager.mGameManager.CharacterHelper.Characters[stat.Character];
 			mPerformanceStats.Add(stat);
-			mSunsetManager.add_character(stat.Character,false);
+			mSunsetManager.add_character(stat.Character,!stat.BadPerformance,false);
 		}
 		PerformanceStats realStat = new PerformanceStats(aChar);
 		realStat.Stats = mManager.mGameManager.CharacterHelper.Characters[realStat.Character];
@@ -726,7 +726,7 @@ public class ModeNormalPlay
 
     public void transition_to_ASTRONAUT()
     {
-        mSunsetManager.add_character(NGM.CurrentCharacterLoader.Character);
+        mSunsetManager.add_character(NGM.CurrentCharacterLoader.Character,!CurrentPerformanceStat.BadPerformance);
         slide_image(null,mSunsetImage,false);
 
         TED.add_event(
@@ -748,7 +748,7 @@ public class ModeNormalPlay
 	{
 		GS = NormalPlayGameState.PRECHOICE;
 
-		mSunsetManager.add_character(NGM.CurrentCharacterLoader.Character);
+		mSunsetManager.add_character(NGM.CurrentCharacterLoader.Character,!CurrentPerformanceStat.BadPerformance);
 		slide_image(null,mSunsetImage,false);
         CharacterIndex[] chars = available_choices(NGM.CurrentCharacterIndex.get_future_neighbor(0));
         mChoiceHelper.shuffle_and_set_choice_poses(chars.Length,mChoosingManager); 
@@ -834,7 +834,7 @@ public class ModeNormalPlay
                     //This can probably stay here
                     //we just died, so add the last character we just played and set the sun
                     //normally this will get called right after you make a choice but if we're here that meeans we didn't make a choice because we died
-                    mSunsetManager.add_character(NGM.CurrentCharacterLoader.Character, false);
+                    mSunsetManager.add_character(NGM.CurrentCharacterLoader.Character, !CurrentPerformanceStat.BadPerformance, false);
                     mSunsetManager.set_sun();
                     slide_image(null, mSunsetImage, false, false);
 

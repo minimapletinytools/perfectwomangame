@@ -46,9 +46,16 @@ public class SunsetManager
 	FlatElementImage construct_flat_image(string aName, int aDepth)
 	{
 		var sizing = mLoader.Sizes.find_static_element(aName);
-		var r = new FlatElementImage(mLoader.Images.staticElements[aName],sizing.Size,aDepth);
-		r.HardPosition = mFlatCamera.get_point(Vector3.zero) + sizing.Offset;
-		return r;
+        try{
+    		var r = new FlatElementImage(mLoader.Images.staticElements[aName],sizing.Size,aDepth);
+    		r.HardPosition = mFlatCamera.get_point(Vector3.zero) + sizing.Offset;
+    		return r;
+        }
+        catch(System.Exception e)
+        {
+            Debug.Log("couldn't find " + aName);
+            throw e;
+        }
 	}
 	
 	public void sunset_loaded_callback(AssetBundle aBundle, string aBundleName)
@@ -198,12 +205,15 @@ public class SunsetManager
 		set_sun (mCharacters.Count);
 	}
 	
-	public void add_character(CharacterIndex aChar, bool aShowScore = true)
+	public void add_character(CharacterIndex aChar, bool aGood, bool aShowScore = true)
 	{
 		Vector3 gDiffLabelOffset = new Vector3(-100,-350,0);
-		if(aChar != CharacterIndex.sFetus)
+		if(aChar != CharacterIndex.sFetus && aChar != CharacterIndex.sOneHundred) //TODO enable astronaut
 		{
-			var addMe = construct_flat_image("SUNSET_"+aChar.StringIdentifier,3+mCharacters.Count*2);
+            string imgname = "SUNSET_"+aChar.StringIdentifier;
+            if(aChar != CharacterIndex.sGrave)
+                imgname += "-" + (aGood?"a":"b");
+			var addMe = construct_flat_image(imgname,3+mCharacters.Count*2);
 			//Debug.Log ("adding character " + aChar.StringIdentifier);
 
 			//special positioning for grave
@@ -429,7 +439,7 @@ public class SunsetManager
 		mManager.mZigManager.ForceShow = 2;
 		
 		//add the gravestone to the scene
-		add_character(CharacterIndex.sGrave,false);
+		add_character(CharacterIndex.sGrave,true,false);
 		
 		//remove the grave
 		if(aStats.Last().Character.Age == 999)
