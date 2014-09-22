@@ -234,8 +234,9 @@ public class ModeNormalPlay
 				break;
 			case "110":
 				set_time_for_PLAY(GameConstants.playAstronautPlayTime); //astronaut scene is shorter
-				setup_next_poses(true); //astronaut scene has no background
+				setup_next_poses(true); //astronaut scene has no transparent pose
                 mAstronaut.start_astro();
+                mManager.mBackgroundManager.hide_bg_and_fg_elements(true);
                 mInterfaceManager.hide_interface();
 				transition_to_PLAY();
 				TED.add_event(

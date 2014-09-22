@@ -217,7 +217,7 @@ public class SunsetManager
 			//Debug.Log ("adding character " + aChar.StringIdentifier);
 
 			//special positioning for grave
-			if(aChar == CharacterIndex.sGrave)
+			if(aChar == CharacterIndex.sGrave && aChar.LevelIndex != 7) //TODO enable astronaut dot
 			{
 				var posImg = construct_flat_image("SUNSET_"+(new CharacterIndex(mCharacters.Count,0)).get_future_neighbor(0).StringIdentifier,0);
 				addMe.HardPosition = posImg.SoftPosition;

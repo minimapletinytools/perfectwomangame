@@ -47,14 +47,22 @@ public class AstronautPlay
 
     public void spawn_asteroid(Vector3 aPos, Vector3 aVel)
     {
-        var ast = new ImageGameObjectUtility(mMode.NGM.mManager.mNewRef.partGold,new Vector2(300,300)).ParentObject;
+
+        //pull the images from the character loader
+        //I should have done this using dependency injection but who cares
+        string[] astroNames = {"BG-1","BG-2","BG-3","BG-4","FG-1","FG-2"};
+        astroNames.Shuffle();
+        var sizing = ManagerManager.Manager.mGameManager.CurrentCharacterLoader.Sizes.find_static_element(astroNames[0]);
+        var astroImage = ManagerManager.Manager.mGameManager.CurrentCharacterLoader.Images.staticElements [astroNames[0]];
+
+        var ast = new ImageGameObjectUtility(astroImage,sizing.Size).ParentObject;
         foreach (Renderer e in ast.GetComponentsInChildren<Renderer>())
         {
-            e.material.renderQueue = 100;
+            e.material.renderQueue = 1000;
             e.gameObject.layer = 1; //this is the mainbodycamera layer
         }
         ast.AddComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePositionZ & RigidbodyConstraints.FreezeRotationX & RigidbodyConstraints.FreezeRotationY;
-        ast.AddComponent<SphereCollider>().radius = 140;
+        ast.AddComponent<SphereCollider>().radius = sizing.Size.y*4/9f;
         ast.transform.position = aPos;
         ast.rigidbody.velocity = aVel;
         ast.rigidbody.useGravity = false;
@@ -94,7 +102,6 @@ public class AstronautPlay
             var pos = new Vector3(Mathf.Cos(rad),Mathf.Sin(rad)*9/16f,0)*2500;
             var vel = (-pos.normalized + new Vector3(Mathf.Cos(rad2),Mathf.Sin(rad2),0)*.15f)*Random.Range(200,300); //send it flying towards the center of the screen
             spawn_asteroid(pos,vel);
-            Debug.Log("spawned asteroid");
         }
 
     }

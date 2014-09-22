@@ -118,28 +118,41 @@ public class BackgroundManager  : FakeMonoBehaviour
 		return mManager.mCameraManager.BackgroundCamera.transform.position + (new Vector3(Random.Range(-1f, 1f), Random.Range(-1f, 1f), 0)).normalized * Random.Range(2000,20000);
 	}
 	
+
+    public void hide_bg_and_fg_elements(bool aHard = false)
+    {
+        foreach (FlatElementImage e in mForegroundElements)
+        {
+            //slide out
+            //e.PositionInterpolationMaxLimit = 1000;
+            //e.SoftPosition = random_position();
+            
+            //fadeout
+            e.SoftColor = new Color(1,1,1,0);
+            if(aHard){
+                e.HardColor = new Color(1,1,1,0);
+                e.update(0);
+            }
+
+        }
+        foreach (FlatElementImage e in mBackgroundElements)
+        {
+            //slide out
+            //e.PositionInterpolationMaxLimit = 1000;
+            //e.SoftPosition = random_position();
+            
+            //fadeout
+            e.SoftColor = new Color(1,1,1,0);
+            if(aHard){
+                e.HardColor = new Color(1,1,1,0);
+                e.update(0);
+            }
+        }
+    }
 	//note aCharacter need not be the same as teh original character (use this or death)
 	public void load_cutscene(int aNum, CharacterLoader aCharacter)
 	{
-		foreach (FlatElementImage e in mForegroundElements)
-		{
-			//slide out
-			//e.PositionInterpolationMaxLimit = 1000;
-			//e.SoftPosition = random_position();
-
-			//fadeout
-			e.SoftColor = new Color(1,1,1,0);
-		}
-		foreach (FlatElementImage e in mBackgroundElements)
-		{
-			//slide out
-			//e.PositionInterpolationMaxLimit = 1000;
-			//e.SoftPosition = random_position();
-
-			//fadeout
-			e.SoftColor = new Color(1,1,1,0);
-		}
-		
+        hide_bg_and_fg_elements();
 		string prefix = "CUTSCENE"+aNum+"_";
 		load_images(aCharacter,mForegroundElements,sForegroundStartingDepth,prefix);
 		set_foreground_layer(mForegroundLayer);
