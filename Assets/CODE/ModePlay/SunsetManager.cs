@@ -217,9 +217,12 @@ public class SunsetManager
 			//Debug.Log ("adding character " + aChar.StringIdentifier);
 
 			//special positioning for grave
-			if(aChar == CharacterIndex.sGrave && aChar.LevelIndex != 7) //TODO enable astronaut dot
+			if(aChar == CharacterIndex.sGrave)
 			{
-				var posImg = construct_flat_image("SUNSET_"+(new CharacterIndex(mCharacters.Count,0)).get_future_neighbor(0).StringIdentifier,0);
+                CharacterIndex gravePosition = (new CharacterIndex(mCharacters.Count,0)).get_future_neighbor(0);
+                if(mCharacters.Count == 7) //astronaut dot does not get used
+                    gravePosition = new CharacterIndex(9,0);
+				var posImg = construct_flat_image("SUNSET_"+gravePosition.StringIdentifier,0);
 				addMe.HardPosition = posImg.SoftPosition;
 				posImg.destroy();
 			} else if(mCharacters.Count < 7) { //add diff label, note no difficulty for age 100
