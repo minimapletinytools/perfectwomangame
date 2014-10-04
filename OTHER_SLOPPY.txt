@@ -1,8 +1,27 @@
+::SCID OUTLINE::
+-events
+	-character X complete (sum TotalCharsPlayed)
+	-game complete (sum TotalGamesPlayed, max HighScore)
+	-character X unlocked (sum CharsUnlocked)
+-achievements
+	-played character X 
+	-born
+	-died
+	-transcended
+	-played 10 games
+	-all characters played
+-hero stats
+	-characters played
+	-number lives lived 
+	-high score 
+-rich user presence
+	-depending on whats possible
+		-playing character X
+		-age X
+		-playing Perfect Woman
+
 ::Unity questions::
 -confirm if pressing button in middle is the same as suspend and if there is any easy way to handle this
-
-
-
 
 ::USER LOGIN PLAN::
 -game start
