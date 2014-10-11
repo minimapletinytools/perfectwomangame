@@ -280,7 +280,7 @@ public class Unlockables
                 unlockedCharacters[e] = 1;
 			//else if(e.Choice < 4)
             else if(e.Choice == 3)
-				unlockedCharacters[e] = 2; //2 - locked, 1 - avail
+				unlockedCharacters[e] = 1; //2 - locked, 1 - avail
 			else
 				unlockedCharacters[e] = 1; 
 		}
@@ -332,6 +332,7 @@ public class UnlockManager
         return r;
     }
 
+    //TODO do this through ZgInterface
 	void read_unlock()
 	{
 		try{
@@ -342,9 +343,9 @@ public class UnlockManager
 		} catch {} //no such file, must be first launch
 	}
 
+    //TODO do this through ZgInterface
 	public void write_unlock()
 	{
-
 		IFormatter formatter = new BinaryFormatter();
 		Stream stream = new FileStream("gg.bin", FileMode.Create, FileAccess.Write, FileShare.None);
 		formatter.Serialize(stream, mUnlocked);

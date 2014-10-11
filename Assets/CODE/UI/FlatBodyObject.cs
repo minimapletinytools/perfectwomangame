@@ -54,6 +54,7 @@ public class FlatBodyObject : FlatElementBase
         SoftColor = new Color(0.5f, 0.5f, 0.5f, 0.5f);
         SoftInterpolation = 0.08f;
 
+        //this breaks everything...
         UseDepth = (aDepth != -1);
         if (UseDepth)
             Depth = aDepth;

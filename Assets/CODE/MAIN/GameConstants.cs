@@ -44,14 +44,14 @@ public static class GameConstants
 	public static float playFeverCutoff = 0.7f;
 	public static float playFeverRequiredTime = 5f;
 	public static float playDefaultPlayTime = 35f;
-    public static float playAstronautPlayTime = 1000;//15f;
+    public static float playAstronautPlayTime = 25f;//15f;
 	public static float playFetusPassThreshold = 0.6f;
 	public static float deathPerformanceThreshold = 0.1f;
 	public static float deathRequiredTime = 8f;
 	public static float badPerformanceThreshold = 0.4f;
 	public static float[] difficultyToChangeTime = new float[]{4,2,1.4f,.7f};
 
-	public static bool showReward = true;
+    public static bool showReward = false;//true;
 
     
     //TODO set true when you have 110
