@@ -73,6 +73,7 @@ public class ZgManager : FakeMonoBehaviour {
 		}
 		
         ZgInterface.update();
+        DepthView.Update();
 	}
 	
 	public int is_reader_connected() //0 - not connected, 1 - trying to connect, 2 - connected

@@ -120,7 +120,7 @@ public class ZgDepthViewer
         
         
     }
-    void Update()
+    public void Update()
     {
         float lambda = 0.1f;
         currentRect.x = (1 - lambda) * currentRect.x + lambda * targetRect.x;
