@@ -195,6 +195,9 @@ public class SunsetManager
 		//float ttt = Mathf.PI*lambda;
 		//mSun.SoftPosition = mFlatCamera.Center + new Vector3(50*Mathf.Cos(ttt),700*Mathf.Sin(ttt),0);
 
+        if (aIndex == 8) //no sun if it's the astronaut
+            mSun.SoftPosition = mFlatCamera.get_point(Vector3.zero) + new Vector3(0, -400, 0); 
+
 		if(hard) mSun.HardPosition = mSun.SoftPosition;
 
 		if(!hard)
@@ -219,10 +222,19 @@ public class SunsetManager
 			//special positioning for grave
 			if(aChar == CharacterIndex.sGrave)
 			{
+                //put it at the last character plus one position
                 CharacterIndex gravePosition = (new CharacterIndex(mCharacters.Count,0)).get_future_neighbor(0);
-                if(mCharacters.Count == 7) //astronaut dot does not get used
-                    gravePosition = new CharacterIndex(9,0);
-				var posImg = construct_flat_image("SUNSET_"+gravePosition.StringIdentifier,0);
+
+                if(mCharacters.Count == 7) //there is no astronaut dot yet TODO need lea to add astronaut dot
+                    gravePosition = new CharacterIndex(9,0); 
+
+                //weird...
+                FlatElementImage posImg;
+                if(gravePosition.LevelIndex <= 7)
+				    posImg = construct_flat_image("SUNSET_"+gravePosition.StringIdentifier+"-a",0);
+                else
+                    posImg = construct_flat_image("SUNSET_"+gravePosition.StringIdentifier,0);
+
 				addMe.HardPosition = posImg.SoftPosition;
 				posImg.destroy();
 			} else if(mCharacters.Count < 7) { //add diff label, note no difficulty for age 100
@@ -522,7 +534,8 @@ public class SunsetManager
 
 			chain = chain.then_one_shot(
 				delegate() {
-					show_score(ps.Character,(int)ps.AdjustedScore,gPreScoreCount + gScoreCount + gPostScoreCount + 1.5f);
+                    if(ps.Character != CharacterIndex.sOneHundred)
+					    show_score(ps.Character,(int)ps.AdjustedScore,gPreScoreCount + gScoreCount + gPostScoreCount + 1.5f);
 				}
 			,gPreScoreCount).then(
 				delegate(float aTime)
@@ -662,8 +675,13 @@ public class SunsetManager
 			deathSentence += "Unfortunately you died ";
 		else
 			deathSentence += "You died ";
-		if(!aStats[aStats.Count-1].Character.IsDescriptionAdjective)
-			deathSentence += "as a ";
+		if (!aStats [aStats.Count - 1].Character.IsDescriptionAdjective)
+           {
+            if("aeiouAEIOU".IndexOf(aStats[aStats.Count-1].Character.Description[0]) >= 0)
+                deathSentence += "as an ";
+            else
+                deathSentence += "as a ";
+        }
 		deathSentence += aStats[aStats.Count-1].Character.Description;
 
 		chain = chain.then(
