@@ -86,7 +86,7 @@ public class BodyManager : FakeMonoBehaviour {
 
         if (aCharacter != null && aCharacter.Name != "999")
         {
-            mFlat = new FlatBodyObject(aCharacter, 30);
+            mFlat = new FlatBodyObject(aCharacter, -1);
             set_layer(mLayer);
             if (ManagerManager.Manager.mGameManager.CurrentLevel == 0)
                 mFlat.HardPosition = Random.insideUnitCircle.normalized * 30000;

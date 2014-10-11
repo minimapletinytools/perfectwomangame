@@ -91,6 +91,11 @@ public class GiftManager
 	public void set_background_for_render()
 	{
 		mManager.mBackgroundManager.load_character(mManager.mGameManager.CurrentCharacterLoader);
+
+        //NOTE exception case for astronaut b/c it has asteroids as background elements even though we don't want them
+        if (mManager.mGameManager.CurrentCharacterLoader.Character == CharacterIndex.sOneHundred)
+            mManager.mBackgroundManager.hide_bg_and_fg_elements(true);
+
 		int[] depthMap = (new int[]{1,-1,4,2,-2,3,5}).Reverse().ToArray();
 		for(int i = 0; i < mStages.Count-1; i++)
 		{

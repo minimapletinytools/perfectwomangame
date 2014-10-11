@@ -58,7 +58,7 @@ public class AstronautPlay
         var ast = new ImageGameObjectUtility(astroImage,sizing.Size).ParentObject;
         foreach (Renderer e in ast.GetComponentsInChildren<Renderer>())
         {
-            e.material.renderQueue = 1000;
+            e.material.renderQueue = 5000;
             e.gameObject.layer = 1; //this is the mainbodycamera layer
         }
         ast.AddComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePositionZ & RigidbodyConstraints.FreezeRotationX & RigidbodyConstraints.FreezeRotationY;
