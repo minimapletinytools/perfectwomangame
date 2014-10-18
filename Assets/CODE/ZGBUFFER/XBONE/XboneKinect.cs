@@ -34,6 +34,13 @@ public class XboneKinect{
 	public bool IsTracking{ get; private set; } //are we tracking
 	ulong mTrackingId = 0; //body id being tracked
 	
+
+    public bool IsReaderConnected
+    {
+        get{
+            return SensorManager.IsOpen();
+        }
+    }
 	public void Start()
 	{
 		SensorManager.Create ();
@@ -134,7 +141,12 @@ public class XboneKinect{
 	}
 	
 	
-	
+    public bool IsReaderConnected
+    {
+        get{
+            return mSource.GetData() != null;
+        }
+    }
 	public bool IsTracking{ get; private set; } //are we tracking
 	ulong mTrackingId = 0; //body id being tracked
 	BodySourceManager mSource = null;

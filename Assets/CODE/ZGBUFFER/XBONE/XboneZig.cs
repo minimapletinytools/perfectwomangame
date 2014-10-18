@@ -56,21 +56,15 @@ public class MicrosoftZig : ZgInterface
 	}
 
 
+
 	//NOTE calling these assumes mStorage has been properly initialized already... 
 	void write_data(byte[] aData, string aName){mStorage.write_data (aData, aName);}
 	byte[] read_data(string aName){return mStorage.read_data (aName);}
 	
-	public ZgInput ZgInput
-	{
-		get
-		{
-			return null;
-		}
-	}
 	public ZgDepth DepthImage{get{ return null; }}
 	public ZgImage ColorImage{get{ return null; }}
 	public ZgLabelMap LabelMap{get{ return null; }}
-	public bool ReaderInitialized { get{ return Initialized; } } //TODO maybe return something more useful...
+    public bool ReaderInitialized { get{ return mKinect.IsReaderConnected; } } //TODO maybe return something more useful...
 	public bool IsMicrosoftKinectSDK { get{ return true; } }
 }
 

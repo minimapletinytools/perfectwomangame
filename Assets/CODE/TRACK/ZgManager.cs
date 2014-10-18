@@ -12,7 +12,7 @@ public class ZgManager : FakeMonoBehaviour {
     public ZgTrackedUser LastTrackedUser { get; private set; }
     public ZgManager(ManagerManager aManager) : base(aManager)
 	{
-        //ZigInterface = new EmptyZig();
+        //ZgInterface = new EmptyZig();
 #if UNITY_XBOXONE && !UNITY_EDITOR
 		ZgInterface = new MicrosoftZig();
 #else
@@ -78,22 +78,14 @@ public class ZgManager : FakeMonoBehaviour {
 	
 	public int is_reader_connected() //0 - not connected, 1 - trying to connect, 2 - connected
 	{
-        if(ZgInterface.ZgInput == null)
-			return 1;
-        else if(ZgInterface.ZgInput.ReaderInited == true)
-			return 2;
-		else return 0;
+        if (ZgInterface.ReaderInitialized)
+            return 2;
+        return 0;
 	}
 
     public bool using_nite()
     {
-        if (ZgInterface.ZgInput != null)
-        {
-            return !ZgInterface.ZgInput.kinectSDK;
-        }
-
-        //default is true because it is a safer choice
-        return true;
+        return !ZgInterface.IsMicrosoftKinectSDK;
     }
 	
 	public bool has_user()

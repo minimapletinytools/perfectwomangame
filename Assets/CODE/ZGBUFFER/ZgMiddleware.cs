@@ -5,7 +5,6 @@ using System.Linq;
 public interface ZgInterface
 {
     void initialize(ZgManager aZig);
-    ZgInput ZgInput{get;} //TODO probably get rid of this and split its function out
 	ZgDepth DepthImage{get;}
 	ZgImage ColorImage{get;}
 	ZgLabelMap LabelMap{get;}
@@ -25,7 +24,7 @@ public interface ZgInterface
 
 }
 
-public class EmptyZg : ZgInterface
+public class EmptyZig : ZgInterface
 {
     //if MonoBehaviours are needed, they can be added to the aZig.gameObject
     public void initialize(ZgManager aZig)
@@ -47,13 +46,6 @@ public class EmptyZg : ZgInterface
 		return true;
 	}
 
-    public ZgInput ZgInput
-    {
-        get
-        {
-            return null;
-        }
-    }
 	public ZgDepth DepthImage{get{ return null; }}
 	public ZgImage ColorImage{get{ return null; }}
 	public ZgLabelMap LabelMap{get{ return null; }}

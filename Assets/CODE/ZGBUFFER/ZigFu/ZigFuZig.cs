@@ -103,7 +103,9 @@ public class ZigFuZig : ZgInterface
     public void update()
     {
     }
-    
+
+
+
     public ZgInput ZgInput
     {
         get
@@ -135,6 +137,6 @@ public class ZigFuZig : ZgInterface
 	public ZgDepth DepthImage{get{ return ZgInput.Depth; }}
 	public ZgImage ColorImage{get{ return ZgInput.Image; }}
 	public ZgLabelMap LabelMap{get{ return ZgInput.LabelMap; }}
-	public bool ReaderInitialized { get{ return ZgInput.ReaderInited; } }
-	public bool IsMicrosoftKinectSDK { get{ return ZgInput.kinectSDK; } }
+    public bool ReaderInitialized { get{ return ZgInput != null && ZgInput.ReaderInited; } }
+    public bool IsMicrosoftKinectSDK { get{ return ZgInput == null || ZgInput.kinectSDK; } } 
 }
