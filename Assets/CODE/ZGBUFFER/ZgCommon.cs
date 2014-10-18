@@ -36,11 +36,13 @@ public class ZgResolutionData
 }
 
 
+
 public class ZgDepth
 {
-    public short[] data;
+    public short[] data = null;
     public int yres;
     public int xres;
+    Texture2D tex = null;
     public ZgDepth (int x, int y, short[] aData = null)
     {
         this.xres = x;
@@ -50,15 +52,18 @@ public class ZgDepth
 		else
 			this.data = aData;
     }
+    public ZgDepth(Texture2D aTex)
+    {
+        tex = aTex;
+    }
 }
 
 public class ZgLabelMap
 {
     public short[] data;
-    public int xres
-    {get;private set;}
-    public int yres
-    {get;private set;}
+    public int xres;
+    public int yres;
+    Texture2D tex = null;
     
     public ZgLabelMap (int x, int y, short[] aData)
     {
@@ -69,15 +74,18 @@ public class ZgLabelMap
 		else
 			this.data = aData;
     }
+
+    public ZgLabelMap(Texture2D aTex)
+    {
+        tex = aTex;
+    }
 }
 public class ZgImage
 {
-    public Color32[] data;
-    public int xres
-    {get;private set;}
-    public int yres
-    {get;private set;}
-    
+    public Color32[] data = null;
+    public int xres;
+    public int yres;
+    Texture2D tex = null;
     public ZgImage (int x, int y, Color32[] aData)
     {
         this.xres = x;
@@ -86,6 +94,10 @@ public class ZgImage
 			this.data = new Color32[x * y];
 		else
 			this.data = aData;
+    }
+    public ZgImage(Texture2D aTex)
+    {
+        tex = aTex;
     }
 }
 

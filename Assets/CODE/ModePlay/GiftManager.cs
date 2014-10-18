@@ -82,7 +82,7 @@ public class GiftManager
 	}
 	public void capture_player()
 	{
-		var tex = mManager.mZigManager.ImageView.take_color_image();
+		var tex = mManager.mZigManager.ImageView.take_color_image(mManager.mZigManager.ZgInterface.ColorImage,mManager.mZigManager.ZgInterface.LabelMap);
 		mStages.Last().playerTex = new Texture2D(tex.width,tex.height,tex.format,false);
 		mStages.Last().playerTex.SetPixels(tex.GetPixels());
 		mStages.Last().playerTex.Apply();

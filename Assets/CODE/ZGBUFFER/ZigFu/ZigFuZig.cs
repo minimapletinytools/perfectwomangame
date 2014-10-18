@@ -105,7 +105,6 @@ public class ZigFuZig : ZgInterface
     }
 
 
-
     public ZgInput ZgInput
     {
         get

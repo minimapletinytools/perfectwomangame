@@ -38,8 +38,9 @@ public class MicrosoftZig : ZgInterface
 	
 	public void update()
 	{
-
 		mKinect.Update ();
+
+        //TODO update data inside of DepthViewer and ImageViewer
 	}
 	
 	public bool has_user()

@@ -46,6 +46,7 @@ public class EmptyZig : ZgInterface
 		return true;
 	}
 
+
 	public ZgDepth DepthImage{get{ return null; }}
 	public ZgImage ColorImage{get{ return null; }}
 	public ZgLabelMap LabelMap{get{ return null; }}

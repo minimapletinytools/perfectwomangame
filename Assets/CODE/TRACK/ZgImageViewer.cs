@@ -5,11 +5,11 @@ using System.Runtime.Serialization;
 
 public class ZgImageViewer
 {
-    public Texture2D take_color_image()
+    public Texture2D take_color_image(ZgImage image, ZgLabelMap labelmap)
     {
         if(ManagerManager.Manager.mZigManager.is_reader_connected() == 2)
         {
-            UpdateTexture (ZgInput.Image,ZgInput.LabelMap);
+            UpdateTexture (image,labelmap);
             //Debug.Log ("updated image");
         }
         return imageTexture;
@@ -42,7 +42,7 @@ public class ZgImageViewer
     }
 
     //call this manually to update imageTexture
-    void UpdateTexture(ZgImage image, ZgLabelMap labelmap)
+    Texture2D UpdateTexture(ZgImage image, ZgLabelMap labelmap)
     {
         
         short[] rawLabelMap = labelmap.data;
@@ -87,6 +87,7 @@ public class ZgImageViewer
         }
         imageTexture.SetPixels32(imageOutputPixels);
         imageTexture.Apply();
-        
+
+        return imageTexture;
     }
 }
