@@ -17,6 +17,8 @@ public class ZgDepthViewer
     // Use this for initialization
 	public ZgDepthViewer () {
 
+        //TODO nedes to handle Kinect2.0 resolutions
+
         textureSize = ZgResolutionData.FromZgResolution(TextureSize);
         DepthTexture = new Texture2D(textureSize.Width, textureSize.Height);
         DepthTexture.wrapMode = TextureWrapMode.Clamp;
@@ -24,7 +26,7 @@ public class ZgDepthViewer
         depthToColor = new Color32[MaxDepth];
         outputPixels = new Color32[textureSize.Width * textureSize.Height];
     }
-    
+
     void UpdateHistogram(ZgDepth depth)
     {
         int i, numOfPoints = 0;
@@ -81,6 +83,29 @@ public class ZgDepthViewer
         }
         DepthTexture.SetPixels32(outputPixels);
         DepthTexture.Apply();
+    }
+
+
+    void UpdateTexture(Texture2D depth)
+    {
+        //TODO test
+        DepthTexture = depth;
+
+        //resize our texture using simple NN resizing
+        /*
+        var pixels = depth.GetPixels();
+        int depthIndex = 0;
+        int factorX = depth.width / textureSize.Width;
+        int factorY = ((depth.height / textureSize.Height) - 1) * depth.width;
+        // invert Y axis while doing the update
+        for (int y = textureSize.Height - 1; y >= 0 ; --y, depthIndex += factorY) {
+            int outputIndex = y * textureSize.Width;
+            for (int x = 0; x < textureSize.Width; ++x, depthIndex += factorX, ++outputIndex) {
+                outputPixels[outputIndex] = depthToColor[pixels[depthIndex]];
+            }
+        }
+        DepthTexture.SetPixels32(outputPixels);
+        DepthTexture.Apply();*/
     }
     
     public void Zig_Update(ZgInput input)

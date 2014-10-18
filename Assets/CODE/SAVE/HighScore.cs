@@ -32,11 +32,11 @@ public class HighScore
 	{
 		Scores = new List<ScoreEntry>();
 	}
-	public ScoreEntry record_score(float aScore, ZgImageViewer aIV, ZgInterface aZg)
+	public ScoreEntry record_score(float aScore, ZgInterface aZg)
 	{
 		ScoreEntry score = new ScoreEntry();
 		score.score = aScore;
-		score.image = aIV.take_color_image(aZg.ColorImage,aZg.LabelMap);
+        score.image = aZg.take_color_image();
 		score.imageName = "hsimage_"+DateTime.Now.ToString();
 		return score;
 	}

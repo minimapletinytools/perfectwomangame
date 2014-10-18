@@ -247,6 +247,7 @@ public class ManagerManager : MonoBehaviour{
 
 		//TODO DELETE
 		mZigManager.DepthView.OnGUI ();
+       //mZigManager.ImageView.OnGUI();
 		
     }
 	

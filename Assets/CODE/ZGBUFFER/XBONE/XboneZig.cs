@@ -40,7 +40,8 @@ public class MicrosoftZig : ZgInterface
 	{
 		mKinect.Update ();
 
-        //TODO update data inside of DepthViewer and ImageViewer
+        //TODO update with real depth texture...
+        //ManagerManager.Manager.mZigManager.DepthView.Zig_Update (ZgInput);
 	}
 	
 	public bool has_user()
@@ -56,6 +57,17 @@ public class MicrosoftZig : ZgInterface
 		return false;
 	}
 
+    public Texture2D take_color_image()
+    {
+        if(ManagerManager.Manager.mZigManager.is_reader_connected() == 2)
+        {
+            //TODO update with real textures...
+            return null;
+            //return ManagerManager.Manager.mZigManager.ImageView.UpdateTexture (ZgImage,ZgLabelMap);
+            //Debug.Log ("updated image");
+        }
+        return null;
+    }
 
 
 	//NOTE calling these assumes mStorage has been properly initialized already... 

@@ -11,10 +11,12 @@ public interface ZgInterface
 	bool ReaderInitialized { get; }
 	bool IsMicrosoftKinectSDK { get; }
 
+
+
     bool has_user();
     void update();
-
 	bool can_start();
+    Texture2D take_color_image();
 
     //TODO
     //void write_data(byte[] aData, string aName);
@@ -45,6 +47,8 @@ public class EmptyZig : ZgInterface
 	{
 		return true;
 	}
+
+    public Texture2D take_color_image(){return null;}
 
 
 	public ZgDepth DepthImage{get{ return null; }}

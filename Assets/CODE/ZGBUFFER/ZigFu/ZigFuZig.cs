@@ -87,7 +87,7 @@ public class ZigFuZig : ZgInterface
 
     public void Zig_UpdateInput(ZigInput aInput)
 	{
-		ManagerManager.Manager.mZigManager.DepthView.Zig_Update (ZgInput);
+		ManagerManager.Manager.mZigManager.DepthView.Zig_Update(ZgInput);
 	}
 
     public bool has_user()
@@ -102,6 +102,17 @@ public class ZigFuZig : ZgInterface
 
     public void update()
     {
+    }
+
+    
+    public Texture2D take_color_image()
+    {
+        if(ManagerManager.Manager.mZigManager.is_reader_connected() == 2)
+        {
+            return ManagerManager.Manager.mZigManager.ImageView.UpdateTexture (ColorImage,LabelMap);
+            //Debug.Log ("updated image");
+        }
+        return null;
     }
 
 
