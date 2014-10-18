@@ -98,10 +98,6 @@ public class TransitionCameraManager : FakeMonoBehaviour
 		//???mSunShafts.sunTransform = shafts.sunTransform;
 		*/
 		
-		
-		//mDepthImage = new FlatElementImage(null,0); 
-		//mElement.Add(mDepthImage);
-		
 
         initialize_depth_warning();
 
@@ -115,6 +111,8 @@ public class TransitionCameraManager : FakeMonoBehaviour
 	public void initialize_depth_warning()
 	{
 		mDepthImage = new FlatElementImage(null,100);
+        mDepthImage.HardScale = Vector3.one * 2;
+        mDepthImage.HardPosition = mFlatCamera.get_point(1, -1) + new Vector3(300, 0);
 		mDepthWarningText = new FlatElementText(mManager.mNewRef.genericFont,40,"Make sure you are\nin frame and no body\nparts are covered",100);
 		mDepthWarningText.HardColor = new Color(1,1,1,0);	
 		mDepthWarningText.Alignment = TextAlignment.Left;
@@ -131,9 +129,12 @@ public class TransitionCameraManager : FakeMonoBehaviour
 	
 	public bool EnableDepthWarning{
 		set{
-			if(value){
+   			if(value){
+                //WHY DIVIDE BY 4 AND NOT 2??? I DONT KNOW
+                mDepthImage.SoftPosition = mFlatCamera.get_point(1,-1) + new Vector3(-10 - mDepthImage.BoundingBox.width / 4, 10 + mDepthImage.BoundingBox.height / 4, 0) * mFlatCamera.screen_pixel_to_camera_pixel_ratio();
 				mDepthWarningText.SoftColor = new Color(1,1,1,1);
 			} else {
+                mDepthImage.SoftPosition = mFlatCamera.get_point(1,-1) + new Vector3(400 - mDepthImage.BoundingBox.width / 4, 10 + mDepthImage.BoundingBox.height / 4, 0) * mFlatCamera.screen_pixel_to_camera_pixel_ratio();
 				mDepthWarningText.SoftColor = new Color(1,1,1,0);
 			}
 		}
@@ -152,9 +153,7 @@ public class TransitionCameraManager : FakeMonoBehaviour
 		
 		
         TED.update(Time.deltaTime);
-		
-		
-        
+
 	}
 
 
@@ -229,7 +228,9 @@ public class TransitionCameraManager : FakeMonoBehaviour
 	
 	public void start_configuration_display()
 	{
-		
+        //bad place to put this but we can assume that at this point all the kinect stuff is properly initialized.
+        mDepthImage.set_new_texture(mManager.mZigManager.DepthView.DepthTexture);
+        EnableDepthWarning = false;
 		
 		//fade in
 		TED.add_event(fade_in,0);
