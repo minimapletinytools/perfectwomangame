@@ -110,9 +110,9 @@ public class TransitionCameraManager : FakeMonoBehaviour
 
 	public void initialize_depth_warning()
 	{
-		mDepthImage = new FlatElementImage(null,100);
+		mDepthImage = new FlatElementImage(null,new Vector2(160,120),100);
         mDepthImage.HardScale = Vector3.one * 2;
-        mDepthImage.HardPosition = mFlatCamera.get_point(1, -1) + new Vector3(300, 0);
+        mDepthImage.HardPosition = mFlatCamera.get_point(1, -1) + new Vector3(-10 - mDepthImage.BoundingBox.width / 4, 10 + mDepthImage.BoundingBox.height / 4, 0) * mFlatCamera.screen_pixel_to_camera_pixel_ratio();
 		mDepthWarningText = new FlatElementText(mManager.mNewRef.genericFont,40,"Make sure you are\nin frame and no body\nparts are covered",100);
 		mDepthWarningText.HardColor = new Color(1,1,1,0);	
 		mDepthWarningText.Alignment = TextAlignment.Left;
@@ -229,7 +229,7 @@ public class TransitionCameraManager : FakeMonoBehaviour
 	public void start_configuration_display()
 	{
         //bad place to put this but we can assume that at this point all the kinect stuff is properly initialized.
-        mDepthImage.set_new_texture(mManager.mZigManager.DepthView.DepthTexture);
+        mDepthImage.set_new_texture(mManager.mZigManager.DepthView.DepthTexture,new Vector2(160,120));
         EnableDepthWarning = false;
 		
 		//fade in

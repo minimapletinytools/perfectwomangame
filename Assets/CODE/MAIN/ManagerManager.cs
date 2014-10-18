@@ -245,7 +245,7 @@ public class ManagerManager : MonoBehaviour{
 		//GUI.Box(new Rect(0,0,Screen.width * mGameManager.mModeNormalPlay.mLastGrade,50),""); 
 
 
-		//TODO DELETE
+		//for debugging
 		//mZigManager.DepthView.OnGUI ();
         //mZigManager.ImageView.OnGUI();
 		

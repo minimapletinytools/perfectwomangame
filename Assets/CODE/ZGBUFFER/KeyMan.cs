@@ -18,7 +18,8 @@ public static class KeyMan
         {"Choice2",XboxOneKeyCode.Gamepad1ButtonDPadUp},
         {"Choice3",XboxOneKeyCode.Gamepad1ButtonDPadDown},
         {"Choice4",XboxOneKeyCode.Gamepad1ButtonDPadRight},
-        {"Quit",null}
+        {"Quit",null},
+        {"DepthToggle",XboxOneKeyCode.Gamepad1ButtonMenu}
     };
 
     public static bool GetKey(string aKey)
@@ -53,7 +54,8 @@ public static class KeyMan
         {"Choice2",KeyCode.Alpha2},
         {"Choice3",KeyCode.Alpha3},
         {"Choice4",KeyCode.Alpha4},
-        {"Quit",KeyCode.Escape}
+        {"Quit",KeyCode.Escape},
+        {"DepthToggle",KeyCode.K}
     };
     
     public static bool GetKey(string aKey)

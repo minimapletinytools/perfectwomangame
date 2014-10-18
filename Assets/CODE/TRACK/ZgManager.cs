@@ -57,7 +57,7 @@ public class ZgManager : FakeMonoBehaviour {
 	public int ForceShow {get;set;} //0 default, 1 forceshow, 2 noshow
 	public override void Update () 
 	{
-		if(Input.GetKeyDown(KeyCode.K))
+		if(KeyMan.GetKeyDown("DepthToggle"))
 			ForceShow = (ForceShow + 1)%3;
 		
 		if(ForceShow == 1 || 

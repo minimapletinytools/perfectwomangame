@@ -41,7 +41,8 @@ public class MicrosoftZig : ZgInterface
 		mKinect.Update ();
 
         //TODO update with real depth texture...
-        //ManagerManager.Manager.mZigManager.DepthView.Zig_Update (ZgInput);
+        if(mKinect.DepthTexture != null)
+            ManagerManager.Manager.mZigManager.DepthView.UpdateTexture(mKinect.DepthTexture);
 	}
 	
 	public bool has_user()
@@ -61,9 +62,7 @@ public class MicrosoftZig : ZgInterface
     {
         if(ManagerManager.Manager.mZigManager.is_reader_connected() == 2)
         {
-            //TODO update with real textures...
-            return null;
-            //return ManagerManager.Manager.mZigManager.ImageView.UpdateTexture (ZgImage,ZgLabelMap);
+            return ManagerManager.Manager.mZigManager.ImageView.UpdateTexture(mKinect.ColorTexture,mKinect.LabelTexture);
             //Debug.Log ("updated image");
         }
         return null;

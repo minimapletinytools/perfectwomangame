@@ -8,6 +8,7 @@ public class ZgImageViewer
     
     public ZgResolution imageResolution = ZgResolution.VGA_640x480;
     Texture2D imageTexture = null;
+    Texture2D labelTexture = null;
     ZgResolutionData imageSizeData;
     Color32[] imageOutputPixels;
     
@@ -36,8 +37,33 @@ public class ZgImageViewer
 
     public Texture2D UpdateTexture(Texture2D image, Texture2D labelmap)
     {
+
         imageTexture = image;
-        var imageData = image.GetPixels();
+        labelTexture = labelmap;    
+
+        /*
+        /Color[] imageData = image.GetPixels();
+        //this wont work at all
+        Color[] imageData = new Color[image.width * image.height];
+        unsafe{
+            //lol, this is not a pointer to the raw texture data stupid...
+            byte* src = (byte*)image.GetNativeTexturePtr().ToPointer(); 
+            for(int i = 0; i < image.width*image.height; i++)
+            {
+                byte y0 = src[4*i + 0];
+                byte u0 = src[4*i + 1];
+                byte y1 = src[4*i + 2];
+                byte v0 = src[4*i + 3];
+                byte C = (byte)(y0 - 16);
+                byte D = (byte)(u0 - 128);
+                byte E = (byte)(v0 - 128);
+                byte r = (byte)((298*C+409*E+128)/256);
+                byte g = (byte)((298*C-100*D-208*E+128)/256);
+                byte b = (byte)((298*C+516*D+128)/256);
+                imageData[i] = new Color(r,g,b);
+            }
+        }
+
         var labelData = labelmap.GetPixels();
         int labelMapIndex = 0;
         int labelMapFactorX = labelmap.width/ image.width;
@@ -56,6 +82,9 @@ public class ZgImageViewer
         }
         imageTexture.SetPixels(imageData);
         imageTexture.Apply();
+
+        */
+
         return imageTexture;
     }
 

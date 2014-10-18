@@ -6,6 +6,7 @@ using Kinect;
 #if UNITY_XBOXONE
 
 public class XboneKinect{
+    /* reverse map...
 	public static Dictionary<ZgJointId,Kinect.JointType> sJointTypeMap = new Dictionary<ZgJointId,Kinect.JointType>()
 	{
 		{ZgJointId.LeftShoulder,Kinect.JointType.ShoulderLeft},
@@ -18,41 +19,92 @@ public class XboneKinect{
 		{ZgJointId.RightHip,Kinect.JointType.HipRight},
 		{ZgJointId.RightKnee,Kinect.JointType.KneeRight},
 		{ZgJointId.RightAnkle,Kinect.JointType.AnkleRight},
-		{ZgJointId.Neck,JointType.Neck},
+		{ZgJointId.Neck,Kinect.JointType.Neck},
 		{ZgJointId.Torso,Kinect.JointType.SpineMid},
 		{ZgJointId.Waist,Kinect.JointType.SpineBase},
 		{ZgJointId.Head,Kinect.JointType.Head},
 		{ZgJointId.LeftHand,Kinect.JointType.HandLeft},
 		{ZgJointId.RightHand,Kinect.JointType.HandRight}
 	};
-    private static Vector3 GetVector3FromJoint(Kinect.Joint joint)
+
+     private static Vector3 GetVector3FromJoint(Kinect.Joint joint)
     {
         return new Vector3(joint.position.x * 10, joint.position.y * 10, joint.position.z * 10);
     }
+     */
 
-	
-	public bool IsTracking{ get; private set; } //are we tracking
-	ulong mTrackingId = 0; //body id being tracked
-	
-
-    public bool IsReaderConnected
+    public static Dictionary<Kinect.JointType,ZgJointId> sJointTypeMap = new Dictionary<Kinect.JointType,ZgJointId>()
     {
-        get{
-            return SensorManager.IsOpen();
-        }
+        {Kinect.JointType.ShoulderLeft,ZgJointId.LeftShoulder},
+        {Kinect.JointType.ElbowLeft,ZgJointId.LeftElbow},
+        {Kinect.JointType.HipLeft,ZgJointId.LeftHip},
+        {Kinect.JointType.KneeLeft,ZgJointId.LeftKnee},
+        {Kinect.JointType.AnkleLeft,ZgJointId.LeftAnkle},
+        {Kinect.JointType.ShoulderRight,ZgJointId.RightShoulder},
+        {Kinect.JointType.ElbowRight,ZgJointId.RightElbow},
+        {Kinect.JointType.HipRight,ZgJointId.RightHip},
+        {Kinect.JointType.KneeRight,ZgJointId.RightKnee},
+        {Kinect.JointType.AnkleRight,ZgJointId.RightAnkle},
+        {Kinect.JointType.Neck,ZgJointId.Neck},
+        {Kinect.JointType.SpineMid,ZgJointId.Torso},
+        {Kinect.JointType.SpineBase,ZgJointId.Waist},
+        {Kinect.JointType.Head,ZgJointId.Head},
+        {Kinect.JointType.HandLeft,ZgJointId.LeftHand},
+        {Kinect.JointType.HandRight,ZgJointId.RightHand}
+    };
+    private static Vector3 GetVector3FromJoint(Kinect.Joint joint)
+    {
+        return new Vector3(joint.position.x * 10, -joint.position.y * 10, joint.position.z * 10);
     }
+
+	
+
+
+	public bool IsTracking{ get; private set; } //are we tracking
+    public bool IsReaderConnected {get{return SensorManager.IsOpen();}}
+
+	ulong mTrackingId = 0; //body id being tracked
+    Texture2D mDepthTexture = null;
+    Texture2D mColorTexture = null;
+    Texture2D mLabelTexture = null;
+    public Texture2D DepthTexture{ get{ return mDepthTexture; } private set{ mDepthTexture = value; }} 
+    public Texture2D ColorTexture{ get{ return mColorTexture; } private set{ mColorTexture = value; }} 
+    public Texture2D LabelTexture{ get{ return mLabelTexture; } private set{ mLabelTexture = value; }} 
+	
+
+
 	public void Start()
 	{
 		SensorManager.Create ();
-		if (!SensorManager.IsOpen ())
-			SensorManager.Open ();
+		if (!SensorManager.IsOpen())
+        {
+            //Debug.Log("Opening Kinect Sensor");
+            SensorManager.Open();
+        }
+        if (SensorManager.IsOpen())
+        {
+            bool bf = SensorManager.bodyFrameReader.Open();
+            bool bif = SensorManager.bodyIndexFrameReader.Open();
+            bool cf = SensorManager.colorFrameReader.Open();
+            bool df = SensorManager.depthFrameReader.Open();
+            //Debug.Log("Kinect initialization status: " + bf + bif + cf + df);
+
+        } else
+        {
+            Debug.Log("Kinect Sensor is not open");
+        }
+        CreateKinectImageTexture(ref mDepthTexture, SensorManager.depthFrameReader, TextureFormat.R16, "Depth");
+        CreateKinectImageTexture(ref mColorTexture, SensorManager.colorFrameReader, TextureFormat.YUY2, "Color");
+        CreateKinectImageTexture(ref mLabelTexture, SensorManager.bodyIndexFrameReader, TextureFormat.Alpha8, "Label");
 	}
 	
 	public void Update()
 	{
         //BODY
         bool bodyReadSuccess = SensorManager.bodyFrameReader.AcquireLatestFrame(JointCoordType.DepthSpace);
+
 		List<ulong> trackedIds = new List<ulong>();
+
 
         foreach (var e in SensorManager.BodyList.list)
         {
@@ -79,38 +131,85 @@ public class XboneKinect{
 		{
 			if (IsTracking && e.trackingId == mTrackingId)
 			{
-				ManagerManager.Manager.mDebugString2 = "real tracking " + ((int)mTrackingId).ToString();
+				//ManagerManager.Manager.mDebugString2 = "real tracking " + ((int)mTrackingId).ToString();
 				ZgTrackedUser tu = new ZgTrackedUser((int)mTrackingId);
 				tu.SkeletonTracked = true;
 				tu.PositionTracked = true;
+                var jointsSeg = e.joints;
+                for(int i = jointsSeg.Offset; i < (jointsSeg.Offset + jointsSeg.Count); i++)
+                {
+                    var jp = jointsSeg.Array[i];
+                    for(int j = 0; j < tu.Skeleton.Count(); j++)
+                    {
+                        if(sJointTypeMap.ContainsKey(jp.jointType) && sJointTypeMap[jp.jointType] == tu.Skeleton[j].Id)
+                        {
+                            tu.Skeleton[j].Position = GetVector3FromJoint(jp);
+                            tu.Skeleton[j].GoodPosition = true;
+                            //TODO rotation
+                        }
+                    }
+                }
+                /* this way does not seem to work for osme reason..
 				for(int i = 0; i < tu.Skeleton.Count(); i++)
 				{
 					if(sJointTypeMap.Keys.Contains(tu.Skeleton[i].Id))
 					{
                         try{
-						tu.Skeleton[i].Position = GetVector3FromJoint(e.joints.Array.First(f=>f.jointType == sJointTypeMap[tu.Skeleton[i].Id]));
-						tu.Skeleton[i].GoodPosition = true;
+    						tu.Skeleton[i].Position = GetVector3FromJoint(e.joints.Array.First(f=>f.jointType == sJointTypeMap[tu.Skeleton[i].Id]));
+    						tu.Skeleton[i].GoodPosition = true;
                         }catch{Debug.Log ("couldn't find joint " + tu.Skeleton[i].Id);}
 						
 					}
-				}
+				}*/
 				ManagerManager.Manager.mZigManager.Zig_UpdateUser(tu);
+                break;
 			}
 		}
 
-        //DEPTH/IMAGE/USER
-        /*TODO
+        //DEPTH/IMAGE/USE
         FrameDescription depthFrameDesc;
         bool depthFrameDescSuccess = SensorManager.depthFrameReader.GetFrameDescription(out depthFrameDesc);
         if(depthFrameDescSuccess)
         {
-            byte[] depthRawData = new byte[depthFrameDesc.BytesPerPixel * depthFrameDesc.LengthInPixels];
-            SensorManager.depthFrameReader.AcquireLatestFrame(depthRawData);
-            ZgDepth depthImage = new ZgDepth(depthFrameDesc.Width,depthFrameDesc.Height,null);
+            //byte[] depthRawData = new byte[depthFrameDesc.BytesPerPixel * depthFrameDesc.LengthInPixels];
+            SensorManager.depthFrameReader.AcquireLatestFrame(DepthTexture.GetNativeTexturePtr());
         }
-        */
+
+        FrameDescription colorFrameDesc;
+        bool colorFrameDescSuccess = SensorManager.colorFrameReader.GetFrameDescription(out colorFrameDesc);
+        if(colorFrameDescSuccess)
+        {
+            //byte[] colorRawData = new byte[colorFrameDesc.BytesPerPixel * colorFrameDesc.LengthInPixels];
+            SensorManager.colorFrameReader.AcquireLatestFrame(ColorTexture.GetNativeTexturePtr());
+        }
+
+        FrameDescription labelFrameDesc;
+        bool labelFrameDescSuccess = SensorManager.bodyIndexFrameReader.GetFrameDescription(out labelFrameDesc);
+        if(labelFrameDescSuccess)
+        {
+            //byte[] labelRawData = new byte[labelFrameDesc.BytesPerPixel * labelFrameDesc.LengthInPixels];
+            SensorManager.bodyIndexFrameReader.AcquireLatestFrame(LabelTexture.GetNativeTexturePtr());
+        }
+
         //ManagerManager.Manager.mZigManager.DepthView.up
 	}
+
+    void CreateKinectImageTexture(ref Texture2D texture, Kinect.IImageFrameReader reader, TextureFormat fmt, string nameForLog )
+    {
+        FrameDescription frameDesc = new FrameDescription();
+        if (reader.GetFrameDescription(out frameDesc))
+        {
+            texture = new Texture2D(frameDesc.Width, frameDesc.Height, fmt, false);
+            texture.filterMode = FilterMode.Bilinear;
+            
+            // Call Apply() so it's actually uploaded to the GPU
+            texture.Apply();
+        }
+        else
+        {
+            Debug.Log( "Failed to get " + nameForLog + " frame desc." );
+        }
+    }
 }
 
 #else

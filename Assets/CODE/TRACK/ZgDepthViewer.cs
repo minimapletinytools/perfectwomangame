@@ -86,7 +86,7 @@ public class ZgDepthViewer
     }
 
 
-    void UpdateTexture(Texture2D depth)
+    public void UpdateTexture(Texture2D depth)
     {
         //TODO test
         DepthTexture = depth;

@@ -83,9 +83,13 @@ public class GiftManager
 	public void capture_player()
 	{
 		var tex = mManager.mZigManager.ZgInterface.take_color_image();
-		mStages.Last().playerTex = new Texture2D(tex.width,tex.height,tex.format,false);
-		mStages.Last().playerTex.SetPixels(tex.GetPixels());
-		mStages.Last().playerTex.Apply();
+        if (tex != null)
+        {
+            mStages.Last().playerTex = new Texture2D(tex.width, tex.height, tex.format, false);
+            mStages.Last().playerTex.SetPixels(tex.GetPixels());
+            mStages.Last().playerTex.Apply();
+        } else
+            Debug.Log("captured a null texture!");
 	}
 
 	public void set_background_for_render()
