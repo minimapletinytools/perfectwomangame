@@ -49,6 +49,8 @@ public class ManagerManager : MonoBehaviour{
     //public MenuReferenceBehaviour mMenuReferences;
 	public NewMenuReferenceBehaviour mNewRef;
 
+    //public System.Action<string,int,int,int> GameEventDistributor { get; set; }
+
 	void Awake () {
 		Random.seed = System.Environment.TickCount;
 		Application.targetFrameRate = (int)GameConstants.TARGET_FRAMERATE;

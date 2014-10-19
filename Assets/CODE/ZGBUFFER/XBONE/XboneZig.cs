@@ -20,16 +20,16 @@ public class MicrosoftZig : ZgInterface
 	public void initialize(ZgManager aZig)
 	{
         mZig = aZig;
+        mUsers = new XboneUsers ();
 		mPLM = new XbonePLM ();
 		mKinect = new XboneKinect ();
-		mUsers = new XboneUsers ();
 		mStorage = new XboneStorage ();
-		mEvents = new XboneEvents ();
+		mEvents = new XboneEvents (aZig.mManager);
 
 
+        mUsers.Start ();
 		mPLM.Start ();
 		mKinect.Start ();
-		mUsers.Start ();
 		mStorage.Start ();
 		mEvents.Start();
 
@@ -39,6 +39,7 @@ public class MicrosoftZig : ZgInterface
 	public void update()
 	{
 		mKinect.Update ();
+        mEvents.Update();
 
         //TODO update with real depth texture...
         if(mKinect.DepthTexture != null)
