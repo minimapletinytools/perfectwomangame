@@ -14,8 +14,8 @@ public class BuildScripts
 		System.IO.Directory.CreateDirectory(buildDir);
 		BuildPipeline.BuildPlayer(scenes , buildDir, BuildTarget.StandaloneOSXIntel, BuildOptions.None);
 		
-		string resourceDstPath = buildDir + "/Contents/Resources";
-		DirectoryCopy(Application.dataPath + "/Resources", resourceDstPath,false);
+		//string resourceDstPath = buildDir + "/Contents/Resources";
+		//DirectoryCopy(Application.dataPath + "/Resources", resourceDstPath,false);
     }
 	
     [MenuItem("Custom/build/OSX")]
@@ -27,8 +27,8 @@ public class BuildScripts
 		System.IO.Directory.CreateDirectory(buildDir);
 		BuildPipeline.BuildPlayer(scenes , buildDir, BuildTarget.StandaloneOSXIntel, BuildOptions.None);
 		
-		string resourceDstPath = buildDir + "/Contents/Resources";
-		DirectoryCopy(Application.dataPath + "/Resources", resourceDstPath,false);
+		//string resourceDstPath = buildDir + "/Contents/Resources";
+		//DirectoryCopy(Application.dataPath + "/Resources", resourceDstPath,false);
     }
 	
 	[MenuItem("Custom/build/WIN")]
@@ -40,8 +40,8 @@ public class BuildScripts
 		System.IO.Directory.CreateDirectory(buildDir);
 		BuildPipeline.BuildPlayer(scenes , buildDir + "/PW.exe", BuildTarget.StandaloneWindows, BuildOptions.None);
 		
-		string resourceDstPath = buildDir + "/PW_data/Resources";
-		DirectoryCopy(Application.dataPath + "/Resources", resourceDstPath,false);
+		//string resourceDstPath = buildDir + "/PW_data/Resources";
+		//DirectoryCopy(Application.dataPath + "/Resources", resourceDstPath,false);
 		
 		//System.IO.Compression
     }

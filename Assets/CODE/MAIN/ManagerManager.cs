@@ -177,7 +177,7 @@ public class ManagerManager : MonoBehaviour{
     public static string sScreenShotPrefix = "char";
     public static bool sTakeManual = true;
     public static bool sTakeKinect = true;
-    public static string sFolderPrefix = "Assets/Resources/POSE_TESTING/";
+    public static string sFolderPrefix = "Assets/StreamingAssets/POSE_TESTING/";
     public static string sImageFolderPrefix = "";
     public static string ScreenShotName { get { return sScreenShotPrefix + sScreenShotNumber; } }
     
