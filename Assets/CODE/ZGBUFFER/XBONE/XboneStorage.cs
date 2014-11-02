@@ -10,25 +10,42 @@ public class XboneStorage
 #if UNITY_XBOXONE 
 
 	ConnectedStorage mStorage = null;
-	bool StorageCreated {get; set;}
+    public bool StorageCreated {get; private set;}
+    public bool IsStorageFail { get; private set; } 
+    public bool IsWriting{get; private set;}
 
 	public void Start()
 	{
-		Storage.StorageManager.Create();
-		var dummy = (new GameObject ("genDummy")).AddComponent<DummyBehaviour> ();
-		dummy.StartCoroutine (save_thread (dummy.gameObject));
+        if (!StorageManager.AmFullyInitialized()) //do I need this? On soft reset, one should not recreate the storage manager??
+        {
+            Storage.StorageManager.Create();
+            var dummy = (new GameObject("genDummy")).AddComponent<DummyBehaviour>();
+            dummy.StartCoroutine(save_thread(dummy.gameObject));
+        }
 	}
 
 	public void write_data(byte[] aData, string aName)
 	{
-		if (StorageCreated) {
-			DataMap toSave = DataMap.Create();
-			toSave.AddOrReplaceBuffer(aName,aData);
-			mStorage.SubmitUpdatesAsync(toSave,null,delegate(ContainerContext Storage2, SubmitDataMapUpdatesAsyncOp op2) {
-				bool ok = op2.Success && op2.Status == ConnectedStorageStatus.SUCCESS;
-				//TODO confirm success??
-			});
-		}
+		if (StorageCreated && !IsWriting)
+        {
+            Debug.Log("trying to write data " + aData.Length);
+            IsWriting = true;
+            DataMap toSave = DataMap.Create();
+            toSave.AddOrReplaceBuffer(aName, aData);
+            mStorage.SubmitUpdatesAsync(toSave, null, delegate(ContainerContext Storage2, SubmitDataMapUpdatesAsyncOp op2)
+            {
+
+                bool ok = op2.Success && op2.Status == ConnectedStorageStatus.SUCCESS;
+
+                Debug.Log("write data success " + op2.Success + " " + op2.Status);
+                //TODO confirm success??
+
+                IsWriting = false;
+            });
+        } else
+        {
+            Debug.Log("error, could not write " + StorageCreated + " " + IsWriting);
+        }
 	}
 	public void read_data(string aName, System.Action<byte[]> aResponse)
 	{
@@ -47,7 +64,11 @@ public class XboneStorage
 					}
 				}
 			);
-		}
+		} else 
+        {
+            Debug.Log("error trying to read data before storage is created");
+            aResponse(null);
+        }
 	}
 
 	IEnumerator save_thread(GameObject aDestroy)
@@ -66,7 +87,7 @@ public class XboneStorage
 				}
 				else
 				{
-					//TODO
+                    IsStorageFail = true;
 					Debug.Log ("storage create failed");
 				}
 			}

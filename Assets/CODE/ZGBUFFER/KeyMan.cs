@@ -19,7 +19,9 @@ public static class KeyMan
         {"Choice3",XboxOneKeyCode.Gamepad1ButtonDPadDown},
         {"Choice4",XboxOneKeyCode.Gamepad1ButtonDPadRight},
         {"Quit",null},
-        {"DepthToggle",XboxOneKeyCode.Gamepad1ButtonMenu}
+        {"DepthToggle",XboxOneKeyCode.Gamepad1ButtonMenu},
+        {"LeftThumbstick",XboxOneKeyCode.Gamepad1ButtonLeftThumbstick},
+        {"RightThumbstick",XboxOneKeyCode.Gamepad1ButtonRightThumbstick},
     };
 
     public static bool GetKey(string aKey)
@@ -41,9 +43,11 @@ public static class KeyMan
         return XboxOneInput.GetKeyUp((XboxOneKeyCode)keyMap[aKey]);
     }
 #else
+
     //we use non-generic version of HashTable here to get around the AOT compile issue with value types in generics.
     public static Hashtable keyMap = new Hashtable()
     {
+
         {"HardSkip",KeyCode.Alpha0},
         {"SoftSkip",KeyCode.Alpha9},
         {"Perfect",KeyCode.A},
@@ -55,7 +59,11 @@ public static class KeyMan
         {"Choice3",KeyCode.Alpha3},
         {"Choice4",KeyCode.Alpha4},
         {"Quit",KeyCode.Escape},
-        {"DepthToggle",KeyCode.K}
+        {"DepthToggle",KeyCode.K},
+
+        //XB1 stuff
+        {"LeftThumbstick",null},
+        {"RightThumbstick",null}
     };
     
     public static bool GetKey(string aKey)

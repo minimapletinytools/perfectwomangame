@@ -1,66 +1,31 @@
-::LEA TODO::
-DONE-icons
-	-100x100 (notification in companion center)
-	-208x208 (shown in the pinned item section)
-	-480x480 (shown in collection and notification center)
-DONE-splash image
-	-1920x1080
+::task list::
+-test out astronaut build so we can make a decision how to proceed with astronaut
+-make a set of poses using the new recording scene
+-design unlock conditions for the last collumn of characters
+-round the upper border of the sunset background
+-clean up the messy edges on the characters and other assets that need it (i.e. the first few characters that were made)
+-create a new splash screen (the current one is very low resolution, I also think it can be more interesting, maybe use the image from the trailer?)
 
-::PORT TODO::
-DONE-add structure for such callbacks...
--PLM
-	-add suspend event
-	-add resource availability changed event
-	-add resume event
-	-add activation event
--STORAGE
-	-ConnectedStorage.CreateAsync(mUserId, "MyContainer", OnConnectedStorageCreated, mFlags);
-		-mUserId -1 is for machine storage
-	-mDataToSave = DataMap.Create();
-	-mDataToSave.AddOrReplaceBuffer("NewBuffer", data);
-		-where data is a byte[]
-	-mConnectedStorage.SubmitUpdatesAsync(mDataToSave, null, OnSubmitDone);
-	-reading
-		mReadAsyncMap = DataMap.Create();
-		mReadAsyncMap.AddNewBuffer("NewBuffer", kBufferSize);
-		mConnectedStorage.ReadAsync(mReadAsyncMap, ReadAsyncReturns);
-	-diff betwene getasyn and readasyn???
-	-mConnectedStorage.QueryRemainingQuotaAsync(QueryRemainingQuotaReturns);
-	-mConnectedStorage.QueryContainerInfoAsync("",QueryContainerInfoAsyncReturns);
--add users
-	DONE-run the users example
--kinect
-	DONE-run the kinect examples...
--events
-	-run the dataplatform example
--input
-	-you can use the standard input and convert keycode to xboxonekeycode instead
-	-switch te gamepad0/joystick0 which is the union of all gamepads
+::future things that we aren't ready to do yet::
+-set up the company
+-draft up contracts for us and everyone who has worked on the game.
+-make whatever assets are necessary when we decide on the astronaut
+-make new poses once we decide on a new format
+-contact steven about additional trailer changes (this is a task from a long time ago), we will want to wait till we go through certification first for this one though in case we need to change any of the content of the trailer.
+
+-do game saving
+-do simplified version of last collumn unlock..
+-test out service configuration please..
 -try out code stripping and see if it works
 	-you can tell it not to strip code by including a link.xml file in the assets folder. see xboxone-aot.html documentation
-
-
--implement game saves
-	DONE-figure out connected storage api (does this work offline???, I guess it's not something I need to worry about)
-	-generalize inside of ZgInterface
--look into a cleaner solution for Box2d stuff
+-fix depth image sizing issue with xb1 kinect depth image
 -startup
 	-post a question on Unity to make sure this is OK
 		-ask about long thread activation time with default-diffuse
-	DONE-do startup timings for an empty project
-		-development 9 spash, 9.5 game
-		-master 7 splash, 7.5 game
-		-debug 8 splash, 8.5 game
-	DONE-do startup timings for PW
-		-master 8 slpash, 11 game
-		-debug 9 splash, 12 game
-	DONE-get rid of all timing debug statements, no longer needed I guess.
 -something to mask graphical artifacts on restart
--do depth color and body images
-	-uggg
-	-wait for native plugins..
 
-
+DONE-generalize game saving in ZgInterface
+IGNORE-look into a cleaner solution for Box2d stuff
 DONE-double check if build package -> build and run actually updates the right packaged
 	-hint I don't think it does..
 DONE-add D to controls

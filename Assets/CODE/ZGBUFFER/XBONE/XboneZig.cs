@@ -47,6 +47,8 @@ public class MicrosoftZig : ZgInterface
         if(mKinect.DepthTexture != null)
             ManagerManager.Manager.mZigManager.DepthView.UpdateTexture(mKinect.DepthTexture);
 
+
+        //defer system gestures
         var gm = mZig.mManager.mGameManager;
         bool defer = false;
         if (gm.GS == NewGameManager.GameState.NORMAL)
@@ -58,6 +60,17 @@ public class MicrosoftZig : ZgInterface
             //TODO defer system gesture
         }
 
+
+        //testcode
+        if (KeyMan.GetKeyDown("LeftThumbstick"))
+        {
+            write_data(mZig.mManager.mMetaManager.UnlockManager.serialize(),"unlock");
+
+        }
+        if (KeyMan.GetKeyDown("RightThumbstick"))
+        {
+            read_data("unlock",delegate(byte[] obj) { mZig.mManager.mMetaManager.UnlockManager.deserialize(obj);});
+        }
 	}
 	
 	public bool has_user()
@@ -68,7 +81,7 @@ public class MicrosoftZig : ZgInterface
 	//TODO should check for users
 	public bool can_start()
 	{
-		if(Initialized)
+		if(Initialized && (mStorage.StorageCreated || mStorage.IsStorageFail))
 			return true;
 		return false;
 	}

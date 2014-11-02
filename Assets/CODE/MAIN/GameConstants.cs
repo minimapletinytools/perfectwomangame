@@ -110,7 +110,7 @@ public static class GameConstants
     public static Color StartScreenLockedGray {get{return new Color(0,0,0,.2f);}}
 	
 
-#if UNITY_XBOXONE 
+#if UNITY_XBOXONE && !UNITY_EDITOR
     public static string assetBundlePrefix = "/StreamingAssets/XB1/";
 #else
     public static string assetBundlePrefix = "/StreamingAssets/";

@@ -16,15 +16,30 @@ public class MetaManager : FakeMonoBehaviour {
 	
 	
 	public override void Start () {
-		mManager.mZigManager.ZgInterface.read_data("unlock", 
-            delegate(byte[] obj){
+
+        var dummy = (new GameObject("genDummy")).AddComponent<DummyBehaviour>();
+        dummy.StartCoroutine(read_unlock_when_ready(dummy.gameObject));
+
+		
+	}
+
+    IEnumerator read_unlock_when_ready( GameObject dummy )
+    {
+        while (!mManager.mZigManager.ZgInterface.can_start())
+            yield return null;
+
+        mManager.mZigManager.ZgInterface.read_data("unlock", 
+           delegate(byte[] obj){
+            Debug.Log("received save data");
                 if(obj != null){
+                    Debug.Log("length " + obj.Length);
                     UnlockManager.deserialize(obj);
                 }
                 SaveDataRead = true;
             }
         );
-	}
+        GameObject.Destroy(dummy);
+    }
 	
 
 	
