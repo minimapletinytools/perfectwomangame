@@ -110,6 +110,13 @@ public static class GameConstants
     public static Color StartScreenLockedGray {get{return new Color(0,0,0,.2f);}}
 	
 
+#if UNITY_XBOXONE 
+    public static string assetBundlePrefix = "/StreamingAssets/XB1/";
+#else
+    public static string assetBundlePrefix = "/StreamingAssets/";
+#endif
+
+
 	//TODO DELETE
 	//characters
 	//oddly enough, these are not constant :)

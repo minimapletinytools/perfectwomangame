@@ -31,13 +31,13 @@ public class AssetBundleLoader : FakeMonoBehaviour
 
     public bool does_bundle_exist(string aBundleName)
     {
-        string filename = Application.dataPath + "/StreamingAssets/" + aBundleName + ".unity3d";
+        string filename = Application.dataPath + GameConstants.assetBundlePrefix + aBundleName + ".unity3d";
         return System.IO.File.Exists(filename);
     }
 	
 	public void new_load_character(string aChar, CharacterBundleManager aManager, System.Action<AssetBundle> aCallback)
 	{
-		string filename = "file://" + Application.dataPath + "/StreamingAssets/" + aChar + ".unity3d";
+		string filename = "file://" + Application.dataPath + GameConstants.assetBundlePrefix + aChar + ".unity3d";
         //Debug.Log("loading from " + filename);
         mRequestLists.Add(new WWW(filename), aCallback);
 	}
@@ -49,14 +49,14 @@ public class AssetBundleLoader : FakeMonoBehaviour
 	
 	public void new_load_mini_characater(string aChar, CharacterBundleManager aManager)
     {
-        string filename = "file://" + Application.dataPath + "/StreamingAssets/" + aChar + "_mini.unity3d";
+        string filename = "file://" + Application.dataPath + GameConstants.assetBundlePrefix + aChar + "_mini.unity3d";
         //Debug.Log("loading mini char from " + filename);
         mRequestLists.Add(new WWW(filename), delegate(AssetBundle aBundle) { aManager.mini_loaded_callback(aBundle,aChar); });
     }
 	
  	public void new_load_poses(string aAssetBundle, CharacterBundleManager aManager)
     {
-        string filename = "file://" + Application.dataPath + "/StreamingAssets/" + aAssetBundle + ".unity3d";
+        string filename = "file://" + Application.dataPath + GameConstants.assetBundlePrefix + aAssetBundle + ".unity3d";
         //Debug.Log("loading poses from " + filename);
         WWW request = new WWW(filename);
         request.threadPriority = ThreadPriority.High;
@@ -65,7 +65,7 @@ public class AssetBundleLoader : FakeMonoBehaviour
 	
 	public void new_load_interface_images(string aAssetBundle, CharacterBundleManager aManager)
 	{
-		string filename = "file://" + Application.dataPath + "/StreamingAssets/" + aAssetBundle + ".unity3d";
+		string filename = "file://" + Application.dataPath + GameConstants.assetBundlePrefix + aAssetBundle + ".unity3d";
         //Debug.Log("loading poses from " + filename);
         WWW request = new WWW(filename);
         request.threadPriority = ThreadPriority.High;
@@ -74,7 +74,7 @@ public class AssetBundleLoader : FakeMonoBehaviour
 	
 	public void new_load_asset_bundle(string aAssetBundle, Action<AssetBundle> aAction)
 	{
-		string filename = "file://" + Application.dataPath + "/StreamingAssets/" + aAssetBundle + ".unity3d";
+		string filename = "file://" + Application.dataPath + GameConstants.assetBundlePrefix + aAssetBundle + ".unity3d";
         //Debug.Log("loading poses from " + filename);
         WWW request = new WWW(filename);
         request.threadPriority = ThreadPriority.High;
