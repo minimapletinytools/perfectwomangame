@@ -706,6 +706,12 @@ public class ModeNormalPlay
 			mManager.mMusicManager.fade_in(5,0.5f);
 		}
 
+        //SAVE THE GAME
+        foreach (CharacterIndex e in CharacterIndex.sAllCharacters)
+            if (mManager.mMetaManager.UnlockManager.is_unlocked(e) != 1)
+                if (UnlockRequirements.requirements.ContainsKey(new UnlockRequirements.FakeCharIndex(e)))
+                    mManager.mMetaManager.UnlockManager.unlock(e);
+
 		mSunsetManager.set_for_GRAVE(mPerformanceStats, 
 			delegate()
 			{

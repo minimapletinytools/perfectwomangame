@@ -300,11 +300,7 @@ public class TransitionCameraManager : FakeMonoBehaviour
 				else
 					dState = 2;
 					*/
-				if( mManager.mCharacterBundleManager.is_initial_loaded() &&
-			   		mManager.mZigManager.ZgInterface.can_start() &&
-			   		((aTime > 5 && mManager.mZigManager.has_user()) ||
-                    KeyMan.GetKey("HardSkip") || KeyMan.GetKey("SoftSkip") ||
-					GameConstants.FORCE_START)){
+				if( can_start(aTime)){
 					go_to_play(); 
 					return true;
 				}	
@@ -319,6 +315,17 @@ public class TransitionCameraManager : FakeMonoBehaviour
 		);
 		
 	}
+
+    bool can_start(float aTime)
+    {
+        return 
+            mManager.mCharacterBundleManager.is_initial_loaded() &&
+            mManager.mZigManager.ZgInterface.can_start() &&
+            mManager.mMetaManager.SaveDataRead &&
+            ((aTime > 5 && mManager.mZigManager.has_user()) ||
+            KeyMan.GetKey("HardSkip") || KeyMan.GetKey("SoftSkip") ||
+            GameConstants.FORCE_START);
+    }
 	
 	public void destroy_configuration_display()
 	{

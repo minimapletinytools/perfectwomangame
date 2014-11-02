@@ -108,6 +108,7 @@ public class MicrosoftZig : ZgInterface
     }
     public void read_data(string aName, System.Action<byte[]> aResponse)
     {
+        aResponse += delegate(byte[] obj) {Debug.Log("read callback " + obj.Length);};
         mStorage.read_data (aName,aResponse);
     }
 	

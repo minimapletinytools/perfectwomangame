@@ -6,9 +6,9 @@ using Users;
 
 
 public class XboneUsers {
-
-
     #if UNITY_XBOXONE 
+
+    public int ActiveUserId{ get; private set; }
 	public void Start () {
 		UsersManager.Create();
 		UsersManager.OnUsersChanged       += OnUsersChanged;
@@ -17,8 +17,13 @@ public class XboneUsers {
 		UsersManager.OnSignOutStarted     += OnUserSignOutStarted;
 		UsersManager.OnDisplayInfoChanged += OnUserDisplayInfoChange;
 
-		//if (!Users.UsersManager.Inst.IsSomeoneSignedIn)
-		//	Users.UsersManager.Inst.RequestSignIn (Users.AccountPickerOptions.AllowGuests);
+		if (!UsersManager.IsSomeoneSignedIn)
+        {
+            ActiveUserId = -1;
+            UsersManager.RequestSignIn(Users.AccountPickerOptions.AllowGuests);
+        }
+        else
+            ActiveUserId = UsersManager.Users [0].Id;
 
 	}
 
@@ -29,12 +34,18 @@ public class XboneUsers {
 	
 	void OnUserSignIn(int id)
 	{
-
+        if (ActiveUserId == -1 || ActiveUserId == id)
+            ActiveUserId = id;
+        else
+        {
+            //TODO tell the user that the game will restart unless they change back.. This involves pausing the game??
+            //TODO or just restart the game?
+        }
 	}
 	
 	void OnUserSignOut(int id)
 	{
-
+        UsersManager.RequestSignIn (Users.AccountPickerOptions.AllowGuests);
 	}
 	
 	void OnUserSignOutStarted(int id, System.IntPtr deferred)

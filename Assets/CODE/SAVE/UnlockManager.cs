@@ -291,11 +291,12 @@ public class Unlockables
 public class UnlockManager
 {
 	Unlockables mUnlocked;
+    ManagerManager mManager;
 	
-	public UnlockManager()
+    public UnlockManager(ManagerManager aManager)
 	{
 		mUnlocked = new Unlockables();
-
+        mManager = aManager;
 		//read_unlock();
 	}
 	
@@ -303,6 +304,12 @@ public class UnlockManager
     {
         return UnlockRequirements.requirements [new UnlockRequirements.FakeCharIndex(aChar.LevelIndex,aChar.Choice)](aStats, mUnlocked.gameHistory);
     }
+
+    public void unlock(CharacterIndex aIndex)
+    {
+        mUnlocked.unlockedCharacters [aIndex] = 1;
+    }
+
 	public void game_finished(List<PerformanceStats> aStats)
 	{
         mUnlocked.gameHistory.Add(aStats);
@@ -319,7 +326,9 @@ public class UnlockManager
                         mUnlocked.unlockedCharacters[e] = 1;
 				}
 		}
-		write_unlock();
+
+        //write_unlock();
+        mManager.mZigManager.ZgInterface.write_data(serialize(),"unlock");
 	}
 
     
@@ -332,6 +341,31 @@ public class UnlockManager
         return r;
     }
 
+    public byte[] serialize()
+    {
+        MemoryStream stream = new MemoryStream();
+        try{
+            IFormatter formatter = new BinaryFormatter();
+            formatter.Serialize(stream, mUnlocked);
+            return stream.GetBuffer();
+        }catch(System.Exception e){
+            throw e;
+        }finally{
+            stream.Close();
+        }
+    }
+
+    public void deserialize(byte[] aData)
+    {
+        try{
+            IFormatter formatter = new BinaryFormatter();
+            MemoryStream stream = new MemoryStream(aData);
+            mUnlocked = (Unlockables) formatter.Deserialize(stream);
+            stream.Close();
+        } catch {}
+    }
+
+    //TODO DELETE
     //TODO do this through ZgInterface
 	void read_unlock()
 	{
@@ -343,6 +377,7 @@ public class UnlockManager
 		} catch {} //no such file, must be first launch
 	}
 
+    //TODO DELETE
     //TODO do this through ZgInterface
 	public void write_unlock()
 	{
