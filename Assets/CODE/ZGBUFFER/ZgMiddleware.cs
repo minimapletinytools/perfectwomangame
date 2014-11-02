@@ -18,10 +18,8 @@ public interface ZgInterface
 	bool can_start();
     Texture2D take_color_image();
 
-    //TODO
-    //void write_data(byte[] aData, string aName);
-	//TODO this needs to be async...
-    //byte[] read_data(string aName);
+    void write_data(byte[] aData, string aName);
+    void read_data(string aName, System.Action<byte[]> aResponse);
 
 
 }
@@ -49,6 +47,9 @@ public class EmptyZig : ZgInterface
 	}
 
     public Texture2D take_color_image(){return null;}
+
+    public void write_data(byte[] aData, string aName){}
+    public void read_data(string aName, System.Action<byte[]> aResponse){}
 
 
 	public ZgDepth DepthImage{get{ return null; }}

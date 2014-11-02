@@ -30,7 +30,7 @@ public class XboneStorage
 			});
 		}
 	}
-	public byte[] read_data(string aName)
+	public void read_data(string aName, System.Action<byte[]> aResponse)
 	{
 		if (StorageCreated) 
 		{
@@ -39,16 +39,15 @@ public class XboneStorage
 					if(op.Success)
 					{
 						var data = view.GetBuffer(aName);
-						//TODO do something with the data
+                        aResponse(data);
 					}
 					else
 					{
-						//TODO
+                        aResponse(null);
 					}
 				}
 			);
 		}
-		return null;
 	}
 
 	IEnumerator save_thread(GameObject aDestroy)

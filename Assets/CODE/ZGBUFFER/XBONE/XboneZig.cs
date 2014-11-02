@@ -102,10 +102,14 @@ public class MicrosoftZig : ZgInterface
         return null;
     }
 
-
-	//NOTE calling these assumes mStorage has been properly initialized already... 
-	void write_data(byte[] aData, string aName){mStorage.write_data (aData, aName);}
-	byte[] read_data(string aName){return mStorage.read_data (aName);}
+    public void write_data(byte[] aData, string aName)
+    {
+        mStorage.write_data (aData, aName);
+    }
+    public void read_data(string aName, System.Action<byte[]> aResponse)
+    {
+        mStorage.read_data (aName,aResponse);
+    }
 	
 	public ZgDepth DepthImage{get{ return null; }}
 	public ZgImage ColorImage{get{ return null; }}

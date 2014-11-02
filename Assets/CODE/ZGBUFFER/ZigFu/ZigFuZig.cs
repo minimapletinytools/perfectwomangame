@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
+using System.IO;
 
 //the callback behaviour in this cas e
 public class ZigFuZig : ZgInterface
@@ -113,6 +114,30 @@ public class ZigFuZig : ZgInterface
             //Debug.Log ("updated image");
         }
         return null;
+    }
+
+    public void write_data(byte[] aData, string aName)
+    {
+        using(StreamWriter writer = new StreamWriter("save.txt"))
+        {
+            writer.Write(System.Convert.ToBase64String(aData));
+        }
+    }
+    public void read_data(string aName, System.Action<byte[]> aResponse)
+    {
+
+        if (File.Exists("save.txt"))
+        {
+            string words = "";
+            using (StreamReader reader = new StreamReader("save.txt"))
+            {
+                words = reader.ReadToEnd();
+            }
+            aResponse(System.Convert.FromBase64String(words));
+        } else
+            aResponse(null);
+
+
     }
 
 
