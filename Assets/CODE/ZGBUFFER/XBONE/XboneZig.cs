@@ -13,7 +13,9 @@ public class MicrosoftZig : ZgInterface
 	XboneKinect mKinect;
 	XbonePLM mPLM;
 	XboneStorage mStorage;
-	XboneEvents mEvents;
+	XboneEvents mEvents; 
+
+    RenderTexture mColorImageRT = null;
 
 	bool Initialized { get; set; }
 	
@@ -32,6 +34,7 @@ public class MicrosoftZig : ZgInterface
 		mKinect.Start ();
 		mStorage.Start ();
 		mEvents.Start();
+
 
 		Initialized = true;
 	}
@@ -63,8 +66,27 @@ public class MicrosoftZig : ZgInterface
     {
         if(ManagerManager.Manager.mZigManager.is_reader_connected() == 2)
         {
+            //TODO write the shader and test
+            /*
+            Material mat = new Material(ManagerManager.Manager.mReferences.mXB1ColorImageShader);
+            mat.SetTexture("Main",mKinect.ColorTexture);
+            mat.SetTexture("Label",mKinect.LabelTexture);
+
+            if(mColorImageRT == null)
+                mColorImageRT = new RenderTexture(mKinect.ColorTexture.width,mKinect.ColorTexture.height,0);
+
+            var img = new ImageGameObjectUtility(mKinect.ColorTexture);
+            img.PlaneObject.renderer.material = mat;
+
+            var aCam = ManagerManager.Manager.mCameraManager.ForegroundCamera; //borrow a camera
+            //TODO resize the camera
+            RenderTexture.active = mColorImageRT;
+            aCam.targetTexture = mColorImageRT;
+            aCam.Render();
+            RenderTexture.active = null;
+            aCam.targetTexture = null;
+            */
             return ManagerManager.Manager.mZigManager.ImageView.UpdateTexture(mKinect.ColorTexture,mKinect.LabelTexture);
-            //Debug.Log ("updated image");
         }
         return null;
     }
