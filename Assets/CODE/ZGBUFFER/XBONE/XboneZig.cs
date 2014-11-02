@@ -44,9 +44,20 @@ public class MicrosoftZig : ZgInterface
 		mKinect.Update ();
         mEvents.Update();
 
-        //TODO update with real depth texture...
         if(mKinect.DepthTexture != null)
             ManagerManager.Manager.mZigManager.DepthView.UpdateTexture(mKinect.DepthTexture);
+
+        var gm = mZig.mManager.mGameManager;
+        bool defer = false;
+        if (gm.GS == NewGameManager.GameState.NORMAL)
+            if (gm.mModeNormalPlay.GS == ModeNormalPlay.NormalPlayGameState.CHOICE && !gm.mModeNormalPlay.Paused) //if choosing and not paused
+                defer = true; 
+        //TODO OTHER DEFER CONDITIONS
+        if (defer)
+        {
+            //TODO defer system gesture
+        }
+
 	}
 	
 	public bool has_user()

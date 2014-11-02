@@ -14,6 +14,7 @@ public class ModeNormalPlay
 	public NewGameManager NGM {get; set;}
 	ManagerManager mManager {get; set;}
 	
+    public bool Paused{ get; set; } //this currently only pauses choosing
 	public float TimeRemaining
 	{ get; set; }
 	public float TimeTotal
@@ -280,6 +281,9 @@ public class ModeNormalPlay
 
 		if(GS == NormalPlayGameState.CHOICE)
 		{
+            if(Paused) 
+                return;
+
 			//cheater keys for difficulty
 			if(
 				NGM.CurrentCharacterIndex.LevelIndex < 7 &&
