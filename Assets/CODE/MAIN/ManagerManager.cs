@@ -54,6 +54,7 @@ public class ManagerManager : MonoBehaviour{
 	void Awake () {
 		Random.seed = System.Environment.TickCount;
 		Application.targetFrameRate = (int)GameConstants.TARGET_FRAMERATE;
+        GameEventDistributor += delegate(string arg1, object[] arg2){};
 
 		Screen.showCursor = false;
 		gameObject.AddComponent<AudioListener>();

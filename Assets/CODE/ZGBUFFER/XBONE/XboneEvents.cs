@@ -12,6 +12,8 @@ public class XboneEvents{
         mManager = aManager;
         mManager.GameEventDistributor += game_event_listener;
 
+        EventManager.Create(@"G:\Data\StreamingAssets\Events-PRFW.0-4A0A3432.man");
+        
         AchievementsManager.Create();
         AchievementsManager.OnAchievementNotification += delegate(AchievementNotification notice)
         {

@@ -262,7 +262,10 @@ public static class UnlockRequirements
 [System.Serializable]
 public class Unlockables
 {
+    //TODO is this what causes the JIT problem and how do I make it not JIT
+    [System.NonSerialized]
 	public List<List<PerformanceStats> > gameHistory = new List<List<PerformanceStats>>();
+
 	public CharIndexContainerInt unlockedCharacters = new CharIndexContainerInt();
 	public bool skipAvail = false;
 	
