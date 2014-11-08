@@ -331,7 +331,11 @@ public class UnlockManager
         mManager.mZigManager.ZgInterface.write_data(serialize(),"unlock");
 	}
 
-    
+    public List<CharacterIndex> get_unlocked_characters()
+    {
+        return CharacterIndex.sAllCharacters.Where(e => mUnlocked.unlockedCharacters [e] == 1).ToList();
+    }
+
     public List<CharacterIndex> get_unlocked_characters_at_level(int aLevelIndex)
     {
         List<CharacterIndex> r = new List<CharacterIndex> ();

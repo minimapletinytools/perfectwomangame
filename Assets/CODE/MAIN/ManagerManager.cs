@@ -49,7 +49,7 @@ public class ManagerManager : MonoBehaviour{
     //public MenuReferenceBehaviour mMenuReferences;
 	public NewMenuReferenceBehaviour mNewRef;
 
-    //public System.Action<string,int,int,int> GameEventDistributor { get; set; }
+    public System.Action<string,object[]> GameEventDistributor { get; set; }
 
 	void Awake () {
 		Random.seed = System.Environment.TickCount;

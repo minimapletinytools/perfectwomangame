@@ -56,9 +56,7 @@ public class MicrosoftZig : ZgInterface
                 defer = true; 
         //TODO OTHER DEFER CONDITIONS
         if (defer)
-        {
-            //TODO defer system gesture
-        }
+            XboxOneInput.DeferSystemGestures(1);
 
 
         //testcode

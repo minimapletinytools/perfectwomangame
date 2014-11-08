@@ -93,6 +93,8 @@ public class NewGameManager : FakeMonoBehaviour
 		{
 			mManager.mAssetLoader.new_load_character(aChar.StringIdentifier,mManager.mCharacterBundleManager);
 		}
+
+        mManager.GameEventDistributor("START GAME", new object[]{GS});
 	}
 	
     //return determines if character bundle is unloaded or not
@@ -134,6 +136,8 @@ public class NewGameManager : FakeMonoBehaviour
 		{
 			mModeSimian.load_character(aCharacter);
 		}
+
+        mManager.GameEventDistributor("NEW CHARACTER", new object[]{aCharacter.Character});
 		
 		if(aCharacter.Name == "0-1") //in this very special case, we keep the bundle to load the death cutscene
 		{

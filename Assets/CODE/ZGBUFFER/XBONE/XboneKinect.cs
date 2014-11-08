@@ -122,9 +122,9 @@ public class XboneKinect{
 			IsTracking = false;
 		}
 		
-		if(IsTracking)
-			ManagerManager.Manager.mDebugString2 = "tracking " + ((int)mTrackingId).ToString();
-		else ManagerManager.Manager.mDebugString2 = "NOT tracking " + ((int)mTrackingId).ToString();
+		//if(IsTracking)
+			//ManagerManager.Manager.mDebugString2 = "tracking " + ((int)mTrackingId).ToString();
+		//else ManagerManager.Manager.mDebugString2 = "NOT tracking " + ((int)mTrackingId).ToString();
 		
 		
 		foreach (var e in SensorManager.BodyList.list)
