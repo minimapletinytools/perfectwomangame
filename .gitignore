@@ -40,3 +40,7 @@ Thumbs.db
 Assets/XboxOne_Generated*
 Assets/Resources
 Assets/StreamingAssets
+DEBUGDLLS
+RELEASEDLLS
+Assets/DLLS/XboxOne
+Assets/Plugins/XboxOne

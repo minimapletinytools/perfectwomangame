@@ -1,21 +1,8 @@
-::task list::
--test out astronaut build so we can make a decision how to proceed with astronaut
--make a set of poses using the new recording scene
--design unlock conditions for the last collumn of characters
--round the upper border of the sunset background
--clean up the messy edges on the characters and other assets that need it (i.e. the first few characters that were made)
--create a new splash screen (the current one is very low resolution, I also think it can be more interesting, maybe use the image from the trailer?)
-
-::future things that we aren't ready to do yet::
--set up the company
--draft up contracts for us and everyone who has worked on the game.
--make whatever assets are necessary when we decide on the astronaut
--make new poses once we decide on a new format
--contact steven about additional trailer changes (this is a task from a long time ago), we will want to wait till we go through certification first for this one though in case we need to change any of the content of the trailer.
-
+-do release build test with validation, binscope etc
 -do game saving
 -do simplified version of last collumn unlock..
 -test out service configuration please..
+	-email dave omg
 -try out code stripping and see if it works
 	-you can tell it not to strip code by including a link.xml file in the assets folder. see xboxone-aot.html documentation
 -fix depth image sizing issue with xb1 kinect depth image

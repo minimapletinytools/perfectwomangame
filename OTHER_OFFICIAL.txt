@@ -1,3 +1,11 @@
+::IDS::
+Product Id         4d844a97-d2e7-4093-9f06-1a55eb004f1a (4d844a97d2e740939f061a55eb004f1a)
+SCID                 f3530100-c251-40ff-9d13-078c4a0a3432 (f3530100c25140ff9d13078c4a0a3432)
+Title ID              4A0A3432
+LicenseNumber lXS2bw8ruN98iYOc
+Id                     PRFW.0
+Sandbox Id        6bf045bd-b80d-4288-9d16-d51f75574958 (6bf045bdb80d42889d16d51f75574958)
+
 ::WORDS::
 Perfect Woman is played using motion controls detected via the Kinect. The player must navigate through 7 different stages of a woman's life. At each stage, the player must 'perform' their character's role by matching poses on the screen using their own physical body. Based on what role and the player's performance at a given stage, the difficulties of future choices are adjusted. For example, being a successful 'child star' at age 9 will make being a charity speaker at age 55 easier, but it will make being a responsible mother harder at age 27. Dynamic narrative fragments string all the characters together. At the very end, a summary of the player's life is shown explaining why some roles were easy and some were hard. 
 
