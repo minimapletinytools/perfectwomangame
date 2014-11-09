@@ -6,7 +6,11 @@
 ​-DeferSystemGestures now being callend during choosing
 
 
--regenerate sunset for xb1
+-game wont play after restart???
+-need to call defer sytem gestures during play as well dummy
+-astronaut transparent shader does not work on xb1
+-disable image capture for now on xb1...
+DONE-regenerate sunset for xb1
 -fix the JIT probelm with serializing Unlockables
 -do release build test with validation, binscope etc
 	-still need to run binscope
