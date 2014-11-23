@@ -1,5 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
+
+#if UNITY_XBOXONE
 using Users;
 using DataPlatform;
 
@@ -66,3 +68,18 @@ public class XboneEvents{
     }
 
 }
+#else
+
+public class XboneEvents{
+    public XboneEvents(ManagerManager aManager)
+    {
+    }
+    public void Start(){}
+    
+    public void Update(){
+        
+        
+    }
+    
+}
+#endif

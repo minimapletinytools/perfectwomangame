@@ -98,6 +98,10 @@ public class XboneStorage
 
 	
 #else
+    public bool StorageCreated {get; private set;}
+    public bool IsStorageFail { get; private set; } 
+    public bool IsWriting{get; private set;}
+
 	public void Start()
 	{
 	}
@@ -105,9 +109,9 @@ public class XboneStorage
 	{
 		
 	}
-	public byte[] read_data(string aName)
-	{
-		return null;
+    public void read_data(string aName, System.Action<byte[]> aResponse)
+  	{
+
 	}
 #endif
 }
