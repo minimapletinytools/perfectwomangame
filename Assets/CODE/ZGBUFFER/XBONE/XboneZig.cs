@@ -35,6 +35,8 @@ public class MicrosoftZig : ZgInterface
 		mStorage.Start ();
 		mEvents.Start();
 
+        //solves some jit problems
+        System.Environment.SetEnvironmentVariable("MONO_REFLECTION_SERIALIZER", "yes");
 
 		Initialized = true;
 	}

@@ -2,6 +2,8 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
+using System.Linq;
+
 public class ManagerManager : MonoBehaviour{
 
 	//TODO move to gameconstants
@@ -95,6 +97,9 @@ public class ManagerManager : MonoBehaviour{
 
             mStartDelegates();
         }
+
+        ManagerManager.Log("poop");
+        ManagerManager.Log("poop");
 
 	}
 	
@@ -230,6 +235,15 @@ public class ManagerManager : MonoBehaviour{
         }*/
     }
 	
+
+    public static List<string> mDebugMessages = new List<string>();
+    public static void Log(string aMsg)
+    {
+        mDebugMessages.Add(aMsg);
+    }
+
+
+      
 	public string mDebugString = "";//"WORK IN PROGRESS";
     public string mDebugString2 = "";
 	void OnGUI()
@@ -239,13 +253,18 @@ public class ManagerManager : MonoBehaviour{
 		GUIStyle style = new GUIStyle();
 		
 		//GUI.Box(new Rect(0,0,Screen.width,Screen.height),MainRenderTexture,style);
-		style.fontSize = 20;
+		style.fontSize = 15;
 		style.normal.textColor = new Color(1,1,1,1);
-		GUI.TextArea(new Rect(10,10,300,70),mDebugString,style);
-        GUI.TextArea(new Rect(10,80,300,70),mDebugString2,style);
+		GUI.TextArea(new Rect(200,10,300,70),mDebugString,style);
+        GUI.TextArea(new Rect(200,40,300,70),mDebugString2,style);
 		//GUI.TextArea(new Rect(50,50,300,100),"WORK IN PROGRESS",style);
 		
 		//GUI.Box(new Rect(0,0,Screen.width * mGameManager.mModeNormalPlay.mLastGrade,50),""); 
+
+        foreach (var e in mDebugMessages.Skip(Mathf.Min(0,mDebugMessages.Count()-10)).Select((val,index) => new {val,index}))
+        {
+            GUI.TextArea(new Rect(0,e.index*20,300,20),e.val,style);
+        }
 
 
 		//for debugging
