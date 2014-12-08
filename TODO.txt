@@ -5,19 +5,19 @@
 ​-made a release build with release dlls. Passed the submission validator but I was not able to run bin scope on it for some reason. Not sure why. Will have to figure this out or not do that and see what optional cert says.
 ​-DeferSystemGestures now being callend during choosing
 
-
--game wont play after restart???
+::TODO::
+-check PLM stuff ,suspendingeventhandler, activationeventhandler and resource availabilityhandler (prob ok?)
+-get achievements working..
 -need to call defer sytem gestures during play as well dummy
--astronaut transparent shader does not work on xb1
+-do new play mode...
+-do simplified version of last collumn unlock..
 -disable image capture for now on xb1...
-DONE-regenerate sunset for xb1
--fix the JIT probelm with serializing Unlockables
+-astronaut transparent shader does not work on xb1
 -do release build test with validation, binscope etc
 	-still need to run binscope
 -do game saving
--do simplified version of last collumn unlock..
--test out service configuration please..
-	-email dave omg
+-fix the JIT probelm with serializing Unlockables
+-game wont play after restart???
 -try out code stripping and see if it works
 	-you can tell it not to strip code by including a link.xml file in the assets folder. see xboxone-aot.html documentation
 -fix depth image sizing issue with xb1 kinect depth image
@@ -26,6 +26,9 @@ DONE-regenerate sunset for xb1
 		-ask about long thread activation time with default-diffuse
 -something to mask graphical artifacts on restart
 
+DONE-test out service configuration please..
+	-email dave omg
+DONE-regenerate sunset for xb1
 DONE-generalize game saving in ZgInterface
 IGNORE-look into a cleaner solution for Box2d stuff
 DONE-double check if build package -> build and run actually updates the right packaged
