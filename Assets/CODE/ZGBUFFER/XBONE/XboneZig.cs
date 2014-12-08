@@ -54,8 +54,16 @@ public class MicrosoftZig : ZgInterface
         var gm = mZig.mManager.mGameManager;
         bool defer = false;
         if (gm.GS == NewGameManager.GameState.NORMAL)
-            if (gm.mModeNormalPlay.GS == ModeNormalPlay.NormalPlayGameState.CHOICE && !gm.mModeNormalPlay.Paused) //if choosing and not paused
-                defer = true; 
+        {
+            //defer if in choice or play but not paused
+            if(!gm.mModeNormalPlay.Paused)
+            {
+                if (gm.mModeNormalPlay.GS == ModeNormalPlay.NormalPlayGameState.CHOICE)
+                    defer = true; 
+                if (gm.mModeNormalPlay.GS == ModeNormalPlay.NormalPlayGameState.PLAY)
+                    defer = true;
+            }
+        }
         //TODO OTHER DEFER CONDITIONS
         if (defer)
             mKinect.DeferSystemGestures(1);
