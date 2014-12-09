@@ -16,9 +16,14 @@ public static class GameConstants
 	public static float TARGET_FRAMERATE = 50;
 
     public static bool FORCE_START = false;
+    public static bool ALLOW_NO_KINECT = true;
+    public static bool NEW_POSE_SWITCHING = true;
 	
 	public static int numberAges = 10; //fetus, 5, 16, 27, 34, 45, 60, 85, 100, DEAD
 	public static int[] numberChoices = new int[]{1,10,10,10,10,10,10,10,1,1};
+
+
+
 
 
 

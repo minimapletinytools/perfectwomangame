@@ -58,6 +58,8 @@ public class TransitionCameraManager : FakeMonoBehaviour
 	FlatElementImage mGLLogo;
 	FlatElementImage mFilmLogo;
 	FlatElementText mMessageText;
+
+    FlatElementImage mKinectRequiredImage;
 	
 	//DepthWarning nonsense
 	FlatElementText mDepthWarningText;
@@ -257,7 +259,13 @@ public class TransitionCameraManager : FakeMonoBehaviour
 		mGLLogo.Enabled = false;
 		mFilmLogo.Enabled = false;*/
 
-		
+        if (!GameConstants.ALLOW_NO_KINECT && mManager.mZigManager.is_reader_connected() == 0)
+        {
+            //TODO put up a KINECT REQUIRED message
+            mKinectRequiredImage = construct_flat_image("FG-1",1000);
+            mKinectRequiredImage.SoftPosition += new Vector3(0,-400,0);
+            mElement.Add(mKinectRequiredImage);
+        }
 		
 		mMessageText = new FlatElementText(refs.genericFont,60,"",1);
 		mMessageText.HardPosition = mFlatCamera.get_point(Vector3.zero) + new Vector3(0,400,0);
@@ -318,6 +326,9 @@ public class TransitionCameraManager : FakeMonoBehaviour
 
     bool can_start(float aTime)
     {
+        if (!GameConstants.ALLOW_NO_KINECT && mManager.mZigManager.is_reader_connected() == 0)
+            return false;
+
         return 
             mManager.mCharacterBundleManager.is_initial_loaded() &&
             mManager.mZigManager.ZgInterface.can_start() &&
