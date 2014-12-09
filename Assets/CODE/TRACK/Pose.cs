@@ -92,7 +92,8 @@ public class PerformanceType
 		SLOW,
 		SWITCH,
 		SLOWSWITCH,
-		COUNT = 4
+        MANUAL,
+		COUNT = 5
 	}
 	
 	public PType PT
@@ -105,7 +106,14 @@ public class PerformanceType
 	{ get; set; }
 	protected PoseAnimation PA
 	{ get; set; }
-	
+
+
+    bool mManualAdvance = false;
+	public void ManualAdvance()
+    {
+        mManualAdvance = true;
+    }
+
 	public PerformanceType(PoseAnimation aAnim, CharacterIndex aIndex)
 	{
 		PA = aAnim;
@@ -197,6 +205,17 @@ public class PerformanceType
 			float lambda = (aTime-(rIndex*changeTime))/changeTime;
 			return Pose.interpolate(PA.get_pose(rIndex*2),PA.get_pose(rIndex*2 + 1),lambda);
 		}
+        else if(PT == PType.MANUAL)
+        {
+            //TODO TEST
+            if(mManualAdvance)
+            {
+                mManualAdvance = false;
+                aTime += changeTime-aTime%changeTime;
+                int rIndex = ((int)(aTime/changeTime));
+                return PA.get_pose(rIndex);
+            }
+        }
 		return null;
 	}
 }
