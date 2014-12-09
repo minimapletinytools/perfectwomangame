@@ -4,15 +4,21 @@
 -cleaned up DLLs in the project
 ​-made a release build with release dlls. Passed the submission validator but I was not able to run bin scope on it for some reason. Not sure why. Will have to figure this out or not do that and see what optional cert says.
 ​-DeferSystemGestures now being callend during choosing
+-DeferSystemGestures now being callend during play
+-now only last collumn of characters can be unlocked, Based on # of playthroughs
 
 ::TODO::
--check PLM stuff ,suspendingeventhandler, activationeventhandler and resource availabilityhandler (prob ok?)
+IGNORE-check PLM stuff ,suspendingeventhandler, activationeventhandler and resource availabilityhandler (prob ok?)
+DONE-need to call defer sytem gestures during play as well dummy
+DONE-do simplified version of last collumn unlock..
+DONE-display error at title screen if no kinect is connected
 -get achievements working..
--need to call defer sytem gestures during play as well dummy
 -do new play mode...
--do simplified version of last collumn unlock..
--disable image capture for now on xb1...
+-fix image capture on XB1
+	-disable image capture for now on xb1...
+	-post question RE YUV conversion on google group
 -astronaut transparent shader does not work on xb1
+	-render texture not clearing to transparent properly??? ask on google groups
 -do release build test with validation, binscope etc
 	-still need to run binscope
 -do game saving

@@ -89,7 +89,10 @@ public class GiftManager
             mStages.Last().playerTex.SetPixels(tex.GetPixels());
             mStages.Last().playerTex.Apply();
         } else
-            Debug.Log("captured a null texture!");
+        {
+            //Debug.Log("captured a null texture!");
+            ManagerManager.Log("ZgInterface returned a null texture");
+        }
 	}
 
 	public void set_background_for_render()
