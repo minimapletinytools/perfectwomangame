@@ -422,8 +422,23 @@ public class ModeNormalPlay
 
             if (PercentTimeCompletion > 0.01f)
             {
+                bool switchEffect = false;
                 mParticles.create_particles(mGrading, true);
-                if (NGM.CurrentPoseAnimation.does_pose_change_precoginitive(Time.time, Time.deltaTime, 0.07f))
+                if(GameConstants.NEW_POSE_SWITCHING)
+                {
+                    //TODO test if switch conditions are right
+                        //TODO switch
+                }
+                else
+                {
+                    if (NGM.CurrentPoseAnimation.does_pose_change_precoginitive(Time.time, Time.deltaTime, 0.07f))
+                    {
+                        switchEffect = true;
+                    }
+
+                }
+
+                if(switchEffect)
                 {
                     mGiftManager.capture_player();
                     mParticles.create_particles(mGrading);
@@ -432,6 +447,8 @@ public class ModeNormalPlay
                     else
                         mManager.mMusicManager.play_sound_effect("pose" + Mathf.Clamp((int)(5 * grade), 0, 4), 0.8f);
                 }
+
+
             }
 			
 
@@ -935,8 +952,13 @@ public class ModeNormalPlay
 			NGM.CurrentPoseAnimation = new PerformanceType(mManager.mCharacterBundleManager.get_pose(NGM.CurrentCharacterIndex,diff),NGM.CurrentCharacterIndex);
 			NGM.CurrentPoseAnimation.BPM = NGM.CharacterHelper.Characters[NGM.CurrentCharacterIndex].CharacterInfo.BPM;
 			NGM.CurrentPoseAnimation.Offset = NGM.CharacterHelper.Characters[NGM.CurrentCharacterIndex].CharacterInfo.BPMOFFSET;
-
 			NGM.CurrentPoseAnimation.set_change_time(GameConstants.difficultyToChangeTime[diff]);
+
+            if(GameConstants.NEW_POSE_SWITCHING)
+            {
+                NGM.CurrentPoseAnimation.ChangeTime = 10;
+                NGM.CurrentPoseAnimation.PT = PerformanceType.PType.MANUAL;
+            }
 
 			
 			NGM.CurrentTargetPose = NGM.CurrentPoseAnimation.get_pose(0);
