@@ -18,8 +18,20 @@ public static class KeyMan
         {"Choice2",XboxOneKeyCode.Gamepad1ButtonDPadUp},
         {"Choice3",XboxOneKeyCode.Gamepad1ButtonDPadDown},
         {"Choice4",XboxOneKeyCode.Gamepad1ButtonDPadRight},
+
+        {"lvl1",null},
+        {"lvl2",null},
+        {"lvl3",null},
+        {"lvl4",null},
+        {"lvl5",null},
+        {"lvl6",null},
+        {"lvl7",null},
+        {"lvl8",XboxOneKeyCode.Gamepad1ButtonY}, //bad key, pick a different one
+
         {"Quit",null},
         {"DepthToggle",XboxOneKeyCode.Gamepad1ButtonMenu},
+
+        //use these for testing
         {"LeftThumbstick",XboxOneKeyCode.Gamepad1ButtonLeftThumbstick},
         {"RightThumbstick",XboxOneKeyCode.Gamepad1ButtonRightThumbstick},
     };
@@ -61,7 +73,16 @@ public static class KeyMan
         {"Quit",KeyCode.Escape},
         {"DepthToggle",KeyCode.K},
 
-        //XB1 stuff
+        {"lvl1",KeyCode.Q},
+        {"lvl2",KeyCode.W},
+        {"lvl3",KeyCode.E},
+        {"lvl4",KeyCode.R},
+        {"lvl5",KeyCode.T},
+        {"lvl6",KeyCode.Z},
+        {"lvl7",KeyCode.U},
+        {"lvl8",KeyCode.I},
+
+        //XB1 stuff, can ignore
         {"LeftThumbstick",null},
         {"RightThumbstick",null}
     };

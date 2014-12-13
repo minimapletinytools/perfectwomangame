@@ -306,15 +306,17 @@ public class ModeNormalPlay
 			}
 
 			//level skipping, this will probably break grave btw	
-			KeyCode[] levelKeys = new KeyCode[]{KeyCode.Q,KeyCode.W,KeyCode.E,KeyCode.R,KeyCode.T,KeyCode.Z,KeyCode.U};
-			KeyCode[] choiceKeys = new KeyCode[]{KeyCode.Alpha1,KeyCode.Alpha2,KeyCode.Alpha3,KeyCode.Alpha4};
+			//KeyCode[] levelKeys = new KeyCode[]{KeyCode.Q,KeyCode.W,KeyCode.E,KeyCode.R,KeyCode.T,KeyCode.Z,KeyCode.U,KeyCode.I};
+			//KeyCode[] choiceKeys = new KeyCode[]{KeyCode.Alpha1,KeyCode.Alpha2,KeyCode.Alpha3,KeyCode.Alpha4};
+            string[] levelKeys = new string[]{"lvl1","lvl2","lvl3","lvl4","lvl5","lvl6","lvl7","lvl8"};
+            string[] choiceKeys = new string[]{"Choice1","Choice2","Choice3","Choice4"};
 			for(int i=0; i < levelKeys.Length; i++)
 			{
-				if(Input.GetKey(levelKeys[i]))
+				if(KeyMan.GetKey(levelKeys[i]))
 				{
 					for(int j=0; j < choiceKeys.Length; j++)
 					{
-						if(Input.GetKeyDown(choiceKeys[j]))
+						if(KeyMan.GetKeyDown(choiceKeys[j]))
 						{
 							slide_image(mChoosingImage,null);
 							slide_image(mSunsetImage,null,false);
