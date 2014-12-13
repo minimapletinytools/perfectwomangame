@@ -41,7 +41,23 @@ public class SunsetManager
 	
 	public bool IsLoaded{get; private set;}
 	
-    public bool ShowBackground{ get { return mBackground.Enabled; } set { mBackground.Enabled = value; } }
+    bool mShowBackground = true;
+    public bool ShowBackground{ get { 
+            return mShowBackground;
+        } set {
+            mShowBackground = value; 
+            if(!mShowBackground)
+            {
+                mBackground.PrimaryGameObject.GetComponentInChildren<Renderer>().enabled = false;
+                mBackground.HardShader = mManager.mReferences.mXB1ClearShader;
+            }
+            else
+            {
+                mBackground.PrimaryGameObject.GetComponentInChildren<Renderer>().enabled = true;
+                mBackground.HardShader = mManager.mReferences.mDefaultCharacterShader;
+            }
+        } 
+    }
 
 	FlatElementImage construct_flat_image(string aName, int aDepth)
 	{

@@ -4,6 +4,9 @@ using System.Linq;
 
 
 //TODO you'll want to switch this over to the Unity pulgins eventually
+#if UNITY_XBOXONE 
+using UnityPluginLog;
+#endif
 
 public class MicrosoftZig : ZgInterface
 {
@@ -39,8 +42,18 @@ public class MicrosoftZig : ZgInterface
         System.Environment.SetEnvironmentVariable("MONO_REFLECTION_SERIALIZER", "yes");
 
 		Initialized = true;
+
+
+        //plugin stuff TODO move to a diff file
+        PluginLogManager.Create();
+        PluginLogManager.SetLogPath("G:\\plugins.log");
+        PluginLogManager.OnLog += OnLog;
 	}
 	
+    void OnLog(UnityPluginLog.LogChannels channel, string message)
+    {
+        ManagerManager.Log(message + channel.ToString());
+    }
 	public void update()
 	{
 		mKinect.Update ();
@@ -72,12 +85,13 @@ public class MicrosoftZig : ZgInterface
         //testcode
         if (KeyMan.GetKeyDown("LeftThumbstick"))
         {
-            write_data(mZig.mManager.mMetaManager.UnlockManager.serialize(),"unlock");
+            PluginLogManager.Log("This is a C# logerror message");
+            //write_data(mZig.mManager.mMetaManager.UnlockManager.serialize(),"unlock");
 
         }
         if (KeyMan.GetKeyDown("RightThumbstick"))
         {
-            read_data("unlock",delegate(byte[] obj) { mZig.mManager.mMetaManager.UnlockManager.deserialize(obj);});
+            //read_data("unlock",delegate(byte[] obj) { mZig.mManager.mMetaManager.UnlockManager.deserialize(obj);});
         }
 	}
 	

@@ -13,8 +13,9 @@ public class PrefabReferenceBehaviour : MonoBehaviour {
 	public Shader mMiniCharacterShader;
 	public Shader mGraphShader;
 	public Shader mRenderTextureShader;
-    public Shader mXB1ColorImageShader;
-	
+    public Shader mXB1ClearShader;
+    public Shader mAlpha8DepthImageShader;
+
 	//important prefabs
 	public GameObject mImageEffectsPrefabs;
     public GameObject mPlanePrefab;

@@ -115,6 +115,7 @@ public class TransitionCameraManager : FakeMonoBehaviour
 		mDepthImage = new FlatElementImage(null,new Vector2(160,120),100);
         mDepthImage.HardScale = Vector3.one * 2;
         mDepthImage.HardPosition = mFlatCamera.get_point(1, -1) + new Vector3(-10 - mDepthImage.BoundingBox.width / 4, 10 + mDepthImage.BoundingBox.height / 4, 0) * mFlatCamera.screen_pixel_to_camera_pixel_ratio();
+        mDepthImage.HardShader = mManager.mReferences.mAlpha8DepthImageShader;
 		mDepthWarningText = new FlatElementText(mManager.mNewRef.genericFont,40,"Make sure you are\nin frame and no body\nparts are covered",100);
 		mDepthWarningText.HardColor = new Color(1,1,1,0);	
 		mDepthWarningText.Alignment = TextAlignment.Left;
