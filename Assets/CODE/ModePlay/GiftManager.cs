@@ -85,9 +85,12 @@ public class GiftManager
 		var tex = mManager.mZigManager.ZgInterface.take_color_image();
         if (tex != null)
         {
+//TODO make this work with XB1 shit... need a way to copy texture...
+#if !UNITY_XBOXONE 
             mStages.Last().playerTex = new Texture2D(tex.width, tex.height, tex.format, false);
             mStages.Last().playerTex.SetPixels(tex.GetPixels());
             mStages.Last().playerTex.Apply();
+#endif
         } else
         {
             //Debug.Log("captured a null texture!");
