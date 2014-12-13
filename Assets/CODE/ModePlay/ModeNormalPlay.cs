@@ -379,7 +379,7 @@ public class ModeNormalPlay
 	
 	public void update_PLAY()
 	{
-        TimeRemaining -= KeyMan.GetKeyDown("Fast") ? Time.deltaTime * 5 : Time.deltaTime;
+        TimeRemaining -= KeyMan.GetKey("Fast") ? Time.deltaTime * 5 : Time.deltaTime;
 		
 		if(NGM.CurrentPose != null) //this should never happen but just in case
 		{
