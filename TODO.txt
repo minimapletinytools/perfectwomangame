@@ -1,12 +1,3 @@
-::UPDATES::
-​-did a first implementation of all events (service configuration was done a while ago. not sure if I did it right). I can't test this yet because they messed up our XDP and I can't get our accounts properly added (see below).
-​-Messed around with xdp and sandboxes. I was able to log into our old sandbox PRWU.0 after a little fadangling, but the product that Dave created for us is actually not owned by us and uses the sandbox PRFW.0 :\. I need to contact Dave to get this sorted out.
--cleaned up DLLs in the project
-​-made a release build with release dlls. Passed the submission validator but I was not able to run bin scope on it for some reason. Not sure why. Will have to figure this out or not do that and see what optional cert says.
-​-DeferSystemGestures now being callend during choosing
--DeferSystemGestures now being callend during play
--now only last collumn of characters can be unlocked, Based on # of playthroughs
-
 ::TODO::
 IGNORE-check PLM stuff ,suspendingeventhandler, activationeventhandler and resource availabilityhandler (prob ok?)
 DONE-need to call defer sytem gestures during play as well dummy
