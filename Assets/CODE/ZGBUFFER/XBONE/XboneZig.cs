@@ -3,57 +3,46 @@ using System.Collections.Generic;
 using System.Linq;
 
 
-//TODO you'll want to switch this over to the Unity pulgins eventually
-#if UNITY_XBOXONE 
-using UnityPluginLog;
-#endif
-
 public class MicrosoftZig : ZgInterface
 {
     
     ZgManager mZig;
 	XboneUsers mUsers;
-	XboneKinect mKinect;
+	public XboneKinect mKinect;
 	XbonePLM mPLM;
 	XboneStorage mStorage;
 	XboneEvents mEvents; 
+    XboneUnityLogPlugin mLog;
 
-    RenderTexture mColorImageRT = null;
+    public RenderTexture mColorImageRT = null;
 
 	bool Initialized { get; set; }
 	
 	public void initialize(ZgManager aZig)
 	{
         mZig = aZig;
+        mLog = new XboneUnityLogPlugin();
         mUsers = new XboneUsers ();
 		mPLM = new XbonePLM ();
 		mKinect = new XboneKinect ();
 		mStorage = new XboneStorage ();
 		mEvents = new XboneEvents (aZig.mManager);
 
-
+        mLog.Start();
         mUsers.Start ();
 		mPLM.Start ();
 		mKinect.Start ();
 		mStorage.Start ();
 		mEvents.Start();
 
+
+        //TODO DELETE solves nothing
         //solves some jit problems
-        System.Environment.SetEnvironmentVariable("MONO_REFLECTION_SERIALIZER", "yes");
+        //System.Environment.SetEnvironmentVariable("MONO_REFLECTION_SERIALIZER", "yes");
 
 		Initialized = true;
-
-
-        //plugin stuff TODO move to a diff file
-        PluginLogManager.Create();
-        PluginLogManager.SetLogPath("G:\\plugins.log");
-        PluginLogManager.OnLog += OnLog;
 	}
-	
-    void OnLog(UnityPluginLog.LogChannels channel, string message)
-    {
-        ManagerManager.Log(message + channel.ToString());
-    }
+
 	public void update()
 	{
 		mKinect.Update ();
@@ -61,6 +50,8 @@ public class MicrosoftZig : ZgInterface
 
         if(mKinect.DepthTexture != null)
             ManagerManager.Manager.mZigManager.DepthView.UpdateTexture(mKinect.DepthTexture);
+
+        //if (mKinect.ColorTexture != null)take_color_image();
 
 
         //defer system gestures
@@ -85,12 +76,16 @@ public class MicrosoftZig : ZgInterface
         //testcode
         if (KeyMan.GetKeyDown("LeftThumbstick"))
         {
-            PluginLogManager.Log("This is a C# logerror message");
+            mLog.UnityLog("left thumbstick was pressed");
             //write_data(mZig.mManager.mMetaManager.UnlockManager.serialize(),"unlock");
 
         }
         if (KeyMan.GetKeyDown("RightThumbstick"))
         {
+            //mEvents.SendDeathEvent();
+            //ManagerManager.Log("Sent fake death event");
+
+            take_color_image();
             //read_data("unlock",delegate(byte[] obj) { mZig.mManager.mMetaManager.UnlockManager.deserialize(obj);});
         }
 	}
@@ -113,10 +108,12 @@ public class MicrosoftZig : ZgInterface
         if(ManagerManager.Manager.mZigManager.is_reader_connected() == 2)
         {
             //TODO write the shader and test
-            /*
-            Material mat = new Material(ManagerManager.Manager.mReferences.mXB1ColorImageShader);
-            mat.SetTexture("Main",mKinect.ColorTexture);
-            mat.SetTexture("Label",mKinect.LabelTexture);
+            ManagerManager.Log("taking color image");
+
+            Material mat = new Material(ManagerManager.Manager.mReferences.mXB1KinectImageMaskingShader);
+            //mat.SetTexture("_MainTex",mKinect.ColorTexture);
+            //mat.SetTexture("_AlphaText",mKinect.LabelTexture);
+            mat.SetTexture("_MainTex",mKinect.LabelTexture);
 
             if(mColorImageRT == null)
                 mColorImageRT = new RenderTexture(mKinect.ColorTexture.width,mKinect.ColorTexture.height,0);
@@ -124,14 +121,23 @@ public class MicrosoftZig : ZgInterface
             var img = new ImageGameObjectUtility(mKinect.ColorTexture);
             img.PlaneObject.renderer.material = mat;
 
+
             var aCam = ManagerManager.Manager.mCameraManager.ForegroundCamera; //borrow a camera
+            img.PlaneObject.transform.position = aCam.transform.position + aCam.transform.forward*15;
+            img.PlaneObject.layer = 4;
             //TODO resize the camera
             RenderTexture.active = mColorImageRT;
             aCam.targetTexture = mColorImageRT;
             aCam.Render();
+            //Texture2D copyTex = new Texture2D(mColorImageRT.width,mColorImageRT.height);
+            //copyTex.ReadPixels(new Rect(0,0,mColorImageRT.width,mColorImageRT.height),0,0);
+            //copyTex.Apply();
             RenderTexture.active = null;
             aCam.targetTexture = null;
-            */
+
+            img.destroy();
+
+
             return ManagerManager.Manager.mZigManager.ImageView.UpdateTexture(mKinect.ColorTexture,mKinect.LabelTexture);
         }
         return null;
