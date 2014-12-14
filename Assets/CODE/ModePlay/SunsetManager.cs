@@ -49,12 +49,12 @@ public class SunsetManager
             if(!mShowBackground)
             {
                 mBackground.PrimaryGameObject.GetComponentInChildren<Renderer>().enabled = false;
-                mBackground.HardShader = mManager.mReferences.mXB1ClearShader;
+                //mBackground.HardShader = mManager.mReferences.mXB1ClearShader;
             }
             else
             {
                 mBackground.PrimaryGameObject.GetComponentInChildren<Renderer>().enabled = true;
-                mBackground.HardShader = mManager.mReferences.mDefaultCharacterShader;
+                //mBackground.HardShader = mManager.mReferences.mDefaultCharacterShader;
             }
         } 
     }
@@ -186,10 +186,14 @@ public class SunsetManager
 		Color leftColor = new Color32(25,25,112,255);
 		Color highColor = new Color32(135,206,235,255);
 		Color rightColor = leftColor;
-		if(lambda < 0.5f)
-			mBackground.HardColor = Color.Lerp(leftColor,highColor,lambda*2)/2f;
-		else
-			mBackground.HardColor = Color.Lerp(highColor,rightColor,(lambda-0.5f)*2)/2f;
+        {
+            if (lambda < 0.5f)
+                mBackground.HardColor = Color.Lerp(leftColor, highColor, lambda * 2) / 2f;
+            else
+                mBackground.HardColor = Color.Lerp(highColor, rightColor, (lambda - 0.5f) * 2) / 2f;
+        }
+        //CAN DELETE
+        //mBackground.HardColor = mBackground.SoftColor = GameConstants.UiWhiteTransparent;
 	}
 
 	public void set_sun(int aIndex, bool hard = false)

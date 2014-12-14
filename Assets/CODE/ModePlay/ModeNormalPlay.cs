@@ -159,7 +159,7 @@ public class ModeNormalPlay
         //hs.y += 600; //additional 300 pixels..
         mSunsetImage.HardScale = hs;
 		mSunsetImage.HardPosition = mFlatCamera.get_point(Vector3.zero) + Vector3.up*mSunsetImage.BoundingBox.height;
-		mSunsetImage.HardShader = mManager.mReferences.mRenderTextureShader;
+		//mSunsetImage.HardShader = mManager.mReferences.mRenderTextureShader;
 		mSunsetImage.PositionInterpolationMinLimit = 10; //so it doesn't take forever to entirely cover the image underneath
 		mElement.Add(mSunsetImage);
 		
