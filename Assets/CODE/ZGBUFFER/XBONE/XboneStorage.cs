@@ -21,6 +21,9 @@ public class XboneStorage
             Storage.StorageManager.Create();
             var dummy = (new GameObject("genDummy")).AddComponent<DummyBehaviour>();
             dummy.StartCoroutine(save_thread(dummy.gameObject));
+        } else
+        {
+            StorageCreated = true; 
         }
 	}
 
