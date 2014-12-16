@@ -112,7 +112,7 @@ public class MicrosoftZig : ZgInterface
 
             Material mat = new Material(ManagerManager.Manager.mReferences.mXB1KinectImageMaskingShader);
             mat.SetTexture("_MainTex",mKinect.ColorTexture);
-            mat.SetTexture("_AlphaText",mKinect.LabelTexture);
+            mat.SetTexture("_AlphaTex",mKinect.LabelTexture);
             //mat.SetTexture("_MainTex",mKinect.LabelTexture);
 
             if(mColorImageRT == null)

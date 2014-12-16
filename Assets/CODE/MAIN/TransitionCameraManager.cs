@@ -64,6 +64,7 @@ public class TransitionCameraManager : FakeMonoBehaviour
 	//DepthWarning nonsense
 	FlatElementText mDepthWarningText;
 	FlatElementImage mDepthImage;
+    FlatElementImage mColorImage; //for testing
 	
 	
     public TransitionCameraManager(ManagerManager aManager)
@@ -102,9 +103,6 @@ public class TransitionCameraManager : FakeMonoBehaviour
 		
 
         initialize_depth_warning();
-
-
-
 		mManager.mAssetLoader.new_load_asset_bundle("START",delegate(AssetBundle aBundle){start_screen_loaded_callback(aBundle,"START");});
 		
 	}
@@ -115,12 +113,12 @@ public class TransitionCameraManager : FakeMonoBehaviour
 		mDepthImage = new FlatElementImage(null,new Vector2(160,120),100);
         mDepthImage.HardScale = Vector3.one * 2;
         mDepthImage.HardPosition = mFlatCamera.get_point(1, -1) + new Vector3(-10 - mDepthImage.BoundingBox.width / 4, 10 + mDepthImage.BoundingBox.height / 4, 0) * mFlatCamera.screen_pixel_to_camera_pixel_ratio();
-        mDepthImage.HardShader = mManager.mReferences.mAlpha8DepthImageShader;
+        mDepthImage.HardShader = mManager.mReferences.mXB1DepthImageShader;
 		mDepthWarningText = new FlatElementText(mManager.mNewRef.genericFont,40,"Make sure you are\nin frame and no body\nparts are covered",100);
 		mDepthWarningText.HardColor = new Color(1,1,1,0);	
 		mDepthWarningText.Alignment = TextAlignment.Left;
 		mDepthWarningText.Anchor = TextAnchor.MiddleLeft;
-		mDepthWarningText.HardPosition = mFlatCamera.get_point(1,-1) + new Vector3(-220,75,0) * mFlatCamera.screen_pixel_to_camera_pixel_ratio();
+		mDepthWarningText.HardPosition = mFlatCamera.get_point(1,-1) + new Vector3(-280,110,0) * mFlatCamera.screen_pixel_to_camera_pixel_ratio();
 		mDepthWarningText.ColorInterpolationMaxLimit = 10f;
 		mDepthWarningText.ColorInterpolationMinLimit = 2f;
 		//mDepthWarningText.Alignment = TextAlignment.Left;
@@ -128,17 +126,22 @@ public class TransitionCameraManager : FakeMonoBehaviour
 		
 		mElement.Add(mDepthImage);
 		mElement.Add(mDepthWarningText);
+
+        //color image for testing
+        mColorImage = new FlatElementImage(null, new Vector2(300, 300), 123);
+        mColorImage.HardPosition = mFlatCamera.Center;
+        mElement.Add(mColorImage);
 	}
 	
 	public bool EnableDepthWarning{
 		set{
    			if(value){
                 //WHY DIVIDE BY 4 AND NOT 2??? I DONT KNOW
-                mDepthImage.SoftPosition = mFlatCamera.get_point(1,-1) + new Vector3(-10 - mDepthImage.BoundingBox.width / 4, 10 + mDepthImage.BoundingBox.height / 4, 0) * mFlatCamera.screen_pixel_to_camera_pixel_ratio();
-				mDepthWarningText.SoftColor = new Color(1,1,1,1);
+                mDepthImage.SoftPosition = mFlatCamera.get_point(1,-1) + new Vector3(-50 - mDepthImage.BoundingBox.width / 4, 50 + mDepthImage.BoundingBox.height / 4, 0) * mFlatCamera.screen_pixel_to_camera_pixel_ratio();
+                mDepthWarningText.SoftColor = GameConstants.UiWhite;
 			} else {
-                mDepthImage.SoftPosition = mFlatCamera.get_point(1,-1) + new Vector3(400 - mDepthImage.BoundingBox.width / 4, 10 + mDepthImage.BoundingBox.height / 4, 0) * mFlatCamera.screen_pixel_to_camera_pixel_ratio();
-				mDepthWarningText.SoftColor = new Color(1,1,1,0);
+                mDepthImage.SoftPosition = mFlatCamera.get_point(1,-1) + new Vector3(400 - mDepthImage.BoundingBox.width / 4, 50 + mDepthImage.BoundingBox.height / 4, 0) * mFlatCamera.screen_pixel_to_camera_pixel_ratio();
+                mDepthWarningText.SoftColor = GameConstants.UiWhiteTransparent;
 			}
 		}
 	}
@@ -151,12 +154,24 @@ public class TransitionCameraManager : FakeMonoBehaviour
     {
 		mFlatCamera.update(Time.deltaTime);
 		foreach (FlatElementBase e in mElement)
-            e.update(Time.deltaTime);            
-		
-		
-		
+            e.update(Time.deltaTime);          
         TED.update(Time.deltaTime);
 
+        //TODO...
+        //if(mManager.mZigManager.DepthView.DepthTexture != null)
+            //mDepthImage.set_new_texture(mManager.mZigManager.DepthView.DepthTexture,new Vector2(160,120));
+        //mDepthImage.set_new_texture((mManager.mZigManager.ZgInterface as MicrosoftZig).mKinect.DepthTexture,new Vector2(160,120));
+        //if(mManager.mZigManager.ImageView.imageTexture != null)
+            //mColorImage.set_new_texture((mManager.mZigManager.ZgInterface as MicrosoftZig).mColorImageRT,new Vector2(300,300));
+
+        /*Material mat2 = new Material(ManagerManager.Manager.mReferences.mXB1ClearShader);
+        mat2.SetTexture("_MainTex",(mManager.mZigManager.ZgInterface as MicrosoftZig).mKinect.LabelTexture);
+        mDepthImage.PrimaryGameObject.GetComponentInChildren<Renderer>().material = mat2;
+
+        Material mat = new Material(ManagerManager.Manager.mReferences.mXB1KinectImageMaskingShader);
+        mat.SetTexture("_MainTex",(mManager.mZigManager.ZgInterface as MicrosoftZig).mKinect.ColorTexture);
+        mat.SetTexture("_AlphaTex",(mManager.mZigManager.ZgInterface as MicrosoftZig).mKinect.LabelTexture);
+        mColorImage.PrimaryGameObject.GetComponentInChildren<Renderer>().material = mat;*/
 	}
 
 
@@ -230,9 +245,7 @@ public class TransitionCameraManager : FakeMonoBehaviour
 	}
 	
 	public void start_configuration_display()
-	{
-        //bad place to put this but we can assume that at this point all the kinect stuff is properly initialized.
-        mDepthImage.set_new_texture(mManager.mZigManager.DepthView.DepthTexture,new Vector2(160,120));
+      	{
         EnableDepthWarning = false;
 		
 		//fade in
@@ -327,6 +340,18 @@ public class TransitionCameraManager : FakeMonoBehaviour
 
     bool can_start(float aTime)
     {
+
+        /*TODO CAN DELETE
+        if (KeyMan.GetKeyDown("LeftThumbstick"))
+        {
+            ManagerManager.Log("EVTS: " + mManager.mCharacterBundleManager.is_initial_loaded() + " " + 
+                               mManager.mZigManager.ZgInterface.can_start() + " " +
+                               mManager.mMetaManager.SaveDataRead + " " + 
+                               ((aTime > 5 && mManager.mZigManager.has_user()) ||
+             KeyMan.GetKey("HardSkip") || KeyMan.GetKey("SoftSkip") ||
+             GameConstants.FORCE_START));
+        }*/
+
         if (!GameConstants.ALLOW_NO_KINECT && mManager.mZigManager.is_reader_connected() == 0)
             return false;
 
