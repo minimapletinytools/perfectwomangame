@@ -5,7 +5,7 @@
 	}
 
 	SubShader {
-	
+		Cull Off Lighting Off ZWrite Off 
 		Pass {
 			CGPROGRAM
 			
@@ -18,7 +18,8 @@
 			float4 frag (v2f_img i) : SV_Target
 			{
 				float4 depth = tex2D( _MainTex, i.uv );
-				return float4(depth.r, depth.r, depth.r, 1);
+				//float shading = max(depth.r,1);
+				return float4(depth.r,depth.r,depth.r, 1);
 			}
 			
 			ENDCG
