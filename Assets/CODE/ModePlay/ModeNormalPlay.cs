@@ -150,7 +150,7 @@ public class ModeNormalPlay
 		mChoosingManager.mFlatCamera.set_render_texture_mode(true);
 		
 		mFlatCamera = new FlatCameraManager(new Vector3(-23200,3500,0),10);
-		mFlatCamera.Camera.depth = 100;
+		mFlatCamera.Camera.depth = 99;
 		mFlatCamera.fit_camera_to_screen();
 		
 		mSunsetImage = new FlatElementImage(mSunsetManager.mFlatCamera.RT,0);

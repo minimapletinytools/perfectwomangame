@@ -7,7 +7,7 @@ public class ZgImageViewer
 {
     
     public ZgResolution imageResolution = ZgResolution.VGA_640x480;
-    Texture2D imageTexture = null;
+    public Texture2D imageTexture = null;
     Texture2D labelTexture = null;
     ZgResolutionData imageSizeData;
     Color32[] imageOutputPixels;

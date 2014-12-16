@@ -81,7 +81,7 @@ public class FlatCameraManager{
         Camera.transform.LookAt(Center, Vector3.up);
         Camera.nearClipPlane = 0.1f;
         Camera.farClipPlane = 1000;
-        Camera.depth = 100;
+        Camera.depth = 99;
         Camera.clearFlags = CameraClearFlags.Depth;
     }
 	

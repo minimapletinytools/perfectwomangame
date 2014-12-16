@@ -1,23 +1,31 @@
 ::TODO::
+-ask about initializing events after restart???
+-update plugins and uniyt and go over events examples..
+	-make a new sapmle project... nup5 please
+-get achievements working..
+	-get plugin log to work...
 IGNORE-check PLM stuff ,suspendingeventhandler, activationeventhandler and resource availabilityhandler (prob ok?)
 DONE-need to call defer sytem gestures during play as well dummy
 DONE-do simplified version of last collumn unlock..
 DONE-display error at title screen if no kinect is connected
--get achievements working..
--do new play mode...
--fix image capture on XB1
-	-disable image capture for now on xb1...
-	-post question RE YUV conversion on google group
--astronaut transparent shader does not work on xb1
+DONE-investigate freezing issue after staying start screen for too long
+DONE-astronaut transparent shader does not work on xb1
 	-render texture not clearing to transparent properly??? ask on google groups
+-do new play mode...
+-fix image capture on XB1 
+	-fix it...
 -do release build test with validation, binscope etc
 	-still need to run binscope
+-figure out how to get rido f "Default Title"
 -do game saving
 -fix the JIT probelm with serializing Unlockables
 -game wont play after restart???
 -try out code stripping and see if it works
 	-you can tell it not to strip code by including a link.xml file in the assets folder. see xboxone-aot.html documentation
--fix depth image sizing issue with xb1 kinect depth image
+-depth image
+	-fix depth image sizing issue with xb1 kinect depth image
+		-seems to be stuck in corner for some reason, add spacing
+	-rendering just a white image
 -startup
 	-post a question on Unity to make sure this is OK
 		-ask about long thread activation time with default-diffuse
