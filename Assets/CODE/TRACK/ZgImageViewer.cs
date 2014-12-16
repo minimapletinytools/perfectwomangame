@@ -35,6 +35,7 @@ public class ZgImageViewer
         userOutputPixels = new Color32[userTextureSize.Width * userTextureSize.Height];
     }
 
+    //TODO get rid of labelmap argument, not needed as we do the image processing in XboneZig now
     public Texture2D UpdateTexture(Texture2D image, Texture2D labelmap)
     {
 

@@ -98,9 +98,6 @@ public class ManagerManager : MonoBehaviour{
             mStartDelegates();
         }
 
-        ManagerManager.Log("poop");
-        ManagerManager.Log("poop");
-
 	}
 	
 

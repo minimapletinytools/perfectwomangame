@@ -67,6 +67,17 @@ public class XboneEvents{
         }
     }
 
+    //just for testing CAN DELETE
+    public void SendDeathEvent()
+    {
+        DataPlatform.Events.SendDeath(
+            UsersManager.Users [0].Id.ToString(),
+            ref mSessionId, 
+            (int)mManager.mGameManager.mModeNormalPlay.TotalScore,
+            mManager.mGameManager.mModeNormalPlay.CurrentPerformanceStat.BadPerformance,
+            mManager.mGameManager.CurrentCharacterIndex.Age);
+    
+    }
     public void Start(){}
 
     public void Update(){
@@ -85,6 +96,10 @@ public class XboneEvents{
     
     public void Update(){
         
+        
+    }
+    public void SendDeathEvent()
+    {
         
     }
     
