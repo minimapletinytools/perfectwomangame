@@ -14,9 +14,9 @@ public class XboneEvents{
         mManager = aManager;
         mManager.GameEventDistributor += game_event_listener;
 
+        EventManager.Destroy(); //clean up from last time we loaded??
         EventManager.Create(@"G:\Data\StreamingAssets\Events-PRFW.0-4A0A3432.man");
-
-        ManagerManager.Log("Events created");
+        ManagerManager.Log("Events created " + EventManager.IsInitialized);
         
         AchievementsManager.Create();
         AchievementsManager.OnAchievementNotification += delegate(AchievementNotification notice)
@@ -27,6 +27,14 @@ public class XboneEvents{
             ManagerManager.Log("Achievement unlocked " + notice.AchievementId);
         };
 
+        DataPlatform.StatisticsManager.Create();
+        /*
+        AchievementsManager.QueryAchievementsForTitleIdAsync(1242182706, UsersManager.Users [0].Id.ToString(), delegate(DataPlatform.Achievements obj, UnityAOT.GetObjectAsyncOp<DataPlatform.Achievements> op)
+        {
+            ManagerManager.Log("ACHIIVEMNETS:");
+            ManagerManager.Log(obj.Length.ToString());
+            ManagerManager.Log(op.Result.ToString());
+        });*/
     }
 
     void game_event_listener(string name, object[] args)
@@ -81,7 +89,20 @@ public class XboneEvents{
     public void Start(){}
 
     public void Update(){
-
+        if (KeyMan.GetKeyDown("LeftThumbstick"))
+        {
+            StatisticsManager.GetSingleUserStatisticsAsync(UsersManager.Users [0].Id,UsersManager.Users [0].Id.ToString(),"f3530100-c251-40ff-9d13-078c4a0a3432","TimesBorn",delegate(UserStatisticsResult obj, UnityAOT.GetObjectAsyncOp<UserStatisticsResult> op) {
+                ManagerManager.Log("stat callback " + op.Success.ToString() + " " + op.IsComplete + " " + obj.Length); 
+               foreach(var e in obj)
+                {
+                    ManagerManager.Log("Made it in " + e.Length + " " + e.ServiceConfigurationId);
+                    foreach(var f in e)
+                    {
+                        ManagerManager.Log(f.Name + " " + f.Value);
+                    }
+                }
+            });
+        }
 
     }
 

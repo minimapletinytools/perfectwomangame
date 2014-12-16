@@ -111,9 +111,9 @@ public class MicrosoftZig : ZgInterface
             ManagerManager.Log("taking color image");
 
             Material mat = new Material(ManagerManager.Manager.mReferences.mXB1KinectImageMaskingShader);
-            //mat.SetTexture("_MainTex",mKinect.ColorTexture);
-            //mat.SetTexture("_AlphaText",mKinect.LabelTexture);
-            mat.SetTexture("_MainTex",mKinect.LabelTexture);
+            mat.SetTexture("_MainTex",mKinect.ColorTexture);
+            mat.SetTexture("_AlphaText",mKinect.LabelTexture);
+            //mat.SetTexture("_MainTex",mKinect.LabelTexture);
 
             if(mColorImageRT == null)
                 mColorImageRT = new RenderTexture(mKinect.ColorTexture.width,mKinect.ColorTexture.height,0);
@@ -122,19 +122,25 @@ public class MicrosoftZig : ZgInterface
             img.PlaneObject.renderer.material = mat;
 
 
-            var aCam = ManagerManager.Manager.mCameraManager.ForegroundCamera; //borrow a camera
-            img.PlaneObject.transform.position = aCam.transform.position + aCam.transform.forward*15;
-            img.PlaneObject.layer = 4;
+            Camera cam = ManagerManager.Manager.gameObject.AddComponent<Camera>();
+            cam.isOrthoGraphic = true;
+            cam.orthographicSize = img.BaseDimension.y;
+            img.PlaneObject.transform.position = cam.transform.position + cam.transform.forward*10;
+            cam.transform.LookAt(img.PlaneObject.transform.position);
             //TODO resize the camera
             RenderTexture.active = mColorImageRT;
-            aCam.targetTexture = mColorImageRT;
-            aCam.Render();
+
+
+            cam.targetTexture = mColorImageRT;
+            cam.clearFlags = CameraClearFlags.SolidColor;
+            cam.backgroundColor = Color.blue;
+            cam.Render();
             //Texture2D copyTex = new Texture2D(mColorImageRT.width,mColorImageRT.height);
             //copyTex.ReadPixels(new Rect(0,0,mColorImageRT.width,mColorImageRT.height),0,0);
             //copyTex.Apply();
             RenderTexture.active = null;
-            aCam.targetTexture = null;
-
+            cam.targetTexture = null;
+            GameObject.Destroy(cam);
             img.destroy();
 
 
