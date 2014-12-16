@@ -10,11 +10,14 @@ public class PrefabReferenceBehaviour : MonoBehaviour {
 	//shaders/materials
 	public Shader mDefaultCharacterShader;
 	public Shader mTransparentCharacaterShader;
-	public Shader mMiniCharacterShader;
-	public Shader mGraphShader;
-	public Shader mRenderTextureShader;
-    public Shader mXB1ClearShader;
-    public Shader mAlpha8DepthImageShader;
+	public Shader mMiniCharacterShader; //legacy
+	public Shader mGraphShader;//legacy
+	public Shader mRenderTextureShader; //legacy
+
+
+    public Shader mXB1KinectImageMaskingShader;
+    public Shader mXB1ClearShader;//TODO DELETE
+    public Shader mXB1DepthImageShader;
 
 	//important prefabs
 	public GameObject mImageEffectsPrefabs;
