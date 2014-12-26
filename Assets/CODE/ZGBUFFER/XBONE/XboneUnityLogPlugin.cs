@@ -35,8 +35,7 @@ public class XboneUnityLogPlugin
     }
     
     #else
-    public void Start()
-    {
-    }
+    public void Start(){}
+    public void UnityLog(string aMsg){}
     #endif
 }
