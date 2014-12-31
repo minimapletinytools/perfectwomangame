@@ -1,9 +1,10 @@
 ::TODO::
 -ask about initializing events after restart???
--update plugins and uniyt and go over events examples..
+-update plugins and unity and go over events examples..
 	-make a new sapmle project... nup5 please
 -get achievements working..
 	-get plugin log to work...
+
 IGNORE-check PLM stuff ,suspendingeventhandler, activationeventhandler and resource availabilityhandler (prob ok?)
 DONE-need to call defer sytem gestures during play as well dummy
 DONE-do simplified version of last collumn unlock..
