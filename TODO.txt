@@ -1,8 +1,25 @@
+::CATALOG ASSETS TODO FOR LEA::
+-This is the list of catalog art assets. I don't know what all of them are for but I'm sure a standard PW image for the ones we don't get will be fine
+	-Box Art 1080x1080
+	-Branded Key Art 584x800
+	-Poster Art 720x1080
+	-Featured Promotional Art 1080x1080
+	-Super Hero Art 1920x1080
+	-Titled Hero Art 1920x1080
+	-Image Gallery 1920x1080
+-do we want a different game title for German release? (I still need Perfect Woman in German so we can add it as a "alternative title" for search purposes)
+-need long and short description of game (this shows up in the Xbox Marketplace when you try and buy the game)
+	-need german translation of both
+
+
 ::OPT CERT TODO::
 DONE-strip out depth image and strip out reward image
 DONE-disable unlockables
 
 ::TODO::
+-make the necessary documents
+	-read this https://developer.xboxlive.com/en-us/xdp/documentation/xdphelp/Pages/product_documents_xdpdocs.aspx
+	-need draft of "Privacy" and "Terms of Use" presumably in the language of the region we are publishing in
 -ask about initializing events after restart???
 -update plugins and uniyt and go over events examples..
 	-make a new sapmle project... nup5 please
