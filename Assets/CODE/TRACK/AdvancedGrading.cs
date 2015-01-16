@@ -9,6 +9,9 @@ public class AdvancedGrading
 	const float GRADE_INTERP = 0f; //0.9f;
 	Dictionary<ZgJointId,float> mLastScore = null;
 	Dictionary<ZgJointId,float> mCurrentScore = null;
+
+    //TODO new grading stuff???
+    //int mLastSwapTime = -1f;
 	
 	public AdvancedGrading()
 	{

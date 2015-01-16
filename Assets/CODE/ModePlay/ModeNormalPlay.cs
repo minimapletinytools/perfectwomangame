@@ -44,27 +44,32 @@ public class ModeNormalPlay
 	}
 
 	
-		
+    //PLAY related stuff
+    AdvancedGrading mGrading = new AdvancedGrading();
+    AstronautPlay mAstronaut;	
 	public float mLastGrade = 0.5f;
+    BodyParticleHelper mParticles = new BodyParticleHelper();
+
 	List<PerformanceStats> mPerformanceStats = new List<PerformanceStats>();
-	BodyParticleHelper mParticles = new BodyParticleHelper();
 	ChoiceHelper mChoiceHelper;
 	
+    //managers
 	public NewInterfaceManager mInterfaceManager = null;
 	public SunsetManager mSunsetManager = null;
 	public ChoosingManager mChoosingManager = null;
 	public GiftManager mGiftManager = null;
 
+    //images
 	//FlatElementImage mInterfaceImage;
 	FlatElementImage mSunsetImage;
 	FlatElementImage mChoosingImage;
 	
+    //FLAT
 	public FlatCameraManager mFlatCamera;
     HashSet<FlatElementBase> mElement = new HashSet<FlatElementBase>();
 	
-	AdvancedGrading mGrading = new AdvancedGrading();
 
-    AstronautPlay mAstronaut;
+
 
 
 
