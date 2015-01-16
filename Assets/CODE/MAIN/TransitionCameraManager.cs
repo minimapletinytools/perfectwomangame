@@ -127,10 +127,11 @@ public class TransitionCameraManager : FakeMonoBehaviour
 		mElement.Add(mDepthImage);
 		mElement.Add(mDepthWarningText);
 
+        //CAN DELETE
         //color image for testing
-        mColorImage = new FlatElementImage(null, new Vector2(300, 300), 123);
-        mColorImage.HardPosition = mFlatCamera.Center;
-        mElement.Add(mColorImage);
+        //mColorImage = new FlatElementImage(null, new Vector2(300, 300), 123);
+        //mColorImage.HardPosition = mFlatCamera.Center;
+        //mElement.Add(mColorImage);
 	}
 	
 	public bool EnableDepthWarning{
