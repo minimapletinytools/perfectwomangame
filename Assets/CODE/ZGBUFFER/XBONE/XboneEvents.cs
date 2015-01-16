@@ -4,10 +4,12 @@ using System.Collections;
 #if UNITY_XBOXONE
 using Users;
 using DataPlatform;
+using ConsoleUtils;
 
 public class XboneEvents{
     System.Guid mSessionId;
     ManagerManager mManager;
+
     public XboneEvents(ManagerManager aManager)
     {
         mSessionId = System.Guid.NewGuid();
@@ -27,7 +29,9 @@ public class XboneEvents{
             ManagerManager.Log("Achievement unlocked " + notice.AchievementId);
         };
 
-        DataPlatform.StatisticsManager.Create();
+        StatisticsManager.Create();
+
+
         /*
         AchievementsManager.QueryAchievementsForTitleIdAsync(1242182706, UsersManager.Users [0].Id.ToString(), delegate(DataPlatform.Achievements obj, UnityAOT.GetObjectAsyncOp<DataPlatform.Achievements> op)
         {
@@ -91,7 +95,7 @@ public class XboneEvents{
     public void Update(){
         if (KeyMan.GetKeyDown("LeftThumbstick"))
         {
-            StatisticsManager.GetSingleUserStatisticsAsync(UsersManager.Users [0].Id,UsersManager.Users [0].Id.ToString(),"f3530100-c251-40ff-9d13-078c4a0a3432","TimesBorn",delegate(UserStatisticsResult obj, UnityAOT.GetObjectAsyncOp<UserStatisticsResult> op) {
+            /*StatisticsManager.GetSingleUserStatisticsAsync(UsersManager.Users [0].Id,UsersManager.Users [0].Id.ToString(),"f3530100-c251-40ff-9d13-078c4a0a3432","TimesBorn",delegate(UserStatisticsResult obj, UnityAOT.GetObjectAsyncOp<UserStatisticsResult> op) {
                 ManagerManager.Log("stat callback " + op.Success.ToString() + " " + op.IsComplete + " " + obj.Length); 
                foreach(var e in obj)
                 {
@@ -101,7 +105,30 @@ public class XboneEvents{
                         ManagerManager.Log(f.Name + " " + f.Value);
                     }
                 }
-            });
+            });*/
+
+
+            //TODO DELETE
+            //this is test stuff and will crash if there is no user logged on at start of game
+            var currentUser = UsersManager.Users [0];
+            ManagerManager.Log("querying for stats userid, uid, scid " + currentUser.Id + " " + currentUser.UID + " " + ConsoleUtilsManager.PrimaryServiceConfigId());;
+            StatisticsManager.GetSingleUserStatisticsAsyncMultipleStats(
+                currentUser.Id, 
+                currentUser.UID, 
+                ConsoleUtilsManager.PrimaryServiceConfigId(), 
+                new string[]{"TimesBorn","HighScore","TimesDied","TimesGruesomeDeath"},
+            delegate(UserStatisticsResult obj, UnityAOT.GetObjectAsyncOp<UserStatisticsResult> op)
+            {
+                ManagerManager.Log("Stat retrieval op: " + op.Success + " userid: " + obj.XboxUserId + " cnt " + obj.Length);
+                foreach (ServiceConfigurationStatistic ss in obj)
+                {
+                    foreach (Statistic stat in ss)
+                    {
+                        ManagerManager.Log(stat.Type.ToString() + " " + stat.Value);
+                    }
+                }
+            }
+            );
         }
 
     }

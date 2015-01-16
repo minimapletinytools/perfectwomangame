@@ -7,7 +7,7 @@ public class MicrosoftZig : ZgInterface
 {
     
     ZgManager mZig;
-	XboneUsers mUsers;
+	public XboneUsers mUsers;
 	public XboneKinect mKinect;
 	XbonePLM mPLM;
 	XboneStorage mStorage;
