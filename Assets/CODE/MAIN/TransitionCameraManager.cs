@@ -135,6 +135,12 @@ public class TransitionCameraManager : FakeMonoBehaviour
 	
 	public bool EnableDepthWarning{
 		set{
+
+            //disabling depth warning for XB1 version
+            //TODO fix depth warning eventually...
+            if(GameConstants.XB1)
+                value = false;
+
    			if(value){
                 //WHY DIVIDE BY 4 AND NOT 2??? I DONT KNOW
                 mDepthImage.SoftPosition = mFlatCamera.get_point(1,-1) + new Vector3(-50 - mDepthImage.BoundingBox.width / 4, 50 + mDepthImage.BoundingBox.height / 4, 0) * mFlatCamera.screen_pixel_to_camera_pixel_ratio();

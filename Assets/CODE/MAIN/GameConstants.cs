@@ -4,6 +4,17 @@ using System.Linq;
 
 public static class GameConstants
 {
+    //XB1 specific stuff
+    #if UNITY_XBOXONE
+    public static bool ALLOW_NO_KINECT = true;
+    public static bool XB1 = true;
+    #else
+    public static bool ALLOW_NO_KINECT = true;
+    public static bool XB1 = false;
+    #endif
+
+
+
 	//TODO only change this when you're about to load up simian mode
 	//I didn't do the conversion properly on all the classes so it's a super bad half assed change
 	//enough should bechanged such that perfect simian will work
@@ -15,8 +26,8 @@ public static class GameConstants
 	public static int CONTENT_HEIGHT = 1800;
 	public static float TARGET_FRAMERATE = 50;
 
+
     public static bool FORCE_START = false;
-    public static bool ALLOW_NO_KINECT = true;
     public static bool NEW_POSE_SWITCHING = false;
 
 	public static int numberAges = 10; //fetus, 5, 16, 27, 34, 45, 60, 85, 100, DEAD

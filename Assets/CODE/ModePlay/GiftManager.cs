@@ -82,19 +82,21 @@ public class GiftManager
 	}
 	public void capture_player()
 	{
-		var tex = mManager.mZigManager.ZgInterface.take_color_image();
-        if (tex != null)
+        //disable image capture feature for XB1
+        //TODO fix this for XB1 version
+        if (!GameConstants.XB1)
         {
-//TODO make this work with XB1 shit... need a way to copy texture...
-#if !UNITY_XBOXONE 
-            mStages.Last().playerTex = new Texture2D(tex.width, tex.height, tex.format, false);
-            mStages.Last().playerTex.SetPixels(tex.GetPixels());
-            mStages.Last().playerTex.Apply();
-#endif
-        } else
-        {
-            //Debug.Log("captured a null texture!");
-            ManagerManager.Log("ZgInterface returned a null texture");
+            var tex = mManager.mZigManager.ZgInterface.take_color_image();
+            if (tex != null)
+            {
+                mStages.Last().playerTex = new Texture2D(tex.width, tex.height, tex.format, false);
+                mStages.Last().playerTex.SetPixels(tex.GetPixels());
+                mStages.Last().playerTex.Apply();
+            } else
+            {
+                //Debug.Log("captured a null texture!");
+                ManagerManager.Log("ZgInterface returned a null texture");
+            }
         }
 	}
 

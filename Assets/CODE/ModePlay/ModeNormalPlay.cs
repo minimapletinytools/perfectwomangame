@@ -449,8 +449,6 @@ public class ModeNormalPlay
                     else
                         mManager.mMusicManager.play_sound_effect("pose" + Mathf.Clamp((int)(5 * grade), 0, 4), 0.8f);
                 }
-
-
             }
 			
 

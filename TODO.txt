@@ -1,16 +1,13 @@
+::OPT CERT TODO::
+DONE-strip out depth image and strip out reward image
+DONE-disable unlockables
+
 ::TODO::
 -ask about initializing events after restart???
 -update plugins and uniyt and go over events examples..
 	-make a new sapmle project... nup5 please
 -get achievements working..
 	-get plugin log to work...
-IGNORE-check PLM stuff ,suspendingeventhandler, activationeventhandler and resource availabilityhandler (prob ok?)
-DONE-need to call defer sytem gestures during play as well dummy
-DONE-do simplified version of last collumn unlock..
-DONE-display error at title screen if no kinect is connected
-DONE-investigate freezing issue after staying start screen for too long
-DONE-astronaut transparent shader does not work on xb1
-	-render texture not clearing to transparent properly??? ask on google groups
 -do new play mode...
 -fix image capture on XB1 
 	-fix it...
@@ -31,6 +28,14 @@ DONE-astronaut transparent shader does not work on xb1
 		-ask about long thread activation time with default-diffuse
 -something to mask graphical artifacts on restart
 
+
+IGNORE-check PLM stuff ,suspendingeventhandler, activationeventhandler and resource availabilityhandler (prob ok?)
+DONE-need to call defer sytem gestures during play as well dummy
+DONE-do simplified version of last collumn unlock..
+DONE-display error at title screen if no kinect is connected
+DONE-investigate freezing issue after staying start screen for too long
+DONE-astronaut transparent shader does not work on xb1
+	-render texture not clearing to transparent properly??? ask on google groups
 DONE-test out service configuration please..
 	-email dave omg
 DONE-regenerate sunset for xb1
