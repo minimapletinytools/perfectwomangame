@@ -171,7 +171,15 @@ public class ManagerManager : MonoBehaviour{
 		Resources.UnloadUnusedAssets();
 		System.GC.Collect();
 
-        Application.LoadLevel(Application.loadedLevel);
+
+
+        //we need to reload this stuff
+        //mCharacterBundleManager.Start();
+        mTransitionCameraManager.go_to_play();
+
+
+        //HARD RESET WAY
+        //Application.LoadLevel(Application.loadedLevel);
     }
 
     //Screenshot nonsense

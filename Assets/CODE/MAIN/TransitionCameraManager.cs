@@ -376,6 +376,8 @@ public class TransitionCameraManager : FakeMonoBehaviour
 
 		foreach(var e in mElement)
 			e.destroy();
+        mElement.Clear();
+
 		//we assume things have faded already so we can just destroy
 		//mPWLogo.destroy();
 		//mPWCredits.destroy();
@@ -387,8 +389,12 @@ public class TransitionCameraManager : FakeMonoBehaviour
 		//because it got destoryed at the step above
 		initialize_depth_warning();
 
-		mManager.mCharacterBundleManager.unload_bundle(mBundle);
-		mBundle = null;
+
+        if (mBundle != null)
+        {
+            mManager.mCharacterBundleManager.unload_bundle(mBundle);
+            mBundle = null;
+        }
 	}
 	
 	public bool go_to_play()
@@ -405,7 +411,7 @@ public class TransitionCameraManager : FakeMonoBehaviour
 			GameConstants.transitionToChoiceDelayTime = 0;
 			GameConstants.preplayTime = 0;
 		}
-		
+
         mManager.mGameManager.start_game(charIndex);
         destroy_configuration_display();
 

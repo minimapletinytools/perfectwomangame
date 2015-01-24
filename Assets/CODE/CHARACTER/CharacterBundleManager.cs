@@ -48,7 +48,7 @@ public class CharacterBundleManager : FakeMonoBehaviour {
         System.Xml.Serialization.XmlSerializer xs = new System.Xml.Serialization.XmlSerializer(typeof(List<ImageSizeData>));
         ImageIndex = xs.Deserialize(stream) as List<ImageSizeData>;
 		ImageBundle = aBundle;
-		add_bundle_to_unload(ImageBundle);
+		//add_bundle_to_unload(ImageBundle);
 		mImagesLoaded = true;
 
 		
@@ -205,6 +205,28 @@ public class CharacterBundleManager : FakeMonoBehaviour {
 			return r;
 		}
 	}
+
+    public void fetus_difficulty_shuffle_hack()
+    {
+        //this is a hack
+        //randomize difficulty changes for fetus
+        var avail = mManager.mMetaManager.UnlockManager.get_unlocked_characters_at_level(1).ToArray();
+        var changeThisInfo = mCharacterHelper.Characters[CharacterIndex.sFetus].CharacterInfo;
+
+        //reset all changes to 0
+        foreach(var e in avail)
+        {
+            Debug.Log(e.StringIdentifier);
+            changeThisInfo.ChangeSet[0].Changes[1].Changes[e] = 0;
+            changeThisInfo.ChangeSet[0].Changes[2].Changes[e] = 0; 
+        }
+
+        //set the new random changes
+        ChoiceHelper.Shuffle(avail);
+        changeThisInfo.ChangeSet[0].Changes[1].Changes[avail[0]] = -1;
+        changeThisInfo.ChangeSet[0].Changes[2].Changes[avail[avail.Count() > 1 ? 1 : 0]] = 1;  //the tertiary operator is for the case where there is only one character unlocked
+    }
+
 	public void pose_bundle_loaded_callback(AssetBundle aBundle)
     {
 		foreach(CharacterIndex e in CharacterIndex.sAllCharacters)
@@ -232,18 +254,10 @@ public class CharacterBundleManager : FakeMonoBehaviour {
 				//mCharacterHelper.Characters[e].CharacterInfo = NUPD.CharacterInformation.default_character_info(e);
 			}
 		}
-
-		//this is a hack
-		//randomize difficulty changes for fetus
-        var avail = mManager.mMetaManager.UnlockManager.get_unlocked_characters_at_level(1).ToArray();
-		ChoiceHelper.Shuffle(avail);
-		var changeThisInfo = mCharacterHelper.Characters[CharacterIndex.sFetus].CharacterInfo;
-		changeThisInfo.ChangeSet[0].Changes[1].Changes[avail[0]] = -1;
-		//NOTEso there is a funny problem with when we have only one character age Level 1, 
-        //we have to make the same character hard that we just made easy
-        //but what can you do
-		changeThisInfo.ChangeSet[0].Changes[2].Changes[avail[avail.Count() > 1 ? 1 : 0]] = 1; 
 		
+        //TODO CAN DELETE
+        //this is now called inside of ModeNormalPlay.reset_stats_and_difficulties
+        //fetus_difficulty_shuffle_hack();
 
 		foreach(CharacterIndex e in CharacterIndex.sAllCharacters)
 		{

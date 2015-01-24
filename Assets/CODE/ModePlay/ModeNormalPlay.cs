@@ -26,6 +26,7 @@ public class ModeNormalPlay
 	public NormalPlayGameState GS { get; private set; }
 	public PerformanceStats CurrentPerformanceStat 
 	{ get { return mPerformanceStats[mPerformanceStats.Count-1]; } }
+
 	public float TotalScore
 	{ 
         get{ 
@@ -43,6 +44,15 @@ public class ModeNormalPlay
 		}
 	}
 
+    public void reset_stats_and_difficulties()
+    {
+        //reset difficulties
+        foreach (var e in CharacterIndex.sAllCharacters.Where(e=>e.LevelIndex > 0))
+            mManager.mCharacterBundleManager.get_character_stat(e).Difficulty = 1;
+        mManager.mCharacterBundleManager.fetus_difficulty_shuffle_hack();
+        //reset stats
+        mPerformanceStats.Clear();
+    }
 	
     //PLAY related stuff
     AdvancedGrading mGrading = new AdvancedGrading();
@@ -203,6 +213,10 @@ public class ModeNormalPlay
 	
 	public void character_loaded()
 	{
+        //this means we are start/restarting the game
+        if(NGM.CurrentCharacterLoader.Character == CharacterIndex.sFetus)
+            reset_stats_and_difficulties();
+
         //reveal the character with sound
         mManager.mMusicManager.play_sound_effect("transitionOut");
         slide_image(mSunsetImage,null,false); 

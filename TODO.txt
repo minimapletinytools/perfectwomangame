@@ -17,6 +17,9 @@ DONE-strip out depth image and strip out reward image
 DONE-disable unlockables
 
 ::TODO::
+-SOFT RESET TODO
+	-clear currentgamestatshistroy
+	-reload character infos
 -make the necessary documents
 	-read this https://developer.xboxlive.com/en-us/xdp/documentation/xdphelp/Pages/product_documents_xdpdocs.aspx
 	-need draft of "Privacy" and "Terms of Use" presumably in the language of the region we are publishing in
@@ -26,7 +29,7 @@ DONE-disable unlockables
 -get achievements working..
 	-get plugin log to work...
 -do new play mode...
--fix image capture on XB1 
+IGNORE-fix image capture on XB1 
 	-fix it...
 -do release build test with validation, binscope etc
 	-still need to run binscope
@@ -44,6 +47,7 @@ DONE-disable unlockables
 	-post a question on Unity to make sure this is OK
 		-ask about long thread activation time with default-diffuse
 -something to mask graphical artifacts on restart
+	-SOFT RESET???
 
 
 IGNORE-check PLM stuff ,suspendingeventhandler, activationeventhandler and resource availabilityhandler (prob ok?)
