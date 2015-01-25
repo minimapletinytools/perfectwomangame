@@ -313,7 +313,7 @@ public class NewInterfaceManager {
 					newChanges[i].Changes[f] = 0;
 		}
         //then we remove text that has no characters assosciated with it
-		aChanges.Changes = newChanges.Where(e=>!e.Changes.is_zero()).ToList();
+		newChanges = newChanges.Where(e=>!e.Changes.is_zero()).ToList();
 
 
 
@@ -390,7 +390,7 @@ public class NewInterfaceManager {
 		0);
 		
 		
-		foreach(var e in aChanges.Changes)
+		foreach(var e in newChanges)
 		{
 			//string changeMsg = Random.Range(0,3) == 0 ? PDStats.negative_sentences[(int)e][0] : PDStats.positive_sentences[(int)e][0];
 			var changes = e;
