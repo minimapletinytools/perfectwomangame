@@ -259,20 +259,18 @@ public class NewInterfaceManager {
             float newWidth = mBBNameText.BoundingBox.width + 300;
             mBBNameTextFrame.mImage.pixel_crop(new Rect(0, 0, newWidth, mBBNameTextFrame.mImage.BaseDimension.y));
             mBBNameTextFrame.HardPosition = origPos + new Vector3(newWidth / 2f, 0, 0);
+
+            string[] labelNames = new string[]{"label_easy_BIG","label_normal_BIG","label_hard_BIG","label_extreme_BIG"};
+            var diffImage = mManager.mCharacterBundleManager.get_image(labelNames[aChar.Stats.Difficulty]);
+            mBBMultiplierImage.set_new_texture(diffImage.Image,diffImage.Data.Size);
+            mBBMultiplierImage.HardColor = GameConstants.UiWhite;
         } else
         {
+            //reset to original pixel crop (for when soft restarting the game)
+            mBBNameTextFrame.mImage.pixel_crop(new Rect(0,0,mBBNameTextFrame.mImage.BaseDimension.x,mBBNameTextFrame.mImage.BaseDimension.y));
             mBBNameText.Text = "";
+            mBBMultiplierImage.HardColor = GameConstants.UiWhiteTransparent;
         }
-
-		if(aChar.Character != CharacterIndex.sFetus && aChar.Character != CharacterIndex.sOneHundred)
-		{
-			string[] labelNames = new string[]{"label_easy_BIG","label_normal_BIG","label_hard_BIG","label_extreme_BIG"};
-			var diffImage = mManager.mCharacterBundleManager.get_image(labelNames[aChar.Stats.Difficulty]);
-			mBBMultiplierImage.set_new_texture(diffImage.Image,diffImage.Data.Size);
-			mBBMultiplierImage.HardColor = GameConstants.UiWhite;
-		}else{
-			mBBMultiplierImage.HardColor = GameConstants.UiWhiteTransparent;
-		}
 	}
 	
     public void hide_interface()
