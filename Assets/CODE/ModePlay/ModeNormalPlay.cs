@@ -135,6 +135,7 @@ public class ModeNormalPlay
 		DoSkipMultipleThisFrame = false;
 	}
 
+    bool mIsInitialized = false;
 	public void initialize()
 	{
 		
@@ -193,6 +194,8 @@ public class ModeNormalPlay
 		mInterfaceImage.HardScale = Vector3.one * mFlatCamera.Width/mInterfaceImage.mImage.PixelDimension.x;
 		mInterfaceImage.HardPosition = mFlatCamera.get_point(Vector3.zero);
 		mElement.Add(mInterfaceImage);*/
+
+        mIsInitialized = true;
 	}
 
 
@@ -201,7 +204,8 @@ public class ModeNormalPlay
 		//load the character
 		mManager.mAssetLoader.new_load_character(aChar.StringIdentifier,mManager.mCharacterBundleManager);
 	
-		initialize();
+        if(!mIsInitialized)
+		    initialize();
 
 	}
 	

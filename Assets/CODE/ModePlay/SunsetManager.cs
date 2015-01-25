@@ -94,7 +94,7 @@ public class SunsetManager
 		mElement.Add(mSun);
 		mElement.Add(mLightRay);
 
-		mManager.mCharacterBundleManager.add_bundle_to_unload(aBundle);
+		//mManager.mCharacterBundleManager.add_bundle_to_unload(aBundle);
 		IsLoaded = true;
 
 		//prep the sky for fetus

@@ -167,19 +167,22 @@ public class ManagerManager : MonoBehaviour{
 	
     public void restart_game()
     {
-        mCharacterBundleManager.cleanup();
-		Resources.UnloadUnusedAssets();
-		System.GC.Collect();
+        if (mGameManager.GS != NewGameManager.GameState.MENU)
+        {
+            mCharacterBundleManager.cleanup();
+            Resources.UnloadUnusedAssets();
+            System.GC.Collect();
 
 
 
-        //we need to reload this stuff
-        //mCharacterBundleManager.Start();
-        mTransitionCameraManager.go_to_play();
+            //we need to reload this stuff
+            //mCharacterBundleManager.Start();
+            mTransitionCameraManager.go_to_play();
 
 
-        //HARD RESET WAY
-        //Application.LoadLevel(Application.loadedLevel);
+            //HARD RESET WAY
+            //Application.LoadLevel(Application.loadedLevel);
+        }
     }
 
     //Screenshot nonsense

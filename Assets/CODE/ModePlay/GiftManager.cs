@@ -43,7 +43,7 @@ public class GiftManager
 	{
 		mLoader = new CharacterLoader();
 		mLoader.complete_load_character(aBundle,aBundleName);
-		mManager.mCharacterBundleManager.add_bundle_to_unload(aBundle);
+		//mManager.mCharacterBundleManager.add_bundle_to_unload(aBundle);
 		IsLoaded = true;
 	}
 
