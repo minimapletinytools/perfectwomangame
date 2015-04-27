@@ -203,7 +203,8 @@ public class ModeNormalPlay
 	{
 		//load the character
 		mManager.mAssetLoader.new_load_character(aChar.StringIdentifier,mManager.mCharacterBundleManager);
-	
+        GS = NormalPlayGameState.NONE;
+
         if(!mIsInitialized)
 		    initialize();
 
