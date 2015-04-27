@@ -216,7 +216,7 @@ public class CharacterBundleManager : FakeMonoBehaviour {
         //reset all changes to 0
         foreach(var e in avail)
         {
-            Debug.Log(e.StringIdentifier);
+            //Debug.Log(e.StringIdentifier);
             changeThisInfo.ChangeSet[0].Changes[1].Changes[e] = 0;
             changeThisInfo.ChangeSet[0].Changes[2].Changes[e] = 0; 
         }

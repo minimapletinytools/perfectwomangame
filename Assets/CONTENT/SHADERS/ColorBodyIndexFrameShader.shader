@@ -5,6 +5,7 @@ Properties {
 	_LabelTex ("Body Index Texture", 2D) = "white" {}
 }
 
+
 Category {
 	Tags { "Queue"="Transparent +100" "IgnoreProjector"="True" "RenderType"="Transparent" }
 	

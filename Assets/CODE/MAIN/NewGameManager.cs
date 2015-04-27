@@ -107,7 +107,6 @@ public class NewGameManager : FakeMonoBehaviour
 		
 
 		if (GS == GameState.NORMAL || GS == GameState.TEST || GS == GameState.CHALLENGE) {
-
             //TODO should move a lot of this stuff into character_loaded routiens
             //TODO make a base class for game modes and put this in a "default_load" routine inside or something
 			mManager.mBackgroundManager.load_character(aCharacter);
@@ -119,8 +118,8 @@ public class NewGameManager : FakeMonoBehaviour
 					mManager.mBodyManager.set_target_pose(mManager.mReferences.mCheapPose.to_pose(),true);
 			}
 			else{
-				mManager.mBodyManager.destroy_character();
-				mManager.mTransparentBodyManager.destroy_character();
+				mManager.mBodyManager.unload();
+				mManager.mTransparentBodyManager.unload();
 			}
 			mManager.mMusicManager.load_character(aCharacter);
 

@@ -158,15 +158,20 @@ public class BackgroundManager  : FakeMonoBehaviour
 		set_foreground_layer(mForegroundLayer);
 	}
 	
+    public void unload()
+    {
+        foreach (FlatElementImage e in mForegroundElements)
+            e.destroy();
+        foreach (FlatElementImage e in mBackgroundElements)
+            e.destroy ();
+        mForegroundElements.Clear();
+        mBackgroundElements.Clear();
+    }
+
     public void load_character(CharacterLoader aCharacter)
     {
 		
-		foreach (FlatElementImage e in mForegroundElements)
-			e.destroy();
-		foreach (FlatElementImage e in mBackgroundElements)
-			e.destroy ();
-		mForegroundElements.Clear();
-		mBackgroundElements.Clear();
+        unload();
 		
         mBackground.mImage.set_new_texture(aCharacter.Images.background1,aCharacter.Sizes.mBackSize);
 		

@@ -70,7 +70,7 @@ public class BodyManager : FakeMonoBehaviour {
             mFlat.HardPosition = mFlat.SoftPosition = mFlat.HardPosition + new Vector3(0,4000,0);
 	}
 	
-    public void destroy_character()
+    public void unload()
     {
         if (mFlat != null)
         {
@@ -82,7 +82,7 @@ public class BodyManager : FakeMonoBehaviour {
     //TODO should call this directly and get rid of that stupid callback thing in events
     public void load_character(CharacterLoader aCharacter)
     {
-        destroy_character();
+        unload();
 
         if (aCharacter != null && aCharacter.Name != "999")
         {

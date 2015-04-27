@@ -4,6 +4,7 @@ Properties {
 	_MainTex ("Particle Texture", 2D) = "white" {}
 }
 
+
 Category {
 	Tags { "Queue"="Transparent +100" "IgnoreProjector"="True" "RenderType"="Transparent" }
 	//Blend SrcAlpha OneMinusSrcAlpha

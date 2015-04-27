@@ -191,6 +191,12 @@ public class MusicManager : FakeMonoBehaviour
 	{
 		play_music(aCharacter.Images.backgroundMusic,1,true);
 	}
+
+    public void unload()
+    {
+        mMusicSource.Stop();
+        mMusicSource.clip = null;
+    }
 	
 	
 }

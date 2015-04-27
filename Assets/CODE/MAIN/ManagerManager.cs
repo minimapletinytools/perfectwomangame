@@ -139,6 +139,9 @@ public class ManagerManager : MonoBehaviour{
     		}
     		mLastScreenSize = newScreenSize;
     		
+    		if(mUpdateDelegates != null) 
+    			mUpdateDelegates();
+
             if (KeyMan.GetKeyDown("Quit"))
             {
                 Application.Quit();
@@ -147,9 +150,6 @@ public class ManagerManager : MonoBehaviour{
             {
                 restart_game();
             }
-    		if(mUpdateDelegates != null) 
-    			mUpdateDelegates();
-
 
             //mDebugString = ((int)(1 / Time.deltaTime)).ToString();
         } 
@@ -169,17 +169,24 @@ public class ManagerManager : MonoBehaviour{
     {
         if (mGameManager.GS != NewGameManager.GameState.MENU)
         {
+            mBackgroundManager.unload();
+            mBodyManager.unload();
+            mTransparentBodyManager.unload();
+            mMusicManager.unload();
+
+            Debug.Log("unloaded current character");
+
             mCharacterBundleManager.cleanup();
             Resources.UnloadUnusedAssets();
             System.GC.Collect();
 
-
+            Debug.Log("GCed assets");
 
             //we need to reload this stuff
             //mCharacterBundleManager.Start();
-            mTransitionCameraManager.go_to_play();
+            mTransitionCameraManager.go_to_play(); 
 
-
+            Debug.Log("restarted");
             //HARD RESET WAY
             //Application.LoadLevel(Application.loadedLevel);
         }

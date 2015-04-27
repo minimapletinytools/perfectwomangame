@@ -1,3 +1,11 @@
+
+::TODO2:
+-make the necessary documents (Lea)
+	-read this https://developer.xboxlive.com/en-us/xdp/documentation/xdphelp/Pages/product_documents_xdpdocs.aspx
+	-game help, privacy, terms of use
+	-need draft of "Privacy" and "Terms of Use" presumably in the language of the region we are publishing in
+-reset code broke (both on xb1 and on PC if you do it too fast), fix it
+
 ::CATALOG ASSETS TODO FOR LEA::
 -This is the list of catalog art assets. I don't know what all of them are for but I'm sure a standard PW image for the ones we don't get will be fine
 	-Box Art 1080x1080
@@ -10,26 +18,21 @@
 -do we want a different game title for German release? (I still need Perfect Woman in German so we can add it as a "alternative title" for search purposes)
 -need long and short description of game (this shows up in the Xbox Marketplace when you try and buy the game)
 	-need german translation of both
-
+-publisher name (I guess we are just going for Perfect Woman?)
+-developer studio name (again, just Perfect Woman?)
 
 ::OPT CERT TODO::
 DONE-strip out depth image and strip out reward image
 DONE-disable unlockables
 
 ::TODO::
--SOFT RESET TODO
-	-clear currentgamestatshistroy
-	-reload character infos
--make the necessary documents
-	-read this https://developer.xboxlive.com/en-us/xdp/documentation/xdphelp/Pages/product_documents_xdpdocs.aspx
-	-need draft of "Privacy" and "Terms of Use" presumably in the language of the region we are publishing in
 -ask about initializing events after restart???
 -update plugins and uniyt and go over events examples..
 	-make a new sapmle project... nup5 please
 -get achievements working..
 	-get plugin log to work...
 -do new play mode...
-IGNORE-fix image capture on XB1 
+-fix image capture on XB1 
 	-fix it...
 -do release build test with validation, binscope etc
 	-still need to run binscope
@@ -47,7 +50,6 @@ IGNORE-fix image capture on XB1
 	-post a question on Unity to make sure this is OK
 		-ask about long thread activation time with default-diffuse
 -something to mask graphical artifacts on restart
-	-SOFT RESET???
 
 
 IGNORE-check PLM stuff ,suspendingeventhandler, activationeventhandler and resource availabilityhandler (prob ok?)

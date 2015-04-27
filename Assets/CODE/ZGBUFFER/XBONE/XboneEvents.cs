@@ -43,6 +43,11 @@ public class XboneEvents{
 
     void game_event_listener(string name, object[] args)
     {
+        if (UsersManager.Users.Count == 0)
+        {
+            ManagerManager.Log("NO USERS CAN'T SENT EVENT " + name);
+        }
+
         if (name == "NEW CHARACTER")
         {
             if ((CharacterIndex)args [0] == CharacterIndex.sFetus)
