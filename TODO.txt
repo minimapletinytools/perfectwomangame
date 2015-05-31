@@ -4,7 +4,11 @@
 	-read this https://developer.xboxlive.com/en-us/xdp/documentation/xdphelp/Pages/product_documents_xdpdocs.aspx
 	-game help, privacy, terms of use
 	-need draft of "Privacy" and "Terms of Use" presumably in the language of the region we are publishing in
--reset code broke (both on xb1 and on PC if you do it too fast), fix it
+-on XB1, sometimes NGM.currentpose will still be null, is sit uan update order problem??? 
+	-I could also easily fix by doing a null check becaues I'm pretty sure it loads the pose after one frame
+DONE-reset code broke (both on xb1 and on PC if you do it too fast), fix it
+
+
 
 ::CATALOG ASSETS TODO FOR LEA::
 -This is the list of catalog art assets. I don't know what all of them are for but I'm sure a standard PW image for the ones we don't get will be fine

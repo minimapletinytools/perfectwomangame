@@ -2,8 +2,11 @@
 using System.Collections;
 
 
+
 #if UNITY_XBOXONE 
 using UnityPluginLog;
+
+using DataPlatform;
 #endif
 
 
@@ -19,19 +22,24 @@ public class XboneUnityLogPlugin
         PluginLogManager.Create();
         PluginLogManager.SetLogPath("G:\\plugins.log");
         PluginLogManager.OnLog += OnLog;
+        ManagerManager.Log("Finished initializing plugin log");
+
+        //DataPlatformPlugin.InitializePlugin(0);
+        //LeaderboardManager.Create();
     }
 
     
     
     void OnLog(UnityPluginLog.LogChannels channel, string message)
     {
-        ManagerManager.Log(message + channel.ToString());
+        ManagerManager.Log("PLUGINLOG: " + message + channel.ToString());
     }
 
     public void UnityLog(string aMsg)
     {
         ManagerManager.Log("trying to unity log " + aMsg);
         PluginLogManager.Log(aMsg);
+        PluginLogManager.LogError("error " + aMsg);
     }
     
     #else

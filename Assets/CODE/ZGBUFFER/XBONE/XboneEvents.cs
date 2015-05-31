@@ -124,8 +124,9 @@ public class XboneEvents{
                 new string[]{"TimesBorn","HighScore","TimesDied","TimesGruesomeDeath"},
             delegate(UserStatisticsResult obj, UnityAOT.GetObjectAsyncOp<UserStatisticsResult> op)
             {
-                ManagerManager.Log("inside");
+                ManagerManager.Log("inside stat callback " + op.ToString());
                 ManagerManager.Log("Stat retrieval op: " + op.Success + " userid: " + obj.XboxUserId + " cnt " + obj.Length);
+                ManagerManager.Log("inside stat callback 2");
                 foreach (ServiceConfigurationStatistic ss in obj)
                 {
                     ManagerManager.Log("inside2");
