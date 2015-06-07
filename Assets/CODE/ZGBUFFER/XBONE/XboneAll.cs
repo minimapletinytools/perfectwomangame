@@ -226,7 +226,7 @@ public class XboneAll {
         }
     }
     
-    void OnSubscribed(uint hresult, RealTimeActivityStatisticChangeSubscription sub)
+    void OnSubscribed(uint hresult, RealTimeActivityStatisticChangeSubscription sub, string statName)
     {
         // If this fails then we can guess that it probably
         // has never been triggered and thus the stat does not

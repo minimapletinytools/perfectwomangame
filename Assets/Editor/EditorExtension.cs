@@ -5,8 +5,6 @@ using UnityEditor;
 using UnityEngine;
 using System.IO;
 using System.Linq;
-
-#if UNITY_XBOXONE 
 using UnityEtx;
 
 namespace UnityEditor
@@ -21,17 +19,18 @@ namespace UnityEditor
 			XCETemplates.InitializeTemplates();
 
 			var potentialManifests = AssetDatabase.GetAllAssetPaths().Where(p => Path.GetExtension(p).ToLower() == ".man");
-
+			//Debug.Log (potentialManifests.Count ());
 			bool didParse = false;
 			XCEFile xceManifest = new XCEFile(true);
 			foreach (String file in potentialManifests)
 			{
+				//Debug.Log (file);
 				string filename = Path.GetFullPath(file);
 				if (xceManifest.ParseFile(filename))
 				{
 					didParse = true;
 					Debug.Log("Parsing XCE Manifest: " + file);
-					break;
+					//break;
 				}
 				else
 				{
@@ -63,4 +62,3 @@ namespace UnityEditor
 	}
 
 }
-#endif

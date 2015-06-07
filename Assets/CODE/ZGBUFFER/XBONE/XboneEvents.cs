@@ -36,27 +36,27 @@ public class XboneEvents{
             {
                 //Debug.Log("BORN EVENT");
                 ManagerManager.Log("BORN EVENT");
-                DataPlatform.Events.SendBorn(UsersManager.Users [0].Id.ToString(), ref mSessionId);
+                Events.SendBorn(UsersManager.Users [0].Id.ToString(), ref mSessionId);
             }
             if ((CharacterIndex)args [0] == CharacterIndex.sOneHundred)
             {
                 //Debug.Log("TRANSCEND EVENT");
                 ManagerManager.Log("TRANSCEND EVENT");
-                DataPlatform.Events.SendTranscend(UsersManager.Users [0].Id.ToString(), ref mSessionId);
+                Events.SendTranscend(UsersManager.Users [0].Id.ToString(), ref mSessionId);
 
             }
         }
         if (name == "DEATH")
         {
             ManagerManager.Log("DEATH EVENT " + (mManager.mGameManager.mModeNormalPlay.CurrentPerformanceStat.BadPerformance ? "GRUESOME" : "NORMAL"));
-            DataPlatform.Events.SendDeath(
+            Events.SendDeath(
                 UsersManager.Users [0].Id.ToString(),
                 ref mSessionId, 
                 (int)mManager.mGameManager.mModeNormalPlay.TotalScore,
                 mManager.mGameManager.mModeNormalPlay.CurrentPerformanceStat.BadPerformance,
                 mManager.mGameManager.CurrentCharacterIndex.Age);
 
-            DataPlatform.Events.SendGameProgress(
+            Events.SendGameProgress(
                 UsersManager.Users [0].Id.ToString(),
                 ref mSessionId,
                 mManager.mMetaManager.UnlockManager.get_unlocked_characters().Count/27f,
@@ -68,7 +68,11 @@ public class XboneEvents{
     //just for testing CAN DELETE
     public void SendDeathEvent()
     {
-        DataPlatform.Events.SendDeath(
+        ManagerManager.Log("Sending DEATH and BORN event");
+
+        Events.SendBorn(UsersManager.Users [0].Id.ToString(), ref mSessionId);
+
+        Events.SendDeath(
             UsersManager.Users [0].Id.ToString(),
             ref mSessionId, 
             (int)mManager.mGameManager.mModeNormalPlay.TotalScore,

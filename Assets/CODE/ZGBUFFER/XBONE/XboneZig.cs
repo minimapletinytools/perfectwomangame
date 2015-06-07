@@ -84,7 +84,7 @@ public class MicrosoftZig : ZgInterface
         }
         if (KeyMan.GetKeyDown("RightThumbstick"))
         {
-            //mEvents.SendDeathEvent();
+            mEvents.SendDeathEvent();
             //ManagerManager.Log("Sent fake death event");
 
             //take_color_image();
