@@ -459,6 +459,7 @@ public class SunsetManager
 	}
 	
 	//delegates needed for skipping cleanly
+    List<FlatElementBase> graveCleanup = new List<FlatElementBase>();
 	QuTimer mGraveChain = null;
 	System.Action mGraveCompleteCb = null;
 	public void set_for_GRAVE(List<PerformanceStats> aStats, System.Action graveCompleteCb)
@@ -531,6 +532,9 @@ public class SunsetManager
 		mElement.Add(finalScoreText);
 		//mElement.Add(perfectEngraving);
 		mElement.Add(finalAgeText);
+
+        graveCleanup.Add(finalScoreText);
+        graveCleanup.Add(finalAgeText);
 
 
 		TimedEventDistributor.TimedEventChain chain = TED.empty_chain();
@@ -753,6 +757,8 @@ public class SunsetManager
 				rewardFrame.SoftPosition = rewardImage.SoftPosition + new Vector3(0,70,0);
 				mElement.Add(rewardImage);
 				mElement.Add(rewardFrame);
+                graveCleanup.Add(rewardImage);
+                graveCleanup.Add(rewardFrame);
 				
 				var subChain = TED.empty_chain().wait(4);
 				if(mModeNormalPlay.mGiftManager.gift_count() > 0)
@@ -797,6 +803,7 @@ public class SunsetManager
 					barImg.HardPosition = barYPosition + new Vector3(0,-1000,0);
 					barImg.SoftPosition = barYPosition;
 					mElement.Add(barImg);
+                    graveCleanup.Add(barImg);
 				}
 			,0).then_one_shot(
 				delegate()
@@ -813,6 +820,7 @@ public class SunsetManager
 						lastXPosition += -textWidth - 75;
 						creditsText.Add(text);
 						mElement.Add(text);
+                        graveCleanup.Add(text);
 						counter++;
 					}
 					
@@ -827,6 +835,7 @@ public class SunsetManager
 						lastXPosition += -img.BoundingBox.width/2f - 500;
 						logos[i] = img;
 						mElement.Add(img);
+                        graveCleanup.Add(img);
 					}
 					
 				}
@@ -887,5 +896,21 @@ public class SunsetManager
 		mGraveChain = TED.LastEventKeyAdded;
 		
 	}
+
+    public void reset_sunset()
+    {
+        //remove characters
+        while (mCharacters.Count > 0)
+            remove_last_character();
+
+        //cleanup credits
+        foreach (var e in graveCleanup)
+        {
+            e.destroy();
+            mElement.Remove(e);
+        }
+        graveCleanup.Clear();
+
+    }
 
 }

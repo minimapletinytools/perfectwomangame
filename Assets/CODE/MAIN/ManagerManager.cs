@@ -184,6 +184,7 @@ public class ManagerManager : MonoBehaviour{
 
             //we need to reload this stuff
             //mCharacterBundleManager.Start();
+            mGameManager.mModeNormalPlay.mSunsetManager.reset_sunset();
             mTransitionCameraManager.go_to_play(); 
 
             Debug.Log("restarted");
