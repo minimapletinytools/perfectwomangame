@@ -16,30 +16,12 @@ public class XboneEvents{
         mManager = aManager;
         mManager.GameEventDistributor += game_event_listener;
 
-        EventManager.Destroy(); //clean up from last time we loaded??
-        EventManager.Create(@"G:\Data\StreamingAssets\Events-PRFW.0-4A0A3432.man");
-        ManagerManager.Log("Events created " + EventManager.IsInitialized);
-        
-        AchievementsManager.Create();
-        AchievementsManager.OnAchievementNotification += delegate(AchievementNotification notice)
-        {
-            mManager.mDebugString = "Achievement unlocked " + notice.AchievementId;
-            Debug.Log("Achievement unlocked " + notice.AchievementId);
-
-            ManagerManager.Log("Achievement unlocked " + notice.AchievementId);
-        };
-
-        StatisticsManager.Create();
-
-
-        /*
-        AchievementsManager.QueryAchievementsForTitleIdAsync(1242182706, UsersManager.Users [0].Id.ToString(), delegate(DataPlatform.Achievements obj, UnityAOT.GetObjectAsyncOp<DataPlatform.Achievements> op)
-        {
-            ManagerManager.Log("ACHIIVEMNETS:");
-            ManagerManager.Log(obj.Length.ToString());
-            ManagerManager.Log(op.Result.ToString());
-        });*/
+        //moved to XboneALl.cs
+        //DataPlatformPlugin.InitializePlugin(0);
+        //AchievementsManager.Create();
+        //StatisticsManager.Create();
     }
+
 
     void game_event_listener(string name, object[] args)
     {
@@ -52,13 +34,13 @@ public class XboneEvents{
         {
             if ((CharacterIndex)args [0] == CharacterIndex.sFetus)
             {
-                Debug.Log("BORN EVENT");
+                //Debug.Log("BORN EVENT");
                 ManagerManager.Log("BORN EVENT");
                 DataPlatform.Events.SendBorn(UsersManager.Users [0].Id.ToString(), ref mSessionId);
             }
             if ((CharacterIndex)args [0] == CharacterIndex.sOneHundred)
             {
-                Debug.Log("TRANSCEND EVENT");
+                //Debug.Log("TRANSCEND EVENT");
                 ManagerManager.Log("TRANSCEND EVENT");
                 DataPlatform.Events.SendTranscend(UsersManager.Users [0].Id.ToString(), ref mSessionId);
 
@@ -66,8 +48,7 @@ public class XboneEvents{
         }
         if (name == "DEATH")
         {
-            ManagerManager.Log("DEATH EVENT");
-            Debug.Log("DEATH EVENT " + (mManager.mGameManager.mModeNormalPlay.CurrentPerformanceStat.BadPerformance ? "GRUESOME" : "NORMAL"));
+            ManagerManager.Log("DEATH EVENT " + (mManager.mGameManager.mModeNormalPlay.CurrentPerformanceStat.BadPerformance ? "GRUESOME" : "NORMAL"));
             DataPlatform.Events.SendDeath(
                 UsersManager.Users [0].Id.ToString(),
                 ref mSessionId, 

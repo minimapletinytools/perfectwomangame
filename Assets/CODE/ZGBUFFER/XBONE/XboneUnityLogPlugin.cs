@@ -19,10 +19,10 @@ public class XboneUnityLogPlugin
     {
         
         //plugin stuff TODO move to a diff file
-        PluginLogManager.Create();
-        PluginLogManager.SetLogPath("G:\\plugins.log");
+        //PluginLogManager.Create();
+        //PluginLogManager.SetLogPath("G:\\plugins.log");
         PluginLogManager.OnLog += OnLog;
-        ManagerManager.Log("Finished initializing plugin log");
+        //ManagerManager.Log("Finished initializing plugin log");
 
         //DataPlatformPlugin.InitializePlugin(0);
         //LeaderboardManager.Create();

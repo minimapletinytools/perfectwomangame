@@ -7,7 +7,8 @@ public class MicrosoftZig : ZgInterface
 {
     
     ZgManager mZig;
-	public XboneUsers mUsers;
+
+    XboneAll mAll;
 	public XboneKinect mKinect;
 	XbonePLM mPLM;
 	XboneStorage mStorage;
@@ -21,15 +22,15 @@ public class MicrosoftZig : ZgInterface
 	public void initialize(ZgManager aZig)
 	{
         mZig = aZig;
+        mAll = new XboneAll();
         mLog = new XboneUnityLogPlugin();
-        mUsers = new XboneUsers ();
 		mPLM = new XbonePLM ();
 		mKinect = new XboneKinect ();
 		mStorage = new XboneStorage ();
 		mEvents = new XboneEvents (aZig.mManager);
 
+        mAll.Start();
         mLog.Start();
-        mUsers.Start ();
 		mPLM.Start ();
 		mKinect.Start ();
 		mStorage.Start ();
@@ -45,6 +46,7 @@ public class MicrosoftZig : ZgInterface
 
 	public void update()
 	{
+        mAll.Update();
 		mKinect.Update ();
         mEvents.Update();
 
@@ -76,7 +78,7 @@ public class MicrosoftZig : ZgInterface
         //testcode
         if (KeyMan.GetKeyDown("LeftThumbstick"))
         {
-            mLog.UnityLog("left thumbstick was pressed");
+            //mLog.UnityLog("left thumbstick was pressed");
             //write_data(mZig.mManager.mMetaManager.UnlockManager.serialize(),"unlock");
 
         }
@@ -85,7 +87,7 @@ public class MicrosoftZig : ZgInterface
             //mEvents.SendDeathEvent();
             //ManagerManager.Log("Sent fake death event");
 
-            take_color_image();
+            //take_color_image();
             //read_data("unlock",delegate(byte[] obj) { mZig.mManager.mMetaManager.UnlockManager.deserialize(obj);});
         }
 	}
@@ -121,7 +123,7 @@ public class MicrosoftZig : ZgInterface
             var img = new ImageGameObjectUtility(mKinect.ColorTexture);
             img.PlaneObject.renderer.material = mat;
 
-
+                                                                                                                                           
             Camera cam = ManagerManager.Manager.gameObject.AddComponent<Camera>();
             cam.isOrthoGraphic = true;
             cam.orthographicSize = img.BaseDimension.y;
