@@ -738,6 +738,8 @@ public class ModeNormalPlay
 	
 	public void transition_to_GRAVE()
 	{
+        mManager.GameEventDistributor("DEATH", new object[]{NGM.CurrentCharacterLoader.Character});
+
 		GS = NormalPlayGameState.GRAVE;
 
 		//since cutscene does not play during horrible death, music does not get played so we start it up again here

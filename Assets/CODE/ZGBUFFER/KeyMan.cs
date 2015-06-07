@@ -12,7 +12,7 @@ public static class KeyMan
         {"SoftSkip",XboxOneKeyCode.Gamepad1ButtonX},
         {"Perfect",XboxOneKeyCode.Gamepad1ButtonB},
         {"Fast",XboxOneKeyCode.Gamepad1ButtonY},
-		{"Die",null},
+        {"Die",XboxOneKeyCode.GamepadButtonLeftShoulder},
         {"Restart",XboxOneKeyCode.Gamepad1ButtonView},
         {"Choice1",XboxOneKeyCode.Gamepad1ButtonDPadLeft},
         {"Choice2",XboxOneKeyCode.Gamepad1ButtonDPadUp},
@@ -59,6 +59,7 @@ public static class KeyMan
     //we use non-generic version of HashTable here to get around the AOT compile issue with value types in generics.
     public static Hashtable keyMap = new Hashtable()
     {
+
 
         {"HardSkip",KeyCode.Alpha0},
         {"SoftSkip",KeyCode.Alpha9},
