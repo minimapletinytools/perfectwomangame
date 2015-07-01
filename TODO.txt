@@ -29,10 +29,12 @@ DONE-strip out depth image and strip out reward image
 DONE-disable unlockables
 
 ::TODO::
--ask about initializing events after restart???
--update plugins and uniyt and go over events examples..
+DONE-appears all the Death event related stats do not work
+	-delete death event and create a new one I guess???
+IGNORE-ask about initializing events after restart???
+DONE-update plugins and uniyt and go over events examples..
 	-make a new sapmle project... nup5 please
--get achievements working..
+DONE-get achievements working..
 	-get plugin log to work...
 -do new play mode...
 -fix image capture on XB1 
