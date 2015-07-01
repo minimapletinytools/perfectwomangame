@@ -9,22 +9,6 @@ public struct CharacterIndex : IEquatable<CharacterIndex>
 	public const int NUMBER_CHARACTERS = 31;
 	public static string[] LEVEL_TO_AGE = new string[10] { "0", "05", "16", "27", "34", "45", "60", "85", "110", "999" };
 	
-	//TODO DELET
-	public static CharacterIndex[] INDEX_TO_CHARACTER = new CharacterIndex[]
-	{
-		new CharacterIndex(0,0),
-		new CharacterIndex(1,0),new CharacterIndex(1,1),new CharacterIndex(1,2),new CharacterIndex(1,3),
-		new CharacterIndex(2,0),new CharacterIndex(2,1),new CharacterIndex(2,2),new CharacterIndex(2,3),
-		new CharacterIndex(3,0),new CharacterIndex(3,1),new CharacterIndex(3,2),new CharacterIndex(3,3),
-		new CharacterIndex(4,0),new CharacterIndex(4,1),new CharacterIndex(4,2),new CharacterIndex(4,3),
-		new CharacterIndex(5,0),new CharacterIndex(5,1),new CharacterIndex(5,2),new CharacterIndex(5,3),
-		new CharacterIndex(6,0),new CharacterIndex(6,1),new CharacterIndex(6,2),new CharacterIndex(6,3),
-		new CharacterIndex(7,0),new CharacterIndex(7,1),new CharacterIndex(7,2),new CharacterIndex(7,3),
-		new CharacterIndex(8,0),
-		new CharacterIndex(9,0)
-	};
-	
-	
 	public static List<CharacterIndex> sAllCharacters = new List<CharacterIndex>()
 	{
 		new CharacterIndex(0,0),
@@ -51,6 +35,16 @@ public struct CharacterIndex : IEquatable<CharacterIndex>
 	}
 	public int LevelIndex {get; private set;}
 	public int Choice{get; private set;}
+    public int Index
+    {
+        get
+        {
+            if(LevelIndex == 0) return 0;
+            else if(LevelIndex < 8) return 1 + (LevelIndex-1)*4 + Choice;
+            else if(LevelIndex == 8) return 28;
+            else return 29;
+        }
+    }
 	public int Age{
 		get{
 			if(LEVEL_TO_AGE[LevelIndex] == "05") //hack, you should really just rename the files...
