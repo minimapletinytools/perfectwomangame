@@ -48,13 +48,19 @@ public class XboneEvents{
         }
         if (name == "DEATH")
         {
-            ManagerManager.Log("DEATH EVENT " + (mManager.mGameManager.mModeNormalPlay.CurrentPerformanceStat.BadPerformance ? "GRUESOME" : "NORMAL"));
-            Events.SendDeath(
+            var gruesome = mManager.mGameManager.mModeNormalPlay.CurrentPerformanceStat.BadPerformance;
+            ManagerManager.Log("DEATH EVENT " + (gruesome ? "GRUESOME" : "NORMAL"));
+
+            Events.SendPassing(
                 UsersManager.Users [0].Id.ToString(),
                 ref mSessionId, 
-                (int)mManager.mGameManager.mModeNormalPlay.TotalScore,
-                mManager.mGameManager.mModeNormalPlay.CurrentPerformanceStat.BadPerformance,
-                mManager.mGameManager.CurrentCharacterIndex.Age);
+                (int)mManager.mGameManager.mModeNormalPlay.TotalScore);
+
+            if(gruesome)
+                Events.SendGruesomePassing(
+                    UsersManager.Users [0].Id.ToString(),
+                    ref mSessionId,
+                    mManager.mGameManager.mModeNormalPlay.CurrentPerformanceStat.Character.Index);
 
             Events.SendGameProgress(
                 UsersManager.Users [0].Id.ToString(),
@@ -72,12 +78,10 @@ public class XboneEvents{
 
         Events.SendBorn(UsersManager.Users [0].Id.ToString(), ref mSessionId);
 
-        Events.SendDeath(
+        Events.SendPassing(
             UsersManager.Users [0].Id.ToString(),
             ref mSessionId, 
-            (int)mManager.mGameManager.mModeNormalPlay.TotalScore,
-            mManager.mGameManager.mModeNormalPlay.CurrentPerformanceStat.BadPerformance,
-            mManager.mGameManager.CurrentCharacterIndex.Age);
+            (int)mManager.mGameManager.mModeNormalPlay.TotalScore);
     
     }
     public void Start(){}
