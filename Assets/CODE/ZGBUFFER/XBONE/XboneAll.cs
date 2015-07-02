@@ -247,6 +247,6 @@ public class XboneAll {
     #else
     public void Start () {
     }
-    
+    public void Update(){}
     #endif
 }
