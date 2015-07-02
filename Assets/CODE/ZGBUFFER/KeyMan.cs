@@ -18,6 +18,9 @@ public static class KeyMan
         {"Choice2",XboxOneKeyCode.Gamepad1ButtonDPadUp},
         {"Choice3",XboxOneKeyCode.Gamepad1ButtonDPadDown},
         {"Choice4",XboxOneKeyCode.Gamepad1ButtonDPadRight},
+        {"Quit",null},
+        {"DepthToggle",null},
+        {"Pause", null},
 
         {"lvl1",null},
         {"lvl2",null},
@@ -73,6 +76,7 @@ public static class KeyMan
         {"Choice4",KeyCode.Alpha4},
         {"Quit",KeyCode.Escape},
         {"DepthToggle",KeyCode.K},
+        {"Pause", KeyCode.P},
 
         {"lvl1",KeyCode.Q},
         {"lvl2",KeyCode.W},
