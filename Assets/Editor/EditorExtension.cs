@@ -1,4 +1,5 @@
-﻿using System;
+﻿#if UNITY_XBOXONE
+using System;
 using System.Collections.Generic;
 using System.Text;
 using UnityEditor;
@@ -62,3 +63,4 @@ namespace UnityEditor
 	}
 
 }
+#endif
