@@ -25,11 +25,14 @@ public class BackgroundManager  : FakeMonoBehaviour
 	
     public override void Update()
     {
-        mBackground.update(Time.deltaTime);
-		foreach(FlatElementImage e in mBackgroundElements)
-       		e.update(Time.deltaTime);
-		foreach(FlatElementImage e in mForegroundElements)
-       		e.update(Time.deltaTime);
+        if (!mManager.mGameManager.mModeNormalPlay.Paused)
+        {
+            mBackground.update(Time.deltaTime);
+            foreach (FlatElementImage e in mBackgroundElements)
+                e.update(Time.deltaTime);
+            foreach (FlatElementImage e in mForegroundElements)
+                e.update(Time.deltaTime);
+        }
 	}
 
     public void set_background_layer(int aLayer)

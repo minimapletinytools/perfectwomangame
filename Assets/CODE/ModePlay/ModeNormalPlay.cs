@@ -303,11 +303,10 @@ public class ModeNormalPlay
 			//transition_to_TRANSITION_play(new CharacterIndex("999"));
 			//mManager.mTransparentBodyManager.transition_character_in(GameConstants.UiWhiteTransparent);
 
+
+        //handle cheater keys for choosing
 		if(GS == NormalPlayGameState.CHOICE)
 		{
-            if(Paused) 
-                return;
-
 			//cheater keys for difficulty
 			if(
 				NGM.CurrentCharacterIndex.LevelIndex < 7 &&
@@ -370,11 +369,11 @@ public class ModeNormalPlay
         foreach (FlatElementBase e in mElement)
             e.update(Time.deltaTime);     
 		
+
 		if(GS == NormalPlayGameState.PLAY)
 		{		
 			//if(Input.GetKeyDown(KeyCode.P))
 			//	mParticles.create_particles(mGrading);
-	
 			update_PLAY();
             if(KeyMan.GetKeyDown("HardSkip"))
 				TimeRemaining = -5; //0;

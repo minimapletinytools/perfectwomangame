@@ -95,7 +95,7 @@ public class GiftManager
             } else
             {
                 //Debug.Log("captured a null texture!");
-                ManagerManager.Log("ZgInterface returned a null texture");
+                //ManagerManager.Log("ZgInterface returned a null texture");
             }
         }
 	}

@@ -156,7 +156,12 @@ public class NewGameManager : FakeMonoBehaviour
 		else CurrentPose = mManager.mReferences.mDefaultPose.to_pose();
 		
 		if (GS == GameState.NORMAL)
-            mModeNormalPlay.update();
+        {
+            if(KeyMan.GetKeyDown("Pause"))
+                mModeNormalPlay.Paused = !mModeNormalPlay.Paused;
+            if(!mModeNormalPlay.Paused)
+                mModeNormalPlay.update();
+        }
         else if (GS == GameState.TEST)
             mModeTesting.update();
         else if (GS == GameState.SIMIAN)
