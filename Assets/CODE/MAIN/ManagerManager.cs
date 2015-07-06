@@ -155,7 +155,7 @@ public class ManagerManager : MonoBehaviour{
         } 
         catch(System.Exception e)
         {
-            mDebugString2 = e.StackTrace;
+            mDebugString2 = e.ToString();
             throw e;
         }
 	}
@@ -271,8 +271,8 @@ public class ManagerManager : MonoBehaviour{
 		//GUI.Box(new Rect(0,0,Screen.width,Screen.height),MainRenderTexture,style);
 		style.fontSize = 15;
 		style.normal.textColor = new Color(1,1,1,1);
-		GUI.TextArea(new Rect(1000,10,300,70),mDebugString,style);
-        GUI.TextArea(new Rect(1000,40,300,70),mDebugString2,style);
+		GUI.TextArea(new Rect(10,10,300,70),mDebugString,style);
+        GUI.TextArea(new Rect(10,40,300,70),mDebugString2,style);
 		//GUI.TextArea(new Rect(50,50,300,100),"WORK IN PROGRESS",style);
 		
 		//GUI.Box(new Rect(0,0,Screen.width * mGameManager.mModeNormalPlay.mLastGrade,50),""); 
