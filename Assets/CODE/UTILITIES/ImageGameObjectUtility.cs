@@ -15,18 +15,18 @@ public class ImageGameObjectUtility
 	
 	public Vector2 TextureOffset {
 		get{
-			return PlaneObject.renderer.material.mainTextureOffset;
+			return PlaneObject.GetComponent<Renderer>().material.mainTextureOffset;
 		}
 		set{
-			PlaneObject.renderer.material.mainTextureOffset = value;
+			PlaneObject.GetComponent<Renderer>().material.mainTextureOffset = value;
 		}
 	}
 	public Vector2 TextureScale {
 		get{
-			return PlaneObject.renderer.material.mainTextureScale;
+			return PlaneObject.GetComponent<Renderer>().material.mainTextureScale;
 		}
 		set{
-			PlaneObject.renderer.material.mainTextureScale = value;
+			PlaneObject.GetComponent<Renderer>().material.mainTextureScale = value;
 		}
 	}
     public Vector2 BaseDimension { get; private set; }
@@ -50,7 +50,7 @@ public class ImageGameObjectUtility
         PlaneObject = (GameObject)GameObject.Instantiate(ManagerManager.Manager.mReferences.mPlanePrefab);
         //GameObject.DestroyImmediate(PlaneObject.GetComponent<BoxCollider>());
         PlaneMaterial = new Material(ManagerManager.Manager.mReferences.mDefaultCharacterShader);
-        PlaneObject.renderer.material = PlaneMaterial;
+        PlaneObject.GetComponent<Renderer>().material = PlaneMaterial;
         set_new_texture(aTex, aSize);
 
         PlaneObject.transform.rotation = Quaternion.AngleAxis(90, Vector3.right) * PlaneObject.transform.rotation;
@@ -70,7 +70,7 @@ public class ImageGameObjectUtility
         }
         else
             BaseDimension = aSize.Value;
-        PlaneObject.renderer.material.mainTexture = aTex;	
+        PlaneObject.GetComponent<Renderer>().material.mainTexture = aTex;	
         PixelDimension = BaseDimension;
     }
 

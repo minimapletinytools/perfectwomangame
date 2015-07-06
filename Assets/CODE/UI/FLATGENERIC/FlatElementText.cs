@@ -47,7 +47,7 @@ public class FlatElementText : FlatElementBase
 			Vector2 size = style.CalcSize(new GUIContent(aText.Aggregate((e,f) => e + f))).x;*/
 
 			//TODO this is probably wrong w/e
-			var r = mMesh.renderer.bounds;
+			var r = mMesh.GetComponent<Renderer>().bounds;
 			return new Rect(r.min.x,r.max.y,r.size.x,r.size.y);
 		}
 	}
@@ -58,7 +58,7 @@ public class FlatElementText : FlatElementBase
 		GameObject textElement = GameObject.Instantiate(fontPrefab) as GameObject;
 		textElement.transform.rotation = Quaternion.AngleAxis(180, Vector3.up);
 		textElement.transform.localScale = new Vector3(10,10,10);
-		mRenderer = PrimaryGameObject.renderer;
+		mRenderer = PrimaryGameObject.GetComponent<Renderer>();
 		mMesh = PrimaryGameObject.GetComponent<TextMesh>();
 		mMesh.anchor = TextAnchor.MiddleCenter;
 		mMesh.alignment = TextAlignment.Center;

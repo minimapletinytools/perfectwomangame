@@ -121,11 +121,11 @@ public class MicrosoftZig : ZgInterface
                 mColorImageRT = new RenderTexture(mKinect.ColorTexture.width,mKinect.ColorTexture.height,0);
 
             var img = new ImageGameObjectUtility(mKinect.ColorTexture);
-            img.PlaneObject.renderer.material = mat;
+            img.PlaneObject.GetComponent<Renderer>().material = mat;
 
                                                                                                                                            
             Camera cam = ManagerManager.Manager.gameObject.AddComponent<Camera>();
-            cam.isOrthoGraphic = true;
+            cam.orthographic = true;
             cam.orthographicSize = img.BaseDimension.y;
             img.PlaneObject.transform.position = cam.transform.position + cam.transform.forward*10;
             cam.transform.LookAt(img.PlaneObject.transform.position);

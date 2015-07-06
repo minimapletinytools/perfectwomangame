@@ -16,12 +16,12 @@ public class ZigUserViewer : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         if (target == null) {
-            target = renderer;
+            target = GetComponent<Renderer>();
         }
         textureSize = ResolutionData.FromZigResolution(TextureSize);
         texture = new Texture2D(textureSize.Width, textureSize.Height);
         texture.wrapMode = TextureWrapMode.Clamp;
-        renderer.material.mainTexture = texture;              
+        GetComponent<Renderer>().material.mainTexture = texture;              
         outputPixels = new Color32[textureSize.Width * textureSize.Height];
         ZigInput.Instance.AddListener(gameObject);
 	}

@@ -20,7 +20,7 @@ public class FlatRenderTextureGraphElement : FlatElementImage {
     //x y are in [0,1] from lower left
     public void draw_point(Vector2 aCenter, GameObject aDot, Color aColor)
     {
-		aDot.GetComponentInChildren<Renderer>().renderer.material.SetColor("_TintColor", aColor);
+		aDot.GetComponentInChildren<Renderer>().GetComponent<Renderer>().material.SetColor("_TintColor", aColor);
 		Vector2 newCenter = 2*(aCenter - new Vector2(0.5f,0.5f));
 		draw_gameObject(aDot,newCenter);
     }
@@ -31,7 +31,7 @@ public class FlatRenderTextureGraphElement : FlatElementImage {
 		
 		Camera cam = (new GameObject("genDrawCamera")).AddComponent<Camera>();
 		cam.aspect = mRenderTexture.width/(float)mRenderTexture.height;
-		cam.isOrthoGraphic = true;
+		cam.orthographic = true;
 		cam.orthographicSize = mRenderTexture.height/2f;
 		cam.targetTexture = mRenderTexture;
 		

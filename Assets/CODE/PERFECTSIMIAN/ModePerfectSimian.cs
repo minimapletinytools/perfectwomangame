@@ -49,7 +49,7 @@ public class ModePerfectSimian
 		cam.transform.position = mManager.mCameraManager.MainBodyCamera.transform.position;
 		cam.transform.rotation = mManager.mCameraManager.MainBodyCamera.transform.rotation;
 		cam.fieldOfView = mManager.mCameraManager.MainBodyCamera.fieldOfView;
-		cam.isOrthoGraphic = mManager.mCameraManager.MainBodyCamera.isOrthoGraphic;
+		cam.orthographic = mManager.mCameraManager.MainBodyCamera.orthographic;
 		cam.orthographicSize = mManager.mCameraManager.MainBodyCamera.orthographicSize;
 		Debug.Log (mManager.mCameraManager.MainBodyCamera.orthographicSize);
 		cam.depth = 9999999;

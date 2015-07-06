@@ -64,8 +64,8 @@ public class AstronautPlay
         ast.AddComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePositionZ & RigidbodyConstraints.FreezeRotationX & RigidbodyConstraints.FreezeRotationY;
         ast.AddComponent<SphereCollider>().radius = sizing.Size.y*4/9f;
         ast.transform.position = aPos;
-        ast.rigidbody.velocity = aVel;
-        ast.rigidbody.useGravity = false;
+        ast.GetComponent<Rigidbody>().velocity = aVel;
+        ast.GetComponent<Rigidbody>().useGravity = false;
 
         mAsteroids.Add(ast);
     }
@@ -92,7 +92,7 @@ public class AstronautPlay
 
         foreach (var e in mParts)
         {
-            e.Value.rigidbody.MovePosition(mMode.NGM.mManager.mBodyManager.mFlat.mParts[e.Key].transform.position);
+            e.Value.GetComponent<Rigidbody>().MovePosition(mMode.NGM.mManager.mBodyManager.mFlat.mParts[e.Key].transform.position);
         }
 
         if (Random.Range(0f, 1f) < Time.deltaTime / 3f) //about every 3 seconds

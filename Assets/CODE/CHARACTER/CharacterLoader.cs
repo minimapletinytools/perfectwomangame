@@ -32,26 +32,26 @@ public class CharacterLoader {
 		
         if (aName != "999") //TODO DELETE do not need a check here since everything below will load null anyhow.
         {
-            Images.head = aBundle.Load("HEAD_A", typeof(Texture2D)) as Texture2D;
-            Images.leftLowerArm = aBundle.Load("LLA_A", typeof(Texture2D)) as Texture2D;
-            Images.leftLowerLeg = aBundle.Load("LLL_A", typeof(Texture2D)) as Texture2D;
-            Images.leftUpperArm = aBundle.Load("LUA_A", typeof(Texture2D)) as Texture2D;
-            Images.leftUpperLeg = aBundle.Load("LUL_A", typeof(Texture2D)) as Texture2D;
-            Images.rightLowerArm = aBundle.Load("RLA_A", typeof(Texture2D)) as Texture2D;
-            Images.rightLowerLeg = aBundle.Load("RLL_A", typeof(Texture2D)) as Texture2D;
-            Images.rightUpperArm = aBundle.Load("RUA_A", typeof(Texture2D)) as Texture2D;
-            Images.rightUpperLeg = aBundle.Load("RUL_A", typeof(Texture2D)) as Texture2D;
-            Images.torso = aBundle.Load("TORSO_A", typeof(Texture2D)) as Texture2D;
-            Images.waist = aBundle.Load("WAIST_A", typeof(Texture2D)) as Texture2D;
+            Images.head = aBundle.LoadAsset("HEAD_A", typeof(Texture2D)) as Texture2D;
+            Images.leftLowerArm = aBundle.LoadAsset("LLA_A", typeof(Texture2D)) as Texture2D;
+            Images.leftLowerLeg = aBundle.LoadAsset("LLL_A", typeof(Texture2D)) as Texture2D;
+            Images.leftUpperArm = aBundle.LoadAsset("LUA_A", typeof(Texture2D)) as Texture2D;
+            Images.leftUpperLeg = aBundle.LoadAsset("LUL_A", typeof(Texture2D)) as Texture2D;
+            Images.rightLowerArm = aBundle.LoadAsset("RLA_A", typeof(Texture2D)) as Texture2D;
+            Images.rightLowerLeg = aBundle.LoadAsset("RLL_A", typeof(Texture2D)) as Texture2D;
+            Images.rightUpperArm = aBundle.LoadAsset("RUA_A", typeof(Texture2D)) as Texture2D;
+            Images.rightUpperLeg = aBundle.LoadAsset("RUL_A", typeof(Texture2D)) as Texture2D;
+            Images.torso = aBundle.LoadAsset("TORSO_A", typeof(Texture2D)) as Texture2D;
+            Images.waist = aBundle.LoadAsset("WAIST_A", typeof(Texture2D)) as Texture2D;
         }
 		
 		
-		Images.background1 = aBundle.Load("BACKGROUND", typeof(Texture2D)) as Texture2D;
-        Images.backgroundMusic = aBundle.Load("AUDIO", typeof(AudioClip)) as AudioClip; //optional
+		Images.background1 = aBundle.LoadAsset("BACKGROUND", typeof(Texture2D)) as Texture2D;
+        Images.backgroundMusic = aBundle.LoadAsset("AUDIO", typeof(AudioClip)) as AudioClip; //optional
 		
 		for(int i = 0; i < 10; i++)
 		{
-			AudioClip clip = aBundle.Load("CSAUDIO_" + i, typeof(AudioClip)) as AudioClip;
+			AudioClip clip = aBundle.LoadAsset("CSAUDIO_" + i, typeof(AudioClip)) as AudioClip;
 			if(clip != null)
 				Images.cutsceneMusic.Add(clip);
 			else 
@@ -61,12 +61,12 @@ public class CharacterLoader {
 			}
 		}
 		
-		Images.deathMusic = aBundle.Load("CSAUDIO_4", typeof(AudioClip)) as AudioClip;
+		Images.deathMusic = aBundle.LoadAsset("CSAUDIO_4", typeof(AudioClip)) as AudioClip;
 		//if(Images.deathMusic == null)
 		//	Debug.Log("no death music for " + Character.StringIdentifier);
 
 
-        TextAsset cd = aBundle.Load("CD", typeof(TextAsset)) as TextAsset;
+        TextAsset cd = aBundle.LoadAsset("CD", typeof(TextAsset)) as TextAsset;
         System.IO.MemoryStream stream = new System.IO.MemoryStream(cd.bytes);
         System.Xml.Serialization.XmlSerializer xs = new System.Xml.Serialization.XmlSerializer(typeof(CharacterData.CharacterDataSizes));
         Sizes = xs.Deserialize(stream) as CharacterData.CharacterDataSizes;
@@ -77,7 +77,7 @@ public class CharacterLoader {
 
 		foreach(CharacterData.ImageSizeOffsetAnimationData e in Sizes.mStaticElements)
 		{
-			Images.staticElements.Add(e.Name,aBundle.Load(e.Name) as Texture2D);
+			Images.staticElements.Add(e.Name,aBundle.LoadAsset(e.Name) as Texture2D);
 		}
 		
 		

@@ -43,7 +43,7 @@ public class CharacterBundleManager : FakeMonoBehaviour {
 	bool mImagesLoaded = false;
 	public void interface_loaded_callback(AssetBundle aBundle)
 	{
-        TextAsset cd = aBundle.Load("INDEX", typeof(TextAsset)) as TextAsset;
+        TextAsset cd = aBundle.LoadAsset("INDEX", typeof(TextAsset)) as TextAsset;
         System.IO.MemoryStream stream = new System.IO.MemoryStream(cd.bytes);
         System.Xml.Serialization.XmlSerializer xs = new System.Xml.Serialization.XmlSerializer(typeof(List<ImageSizeData>));
         ImageIndex = xs.Deserialize(stream) as List<ImageSizeData>;
@@ -58,7 +58,7 @@ public class CharacterBundleManager : FakeMonoBehaviour {
 	public ImageSizePair get_image(string identifier)
 	{
 		ImageSizePair r = new ImageSizePair();
-		r.Image = ImageBundle.Load(identifier) as Texture2D;
+		r.Image = ImageBundle.LoadAsset(identifier) as Texture2D;
 		r.Data = ImageIndex.Find(e => e.Name == identifier); //TODO not finding size data
 
 		if(r.Data == null || r.Image == null)
@@ -238,7 +238,7 @@ public class CharacterBundleManager : FakeMonoBehaviour {
 			{
 				//Debug.Log ("loaded character info " + txtName);
 				mCharacterHelper.Characters[e].CharacterInfo = 
-					NUPD.CharacterInformationProcessor.process_character((aBundle.Load(txtName) as TextAsset).text);
+					NUPD.CharacterInformationProcessor.process_character((aBundle.LoadAsset(txtName) as TextAsset).text);
 				
 				//kind of a hack.
 				//TODO uncomment this when you get new character packages in...
@@ -268,7 +268,7 @@ public class CharacterBundleManager : FakeMonoBehaviour {
 					string s = construct_pose_string(e,i,j);
 					if(aBundle.Contains(s))
 					{
-						mPoses[s] = (aBundle.Load(s) as TextAsset).to_pose();
+						mPoses[s] = (aBundle.LoadAsset(s) as TextAsset).to_pose();
 					}
 				}
 			}

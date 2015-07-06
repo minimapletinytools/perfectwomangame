@@ -58,7 +58,7 @@ public class ManagerManager : MonoBehaviour{
 		Application.targetFrameRate = (int)GameConstants.TARGET_FRAMERATE;
         GameEventDistributor += delegate(string arg1, object[] arg2){};
 
-		Screen.showCursor = false;
+		Cursor.visible = false;
 		gameObject.AddComponent<AudioListener>();
 		
         //Debug.Log("setting up managers");

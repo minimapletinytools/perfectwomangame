@@ -444,8 +444,8 @@ public class FlatBodyObject : FlatElementBase
         //sphere.transform.parent = parent.transform;
         GameObject kid = (GameObject)GameObject.Instantiate(ManagerManager.Manager.mReferences.mPlanePrefab);
 		//GameObject kid = (GameObject)GameObject.CreatePrimitive(PrimitiveType.Plane); //TODO use prefab instead
-        kid.renderer.material = new Material(ManagerManager.Manager.mReferences.mDefaultCharacterShader);
-        kid.renderer.material.mainTexture = aTex;
+        kid.GetComponent<Renderer>().material = new Material(ManagerManager.Manager.mReferences.mDefaultCharacterShader);
+        kid.GetComponent<Renderer>().material.mainTexture = aTex;
         kid.transform.rotation = Quaternion.AngleAxis(90, Vector3.right) * kid.transform.rotation;
 
         kid.transform.localScale = new Vector3(BodyManager.convert_units(aDim.x) / 10.0f, 1, BodyManager.convert_units(aDim.y) / 10.0f) * GameConstants.SCALE;

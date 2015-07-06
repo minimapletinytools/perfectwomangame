@@ -29,8 +29,8 @@ public class FlatCameraManager{
     }
     public bool IsOrthographic
     {
-        get { return Camera.isOrthoGraphic; }
-        private set { Camera.isOrthoGraphic = true; }
+        get { return Camera.orthographic; }
+        private set { Camera.orthographic = true; }
     }
     public float Width
     {
@@ -110,7 +110,7 @@ public class FlatCameraManager{
 	{
 		Interpolator.TargetOrthographicHeight = ManagerManager.DESIRED_SCENE_HEIGHT/2f;
 		Camera.aspect = ManagerManager.FORCED_ASPECT_RATIO;
-		Camera.isOrthoGraphic = true;
+		Camera.orthographic = true;
 		Camera.orthographicSize = ManagerManager.DESIRED_SCENE_HEIGHT/2;
 		Camera.rect = new Rect(0,0,1,1);
 	}

@@ -98,9 +98,9 @@ public class PhysicsFlatBodyObject
 			GameObject main = new GameObject("gen"+e.Key.ToString());
 			main.transform.position = mFlat.mParts[e.Key].transform.position;
 			main.AddComponent<Rigidbody>();
-			main.rigidbody.constraints = RigidbodyConstraints.FreezePositionZ & RigidbodyConstraints.FreezeRotationX & RigidbodyConstraints.FreezeRotationY;
-			main.rigidbody.drag = 1;
-			main.rigidbody.angularDrag = 1;
+			main.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePositionZ & RigidbodyConstraints.FreezeRotationX & RigidbodyConstraints.FreezeRotationY;
+			main.GetComponent<Rigidbody>().drag = 1;
+			main.GetComponent<Rigidbody>().angularDrag = 1;
 			//main.rigidbody.useGravity = false;
 			mBodies[e.Key] = main;
 			foreach(var f in e.Value.otherEnds)
@@ -123,7 +123,7 @@ public class PhysicsFlatBodyObject
 					//create a joint anchored at f between f and e
 					var joint = mBodies[f].AddComponent<HingeJoint>();
 					joint.anchor = Vector3.zero;
-					joint.connectedBody = mBodies[e.Key].rigidbody;
+					joint.connectedBody = mBodies[e.Key].GetComponent<Rigidbody>();
 					mJointAngleOffset[f] = new JointOffset{joint = joint,offset = mFlat.mParts[f].transform.rotation}; //this should be ok...
 				}
 			}
