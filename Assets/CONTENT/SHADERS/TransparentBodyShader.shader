@@ -12,7 +12,7 @@ Shader "Custom/TransparentBodyShader" {
 		
 		//Blend One Zero
 		CGPROGRAM
-		#pragma surface surf SimpleLambert
+		#pragma surface surf SimpleLambert keepalpha
 		//this is not lambert at all
 		half4 LightingSimpleLambert (SurfaceOutput s, half3 lightDir, half atten) {
 		  half4 c;
@@ -30,7 +30,7 @@ Shader "Custom/TransparentBodyShader" {
 
 		void surf (Input IN, inout SurfaceOutput o) {
 			half4 c = tex2D (_MainTex, IN.uv_MainTex);
-			o.Albedo = _Color.rgb;
+			o.Albedo = _Color.rgb * c.a;
 			o.Alpha = 0;
 			if(c.a != 0)
 			{
