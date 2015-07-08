@@ -128,8 +128,10 @@ public static class GameConstants
 
 #if UNITY_XBOXONE && !UNITY_EDITOR
     public static string assetBundlePrefix = "/StreamingAssets/XB1/";
-#else
+#elif UNITY_EDITOR
     public static string assetBundlePrefix = "/StreamingAssets/";
+#else
+    public static string assetBundlePrefix = "/Resources/Data/StreamingAssets/";
 #endif
 
 
