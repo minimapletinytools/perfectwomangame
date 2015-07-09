@@ -19,7 +19,7 @@ public static class KeyMan
         {"Choice3",XboxOneKeyCode.Gamepad1ButtonDPadDown},
         {"Choice4",XboxOneKeyCode.Gamepad1ButtonDPadRight},
         {"Quit",null},
-        {"DepthToggle",null},
+        {"DepthToggle",XboxOneKeyCode.Gamepad1ButtonMenu},
         {"Pause", null},
 
         {"lvl1",null},
@@ -30,9 +30,6 @@ public static class KeyMan
         {"lvl6",null},
         {"lvl7",null},
         {"lvl8",XboxOneKeyCode.Gamepad1ButtonY}, //bad key, pick a different one
-
-        {"Quit",null},
-        {"DepthToggle",XboxOneKeyCode.Gamepad1ButtonMenu},
 
         //use these for testing
         {"LeftThumbstick",XboxOneKeyCode.Gamepad1ButtonLeftThumbstick},
