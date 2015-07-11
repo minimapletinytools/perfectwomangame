@@ -1,11 +1,19 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class XbonePLM
-{
-
 
 #if UNITY_XBOXONE 
+using DataPlatform;
+using Users;
+
+public class XbonePLM
+{
+    ManagerManager mManager;
+    
+    public XbonePLM(ManagerManager aManager)
+    {
+        mManager = aManager;
+    }
 
 	public void Start()
 	{
@@ -17,6 +25,7 @@ public class XbonePLM
 		XboxOnePLM.OnSuspendingEvent += Suspending;
 		XboxOnePLM.OnResourceAvailabilityChangedEvent += ResourceAvailabilityChangedEvent;
 		XboxOnePLM.OnResumingEvent += Resuming;
+
 		//XboxOnePLM.OnActivationEvent += Activation;
 	}
 
@@ -35,18 +44,20 @@ public class XbonePLM
 	void Resuming(double aTime)
 	{
 		//TODO check if user has changed
-	}
+
+    }
 
 	void Activation(ActivatedEventArgs args)
 	{
 		//TODO do I need to return something here toget out of constrained mode???
 	}
-
+}
 #else
+    
+public class XbonePLM
+{
 	public void Start()
 	{
 	}
-#endif
-
-
 }
+#endif

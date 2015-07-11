@@ -98,6 +98,7 @@ public class ManagerManager : MonoBehaviour{
             mStartDelegates();
         }
 
+        GameEventDistributor("START",null);
 	}
 	
 
@@ -287,6 +288,11 @@ public class ManagerManager : MonoBehaviour{
 		//mZigManager.DepthView.OnGUI ();
         //mZigManager.ImageView.OnGUI();
 		
+    }
+
+
+    void OnApplicationQuit() {
+        GameEventDistributor("TERMINATE",null);
     }
 	
 }

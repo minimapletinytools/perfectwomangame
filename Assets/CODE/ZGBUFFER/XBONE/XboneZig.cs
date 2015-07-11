@@ -12,7 +12,7 @@ public class MicrosoftZig : ZgInterface
 	public XboneKinect mKinect;
 	XbonePLM mPLM;
 	XboneStorage mStorage;
-	XboneEvents mEvents; 
+	public XboneEvents mEvents; 
     XboneUnityLogPlugin mLog;
 
     public RenderTexture mColorImageRT = null;
@@ -24,7 +24,7 @@ public class MicrosoftZig : ZgInterface
         mZig = aZig;
         mAll = new XboneAll();
         mLog = new XboneUnityLogPlugin();
-		mPLM = new XbonePLM ();
+        mPLM = new XbonePLM (aZig.mManager);
 		mKinect = new XboneKinect ();
 		mStorage = new XboneStorage ();
 		mEvents = new XboneEvents (aZig.mManager);
@@ -153,12 +153,14 @@ public class MicrosoftZig : ZgInterface
 
     public void write_data(byte[] aData, string aName)
     {
-        mStorage.write_data (aData, aName);
+        //TODO fix
+        //mStorage.write_data (aData, aName);
     }
     public void read_data(string aName, System.Action<byte[]> aResponse)
     {
-        aResponse += delegate(byte[] obj) {Debug.Log("read callback " + obj.Length);};
-        mStorage.read_data (aName,aResponse);
+        //TODO fix
+        //aResponse += delegate(byte[] obj) {Debug.Log("read callback " + obj.Length);};
+        //mStorage.read_data (aName,aResponse);
     }
 	
 	public ZgDepth DepthImage{get{ return null; }}

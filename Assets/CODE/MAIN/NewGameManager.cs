@@ -158,7 +158,12 @@ public class NewGameManager : FakeMonoBehaviour
 		if (GS == GameState.NORMAL)
         {
             if(KeyMan.GetKeyDown("Pause"))
-                mModeNormalPlay.Paused = !mModeNormalPlay.Paused;
+            {
+                if(!mModeNormalPlay.Paused)
+                    mManager.GameEventDistributor("PAUSE",null);
+                else
+                    mManager.GameEventDistributor("RESUME",null);
+            }
             if(!mModeNormalPlay.Paused)
                 mModeNormalPlay.update();
         }
@@ -180,10 +185,17 @@ public class NewGameManager : FakeMonoBehaviour
 		}
 	}
 	
-	
-	
-	
-	
+    void game_event_listener(string name, object[] args)
+    {
+        if (name == "PAUSE")
+        {
+            mModeNormalPlay.Paused = true;
+        } else if (name == "RESUME")
+        {
+            mModeNormalPlay.Paused = false;
+        }
+    }
+
     public int get_character_difficulty(CharacterIndex aChar)
     {
         return CharacterHelper.Characters[aChar].Difficulty;

@@ -7,7 +7,7 @@ using DataPlatform;
 using ConsoleUtils;
 
 public class XboneEvents{
-    System.Guid mSessionId;
+    public System.Guid mSessionId;
     ManagerManager mManager;
 
     public XboneEvents(ManagerManager aManager)
@@ -68,6 +68,25 @@ public class XboneEvents{
                 mManager.mMetaManager.UnlockManager.get_unlocked_characters().Count/27f,
                 mManager.mMetaManager.UnlockManager.get_unlocked_characters().Count);
 
+        }
+
+        if (name == "START")
+        {
+            Events.SendPlayerSessionStart(UsersManager.Users [0].Id.ToString(), ref mSessionId, "", 0, 0);
+        }
+
+        if (name == "PAUSE")
+        {
+            Events.SendPlayerSessionPause(UsersManager.Users [0].Id.ToString(), ref mSessionId, "");
+        }
+        if (name == "RESUME")
+        {
+            Events.SendPlayerSessionResume(UsersManager.Users [0].Id.ToString(), ref mSessionId, "", 0, 0);
+        }
+
+        if (name == "TERMINATE")
+        {
+            Events.SendPlayerSessionEnd(UsersManager.Users [0].Id.ToString(), ref mSessionId, "", 0, 0,0);
         }
     }
 
