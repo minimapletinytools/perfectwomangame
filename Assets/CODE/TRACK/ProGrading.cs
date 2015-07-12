@@ -168,13 +168,18 @@ public class ProGrading {
     }
     public static Pose read_pose(TextAsset aText)
     {
+        return read_pose(aText.text);
+    }
+
+    public static Pose read_pose(string aPose)
+    {
         Pose p = new Pose();
         //System.IO.MemoryStream stream = new System.IO.MemoryStream(aText.bytes);
-        var tr = new System.IO.StringReader(aText.text); 
+        var tr = new System.IO.StringReader(aPose); 
         var xr = System.Xml.XmlReader.Create(tr);
         var xd = new System.Xml.XmlDocument();
         xd.Load(xr);
-
+        
         var elts = xd.ChildNodes [1].FirstChild;
         for(int i = 0; i < elts.ChildNodes.Count; i++)
         {

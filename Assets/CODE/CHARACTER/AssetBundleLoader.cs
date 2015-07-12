@@ -60,7 +60,7 @@ public class AssetBundleLoader : FakeMonoBehaviour
         //Debug.Log("loading poses from " + filename);
         WWW request = new WWW(filename);
         request.threadPriority = ThreadPriority.High;
-        mRequestLists.Add(request, delegate(AssetBundle aBundle) { aManager.pose_bundle_loaded_callback(aBundle); });
+        mRequestLists.Add(request, delegate(AssetBundle aBundle) { aManager.bulk_pose_bundle_loaded_callback(aBundle); });
     }
 	
 	public void new_load_interface_images(string aAssetBundle, CharacterBundleManager aManager)

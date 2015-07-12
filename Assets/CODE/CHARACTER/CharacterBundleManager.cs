@@ -11,7 +11,7 @@ public class CharacterBundleManager : FakeMonoBehaviour {
 	public override void Start()
 	{
 		//Debug.Log ("starting CBM");
-		mManager.mAssetLoader.new_load_poses("POSES",this);
+		mManager.mAssetLoader.new_load_poses("BULKPOSES",this);
 		mManager.mAssetLoader.new_load_interface_images("IMAGES",this);
 		//load_mini_characters();
 	}
@@ -43,6 +43,7 @@ public class CharacterBundleManager : FakeMonoBehaviour {
 	bool mImagesLoaded = false;
 	public void interface_loaded_callback(AssetBundle aBundle)
 	{
+        Debug.Log("images");
         TextAsset cd = aBundle.LoadAsset("INDEX", typeof(TextAsset)) as TextAsset;
         System.IO.MemoryStream stream = new System.IO.MemoryStream(cd.bytes);
         System.Xml.Serialization.XmlSerializer xs = new System.Xml.Serialization.XmlSerializer(typeof(List<ImageSizeData>));
@@ -51,6 +52,7 @@ public class CharacterBundleManager : FakeMonoBehaviour {
 		//add_bundle_to_unload(ImageBundle);
 		mImagesLoaded = true;
 
+        Debug.Log("end images");
 		
 		//foreach(ImageSizeData e in ImageIndex.OrderBy(f => f.Name))
 			//Debug.Log (e.Name + " " + e.Size );
@@ -229,6 +231,7 @@ public class CharacterBundleManager : FakeMonoBehaviour {
 
 	public void pose_bundle_loaded_callback(AssetBundle aBundle)
     {
+        //Debug.Log("poses");
 		foreach(CharacterIndex e in CharacterIndex.sAllCharacters)
 		{
             if(e == CharacterIndex.sGrave)
@@ -261,6 +264,7 @@ public class CharacterBundleManager : FakeMonoBehaviour {
 
 		foreach(CharacterIndex e in CharacterIndex.sAllCharacters)
 		{
+            //Debug.Log ("loaded pose for " + e.StringIdentifier);
 			for(int i = 0; i < 4; i++)
 			{
 				for(int j = 1; j < 10; j++) //assuming no mroe than 10 poses per animatino
@@ -275,8 +279,69 @@ public class CharacterBundleManager : FakeMonoBehaviour {
 		}
         aBundle.Unload(true); //don't need this anymore I don't ithnk...
 		mPosesLoaded = true;
+
+        //Debug.Log("end poses");
     }
 	
+    
+    public void bulk_pose_bundle_loaded_callback(AssetBundle aBundle)
+    {
+        var bf = new System.Runtime.Serialization.Formatters.Binary.BinaryFormatter();
+        var stream = new System.IO.MemoryStream((aBundle.LoadAsset("POSEDICT") as TextAsset).bytes);
+        var dict = bf.Deserialize(stream) as Dictionary<string,string>;
+        //Debug.Log("bulk poses");
+
+        foreach(CharacterIndex e in CharacterIndex.sAllCharacters)
+        {
+            if(e == CharacterIndex.sGrave)
+                continue;
+            string txtName = "info_"+e.StringIdentifier;
+            if(dict.ContainsKey(txtName))
+            {
+                //Debug.Log ("loaded character info " + txtName);
+                mCharacterHelper.Characters[e].CharacterInfo = 
+                    NUPD.CharacterInformationProcessor.process_character(dict[txtName]);
+                
+                //kind of a hack.
+                //TODO uncomment this when you get new character packages in...
+                GameConstants.INDEX_TO_SHORT_NAME[e] = mCharacterHelper.Characters[e].CharacterInfo.ShortName;
+                //GameConstants.INDEX_TO_FULL_NAME[e] = mCharacterHelper.Characters[e].CharacterInfo.LongName;
+                GameConstants.INDEX_TO_DESCRIPTION[e] = mCharacterHelper.Characters[e].CharacterInfo.Description;
+            }
+            else
+            {
+                
+                throw new UnityException("No info found for " + txtName);
+                //Debug.Log ("no info found for " + txtName);
+                //mCharacterHelper.Characters[e].CharacterInfo = NUPD.CharacterInformation.default_character_info(e);
+            }
+        }
+        
+        //TODO CAN DELETE
+        //this is now called inside of ModeNormalPlay.reset_stats_and_difficulties
+        //fetus_difficulty_shuffle_hack();
+        
+        foreach(CharacterIndex e in CharacterIndex.sAllCharacters)
+        {
+            //Debug.Log ("loaded pose for " + e.StringIdentifier);
+            for(int i = 0; i < 4; i++)
+            {
+                for(int j = 1; j < 10; j++) //assuming no mroe than 10 poses per animatino
+                {
+                    string s = construct_pose_string(e,i,j);
+                    if(aBundle.Contains(s))
+                    {
+                        mPoses[s] = ProGrading.read_pose(dict[s]);
+                    }
+                }
+            }
+        }
+        aBundle.Unload(true); //don't need this anymore I don't ithnk...
+        mPosesLoaded = true;
+        
+        //Debug.Log("end poses");
+    }
+
 	public void cleanup()
 	{
 		Debug.Log ("cleaning up asset bundles");
