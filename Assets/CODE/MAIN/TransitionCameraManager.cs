@@ -330,6 +330,7 @@ public class TransitionCameraManager : FakeMonoBehaviour
 					dState = 2;
 					*/
 				if( can_start(aTime)){
+
 					go_to_play(); 
 					return true;
 				}	

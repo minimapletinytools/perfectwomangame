@@ -43,7 +43,7 @@ public class CharacterBundleManager : FakeMonoBehaviour {
 	bool mImagesLoaded = false;
 	public void interface_loaded_callback(AssetBundle aBundle)
 	{
-        Debug.Log("images");
+        //Debug.Log("images");
         TextAsset cd = aBundle.LoadAsset("INDEX", typeof(TextAsset)) as TextAsset;
         System.IO.MemoryStream stream = new System.IO.MemoryStream(cd.bytes);
         System.Xml.Serialization.XmlSerializer xs = new System.Xml.Serialization.XmlSerializer(typeof(List<ImageSizeData>));
@@ -52,7 +52,7 @@ public class CharacterBundleManager : FakeMonoBehaviour {
 		//add_bundle_to_unload(ImageBundle);
 		mImagesLoaded = true;
 
-        Debug.Log("end images");
+        //Debug.Log("end images");
 		
 		//foreach(ImageSizeData e in ImageIndex.OrderBy(f => f.Name))
 			//Debug.Log (e.Name + " " + e.Size );
@@ -329,8 +329,9 @@ public class CharacterBundleManager : FakeMonoBehaviour {
                 for(int j = 1; j < 10; j++) //assuming no mroe than 10 poses per animatino
                 {
                     string s = construct_pose_string(e,i,j);
-                    if(aBundle.Contains(s))
+                    if(dict.ContainsKey(s))
                     {
+                        //Debug.Log("loaded " + s);
                         mPoses[s] = ProGrading.read_pose(dict[s]);
                     }
                 }
@@ -339,7 +340,7 @@ public class CharacterBundleManager : FakeMonoBehaviour {
         aBundle.Unload(true); //don't need this anymore I don't ithnk...
         mPosesLoaded = true;
         
-        //Debug.Log("end poses");
+        //Debug.Log("end bulk poses");
     }
 
 	public void cleanup()
