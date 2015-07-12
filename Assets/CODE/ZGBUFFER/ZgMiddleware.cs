@@ -49,7 +49,7 @@ public class EmptyZig : ZgInterface
     public Texture2D take_color_image(){return null;}
 
     public void write_data(byte[] aData, string aName){}
-    public void read_data(string aName, System.Action<byte[]> aResponse){}
+    public void read_data(string aName, System.Action<byte[]> aResponse){aResponse(null);}
 
 
 	public ZgDepth DepthImage{get{ return null; }}
