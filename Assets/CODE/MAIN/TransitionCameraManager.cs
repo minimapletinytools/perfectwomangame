@@ -360,6 +360,17 @@ public class TransitionCameraManager : FakeMonoBehaviour
              GameConstants.FORCE_START));
         }*/
 
+
+        /*
+        mManager.mDebugString = (GameConstants.ALLOW_NO_KINECT + " " + mManager.mZigManager.is_reader_connected() + " " +
+                                 mManager.mCharacterBundleManager.is_initial_loaded() + " " +
+                                 mManager.mZigManager.ZgInterface.can_start() + " " +
+                                 mManager.mMetaManager.SaveDataRead + " " +
+                                 (aTime > 5 && mManager.mZigManager.has_user()) + " " +
+                                 (KeyMan.GetKey("HardSkip") || KeyMan.GetKey("SoftSkip"))  + " " +
+                                 GameConstants.FORCE_START);
+        */
+
         if (!GameConstants.ALLOW_NO_KINECT && mManager.mZigManager.is_reader_connected() == 0)
             return false;
 

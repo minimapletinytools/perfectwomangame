@@ -44,6 +44,7 @@ public class MicrosoftZig : ZgInterface
 		Initialized = true;
 	}
 
+    int initCounter = 0;
 	public void update()
 	{
         mAll.Update();
@@ -90,6 +91,10 @@ public class MicrosoftZig : ZgInterface
             //take_color_image();
             //read_data("unlock",delegate(byte[] obj) { mZig.mManager.mMetaManager.UnlockManager.deserialize(obj);});
         }
+
+        if (initCounter == 3)
+            mZig.mManager.GameEventDistributor("OTHER_PLATFORM_INITIALIZE", null);
+        initCounter++;
 	}
 	
 	public bool has_user()
@@ -153,14 +158,12 @@ public class MicrosoftZig : ZgInterface
 
     public void write_data(byte[] aData, string aName)
     {
-        //TODO fix
-        //mStorage.write_data (aData, aName);
+        mStorage.write_data (aData, aName);
     }
     public void read_data(string aName, System.Action<byte[]> aResponse)
     {
-        //TODO fix
-        //aResponse += delegate(byte[] obj) {Debug.Log("read callback " + obj.Length);};
-        //mStorage.read_data (aName,aResponse);
+        aResponse += delegate(byte[] obj) {Debug.Log("read callback " + obj.Length);};
+        mStorage.read_data (aName,aResponse);
     }
 	
 	public ZgDepth DepthImage{get{ return null; }}
