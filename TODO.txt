@@ -6,7 +6,7 @@
 -on XB1, sometimes NGM.currentpose will still be null, is sit uan update order problem??? 
 	-I could also easily fix by doing a null check becaues I'm pretty sure it loads the pose after one frame
 DONE-reset code broke (both on xb1 and on PC if you do it too fast), fix it
--build no longer works no OSX, POSES.unity3d wont load or maybe it's just asset bundles in general? Fuuucckkk
+DONE-build no longer works no OSX, POSES.unity3d wont load or maybe it's just asset bundles in general? Fuuucckkk
 
 
 ::CATALOG ASSETS TODO FOR LEA::
