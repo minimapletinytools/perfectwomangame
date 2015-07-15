@@ -47,8 +47,8 @@ public class XboneAll {
             };
             
             
-            RTAManager.CreateAsync(ActiveUserId, OnRTACreated);
-            RefreshStatisticsData();
+            //RTAManager.CreateAsync(ActiveUserId, OnRTACreated);
+            //RefreshStatisticsData();
             ManagerManager.Log("successfully ran xbone initialization coroutine");
         }
     }

@@ -18,12 +18,15 @@ public class XboneStorage
 	{
         //if (!StorageManager.AmFullyInitialized()) //do I need this? On soft reset, one should not recreate the storage manager??
         {
+
             StorageManager.Create();
             var dummy = (new GameObject("genDummy")).AddComponent<DummyBehaviour>();
             dummy.StartCoroutine(save_thread(dummy.gameObject));
+
+
         } //else
         {
-            //StorageCreated = true; 
+            //this should never happen???
         }
 	}
 
