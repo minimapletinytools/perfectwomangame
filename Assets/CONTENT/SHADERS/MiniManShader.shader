@@ -11,7 +11,7 @@ Shader "Custom/MiniManShader" {
 		Cull Off Lighting Off ZWrite Off Fog { Color (0,0,0,0) }
 		
 		CGPROGRAM
-		#pragma surface surf SimpleLambert
+		#pragma surface surf SimpleLambert keepalpha
 		//this is not lambert at all
 		half4 LightingSimpleLambert (SurfaceOutput s, half3 lightDir, half atten) {
 		  half4 c;
