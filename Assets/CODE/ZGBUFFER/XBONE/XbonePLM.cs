@@ -32,24 +32,26 @@ public class XbonePLM
 	void Suspending()
 	{
 		//TODO save
-
+        ManagerManager.Log("SUSPENDING");
 		XboxOnePLM.AmReadyToSuspendNow ();
 	}
 
 	void ResourceAvailabilityChangedEvent(bool aConstrained)
 	{
 		//TODO (also make sure the boolean is correct..
+        ManagerManager.Log("RESOURCES CHANGED " + aConstrained);
 	}
 
 	void Resuming(double aTime)
 	{
 		//TODO check if user has changed
-
+        ManagerManager.Log("RESUMING");
     }
 
 	void Activation(ActivatedEventArgs args)
 	{
 		//TODO do I need to return something here toget out of constrained mode???
+        ManagerManager.Log("ACTIVATION");
 	}
 }
 #else
