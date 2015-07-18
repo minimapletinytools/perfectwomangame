@@ -198,6 +198,13 @@ public class ModeNormalPlay
         mIsInitialized = true;
 	}
 
+    public void reset()
+    {
+        GS = NormalPlayGameState.NONE;
+        mSunsetManager.reset_sunset();
+        mInterfaceManager.hide_interface();
+    }
+
 
 	public void initialize_game_with_character(CharacterIndex aChar)
 	{

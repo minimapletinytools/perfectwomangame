@@ -120,7 +120,7 @@ public class NewInterfaceManager {
 		mElement.Add(mBBMultiplierImage);
 		mElement.Add(mWarningOverlay);
 	}
-	
+     
 	
 	//--------
 	//related to updating play
@@ -232,6 +232,8 @@ public class NewInterfaceManager {
 	//this gets called by NewGameManager
 	public void begin_new_character(PerformanceStats aChar)
 	{
+        hide_interface(true);
+
 		var nameFrame = 
 			aChar.Character == CharacterIndex.sFetus ? mManager.mCharacterBundleManager.get_image("TEXTBOX-FETUS") : 
 				aChar.Character == CharacterIndex.sOneHundred ? mManager.mCharacterBundleManager.get_image("TEXTBOX-110") :
@@ -273,13 +275,13 @@ public class NewInterfaceManager {
         }
 	}
 	
-    public void hide_interface()
+    public void hide_interface(bool aShow = false)
     {
-        mBBScoreFrame.Enabled = false;
-        mBBScoreText.Enabled = false;
-        mBBNameTextFrame.Enabled = false;
-        mBBNameText.Enabled = false;
-        mBBMultiplierImage.Enabled = false;
+        mBBScoreFrame.Enabled = aShow;
+        mBBScoreText.Enabled = aShow;
+        mBBNameTextFrame.Enabled = aShow;
+        mBBNameText.Enabled = aShow;
+        mBBMultiplierImage.Enabled = aShow;
     }
 
 

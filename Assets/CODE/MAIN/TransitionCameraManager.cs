@@ -243,13 +243,20 @@ public class TransitionCameraManager : FakeMonoBehaviour
 			
 		}
 
-		mManager.mCharacterBundleManager.add_bundle_to_unload(mBundle);
+        //CAN DELETE, we no longer want to unload this because of soft reset
+		//mManager.mCharacterBundleManager.add_bundle_to_unload(mBundle);
 
         
         
         start_configuration_display();
 
 	}
+
+    public void reload()
+    {
+        destroy_configuration_display();
+        start_screen_loaded_callback(mBundle, "START");   
+    }
 	
 	public void start_configuration_display()
       	{
@@ -402,13 +409,16 @@ public class TransitionCameraManager : FakeMonoBehaviour
 		initialize_depth_warning();
 
 
+        //CAN DELETE, we no longer want to unload this bundle because we do soft resets
         if (mBundle != null)
         {
-            mManager.mCharacterBundleManager.unload_bundle(mBundle);
-            mBundle = null;
+            //mManager.mCharacterBundleManager.unload_bundle(mBundle);
+            //mBundle = null;
         }
 	}
 	
+
+
 	public bool go_to_play()
 	{
 		mManager.mMusicManager.fade_out_extra_music();

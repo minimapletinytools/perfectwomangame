@@ -179,7 +179,10 @@ public class ManagerManager : MonoBehaviour{
             mBackgroundManager.unload();
             mBodyManager.unload();
             mTransparentBodyManager.unload();
+            mBodyManager.unload();
             mMusicManager.unload();
+            mGameManager.mModeNormalPlay.reset();
+            mGameManager.GS = NewGameManager.GameState.NONE;
 
             Debug.Log("unloaded current character");
 
@@ -189,12 +192,11 @@ public class ManagerManager : MonoBehaviour{
 
             Debug.Log("GCed assets");
 
-            //we need to reload this stuff
-            //mCharacterBundleManager.Start();
-            mGameManager.mModeNormalPlay.mSunsetManager.reset_sunset();
-            mTransitionCameraManager.go_to_play(); 
+            //mTransitionCameraManager.go_to_play(); 
+            mTransitionCameraManager.reload();
 
             Debug.Log("restarted");
+
             //HARD RESET WAY
             //Application.LoadLevel(Application.loadedLevel);
         }

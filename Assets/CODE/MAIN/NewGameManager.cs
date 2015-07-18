@@ -23,7 +23,7 @@ public class NewGameManager : FakeMonoBehaviour
 	
 	
 	public GameState GS
-	{ get; private set; }
+	{ get; set; }
 	public CharacterLoader CurrentCharacterLoader
 	{ get; private set; }
 	public CharacterIndex CurrentCharacterIndex
