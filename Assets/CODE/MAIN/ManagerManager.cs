@@ -187,8 +187,8 @@ public class ManagerManager : MonoBehaviour{
             Debug.Log("unloaded current character");
 
             mCharacterBundleManager.cleanup();
-            Resources.UnloadUnusedAssets();
-            System.GC.Collect();
+            //Resources.UnloadUnusedAssets();
+            //System.GC.Collect();
 
             Debug.Log("GCed assets");
 
