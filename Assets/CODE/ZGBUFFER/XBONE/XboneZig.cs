@@ -79,13 +79,13 @@ public class MicrosoftZig : ZgInterface
         //testcode
         if (KeyMan.GetKeyDown("LeftThumbstick"))
         {
-            //mLog.UnityLog("left thumbstick was pressed");
-            //write_data(mZig.mManager.mMetaManager.UnlockManager.serialize(),"unlock");
+            mLog.UnityLog("left thumbstick was pressed");
+            write_data(mZig.mManager.mMetaManager.UnlockManager.serialize(),"unlock");
 
         }
         if (KeyMan.GetKeyDown("RightThumbstick"))
         {
-            mEvents.SendDeathEvent();
+            //mEvents.SendDeathEvent();
             //ManagerManager.Log("Sent fake death event");
 
             //take_color_image();
@@ -99,7 +99,7 @@ public class MicrosoftZig : ZgInterface
 	
 	public bool has_user()
 	{
-		return mKinect.IsTracking;
+		return mKinect.IsTracking && mAll.IsSomeoneSignedIn;
 	}
 
 	//TODO should check for users
@@ -162,7 +162,7 @@ public class MicrosoftZig : ZgInterface
     }
     public void read_data(string aName, System.Action<byte[]> aResponse)
     {
-        aResponse += delegate(byte[] obj) {Debug.Log("read callback " + obj.Length);};
+        aResponse += delegate(byte[] obj) {ManagerManager.Log("read callback " + (obj == null ? " FAIL" : obj.Length.ToString()));};
         mStorage.read_data (aName,aResponse);
     }
 	

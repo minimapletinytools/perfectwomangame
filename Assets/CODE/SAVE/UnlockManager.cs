@@ -129,7 +129,7 @@ public class UnlockManager
 			Stream stream = new FileStream("gg.bin", FileMode.Open, FileAccess.Read, FileShare.Read);
 			mUnlocked = (Unlockables) formatter.Deserialize(stream);
 			stream.Close();
-		} catch {} //no such file, must be first launch
+		} catch {} //no such file, must be first launch OR save data corrupted
 	}
 
     //TODO DELETE

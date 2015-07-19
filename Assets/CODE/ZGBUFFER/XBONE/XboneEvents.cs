@@ -34,6 +34,10 @@ public class XboneEvents{
         {
             if ((CharacterIndex)args [0] == CharacterIndex.sFetus)
             {
+                Events.SendPlayerSessionStart(UsersManager.Users [0].Id.ToString(), ref mSessionId, "", 0, 0);
+            }
+            if (((CharacterIndex)args [0]).LevelIndex == 1)
+            {
                 //Debug.Log("BORN EVENT");
                 ManagerManager.Log("BORN EVENT");
                 Events.SendBorn(UsersManager.Users [0].Id.ToString(), ref mSessionId);
@@ -72,7 +76,7 @@ public class XboneEvents{
 
         if (name == "START")
         {
-            Events.SendPlayerSessionStart(UsersManager.Users [0].Id.ToString(), ref mSessionId, "", 0, 0);
+            //Events.SendPlayerSessionStart(UsersManager.Users [0].Id.ToString(), ref mSessionId, "", 0, 0);
         }
 
         if (name == "PAUSE")
@@ -120,7 +124,7 @@ public class XboneEvents{
                 }
             });*/
 
-
+            /*
             //TODO DELETE
             //this is test stuff and will crash if there is no user logged on at start of game
             var currentUser = UsersManager.Users [0];
@@ -145,7 +149,7 @@ public class XboneEvents{
                     }
                 }
             }
-            );
+            );*/
         }
 
     }

@@ -25,8 +25,7 @@ public class XbonePLM
 		XboxOnePLM.OnSuspendingEvent += Suspending;
 		XboxOnePLM.OnResourceAvailabilityChangedEvent += ResourceAvailabilityChangedEvent;
 		XboxOnePLM.OnResumingEvent += Resuming;
-
-		//XboxOnePLM.OnActivationEvent += Activation;
+		XboxOnePLM.OnActivationEvent += Activation;
 	}
 
 	void Suspending()

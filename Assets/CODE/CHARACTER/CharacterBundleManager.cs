@@ -229,6 +229,7 @@ public class CharacterBundleManager : FakeMonoBehaviour {
         changeThisInfo.ChangeSet[0].Changes[2].Changes[avail[avail.Count() > 1 ? 1 : 0]] = 1;  //the tertiary operator is for the case where there is only one character unlocked
     }
 
+    //CAN DELETE, this is the old version that has each thing as an individual TextAsset in the asset bundle which runs too slowly on XB1
 	public void pose_bundle_loaded_callback(AssetBundle aBundle)
     {
         //Debug.Log("poses");

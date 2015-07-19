@@ -56,11 +56,7 @@ public class ManagerManager : MonoBehaviour{
 	void Awake () {
 		Random.seed = System.Environment.TickCount;
 		Application.targetFrameRate = (int)GameConstants.TARGET_FRAMERATE;
-        GameEventDistributor += delegate(string arg1, object[] arg2)
-        {
-            if(arg1 == "OTHER_PLATFORM_INITIALIZE")
-                GameEventDistributor("START",null);
-        };
+        GameEventDistributor += delegate(string arg1, object[] arg2){};
 
 		Cursor.visible = false;
 		gameObject.AddComponent<AudioListener>();
@@ -102,9 +98,9 @@ public class ManagerManager : MonoBehaviour{
             mStartDelegates();
         }
 
-#if !UNITY_XBOXONE
-        mManager.GameEventDistributor("START",null);
-#endif
+        GameEventDistributor("START",null);
+
+        ManagerManager.Log("START GAME");
 	}
 	
 
@@ -291,7 +287,7 @@ public class ManagerManager : MonoBehaviour{
         {
             var height = style.CalcHeight(new GUIContent(e.val),Screen.width)+10;
             heightCounter += (int)height;
-            GUI.TextArea(new Rect(Screen.width,heightCounter,Screen.width,(int)height),e.val,style);
+            GUI.TextArea(new Rect(10,heightCounter,Screen.width,(int)height),e.val,style);
 
         }
 

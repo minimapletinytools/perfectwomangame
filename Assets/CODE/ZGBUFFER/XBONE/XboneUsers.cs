@@ -6,7 +6,7 @@ using Users;
 
 
 public class XboneUsers {
-    #if UNITY_XBOXONE 
+#if UNITY_XBOXONE 
 
 
 	public void Start () {
@@ -19,6 +19,5 @@ public class XboneUsers {
 #else
     public void Start () {
     }
-
 #endif
 }
