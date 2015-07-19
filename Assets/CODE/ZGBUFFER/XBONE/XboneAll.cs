@@ -5,6 +5,7 @@ using Users;
 using DataPlatform;
 using UnityPluginLog;
 using ConsoleUtils;
+using TextSystems;
 #endif
 
 
@@ -14,9 +15,11 @@ public class XboneAll {
     #if UNITY_XBOXONE 
 
     public int ActiveUserId{ get; private set; }
+    public bool IsSomeoneSignedIn{ get { return UsersManager.IsSomeoneSignedIn; } }
 
     public void Start () {
         DataPlatformPlugin.InitializePlugin(0);
+        TextSystemsManager.Create();
         UsersManager.Create();
         SetupUserManagerCallbacks();
         AchievementsManager.Create();
@@ -45,7 +48,15 @@ public class XboneAll {
             {
                 ManagerManager.Log("Achievement unlocked " + notice.AchievementId);
             };
-            
+
+
+            //set rich presence string
+            //TODO if no one is signed in...
+            if(IsSomeoneSignedIn)
+            {
+                PresenceData data = PresenceService.CreatePresenceData(ConsoleUtilsManager.PrimaryServiceConfigId(), "default", null);
+                PresenceService.SetPresenceAsync(ActiveUserId, true, data, delegate(UnityPlugin.AsyncStatus status, UnityAOT.ActionAsyncOp op) {});
+            }
             
             //RTAManager.CreateAsync(ActiveUserId, OnRTACreated);
             //RefreshStatisticsData();
@@ -163,7 +174,7 @@ public class XboneAll {
     //RTA stuff
 
     string kTimesBorn = "TimesBorn";
-    string kTimesDied = "TimesDied";
+    string kTimesDied = "TimesDeath";
     public void RefreshStatisticsData()
     {
         string[] statsToQuery = new string[] { kTimesBorn, kTimesDied };
@@ -245,6 +256,7 @@ public class XboneAll {
     }
 
     #else
+    public bool IsSomeoneSignedIn{ get { return false; } }
     public void Start () {
     }
     public void Update(){}
