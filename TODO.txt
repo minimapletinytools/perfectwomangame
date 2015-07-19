@@ -1,4 +1,19 @@
-::TODO2:
+::TODO2::
+-can not run xbone events until after a user has signed in
+	-don't send events in general unless thehre is a user signed in
+-figure out user login/logout nonsense. When to pause the game, etc.
+	-i.e. should pause on start screen if there is no user signed in
+	-what to do if user signs out in the middle of play
+		-restart to start screen I guess???
+		-or pause, and let them sign back in
+-figure out start suspend resume activate events
+-clear out all achievements and test
+-finalize gamerscore on all achievements
+-set rich presence string
+-need to reset choosing/sunset stuff to the right position on restart
+-there's another AOT issue with storage
+	-try switching to xml serialization I guess
+
 -make the necessary documents (Lea)
 	-read this https://developer.xboxlive.com/en-us/xdp/documentation/xdphelp/Pages/product_documents_xdpdocs.aspx
 	-game help, privacy, terms of use
