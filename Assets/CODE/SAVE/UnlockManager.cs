@@ -11,8 +11,8 @@ using System.Runtime.Serialization.Formatters.Binary;
 public class Unlockables
 {
     //TODO is this what causes the JIT problem and how do I make it not JIT
-    [System.NonSerialized]
-	public List<List<PerformanceStats> > gameHistory = new List<List<PerformanceStats>>();
+    //[System.NonSerialized]
+	//public List<List<PerformanceStats> > gameHistory = new List<List<PerformanceStats>>();
 
 	public CharIndexContainerInt unlockedCharacters = new CharIndexContainerInt();
 	public bool skipAvail = false;
@@ -53,7 +53,9 @@ public class UnlockManager
 	
     public UnlockRequirements.UnlockData did_unlock(CharacterIndex aChar,List<PerformanceStats> aStats)
     {
-        return UnlockRequirements.requirements [new UnlockRequirements.FakeCharIndex(aChar.LevelIndex,aChar.Choice)](aStats, mUnlocked.gameHistory);
+        return new UnlockRequirements.UnlockData();
+        //TODO reenable
+        //return UnlockRequirements.requirements [new UnlockRequirements.FakeCharIndex(aChar.LevelIndex,aChar.Choice)](aStats, mUnlocked.gameHistory);
     }
 
     public void unlock(CharacterIndex aIndex)
@@ -63,7 +65,9 @@ public class UnlockManager
 
 	public void game_finished(List<PerformanceStats> aStats)
 	{
-        mUnlocked.gameHistory.Add(aStats);
+        //TODO renable
+        //mUnlocked.gameHistory.Add(aStats);
+
         //TODO maybe consider pruning after it reaches like over 100 playthroughs
 
 
