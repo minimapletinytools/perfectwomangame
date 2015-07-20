@@ -1,3 +1,17 @@
+::USER PLAN::
+-from title
+	-wont start until user signs in
+	-on start/restart game if user is signed in or on user sign in
+		-set default rich presecence string
+		-send start event
+-from game / from resume
+	-on user sign out / if no user is signed in
+		-pause game and prompt user to sign in
+			-if same user, unpause
+			-if different user restart game??
+
+
+
 ::TODO2::
 -can not run xbone events until after a user has signed in
 	-don't send events in general unless thehre is a user signed in
