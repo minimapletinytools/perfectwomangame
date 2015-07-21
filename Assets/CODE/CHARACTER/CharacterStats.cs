@@ -34,10 +34,12 @@ public class PerformanceStats
         }
     }
 
-	public CharacterStats Stats
-	{ get; set; }
-	public bool Finished { get; set; } //did we finish with this character already
+    public bool Finished { get; set; } //did we finish with this character already
 	public float DeathTime { get; set; } //what time (0,1) did this character die
+
+    [System.NonSerialized] //we don't serialize this, maybe we should but I don't use it at the moment
+    CharacterStats mStats;
+    public CharacterStats Stats { get{ return mStats; } set{mStats = value;} }
 
 	[System.NonSerialized] //we don't serialize this because it's too big and not needed
 	List<TimeScorePair> mScore; //time, score
