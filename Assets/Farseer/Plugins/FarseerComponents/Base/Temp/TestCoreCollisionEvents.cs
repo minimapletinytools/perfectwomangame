@@ -9,7 +9,7 @@ public class TestCoreCollisionEvents : MonoBehaviour
 	public FSBodyComponent AttachedBody;
 	public FSShapeComponent AttachedShape;
 	
-	private GUIText guiText;
+	private new GUIText guiText;
 	
 	private bool initialized = false;
 	

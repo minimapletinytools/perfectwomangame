@@ -43,7 +43,7 @@ public class XboneStorage
 
                 bool ok = op2.Success && op2.Status == ConnectedStorageStatus.SUCCESS;
 
-                Debug.Log("write data success " + op2.Success + " " + op2.Status);
+                Debug.Log("write data success " + ok + " " + op2.Success + " " + op2.Status);
                 //TODO confirm success??
 
                 IsWriting = false;

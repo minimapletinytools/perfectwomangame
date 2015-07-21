@@ -109,7 +109,8 @@ public class XboneKinect{
 	public void Update()
 	{
         //BODY
-        bool bodyReadSuccess = SensorManager.bodyFrameReader.AcquireLatestFrame(JointCoordType.DepthSpace);
+        //bool bodyReadSuccess = SensorManager.bodyFrameReader.AcquireLatestFrame(JointCoordType.DepthSpace);
+        SensorManager.bodyFrameReader.AcquireLatestFrame(JointCoordType.DepthSpace);
 
 		List<ulong> trackedIds = new List<ulong>();
 
