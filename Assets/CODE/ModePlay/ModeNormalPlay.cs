@@ -203,6 +203,11 @@ public class ModeNormalPlay
         GS = NormalPlayGameState.NONE;
         mSunsetManager.reset_sunset();
         mInterfaceManager.hide_interface();
+        mInterfaceManager.enable_warning_text(false);
+
+        //move the images out of the way
+        slide_image(mChoosingImage, null, false, true);
+        slide_image(mSunsetImage, null, false, true);
     }
 
 
