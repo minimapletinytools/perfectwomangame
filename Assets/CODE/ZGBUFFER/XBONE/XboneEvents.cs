@@ -76,6 +76,7 @@ public class XboneEvents{
 
         if (name == "START")
         {
+            //this is done elsewhere now since START event may happen before there are any users
             //Events.SendPlayerSessionStart(UsersManager.Users [0].Id.ToString(), ref mSessionId, "", 0, 0);
         }
 
