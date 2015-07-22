@@ -8,7 +8,7 @@ public class MicrosoftZig : ZgInterface
     
     ZgManager mZig;
 
-    XboneAll mAll;
+    public XboneAll mAll;
 	public XboneKinect mKinect;
 	XbonePLM mPLM;
 	XboneStorage mStorage;
@@ -18,9 +18,13 @@ public class MicrosoftZig : ZgInterface
     public RenderTexture mColorImageRT = null;
 
 	bool Initialized { get; set; }
+
+    public static MicrosoftZig Inst {get; private set;}
 	
 	public void initialize(ZgManager aZig)
 	{
+        Inst = this;
+        
         mZig = aZig;
         mAll = new XboneAll();
         mLog = new XboneUnityLogPlugin();
