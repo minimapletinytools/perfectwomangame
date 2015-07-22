@@ -30,7 +30,7 @@ public class MetaManager : FakeMonoBehaviour {
 
         mManager.mZigManager.ZgInterface.read_data("unlock", 
            delegate(byte[] obj){
-            Debug.Log("received save data");
+            Debug.Log("received save data " + obj);
                 if(obj != null){
                     Debug.Log("length " + obj.Length);
                     UnlockManager.deserialize(obj);

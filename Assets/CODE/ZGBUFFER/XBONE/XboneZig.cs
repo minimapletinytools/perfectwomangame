@@ -79,7 +79,7 @@ public class MicrosoftZig : ZgInterface
         //testcode
         if (KeyMan.GetKeyDown("LeftThumbstick"))
         {
-            mLog.UnityLog("left thumbstick was pressed");
+            mLog.UnityLog("test save data");
             write_data(mZig.mManager.mMetaManager.UnlockManager.serialize(),"unlock");
 
         }
@@ -89,7 +89,8 @@ public class MicrosoftZig : ZgInterface
             //ManagerManager.Log("Sent fake death event");
 
             //take_color_image();
-            //read_data("unlock",delegate(byte[] obj) { mZig.mManager.mMetaManager.UnlockManager.deserialize(obj);});
+            mLog.UnityLog("test read data");
+            read_data("unlock",delegate(byte[] obj) { mZig.mManager.mMetaManager.UnlockManager.deserialize(obj);});
         }
 
         if (initCounter == 3)

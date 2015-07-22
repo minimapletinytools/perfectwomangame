@@ -5,13 +5,15 @@ using System.Linq;
 using System.IO;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
+using Newtonsoft.Json;
+using System.Text;
 
 
 [System.Serializable]
 public class Unlockables
 {
+    //one option is to just replace it with an int of number characters played 
     //TODO is this what causes the JIT problem and how do I make it not JIT
-    [System.NonSerialized]
 	public List<List<PerformanceStats> > gameHistory = new List<List<PerformanceStats>>();
 
 	public CharIndexContainerInt unlockedCharacters = new CharIndexContainerInt();
@@ -36,7 +38,6 @@ public class Unlockables
 				unlockedCharacters[e] = 1; 
 		}
 	}
-
 }
 
 public class UnlockManager
@@ -81,7 +82,7 @@ public class UnlockManager
 				}
 		}
 
-        //write_unlock();
+        write_unlock();
         mManager.mZigManager.ZgInterface.write_data(serialize(),"unlock");
 	}
 
@@ -101,6 +102,9 @@ public class UnlockManager
 
     public byte[] serialize()
     {
+        return (new UnicodeEncoding()).GetBytes(JsonConvert.SerializeObject(mUnlocked));
+
+        /* old C# serialization/deserialization, wont work on XB1 due to JIT issue
         MemoryStream stream = new MemoryStream();
         try{
             IFormatter formatter = new BinaryFormatter();
@@ -110,17 +114,22 @@ public class UnlockManager
             throw e;
         }finally{
             stream.Close();
-        }
+        }*/
     }
 
     public void deserialize(byte[] aData)
     {
+        
+        mUnlocked = JsonConvert.DeserializeObject<Unlockables>((new UnicodeEncoding()).GetString(aData));
+
+        /* old C# serialization/deserialization, wont work on XB1 due to JIT issue
         try{
             IFormatter formatter = new BinaryFormatter();
             MemoryStream stream = new MemoryStream(aData);
             mUnlocked = (Unlockables) formatter.Deserialize(stream);
             stream.Close();
         } catch {}
+        */
     }
 
     //TODO DELETE

@@ -34,7 +34,7 @@ public class XboneStorage
 	{
 		if (StorageCreated && !IsWriting)
         {
-            Debug.Log("trying to write data " + aData.Length);
+            //Debug.Log("trying to write data " + aData.Length);
             IsWriting = true;
             DataMap toSave = DataMap.Create();
             toSave.AddOrReplaceBuffer(aName, aData);
@@ -43,14 +43,14 @@ public class XboneStorage
 
                 bool ok = op2.Success && op2.Status == ConnectedStorageStatus.SUCCESS;
 
-                Debug.Log("write data success " + ok + " " + op2.Success + " " + op2.Status);
+                ManagerManager.Log("write data success " + ok + " " + op2.Success + " " + op2.Status);
                 //TODO confirm success??
 
                 IsWriting = false;
             });
         } else
         {
-            Debug.Log("error, could not write " + StorageCreated + " " + IsWriting);
+            ManagerManager.Log("error, could not write " + StorageCreated + " " + IsWriting);
         }
 	}
 	public void read_data(string aName, System.Action<byte[]> aResponse)
@@ -72,7 +72,7 @@ public class XboneStorage
 			);
 		} else 
         {
-            Debug.Log("error trying to read data before storage is created");
+            ManagerManager.Log("error trying to read data before storage is created");
             aResponse(null);
         }
 	}
@@ -88,13 +88,12 @@ public class XboneStorage
 				if(op.Success)
 				{
 					mStorage = storage;
-					StorageCreated = true;
-					Debug.Log ("storage created success");
+					ManagerManager.Log ("storage created success");
 				}
 				else
 				{
                     IsStorageFail = true;
-					Debug.Log ("storage create failed");
+                    ManagerManager.Log ("storage create failed");
 				}
 			}
 		);
