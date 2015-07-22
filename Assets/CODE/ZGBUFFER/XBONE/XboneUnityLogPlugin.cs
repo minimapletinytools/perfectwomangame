@@ -37,7 +37,6 @@ public class XboneUnityLogPlugin
 
     public void UnityLog(string aMsg)
     {
-        ManagerManager.Log("trying to unity log " + aMsg);
         PluginLogManager.Log(aMsg);
         PluginLogManager.LogError("error " + aMsg);
     }

@@ -285,7 +285,7 @@ public class ManagerManager : MonoBehaviour{
         int heightCounter = 50;
         foreach (var e in mDebugMessages.Skip(Mathf.Min(0,mDebugMessages.Count()-20)).Select((val,index) => new {val,index}))
         {
-            var height = style.CalcHeight(new GUIContent(e.val),Screen.width)+10;
+            var height = style.CalcHeight(new GUIContent(e.val),Screen.width);
             heightCounter += (int)height;
             GUI.TextArea(new Rect(10,heightCounter,Screen.width,(int)height),e.val,style);
 
