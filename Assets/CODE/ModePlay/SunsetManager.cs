@@ -911,6 +911,8 @@ public class SunsetManager
         }
         graveCleanup.Clear();
 
+        ShowBackground = true;
+        set_sun(0, true);
     }
 
 }
