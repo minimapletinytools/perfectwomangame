@@ -151,7 +151,7 @@ public class ProjectionManager : FakeMonoBehaviour {
         Vector3 right = Vector3.Cross(mUp, mNormal);
         Vector3 v = B - A;
        
-        Vector3 projected = Vector3.ProjectOnPlane(mNormal, v);
+        Vector3 projected = Vector3.Exclude(mNormal, v);
         float r = Vector3.Angle(right, projected);
         if (Vector3.Dot(Vector3.Cross(right, projected), mNormal) < 0)
         {
