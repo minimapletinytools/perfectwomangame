@@ -79,14 +79,16 @@ public class XboneStorage
 
 	IEnumerator save_thread(GameObject aDestroy)
 	{
-		while (!Storage.StorageManager.AmFullyInitialized ())
+		while (!Storage.StorageManager.AmFullyInitialized () || !MicrosoftZig.Inst.has_user())
 			yield return null;
 
 		//TODO use user ID from user manager...
-		ConnectedStorage.CreateAsync (-1, "main_save", 
+		ConnectedStorage.CreateAsync (MicrosoftZig.Inst.mAll.ActiveUserId , "main_save", 
 			delegate(ConnectedStorage storage, CreateConnectedStorageOp op) {
 				if(op.Success)
 				{
+                    StorageCreated = true;
+                    IsStorageFail = false;
 					mStorage = storage;
 					ManagerManager.Log ("storage created success");
 				}

@@ -766,6 +766,8 @@ public class ModeNormalPlay
                 if (UnlockRequirements.requirements.ContainsKey(new UnlockRequirements.FakeCharIndex(e)))
                     mManager.mMetaManager.UnlockManager.unlock(e);
 
+        mManager.mMetaManager.UnlockManager.game_finished(mPerformanceStats);
+
 		mSunsetManager.set_for_GRAVE(mPerformanceStats, 
 			delegate()
 			{

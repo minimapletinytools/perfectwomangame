@@ -82,7 +82,7 @@ public class UnlockManager
 				}
 		}
 
-        write_unlock();
+        //write_unlock();
         mManager.mZigManager.ZgInterface.write_data(serialize(),"unlock");
 	}
 
@@ -119,7 +119,7 @@ public class UnlockManager
 
     public void deserialize(byte[] aData)
     {
-        
+        Debug.Log((new UnicodeEncoding()).GetString(aData));
         mUnlocked = JsonConvert.DeserializeObject<Unlockables>((new UnicodeEncoding()).GetString(aData));
 
         /* old C# serialization/deserialization, wont work on XB1 due to JIT issue
