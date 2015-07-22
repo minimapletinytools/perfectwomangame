@@ -32,7 +32,7 @@ public class XboneUnityLogPlugin
     
     void OnLog(UnityPluginLog.LogChannels channel, string message)
     {
-        ManagerManager.Log("PLUGINLOG: " + message + channel.ToString());
+        //ManagerManager.Log("PLUGINLOG: " + message + channel.ToString());
     }
 
     public void UnityLog(string aMsg)

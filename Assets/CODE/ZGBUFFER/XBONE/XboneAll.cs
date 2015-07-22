@@ -128,21 +128,30 @@ public class XboneAll {
     }
     void OnUsersChanged(int id,bool wasAdded)
     {
-        
+        ManagerManager.Log("OnUsersChanged " + id + " " + wasAdded);
     }
     
     void OnUserSignIn(int id)
     {
+        ManagerManager.Log("OnUserSignIn " + id);
         if (ActiveUserId == -1)
         {
+            if(id != ActiveUserId)
+                ManagerManager.Manager.restart_game();
+            ActiveUserId = id;
             NewPrimaryUserChanged();
+
         }
     }
     
     void OnUserSignOut(int id)
     {
+        ManagerManager.Log("OnUserSignOut " + id);
         if (ActiveUserId == id)
         {
+            LastActiveUserId = id;
+            ActiveUserId = -1;
+            ManagerManager.Manager.GameEventDistributor("PAUSE",null);
             //TODO pause game
             //tell user game will restart if they log in as someone else
             //does this get called if user logs out while game is suspended????
@@ -152,6 +161,7 @@ public class XboneAll {
     
     void OnUserSignOutStarted(int id, System.IntPtr deferred)
     {
+        ManagerManager.Log("OnUserSignOutStarted " + id);
         var deferral = new SignOutDeferral(deferred);
         var dummy = (new GameObject ("genDummy")).AddComponent<DummyBehaviour> ();
         dummy.StartCoroutine (deferral_thread (dummy.gameObject,deferral));
@@ -166,7 +176,7 @@ public class XboneAll {
     
     void OnUserDisplayInfoChange(int id)
     {
-        
+        ManagerManager.Log("OnUserDisplayInfoChange " + id);
     }
 
 
