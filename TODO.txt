@@ -1,5 +1,11 @@
+::XBONEMENU::
+
 ::USER PLAN::
+-storage needs to be user specific, reload on user change
+-need to figure out how to access user via kinect sign in??
+-is there such thing as a primary user??? We'll just make it the first user that signed in or the first user recognized... Doesn't care if controller/players swap
 -from title
+	-needs to be a way for the player to switch user and for the game to indicate which user is playing the game (XR 112/113)
 	-wont start until user signs in
 	-on start/restart game if user is signed in or on user sign in
 		-set default rich presecence string
@@ -8,11 +14,11 @@
 	-on user sign out / if no user is signed in
 		-pause game and prompt user to sign in
 			-if same user, unpause
-			-if different user restart game??
-
-
+			-if different user restart game?? (XR 116)
+				-or maybe give the player a chance to change back to original user, nah
 
 ::TODO2::
+-solve the quarternion bug
 -can not run xbone events until after a user has signed in
 	-don't send events in general unless thehre is a user signed in
 -figure out user login/logout nonsense. When to pause the game, etc.
@@ -24,8 +30,9 @@
 -clear out all achievements and test
 -finalize gamerscore on all achievements
 -set rich presence string
--need to reset choosing/sunset stuff to the right position on restart
--there's another AOT issue with storage
+-make sure storage is in fact storing the right thing (becaues it's probably not)
+DONE-need to reset choosing/sunset stuff to the right position on restart
+DONE-there's another AOT issue with storage
 	-try switching to xml serialization I guess
 
 -make the necessary documents (Lea)
