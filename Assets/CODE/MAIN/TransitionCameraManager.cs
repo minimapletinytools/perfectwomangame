@@ -335,7 +335,6 @@ public class TransitionCameraManager : FakeMonoBehaviour
 		CharacterIndex charIndex = Input.GetKeyDown(KeyCode.Alpha9) ? choices[Random.Range(0,choices.Count)] : CharacterIndex.sFetus;
 		if(Input.GetKeyDown(KeyCode.Alpha9) )
 		{
-			GameConstants.fadingTime = 0.1f;
 			GameConstants.numberRetries = 0;
 			GameConstants.transitionToChoiceDelayTime = 0;
 			GameConstants.preplayTime = 0;

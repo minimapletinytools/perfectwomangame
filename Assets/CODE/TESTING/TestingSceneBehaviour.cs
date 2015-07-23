@@ -11,7 +11,6 @@ public class TestingSceneBehaviour : MonoBehaviour {
 		ManagerManager.Manager.mGameManager.set_testing();
 		GameConstants.FORCE_START = true;
 		//ManagerManager.Manager.mRecordMode = true;
-		GameConstants.fadingTime = 0.01f;
 		
 
 	}

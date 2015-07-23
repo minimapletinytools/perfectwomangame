@@ -90,7 +90,6 @@ public static class GameConstants
 
 	public static int numberRetries = 1;
 	public static float preplayTime = .5f;
-    public static float fadingTime = 2.3f; //TODO DELETE we no longer fade
 	public static float transitionToChoiceDelayTime = 1.2f;
 	
 
