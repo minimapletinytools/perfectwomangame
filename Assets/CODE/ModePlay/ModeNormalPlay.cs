@@ -206,8 +206,8 @@ public class ModeNormalPlay
         mInterfaceManager.enable_warning_text(false);
 
         //move the images out of the way
-        slide_image(mChoosingImage, null, false, true);
-        slide_image(mSunsetImage, null, false, true);
+        slide_image(mFlatCamera, mChoosingImage, null, false, true);
+        slide_image(mFlatCamera, mSunsetImage, null, false, true);
     }
 
 
@@ -236,7 +236,7 @@ public class ModeNormalPlay
 
         //reveal the character with sound
         mManager.mMusicManager.play_sound_effect("transitionOut");
-        slide_image(mSunsetImage,null,false); 
+        slide_image(mFlatCamera, mSunsetImage, null, false); 
 
 		//we use the hack version instead that allows us to skip characters
 		set_last_performance_stat_to_character(NGM.CurrentCharacterIndex);
@@ -353,8 +353,8 @@ public class ModeNormalPlay
 					{
 						if(KeyMan.GetKeyDown(choiceKeys[j]))
 						{
-							slide_image(mChoosingImage,null);
-							slide_image(mSunsetImage,null,false);
+                            slide_image(mFlatCamera, mChoosingImage, null);
+                            slide_image(mFlatCamera, mSunsetImage, null, false);
 							mManager.mMusicManager.fade_out_extra_music();
 							mManager.mMusicManager.fade_out(0);
 							mManager.mAssetLoader.new_load_character((new CharacterIndex(i+1,j)).StringIdentifier,mManager.mCharacterBundleManager);
@@ -594,7 +594,7 @@ public class ModeNormalPlay
 		int choice = mChoiceHelper.update(new SetPlayChoice(mChoosingManager));
 		if(choice != -1)
 		{
-			slide_image(mChoosingImage,null);
+            slide_image(mFlatCamera, mChoosingImage, null);
 			//mSunsetManager.fade_characters(false);
 			mManager.mMusicManager.fade_out_extra_music();
 			transition_to_TRANSITION_play(CurrentPerformanceStat.Character.get_future_neighbor(choice));
@@ -794,7 +794,7 @@ public class ModeNormalPlay
     public void transition_to_ASTRONAUT()
     {
         mSunsetManager.add_character(NGM.CurrentCharacterLoader.Character,!CurrentPerformanceStat.BadPerformance);
-        slide_image(null,mSunsetImage,false);
+        slide_image(mFlatCamera, null, mSunsetImage, false);
 
         TED.add_event(
             delegate(float aTime){
@@ -816,7 +816,7 @@ public class ModeNormalPlay
 		GS = NormalPlayGameState.PRECHOICE;
 
 		mSunsetManager.add_character(NGM.CurrentCharacterLoader.Character,!CurrentPerformanceStat.BadPerformance);
-		slide_image(null,mSunsetImage,false);
+        slide_image(mFlatCamera, null, mSunsetImage, false);
         CharacterIndex[] chars = available_choices(NGM.CurrentCharacterIndex.get_future_neighbor(0));
         mChoiceHelper.shuffle_and_set_choice_poses(chars.Length,mChoosingManager); 
         mChoosingManager.set_bb_choices(chars);
@@ -838,7 +838,7 @@ public class ModeNormalPlay
 				mSunsetManager.low_skippable_text_bubble_event("You turn " + NGM.CurrentCharacterIndex.get_future_neighbor(0).Age + ".",gAgeDisplayDur)
 			,2.5f).then_one_shot(
 				delegate(){
-					slide_image(null,mChoosingImage);
+                    slide_image(mFlatCamera, null, mChoosingImage);
 					mManager.mMusicManager.fade_in_extra_music("choiceMusic");
 					GS = NormalPlayGameState.CHOICE;
 				}
@@ -847,7 +847,7 @@ public class ModeNormalPlay
 		else
 		{
 			mSunsetManager.set_sun();
-			slide_image(null,mChoosingImage);
+            slide_image(mFlatCamera, null, mChoosingImage);
 			mManager.mMusicManager.fade_in_extra_music("choiceMusic");
 			GS = NormalPlayGameState.CHOICE;
 		}
@@ -903,7 +903,7 @@ public class ModeNormalPlay
                     //normally this will get called right after you make a choice but if we're here that meeans we didn't make a choice because we died
                     mSunsetManager.add_character(NGM.CurrentCharacterLoader.Character, !CurrentPerformanceStat.BadPerformance, false);
                     mSunsetManager.set_sun();
-                    slide_image(null, mSunsetImage, false, false);
+                    slide_image(mFlatCamera, null, mSunsetImage, false, false);
 
                     if(NGM.CurrentCharacterIndex == CharacterIndex.sOneHundred)
                         mSunsetManager.ShowBackground = false;
@@ -1005,20 +1005,20 @@ public class ModeNormalPlay
 		}
 	}
 
-	public void slide_image(FlatElementImage cur, FlatElementImage next, bool right = true, bool instant = false)
+	public static void slide_image(FlatCameraManager aCam, FlatElementImage cur, FlatElementImage next, bool right = true, bool instant = false)
 	{
 
 		//TODO set triggers to deactivate the surfaces, maybe not here.. for performance..
 		if(next!=null)
 		{
-			next.HardPosition = mFlatCamera.get_point(Vector3.zero) + (right ? Vector3.right*next.BoundingBox.width : Vector3.down * next.BoundingBox.height);
-			next.SoftPosition = mFlatCamera.get_point(Vector3.zero);
+            next.HardPosition = aCam.get_point(Vector3.zero) + (right ? Vector3.right * next.BoundingBox.width : Vector3.down * next.BoundingBox.height);
+            next.SoftPosition = aCam.get_point(Vector3.zero);
 			if(instant)
 				next.HardPosition = next.SoftPosition;
 		}
 		if(cur != null)
 		{
-			cur.SoftPosition = mFlatCamera.get_point(Vector3.zero) - (right ? Vector3.right*cur.BoundingBox.width : Vector3.down * cur.BoundingBox.height);
+            cur.SoftPosition = aCam.get_point(Vector3.zero) - (right ? Vector3.right * cur.BoundingBox.width : Vector3.down * cur.BoundingBox.height);
 			if(instant)
 				cur.HardPosition = cur.SoftPosition;
 		}

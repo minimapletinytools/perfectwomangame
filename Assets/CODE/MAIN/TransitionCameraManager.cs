@@ -66,6 +66,10 @@ public class TransitionCameraManager : FakeMonoBehaviour
 	FlatElementImage mDepthImage;
     FlatElementImage mColorImage; //for testing
 	
+
+    //camera stuff
+    FlatElementImage mRTImage;
+    FlatCameraManager mRTCamera;
 	
     public TransitionCameraManager(ManagerManager aManager)
         : base(aManager) 
@@ -76,8 +80,8 @@ public class TransitionCameraManager : FakeMonoBehaviour
 	
 	public override void Start()
 	{
-		mFlatCamera = new FlatCameraManager(new Vector3(10000, 10000, 0), 10);
-		mFlatCamera.Camera.depth = 99; //we want this on top always
+		mFlatCamera = new FlatCameraManager(new Vector3(10000, 10000, 0), 9);
+		mFlatCamera.Camera.depth = 101; //we want this on top always
 		//mFlatCamera.Camera.clearFlags = CameraClearFlags.SolidColor;
 		mFlatCamera.Camera.clearFlags = CameraClearFlags.Depth;
 		mFlatCamera.Camera.backgroundColor = new Color32(37,37,37,255);
@@ -100,10 +104,24 @@ public class TransitionCameraManager : FakeMonoBehaviour
 		mSunShafts.useSkyBoxAlpha = shafts.useSkyBoxAlpha;
 		//???mSunShafts.sunTransform = shafts.sunTransform;
 		*/
+
+        //setup RT camera
+        mRTCamera = new FlatCameraManager(new Vector3(10000, -6000, 0), 10);
+        mRTCamera.set_render_texture_mode(true);
+        mRTCamera.Camera.GetComponent<Camera>().name = "TCMCAMERA";
+        mRTCamera.fit_camera_to_game();
+        mRTImage = new FlatElementImage(mRTCamera.RT, 1);
+        mRTImage.PrimaryGameObject.name = "TCMIMAGE";
+        mRTImage.HardScale = Vector3.one * mFlatCamera.Width / mRTImage.mImage.PixelDimension.x;
+        ModeNormalPlay.slide_image(mFlatCamera, null, mRTImage, false,true);
+        mElement.Add(mRTImage);
+        
 		
 
         initialize_depth_warning();
 		mManager.mAssetLoader.new_load_asset_bundle("START",delegate(AssetBundle aBundle){start_screen_loaded_callback(aBundle,"START");});
+
+        mManager.GameEventDistributor += game_event_listener;
 		
 	}
 	
@@ -164,6 +182,8 @@ public class TransitionCameraManager : FakeMonoBehaviour
             e.update(Time.deltaTime);          
         TED.update(Time.deltaTime);
 
+        ModeNormalPlay.draw_render_texture(mRTCamera);
+
         //TODO...
         //if(mManager.mZigManager.DepthView.DepthTexture != null)
             //mDepthImage.set_new_texture(mManager.mZigManager.DepthView.DepthTexture,new Vector2(160,120));
@@ -203,7 +223,7 @@ public class TransitionCameraManager : FakeMonoBehaviour
 			sizing.Size = backSize;
 			r = new FlatElementImage(mLoader.Images.background1,backSize,aDepth);
 		}
-		r.HardPosition = mFlatCamera.get_point(Vector3.zero) + sizing.Offset;
+        r.HardPosition = mRTCamera.get_point(Vector3.zero) + sizing.Offset;
 		return r;
 	}
 
@@ -246,7 +266,50 @@ public class TransitionCameraManager : FakeMonoBehaviour
         //CAN DELETE, we no longer want to unload this because of soft reset
 		//mManager.mCharacterBundleManager.add_bundle_to_unload(mBundle);
 
+
         
+        NewMenuReferenceBehaviour refs = mManager.mNewRef;
+        //mPWLogo = new FlatElementText(refs.genericFont,130,"P e r f e c t  W o m a n",1);
+        //mPWLogo.HardPosition = mRTCamera.Center + new Vector3(0,250,0);
+        //mPWCredits =  new FlatElementText(refs.genericFont,60,"A  G a m e  b y  P e t e r  L u  a n d  L e a  S c h \u00F6 e n f e l d e r",1);
+        //mPWCredits.HardPosition = mRTCamera.Center + new Vector3(0,0,0);
+        //mElement.Add(mPWLogo);
+        //mElement.Add(mPWCredits);
+
+        //logos
+        /*
+		mPWLogoImage = new FlatElementImage(refs.perfectWomanLogo,1);
+		mGLLogo = new FlatElementImage(refs.gameLabLogo,1);
+		mFilmLogo = new FlatElementImage(refs.filmAkademieLogo,1);
+		mPWLogoImage.HardPosition = mRTCamera.get_point(Vector3.zero) + new Vector3(0,200,0);
+		mGLLogo.HardPosition = mRTCamera.get_point(0,-0.5f) + new Vector3(mGLLogo.BoundingBox.width/2 + 50,0,0);
+		mFilmLogo.HardPosition = mRTCamera.get_point(0,-0.5f) - new Vector3(mFilmLogo.BoundingBox.width/2 + 50,0,0);
+        */
+
+        /*mPWLogo.Enabled = false;
+        mGLLogo.Enabled = false;
+        mFilmLogo.Enabled = false;*/
+
+        if (!GameConstants.ALLOW_NO_KINECT && mManager.mZigManager.is_reader_connected() == 0)
+        {
+            //TODO put up a KINECT REQUIRED message
+            mKinectRequiredImage = construct_flat_image("FG-1", 1000);
+            mKinectRequiredImage.SoftPosition += new Vector3(0, -400, 0);
+            mElement.Add(mKinectRequiredImage);
+        }
+
+        mMessageText = new FlatElementText(refs.genericFont, 60, "", 1);
+        mMessageText.HardPosition = mRTCamera.get_point(Vector3.zero) + new Vector3(0, 400, 0);
+
+        //TODO delete all this stuffeouou
+        /*mElement.Add(mPWLogoImage);
+        mElement.Add(mGLLogo);
+        mElement.Add(mFilmLogo);*/
+
+        mElement.Add(mMessageText);
+		
+	
+		
         
         start_configuration_display();
 
@@ -254,61 +317,19 @@ public class TransitionCameraManager : FakeMonoBehaviour
 
     public void reload()
     {
-        destroy_configuration_display();
-        start_screen_loaded_callback(mBundle, "START");   
+        //destroy_configuration_display();
+        //start_screen_loaded_callback(mBundle, "START");   
+
+        //note this will glitch if you try and reset inside of start screen
+        ModeNormalPlay.slide_image(mFlatCamera, null, mRTImage, false);
+
+        start_configuration_display();
     }
 	
 	public void start_configuration_display()
-      	{
+    {
         EnableDepthWarning = false;
-		
-		//fade in
-		TED.add_event(fade_in,0);
-		
-		NewMenuReferenceBehaviour refs = mManager.mNewRef;
-		//mPWLogo = new FlatElementText(refs.genericFont,130,"P e r f e c t  W o m a n",1);
-		//mPWLogo.HardPosition = mFlatCamera.Center + new Vector3(0,250,0);
-		//mPWCredits =  new FlatElementText(refs.genericFont,60,"A  G a m e  b y  P e t e r  L u  a n d  L e a  S c h \u00F6 e n f e l d e r",1);
-		//mPWCredits.HardPosition = mFlatCamera.Center + new Vector3(0,0,0);
-		//mElement.Add(mPWLogo);
-		//mElement.Add(mPWCredits);
-		
-		//logos
-        /*
-		mPWLogoImage = new FlatElementImage(refs.perfectWomanLogo,1);
-		mGLLogo = new FlatElementImage(refs.gameLabLogo,1);
-		mFilmLogo = new FlatElementImage(refs.filmAkademieLogo,1);
-		mPWLogoImage.HardPosition = mFlatCamera.get_point(Vector3.zero) + new Vector3(0,200,0);
-		mGLLogo.HardPosition = mFlatCamera.get_point(0,-0.5f) + new Vector3(mGLLogo.BoundingBox.width/2 + 50,0,0);
-		mFilmLogo.HardPosition = mFlatCamera.get_point(0,-0.5f) - new Vector3(mFilmLogo.BoundingBox.width/2 + 50,0,0);
-  */      
 
-		/*mPWLogo.Enabled = false;
-		mGLLogo.Enabled = false;
-		mFilmLogo.Enabled = false;*/
-
-        if (!GameConstants.ALLOW_NO_KINECT && mManager.mZigManager.is_reader_connected() == 0)
-        {
-            //TODO put up a KINECT REQUIRED message
-            mKinectRequiredImage = construct_flat_image("FG-1",1000);
-            mKinectRequiredImage.SoftPosition += new Vector3(0,-400,0);
-            mElement.Add(mKinectRequiredImage);
-        }
-		
-		mMessageText = new FlatElementText(refs.genericFont,60,"",1);
-		mMessageText.HardPosition = mFlatCamera.get_point(Vector3.zero) + new Vector3(0,400,0);
-
-		//TODO delete all this stuffeouou
-		/*mElement.Add(mPWLogoImage);
-		mElement.Add(mGLLogo);
-		mElement.Add(mFilmLogo);*/
-
-		mElement.Add(mMessageText);
-		
-	
-		
-		
-		
 		//display logo
 		//if no kinect is found
 			//display no kinect found nonsesnse
@@ -403,7 +424,7 @@ public class TransitionCameraManager : FakeMonoBehaviour
 		//mPWLogoImage.destroy();
 		//mGLLogo.destroy();
 		//mFilmLogo.destroy();
-		mFlatCamera.Camera.clearFlags = CameraClearFlags.Depth;
+		mFlatCamera.Camera.clearFlags = CameraClearFlags.Depth; //I don't know why this is here
 
 		//because it got destoryed at the step above
 		initialize_depth_warning();
@@ -435,10 +456,22 @@ public class TransitionCameraManager : FakeMonoBehaviour
 		}
 
         mManager.mGameManager.start_game(charIndex);
-        destroy_configuration_display();
+        
+        //destroy_configuration_display();
 
 		return true;
 	}
+
+    void game_event_listener(string name, object[] args)
+    {
+        if (name == "NEW CHARACTER")
+        {
+            //if ((CharacterIndex)args[0] == CharacterIndex.sFetus)
+            {
+                ModeNormalPlay.slide_image(mFlatCamera, mRTImage, null, false);
+            }
+        }
+    }
 
     //TODO DELETE we no longer fade
 	public void fade_in_with_sound()
@@ -483,5 +516,7 @@ public class TransitionCameraManager : FakeMonoBehaviour
 		//mSunShafts.sunShaftIntensity = (1-l)*0 + l*MAX_FADE;
 		return l>=1;
 	}
+
+
 }
 
