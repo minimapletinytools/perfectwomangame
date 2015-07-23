@@ -356,51 +356,5 @@ public class TransitionCameraManager : FakeMonoBehaviour
             }
         }
     }
-
-    //TODO DELETE we no longer fade
-	public void fade_in_with_sound()
-	{
-		TED.add_one_shot_event(
-			delegate(){ 
-				mManager.mMusicManager.play_sound_effect("transitionIn"); 
-			}
-		).then(
-			fade_in,
-		0);
-	}
-
-    //TODO DELETE we no longer fade
-	public void fade_out_with_sound(System.Action aFadeCompleteCb)
-	{
-			
-		TED.add_one_shot_event(
-			delegate(){ 
-				float delay = GameConstants.fadingTime-mManager.mMusicManager.get_sound_clip("transitionOut").length;
-				if(delay < 0) delay = 0; 
-				TED.add_one_shot_event( //too bad we don't have awesome branching event chain
-					delegate(){ mManager.mMusicManager.play_sound_effect("transitionOut"); },
-				delay);
-			}
-		).then(
-			fade_out,
-        0).then_one_shot(
-			delegate(){ aFadeCompleteCb(); }
-		);
-	}
-	
-    bool fade_in(float time)
-	{
-		float l = (time/GameConstants.fadingTime);
-		//mSunShafts.sunShaftIntensity = (1-l)*MAX_FADE + l*0;
-		return l>=1;
-	}
-	bool fade_out(float time)
-	{
-		float l = (time/GameConstants.fadingTime);
-		//mSunShafts.sunShaftIntensity = (1-l)*0 + l*MAX_FADE;
-		return l>=1;
-	}
-
-
 }
 

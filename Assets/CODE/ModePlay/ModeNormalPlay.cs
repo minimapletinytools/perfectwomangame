@@ -286,7 +286,6 @@ public class ModeNormalPlay
 				transition_to_PLAY();
 				break;
 		}
-		mManager.mTransitionCameraManager.fade_in_with_sound();
 	}
 	
 	public static void draw_render_texture(FlatCameraManager aCam)
@@ -768,12 +767,7 @@ public class ModeNormalPlay
 
         mManager.mMetaManager.UnlockManager.game_finished(mPerformanceStats);
 
-		mSunsetManager.set_for_GRAVE(mPerformanceStats, 
-			delegate()
-			{
-				mManager.mTransitionCameraManager.fade_out_with_sound(mManager.restart_game);
-			}
-		);
+		mSunsetManager.set_for_GRAVE(mPerformanceStats, delegate(){});
 	}
 
 
