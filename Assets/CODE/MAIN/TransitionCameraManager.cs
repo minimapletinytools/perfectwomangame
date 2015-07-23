@@ -80,6 +80,9 @@ public class TransitionCameraManager : FakeMonoBehaviour
 	
 	public override void Start()
 	{
+        mManager.GameEventDistributor += game_event_listener;
+
+        //setup flat camera
 		mFlatCamera = new FlatCameraManager(new Vector3(10000, 10000, 0), 9);
 		mFlatCamera.Camera.depth = 101; //we want this on top always
 		//mFlatCamera.Camera.clearFlags = CameraClearFlags.SolidColor;
@@ -87,23 +90,6 @@ public class TransitionCameraManager : FakeMonoBehaviour
 		mFlatCamera.Camera.backgroundColor = new Color32(37,37,37,255);
 		mFlatCamera.fit_camera_to_screen(true);
 		
-        //TODO Find XBONE Replacement
-        /*
-        SunShafts shafts = ((GameObject)GameObject.Instantiate(mManager.mReferences.mImageEffectsPrefabs)).GetComponent<SunShafts>();
-		mSunShafts = mFlatCamera.Camera.gameObject.AddComponent<SunShafts>();
-		mSunShafts.maxRadius = shafts.maxRadius;
-		mSunShafts.radialBlurIterations = shafts.radialBlurIterations;
-		mSunShafts.resolution = shafts.resolution;
-		mSunShafts.screenBlendMode = shafts.screenBlendMode;
-		mSunShafts.simpleClearShader = shafts.simpleClearShader;
-		mSunShafts.sunColor = shafts.sunColor;
-		mSunShafts.sunShaftBlurRadius = shafts.sunShaftBlurRadius;
-		mSunShafts.sunShaftIntensity = shafts.sunShaftIntensity;
-		mSunShafts.sunShaftsShader = shafts.sunShaftsShader;
-		mSunShafts.useDepthTexture = shafts.useDepthTexture;
-		mSunShafts.useSkyBoxAlpha = shafts.useSkyBoxAlpha;
-		//???mSunShafts.sunTransform = shafts.sunTransform;
-		*/
 
         //setup RT camera
         mRTCamera = new FlatCameraManager(new Vector3(10000, -6000, 0), 10);
@@ -116,13 +102,10 @@ public class TransitionCameraManager : FakeMonoBehaviour
         ModeNormalPlay.slide_image(mFlatCamera, null, mRTImage, false,true);
         mElement.Add(mRTImage);
         
-		
-
+        //this is seen by main flat camera and not RT camera FYI
         initialize_depth_warning();
-		mManager.mAssetLoader.new_load_asset_bundle("START",delegate(AssetBundle aBundle){start_screen_loaded_callback(aBundle,"START");});
 
-        mManager.GameEventDistributor += game_event_listener;
-		
+		mManager.mAssetLoader.new_load_asset_bundle("START",delegate(AssetBundle aBundle){start_screen_loaded_callback(aBundle,"START");});
 	}
 	
 
@@ -144,12 +127,6 @@ public class TransitionCameraManager : FakeMonoBehaviour
 		
 		mElement.Add(mDepthImage);
 		mElement.Add(mDepthWarningText);
-
-        //CAN DELETE
-        //color image for testing
-        //mColorImage = new FlatElementImage(null, new Vector2(300, 300), 123);
-        //mColorImage.HardPosition = mFlatCamera.Center;
-        //mElement.Add(mColorImage);
 	}
 	
 	public bool EnableDepthWarning{
@@ -235,9 +212,6 @@ public class TransitionCameraManager : FakeMonoBehaviour
 	{
 		mBundle = aBundle;
 
-		
-		//TED.add_event(fade_in,0);
-		
 		CharacterLoader loader = new CharacterLoader();
         loader.complete_load_character(aBundle,aBundleName);
 		mLoader = loader;
@@ -263,32 +237,8 @@ public class TransitionCameraManager : FakeMonoBehaviour
 			
 		}
 
-        //CAN DELETE, we no longer want to unload this because of soft reset
-		//mManager.mCharacterBundleManager.add_bundle_to_unload(mBundle);
-
-
         
         NewMenuReferenceBehaviour refs = mManager.mNewRef;
-        //mPWLogo = new FlatElementText(refs.genericFont,130,"P e r f e c t  W o m a n",1);
-        //mPWLogo.HardPosition = mRTCamera.Center + new Vector3(0,250,0);
-        //mPWCredits =  new FlatElementText(refs.genericFont,60,"A  G a m e  b y  P e t e r  L u  a n d  L e a  S c h \u00F6 e n f e l d e r",1);
-        //mPWCredits.HardPosition = mRTCamera.Center + new Vector3(0,0,0);
-        //mElement.Add(mPWLogo);
-        //mElement.Add(mPWCredits);
-
-        //logos
-        /*
-		mPWLogoImage = new FlatElementImage(refs.perfectWomanLogo,1);
-		mGLLogo = new FlatElementImage(refs.gameLabLogo,1);
-		mFilmLogo = new FlatElementImage(refs.filmAkademieLogo,1);
-		mPWLogoImage.HardPosition = mRTCamera.get_point(Vector3.zero) + new Vector3(0,200,0);
-		mGLLogo.HardPosition = mRTCamera.get_point(0,-0.5f) + new Vector3(mGLLogo.BoundingBox.width/2 + 50,0,0);
-		mFilmLogo.HardPosition = mRTCamera.get_point(0,-0.5f) - new Vector3(mFilmLogo.BoundingBox.width/2 + 50,0,0);
-        */
-
-        /*mPWLogo.Enabled = false;
-        mGLLogo.Enabled = false;
-        mFilmLogo.Enabled = false;*/
 
         if (!GameConstants.ALLOW_NO_KINECT && mManager.mZigManager.is_reader_connected() == 0)
         {
@@ -301,47 +251,23 @@ public class TransitionCameraManager : FakeMonoBehaviour
         mMessageText = new FlatElementText(refs.genericFont, 60, "", 1);
         mMessageText.HardPosition = mRTCamera.get_point(Vector3.zero) + new Vector3(0, 400, 0);
 
-        //TODO delete all this stuffeouou
-        /*mElement.Add(mPWLogoImage);
-        mElement.Add(mGLLogo);
-        mElement.Add(mFilmLogo);*/
-
         mElement.Add(mMessageText);
-		
-	
-		
-        
+
         start_configuration_display();
 
 	}
 
     public void reload()
     {
-        //destroy_configuration_display();
-        //start_screen_loaded_callback(mBundle, "START");   
 
         //note this will glitch if you try and reset inside of start screen
         ModeNormalPlay.slide_image(mFlatCamera, null, mRTImage, false);
-
         start_configuration_display();
     }
 	
 	public void start_configuration_display()
     {
         EnableDepthWarning = false;
-
-		//display logo
-		//if no kinect is found
-			//display no kinect found nonsesnse
-			//mManager.mZigManager.is_reader_connected()
-		//if kinect is found and five seconds elapsed, fade in depth image
-		//if user is not found prompt stand in front of the kinect so the knicet sees all of you
-		//if 3 seconds elapsed and user is found, 1 sec GOOD, center in camera
-		//if 3 second elapsed and user is near center, 1 sec GOOD, make a t pose
-		//if 3 seconds elapesed and user is in tpose, 1 sec GOOD, begin fadeout
-			//on fadeoutcb, move depth image to lower left corner	
-		//mManager.mZigManager.DepthView.set_full(true);
-		
 		
 		int dState = 0; //0-started, 1-kinect not found
 		TED.add_event(
@@ -377,18 +303,6 @@ public class TransitionCameraManager : FakeMonoBehaviour
     bool can_start(float aTime)
     {
 
-        /*TODO CAN DELETE
-        if (KeyMan.GetKeyDown("LeftThumbstick"))
-        {
-            ManagerManager.Log("EVTS: " + mManager.mCharacterBundleManager.is_initial_loaded() + " " + 
-                               mManager.mZigManager.ZgInterface.can_start() + " " +
-                               mManager.mMetaManager.SaveDataRead + " " + 
-                               ((aTime > 5 && mManager.mZigManager.has_user()) ||
-             KeyMan.GetKey("HardSkip") || KeyMan.GetKey("SoftSkip") ||
-             GameConstants.FORCE_START));
-        }*/
-
-
         /*
         mManager.mDebugString = (GameConstants.ALLOW_NO_KINECT + " " + mManager.mZigManager.is_reader_connected() + " " +
                                  mManager.mCharacterBundleManager.is_initial_loaded() + " " +
@@ -411,34 +325,6 @@ public class TransitionCameraManager : FakeMonoBehaviour
             GameConstants.FORCE_START);
     }
 	
-	public void destroy_configuration_display()
-	{
-
-		foreach(var e in mElement)
-			e.destroy();
-        mElement.Clear();
-
-		//we assume things have faded already so we can just destroy
-		//mPWLogo.destroy();
-		//mPWCredits.destroy();
-		//mPWLogoImage.destroy();
-		//mGLLogo.destroy();
-		//mFilmLogo.destroy();
-		mFlatCamera.Camera.clearFlags = CameraClearFlags.Depth; //I don't know why this is here
-
-		//because it got destoryed at the step above
-		initialize_depth_warning();
-
-
-        //CAN DELETE, we no longer want to unload this bundle because we do soft resets
-        if (mBundle != null)
-        {
-            //mManager.mCharacterBundleManager.unload_bundle(mBundle);
-            //mBundle = null;
-        }
-	}
-	
-
 
 	public bool go_to_play()
 	{
@@ -456,8 +342,6 @@ public class TransitionCameraManager : FakeMonoBehaviour
 		}
 
         mManager.mGameManager.start_game(charIndex);
-        
-        //destroy_configuration_display();
 
 		return true;
 	}
