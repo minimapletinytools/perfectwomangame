@@ -1,4 +1,26 @@
-::XBONEMENU::
+::TODO FOR LEA::
+-compile list of festivals we've shown at that aren't on the website
+-nicer splash screen 1920x1080
+-icons for each of the achievements 1920x1080. 
+	-you can see in the images that I use the splash screen image for now which I don't think looks very nice.
+	-I don't think you need to make custom artwork for each one, maybe something generic with different colors for each achievement
+	-achievements:
+		-10 lives
+		-100 lives
+		-1000 lives
+		-Born
+		-Death
+		-Diversity (play every character)
+		-Gruesome Death
+		-Holistic Wisdom
+		-So many fun ways to die (10 gruesome deaths)
+		-Transcend (get astronaut)
+-create survive cutscenes for age 85 characters
+-create icon for  astronaut 
+-You are playing Perfect Woman as ________
+	-this is required by XR, it can be a bubble thingy that pops up in the upper left hand corner of the screen. It should have a space to fill in the name of the play as text.
+-A Kinect is required to play. Please make sure your Kinect is connected. (for PC build, not needed for xb1)
+	-this shows up in the middle of the title screen on PC/OSX if you don't have a kinect plugged in.
 
 ::USER PLAN::
 -storage needs to be user specific, reload on user change
@@ -18,9 +40,19 @@
 				-or maybe give the player a chance to change back to original user, nah
 
 ::TODO2::
--solve the quarternion bug
--can not run xbone events until after a user has signed in
-	-don't send events in general unless thehre is a user signed in
+-the sexy girl neck is still broken
+DONE-still says "you died old astronaut"
+-might be a weird thingh with credits music not stopping playing if reset during grave... But I don' think this is omething IN eed to worry about
+-achivements stopped working again
+	-setup the RTA example again....
+-ask microsoft if we need to localize in game content or only marketplace stuff
+-skipping in grave scene on XB1 causes error
+-packaging/validator nonsense
+	DONE?-do a package build and test...
+	DONE-run validator
+	-run binscope
+-notify player who is playing
+-solve the quarternion bug	
 -figure out user login/logout nonsense. When to pause the game, etc.
 	-i.e. should pause on start screen if there is no user signed in
 	-what to do if user signs out in the middle of play
@@ -29,18 +61,22 @@
 -figure out start suspend resume activate events
 -clear out all achievements and test
 -finalize gamerscore on all achievements
--set rich presence string
--make sure storage is in fact storing the right thing (becaues it's probably not)
-DONE-need to reset choosing/sunset stuff to the right position on restart
-DONE-there's another AOT issue with storage
-	-try switching to xml serialization I guess
-
+-set rich presence string / test that this works
+-redo unlockables so it only uses number of characters unlocked because of stupid JIT problems that aren't worth fixing
 -make the necessary documents (Lea)
 	-read this https://developer.xboxlive.com/en-us/xdp/documentation/xdphelp/Pages/product_documents_xdpdocs.aspx
 	-game help, privacy, terms of use
 	-need draft of "Privacy" and "Terms of Use" presumably in the language of the region we are publishing in
 -on XB1, sometimes NGM.currentpose will still be null, is sit uan update order problem??? 
 	-I could also easily fix by doing a null check becaues I'm pretty sure it loads the pose after one frame
+DONE-make sure storage is in fact storing the right thing (becaues it's probably not)	
+DONE-need to add transition from title screen to fetus
+DONE-kinect stuff is backwards on xb1 again for some reason...
+DONE/IGNORE-can not run xbone events until after a user has signed in
+	-don't send events in general unless thehre is a user signed in
+DONE-need to reset choosing/sunset stuff to the right position on restart
+DONE-there's another AOT issue with storage
+	-try switching to xml serialization I guess	
 DONE-reset code broke (both on xb1 and on PC if you do it too fast), fix it
 DONE-build no longer works no OSX, POSES.unity3d wont load or maybe it's just asset bundles in general? Fuuucckkk
 
@@ -65,13 +101,6 @@ DONE-strip out depth image and strip out reward image
 DONE-disable unlockables
 
 ::TODO::
-DONE-appears all the Death event related stats do not work
-	-delete death event and create a new one I guess???
-IGNORE-ask about initializing events after restart???
-DONE-update plugins and uniyt and go over events examples..
-	-make a new sapmle project... nup5 please
-DONE-get achievements working..
-	-get plugin log to work...
 -do new play mode...
 -fix image capture on XB1 
 	-fix it...
@@ -92,7 +121,13 @@ DONE-get achievements working..
 		-ask about long thread activation time with default-diffuse
 -something to mask graphical artifacts on restart
 
-
+DONE-appears all the Death event related stats do not work
+	-delete death event and create a new one I guess???
+IGNORE-ask about initializing events after restart???
+DONE-update plugins and uniyt and go over events examples..
+	-make a new sapmle project... nup5 please
+DONE-get achievements working..
+	-get plugin log to work...
 IGNORE-check PLM stuff ,suspendingeventhandler, activationeventhandler and resource availabilityhandler (prob ok?)
 DONE-need to call defer sytem gestures during play as well dummy
 DONE-do simplified version of last collumn unlock..
