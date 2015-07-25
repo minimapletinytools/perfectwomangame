@@ -18,6 +18,8 @@ public class XboneAll {
     public int LastActiveUserId{ get; private set; }
     public bool IsSomeoneSignedIn{ get { return UsersManager.IsSomeoneSignedIn; } }
 
+    string[] stats = new string[] { "TimesBorn", "TimesGruesomeDeath" };
+
     public void Start () {
         DataPlatformPlugin.InitializePlugin(0);
         TextSystemsManager.Create();
@@ -28,6 +30,8 @@ public class XboneAll {
         PluginLogManager.Create();
         PluginLogManager.SetLogPath("G:\\plugins.log");
 
+        EventManager.Create(@"G:\Data\StreamingAssets\Events-PRFW.0-4A0A3432.man");
+        ManagerManager.Log("Events created " + EventManager.IsInitialized);
     }
 
     bool firstTime = true;
@@ -37,19 +41,57 @@ public class XboneAll {
         {
             firstTime = false;
             SanityCheckApplicationSetup();
-            
-            
-            //EventManager.Destroy(); //clean up from last time we loaded??
-            EventManager.Create(@"G:\Data\StreamingAssets\Events-PRFW.0-4A0A3432.man");
-            ManagerManager.Log("Events created " + EventManager.IsInitialized);
             AchievementsManager.OnAchievementNotification += delegate(AchievementNotification notice)
             {
                 ManagerManager.Log("Achievement unlocked " + notice.AchievementId);
             };
+            //ManagerManager.Log("successfully ran xbone initialization coroutine");
 
-            ManagerManager.Log("successfully ran xbone initialization coroutine");
+            RTAManager.CreateAsync(UsersManager.Users[0].Id, OnRTACreated);
+        }
+
+        if (KeyMan.GetKeyDown("LeftThumbstick"))
+        {
+            ManagerManager.Log("getSingle");
+            StatisticsManager.GetSingleUserStatisticsAsyncMultipleStats(UsersManager.Users[0].Id, UsersManager.Users[0].UID, ConsoleUtilsManager.PrimaryServiceConfigId(), stats,null);
         }
     }
+
+    RTA m_RTA;
+    void OnRTACreated(RTA rta)
+    {
+        if (null == rta)
+        {
+            ManagerManager.Log("ERROR: rta controller for my user could not be created!");
+            return;
+        }
+        ManagerManager.Log("RTA created");
+        rta.OnStatisticChanged += OnStatisticChanged;
+        rta.OnSubscribed += OnSubscribed;
+        foreach(var e in stats)
+            rta.SubscribeToStatistic(e);
+        m_RTA = rta;
+    }
+    void OnStatisticChanged(uint hresult, RealTimeActivityStatisticChangeEventArgs args)
+    {
+        if (args != null)
+        {
+            ManagerManager.Log("StatChange: " + args.Subscription.StatisticName + " = " + args.StatisticValue + "\n");
+        }
+    }
+
+    void OnSubscribed(uint hresult, RealTimeActivityStatisticChangeSubscription sub, string statName)
+    {
+        if (sub != null)
+        {
+            ManagerManager.Log("StatSubscribe: " + sub.StatisticName + " = " + sub.InitialStatisticValue + "\n");
+        }
+        else
+        {
+            ManagerManager.Log("SUBSCRIBE FAIL: [" + statName + "] [0x" + hresult.ToString("X8") + "]");
+        }
+    }
+
 
     
     bool SanityCheckApplicationSetup()
@@ -124,6 +166,7 @@ public class XboneAll {
         {
             ActiveUserId = UsersManager.Users [0].Id;
             LastActiveUserId = ActiveUserId;
+            NewPrimaryUserChanged();
         }
     }
     void OnUsersChanged(int id,bool wasAdded)

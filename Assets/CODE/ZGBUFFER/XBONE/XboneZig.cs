@@ -83,8 +83,7 @@ public class MicrosoftZig : ZgInterface
         //testcode
         if (KeyMan.GetKeyDown("LeftThumbstick"))
         {
-            mLog.UnityLog("test save data");
-            write_data(mZig.mManager.mMetaManager.UnlockManager.serialize(),"unlock");
+            //write_data(mZig.mManager.mMetaManager.UnlockManager.serialize(),"unlock");
 
         }
         if (KeyMan.GetKeyDown("RightThumbstick"))
@@ -93,8 +92,7 @@ public class MicrosoftZig : ZgInterface
             //ManagerManager.Log("Sent fake death event");
 
             //take_color_image();
-            mLog.UnityLog("test read data");
-            read_data("unlock",delegate(byte[] obj) { mZig.mManager.mMetaManager.UnlockManager.deserialize(obj);});
+            //read_data("unlock",delegate(byte[] obj) { mZig.mManager.mMetaManager.UnlockManager.deserialize(obj);});
         }
 
         if (initCounter == 3)
@@ -167,7 +165,7 @@ public class MicrosoftZig : ZgInterface
     }
     public void read_data(string aName, System.Action<byte[]> aResponse)
     {
-        aResponse += delegate(byte[] obj) { };// {ManagerManager.Log("read callback " + (obj == null ? " FAIL" : obj.Length.ToString()));};
+        aResponse += delegate(byte[] obj){ManagerManager.Log("read callback " + (obj == null ? " FAIL" : obj.Length.ToString()));};
         mStorage.read_data (aName,aResponse);
     }
 	

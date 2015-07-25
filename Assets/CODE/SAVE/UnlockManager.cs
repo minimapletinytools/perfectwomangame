@@ -14,10 +14,13 @@ public class Unlockables
 {
     //one option is to just replace it with an int of number characters played 
     //TODO is this what causes the JIT problem and how do I make it not JIT
+    //[System.NonSerialized]
+    [JsonIgnore]
 	public List<List<PerformanceStats> > gameHistory = new List<List<PerformanceStats>>();
 
+    public int numberGamesPlayed = 0;
 	public CharIndexContainerInt unlockedCharacters = new CharIndexContainerInt();
-	public bool skipAvail = false;
+	//public bool skipAvail = false;
 	
 	public Unlockables()
 	{
@@ -65,8 +68,8 @@ public class UnlockManager
 
 	public void game_finished(List<PerformanceStats> aStats)
 	{
-        //TODO renable
         mUnlocked.gameHistory.Add(aStats);
+        mUnlocked.numberGamesPlayed += 1;
 
         //TODO maybe consider pruning after it reaches like over 1000 playthroughs
 

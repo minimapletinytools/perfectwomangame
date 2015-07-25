@@ -34,19 +34,19 @@ public class XboneEvents{
         {
             if ((CharacterIndex)args [0] == CharacterIndex.sFetus)
             {
-                Events.SendPlayerSessionStart(UsersManager.Users [0].Id.ToString(), ref mSessionId, "", 0, 0);
+                Events.SendPlayerSessionStart(UsersManager.Users [0].UID, ref mSessionId, "", 0, 0);
             }
             if (((CharacterIndex)args [0]).LevelIndex == 1)
             {
                 //Debug.Log("BORN EVENT");
                 ManagerManager.Log("BORN EVENT");
-                Events.SendBorn(UsersManager.Users [0].Id.ToString(), ref mSessionId);
+                Events.SendBorn(UsersManager.Users [0].UID, ref mSessionId);
             }
             if ((CharacterIndex)args [0] == CharacterIndex.sOneHundred)
             {
                 //Debug.Log("TRANSCEND EVENT");
                 ManagerManager.Log("TRANSCEND EVENT");
-                Events.SendTranscend(UsersManager.Users [0].Id.ToString(), ref mSessionId);
+                Events.SendTranscend(UsersManager.Users [0].UID, ref mSessionId);
 
             }
         }
@@ -56,18 +56,18 @@ public class XboneEvents{
             ManagerManager.Log("DEATH EVENT " + (gruesome ? "GRUESOME" : "NORMAL"));
 
             Events.SendPassing(
-                UsersManager.Users [0].Id.ToString(),
+                UsersManager.Users [0].UID,
                 ref mSessionId, 
                 (int)mManager.mGameManager.mModeNormalPlay.TotalScore);
 
             if(gruesome)
                 Events.SendGruesomePassing(
-                    UsersManager.Users [0].Id.ToString(),
+                    UsersManager.Users [0].UID,
                     ref mSessionId,
                     mManager.mGameManager.mModeNormalPlay.CurrentPerformanceStat.Character.Index);
 
             Events.SendGameProgress(
-                UsersManager.Users [0].Id.ToString(),
+                UsersManager.Users [0].UID,
                 ref mSessionId,
                 mManager.mMetaManager.UnlockManager.get_unlocked_characters().Count/27f,
                 mManager.mMetaManager.UnlockManager.get_unlocked_characters().Count);
@@ -77,21 +77,21 @@ public class XboneEvents{
         if (name == "START")
         {
             //this is done elsewhere now since START event may happen before there are any users
-            //Events.SendPlayerSessionStart(UsersManager.Users [0].Id.ToString(), ref mSessionId, "", 0, 0);
+            //Events.SendPlayerSessionStart(UsersManager.Users [0].UID, ref mSessionId, "", 0, 0);
         }
 
         if (name == "PAUSE")
         {
-            Events.SendPlayerSessionPause(UsersManager.Users [0].Id.ToString(), ref mSessionId, "");
+            Events.SendPlayerSessionPause(UsersManager.Users [0].UID, ref mSessionId, "");
         }
         if (name == "RESUME")
         {
-            Events.SendPlayerSessionResume(UsersManager.Users [0].Id.ToString(), ref mSessionId, "", 0, 0);
+            Events.SendPlayerSessionResume(UsersManager.Users [0].UID, ref mSessionId, "", 0, 0);
         }
 
         if (name == "TERMINATE")
         {
-            Events.SendPlayerSessionEnd(UsersManager.Users [0].Id.ToString(), ref mSessionId, "", 0, 0,0);
+            Events.SendPlayerSessionEnd(UsersManager.Users [0].UID, ref mSessionId, "", 0, 0,0);
         }
     }
 
@@ -100,10 +100,10 @@ public class XboneEvents{
     {
         ManagerManager.Log("Sending DEATH and BORN event");
 
-        Events.SendBorn(UsersManager.Users [0].Id.ToString(), ref mSessionId);
+        Events.SendBorn(UsersManager.Users [0].UID, ref mSessionId);
 
         Events.SendPassing(
-            UsersManager.Users [0].Id.ToString(),
+            UsersManager.Users [0].UID,
             ref mSessionId, 
             (int)mManager.mGameManager.mModeNormalPlay.TotalScore);
     
@@ -113,7 +113,7 @@ public class XboneEvents{
     public void Update(){
         if (KeyMan.GetKeyDown("LeftThumbstick"))
         {
-            /*StatisticsManager.GetSingleUserStatisticsAsync(UsersManager.Users [0].Id,UsersManager.Users [0].Id.ToString(),"f3530100-c251-40ff-9d13-078c4a0a3432","TimesBorn",delegate(UserStatisticsResult obj, UnityAOT.GetObjectAsyncOp<UserStatisticsResult> op) {
+            /*StatisticsManager.GetSingleUserStatisticsAsync(UsersManager.Users [0].Id,UsersManager.Users [0].UID,"f3530100-c251-40ff-9d13-078c4a0a3432","TimesBorn",delegate(UserStatisticsResult obj, UnityAOT.GetObjectAsyncOp<UserStatisticsResult> op) {
                 ManagerManager.Log("stat callback " + op.Success.ToString() + " " + op.IsComplete + " " + obj.Length); 
                foreach(var e in obj)
                 {
