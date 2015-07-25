@@ -166,7 +166,7 @@ public class ModeNormalPlay
 		mChoosingManager.mFlatCamera.set_render_texture_mode(true);
 		
 		mFlatCamera = new FlatCameraManager(new Vector3(-23200,3500,0),10);
-		mFlatCamera.Camera.depth = 98;
+		mFlatCamera.Camera.depth = 100;
 		mFlatCamera.fit_camera_to_screen();
 		
 		mSunsetImage = new FlatElementImage(mSunsetManager.mFlatCamera.RT,0);
@@ -767,7 +767,7 @@ public class ModeNormalPlay
 
         mManager.mMetaManager.UnlockManager.game_finished(mPerformanceStats);
 
-		mSunsetManager.set_for_GRAVE(mPerformanceStats, delegate(){});
+        mSunsetManager.set_for_GRAVE(mPerformanceStats, delegate() { mManager.restart_game(); });
 	}
 
 
