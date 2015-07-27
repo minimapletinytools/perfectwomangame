@@ -1,9 +1,10 @@
 ::TODO FOR LEA::
 -compile list of festivals we've shown at that aren't on the website
--nicer splash screen 1920x1080
+-redo splash screen 1920x1080
+-maybe redo the other icons (100x100, 208x208, 480x480) for the game (I think they could look nicer). Anyhow, I included images of where these icons show up so you can judge for yourself.
 -icons for each of the achievements 1920x1080. 
 	-you can see in the images that I use the splash screen image for now which I don't think looks very nice.
-	-I don't think you need to make custom artwork for each one, maybe something generic with different colors for each achievement
+	-I don't think you need to make custom artwork for each one, maybe something generic with different colors for each achievement, this would also make it easy for us to add the graphics for other achievements later on if we choose to add them.
 	-achievements:
 		-10 lives
 		-100 lives
@@ -40,27 +41,19 @@
 				-or maybe give the player a chance to change back to original user, nah
 
 ::TODO2::
--the sexy girl neck is still broken
-DONE-still says "you died old astronaut"
+-fix achievements that depend on number characters played/unlocked (need to mess around with save file again UGGG stupid AOT)
+-UsersManager.FindUserByTrackingId if you need to connect kinect user with player
+-make duplicate of ggfiles, one for  XB1 and one for PC
 -might be a weird thingh with credits music not stopping playing if reset during grave... But I don' think this is omething IN eed to worry about
--achivements stopped working again
-	-setup the RTA example again....
 -ask microsoft if we need to localize in game content or only marketplace stuff
 -skipping in grave scene on XB1 causes error
 -packaging/validator nonsense
 	DONE?-do a package build and test...
 	DONE-run validator
 	-run binscope
--notify player who is playing
 -solve the quarternion bug	
--figure out user login/logout nonsense. When to pause the game, etc.
-	-i.e. should pause on start screen if there is no user signed in
-	-what to do if user signs out in the middle of play
-		-restart to start screen I guess???
-		-or pause, and let them sign back in
 -figure out start suspend resume activate events
 -clear out all achievements and test
--finalize gamerscore on all achievements
 -set rich presence string / test that this works
 -redo unlockables so it only uses number of characters unlocked because of stupid JIT problems that aren't worth fixing
 -make the necessary documents (Lea)
@@ -69,6 +62,20 @@ DONE-still says "you died old astronaut"
 	-need draft of "Privacy" and "Terms of Use" presumably in the language of the region we are publishing in
 -on XB1, sometimes NGM.currentpose will still be null, is sit uan update order problem??? 
 	-I could also easily fix by doing a null check becaues I'm pretty sure it loads the pose after one frame
+
+
+DONE-rebuild START and 16-1 for XB1
+DONE-notify player who is playing
+DONE/IGNORE-figure out user login/logout nonsense. When to pause the game, etc.
+	-i.e. should pause on start screen if there is no user signed in
+	-what to do if user signs out in the middle of play
+		-restart to start screen I guess???
+		-or pause, and let them sign back in
+DONE-finalize gamerscore on all achievements	
+DONE-the sexy girl neck is still broken
+DONE-still says "you died old astronaut"
+DONE-achivements stopped working again
+	-setup the RTA example again....
 DONE-make sure storage is in fact storing the right thing (becaues it's probably not)	
 DONE-need to add transition from title screen to fetus
 DONE-kinect stuff is backwards on xb1 again for some reason...

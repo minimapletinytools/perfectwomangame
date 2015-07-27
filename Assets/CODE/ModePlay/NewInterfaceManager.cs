@@ -457,6 +457,9 @@ public class NewInterfaceManager {
 		}
 		
 		chain = chain.then_one_shot(delegate(){mLastCutsceneCompleteCb();},END_CUTSCENE_DELAY_TIME);
+
+        //TODO this is a hack fix, need to fix it properly...
+        //chain = chain.then_one_shot(delegate() { if(mLastCutsceneCompleteCb != null) mLastCutsceneCompleteCb(); }, END_CUTSCENE_DELAY_TIME);
 		
 		mLastCutsceneChain = TED.LastEventKeyAdded;
 	}
