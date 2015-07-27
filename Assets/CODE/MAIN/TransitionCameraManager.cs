@@ -39,10 +39,8 @@ public class TransitionCameraManager : FakeMonoBehaviour
 
 	//static float MAX_FADE = 30;
 	
-	
-	//render to this guy someday eventually ha ha...
-	public RenderTexture AllRenderTexture { get; private set; }
-	
+
+    public bool IsInitialized {get; private set;}
 	public TimedEventDistributor TED { get; private set; }
 	
 	
@@ -74,7 +72,6 @@ public class TransitionCameraManager : FakeMonoBehaviour
     public TransitionCameraManager(ManagerManager aManager)
         : base(aManager) 
     {
-		AllRenderTexture = new RenderTexture(Screen.width,Screen.height,16); 
 		TED = new TimedEventDistributor();
     }
 	
@@ -190,7 +187,16 @@ public class TransitionCameraManager : FakeMonoBehaviour
 		if(aName != "BACKGROUND") //this is stupid and you should make background part of the dump..
 		{
 			sizing = mLoader.Sizes.find_static_element(aName);
-			r = new FlatElementImage(mLoader.Images.staticElements[aName],sizing.Size,aDepth);
+            try
+            {
+                r = new FlatElementImage(mLoader.Images.staticElements[aName], sizing.Size, aDepth);
+            }
+            catch(System.Exception e)
+            {
+                Debug.Log("messed up on " + aName);
+                throw e;
+            }
+
 		}
 		else 
 		{
@@ -254,6 +260,8 @@ public class TransitionCameraManager : FakeMonoBehaviour
         mElement.Add(mMessageText);
 
         start_configuration_display();
+
+        IsInitialized = true;
 
 	}
 
@@ -344,6 +352,36 @@ public class TransitionCameraManager : FakeMonoBehaviour
 
 		return true;
 	}
+
+    public void you_are_playing_as(string aName)
+    {
+        NewMenuReferenceBehaviour refs = mManager.mNewRef;
+        var title = construct_flat_image("START_PLAYER", 100);
+        var text = new FlatElementText(refs.genericFont, 50, aName, 101);
+        title.HardPosition = mFlatCamera.get_point(.73f, .85f);
+        text.HardPosition = title.HardPosition - new Vector3(0,44,0);
+        title.HardColor = GameConstants.UiWhiteTransparent;
+        text.HardColor = GameConstants.UiBlueTransparent;
+        title.SoftColor = GameConstants.UiWhite;
+        text.SoftColor = GameConstants.UiBlue;
+        mElement.Add(title);
+        mElement.Add(text);
+        TED.add_one_shot_event(
+            delegate()
+            {
+                title.SoftColor = text.SoftColor = GameConstants.UiWhiteTransparent;
+            },
+        5).then_one_shot(
+            delegate()
+            {
+                title.destroy();
+                text.destroy();
+                mElement.Remove(title);
+                mElement.Remove(text);
+            },
+        5);
+    }
+
 
     void game_event_listener(string name, object[] args)
     {
