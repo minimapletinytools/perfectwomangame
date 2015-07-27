@@ -19,8 +19,9 @@ public class CharacterBundleManager : FakeMonoBehaviour {
 
 	public bool is_initial_loaded()
 	{
-		return mPosesLoaded && (mNumberMiniCharactersLoading == 0) && mImagesLoaded;
+        return mPosesLoaded && (mNumberMiniCharactersLoading == 0) && mImagesLoaded && mManager.mTransitionCameraManager.IsInitialized;
 			//&& (mManager.mGameManager.mModeNormalPlay.mSunsetManager.IsLoaded); //TODO may want to check game mode to make sure we aren't in testing or simian
+        //TODO this should check START.bundle as well?
 	}
 	
 	
