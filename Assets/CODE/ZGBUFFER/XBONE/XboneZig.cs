@@ -11,7 +11,7 @@ public class MicrosoftZig : ZgInterface
     public XboneAll mAll;
 	public XboneKinect mKinect;
 	XbonePLM mPLM;
-	XboneStorage mStorage;
+	public XboneStorage mStorage;
 	public XboneEvents mEvents; 
     XboneUnityLogPlugin mLog;
 
@@ -31,13 +31,12 @@ public class MicrosoftZig : ZgInterface
         mPLM = new XbonePLM (aZig.mManager);
 		mKinect = new XboneKinect ();
 		mStorage = new XboneStorage ();
-		mEvents = new XboneEvents (aZig.mManager);
+		mEvents = new XboneEvents ();
 
         mAll.Start();
         mLog.Start();
 		mPLM.Start ();
 		mKinect.Start ();
-		mStorage.Start ();
 		mEvents.Start();
 
 

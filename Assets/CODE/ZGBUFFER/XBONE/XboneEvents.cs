@@ -9,17 +9,14 @@ using ConsoleUtils;
 public class XboneEvents{
     public System.Guid mSessionId;
     ManagerManager mManager;
+    XboneAll mAll;
 
-    public XboneEvents(ManagerManager aManager)
+    public XboneEvents()
     {
+        mAll = MicrosoftZig.Inst.mAll;
         mSessionId = System.Guid.NewGuid();
-        mManager = aManager;
+        mManager = ManagerManager.Manager;
         mManager.GameEventDistributor += game_event_listener;
-
-        //moved to XboneALl.cs
-        //DataPlatformPlugin.InitializePlugin(0);
-        //AchievementsManager.Create();
-        //StatisticsManager.Create();
     }
 
 
@@ -34,19 +31,19 @@ public class XboneEvents{
         {
             if ((CharacterIndex)args [0] == CharacterIndex.sFetus)
             {
-                Events.SendPlayerSessionStart(UsersManager.Users [0].UID, ref mSessionId, "", 0, 0);
+                Events.SendPlayerSessionStart(mAll.LastActiveUser.UID, ref mSessionId, "", 0, 0);
             }
             if (((CharacterIndex)args [0]).LevelIndex == 1)
             {
                 //Debug.Log("BORN EVENT");
                 ManagerManager.Log("BORN EVENT");
-                Events.SendBorn(UsersManager.Users [0].UID, ref mSessionId);
+                Events.SendBorn(mAll.LastActiveUser.UID, ref mSessionId);
             }
             if ((CharacterIndex)args [0] == CharacterIndex.sOneHundred)
             {
                 //Debug.Log("TRANSCEND EVENT");
                 ManagerManager.Log("TRANSCEND EVENT");
-                Events.SendTranscend(UsersManager.Users [0].UID, ref mSessionId);
+                Events.SendTranscend(mAll.LastActiveUser.UID, ref mSessionId);
 
             }
         }
@@ -56,18 +53,18 @@ public class XboneEvents{
             ManagerManager.Log("DEATH EVENT " + (gruesome ? "GRUESOME" : "NORMAL"));
 
             Events.SendPassing(
-                UsersManager.Users [0].UID,
+                mAll.LastActiveUser.UID,
                 ref mSessionId, 
                 (int)mManager.mGameManager.mModeNormalPlay.TotalScore);
 
             if(gruesome)
                 Events.SendGruesomePassing(
-                    UsersManager.Users [0].UID,
+                    mAll.LastActiveUser.UID,
                     ref mSessionId,
                     mManager.mGameManager.mModeNormalPlay.CurrentPerformanceStat.Character.Index);
 
             Events.SendGameProgress(
-                UsersManager.Users [0].UID,
+                mAll.LastActiveUser.UID,
                 ref mSessionId,
                 mManager.mMetaManager.UnlockManager.get_unlocked_characters().Count/27f,
                 mManager.mMetaManager.UnlockManager.get_unlocked_characters().Count);
@@ -77,21 +74,21 @@ public class XboneEvents{
         if (name == "START")
         {
             //this is done elsewhere now since START event may happen before there are any users
-            //Events.SendPlayerSessionStart(UsersManager.Users [0].UID, ref mSessionId, "", 0, 0);
+            //Events.SendPlayerSessionStart(mAll.LastActiveUser.UID, ref mSessionId, "", 0, 0);
         }
 
         if (name == "PAUSE")
         {
-            Events.SendPlayerSessionPause(UsersManager.Users [0].UID, ref mSessionId, "");
+            Events.SendPlayerSessionPause(mAll.LastActiveUser.UID, ref mSessionId, "");
         }
         if (name == "RESUME")
         {
-            Events.SendPlayerSessionResume(UsersManager.Users [0].UID, ref mSessionId, "", 0, 0);
+            Events.SendPlayerSessionResume(mAll.LastActiveUser.UID, ref mSessionId, "", 0, 0);
         }
 
         if (name == "TERMINATE")
         {
-            Events.SendPlayerSessionEnd(UsersManager.Users [0].UID, ref mSessionId, "", 0, 0,0);
+            Events.SendPlayerSessionEnd(mAll.LastActiveUser.UID, ref mSessionId, "", 0, 0,0);
         }
     }
 
@@ -100,10 +97,10 @@ public class XboneEvents{
     {
         ManagerManager.Log("Sending DEATH and BORN event");
 
-        Events.SendBorn(UsersManager.Users [0].UID, ref mSessionId);
+        Events.SendBorn(mAll.LastActiveUser.UID, ref mSessionId);
 
         Events.SendPassing(
-            UsersManager.Users [0].UID,
+            mAll.LastActiveUser.UID,
             ref mSessionId, 
             (int)mManager.mGameManager.mModeNormalPlay.TotalScore);
     
@@ -113,7 +110,7 @@ public class XboneEvents{
     public void Update(){
         if (KeyMan.GetKeyDown("LeftThumbstick"))
         {
-            /*StatisticsManager.GetSingleUserStatisticsAsync(UsersManager.Users [0].Id,UsersManager.Users [0].UID,"f3530100-c251-40ff-9d13-078c4a0a3432","TimesBorn",delegate(UserStatisticsResult obj, UnityAOT.GetObjectAsyncOp<UserStatisticsResult> op) {
+            /*StatisticsManager.GetSingleUserStatisticsAsync(mAll.LastActiveUser.Id,mAll.LastActiveUser.UID,"f3530100-c251-40ff-9d13-078c4a0a3432","TimesBorn",delegate(UserStatisticsResult obj, UnityAOT.GetObjectAsyncOp<UserStatisticsResult> op) {
                 ManagerManager.Log("stat callback " + op.Success.ToString() + " " + op.IsComplete + " " + obj.Length); 
                foreach(var e in obj)
                 {
@@ -128,7 +125,7 @@ public class XboneEvents{
             /*
             //TODO DELETE
             //this is test stuff and will crash if there is no user logged on at start of game
-            var currentUser = UsersManager.Users [0];
+            var currentUser = mAll.LastActiveUser;
             ManagerManager.Log("querying for stats userid, uid, scid " + currentUser.Id + " " + currentUser.UID + " " + ConsoleUtilsManager.PrimaryServiceConfigId());;
             StatisticsManager.GetSingleUserStatisticsAsyncMultipleStats(
                 currentUser.Id, 

@@ -39,12 +39,17 @@ public class XbonePLM
 	{
 		//TODO (also make sure the boolean is correct..
         ManagerManager.Log("RESOURCES CHANGED " + aConstrained);
+
+        if(aConstrained == false && !MicrosoftZig.Inst.mAll.IsSomeoneSignedIn)
+            UsersManager.RequestSignIn(Users.AccountPickerOptions.AllowGuests);
 	}
 
 	void Resuming(double aTime)
 	{
 		//TODO check if user has changed
         ManagerManager.Log("RESUMING");
+        if(!MicrosoftZig.Inst.mAll.IsSomeoneSignedIn)
+            UsersManager.RequestSignIn(Users.AccountPickerOptions.AllowGuests);
     }
 
 	void Activation(ActivatedEventArgs args)

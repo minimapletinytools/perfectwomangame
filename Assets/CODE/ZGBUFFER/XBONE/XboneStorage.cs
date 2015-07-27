@@ -14,21 +14,11 @@ public class XboneStorage
     public bool IsStorageFail { get; private set; } 
     public bool IsWriting{get; private set;}
 
-	public void Start()
-	{
-        //if (!StorageManager.AmFullyInitialized()) //do I need this? On soft reset, one should not recreate the storage manager??
-        {
-
-            StorageManager.Create();
-            var dummy = (new GameObject("genDummy")).AddComponent<DummyBehaviour>();
-            dummy.StartCoroutine(save_thread(dummy.gameObject));
-
-
-        } //else
-        {
-            //this should never happen???
-        }
-	}
+    public void InitializeUserStorage()
+    {
+        var dummy = (new GameObject("genDummy")).AddComponent<DummyBehaviour>();
+        dummy.StartCoroutine(save_thread(dummy.gameObject));
+    }
 
 	public void write_data(byte[] aData, string aName)
 	{
@@ -82,8 +72,7 @@ public class XboneStorage
 		while (!Storage.StorageManager.AmFullyInitialized () || !MicrosoftZig.Inst.has_user())
 			yield return null;
 
-		//TODO use user ID from user manager...
-		ConnectedStorage.CreateAsync (MicrosoftZig.Inst.mAll.ActiveUserId , "main_save", 
+		ConnectedStorage.CreateAsync (MicrosoftZig.Inst.mAll.ActiveUser.Id, "main_save", 
 			delegate(ConnectedStorage storage, CreateConnectedStorageOp op) {
 				if(op.Success)
 				{
@@ -109,9 +98,6 @@ public class XboneStorage
     public bool IsStorageFail { get; private set; } 
     public bool IsWriting{get; private set;}
 
-	public void Start()
-	{
-	}
 	public void write_data(byte[] aData, string aName)
 	{
 		
