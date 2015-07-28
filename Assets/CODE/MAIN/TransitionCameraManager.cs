@@ -211,6 +211,32 @@ public class TransitionCameraManager : FakeMonoBehaviour
 	}
 
 
+    public void set_start_screen_character_transparency()
+    {
+
+        foreach (var e in mElement)
+        {
+            if (e.PrimaryGameObject.name.StartsWith("genImageObject_BG-"))
+            {
+                int chara = System.Convert.ToInt32(e.PrimaryGameObject.name.Substring(18));
+                if (mManager.mMetaManager.UnlockManager.is_unlocked(sCharOrderList[chara - 2]) != 1)
+                {
+                    e.HardShader = mManager.mReferences.mTransparentCharacaterShader;
+                    e.HardColor = //new Color(0.75f,0,0,1);
+                        //actually can't read this data yet because it's not loaded fast enough I guess...
+                        //mManager.mCharacterBundleManager.get_character_stat(sCharOrderList[i-2]).CharacterInfo.CharacterOutlineColor;
+                        //GameConstants.StartScreenLockedGray;
+                        GameConstants.UiWhiteTransparent; //completely dissapear :O
+                }
+                else
+                {
+                    e.HardShader = mManager.mReferences.mDefaultCharacterShader;
+                    e.HardColor = GameConstants.UiWhite;
+                }
+            }
+        }
+    }
+
 
 	CharacterLoader mLoader = null;
 	AssetBundle mBundle = null;
@@ -229,19 +255,10 @@ public class TransitionCameraManager : FakeMonoBehaviour
 		for(int i = 2; i < 30; i++)
 		{
 			var img = construct_flat_image("BG-"+i,30-i);
-			if(mManager.mMetaManager.UnlockManager.is_unlocked(sCharOrderList[i-2]) != 1)
-			{
-				img.HardShader = mManager.mReferences.mTransparentCharacaterShader;
-				img.HardColor = //new Color(0.75f,0,0,1);
-					//actually can't read this data yet because it's not loaded fast enough I guess...
-					//mManager.mCharacterBundleManager.get_character_stat(sCharOrderList[i-2]).CharacterInfo.CharacterOutlineColor;
-                    GameConstants.StartScreenLockedGray;
-
-			}
-
 			mElement.Add(img);
-			
 		}
+
+        set_start_screen_character_transparency();
 
         
         NewMenuReferenceBehaviour refs = mManager.mNewRef;
@@ -270,6 +287,7 @@ public class TransitionCameraManager : FakeMonoBehaviour
 
         //note this will glitch if you try and reset inside of start screen
         ModeNormalPlay.slide_image(mFlatCamera, null, mRTImage, false);
+        set_start_screen_character_transparency();
         start_configuration_display();
     }
 	
