@@ -120,7 +120,10 @@ public class SunsetManager
 		var scoreBgImage = mManager.mCharacterBundleManager.get_image("SCORELABEL");
 		FlatElementImage scoreBg = new FlatElementImage(scoreBgImage.Image,scoreBgImage.Data.Size,20);
 		scoreBg.HardPosition = mFlatCamera.get_point(0,1.5f);
+
+        //TODO this will crash if you reset during grave scene
 		scoreBg.HardPosition = mCharacters[ind].SoftPosition + new Vector3(0,400,0);
+
 		scoreText.HardPosition = scoreBg.HardPosition;
 		scoreText.SoftPosition = scoreBg.SoftPosition;
 		scoreText.Text = ""+aScore;

@@ -180,18 +180,18 @@ public class ManagerManager : MonoBehaviour{
             mGameManager.mModeNormalPlay.reset();
             mGameManager.GS = NewGameManager.GameState.NONE;
 
-            Debug.Log("unloaded current character");
+            //Debug.Log("unloaded current character");
 
             mCharacterBundleManager.cleanup();
             //Resources.UnloadUnusedAssets();
             //System.GC.Collect();
 
-            Debug.Log("GCed assets");
+            //Debug.Log("GCed assets");
 
             //mTransitionCameraManager.go_to_play(); 
             mTransitionCameraManager.reload();
 
-            Debug.Log("restarted");
+            //Debug.Log("restarted");
 
             //HARD RESET WAY
             //Application.LoadLevel(Application.loadedLevel);
