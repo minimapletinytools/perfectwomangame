@@ -39,9 +39,9 @@ public class NewGameManager : FakeMonoBehaviour
     { get; set; }
 	public PerformanceType CurrentPoseAnimation
 	{ get; set; }
-	
-	public CharacterLoader DeathCharacter //hack to store fetus death
-	{ get; set; }
+
+	//CAN DELETE
+	//public CharacterLoader DeathCharacter { get; set; } //hack to store fetus death
 	
 	QuTimer mIdleTimer = new QuTimer(0,300);
 
@@ -138,11 +138,13 @@ public class NewGameManager : FakeMonoBehaviour
 
         mManager.GameEventDistributor("NEW CHARACTER", new object[]{aCharacter.Character});
 		
-		if(aCharacter.Name == "0-1") //in this very special case, we keep the bundle to load the death cutscene
+		
+        //CAN DELETE
+        /*if(aCharacter.Name == "0-1") //in this very special case, we keep the bundle to load the death cutscene
 		{
 			DeathCharacter = aCharacter;
 			return false;
-		}
+		}*/
 		
 		return true;
 	}
