@@ -26,7 +26,7 @@ public static class UnlockRequirements
         }
         public int GetHashCode(FakeCharIndex bx)
         {
-            return bx.GetHashCode();
+            return bx.Level * 100 + bx.Choice;
         }
     }
     public class UnlockData
