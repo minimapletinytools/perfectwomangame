@@ -140,6 +140,28 @@ public class ZigFuZig : ZgInterface
 
     }
 
+    /* CAN DELETE, old save code 
+    using System.IO;
+    using System.Runtime.Serialization;
+    using System.Runtime.Serialization.Formatters.Binary;
+    void read_unlock()
+    {
+        try
+        {
+            IFormatter formatter = new BinaryFormatter();
+            Stream stream = new FileStream("gg.bin", FileMode.Open, FileAccess.Read, FileShare.Read);
+            mUnlocked = (Unlockables)formatter.Deserialize(stream);
+            stream.Close();
+        }
+        catch { } //no such file, must be first launch OR save data corrupted
+    }
+    public void write_unlock()
+    {
+        IFormatter formatter = new BinaryFormatter();
+        Stream stream = new FileStream("gg.bin", FileMode.Create, FileAccess.Write, FileShare.None);
+        formatter.Serialize(stream, mUnlocked);
+        stream.Close();
+    }*/
 
     public ZgInput ZgInput
     {

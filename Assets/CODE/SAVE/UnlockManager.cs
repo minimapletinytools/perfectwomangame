@@ -2,9 +2,6 @@ using UnityEngine;
 using System.Collections.Generic;
 using System;
 using System.Linq;
-using System.IO;
-using System.Runtime.Serialization;
-using System.Runtime.Serialization.Formatters.Binary;
 using Newtonsoft.Json;
 using System.Text;
 
@@ -14,11 +11,13 @@ public class Unlockables
 {
     //one option is to just replace it with an int of number characters played 
     //TODO is this what causes the JIT problem and how do I make it not JIT
+    //TODO DELETE, we just used numberGamesPlayed now
     //[System.NonSerialized]
     [JsonIgnore]
 	public List<List<PerformanceStats> > gameHistory = new List<List<PerformanceStats>>();
 
     public int numberGamesPlayed = 0;
+    public CharIndexContainerInt charactersPlayed = new CharIndexContainerInt();
 	public CharIndexContainerInt unlockedCharacters = new CharIndexContainerInt();
 	//public bool skipAvail = false;
 	
@@ -36,7 +35,7 @@ public class Unlockables
                 unlockedCharacters[e] = 1;
 			//else if(e.Choice < 4)
             else if(e.Choice == 3)
-				unlockedCharacters[e] = 1; //2 - locked, 1 - avail
+				unlockedCharacters[e] = 2; //2 - locked, 1 - avail
 			else
 				unlockedCharacters[e] = 1; 
 		}
@@ -45,8 +44,9 @@ public class Unlockables
 
 public class UnlockManager
 {
-	Unlockables mUnlocked;
+	public Unlockables mUnlocked;
     ManagerManager mManager;
+    public Dictionary<UnlockRequirements.FakeCharIndex, UnlockRequirements.UnlockData> unlockedThisGame = new Dictionary<UnlockRequirements.FakeCharIndex, UnlockRequirements.UnlockData>(new UnlockRequirements.FakeCharIndexComparer());
 	
     public UnlockManager(ManagerManager aManager)
 	{
@@ -54,38 +54,52 @@ public class UnlockManager
         mManager = aManager;
 		//read_unlock();
 	}
-	
+
+    public UnlockRequirements.UnlockData did_unlock_simple(CharacterIndex aChar, List<PerformanceStats> aStats)
+    {
+
+        //fake it
+        List<List<PerformanceStats>> fakeGameHistory = new List<List<PerformanceStats>>();
+        for (int i = 0; i < mUnlocked.numberGamesPlayed; i++)
+            fakeGameHistory.Add(new List<PerformanceStats>());
+
+        return UnlockRequirements.requirements[new UnlockRequirements.FakeCharIndex(aChar.LevelIndex, aChar.Choice)](aStats, fakeGameHistory);
+    }
+
     public UnlockRequirements.UnlockData did_unlock(CharacterIndex aChar,List<PerformanceStats> aStats)
     {
         //return new UnlockRequirements.UnlockData();
         return UnlockRequirements.requirements [new UnlockRequirements.FakeCharIndex(aChar.LevelIndex,aChar.Choice)](aStats, mUnlocked.gameHistory);
     }
 
-    public void unlock(CharacterIndex aIndex)
+    public void unlock(CharacterIndex aIndex, UnlockRequirements.UnlockData aData)
     {
-        mUnlocked.unlockedCharacters [aIndex] = 1;
+        mUnlocked.unlockedCharacters[aIndex] = 1;
+        unlockedThisGame[new UnlockRequirements.FakeCharIndex(aIndex)] = aData;
     }
 
 	public void game_finished(List<PerformanceStats> aStats)
 	{
+        //TODO maybe consider pruning after it reaches like over 1000 playthroughs
         mUnlocked.gameHistory.Add(aStats);
         mUnlocked.numberGamesPlayed += 1;
 
-        //TODO maybe consider pruning after it reaches like over 1000 playthroughs
-
-
+        Debug.Log("game finished, played " + mUnlocked.numberGamesPlayed);
 		foreach(CharacterIndex e in CharacterIndex.sAllCharacters)
 		{
-			if(mUnlocked.unlockedCharacters[e] != 1)
-				if(UnlockRequirements.requirements.ContainsKey(new UnlockRequirements.FakeCharIndex(e)))
-				{
-                    var msg = did_unlock(e,aStats);
-					if(msg != null)
-                        mUnlocked.unlockedCharacters[e] = 1;
-				}
+            if (mUnlocked.unlockedCharacters[e] != 1)
+            {
+                if (UnlockRequirements.requirements.ContainsKey(new UnlockRequirements.FakeCharIndex(e)))
+                {
+                    var msg = did_unlock_simple(e, aStats);
+                    if (msg != null)
+                    {
+                        Debug.Log("unlocked " + e.StringIdentifier);
+                        unlock(e,msg);
+                    }
+                }
+            }
 		}
-
-        //write_unlock();
         mManager.mZigManager.ZgInterface.write_data(serialize(),"unlock");
 	}
 
@@ -122,7 +136,7 @@ public class UnlockManager
 
     public void deserialize(byte[] aData)
     {
-        Debug.Log((new UnicodeEncoding()).GetString(aData));
+        //Debug.Log((new UnicodeEncoding()).GetString(aData));
         mUnlocked = JsonConvert.DeserializeObject<Unlockables>((new UnicodeEncoding()).GetString(aData));
 
         /* old C# serialization/deserialization, wont work on XB1 due to JIT issue
@@ -134,29 +148,6 @@ public class UnlockManager
         } catch {}
         */
     }
-
-    //TODO DELETE
-    //TODO do this through ZgInterface
-	void read_unlock()
-	{
-		try{
-			IFormatter formatter = new BinaryFormatter();
-			Stream stream = new FileStream("gg.bin", FileMode.Open, FileAccess.Read, FileShare.Read);
-			mUnlocked = (Unlockables) formatter.Deserialize(stream);
-			stream.Close();
-		} catch {} //no such file, must be first launch OR save data corrupted
-	}
-
-    //TODO DELETE
-    //TODO do this through ZgInterface
-	public void write_unlock()
-	{
-		IFormatter formatter = new BinaryFormatter();
-		Stream stream = new FileStream("gg.bin", FileMode.Create, FileAccess.Write, FileShare.None);
-		formatter.Serialize(stream, mUnlocked);
-		stream.Close();
-		
-	}
 	
 	public int is_unlocked(CharacterIndex aIndex)
 	{
