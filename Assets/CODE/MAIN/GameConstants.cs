@@ -5,15 +5,25 @@ using System.Linq;
 public static class GameConstants
 {
     //XB1 specific stuff
-    #if UNITY_XBOXONE
+#if UNITY_XBOXONE
     public static bool ALLOW_NO_KINECT = true;
     public static bool XB1 = true;
-    #else
+    public static int IDLE_RESTART_TIME = 9999999;
+#else
     public static bool ALLOW_NO_KINECT = true;
     public static bool XB1 = false;
-    #endif
+    public static int IDLE_RESTART_TIME = 300;
+#endif
 
 
+
+#if UNITY_XBOXONE && !UNITY_EDITOR
+    public static string assetBundlePrefix = "/StreamingAssets/XB1/";
+#elif UNITY_EDITOR
+    public static string assetBundlePrefix = "/StreamingAssets/";
+#else
+    public static string assetBundlePrefix = "/Resources/Data/StreamingAssets/";
+#endif
 
 	//TODO only change this when you're about to load up simian mode
 	//I didn't do the conversion properly on all the classes so it's a super bad half assed change
@@ -124,15 +134,6 @@ public static class GameConstants
 	
 	public static Color TransparentBodyDefaultColor {get {return new Color(0,0.317f,.898f,1);}}
     public static Color StartScreenLockedGray {get{return new Color(0,0,0,.2f);}}
-	
-
-#if UNITY_XBOXONE && !UNITY_EDITOR
-    public static string assetBundlePrefix = "/StreamingAssets/XB1/";
-#elif UNITY_EDITOR
-    public static string assetBundlePrefix = "/StreamingAssets/";
-#else
-    public static string assetBundlePrefix = "/Resources/Data/StreamingAssets/";
-#endif
 
 
 	//TODO DELETE

@@ -43,7 +43,7 @@ public class NewGameManager : FakeMonoBehaviour
 	//CAN DELETE
 	//public CharacterLoader DeathCharacter { get; set; } //hack to store fetus death
 	
-	QuTimer mIdleTimer = new QuTimer(0,300);
+	QuTimer mIdleTimer = new QuTimer(0,GameConstants.IDLE_RESTART_TIME);
 
 	
 	ModeTesting mModeTesting;
@@ -182,8 +182,11 @@ public class NewGameManager : FakeMonoBehaviour
 			if(!mManager.mZigManager.has_user() && mManager.mZigManager.is_reader_connected() == 2)
 				mIdleTimer.update(Time.deltaTime);
 			else mIdleTimer.reset();
-			if(mIdleTimer.isExpired())
-				mManager.restart_game();
+            if (mIdleTimer.isExpired())
+            {
+                mIdleTimer.reset();
+                mManager.restart_game();
+            }
 		}
 	}
 	
