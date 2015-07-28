@@ -121,8 +121,9 @@ public class SunsetManager
 		FlatElementImage scoreBg = new FlatElementImage(scoreBgImage.Image,scoreBgImage.Data.Size,20);
 		scoreBg.HardPosition = mFlatCamera.get_point(0,1.5f);
 
-        //TODO this will crash if you reset during grave scene
-		scoreBg.HardPosition = mCharacters[ind].SoftPosition + new Vector3(0,400,0);
+        //SLOPPY, restart will clear out all characters but the TED will still be running and calling this function which will crash here
+        if(mCharacters.Count > ind)
+		    scoreBg.HardPosition = mCharacters[ind].SoftPosition + new Vector3(0,400,0);
 
 		scoreText.HardPosition = scoreBg.HardPosition;
 		scoreText.SoftPosition = scoreBg.SoftPosition;
@@ -675,7 +676,7 @@ public class SunsetManager
 						).then_one_shot(
 							delegate()
 							{
-								if(npo != null)
+								if(npo != null && !npo.IsDestroyed) //if we used softskip, npo could be destroyed at this point
 								{
 									npo.Text = conText.Last();
 									mCharacters[char_to_list_index(ps.Character)].Events.add_event(jiggleDelegate,0);
