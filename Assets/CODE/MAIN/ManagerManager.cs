@@ -191,7 +191,7 @@ public class ManagerManager : MonoBehaviour{
             //mTransitionCameraManager.go_to_play(); 
             mTransitionCameraManager.reload();
 
-            //Debug.Log("restarted");
+            ManagerManager.Log("restarted");
 
             //HARD RESET WAY
             //Application.LoadLevel(Application.loadedLevel);

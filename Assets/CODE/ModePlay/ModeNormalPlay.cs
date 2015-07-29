@@ -762,6 +762,7 @@ public class ModeNormalPlay
 
         mManager.mMetaManager.UnlockManager.game_finished(mPerformanceStats);
 
+        //TODO this will double restart if you force restart after grave
         mSunsetManager.set_for_GRAVE(mPerformanceStats, delegate() { mManager.restart_game(); });
 	}
 

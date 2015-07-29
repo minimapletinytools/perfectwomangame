@@ -723,7 +723,7 @@ public class SunsetManager
             if (mManager.mMetaManager.UnlockManager.unlockedThisGame.TryGetValue(new UnlockRequirements.FakeCharIndex(e), out unlockData))
 			{
 				if(unlockData != null){
-                    Debug.Log("announcing unlock " + e.StringIdentifier);
+                    ManagerManager.Log("announcing unlock " + e.StringIdentifier);
 					CharacterIndex ce = new CharacterIndex(e);
 					chain = chain.then_one_shot(
 						delegate(){

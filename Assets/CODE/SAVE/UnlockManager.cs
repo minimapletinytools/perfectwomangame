@@ -84,7 +84,7 @@ public class UnlockManager
         mUnlocked.gameHistory.Add(aStats);
         mUnlocked.numberGamesPlayed += 1;
 
-        Debug.Log("game finished, played " + mUnlocked.numberGamesPlayed);
+        ManagerManager.Log("game finished, played " + mUnlocked.numberGamesPlayed);
 		foreach(CharacterIndex e in CharacterIndex.sAllCharacters)
 		{
             if (mUnlocked.unlockedCharacters[e] != 1)
@@ -94,7 +94,7 @@ public class UnlockManager
                     var msg = did_unlock_simple(e, aStats);
                     if (msg != null)
                     {
-                        Debug.Log("unlocked " + e.StringIdentifier);
+                        ManagerManager.Log("unlocked " + e.StringIdentifier);
                         unlock(e,msg);
                     }
                 }

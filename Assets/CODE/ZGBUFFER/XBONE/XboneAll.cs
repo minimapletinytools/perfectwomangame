@@ -64,10 +64,11 @@ public class XboneAll {
 
         if (!IsActiveUserInitialized && ManagerManager.Manager.mCharacterBundleManager.is_initial_loaded() && IsSomeoneSignedIn)
         {
-
+            //users
             ActiveUser = UsersManager.Users[0];
             LastActiveUser = ActiveUser;
 
+            //title screen
             ManagerManager.Log("User Initialized " + ActiveUser.GameDisplayName);
             ManagerManager.Manager.mTransitionCameraManager.you_are_playing_as(ActiveUser.GameDisplayName);
 
