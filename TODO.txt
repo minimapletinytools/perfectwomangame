@@ -40,13 +40,27 @@
 			-if different user restart game?? (XR 116)
 				-or maybe give the player a chance to change back to original user, nah
 
+::PRE-CERT TODO
+-fix storage and enable character unlocking
+-enable character unlocking achievements
+-disable all debug messages
+-test the game a few times through!
+	-test user login/logout scenarios
+	-test achievements
+	-maybe go through the cert program tests
+
 ::TODO2::
+-double restart if you force restart on 
+	-ModeNormalPlay.cs mSunsetManager.set_for_GRAVE(mPerformanceStats, delegate() { mManager.restart_game(); }); 
+-optional cert yo
 -fix achievements that depend on number characters played/unlocked (need to mess around with save file again UGGG stupid AOT)
 -UsersManager.FindUserByTrackingId if you need to connect kinect user with player
 -make duplicate of ggfiles, one for  XB1 and one for PC
 -might be a weird thingh with credits music not stopping playing if reset during grave... But I don' think this is omething IN eed to worry about
 -ask microsoft if we need to localize in game content or only marketplace stuff
--skipping in grave scene on XB1 causes error
+-skipping/resetting in grave scene on XB1 causes error
+	-it's when you soft skip on the two part text bubbles I think, it will then try to chnage the text on a non existent text bubble, you can solve this just by testing if it's null or not.
+	-some of the TED stuff is not given a chance to finish on reset and causes problems
 -packaging/validator nonsense
 	DONE?-do a package build and test...
 	DONE-run validator
@@ -62,8 +76,28 @@
 	-need draft of "Privacy" and "Terms of Use" presumably in the language of the region we are publishing in
 -on XB1, sometimes NGM.currentpose will still be null, is sit uan update order problem??? 
 	-I could also easily fix by doing a null check becaues I'm pretty sure it loads the pose after one frame
+-get new events implemented and contact IDDS about certification
+-contact PEGI and ESRB about ratings
+-gloss over TLA
+-reply to mattia
 
 
+DONE-title screen will randomly crash if you leave it running for too long???
+DONE-fetus is not being loaded because it is being stored as death character, I'm not even sure what is fetus death scene wtf???
+	-pretty sure you can just get rid of this
+DONE-get build to work on U5 again... uggg
+	-get rid of storage and RTA errors
+	DONE-figure out why load time is so long
+	DONE-rebuild all bundles
+	DONE-game wont start anymore :(
+DONE-submit to PLAY15
+DONE-finish FOST submission
+DONE-start achievement list thread for lea
+	-include hero score, gamer score and RTA
+DONE-get script from lea, shoot and edit the video
+IGNORE-do FOST submission for PW
+	IGNORE-need to fix death cutscene to astronaut stuff (or not)
+	DONE-make playthrough video and have lea voice it
 DONE-rebuild START and 16-1 for XB1
 DONE-notify player who is playing
 DONE/IGNORE-figure out user login/logout nonsense. When to pause the game, etc.
