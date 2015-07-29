@@ -65,7 +65,7 @@ public static class GameConstants
 	//game stuff
 	public static float maxGradeNorm = 13f; //18 is good for final version, 16 for festival
 	public static float minGradeNorm = 3f;	//use 1.5f for final 
-    public static float astronautCutoff = 0; //eventually something like .6f
+    public static float astronautCutoff = .6f; //eventually something like .6f
 	public static float playSuperCutoff = 0.9f;
 	public static float playFeverCutoff = 0.7f;
 	public static float playFeverRequiredTime = 5f;

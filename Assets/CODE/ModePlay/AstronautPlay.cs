@@ -10,6 +10,8 @@ public class AstronautPlay
     List<GameObject> mAsteroids = new List<GameObject>();
     Dictionary<ZgJointId,GameObject> mParts = new Dictionary<ZgJointId, GameObject>();
 
+    Vector3 mStartingPos;
+
     public AstronautPlay(ModeNormalPlay aMode)
     {
         mMode = aMode;
@@ -43,6 +45,8 @@ public class AstronautPlay
 
             mParts[e].transform.position = mMode.NGM.mManager.mBodyManager.mFlat.mParts[ZgJointId.Head].transform.position;
         }
+
+        mStartingPos = mMode.NGM.mManager.mBodyManager.mFlat.SoftPosition;
     }
 
     public void spawn_asteroid(Vector3 aPos, Vector3 aVel)
@@ -90,11 +94,28 @@ public class AstronautPlay
     {
         //mSimian.update(mMode.NGM.mManager.mProjectionManager);
 
+        //move the bodies
+        Vector3 netVel = Vector3.zero;
         foreach (var e in mParts)
         {
-            e.Value.GetComponent<Rigidbody>().MovePosition(mMode.NGM.mManager.mBodyManager.mFlat.mParts[e.Key].transform.position);
+            var rb = e.Value.GetComponent<Rigidbody>();
+            netVel += rb.velocity;
         }
 
+        //TODO make this work
+        //mMode.NGM.mManager.mBodyManager.mFlat.SoftPosition += (mStartingPos - mMode.NGM.mManager.mBodyManager.mFlat.SoftPosition) * 0.05f;
+        //mMode.NGM.mManager.mBodyManager.mFlat.SoftPosition += netVel * Time.deltaTime; 
+        
+
+        foreach (var e in mParts)
+        {
+            var rb = e.Value.GetComponent<Rigidbody>();
+            rb.MovePosition(mMode.NGM.mManager.mBodyManager.mFlat.mParts[e.Key].transform.position);
+        }
+        
+
+
+        //generate asteroids
         if (Random.Range(0f, 1f) < Time.deltaTime / 3f) //about every 3 seconds
         {
             float rad = Random.Range(0,Mathf.PI*2);

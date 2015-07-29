@@ -613,6 +613,11 @@ public class ModeNormalPlay
 		);
 		
 	}
+
+    bool space_camp_final_exam()
+    {
+        return mPerformanceStats.Where(e=>e.Score < GameConstants.astronautCutoff).Count() == 0);
+    }
 	
 	public void CUTSCENE_finished(NUPD.ChangeSet changes = null)
 	{
@@ -639,7 +644,7 @@ public class ModeNormalPlay
 				{
 					if(GameConstants.showAstronaut 
                     && CurrentPerformanceStat.Character.LevelIndex == 7
-                    && mPerformanceStats.Where(e=>e.Score < GameConstants.astronautCutoff).Count() == 0)
+                    && space_camp_final_exam()
 					{
                         transition_to_ASTRONAUT();
 					}
