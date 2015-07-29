@@ -754,7 +754,7 @@ public class ModeNormalPlay
 	
 	public void transition_to_GRAVE()
 	{
-        mManager.GameEventDistributor("DEATH", new object[]{NGM.CurrentCharacterLoader.Character});
+        mManager.GameEventDistributor("DEATH", new object[]{NGM.mModeNormalPlay.mPerformanceStats});
 
 		GS = NormalPlayGameState.GRAVE;
 

@@ -1,15 +1,20 @@
 ﻿using UnityEngine;
-using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
+using System;
 
 #if UNITY_XBOXONE
 using Users;
 using DataPlatform;
 using ConsoleUtils;
 
+
 public class XboneEvents{
     public System.Guid mSessionId;
     ManagerManager mManager;
     XboneAll mAll;
+
+    public delegate void XB1EventsAdhocDelegate(string a1, ref Guid a2, Int32 a3);
 
     public XboneEvents()
     {
@@ -49,6 +54,7 @@ public class XboneEvents{
         }
         if (name == "DEATH")
         {
+            
             var gruesome = mManager.mGameManager.mModeNormalPlay.CurrentPerformanceStat.BadPerformance;
             ManagerManager.Log("DEATH EVENT " + (gruesome ? "GRUESOME" : "NORMAL"));
 
@@ -63,6 +69,10 @@ public class XboneEvents{
                     ref mSessionId,
                     mManager.mGameManager.mModeNormalPlay.CurrentPerformanceStat.Character.Index);
 
+            var performance = args[0] as List<PerformanceStats>;
+            handle_ad_hoc_events(performance);
+
+            //TODO make this right
             Events.SendGameProgress(
                 mAll.LastActiveUser.UID,
                 ref mSessionId,
@@ -91,7 +101,31 @@ public class XboneEvents{
             Events.SendPlayerSessionEnd(mAll.LastActiveUser.UID, ref mSessionId, "", 0, 0,0);
         }
     }
+    void handle_ad_hoc_events(List<PerformanceStats> aStats)
+    {
 
+        Dictionary<XB1EventsAdhocDelegate,List<CharacterIndex>> options = new Dictionary<XB1EventsAdhocDelegate,List<CharacterIndex>>()
+        {
+            {Events.SendAH1_career_woman, new List<CharacterIndex>(){CharacterIndex.sStar,CharacterIndex.sSchool,CharacterIndex.sGames,CharacterIndex.sProf,CharacterIndex.sBurnt}},
+            {Events.SendAH2_conservative, new List<CharacterIndex>(){CharacterIndex.sPrincess,CharacterIndex.sMother,CharacterIndex.sClerk,CharacterIndex.sMarried,CharacterIndex.sAngry,CharacterIndex.sFundraiser,CharacterIndex.sPray}}
+            //TODO finish
+        };
+
+        foreach(var e in options)
+        {
+            bool pass = true;
+            foreach(var f in e.Value)
+            {
+                if(aStats.Where(g=>g.Character == f).Count() == 0) //if we are missing a character
+                {
+                    pass = false;
+                    break;
+                }
+            }
+            if(pass)
+                e.Key(mAll.LastActiveUser.UID,ref mSessionId,1);
+        }
+    }
     //just for testing CAN DELETE
     public void SendDeathEvent()
     {
