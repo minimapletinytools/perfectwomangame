@@ -82,7 +82,9 @@ public class MicrosoftZig : ZgInterface
         //testcode
         if (KeyMan.GetKeyDown("LeftThumbstick"))
         {
-            //write_data(mZig.mManager.mMetaManager.UnlockManager.serialize(),"unlock");
+            ManagerManager.Log("clearing out saves");
+            mZig.mManager.mMetaManager.UnlockManager.mUnlocked = new Unlockables();
+            write_data(mZig.mManager.mMetaManager.UnlockManager.serialize(),"unlock");
 
         }
         if (KeyMan.GetKeyDown("RightThumbstick"))

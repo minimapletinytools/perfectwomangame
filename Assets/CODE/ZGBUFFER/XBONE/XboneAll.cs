@@ -77,7 +77,7 @@ public class XboneAll {
             
             //storage
             MicrosoftZig.Inst.mStorage.InitializeUserStorage();
-            
+            ManagerManager.Manager.mMetaManager.StartSaveThread(); 
 
             IsActiveUserInitialized = true;
         }

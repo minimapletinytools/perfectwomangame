@@ -69,7 +69,7 @@ public class XboneStorage
 
 	IEnumerator save_thread(GameObject aDestroy)
 	{
-		while (!Storage.StorageManager.AmFullyInitialized () || !MicrosoftZig.Inst.has_user())
+		while (!Storage.StorageManager.AmFullyInitialized () || !MicrosoftZig.Inst.mAll.IsSomeoneSignedIn)
 			yield return null;
 
 		ConnectedStorage.CreateAsync (MicrosoftZig.Inst.mAll.ActiveUser.Id, "main_save", 

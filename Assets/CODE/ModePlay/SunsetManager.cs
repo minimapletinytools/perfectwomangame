@@ -738,6 +738,10 @@ public class SunsetManager
 			}
 		}
 
+        //so we don't announce unlock again when we restart
+        mManager.mMetaManager.UnlockManager.unlockedThisGame.Clear();
+
+
 		
 		
 		if(GameConstants.showReward && aStats[aStats.Count-1].Character.LevelIndex >= 7)
