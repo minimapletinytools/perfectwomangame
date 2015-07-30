@@ -72,6 +72,10 @@ public class XboneAll {
             ManagerManager.Log("User Initialized " + ActiveUser.GameDisplayName);
             ManagerManager.Manager.mTransitionCameraManager.you_are_playing_as(ActiveUser.GameDisplayName);
 
+            //game
+            if(!XboxOnePLM.AmConstrained())
+                ManagerManager.Manager.GameEventDistributor("RESUME", null);
+
             //rich user presence
             SetRichUserPresence();
             

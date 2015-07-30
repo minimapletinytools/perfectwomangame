@@ -40,8 +40,14 @@ public class XbonePLM
 		//TODO (also make sure the boolean is correct..
         ManagerManager.Log("RESOURCES CHANGED " + aConstrained);
 
-        if(aConstrained == false && !MicrosoftZig.Inst.mAll.IsSomeoneSignedIn)
+        if (aConstrained)
+            ManagerManager.Manager.GameEventDistributor("PAUSE",null);
+        else if(aConstrained == false && !MicrosoftZig.Inst.mAll.IsSomeoneSignedIn)
             UsersManager.RequestSignIn(Users.AccountPickerOptions.AllowGuests);
+        else
+            ManagerManager.Manager.GameEventDistributor("RESUME", null);
+
+        
 	}
 
 	void Resuming(double aTime)
