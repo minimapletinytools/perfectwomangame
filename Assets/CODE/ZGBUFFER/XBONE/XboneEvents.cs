@@ -103,12 +103,17 @@ public class XboneEvents{
     }
     void handle_ad_hoc_events(List<PerformanceStats> aStats)
     {
-
+        //TODO TEST
         Dictionary<XB1EventsAdhocDelegate,List<CharacterIndex>> options = new Dictionary<XB1EventsAdhocDelegate,List<CharacterIndex>>()
         {
             {Events.SendAH1_career_woman, new List<CharacterIndex>(){CharacterIndex.sStar,CharacterIndex.sSchool,CharacterIndex.sGames,CharacterIndex.sProf,CharacterIndex.sBurnt}},
-            {Events.SendAH2_conservative, new List<CharacterIndex>(){CharacterIndex.sPrincess,CharacterIndex.sMother,CharacterIndex.sClerk,CharacterIndex.sMarried,CharacterIndex.sAngry,CharacterIndex.sFundraiser,CharacterIndex.sPray}}
-            //TODO finish
+            {Events.SendAH2_conservative, new List<CharacterIndex>(){CharacterIndex.sPrincess,CharacterIndex.sMother,CharacterIndex.sClerk,CharacterIndex.sMarried,CharacterIndex.sAngry,CharacterIndex.sFundraiser,CharacterIndex.sPray}},
+            {Events.SendAH3_hippie, new List<CharacterIndex>(){CharacterIndex.sPunk,CharacterIndex.sDrunk,CharacterIndex.sBeach,CharacterIndex.sDance,CharacterIndex.sTribal}},
+            {Events.SendAH4_sexy, new List<CharacterIndex>(){CharacterIndex.sSexy,CharacterIndex.sDrunk,CharacterIndex.sDance,CharacterIndex.sPorn}},
+            {Events.SendAH5_extremist, new List<CharacterIndex>(){CharacterIndex.sGang,CharacterIndex.sTerrorist,CharacterIndex.sWhale,CharacterIndex.sAngry,CharacterIndex.sPray}},
+            {Events.SendAH6_boring, new List<CharacterIndex>(){CharacterIndex.sSchool,CharacterIndex.sMother,CharacterIndex.sClerk,CharacterIndex.sMarried,CharacterIndex.sFundraiser,CharacterIndex.sDemented}},
+            {Events.SendAH7_family_life, new List<CharacterIndex>(){CharacterIndex.sSister,CharacterIndex.sMother,CharacterIndex.sBeach,CharacterIndex.sLeukemia,CharacterIndex.sGrandma}},
+            {Events.SendAH8_hard_life, new List<CharacterIndex>(){CharacterIndex.sSlave,CharacterIndex.sSister,CharacterIndex.sLeukemia,CharacterIndex.sBurnt,CharacterIndex.sAngry}}
         };
 
         foreach(var e in options)
