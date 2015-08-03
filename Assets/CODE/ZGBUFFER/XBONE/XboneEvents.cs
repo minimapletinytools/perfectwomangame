@@ -27,9 +27,10 @@ public class XboneEvents{
 
     void game_event_listener(string name, object[] args)
     {
-        if (UsersManager.Users.Count == 0)
+        if (mAll.LastActiveUser == null)
         {
-            ManagerManager.Log("NO USERS CAN'T SENT EVENT " + name);
+            ManagerManager.Log("LastActiveUser is null, can't send event " + name);
+            return;
         }
 
         if (name == "NEW CHARACTER")
@@ -49,14 +50,17 @@ public class XboneEvents{
                 //Debug.Log("TRANSCEND EVENT");
                 ManagerManager.Log("TRANSCEND EVENT");
                 Events.SendTranscend(mAll.LastActiveUser.UID, ref mSessionId);
-
             }
+
+            send_game_progress(((CharacterIndex)args[0]).LevelIndex / 9f);
         }
         if (name == "DEATH")
         {
             
             var gruesome = mManager.mGameManager.mModeNormalPlay.CurrentPerformanceStat.BadPerformance;
             ManagerManager.Log("DEATH EVENT " + (gruesome ? "GRUESOME" : "NORMAL"));
+
+            send_game_progress(1);
 
             Events.SendPassing(
                 mAll.LastActiveUser.UID,
@@ -71,13 +75,6 @@ public class XboneEvents{
 
             var performance = args[0] as List<PerformanceStats>;
             handle_ad_hoc_events(performance);
-
-            //TODO make this right
-            Events.SendGameProgress(
-                mAll.LastActiveUser.UID,
-                ref mSessionId,
-                mManager.mMetaManager.UnlockManager.get_unlocked_characters().Count/27f,
-                mManager.mMetaManager.UnlockManager.get_unlocked_characters().Count);
 
         }
 
@@ -100,6 +97,16 @@ public class XboneEvents{
         {
             Events.SendPlayerSessionEnd(mAll.LastActiveUser.UID, ref mSessionId, "", 0, 0,0);
         }
+    }
+
+    void send_game_progress(float progress)
+    {
+        ManagerManager.Log("EVENT: gameprogress " + progress + " " + mManager.mMetaManager.UnlockManager.get_unlocked_characters().Count);
+        Events.SendGameProgress(
+                mAll.LastActiveUser.UID,
+                ref mSessionId,
+                progress,
+                mManager.mMetaManager.UnlockManager.get_unlocked_characters().Count);
     }
     void handle_ad_hoc_events(List<PerformanceStats> aStats)
     {
@@ -195,9 +202,6 @@ public class XboneEvents{
 #else
 
 public class XboneEvents{
-    public XboneEvents(ManagerManager aManager)
-    {
-    }
     public void Start(){}
     
     public void Update(){
