@@ -70,7 +70,9 @@ public class NewGameManager : FakeMonoBehaviour
 		mModeChallenge = new ModeChallenge(this);
 		mModeNormalPlay = new ModeNormalPlay(this);
 		mModeSimian = new ModePerfectSimian(this);
-	
+
+
+        mManager.GameEventDistributor += game_event_listener;
 	}
 	
 	public void start_game(CharacterIndex aChar)

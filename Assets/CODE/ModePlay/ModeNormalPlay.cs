@@ -14,7 +14,7 @@ public class ModeNormalPlay
 	public NewGameManager NGM {get; set;}
 	ManagerManager mManager {get; set;}
 	
-    public bool Paused{ get; set; } //this currently only pauses choosing
+    public bool Paused{ get; set; }
 	public float TimeRemaining
 	{ get; set; }
 	public float TimeTotal
