@@ -24,8 +24,9 @@ public class BuildScripts
     static void build_osx()
     {
 		string[] scenes = {"Assets/SCENES/kinect_test.unity"};
- 
-		string buildDir = "/Users/user/Desktop/unitybuilds/lea/" + System.DateTime.Now.ToString("MMMdhmm") +"_osx.app";
+
+        string buildDir = System.Environment.ExpandEnvironmentVariables("%HOMEDRIVE%%HOMEPATH%") + "/Desktop/unitybuilds/lea/" + System.DateTime.Now.ToString("MMMdhmm") + "_osx.app";
+		//string buildDir = "/Users/user/Desktop/unitybuilds/lea/" + System.DateTime.Now.ToString("MMMdhmm") +"_osx.app";
 		System.IO.Directory.CreateDirectory(buildDir);
 		BuildPipeline.BuildPlayer(scenes , buildDir, BuildTarget.StandaloneOSXIntel, BuildOptions.None);
 		
@@ -40,7 +41,6 @@ public class BuildScripts
     {
 		string[] scenes = {"Assets/SCENES/kinect_test.unity"};
 
-        Debug.Log(System.Environment.ExpandEnvironmentVariables("%HOMEDRIVE%%HOMEPATH%"));
         string buildDir = System.Environment.ExpandEnvironmentVariables("%HOMEDRIVE%%HOMEPATH%") + "/Desktop/unitybuilds/lea/" + System.DateTime.Now.ToString("MMMdhmm") + "";
 		//string buildDir = "/Users/user/Desktop/unitybuilds/lea/" + System.DateTime.Now.ToString("MMMdhmm") + "";
 		System.IO.Directory.CreateDirectory(buildDir);
