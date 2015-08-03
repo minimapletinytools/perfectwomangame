@@ -68,6 +68,9 @@ public class XbonePLM
     
 public class XbonePLM
 {
+    public XbonePLM(ManagerManager aManager)
+    {
+    }
 	public void Start()
 	{
 	}

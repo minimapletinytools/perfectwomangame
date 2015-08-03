@@ -19,13 +19,13 @@ public static class GameConstants
 
 #if UNITY_XBOXONE && !UNITY_EDITOR
     public static string assetBundlePrefix = "/StreamingAssets/XB1/";
-#elif UNITY_EDITOR
+#elif UNITY_EDITOR || UNITY_STANDALONE_WIN
     public static string assetBundlePrefix = "/StreamingAssets/";
-#else
+#elif UNITY_STANDALONE_OSX
     public static string assetBundlePrefix = "/Resources/Data/StreamingAssets/";
 #endif
 
-	//TODO only change this when you're about to load up simian mode
+    //TODO only change this when you're about to load up simian mode
 	//I didn't do the conversion properly on all the classes so it's a super bad half assed change
 	//enough should bechanged such that perfect simian will work
 	//I hope

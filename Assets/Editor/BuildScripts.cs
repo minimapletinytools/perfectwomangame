@@ -16,6 +16,8 @@ public class BuildScripts
 		
 		//string resourceDstPath = buildDir + "/Contents/Resources";
 		//DirectoryCopy(Application.dataPath + "/Resources", resourceDstPath,false);
+
+     
     }
 	
     [MenuItem("Custom/build/OSX")]
@@ -29,21 +31,25 @@ public class BuildScripts
 		
 		//string resourceDstPath = buildDir + "/Contents/Resources";
 		//DirectoryCopy(Application.dataPath + "/Resources", resourceDstPath,false);
+
+        //TODO delete XB1 directory
     }
 	
 	[MenuItem("Custom/build/WIN")]
     static void build_w()
     {
 		string[] scenes = {"Assets/SCENES/kinect_test.unity"};
- 
-		string buildDir = "/Users/user/Desktop/unitybuilds/lea/" + System.DateTime.Now.ToString("MMMdhmm") + "";
+
+        Debug.Log(System.Environment.ExpandEnvironmentVariables("%HOMEDRIVE%%HOMEPATH%"));
+        string buildDir = System.Environment.ExpandEnvironmentVariables("%HOMEDRIVE%%HOMEPATH%") + "/Desktop/unitybuilds/lea/" + System.DateTime.Now.ToString("MMMdhmm") + "";
+		//string buildDir = "/Users/user/Desktop/unitybuilds/lea/" + System.DateTime.Now.ToString("MMMdhmm") + "";
 		System.IO.Directory.CreateDirectory(buildDir);
 		BuildPipeline.BuildPlayer(scenes , buildDir + "/PW.exe", BuildTarget.StandaloneWindows, BuildOptions.None);
 		
 		//string resourceDstPath = buildDir + "/PW_data/Resources";
 		//DirectoryCopy(Application.dataPath + "/Resources", resourceDstPath,false);
-		
-		//System.IO.Compression
+
+        //TODO delete XB1 directory
     }
 
     [MenuItem("Custom/build/XBONE")]
