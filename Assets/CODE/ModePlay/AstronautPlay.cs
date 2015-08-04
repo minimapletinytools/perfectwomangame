@@ -65,6 +65,7 @@ public class AstronautPlay
             e.material.renderQueue = 5000;
             e.gameObject.layer = 1; //this is the mainbodycamera layer
         }
+        ast.AddComponent<AstronautCollisionBehaviour>().Astronaut = this;
         ast.AddComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePositionZ & RigidbodyConstraints.FreezeRotationX & RigidbodyConstraints.FreezeRotationY;
         ast.AddComponent<SphereCollider>().radius = sizing.Size.y*4/9f;
         ast.transform.position = aPos;
@@ -90,21 +91,19 @@ public class AstronautPlay
 
     }
 
+    Vector3 mMoveSpeed = new Vector3(0,0,0);
+    public void ASTROCOLLISION(Vector3 aVel, Vector3 aPoint)
+    {
+        mMoveSpeed -= aVel/5f;
+    }
+
     public void update_astro()
     {
         //mSimian.update(mMode.NGM.mManager.mProjectionManager);
 
-        //move the bodies
-        Vector3 netVel = Vector3.zero;
-        foreach (var e in mParts)
-        {
-            var rb = e.Value.GetComponent<Rigidbody>();
-            netVel += rb.velocity;
-        }
-
-        //TODO make this work
-        //mMode.NGM.mManager.mBodyManager.mFlat.SoftPosition += (mStartingPos - mMode.NGM.mManager.mBodyManager.mFlat.SoftPosition) * 0.05f;
-        //mMode.NGM.mManager.mBodyManager.mFlat.SoftPosition += netVel * Time.deltaTime; 
+        //floaty astronaut
+        mMode.NGM.mManager.mBodyManager.mFlat.SoftPosition += mMoveSpeed * Time.deltaTime;
+        mMoveSpeed = mMoveSpeed * 0.993f;
         
 
         foreach (var e in mParts)
