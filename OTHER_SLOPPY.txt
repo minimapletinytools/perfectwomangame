@@ -1,3 +1,113 @@
+::NEW ACHIEVEMENTS
+
+Conservative life: played 
+Princess
+Mother of 2 happy kids 
+7/11 Cashier 
+Rich wife
+Angry because daughter became a man
+Speaker at charity event
+Praying to God to take you to heaven
+
+Achieved:
+You’re so traditional. We hope you’re happy!
+
+Not yet achieved:
+You’re still too liberal to be conservative.
+
+Career woman: played 
+Super talented singer and performer
+Eager student
+Professional gamer 
+Successful prof at MIT 
+Burned out
+
+Achieved:
+You’re super talented, eager and successful. And unfortunately always burned out.
+
+Not achieved yet:
+Try harder!
+
+Hippie: played 
+Playing in a band in the woods 
+Drunk girl on Octoberfest 
+Raising adopted child at the beach
+Belly dance teacher
+Tribal matriarch
+
+Achieved:
+Relaxed, drunk and happy. Hopefully it stays like that!
+
+Not achieved yet:
+Relax harder!
+
+Sexy:
+Teenager, everybody wants to have sex with
+Drunk girl on Octoberfest
+Belly dance teacher
+Call girl
+
+Achieved:
+Everyone loves your body. Especially you!
+
+Not achieved yet:
+Love your body more!
+
+Extremist:
+Street kid, leading a gang
+Terrorist
+Whale hunter
+Angry because your daughter became a man
+Praying to god to take you to heaven
+
+Achieved:
+You’re so extreme, it hurts.
+
+Not achieved yet:
+Be a rebel!
+
+Boring woman:
+Eager student
+Mother of 2 happy kids
+7/11 cashier
+Rich wife
+Speaker at charity event
+Demented but happy
+
+Achieved:
+You’re eager, happy and rich. The normal stuff.
+
+Not achieved yet:
+Try to be normal for once!
+
+Family life:
+Taking Care of your younger brother during war
+Mother of two happy kids
+Raising adopted child at the beach
+Mother whose child dies of leukemia
+Wise and experienced grandmother
+
+Achieved:
+Awwww, you’re so caring!
+
+Not achieved yet:
+Take care of your family, woman!
+
+
+Hard life:
+Child worker
+Taking care of your younger brother during war
+Mother whose child died of leukemia
+Burned out
+Angry because your daughter became a man
+
+Achieved:
+Child labour, grieve, burn out - you’ve had it all.
+
+Not achieved yet:
+What doesn’t kill you, makes you harder.
+
+
 ::SCID OUTLINE::
 -events
 	-character X complete (sum TotalCharsPlayed)

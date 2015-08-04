@@ -1,114 +1,3 @@
-::NEW ACHIEVEMENTS
-
-Conservative life: played 
-Princess
-Mother of 2 happy kids 
-7/11 Cashier 
-Rich wife
-Angry because daughter became a man
-Speaker at charity event
-Praying to God to take you to heaven
-
-Achieved:
-You’re so traditional. We hope you’re happy!
-
-Not yet achieved:
-You’re still too liberal to be conservative.
-
-Career woman: played 
-Super talented singer and performer
-Eager student
-Professional gamer 
-Successful prof at MIT 
-Burned out
-
-Achieved:
-You’re super talented, eager and successful. And unfortunately always burned out.
-
-Not achieved yet:
-Try harder!
-
-Hippie: played 
-Playing in a band in the woods 
-Drunk girl on Octoberfest 
-Raising adopted child at the beach
-Belly dance teacher
-Tribal matriarch
-
-Achieved:
-Relaxed, drunk and happy. Hopefully it stays like that!
-
-Not achieved yet:
-Relax harder!
-
-Sexy:
-Teenager, everybody wants to have sex with
-Drunk girl on Octoberfest
-Belly dance teacher
-Call girl
-
-Achieved:
-Everyone loves your body. Especially you!
-
-Not achieved yet:
-Love your body more!
-
-Extremist:
-Street kid, leading a gang
-Terrorist
-Whale hunter
-Angry because your daughter became a man
-Praying to god to take you to heaven
-
-Achieved:
-You’re so extreme, it hurts.
-
-Not achieved yet:
-Be a rebel!
-
-Boring woman:
-Eager student
-Mother of 2 happy kids
-7/11 cashier
-Rich wife
-Speaker at charity event
-Demented but happy
-
-Achieved:
-You’re eager, happy and rich. The normal stuff.
-
-Not achieved yet:
-Try to be normal for once!
-
-Family life:
-Taking Care of your younger brother during war
-Mother of two happy kids
-Raising adopted child at the beach
-Mother whose child dies of leukemia
-Wise and experienced grandmother
-
-Achieved:
-Awwww, you’re so caring!
-
-Not achieved yet:
-Take care of your family, woman!
-
-
-Hard life:
-Child worker
-Taking care of your younger brother during war
-Mother whose child died of leukemia
-Burned out
-Angry because your daughter became a man
-
-Achieved:
-Child labour, grieve, burn out - you’ve had it all.
-
-Not achieved yet:
-What doesn’t kill you, makes you harder.
-
-
-
 ::TODO FOR LEA::
 -compile list of festivals we've shown at that aren't on the website
 -redo splash screen 1920x1080
@@ -135,30 +24,12 @@ What doesn’t kill you, makes you harder.
 -maybe redo the other icons (100x100, 208x208, 480x480) for the game (I think they could look nicer). Anyhow, I included images of where these icons show up so you can judge for yourself.
 
 ::FUTURE LEA TODO STUFF::
--
 -decide on publisher name and developer studio
 -talk about german language support
 -submit for ratings
 
-::USER PLAN::
--storage needs to be user specific, reload on user change
--need to figure out how to access user via kinect sign in??
--is there such thing as a primary user??? We'll just make it the first user that signed in or the first user recognized... Doesn't care if controller/players swap
--from title
-	-needs to be a way for the player to switch user and for the game to indicate which user is playing the game (XR 112/113)
-	-wont start until user signs in
-	-on start/restart game if user is signed in or on user sign in
-		-set default rich presecence string
-		-send start event
--from game / from resume
-	-on user sign out / if no user is signed in
-		-pause game and prompt user to sign in
-			-if same user, unpause
-			-if different user restart game?? (XR 116)
-				-or maybe give the player a chance to change back to original user, nah
-
 ::PRE-CERT TODO
--fix storage and enable character unlocking
+DONE-fix storage and enable character unlocking
 -enable character unlocking achievements
 -disable all controller cheater keys
 -disable all debug messages
@@ -168,20 +39,28 @@ What doesn’t kill you, makes you harder.
 	-maybe go through the cert program tests
 
 ::TODO2::
--test out new pausing when constrained nonsense 
-	-sign out, launch game, make sure it doesn't  start
-	-sign out, sign in, make sure it doesn't start)
--test new achievements
--add simple physics to astronaut
+-submit to http://www.ludicious.ch/
+-make new press package
+	-screenshots
+	-latest build of game, windows + osx
+	-instruction on how to play
+	-trailer and gameplay video
+	-text document including additional information
+	-full credits
+
+-update screenshots on website..
+-figure out what that brief freeze after starting a character is
+	-call ModeNormalPlay initialize during title screen
+	-make CharacterLoader load accross several frames
+-email lea about getting PW into museum
+-fix font position on character unlocking
+-email and ask if we are ready for final certification
 -get rid of holistic wisdom / rename it
 -send lea a build with unlockables
 -double restart if you force restart on?????
 	-ModeNormalPlay.cs mSunsetManager.set_for_GRAVE(mPerformanceStats, delegate() { mManager.restart_game(); }); 
 -optional cert yo
--fix achievements that depend on number characters played/unlocked (need to mess around with save file again UGGG stupid AOT) (game progress)
-	-maybe make them ad-hoc??
 -UsersManager.FindUserByTrackingId if you need to connect kinect user with player
--make duplicate of ggfiles, one for  XB1 and one for PC
 -ask microsoft if we need to localize in game content or only marketplace stuff
 -skipping/resetting in grave scene on XB1 causes error
 	-it's when you soft skip on the two part text bubbles I think, it will then try to chnage the text on a non existent text bubble, you can solve this just by testing if it's null or not.
@@ -203,6 +82,16 @@ What doesn’t kill you, makes you harder.
 -reply to mattia
 
 
+IGNORE-make duplicate of ggfiles, one for  XB1 and one for PC
+DONE-fix achievements that depend on number characters played/unlocked (need to mess around with save file again UGGG stupid AOT) (game progress)
+	-maybe make them ad-hoc??
+DONE-problems when switching players while not in game
+DONE-add simple physics to astronaut
+DONE-test new achievements
+DONE-Windows build is broken now, maybe just need to rebuild bulkposes
+DONE-test out new pausing when constrained nonsense 
+	DONE-sign out, launch game, make sure it doesn't  start
+	DONE-sign out, sign in, make sure it doesn't start)
 IGNORE-on XB1, sometimes NGM.currentpose will still be null, is sit uan update order problem??? 
 	-I could also easily fix by doing a null check becaues I'm pretty sure it loads the pose after one frame
 IGNORE-get new events implemented and contact IDDS about certification
