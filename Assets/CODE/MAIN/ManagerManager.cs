@@ -56,7 +56,7 @@ public class ManagerManager : MonoBehaviour{
 	void Awake () {
 		Random.seed = System.Environment.TickCount;
 		Application.targetFrameRate = (int)GameConstants.TARGET_FRAMERATE;
-        GameEventDistributor += delegate(string arg1, object[] arg2){};
+        GameEventDistributor += delegate(string arg1, object[] arg2) { Log("GAME EVENT: " + arg1); };
 
 		Cursor.visible = false;
 		gameObject.AddComponent<AudioListener>();
@@ -134,7 +134,7 @@ public class ManagerManager : MonoBehaviour{
 	Vector2 mLastScreenSize = new Vector2();
 	void Update () {
 
-        try{
+        //try{
     		Vector2 newScreenSize = new Vector2(Screen.width,Screen.height);
     		if(mLastScreenSize != newScreenSize)
     		{
@@ -155,12 +155,13 @@ public class ManagerManager : MonoBehaviour{
             }
 
             //mDebugString = ((int)(1 / Time.deltaTime)).ToString();
-        } 
+        //} 
+        /*
         catch(System.Exception e)
         {
             mDebugString2 = e.ToString();
             throw e;
-        }
+        }*/
 	}
 	
 	void FixedUpdate() {
@@ -210,7 +211,6 @@ public class ManagerManager : MonoBehaviour{
     
     public void take_screenshot(string filename, Camera cam)
     {
-        
         int resWidth = 800;
         int resHeight = 450;
         RenderTexture rt = new RenderTexture(resWidth, resHeight, 24);
@@ -231,8 +231,8 @@ public class ManagerManager : MonoBehaviour{
         byte[] bytes = screenShot.EncodeToPNG();
         System.IO.File.WriteAllBytes(filename, bytes);
         //Debug.Log(string.Format("Took screenshot to: {0}", filename));
-        
     }
+
     void LateUpdate()
     {
 		/*
@@ -269,35 +269,38 @@ public class ManagerManager : MonoBehaviour{
     public string mDebugString2 = "";
 	void OnGUI()
     {
-        GUI.depth = int.MinValue;
-        //GUI.Box(new Rect(20, 20, 80,30), mDebugString);
-		GUIStyle style = new GUIStyle();
-		
-		//GUI.Box(new Rect(0,0,Screen.width,Screen.height),MainRenderTexture,style);
-		style.fontSize = 15;
-		style.normal.textColor = new Color(1,1,1,1);
-		GUI.TextArea(new Rect(10,10,300,70),mDebugString,style);
-        GUI.TextArea(new Rect(10,40,300,70),mDebugString2,style);
-		//GUI.TextArea(new Rect(50,50,300,100),"WORK IN PROGRESS",style);
-		
-		//GUI.Box(new Rect(0,0,Screen.width * mGameManager.mModeNormalPlay.mLastGrade,50),""); 
-
-        int heightCounter = 50;
-        foreach (var e in mDebugMessages.Reverse<string>().Select((val,index) => new {val,index}))
+        if (GameConstants.SHOW_DEBUG)
         {
-            var height = style.CalcHeight(new GUIContent(e.val),Screen.width);
-            GUI.TextArea(new Rect(10,heightCounter,Screen.width,(int)height),e.val,style);
-            heightCounter += (int)height + 10;
+            GUI.depth = int.MinValue;
+            //GUI.Box(new Rect(20, 20, 80,30), mDebugString);
+            GUIStyle style = new GUIStyle();
 
-            if (heightCounter > 800)
-                break;
+            //GUI.Box(new Rect(0,0,Screen.width,Screen.height),MainRenderTexture,style);
+            style.fontSize = 15;
+            style.normal.textColor = new Color(1, 1, 1, 1);
+            GUI.TextArea(new Rect(10, 10, 300, 70), mDebugString, style);
+            GUI.TextArea(new Rect(10, 40, 300, 70), mDebugString2, style);
+            //GUI.TextArea(new Rect(50,50,300,100),"WORK IN PROGRESS",style);
+
+            //GUI.Box(new Rect(0,0,Screen.width * mGameManager.mModeNormalPlay.mLastGrade,50),""); 
+
+            int heightCounter = 50;
+            foreach (var e in mDebugMessages.Reverse<string>().Select((val, index) => new { val, index }))
+            {
+                var height = style.CalcHeight(new GUIContent(e.val), Screen.width);
+                GUI.TextArea(new Rect(10, heightCounter, Screen.width, (int)height), e.val, style);
+                heightCounter += (int)height + 10;
+
+                if (heightCounter > 800)
+                    break;
+            }
+
+
+            //for debugging
+            //mZigManager.DepthView.OnGUI ();
+            //mZigManager.ImageView.OnGUI();
+
         }
-
-
-		//for debugging
-		//mZigManager.DepthView.OnGUI ();
-        //mZigManager.ImageView.OnGUI();
-		
     }
 
 

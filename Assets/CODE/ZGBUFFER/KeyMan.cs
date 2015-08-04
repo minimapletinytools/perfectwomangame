@@ -89,20 +89,29 @@ public static class KeyMan
         {"RightThumbstick",null}
     };
     
-    public static bool GetKey(string aKey)
+    public static bool GetKey(string aKey, bool aForce = false)
     {
+        if (!(aForce || GameConstants.KB_CONTROL))
+            return false;
+
         if (keyMap [aKey] == null)
             return false;
         return Input.GetKey((KeyCode)keyMap[aKey]);
     }
-    public static bool GetKeyDown(string aKey)
+    public static bool GetKeyDown(string aKey, bool aForce = false)
     {
-        if (keyMap [aKey] == null)
+        if (!(aForce || GameConstants.KB_CONTROL))
+            return false;
+
+        if (keyMap[aKey] == null)
             return false;
         return Input.GetKeyDown((KeyCode)keyMap[aKey]);
     }
-    public static bool GetKeyUp(string aKey)
+    public static bool GetKeyUp(string aKey, bool aForce = false)
     {
+        if (!(aForce || GameConstants.KB_CONTROL))
+            return false;
+
         if (keyMap [aKey] == null)
             return false;
         return Input.GetKeyUp((KeyCode)keyMap[aKey]);
