@@ -45,7 +45,11 @@ public class FlatUnlockBadge : FlatElementMultiBase
 		text1 = new FlatElementText(unlockfont,120,"new lifestyle",aDepth +1);
 		text2 = new FlatElementText(unlockfont,200,"UNLOCKED",aDepth +1);
 		mainIcon = new FlatUnlockIcon(aChar,true,aDepth+1);
-		text3 = new FlatElementText(unlockfont,70,FlatElementText.convert_to_multiline_max(35,aData.Sentence),aDepth +1);
+
+        if(aData.Related.Length == 0)
+            text3 = new FlatElementText(unlockfont, 200, FlatElementText.convert_to_multiline_max(35, aData.Sentence), aDepth + 1);
+        else
+    		text3 = new FlatElementText(unlockfont,70,FlatElementText.convert_to_multiline_max(35,aData.Sentence),aDepth +1);
 
 		mElements.Add(new FlatElementMultiBase.ElementOffset(background, new Vector3(0,0,0)));
 		mElements.Add(new FlatElementMultiBase.ElementOffset(text1, new Vector3(0,600,0)));

@@ -31,13 +31,18 @@ public class Unlockables
 
 			if(e.Choice == 0)
 				unlockedCharacters[e] = 1; 
-            else if(e.LevelIndex == 1)
-                unlockedCharacters[e] = 1;
+            //else if(e.LevelIndex == 1)
+                //unlockedCharacters[e] = 1;
 			//else if(e.Choice < 4)
-            else if(e.Choice == 3)
-				unlockedCharacters[e] = 2; //2 - locked, 1 - avail
-			else
-				unlockedCharacters[e] = 1; 
+            else if (e.Choice == 3)
+            {
+                if (GameConstants.UNLOCK_ALL)
+                    unlockedCharacters[e] = 1; //2 - locked, 1 - avail
+                else
+                    unlockedCharacters[e] = 2;
+            }
+            else
+                unlockedCharacters[e] = 1; 
 		}
 	}
 }
