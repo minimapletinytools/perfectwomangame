@@ -1,8 +1,14 @@
+::XDP DEV ACCOUNTS::
+-for peter@perfectwomangame.com
+	-email: PRFW-main000@xboxtest.com - PRFW-main049@xboxtest.com
+	-password: caps + usual + 1
+
 ::PERFECT WOMAN MONEYS::
 -$30 skype money
 -$25 FOST
 -$10 Fantastic Fest
 -$25 JSON.net
+-$5 60 second shooter prime
 
 
 ::FOST PW SUBMISSION INFO
