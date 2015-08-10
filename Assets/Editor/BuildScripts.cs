@@ -10,7 +10,7 @@ public class BuildScripts
     {
 		string[] scenes = {"Assets/SCENES/recording.unity"};
  
-		string buildDir = "/Users/user/Desktop/unitybuilds/lea/" + System.DateTime.Now.ToString("MMMdhmm") +"_testing_osx.app";
+		string buildDir = "/Users/user/Desktop/unitybuilds/lea/" + System.DateTime.Now.ToString("yyyy_MMM_d_hmm") +"_testing_osx.app";
 		System.IO.Directory.CreateDirectory(buildDir);
 		BuildPipeline.BuildPlayer(scenes , buildDir, BuildTarget.StandaloneOSXIntel, BuildOptions.None);
 		
@@ -25,8 +25,8 @@ public class BuildScripts
     {
 		string[] scenes = {"Assets/SCENES/kinect_test.unity"};
 
-        string buildDir = System.Environment.ExpandEnvironmentVariables("%HOMEDRIVE%%HOMEPATH%") + "/Desktop/unitybuilds/lea/" + System.DateTime.Now.ToString("MMMdhmm") + "_osx.app";
-		//string buildDir = "/Users/user/Desktop/unitybuilds/lea/" + System.DateTime.Now.ToString("MMMdhmm") +"_osx.app";
+        string buildDir = System.Environment.ExpandEnvironmentVariables("%HOMEDRIVE%%HOMEPATH%") + "/Desktop/unitybuilds/lea/" + System.DateTime.Now.ToString("yyyy_MMM_d_hmm") + "_osx.app";
+		//string buildDir = "/Users/user/Desktop/unitybuilds/lea/" + System.DateTime.Now.ToString("yyyy_MMM_d_hmm") +"_osx.app";
 		System.IO.Directory.CreateDirectory(buildDir);
 		BuildPipeline.BuildPlayer(scenes , buildDir, BuildTarget.StandaloneOSXIntel, BuildOptions.None);
 		
@@ -41,8 +41,8 @@ public class BuildScripts
     {
 		string[] scenes = {"Assets/SCENES/kinect_test.unity"};
 
-        string buildDir = System.Environment.ExpandEnvironmentVariables("%HOMEDRIVE%%HOMEPATH%") + "/Desktop/unitybuilds/lea/" + System.DateTime.Now.ToString("MMMdhmm") + "";
-		//string buildDir = "/Users/user/Desktop/unitybuilds/lea/" + System.DateTime.Now.ToString("MMMdhmm") + "";
+        string buildDir = System.Environment.ExpandEnvironmentVariables("%HOMEDRIVE%%HOMEPATH%") + "/Desktop/unitybuilds/lea/" + System.DateTime.Now.ToString("yyyy_MMM_d_hmm") + "";
+		//string buildDir = "/Users/user/Desktop/unitybuilds/lea/" + System.DateTime.Now.ToString("yyyy_MMM_d_hmm") + "";
 		System.IO.Directory.CreateDirectory(buildDir);
 		BuildPipeline.BuildPlayer(scenes , buildDir + "/PW.exe", BuildTarget.StandaloneWindows, BuildOptions.None);
 		
@@ -58,7 +58,7 @@ public class BuildScripts
         /* this doesn't work yet
         string[] scenes = {"Assets/SCENES/kinect_test.unity"};
         
-        string buildDir = "C:/Users/theking/Desktop/unitybuilds/GG/" + System.DateTime.Now.ToString("MMMdhmm") + "";
+        string buildDir = "C:/Users/theking/Desktop/unitybuilds/GG/" + System.DateTime.Now.ToString("yyyy_MMM_d_hmm") + "";
         System.IO.Directory.CreateDirectory(buildDir);
         BuildPipeline.BuildPlayer(scenes , buildDir + "/PW.exe", BuildTarget.XboxOne, BuildOptions.None);
 
