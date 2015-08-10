@@ -16,6 +16,29 @@ You build your own Perfect Woman story by choosing and performing a diverse cast
 -Developer Studio
 	-
 
+::ESRB contact::
+::...::
+If you are a game publisher and/or developer and have not yet registered to receive a User Name and Password, you must apply by mail. Please provide a cover letter on company letterhead describing your company, the product(s) intended to be submitted for rating, past products developed, and general information including your website address, full contact information (phone, mail, e-mail), list of executive officers and designated ESRB contact person within your company. This information, in addition to any other helpful materials (i.e. media kits, demo discs, etc.) should be sent to:
+ 
+Entertainment Software Rating Board
+c/o Publisher Account Requests
+PO Box 4518
+New York, NY 10163-4518
+ 
+ESRB will generally contact submitting companies within five business days of receipt of these materials. If your registration is confirmed, your designated ESRB contact person will receive a User Name and Password via the e-mail address provided.
+
+:::PW CV::
+Dear ESRB, we are writing to request access to your site. We would like to get our Xbox One title "Perfect Woman" an ESRB rating. We are a new independent studio with no past products. Our game website is www.perfectwomangame.com.
+
+(primary contact, ESRB contact, co-owner)
+Peter Lu
+11522 Ohio Ave. #5
+Los Angeles, CA, 90025
+
+(co-owner)
+Lea Schoenfelder
+Oberhöchstadter Straße 8
+61440, Oberursel, Germany
 
 
 ::FUTURE LEA TODO STUFF::
@@ -32,20 +55,26 @@ You build your own Perfect Woman story by choosing and performing a diverse cast
 	-test achievements
 	-maybe go through the cert program tests
 
-::TODO2::
+::TODO2:: 
+-contact PEGI and ESRB about ratings
+-figure out start suspend resume activate events
+-clear out all achievements and test
+-set rich presence string / test that this works
+DONE-rebuild asset bundles for windows
 -microsoft stuff
 	-ask about privacy and terms of use doc (seems like it's not required, but ask to make sure)
 	-optional cert yo
 	-ask microsoft if we need to localize in game content or only marketplace stuff
 -submit to http://www.ludicious.ch/
 -make new press package
-	-screenshots
+	DONE-screenshots
 	-latest build of game, windows + osx
 	-instruction on how to play
-	-trailer and gameplay video
+	DONE-trailer and gameplay video
 	-text document including additional information
 	-full credits
 -create game help (see XDP, sixty second shooter for reference)
+	-read this https://developer.xboxlive.com/en-us/xdp/documentation/xdphelp/Pages/product_documents_xdpdocs.aspx
 	-make http://www.perfectwomangame.com/support
 -16-3 HEAD_A needs to have transparencies around eyes removed
 -update screenshots on website..
@@ -54,8 +83,6 @@ You build your own Perfect Woman story by choosing and performing a diverse cast
 	-make CharacterLoader load accross several frames
 -email lea about getting PW into museum
 -fix font position on character unlocking
--email and ask if we are ready for final certification
--get rid of holistic wisdom / rename it
 -send lea a build with unlockables
 -double restart if you force restart on?????
 	-ModeNormalPlay.cs mSunsetManager.set_for_GRAVE(mPerformanceStats, delegate() { mManager.restart_game(); }); 
@@ -68,18 +95,12 @@ You build your own Perfect Woman story by choosing and performing a diverse cast
 	DONE-run validator
 	-run binscope
 -solve the quarternion bug	
--figure out start suspend resume activate events
--clear out all achievements and test
--set rich presence string / test that this works
--make the necessary documents (Lea)
-	-read this https://developer.xboxlive.com/en-us/xdp/documentation/xdphelp/Pages/product_documents_xdpdocs.aspx
-	-game help, privacy, terms of use
-	-need draft of "Privacy" and "Terms of Use" presumably in the language of the region we are publishing in
--contact PEGI and ESRB about ratings
 -gloss over TLA
 -reply to mattia
 
 
+DONE/IGNORE-email and ask if we are ready for final certification
+DONE-get rid of holistic wisdom / rename it
 DONE-fix storage and enable character unlocking
 DONE-enable character unlocking achievements
 IGNORE-make duplicate of ggfiles, one for  XB1 and one for PC
