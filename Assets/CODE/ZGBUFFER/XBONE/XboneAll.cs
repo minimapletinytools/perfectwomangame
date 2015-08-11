@@ -3,7 +3,6 @@ using System.Collections;
 #if UNITY_XBOXONE 
 using Users;
 using DataPlatform;
-using UnityPluginLog;
 using ConsoleUtils;
 using TextSystems;
 using UnityAOT;
@@ -33,8 +32,6 @@ public class XboneAll {
         UsersManager.Create();
         AchievementsManager.Create();
         StatisticsManager.Create();
-        PluginLogManager.Create();
-        PluginLogManager.SetLogPath("G:\\plugins.log");
         EventManager.Create(@"G:\Data\StreamingAssets\Events-PRFW.0-4A0A3432.man");
         Storage.StorageManager.Create();
 

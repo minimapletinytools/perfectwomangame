@@ -1,23 +1,15 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-
-
-#if UNITY_XBOXONE 
+#if UNITY_XBOXONE && false
 using UnityPluginLog;
-
 using DataPlatform;
-#endif
-
 
 public class XboneUnityLogPlugin 
 {
     
-    #if UNITY_XBOXONE 
-    
     public void Start()
     {
-        
         //plugin stuff TODO move to a diff file
         //PluginLogManager.Create();
         //PluginLogManager.SetLogPath("G:\\plugins.log");
@@ -40,9 +32,12 @@ public class XboneUnityLogPlugin
         PluginLogManager.Log(aMsg);
         PluginLogManager.LogError("error " + aMsg);
     }
-    
-    #else
+}
+
+#else
+public class XboneUnityLogPlugin 
+{   
     public void Start(){}
     public void UnityLog(string aMsg){}
-    #endif
 }
+#endif
