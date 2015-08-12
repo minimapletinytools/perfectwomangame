@@ -89,6 +89,10 @@ public class MicrosoftZig : ZgInterface
         }
         if (KeyMan.GetKeyDown("RightThumbstick"))
         {
+            ManagerManager.Log("EVERYTHING UNLOCKED");
+            mZig.mManager.mMetaManager.UnlockManager.mUnlocked.unlock_all();
+            write_data(mZig.mManager.mMetaManager.UnlockManager.serialize(), "unlock");
+
             //mEvents.SendDeathEvent();
             //ManagerManager.Log("Sent fake death event");
 

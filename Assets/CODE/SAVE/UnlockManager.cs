@@ -45,6 +45,12 @@ public class Unlockables
                 unlockedCharacters[e] = 1; 
 		}
 	}
+
+    public void unlock_all()
+    {
+        foreach (CharacterIndex e in CharacterIndex.sAllCharacters)
+            unlockedCharacters[e] = 1;
+    }
 }
 
 public class UnlockManager
