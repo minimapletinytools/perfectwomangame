@@ -1,0 +1,19 @@
+﻿body
+{
+    height:100%;
+    font-size: 24px;
+
+    /* These are the standard fallbacks that are design approved for the majority of the supported devices. */
+    font-family:Segoe UI Regular,HelveticaNeue, Droid Sans, Arial, Sans-Serif;
+
+    color:#ebebeb;
+    background-color:#222222;
+
+    padding: 64px 28px 64px 64px;
+    word-break: break-all;
+}
+
+/* Position the logo below the speech orb so it does not get covered when the user is in active listening */
+.appLogo {
+    margin-top: 80px;
+}
