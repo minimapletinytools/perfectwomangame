@@ -284,14 +284,14 @@ public class ManagerManager : MonoBehaviour{
 
             //GUI.Box(new Rect(0,0,Screen.width * mGameManager.mModeNormalPlay.mLastGrade,50),""); 
 
-            int heightCounter = 50;
+            int heightCounter = 25;
             foreach (var e in mDebugMessages.Reverse<string>().Select((val, index) => new { val, index }))
             {
                 var height = style.CalcHeight(new GUIContent(e.val), Screen.width);
                 GUI.TextArea(new Rect(10, heightCounter, Screen.width, (int)height), e.val, style);
-                heightCounter += (int)height + 10;
+                heightCounter += (int)height + 2;
 
-                if (heightCounter > 800)
+                if (heightCounter > Screen.height - 40)
                     break;
             }
 
