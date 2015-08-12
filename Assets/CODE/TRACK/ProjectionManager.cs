@@ -139,9 +139,9 @@ public class ProjectionManager : FakeMonoBehaviour {
 		float r = 0;
         //TODO some problems with this lockngi... Should default to below if that happens
 		//if(!mManager.mZigManager.using_nite())
-            r = -waist.Rotation.flat_rotation() + 90;    
+            //r = -waist.Rotation.flat_rotation() + 90;    
         //else
-            //r = get_relative(waist.Position, L.Position * 0.5f + R.Position * 0.5f);
+            r = get_relative(waist.Position, L.Position * 0.5f + R.Position * 0.5f);
 
 		return r;
     }
