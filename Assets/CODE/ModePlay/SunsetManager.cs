@@ -466,7 +466,7 @@ public class SunsetManager
     List<FlatElementBase> graveCleanup = new List<FlatElementBase>();
 	QuTimer mGraveChain = null;
 	System.Action mGraveCompleteCb = null;
-	public void set_for_GRAVE(List<PerformanceStats> aStats, System.Action graveCompleteCb)
+	public void set_for_GRAVE(List<PerformanceStats> aStats)
 	{
 		//timing vars
 		float gIntroText = 4.5f;
@@ -799,95 +799,99 @@ public class SunsetManager
 		mGraveCompleteCb = delegate()
 		{
 			Vector3 barYPosition = mFlatCamera.get_point(Vector3.zero) + new Vector3(0,-700,0);
-			TED.add_one_shot_event(
-				delegate()
-				{
-					mManager.mMusicManager.fade_in_extra_music("creditsMusic");
-					mManager.mMusicManager.fade_out();
-					var imgData = mManager.mCharacterBundleManager.get_image("BAR");
-					var barImg = new FlatElementImage(imgData.Image,imgData.Data.Size,24);
-					barImg.HardPosition = barYPosition + new Vector3(0,-1000,0);
-					barImg.SoftPosition = barYPosition;
-					mElement.Add(barImg);
+            TED.add_one_shot_event(
+                delegate()
+                {
+                    mManager.mMusicManager.fade_in_extra_music("creditsMusic");
+                    mManager.mMusicManager.fade_out();
+                    var imgData = mManager.mCharacterBundleManager.get_image("BAR");
+                    var barImg = new FlatElementImage(imgData.Image, imgData.Data.Size, 24);
+                    barImg.HardPosition = barYPosition + new Vector3(0, -1000, 0);
+                    barImg.SoftPosition = barYPosition;
+                    mElement.Add(barImg);
                     graveCleanup.Add(barImg);
-				}
-			,0).then_one_shot(
-				delegate()
-				{
-					
-					float lastXPosition = mFlatCamera.get_point(Vector3.zero).x-mFlatCamera.Width/2 - 100;	
-					int counter = 0;
-					foreach(string e in GameConstants.credits)
-					{
-						var text = new FlatElementText(mManager.mNewRef.genericFont,70,e,25);
-						float textWidth = text.BoundingBox.width;
-						text.HardColor = new Color(1,1,1,1);
-						text.HardPosition = new Vector3(lastXPosition-textWidth/2f,barYPosition.y,0);
-						lastXPosition += -textWidth - 75;
-						creditsText.Add(text);
-						mElement.Add(text);
+                }
+            , 0).then_one_shot(
+                delegate()
+                {
+
+                    float lastXPosition = mFlatCamera.get_point(Vector3.zero).x - mFlatCamera.Width / 2 - 100;
+                    int counter = 0;
+                    foreach (string e in GameConstants.credits)
+                    {
+                        var text = new FlatElementText(mManager.mNewRef.genericFont, 70, e, 25);
+                        float textWidth = text.BoundingBox.width;
+                        text.HardColor = new Color(1, 1, 1, 1);
+                        text.HardPosition = new Vector3(lastXPosition - textWidth / 2f, barYPosition.y, 0);
+                        lastXPosition += -textWidth - 75;
+                        creditsText.Add(text);
+                        mElement.Add(text);
                         graveCleanup.Add(text);
-						counter++;
-					}
-					
-					lastXPosition += -200;
-					string[] imageNames = new string[]{"LOGO_FA","LOGO_AI","LOGO_GL"};
-					for(int i = 0; i < imageNames.Length; i++)
-					{
-						var imgData = mManager.mCharacterBundleManager.get_image(imageNames[i]);
-						var img = new FlatElementImage(imgData.Image,imgData.Data.Size,25);
-						float imgWidth = img.BoundingBox.width;
-						img.HardPosition =  new Vector3(lastXPosition-imgWidth/2,barYPosition.y,0);
-						lastXPosition += -img.BoundingBox.width/2f - 500;
-						logos[i] = img;
-						mElement.Add(img);
+                        counter++;
+                    }
+
+                    lastXPosition += -200;
+                    string[] imageNames = new string[] { "LOGO_FA", "LOGO_AI", "LOGO_GL" };
+                    for (int i = 0; i < imageNames.Length; i++)
+                    {
+                        var imgData = mManager.mCharacterBundleManager.get_image(imageNames[i]);
+                        var img = new FlatElementImage(imgData.Image, imgData.Data.Size, 25);
+                        float imgWidth = img.BoundingBox.width;
+                        img.HardPosition = new Vector3(lastXPosition - imgWidth / 2, barYPosition.y, 0);
+                        lastXPosition += -img.BoundingBox.width / 2f - 500;
+                        logos[i] = img;
+                        mElement.Add(img);
                         graveCleanup.Add(img);
-					}
-					
-				}
-			,1).then_one_shot(
-				delegate() {
+                    }
 
-					/* this will fade everything out super slowly
-					List<FlatElementBase> graveItems = new List<FlatElementBase>(){finalScoreText,perfectPercent};
-					foreach(FlatElementBase e in 
-				        mCharacters.Cast<FlatElementBase>()
-				        .Concat(mDiffLabels.Cast<FlatElementBase>())
-				        .Concat(mScoreLabels.Cast<FlatElementBase>())
-				        .Concat(mScoreTexts.Cast<FlatElementBase>())
-				        .Concat(graveItems.Cast<FlatElementBase>()))
-					{
-						e.ColorInterpolationLimit = 0.05f;
-						e.SoftColor = GameConstants.UiWhiteTransparent;
-					}*/
-				}
-			,0).then(
-				delegate(float aTime)
-				{
-				
-				//scroll contents down
-				Vector3 scroll = new Vector3(scrollSpeed*(aTime-lastTime),0,0);
-				foreach(FlatElementText e in creditsText)
-				{
-					e.SoftPosition = e.SoftPosition + scroll;
-				}
+                }
+            , 1).then_one_shot(
+                delegate()
+                {
 
-				foreach(FlatElementImage e in logos)
-				{
-					e.SoftPosition = e.SoftPosition + scroll;
-				}
-				
-				lastTime = aTime;
-				if(Input.GetKeyDown(KeyCode.Alpha0))
-					return true;
-				
-				if(aTime > gRestart)
-					return true;
-				return false;
-			}
-			,0).then_one_shot(
-				graveCompleteCb
-			,0);
+                    /* this will fade everything out super slowly
+                    List<FlatElementBase> graveItems = new List<FlatElementBase>(){finalScoreText,perfectPercent};
+                    foreach(FlatElementBase e in 
+                        mCharacters.Cast<FlatElementBase>()
+                        .Concat(mDiffLabels.Cast<FlatElementBase>())
+                        .Concat(mScoreLabels.Cast<FlatElementBase>())
+                        .Concat(mScoreTexts.Cast<FlatElementBase>())
+                        .Concat(graveItems.Cast<FlatElementBase>()))
+                    {
+                        e.ColorInterpolationLimit = 0.05f;
+                        e.SoftColor = GameConstants.UiWhiteTransparent;
+                    }*/
+                }
+            , 0).then(
+                delegate(float aTime)
+                {
+
+                    //scroll contents down
+                    Vector3 scroll = new Vector3(scrollSpeed * (aTime - lastTime), 0, 0);
+                    foreach (FlatElementText e in creditsText)
+                    {
+                        e.SoftPosition = e.SoftPosition + scroll;
+                    }
+
+                    foreach (FlatElementImage e in logos)
+                    {
+                        e.SoftPosition = e.SoftPosition + scroll;
+                    }
+
+                    lastTime = aTime;
+                    if (Input.GetKeyDown(KeyCode.Alpha0))
+                        return true;
+
+                    if (aTime > gRestart)
+                        return true;
+                    return false;
+                }
+            , 0).then_one_shot(
+                delegate(){
+                    mManager.mMusicManager.fade_out_extra_music();
+                    mManager.restart_game();   
+                }
+            , 0);
 		};
 		
 		chain = chain.then_one_shot(

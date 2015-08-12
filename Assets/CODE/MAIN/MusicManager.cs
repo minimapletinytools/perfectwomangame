@@ -194,6 +194,7 @@ public class MusicManager : FakeMonoBehaviour
 
     public void unload()
     {
+        fade_out_extra_music();
         mMusicSource.Stop();
         mMusicSource.clip = null;
     }
