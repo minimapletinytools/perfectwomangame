@@ -55,16 +55,29 @@ Oberhöchstadter Straße 8
 	-test achievements
 	-maybe go through the cert program tests
 
+::optional cert stuff::
+-unlock everything and download the save xml
+-http://forum.unity3d.com/threads/creating-a-build-for-xbox-certification-submission.341132/#post-2228901
+
+::final cert stuff
+-need feature promotional square art
+-game ratings
+
 ::TODO2:: 
+-only one life in the game instead of 2!
+-do certification workbook
+-do title metadata translations
+-need feature promotional square art
+-test out game help
 -contact PEGI and ESRB about ratings
 -figure out start suspend resume activate events
 -clear out all achievements and test
 -set rich presence string / test that this works
 DONE-rebuild asset bundles for windows
 -microsoft stuff
-	-ask about privacy and terms of use doc (seems like it's not required, but ask to make sure)
 	-optional cert yo
-	-ask microsoft if we need to localize in game content or only marketplace stuff
+	DONE/IGNORE-ask about privacy and terms of use doc (seems like it's not required, but ask to make sure)
+	DONE-ask microsoft if we need to localize in game content or only marketplace stuff
 -submit to http://www.ludicious.ch/
 -make new press package
 	DONE-screenshots
@@ -77,7 +90,7 @@ DONE-rebuild asset bundles for windows
 	-read this https://developer.xboxlive.com/en-us/xdp/documentation/xdphelp/Pages/product_documents_xdpdocs.aspx
 	-make http://www.perfectwomangame.com/support
 -16-3 HEAD_A needs to have transparencies around eyes removed
--update screenshots on website..
+DONE-update screenshots on website..
 -figure out what that brief freeze after starting a character is
 	-call ModeNormalPlay initialize during title screen
 	-make CharacterLoader load accross several frames
