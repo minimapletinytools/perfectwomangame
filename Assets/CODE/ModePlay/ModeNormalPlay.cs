@@ -213,6 +213,13 @@ public class ModeNormalPlay
         mInterfaceManager.hide_interface();
         mInterfaceManager.enable_warning_text(false);
 
+        //clear out characters
+        while (mPerformanceStats.Count > 0)
+        {
+            mSunsetManager.remove_last_character();
+            mPerformanceStats.RemoveAt(mPerformanceStats.Count - 1);
+        }
+
         //move the images out of the way
         slide_image(mFlatCamera, mChoosingImage, null, false, true);
         slide_image(mFlatCamera, mSunsetImage, null, false, true);
@@ -347,7 +354,6 @@ public class ModeNormalPlay
 				mChoosingManager.set_bb_choices(NGM.CurrentCharacterIndex.get_future_neighbor(0).get_neighbors());
 			}
 
-			//level skipping, this will probably break grave btw	
 			//KeyCode[] levelKeys = new KeyCode[]{KeyCode.Q,KeyCode.W,KeyCode.E,KeyCode.R,KeyCode.T,KeyCode.Z,KeyCode.U,KeyCode.I};
 			//KeyCode[] choiceKeys = new KeyCode[]{KeyCode.Alpha1,KeyCode.Alpha2,KeyCode.Alpha3,KeyCode.Alpha4};
             string[] levelKeys = new string[]{"lvl1","lvl2","lvl3","lvl4","lvl5","lvl6","lvl7","lvl8"};
@@ -624,7 +630,13 @@ public class ModeNormalPlay
 
     bool space_camp_final_exam()
     {
-        return mPerformanceStats.Where(e=>e.Score < GameConstants.astronautCutoff).Count() == 0;
+        ManagerManager.Log("testing " + mPerformanceStats.Count() + " chars");
+        foreach (var e in mPerformanceStats)
+        {
+            ManagerManager.Log(e.Character.StringIdentifier + " " + e.Score);
+        }
+        ManagerManager.Log("spacecamp final exam " + mPerformanceStats.Where(e => e.Character != CharacterIndex.sFetus).Where(e => e.Score < GameConstants.astronautCutoff).Count());
+        return mPerformanceStats.Where(e=>e.Character != CharacterIndex.sFetus).Where(e=>e.Score < GameConstants.astronautCutoff).Count() == 0;
     }
 	
 	public void CUTSCENE_finished(NUPD.ChangeSet changes = null)
