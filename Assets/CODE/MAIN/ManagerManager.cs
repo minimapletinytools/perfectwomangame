@@ -98,8 +98,6 @@ public class ManagerManager : MonoBehaviour{
             mStartDelegates();
         }
 
-        GameEventDistributor("START",null);
-
         ManagerManager.Log("START GAME");
 	}
 	

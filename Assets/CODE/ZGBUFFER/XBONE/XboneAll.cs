@@ -73,6 +73,9 @@ public class XboneAll {
             if(!XboxOnePLM.AmConstrained())
                 ManagerManager.Manager.GameEventDistributor("RESUME", null);
 
+            //event
+            ManagerManager.Manager.GameEventDistributor("START", null);
+
             //rich user presence
             SetRichUserPresence();
             
@@ -175,8 +178,11 @@ public class XboneAll {
         ManagerManager.Log("OnUserSignIn " + GetUserName(id));
         if (ActiveUser == null)
         {
-            if(id != LastActiveUser.Id)
+            if (id != LastActiveUser.Id)
+            {
+                ManagerManager.Manager.GameEventDistributor("TERMINATE", null);
                 ManagerManager.Manager.restart_game();
+            }
             ActiveUser = UsersManager.Users[0];
         }
     }

@@ -37,8 +37,10 @@ public class XboneEvents{
         {
             if ((CharacterIndex)args [0] == CharacterIndex.sFetus)
             {
-                Events.SendPlayerSessionStart(mAll.LastActiveUser.UID, ref mSessionId, "", 0, 0);
+                //this is sent on user login/logout instead now
+                //Events.SendPlayerSessionStart(mAll.LastActiveUser.UID, ref mSessionId, "", 0, 0);
             }
+
             if (((CharacterIndex)args [0]).LevelIndex == 1)
             {
                 //Debug.Log("BORN EVENT");
@@ -80,10 +82,8 @@ public class XboneEvents{
 
         if (name == "START")
         {
-            //this is done elsewhere now since START event may happen before there are any users
-            //Events.SendPlayerSessionStart(mAll.LastActiveUser.UID, ref mSessionId, "", 0, 0);
+            Events.SendPlayerSessionStart(mAll.LastActiveUser.UID, ref mSessionId, "", 0, 0);
         }
-
         if (name == "PAUSE")
         {
             Events.SendPlayerSessionPause(mAll.LastActiveUser.UID, ref mSessionId, "");
