@@ -97,8 +97,16 @@ public class ModeNormalPlay
 		while(mPerformanceStats.Count > 0 && mPerformanceStats.Last().Character.LevelIndex < aChar.LevelIndex - 1)
 		{
 			PerformanceStats stat = new PerformanceStats(new CharacterIndex(mPerformanceStats.Last().Character.LevelIndex + 1,Random.Range(0,4)));
-			stat.update_score(0,Random.value);
-			stat.update_score(1,Random.value);
+            if (GameConstants.allPerfectOnSkip)
+            {
+                stat.update_score(0, 1);
+                stat.update_score(1, 1);
+            }
+            else
+            {
+                stat.update_score(0, Random.value);
+                stat.update_score(1, Random.value);
+            }
 			stat.Stats = mManager.mGameManager.CharacterHelper.Characters[stat.Character];
 			mPerformanceStats.Add(stat);
 			mSunsetManager.add_character(stat.Character,!stat.BadPerformance,false);

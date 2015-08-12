@@ -83,11 +83,11 @@ public static class GameConstants
 	public static float badPerformanceThreshold = 0.4f;
 	public static float[] difficultyToChangeTime = new float[]{4,2,1.4f,.7f};
 
-    public static bool showReward = false;//true;
+    public static bool showReward = false;//true; //this might have broken sometime along the way...
 
-    
-    //TODO set true when you have 110
     public static bool showAstronaut = true;
+
+    public static bool allPerfectOnSkip = true; //for character skipping, sets performances of all characters to perfect (as oppose to random score)
 	
 	//grave stuff
 	//public static string[] credits = {"Perfect Woman","created by", "Lea Sch\u00F6enfelder", "Peter Lu"};
