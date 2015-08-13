@@ -28,7 +28,7 @@ public static class KeyMan
         {"lvl4",null},
         {"lvl5",null},
         {"lvl6",null},
-        {"lvl7",null},
+        {"lvl7",XboxOneKeyCode.Gamepad1ButtonB},
         {"lvl8",XboxOneKeyCode.Gamepad1ButtonY}, //bad key, pick a different one
 
         //use these for testing
@@ -36,20 +36,29 @@ public static class KeyMan
         {"RightThumbstick",XboxOneKeyCode.Gamepad1ButtonRightThumbstick},
     };
 
-    public static bool GetKey(string aKey)
+    public static bool GetKey(string aKey, bool aForce = false)
     {
+        if (!(aForce || GameConstants.KB_CONTROL))
+            return false;
+
         if (keyMap [aKey] == null)
             return false;
         return XboxOneInput.GetKey((XboxOneKeyCode)keyMap[aKey]);
     }
-    public static bool GetKeyDown(string aKey)
+    public static bool GetKeyDown(string aKey, bool aForce = false)
     {
+        if (!(aForce || GameConstants.KB_CONTROL))
+            return false;
+
         if (keyMap [aKey] == null)
             return false;
         return XboxOneInput.GetKeyDown((XboxOneKeyCode)keyMap[aKey]);
     }
-    public static bool GetKeyUp(string aKey)
+    public static bool GetKeyUp(string aKey, bool aForce = false)
     {
+        if (!(aForce || GameConstants.KB_CONTROL))
+            return false;
+
         if (keyMap [aKey] == null)
             return false;
         return XboxOneInput.GetKeyUp((XboxOneKeyCode)keyMap[aKey]);
