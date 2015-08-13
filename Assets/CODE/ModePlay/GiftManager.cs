@@ -13,7 +13,6 @@ public class GiftManager
 		mManager = aManager;
 	}
 
-	public TimedEventDistributor TED { get; private set; }
     public FlatCameraManager mFlatCamera;
     HashSet<FlatElementBase> mElement = new HashSet<FlatElementBase>();
 	
@@ -26,7 +25,6 @@ public class GiftManager
 	public void initialize()
 	{
 		IsLoaded = false;
-		TED = new TimedEventDistributor();
 		mFlatCamera = new FlatCameraManager(mManager.mCameraManager.BackgroundCamera.transform.position, 10);
 		mFlatCamera.fit_camera_to_game(); 
 		mFlatCamera.Camera.cullingMask = (1 << 3) | (1 << 0);
@@ -61,8 +59,7 @@ public class GiftManager
 	{
 		mFlatCamera.update(Time.deltaTime);
 		foreach (FlatElementBase e in mElement)
-			e.update(Time.deltaTime);       
-		TED.update(Time.deltaTime);
+			e.update(Time.deltaTime);   
 	}
 
 

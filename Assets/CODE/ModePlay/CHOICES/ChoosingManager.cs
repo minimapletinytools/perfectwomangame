@@ -12,7 +12,6 @@ public class ChoosingManager
 		mManager = aManager;
 	}
 
-	public TimedEventDistributor TED { get; private set; }
     public FlatCameraManager mFlatCamera;
     HashSet<FlatElementBase> mElement = new HashSet<FlatElementBase>();
 	
@@ -33,9 +32,6 @@ public class ChoosingManager
 
 	public void initialize()
 	{
-		
-		TED = new TimedEventDistributor();
-		
 		mFlatCamera = new FlatCameraManager(new Vector3(24200,-3500,0),10);
 		mFlatCamera.fit_camera_to_game();
 		//mFlatCamera = mModeNormalPlay.mSunsetManager.mFlatCamera;
@@ -129,9 +125,6 @@ public class ChoosingManager
 		mFlatCamera.update(Time.deltaTime);
         foreach (FlatElementBase e in mElement)
             e.update(Time.deltaTime);       
-		
-		TED.update(Time.deltaTime);
-		
 		
 		//TODO should render mFlatCamera to a render texture
 	}
