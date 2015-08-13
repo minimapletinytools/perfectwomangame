@@ -56,6 +56,40 @@ public class NewInterfaceManager {
 		return mFlatCamera.get_point(Vector3.zero) + (new Vector3(Random.Range(-1f, 1f), Random.Range(-1f, 1f), 0)).normalized * Random.Range(4000,4000);
     }
 
+
+    public void reset()
+    {
+        hide_interface();
+        enable_warning_text(false);
+        clear_TED_and_fade_out_bubbles();
+    }
+
+    //this function is duplicated in NewInterfaceManager.cs and SunsetManager.cs. I would have used refs to TED and mElement but I can't use ref parameters inside of an anonymous function
+    void clear_TED_and_fade_out_bubbles()
+    {
+        TED.clear_events();
+        foreach (var e in mElement)
+        {
+            var elt = e;
+            if (elt.PrimaryGameObject.name == "genPOPUPTEXT")
+            {
+                TED.add_one_shot_event(
+                    delegate()
+                    {
+                        elt.SoftColor = new Color(0.5f, 0.5f, 0.5f, 0);
+                    }
+                ).then_one_shot(
+                    delegate()
+                    {
+                        elt.destroy();
+                        mElement.Remove(elt);
+                    }
+                , 2);
+            }
+        }
+    }
+
+
 	FlatElementImage mBBNameTextFrame;
 	FlatElementText mBBNameText;
 	FlatElementImage mBBScoreFrame;

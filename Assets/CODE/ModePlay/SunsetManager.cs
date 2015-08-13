@@ -465,6 +465,7 @@ public class SunsetManager
 	//delegates needed for skipping cleanly
     List<FlatElementBase> graveCleanup = new List<FlatElementBase>();
 	QuTimer mGraveChain = null;
+    QuTimer mGraveCompleteChain = null;
 	System.Action mGraveCompleteCb = null;
 	public void set_for_GRAVE(List<PerformanceStats> aStats)
 	{
@@ -892,6 +893,7 @@ public class SunsetManager
                     mManager.restart_game();   
                 }
             , 0);
+            mGraveCompleteChain = TED.LastEventKeyAdded;
 		};
 		
 		chain = chain.then_one_shot(
@@ -909,20 +911,73 @@ public class SunsetManager
 
     public void reset_sunset()
     {
+        //reset sunset background
+        ShowBackground = true;
+        set_sun(0, true);
+
         //remove characters
         while (mCharacters.Count > 0)
             remove_last_character();
 
+        clear_TED_and_fade_out_bubbles();
+
+        /*
+        //clear out grave events
+        if (mGraveChain != null)
+        {
+            TED.remove_event(mGraveChain);
+            mGraveChain = null;
+        }
+        if (mGraveCompleteChain != null)
+        {
+            TED.remove_event(mGraveCompleteChain);
+            mGraveCompleteChain = null;
+        }
+        mGraveCompleteCb = null;*/
+
         //cleanup credits
         foreach (var e in graveCleanup)
         {
-            e.destroy();
-            mElement.Remove(e);
+            var elt = e;
+            TED.add_one_shot_event(
+                delegate()
+                {
+                    elt.SoftColor = new Color(0.5f, 0.5f, 0.5f, 0);
+                }
+            ).then_one_shot(
+                delegate()
+                {
+                    elt.destroy();
+                    mElement.Remove(elt);
+                }
+            , 2);
         }
         graveCleanup.Clear();
+    }
 
-        ShowBackground = true;
-        set_sun(0, true);
+    //this function is duplicated in NewInterfaceManager.cs and SunsetManager.cs. I would have used refs to TED and mElement but I can't use ref parameters inside of an anonymous function
+    void clear_TED_and_fade_out_bubbles()
+    {
+        TED.clear_events();
+        foreach (var e in mElement)
+        {
+            var elt = e;
+            if (elt.PrimaryGameObject.name == "genPOPUPTEXT")
+            {
+                TED.add_one_shot_event(
+                    delegate()
+                    {
+                        elt.SoftColor = new Color(0.5f, 0.5f, 0.5f, 0);
+                    }
+                ).then_one_shot(
+                    delegate()
+                    {
+                        elt.destroy();
+                        mElement.Remove(elt);
+                    }
+                , 2);
+            }
+        }
     }
 
 }

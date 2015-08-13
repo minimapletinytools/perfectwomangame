@@ -210,8 +210,11 @@ public class ModeNormalPlay
     {
         GS = NormalPlayGameState.NONE;
         mSunsetManager.reset_sunset();
-        mInterfaceManager.hide_interface();
-        mInterfaceManager.enable_warning_text(false);
+        mInterfaceManager.reset();
+        mAstronaut.finish_astro();
+
+        //hope this is ok :O
+        TED.clear_events();
 
         //clear out characters
         while (mPerformanceStats.Count > 0)
@@ -223,6 +226,31 @@ public class ModeNormalPlay
         //move the images out of the way
         slide_image(mFlatCamera, mChoosingImage, null, false, true);
         slide_image(mFlatCamera, mSunsetImage, null, false, true);
+    }
+
+    //this function is duplicated in several files. I would have used refs to TED and mElement but I can't use ref parameters inside of an anonymous function
+    public void clear_TED_and_fade_out_bubbles()
+    {
+        TED.clear_events();
+        foreach (var e in mElement)
+        {
+            var elt = e;
+            if (elt.PrimaryGameObject.name == "genPOPUPTEXT")
+            {
+                TED.add_one_shot_event(
+                    delegate()
+                    {
+                        elt.SoftColor = new Color(0.5f, 0.5f, 0.5f, 0);
+                    }
+                ).then_one_shot(
+                    delegate()
+                    {
+                        elt.destroy();
+                        mElement.Remove(elt);
+                    }
+                , 5);
+            }
+        }
     }
 
 

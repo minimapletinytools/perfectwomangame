@@ -12,9 +12,12 @@ public class AstronautPlay
 
     Vector3 mStartingPos;
 
+    public TimedEventDistributor TED { get; private set; }
+
     public AstronautPlay(ModeNormalPlay aMode)
     {
         mMode = aMode;
+        TED = new TimedEventDistributor();
     }
 
     public void start_astro()
@@ -81,8 +84,17 @@ public class AstronautPlay
         //mSimian = null;
         //GameConstants.SCALE = 1;
 
-        //TODO 
-        //should really fade out the asteroids but meh, 
+
+        //destroy the asteroids after 5000 seconds, I kind of like how they float into other screens but we don't want any memory licks either :o
+        var copyAstro = mAsteroids;
+        TED.add_one_shot_event(
+            delegate(){
+                foreach (var e in copyAstro)
+                {
+                    GameObject.Destroy(e);
+                }
+            }
+        ,5000);
         mAsteroids.Clear();
 
         foreach (var e in mParts)

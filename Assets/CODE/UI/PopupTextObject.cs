@@ -99,6 +99,7 @@ public class PopupTextObject : FlatElementMultiBase {
 		mElements.Add(mTextOffset);
 		Text = aText;
         PrimaryGameObject = create_primary_from_elements();
+        PrimaryGameObject.name = "genPOPUPTEXT";
 
 		//make sure it gets applied to text as well...
 		ColorInterpolationMaxLimit = 3f;
