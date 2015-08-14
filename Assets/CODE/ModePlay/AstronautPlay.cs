@@ -106,7 +106,7 @@ public class AstronautPlay
     Vector3 mMoveSpeed = new Vector3(0,0,0);
     public void ASTROCOLLISION(Vector3 aVel, Vector3 aPoint)
     {
-        mMoveSpeed -= aVel/5f;
+        mMoveSpeed -= aVel/10f;
     }
 
     public void update_astro()
@@ -115,7 +115,7 @@ public class AstronautPlay
 
         //floaty astronaut
         mMode.NGM.mManager.mBodyManager.mFlat.SoftPosition += mMoveSpeed * Time.deltaTime;
-        mMoveSpeed = mMoveSpeed * 0.993f;
+        mMoveSpeed = mMoveSpeed * 0.98f;
         
 
         foreach (var e in mParts)

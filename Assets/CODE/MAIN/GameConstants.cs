@@ -5,12 +5,12 @@ using System.Linq;
 public static class GameConstants
 {
     //XB1 specific stuff
-#if UNITY_XBOXONE
+#if UNITY_XBOXONE && !UNITY_EDITOR
     public static bool ALLOW_NO_KINECT = true;
     public static bool XB1 = true;
     public static int IDLE_RESTART_TIME = 9999999;
-    public static bool KB_CONTROL = true;
-    public static bool SHOW_DEBUG = true;
+    public static bool KB_CONTROL = false;
+    public static bool SHOW_DEBUG = false;
     public static bool UNLOCK_ALL = false;
 #else
     public static bool ALLOW_NO_KINECT = true;
@@ -71,7 +71,9 @@ public static class GameConstants
 	//game stuff
 	public static float maxGradeNorm = 13f; //18 is good for final version, 16 for festival
 	public static float minGradeNorm = 3f;	//use 1.5f for final 
-    public static float astronautCutoff = .6f; //eventually something like .6f
+    public static float gradingGraceDegrees = 1f;
+    public static float astronautCutoff = .6f; //makes sense if this is the  same as badPerformanceThreshold
+    public static float badPerformanceThreshold = 0.6f; //.4 for easy version
 	public static float playSuperCutoff = 0.9f;
 	public static float playFeverCutoff = 0.7f;
 	public static float playFeverRequiredTime = 5f;
@@ -80,7 +82,6 @@ public static class GameConstants
 	public static float playFetusPassThreshold = 0.6f;
 	public static float deathPerformanceThreshold = 0.1f;
 	public static float deathRequiredTime = 8f;
-	public static float badPerformanceThreshold = 0.4f;
 	public static float[] difficultyToChangeTime = new float[]{4,2,1.4f,.7f};
 
     public static bool showReward = false;//true; //this might have broken sometime along the way...
@@ -104,7 +105,7 @@ public static class GameConstants
 		"David Elliott","Sabrina Winter", "Eddo Stern", "J\u00F6rg Ihle", "Tyler Stefanich", "Nikita Arefkia"
 	};
 
-	public static int numberRetries = 1;
+	public static int numberRetries = 0;
 	public static float preplayTime = .5f;
 	public static float transitionToChoiceDelayTime = 1.2f;
 	
