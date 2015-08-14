@@ -58,7 +58,7 @@ public class ChoiceHelper
             {
 				float grade = 9999999; //important that there are more 9s here than above!
 				if(CurrentPose != null && mChoicePoses[i] != null)
-					grade = ProGrading.grade_pose(CurrentPose, mChoicePoses[i]);
+					grade = ProGrading.grade_pose(CurrentPose, mChoicePoses[i],false);
                 if (grade < minGrade)
                 {
                     minGrade = grade;

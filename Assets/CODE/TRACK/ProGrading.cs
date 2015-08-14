@@ -61,7 +61,7 @@ public class ProGrading {
         return r;
 	}
 	
-    public static float grade_pose(Pose A, Pose B) //weight is taken from Pose B, B is traget
+    public static float grade_pose(Pose A, Pose B, bool useGrace = true) //weight is taken from Pose B, B is traget
     {
         float weightsum = 0;
         float gradesum = 0;
@@ -75,6 +75,9 @@ public class ProGrading {
             float diff = target - actual;
             while (diff > 180) diff -= 360;
             while(diff < -180) diff += 360;
+            //grading grace
+            if(useGrace)
+                diff = Mathf.Min(diff - GameConstants.gradingGraceDegrees, 0);
             gradesum += diff * diff * bPose.weight;
             weightsum += bPose.weight;
             output += e.joint + " target: " + target + " actual: " + actual + " diff: " + diff + "\n";
