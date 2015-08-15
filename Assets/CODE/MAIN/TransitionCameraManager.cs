@@ -159,10 +159,16 @@ public class TransitionCameraManager : FakeMonoBehaviour
 
         ModeNormalPlay.draw_render_texture(mRTCamera);
 
-        //TODO...
-        //if(mManager.mZigManager.DepthView.DepthTexture != null)
-            //mDepthImage.set_new_texture(mManager.mZigManager.DepthView.DepthTexture,new Vector2(160,120));
-        //mDepthImage.set_new_texture((mManager.mZigManager.ZgInterface as MicrosoftZig).mKinect.DepthTexture,new Vector2(160,120));
+
+        if (!GameConstants.XB1)
+        {
+            if (mManager.mZigManager.DepthView.DepthTexture != null)
+                mDepthImage.set_new_texture(mManager.mZigManager.DepthView.DepthTexture, new Vector2(160, 120));
+        }
+
+
+        //TEST CODE FOR XB1 DEPTH/IMAGE DISPLAY CAN DELETE
+            //mDepthImage.set_new_texture((mManager.mZigManager.ZgInterface as MicrosoftZig).mKinect.DepthTexture,new Vector2(160,120));
         //if(mManager.mZigManager.ImageView.imageTexture != null)
             //mColorImage.set_new_texture((mManager.mZigManager.ZgInterface as MicrosoftZig).mColorImageRT,new Vector2(300,300));
 
