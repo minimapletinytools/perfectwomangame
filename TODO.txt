@@ -28,7 +28,15 @@ New York, NY 10163-4518
 ESRB will generally contact submitting companies within five business days of receipt of these materials. If your registration is confirmed, your designated ESRB contact person will receive a User Name and Password via the e-mail address provided.
 
 :::PW CV::
-Dear ESRB, we are writing to request access to your site. We would like to get our Xbox One title "Perfect Woman" an ESRB rating. We are a new independent studio with no past products. Our game website is www.perfectwomangame.com.
+Dear ESRB, we are writing to request access to your site. We would like to get our Xbox One title "Perfect Woman" an ESRB rating. We are a new independent studio with no past products. 
+
+
+Game Website and Media:
+
+Our game website is www.perfectwomangame.com. 
+A presskit including media for Perfect Woman is available here: www.perfectwomangame.com/support/PW_PRESSKIT_8_14_2015.zip
+
+Contact Info:
 
 (primary contact, ESRB contact, co-owner)
 Peter Lu
@@ -40,7 +48,6 @@ Lea Schoenfelder
 Oberhöchstadter Straße 8
 61440, Oberursel, Germany
 
-
 ::FUTURE LEA TODO STUFF::
 -decide on publisher name and developer studio
 -talk about german language support
@@ -50,68 +57,85 @@ Oberhöchstadter Straße 8
 -enable character unlocking
 -disable all controller cheater keys
 -disable all debug messages
+-remove PC/MAC bundles
 -test the game a few times through!
 	-test user login/logout scenarios
 	-test achievements
 	-maybe go through the cert program tests
 
-::optional cert stuff::
--unlock everything and download the save xml
--http://forum.unity3d.com/threads/creating-a-build-for-xbox-certification-submission.341132/#post-2228901
-
 ::final cert stuff
 -need feature promotional square art
 -game ratings
+-upload game help again
+
+::restart plan
+-add resume/restart menu
+-manually clear out TED and add bubbles fade/destroy events
+DONE-add TED astronaut clear out events..
 
 ::TODO2:: 
--only one life in the game instead of 2!
--do certification workbook
--do title metadata translations
+-grading changes
+	-consider multiplying waste angle by 2 for XB1 becaues it's not as sensitive as the regular kienct
+	-consider punishing more for large errors (^2.5 istead of ^2)
+-unlock text on PC font size is wrong (at least when runnig in corner of editor)
 -need feature promotional square art
--test out game help
 -contact PEGI and ESRB about ratings
 -figure out start suspend resume activate events
--clear out all achievements and test
 -set rich presence string / test that this works
-DONE-rebuild asset bundles for windows
 -microsoft stuff
 	-optional cert yo
 	DONE/IGNORE-ask about privacy and terms of use doc (seems like it's not required, but ask to make sure)
 	DONE-ask microsoft if we need to localize in game content or only marketplace stuff
--submit to http://www.ludicious.ch/
--make new press package
-	DONE-screenshots
-	-latest build of game, windows + osx
-	-instruction on how to play
-	DONE-trailer and gameplay video
-	-text document including additional information
-	-full credits
--create game help (see XDP, sixty second shooter for reference)
-	-read this https://developer.xboxlive.com/en-us/xdp/documentation/xdphelp/Pages/product_documents_xdpdocs.aspx
-	-make http://www.perfectwomangame.com/support
--16-3 HEAD_A needs to have transparencies around eyes removed
-DONE-update screenshots on website..
 -figure out what that brief freeze after starting a character is
 	-call ModeNormalPlay initialize during title screen
 	-make CharacterLoader load accross several frames
 -email lea about getting PW into museum
 -fix font position on character unlocking
 -send lea a build with unlockables
--double restart if you force restart on?????
-	-ModeNormalPlay.cs mSunsetManager.set_for_GRAVE(mPerformanceStats, delegate() { mManager.restart_game(); }); 
 -UsersManager.FindUserByTrackingId if you need to connect kinect user with player
--skipping/resetting in grave scene on XB1 causes error
-	-it's when you soft skip on the two part text bubbles I think, it will then try to chnage the text on a non existent text bubble, you can solve this just by testing if it's null or not.
-	-some of the TED stuff is not given a chance to finish on reset and causes problems
--packaging/validator nonsense
-	DONE?-do a package build and test...
-	DONE-run validator
-	-run binscope
 -solve the quarternion bug	
 -gloss over TLA
 -reply to mattia
 
-
+MOVED-skipping/resetting in grave scene on XB1 causes error
+	-it's when you soft skip on the two part text bubbles I think, it will then try to chnage the text on a non existent text bubble, you can solve this just by testing if it's null or not.
+	-some of the TED stuff is not given a chance to finish on reset and causes problems
+DONE/IGNORE-make new press package
+	DONE-screenshots
+	-latest build of game, windows + osx
+	-instruction on how to play
+	DONE-trailer and gameplay video
+	-text document including additional information
+	-full credits
+MOVED-fix all outstanding restart issues (this can happen when user force logs out..)
+	-restart in grave causes problems
+	-restart during astronaut causes problems
+DONE-test out game help
+DONE-do certification workbook
+DONE-do title metadata translations
+DONE-add a deadzone for accurate pose matching so players can get good match more easily
+DONE-WHY WONT KEYBOARD INPUT WORK
+DONE-hide depth warning on launching
+DONE-torso not tracking
+DONE-reset game needs to reset score
+DONE-astronaut not working???
+DONE-only one life in the game instead of 2!
+DONE-clear out all achievements and test
+DONE-rebuild asset bundles for windows
+DONE-submit to http://www.ludicious.ch/
+DONE-create game help (see XDP, sixty second shooter for reference)
+	-read this https://developer.xboxlive.com/en-us/xdp/documentation/xdphelp/Pages/product_documents_xdpdocs.aspx
+	-make http://www.perfectwomangame.com/support
+IGNORE-16-3 HEAD_A needs to have transparencies around eyes removed
+DONE-update screenshots on website..
+IGNORE/DONE-double restart if you force restart on?????
+	-ModeNormalPlay.cs mSunsetManager.set_for_GRAVE(mPerformanceStats, delegate() { mManager.restart_game(); }); 	
+DONE-packaging/validator nonsense
+	DONE?-do a package build and test...
+	DONE-run validator
+	IGNORE/DONE-run binscope
+DONE-unlock everything and download the save xml
+DONE-http://forum.unity3d.com/threads/creating-a-build-for-xbox-certification-submission.341132/#post-2228901
 DONE/IGNORE-email and ask if we are ready for final certification
 DONE-get rid of holistic wisdom / rename it
 DONE-fix storage and enable character unlocking
