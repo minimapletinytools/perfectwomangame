@@ -28,8 +28,8 @@ New York, NY 10163-4518
 ESRB will generally contact submitting companies within five business days of receipt of these materials. If your registration is confirmed, your designated ESRB contact person will receive a User Name and Password via the e-mail address provided.
 
 :::PW CV::
-Dear ESRB, we are writing to request access to your site. We would like to get our Xbox One title "Perfect Woman" an ESRB rating. We are a new independent studio with no past products. 
-
+Dear ESRB, we are writing to request access to your site. We would like to get our Xbox One title "Perfect Woman" an ESRB rating. We are a new independent studio with no past products.
+ fac
 
 Game Website and Media:
 
@@ -64,7 +64,7 @@ Oberhöchstadter Straße 8
 	-maybe go through the cert program tests
 
 ::final cert stuff
--need feature promotional square art
+-need feature promotional square artifacts
 -game ratings
 -upload game help again
 
@@ -78,7 +78,7 @@ DONE-add TED astronaut clear out events..
 	-consider multiplying waste angle by 2 for XB1 becaues it's not as sensitive as the regular kienct
 	-consider punishing more for large errors (^2.5 istead of ^2)
 -unlock text on PC font size is wrong (at least when runnig in corner of editor)
--need feature promotional square art
+-need feature promotional square atryo
 -contact PEGI and ESRB about ratings
 -figure out start suspend resume activate events
 -set rich presence string / test that this works
