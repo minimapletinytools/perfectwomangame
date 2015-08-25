@@ -57,7 +57,15 @@ public class TransitionCameraManager : FakeMonoBehaviour
 	FlatElementImage mFilmLogo;
 	FlatElementText mMessageText;
 
+    //kinect required
     FlatElementImage mKinectRequiredImage;
+
+    //restart menu stuff
+    FlatElementImage mMenuBackground;
+    FlatElementImage mMenuSelector;
+    FlatElementText mResume;
+    FlatElementText mRestart;
+
 	
 	//DepthWarning nonsense
 	FlatElementText mDepthWarningText;
@@ -182,7 +190,15 @@ public class TransitionCameraManager : FakeMonoBehaviour
         mColorImage.PrimaryGameObject.GetComponentInChildren<Renderer>().material = mat;*/
 	}
 
+    public void show_menu()
+    {
 
+    }
+
+    public void update_menu()
+    {
+
+    }
 
 	FlatElementImage construct_flat_image(string aName, int aDepth)
 	{
@@ -256,20 +272,20 @@ public class TransitionCameraManager : FakeMonoBehaviour
 		mLoader = loader;
 
 
+        //create background
 		mElement.Add(construct_flat_image("BACKGROUND",0));
 		mElement.Add(construct_flat_image("FG-1",30));
-
 		for(int i = 2; i < 30; i++)
 		{
 			var img = construct_flat_image("BG-"+i,30-i);
 			mElement.Add(img);
 		}
-
         set_start_screen_character_transparency();
 
         
         NewMenuReferenceBehaviour refs = mManager.mNewRef;
 
+        //kinect required image
         if (!GameConstants.ALLOW_NO_KINECT && mManager.mZigManager.is_reader_connected() == 0)
         {
             //TODO put up a KINECT REQUIRED message
@@ -278,9 +294,17 @@ public class TransitionCameraManager : FakeMonoBehaviour
             mElement.Add(mKinectRequiredImage);
         }
 
+
+        //mMenuBackground;
+        //mMenuSelector;
+        //mResume;
+        //mRestart;
+
+
+
+        //????
         mMessageText = new FlatElementText(refs.genericFont, 60, "", 1);
         mMessageText.HardPosition = mRTCamera.get_point(Vector3.zero) + new Vector3(0, 400, 0);
-
         mElement.Add(mMessageText);
 
         start_configuration_display();
