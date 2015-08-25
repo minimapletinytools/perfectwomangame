@@ -802,9 +802,7 @@ public class ModeNormalPlay
 	
 	public void transition_to_GRAVE()
 	{
-        mManager.GameEventDistributor("DEATH", new object[]{NGM.mModeNormalPlay.mPerformanceStats});
-
-		GS = NormalPlayGameState.GRAVE;
+        GS = NormalPlayGameState.GRAVE;
 
 		//since cutscene does not play during horrible death, music does not get played so we start it up again here
 		if(mManager.mMusicManager.MusicClip != NGM.CurrentCharacterLoader.Images.backgroundMusic)
@@ -815,8 +813,9 @@ public class ModeNormalPlay
 
         mManager.mMetaManager.UnlockManager.game_finished(mPerformanceStats);
 
-        //TODO this will double restart if you force restart after grave
         mSunsetManager.set_for_GRAVE(mPerformanceStats);
+
+        mManager.GameEventDistributor("DEATH", new object[] { NGM.mModeNormalPlay.mPerformanceStats });
 	}
 
 

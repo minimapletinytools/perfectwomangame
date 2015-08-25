@@ -53,8 +53,6 @@ public class XboneEvents{
                 ManagerManager.Log("TRANSCEND EVENT");
                 Events.SendTranscend(mAll.LastActiveUser.UID, ref mSessionId);
             }
-
-            send_game_progress(((CharacterIndex)args[0]).LevelIndex / 9f);
         }
         if (name == "DEATH")
         {
@@ -62,7 +60,7 @@ public class XboneEvents{
             var gruesome = mManager.mGameManager.mModeNormalPlay.CurrentPerformanceStat.BadPerformance;
             ManagerManager.Log("DEATH EVENT " + (gruesome ? "GRUESOME" : "NORMAL"));
 
-            send_game_progress(1);
+            send_game_progress();
 
             Events.SendPassing(
                 mAll.LastActiveUser.UID,
@@ -99,8 +97,10 @@ public class XboneEvents{
         }
     }
 
-    void send_game_progress(float progress)
+    void send_game_progress()
     {
+        int lockedChars = mManager.mMetaManager.UnlockManager.mUnlocked.unlockedCharacters.to_array().Where(e => e == 2).Count();
+        float progress = 1 - Mathf.Max(0, 7 - lockedChars) / 7f;
         ManagerManager.Log("EVENT: gameprogress " + progress + " " + mManager.mMetaManager.UnlockManager.get_unlocked_characters().Count);
         Events.SendGameProgress(
                 mAll.LastActiveUser.UID,
