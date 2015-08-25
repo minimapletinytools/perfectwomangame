@@ -404,6 +404,7 @@ public class TransitionCameraManager : FakeMonoBehaviour
 
     public void you_are_playing_as(string aName)
     {
+        aName = System.Text.RegularExpressions.Regex.Replace(aName, @"[^\u0020-\u007E]", "[]");
         NewMenuReferenceBehaviour refs = mManager.mNewRef;
         var title = construct_flat_image("START_PLAYER", 100);
         var text = new FlatElementText(refs.genericFont, 50, aName, 101);
