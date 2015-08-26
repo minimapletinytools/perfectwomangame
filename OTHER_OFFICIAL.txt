@@ -7,7 +7,7 @@
 -for peter@perfectwomangame.com
 	-email: PRFW-main000@xboxtest.com - PRFW-main049@xboxtest.com
 	-password: caps + usual + 1
-	-used: 000,
+	-used: 000, 001
 
 ::PERFECT WOMAN MONEYS::
 -$30 skype money
@@ -174,6 +174,36 @@ Conditions: Play the following characters in one game
 *Mother whose child died of leukemia
 *Burned out
 *Angry because your daughter became a man
+
+::ESRB LETTER::
+Dear ESRB, we are writing to request access to your site. We would like to get our Xbox One title "Perfect Woman" an ESRB rating. We are new independent studio founded by Peter Lu and Lea Schoenfelder and currently have no products other than Perfect Woman. Perfect Woman has been shown at various public and private events (games/art conferences and festivals, usually) and we are currently looking to reach a wider audience by publishing on Xbox One. Game and contact information available below.
+
+Sincerely,
+Peter Lu & Lea Schoenfelder
+
+_________________________________________
+
+Game Website and Media:
+
+Our game website is www.perfectwomangame.com. 
+A presskit including media for Perfect Woman is available here: www.perfectwomangame.com/support/PW_PRESSKIT_8_14_2015.zip
+
+Contact Info:
+
+(primary contact, ESRB contact, co-owner)
+name: Peter Lu
+email: peter@perfectwomangame.com
+phone: +14089168218
+address: 11522 Ohio Ave. #5
+Los Angeles, CA, 90025
+
+(co-owner)
+name: Lea Schönfelder 
+email: lea@schoenfelder.co
+phone:+49017620345669
+address: Oberhöchstadter Straße 8
+61440, Oberursel, Germany
+
 
 ::FOST PW SUBMISSION INFO
 :Entry Description (Please limit to 500 words)*

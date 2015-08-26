@@ -16,42 +16,6 @@ You build your own Perfect Woman story by choosing and performing a diverse cast
 -Developer Studio
 	-
 
-::ESRB contact::
-::...::
-If you are a game publisher and/or developer and have not yet registered to receive a User Name and Password, you must apply by mail. Please provide a cover letter on company letterhead describing your company, the product(s) intended to be submitted for rating, past products developed, and general information including your website address, full contact information (phone, mail, e-mail), list of executive officers and designated ESRB contact person within your company. This information, in addition to any other helpful materials (i.e. media kits, demo discs, etc.) should be sent to:
- 
-Entertainment Software Rating Board
-c/o Publisher Account Requests
-PO Box 4518
-New York, NY 10163-4518
- 
-ESRB will generally contact submitting companies within five business days of receipt of these materials. If your registration is confirmed, your designated ESRB contact person will receive a User Name and Password via the e-mail address provided.
-
-:::PW CV::
-Dear ESRB, we are writing to request access to your site. We would like to get our Xbox One title "Perfect Woman" an ESRB rating. We are a new independent studio with no past products.
- fac
-
-Game Website and Media:
-
-Our game website is www.perfectwomangame.com. 
-A presskit including media for Perfect Woman is available here: www.perfectwomangame.com/support/PW_PRESSKIT_8_14_2015.zip
-
-Contact Info:
-
-(primary contact, ESRB contact, co-owner)
-Peter Lu
-11522 Ohio Ave. #5
-Los Angeles, CA, 90025
-
-(co-owner)
-Lea Schoenfelder
-Oberhöchstadter Straße 8
-61440, Oberursel, Germany
-
-::FUTURE LEA TODO STUFF::
--decide on publisher name and developer studio
--talk about german language support
--submit for ratings
 
 ::PRE-CERT TODO
 -enable character unlocking
@@ -74,12 +38,22 @@ Oberhöchstadter Straße 8
 DONE-add TED astronaut clear out events..
 
 ::TODO2:: 
+-menu key -> do you want to change users? This will restart your game -> account picker
+DONE?-replace all non standard characters with [] in display name
+DONE?-make game progress the number of charactes you unlocked again
+-images
+	-achievements still using placeholder images???
+	-pinned image is placeholder image
+	-(are these things set in XDP??)
+-check that changing users restarts the game with the right save data
+	-indeed this seems to be the case???
+-launch account picker at beginning of game regardless
+-punish players for not doing anything (for exptreme difficulty)
 -grading changes
 	-consider multiplying waste angle by 2 for XB1 becaues it's not as sensitive as the regular kienct
 	-consider punishing more for large errors (^2.5 istead of ^2)
 -unlock text on PC font size is wrong (at least when runnig in corner of editor)
 -need feature promotional square atryo
--contact PEGI and ESRB about ratings
 -figure out start suspend resume activate events
 -set rich presence string / test that this works
 -microsoft stuff
@@ -97,6 +71,7 @@ DONE-add TED astronaut clear out events..
 -gloss over TLA
 -reply to mattia
 
+DONE-contact PEGI and ESRB about ratings
 MOVED-skipping/resetting in grave scene on XB1 causes error
 	-it's when you soft skip on the two part text bubbles I think, it will then try to chnage the text on a non existent text bubble, you can solve this just by testing if it's null or not.
 	-some of the TED stuff is not given a chance to finish on reset and causes problems
