@@ -43,6 +43,7 @@ public class XboneAll {
         UsersManager.OnUserSignOut += OnUserSignOut;
         UsersManager.OnSignOutStarted += OnUserSignOutStarted;
         UsersManager.OnDisplayInfoChanged += OnUserDisplayInfoChange;
+        UsersManager.OnAppCurrentUserChanged += OnAppCurrentUserChanged;
     }
 
     bool firstTime = true;
@@ -53,8 +54,8 @@ public class XboneAll {
             firstTime = false;
             SanityCheckApplicationSetup();
 
-            if(!IsSomeoneSignedIn)
-                UsersManager.RequestSignIn(Users.AccountPickerOptions.AllowGuests);
+            //if(!IsSomeoneSignedIn)
+            UsersManager.RequestSignIn(AccountPickerOptions.None);
 
             //RTAManager.CreateAsync(UsersManager.Users[0].Id, OnRTACreated);
         }
@@ -91,6 +92,11 @@ public class XboneAll {
             //ManagerManager.Log("getSingle");
             //StatisticsManager.GetSingleUserStatisticsAsyncMultipleStats(UsersManager.Users[0].Id, UsersManager.Users[0].UID, ConsoleUtilsManager.PrimaryServiceConfigId(), stats,null);
         }
+
+        if (UsersManager.Users.Count == 0)
+            ManagerManager.Manager.mDebugString = "NO USERS";
+        else
+            ManagerManager.Manager.mDebugString = "Current user: " + UsersManager.GetAppCurrentUser().Id + " " + UsersManager.GetAppCurrentUser().GameDisplayName;
     }
 
     void game_event_listener(string name, object[] args)
@@ -163,19 +169,27 @@ public class XboneAll {
 
     //USER STUFF
     string GetUserName(int id)
-    { 
-        CommonProfile profile;
-        UsersManager.GetCommonProfile(id, out profile);
-        return profile.OnlineID;
+    {
+        PlatformProfile pprofile;
+        UsersManager.GetPlatformProfile(id, out pprofile);
+        return pprofile.GameDisplayName;
+        //CommonProfile profile;
+        //UsersManager.GetCommonProfile(id, out profile);
+        //return profile.OnlineID;
     }
+
+    void OnAppCurrentUserChanged(int id)
+    {
+    }
+
     void OnUsersChanged(int id,bool wasAdded)
     {
-        ManagerManager.Log("OnUsersChanged " + GetUserName(id) + " " + wasAdded);
+        ManagerManager.Log("OnUsersChanged " + id + " " + GetUserName(id) + " " + wasAdded);
     }
     
     void OnUserSignIn(int id)
     {
-        ManagerManager.Log("OnUserSignIn " + GetUserName(id));
+        ManagerManager.Log("OnUserSignIn " + id + " " + GetUserName(id));
         if (ActiveUser == null)
         {
             if (id != LastActiveUser.Id)
@@ -189,13 +203,13 @@ public class XboneAll {
 
     void OnUserSignOut(int id)
     {
-        ManagerManager.Log("OnUserSignOut " + GetUserName(id));
+        ManagerManager.Log("OnUserSignOut " + id + " " + GetUserName(id));
         if (ActiveUser.Id == id)
         {
             ManagerManager.Manager.GameEventDistributor("PAUSE", null);
             ActiveUser = null;
             IsActiveUserInitialized = false;
-            ManagerManager.Log("Active user + " + GetUserName(id) + " signed out.");
+            ManagerManager.Log("Active user + " + id + " " + GetUserName(id) + " signed out.");
             //TODO pause game
             //tell user game will restart if they log in as someone else
             //does this get called if user logs out while game is suspended????
@@ -205,7 +219,7 @@ public class XboneAll {
     
     void OnUserSignOutStarted(int id, System.IntPtr deferred)
     {
-        ManagerManager.Log("OnUserSignOutStarted " + GetUserName(id));
+        ManagerManager.Log("OnUserSignOutStarted " + id + " " + GetUserName(id));
         var deferral = new SignOutDeferral(deferred);
         var dummy = (new GameObject ("genDummy")).AddComponent<DummyBehaviour> ();
         dummy.StartCoroutine (deferral_thread (dummy.gameObject,deferral));
