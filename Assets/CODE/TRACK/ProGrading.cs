@@ -19,8 +19,6 @@ public class ProGrading {
         //global waist angle??
     }
 
-    
-
     public static float grade_to_perfect(float aGrade)
     {
 		//0 is bad 1 is perfect
@@ -63,6 +61,7 @@ public class ProGrading {
 	
     public static float grade_pose(Pose A, Pose B, bool useGrace = true) //weight is taken from Pose B, B is traget
     {
+        float powwow = 2.5f;
         float weightsum = 0;
         float gradesum = 0;
         string output = "";
@@ -78,11 +77,11 @@ public class ProGrading {
             //grading grace
             if(useGrace)
                 diff = Mathf.Min(diff - GameConstants.gradingGraceDegrees, 0);
-            gradesum += diff * diff * bPose.weight;
+            gradesum += Mathf.Pow(diff,powwow) * bPose.weight;
             weightsum += bPose.weight;
             output += e.joint + " target: " + target + " actual: " + actual + " diff: " + diff + "\n";
         }
-        output += " grade: " + Mathf.Sqrt(gradesum) / weightsum;
+        output += " grade: " + Mathf.Pow(gradesum,1f/powwow) / weightsum;
         return Mathf.Sqrt(gradesum) / weightsum;
     }
     public static Pose snap_pose(ManagerManager manager)
