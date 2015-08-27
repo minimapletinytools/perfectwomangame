@@ -63,7 +63,7 @@ public class XboneAll {
         if (!IsActiveUserInitialized && ManagerManager.Manager.mCharacterBundleManager.is_initial_loaded() && IsSomeoneSignedIn)
         {
             //users
-            ActiveUser = UsersManager.Users[0];
+            ActiveUser = UsersManager.GetAppCurrentUser();
             LastActiveUser = ActiveUser;
 
             //title screen
@@ -178,8 +178,21 @@ public class XboneAll {
         //return profile.OnlineID;
     }
 
-    void OnAppCurrentUserChanged(int id)
+    void OnAppCurrentUserChanged()
     {
+        var user = UsersManager.GetAppCurrentUser();
+        if (user != null)
+        {
+            int id = UsersManager.GetAppCurrentUser().Id;
+            ManagerManager.Log("OnAppCurrentUserChanged " + id + " " + GetUserName(id));
+            if (ActiveUser.Id != id)
+            {
+                ManagerManager.Manager.GameEventDistributor("PAUSE", null);
+                ActiveUser = null;
+                IsActiveUserInitialized = false;
+            }
+        }
+        else UsersManager.RequestSignIn(Users.AccountPickerOptions.AllowGuests);
     }
 
     void OnUsersChanged(int id,bool wasAdded)
@@ -190,6 +203,7 @@ public class XboneAll {
     void OnUserSignIn(int id)
     {
         ManagerManager.Log("OnUserSignIn " + id + " " + GetUserName(id));
+        /*
         if (ActiveUser == null)
         {
             if (id != LastActiveUser.Id)
@@ -198,12 +212,13 @@ public class XboneAll {
                 ManagerManager.Manager.restart_game();
             }
             ActiveUser = UsersManager.Users[0];
-        }
+        }*/
     }
 
     void OnUserSignOut(int id)
     {
         ManagerManager.Log("OnUserSignOut " + id + " " + GetUserName(id));
+        /*
         if (ActiveUser.Id == id)
         {
             ManagerManager.Manager.GameEventDistributor("PAUSE", null);
@@ -214,7 +229,7 @@ public class XboneAll {
             //tell user game will restart if they log in as someone else
             //does this get called if user logs out while game is suspended????
             UsersManager.RequestSignIn(Users.AccountPickerOptions.AllowGuests);
-        }
+        }*/
     }
     
     void OnUserSignOutStarted(int id, System.IntPtr deferred)
