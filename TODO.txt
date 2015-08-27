@@ -38,6 +38,23 @@ You build your own Perfect Woman story by choosing and performing a diverse cast
 DONE-add TED astronaut clear out events..
 
 ::TODO2:: 
+DONE-make a post on unity forums asking about crash...
+	-follow up with microsoft again and see if you can get more info. Ask if it might be a streaming install issue
+	-We've recently submitted our game "Perfect Woman" to cert. They reported game crashes that I have never seen nor am I able to replicate myself. These crashes occur on their end consistently during regular gameplay. 
+
+	To load assets in our game, we access Asset Bundles stored in the StreamingAssets folder with the WWW class. According to their notes, the crashes happen the same time these bundles are accessed. There's no way for me to be sure but it seems overwhelmingly likely that these two things are related. The CABs they sent me only contain a .mdmp file which are not very useful. 
+
+	The Cert guy said "The “NULL_POINTER_READ_c0000005_umd.dll!UMDPresentArray” failure seems to be the primary crash bucket." and this CAB file contained .mdmp files that say "The thread tried to read from or write to a virtual address ofr which it does not have the appropriate access" under Exception Information.
+
+	Any ideas whath the issue could be or  what question I should ask the people at cert? This is a total game breaker. I have no way to reproduce this issue on my end I can only take guesses at what the issue is and resubmit to cert. 
+
+	Thanks,
+	-Peter
+
+
+
+
+
 -menu key -> do you want to change users? This will restart your game -> account picker
 DONE?-replace all non standard characters with [] in display name
 DONE?-make game progress the number of charactes you unlocked again
@@ -47,11 +64,13 @@ DONE?-make game progress the number of charactes you unlocked again
 	-(are these things set in XDP??)
 -check that changing users restarts the game with the right save data
 	-indeed this seems to be the case???
--launch account picker at beginning of game regardless
--punish players for not doing anything (for exptreme difficulty)
+DONE-launch account picker at beginning of game regardless
 -grading changes
 	-consider multiplying waste angle by 2 for XB1 becaues it's not as sensitive as the regular kienct
-	-consider punishing more for large errors (^2.5 istead of ^2)
+	DONE-consider punishing more for large errors (^2.5 istead of ^2)
+	-punish players for not doing anything (for exptreme difficulty)
+		-on each grade step, use grade pose to see how much player pose has changed since last step
+		-compare this against how much target pose has changed
 -unlock text on PC font size is wrong (at least when runnig in corner of editor)
 -need feature promotional square atryo
 -figure out start suspend resume activate events

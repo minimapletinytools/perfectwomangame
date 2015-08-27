@@ -4,6 +4,10 @@
 
 
 ::XDP DEV ACCOUNTS::
+-peter@perfectwomangame.com
+	-pass: complicated
+-chippermonky@gmail.com
+	-pass:
 -for peter@perfectwomangame.com
 	-email: PRFW-main000@xboxtest.com - PRFW-main049@xboxtest.com
 	-password: caps + usual + 1
