@@ -22,8 +22,15 @@
 
 ::WEBSITE INFO::
 -login at perfectwomangame.com/wp-admin
--username: peter
--password: usual
+	-username: peter
+	-password: usual
+-login at rating.pegi.info 
+	-username: p.lu
+	-password: usual
+	-training video code (from below): 14ba2cs0i 
+-login at http://demo.elmg.net/pegi/
+	-username: p.lu
+	-password: G2D6j9rq
 
 ::ACHIEVEMENT GUIDE::
 
