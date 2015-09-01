@@ -31,6 +31,10 @@
 -login at http://demo.elmg.net/pegi/
 	-username: p.lu
 	-password: G2D6j9rq
+-login to ESRB rating site
+	-username: pub
+	-password: 4321
+
 
 ::ACHIEVEMENT GUIDE::
 

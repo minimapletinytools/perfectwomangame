@@ -9,8 +9,8 @@ public static class GameConstants
     public static bool ALLOW_NO_KINECT = true;
     public static bool XB1 = true;
     public static int IDLE_RESTART_TIME = 9999999;
-    public static bool KB_CONTROL = false;
-    public static bool SHOW_DEBUG = false;
+    public static bool KB_CONTROL = true;
+    public static bool SHOW_DEBUG = true;
     public static bool UNLOCK_ALL = false;
 #else
     public static bool ALLOW_NO_KINECT = true;
