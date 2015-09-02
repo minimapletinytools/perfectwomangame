@@ -21,6 +21,7 @@ You build your own Perfect Woman story by choosing and performing a diverse cast
 
 
 ::PRE-CERT TODO
+-add manifest to submission
 -enable character unlocking
 -disable all controller cheater keys
 -disable all debug messages
@@ -41,22 +42,12 @@ DONE-upload game help again
 DONE-add TED astronaut clear out events..
 
 ::TODO2:: 
--make sure game title is Perfect Woman not PerfectWoman
-DONE-make a post on unity forums asking about crash...
-	-follow up with microsoft again and see if you can get more info. Ask if it might be a streaming install issue
-	-We've recently submitted our game "Perfect Woman" to cert. They reported game crashes that I have never seen nor am I able to replicate myself. These crashes occur on their end consistently during regular gameplay. 
-
-	To load assets in our game, we access Asset Bundles stored in the StreamingAssets folder with the WWW class. According to their notes, the crashes happen the same time these bundles are accessed. There's no way for me to be sure but it seems overwhelmingly likely that these two things are related. The CABs they sent me only contain a .mdmp file which are not very useful. 
-
-	The Cert guy said "The “NULL_POINTER_READ_c0000005_umd.dll!UMDPresentArray” failure seems to be the primary crash bucket." and this CAB file contained .mdmp files that say "The thread tried to read from or write to a virtual address ofr which it does not have the appropriate access" under Exception Information.
-
-	Any ideas whath the issue could be or  what question I should ask the people at cert? This is a total game breaker. I have no way to reproduce this issue on my end I can only take guesses at what the issue is and resubmit to cert. 
-
-	Thanks,
-	-Peter
-
 DONE?-replace all non standard characters with [] in display name
 DONE?-make game progress the number of charactes you unlocked again
+-fix font position on character unlocking
+-change ESRB rating to AO in the manifest and add it to the submission
+	-better yet, include it as a manifest override in Unity so you don't need to do this everytime
+-make sure game title is Perfect Woman not PerfectWoman
 -menu key -> do you want to change users? This will restart your game -> account picker
 -images
 	-make screenshots
@@ -78,9 +69,20 @@ DONE?-make game progress the number of charactes you unlocked again
 	-call ModeNormalPlay initialize during title screen
 	-make CharacterLoader load accross several frames
 -email lea about getting PW into museum
--fix font position on character unlocking
 -reply to mattia
 
+DONE-make a post on unity forums asking about crash... (http://forum.unity3d.com/threads/mysterious-locally-stored-asset-bundle-related-crash-only-during-cert.350709/)
+	-follow up with microsoft again and see if you can get more info. Ask if it might be a streaming install issue
+	-We've recently submitted our game "Perfect Woman" to cert. They reported game crashes that I have never seen nor am I able to replicate myself. These crashes occur on their end consistently during regular gameplay. 
+
+	To load assets in our game, we access Asset Bundles stored in the StreamingAssets folder with the WWW class. According to their notes, the crashes happen the same time these bundles are accessed. There's no way for me to be sure but it seems overwhelmingly likely that these two things are related. The CABs they sent me only contain a .mdmp file which are not very useful. 
+
+	The Cert guy said "The “NULL_POINTER_READ_c0000005_umd.dll!UMDPresentArray” failure seems to be the primary crash bucket." and this CAB file contained .mdmp files that say "The thread tried to read from or write to a virtual address ofr which it does not have the appropriate access" under Exception Information.
+
+	Any ideas whath the issue could be or  what question I should ask the people at cert? This is a total game breaker. I have no way to reproduce this issue on my end I can only take guesses at what the issue is and resubmit to cert. 
+
+	Thanks,
+	-Peter
 IGNORE-need feature promotional square atryo
 DONE-send lea a build with unlockables
 IGNORE-UsersManager.FindUserByTrackingId if you need to connect kinect user with player

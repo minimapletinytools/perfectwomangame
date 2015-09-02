@@ -1,0 +1,88 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Package xmlns:mx="http://schemas.microsoft.com/appx/2013/xbox/manifest" IgnorableNamespaces="mx" xmlns="http://schemas.microsoft.com/appx/2010/manifest">
+  <Identity Name="PeterLuandLeaSchoenfelder.PerfectWoman" Publisher="CN=PeterLuandLeaSchoenfelder" Version="1.0.0.0" />
+  <Properties>
+    <DisplayName>Perfect Woman</DisplayName>
+    <PublisherDisplayName>Peter Lu and Lea Schoenfelder</PublisherDisplayName>
+    <Logo>StoreLogo.png</Logo>
+    <Description>Perfect Woman</Description>
+  </Properties>
+  <Prerequisites>
+    <OSMinVersion>6.2</OSMinVersion>
+    <OSMaxVersionTested>6.2</OSMaxVersionTested>
+    <mx:ApplicationEnvironment>title</mx:ApplicationEnvironment>
+    <mx:OSName>era</mx:OSName>
+  </Prerequisites>
+  <Resources>
+    <Resource Language="en-us" />
+  </Resources>
+  <Applications>
+    <Application Id="App" Executable="XboxOnePlayer.exe" EntryPoint="XboxOnePlayer.app">
+      <VisualElements DisplayName="PerfectWoman" Logo="Logo.png" SmallLogo="SmallLogo.png" Description="PerfectWoman" ForegroundText="light" BackgroundColor="#464646">
+        <SplashScreen Image="SplashScreen.png" />
+        <DefaultTile WideLogo="WideLogo.png" />
+      </VisualElements>
+      <Extensions>
+        <mx:Extension Category="xbox.live">
+          <mx:XboxLive TitleId="4A0A3432" PrimaryServiceConfigId="f3530100-c251-40ff-9d13-078c4a0a3432" />
+        </mx:Extension>
+        <mx:Extension Category="xbox.system.resources">
+          <mx:XboxSystemResources>
+            <mx:GpuAvailability>fixed</mx:GpuAvailability>
+          </mx:XboxSystemResources>
+        </mx:Extension>
+        <mx:Extension Category="windows.xbox.networking">
+          <mx:XboxNetworkingManifest>
+            <mx:SocketDescriptions />
+            <mx:SecureDeviceAssociationTemplates />
+          </mx:XboxNetworkingManifest>
+        </mx:Extension>
+      </Extensions>
+      <mx:Ratings Category="game">
+        <mx:Rating>ESRB:AO</mx:Rating>
+      </mx:Ratings>
+    </Application>
+  </Applications>
+  <Capabilities>
+    <mx:Capability Name="kinectRequired" />
+    <mx:Capability Name="kinectVision" />
+  </Capabilities>
+  <Extensions>
+    <Extension Category="windows.activatableClass.inProcessServer">
+      <InProcessServer>
+        <Path>Microsoft.Xbox.Services.dll</Path>
+        <ActivatableClass ActivatableClassId="Microsoft.Xbox.Services.XboxLiveContext" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="Microsoft.Xbox.Services.Configuration" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="Microsoft.Xbox.Services.Multiplayer.MultiplayerQualityOfServiceMeasurements" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="Microsoft.Xbox.Services.Multiplayer.MultiplayerSessionReference" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="Microsoft.Xbox.Services.Multiplayer.MultiplayerSession" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="Microsoft.Xbox.Services.Matchmaking.CreateMatchTicketResponse" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="Microsoft.Xbox.Services.Matchmaking.HopperStatisticsResponse" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="Microsoft.Xbox.Services.Matchmaking.MatchTicketDetailsResponse" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="Microsoft.Xbox.Services.Presence.PresenceData" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="Microsoft.Xbox.Services.TitleStorage.TitleStorageBlobMetadata" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="Microsoft.Xbox.Services.UserStatistics.RequestedStatistics" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="Microsoft.Xbox.Services.Social.SocialGroupConstants" ThreadingModel="both" />
+      </InProcessServer>
+    </Extension>
+    <Extension Category="windows.activatableClass.inProcessServer">
+      <InProcessServer>
+        <Path>Microsoft.Kinect.dll</Path>
+        <ActivatableClass ActivatableClassId="Microsoft.Kinect.FaceFrameSource" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="Microsoft.Kinect.VisualGestureBuilderDatabase" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="Microsoft.Kinect.VisualGestureBuilderFrameSource" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="Microsoft.Kinect.FaceModel" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="Microsoft.Kinect.FaceAlignment" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="Microsoft.Kinect.FaceModelBuilder" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="Microsoft.Kinect.HighDefinitionFaceFrameSource" ThreadingModel="both" />
+      </InProcessServer>
+    </Extension>
+    <mx:PackageExtension Category="windows.kinect">
+      <mx:Kinect IsVersionLocked="true">
+        <mx:AudioPipeline Version="1.0.0" />
+        <mx:SpeechPipeline Version="1.0.0" />
+        <mx:VisionPipeline Version="1.0.0" />
+      </mx:Kinect>
+    </mx:PackageExtension>
+  </Extensions>
+</Package>
