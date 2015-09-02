@@ -1,0 +1,32 @@
+In our optional cert for  "Perfect Woman - Option 1" submission ID 20150814-2D374CD4 the following issue to "XR-001 - Title Stability" was reported:
+
+-------------------
+ISSUE - 2 of 2 - CFR
+The title crashed to the Xbox Home screen after selecting 7/11 cashier as a life decision.
+ 
+Reproduction Steps:
+1. Ensured that a Kinect was connected to the console and enabled.
+2. Signed into an Xbox profile and launched the title.
+3. Entered the Kinect's field of view > proceeded through active gameplay until the 7/11 cashier option became available as a life decision.
+4. Selected 7/11 cashier by matching the body shape.
+5. Observed that the title crashed to the Xbox Home screen.
+ 
+Expected Behavior:
+The title must remain stable.
+ 
+Frequency:
+Console 1: 2 occurrence(s) during test.
+Console 2: 3 occurrence(s) during test.
+Console 3: 2 occurrence(s) during test.
+ 
+Notes: 
+1. This issue was observed on one occasion after selecting Pro Gamer as a life decision.
+2. This issue was observed on one occasion after selecting Tribal matriarch as a life decision.
+3. This issue was observed on one occasion upon launch.
+-------------------
+
+This is not an issue I have ever encountered or have been able to reproduce. I've reached out to the cert team for information and crash logs but have not been able to reproduce or understand what is causing the issues. The best/only lead I have so far is that the crash seems only to be triggered when I'm accessing and/or processing the Unity3d Asset Bundles I've stored in the StreamingAssets folder of the game binary.
+
+I've regenerated all my bundles and made a few changes to the pattern these files are being accessed in hopes that this may solve the issue. But since I have never seen or been able to reproduce this issue, it's just a shot in the dark.
+
+I posted this as a question onto the Unity Xbox One Development forums but as of 9/2/15 no one has replied: http://forum.unity3d.com/threads/mysterious-locally-stored-asset-bundle-related-crash-only-during-cert.350709/
