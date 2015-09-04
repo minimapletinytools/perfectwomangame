@@ -646,17 +646,17 @@ public class ModeNormalPlay
 		GS = NormalPlayGameState.CUTSCENE;
         NUPD.ChangeSet changes = CurrentPerformanceStat.CutsceneChangeSet;
 		
-        //TODO astronaut special???
 		load_CUTSCENE(changes);
 		
 		mInterfaceManager.set_for_CUTSCENE(
 			delegate(){CUTSCENE_finished(changes);}, 
-			changes
+			changes,
+            space_camp_final_exam()
 		);
 		
 	}
 
-    bool space_camp_final_exam()
+    bool space_camp_final_exam_internal()
     {
         ManagerManager.Log("testing " + mPerformanceStats.Count() + " chars");
         foreach (var e in mPerformanceStats)
@@ -665,6 +665,12 @@ public class ModeNormalPlay
         }
         ManagerManager.Log("spacecamp final exam " + mPerformanceStats.Where(e => e.Character != CharacterIndex.sFetus).Where(e => e.Score < GameConstants.astronautCutoff).Count());
         return mPerformanceStats.Where(e=>e.Character != CharacterIndex.sFetus).Where(e=>e.Score < GameConstants.astronautCutoff).Count() == 0;
+    }
+
+    bool space_camp_final_exam()
+    {
+        return GameConstants.showAstronaut
+            && CurrentPerformanceStat.Character.LevelIndex == 7;
     }
 	
 	public void CUTSCENE_finished(NUPD.ChangeSet changes = null)
@@ -690,9 +696,7 @@ public class ModeNormalPlay
 			{	 
 				if(CurrentPerformanceStat.Character.LevelIndex > 6) //if natural death :)
 				{
-					if(GameConstants.showAstronaut 
-                    && CurrentPerformanceStat.Character.LevelIndex == 7
-                    && space_camp_final_exam())
+					if(space_camp_final_exam())
 					{
                         transition_to_ASTRONAUT();
 					}
@@ -778,7 +782,8 @@ public class ModeNormalPlay
 				delegate(){
 					mInterfaceManager.set_for_CUTSCENE(
 						delegate(){CUTSCENE_finished(CurrentPerformanceStat.CutsceneChangeSet);}, 
-						CurrentPerformanceStat.CutsceneChangeSet
+						CurrentPerformanceStat.CutsceneChangeSet,
+                        false
 					);
 				}
 			,0);
@@ -963,8 +968,6 @@ public class ModeNormalPlay
 	public void load_CUTSCENE(NUPD.ChangeSet changes)
 	{
 
-        //TODO ADD SPECIAL SURVIVE CUTSCENE FOR ASTRONAUT
-
 		int changeIndex = -1;
 		
         if(changes == null)
@@ -1014,11 +1017,12 @@ public class ModeNormalPlay
 		mManager.mBodyManager.transition_character_out();
 		mManager.mTransparentBodyManager.transition_character_out();
 
-        //if bad performance, has cutscene and is NOT astronaut
-        if(CurrentPerformanceStat.BadPerformance && NGM.CurrentCharacterLoader.has_cutscene(1) && NGM.CurrentCharacterIndex != CharacterIndex.sOneHundred)
-			mManager.mBackgroundManager.load_cutscene(1,NGM.CurrentCharacterLoader);
-		else
-			mManager.mBackgroundManager.load_cutscene(0,NGM.CurrentCharacterLoader);
+        if (space_camp_final_exam())
+            mManager.mBackgroundManager.hide_bg_and_fg_elements();
+        else if (CurrentPerformanceStat.BadPerformance && NGM.CurrentCharacterLoader.has_cutscene(1) && NGM.CurrentCharacterIndex != CharacterIndex.sOneHundred) //if bad performance, has cutscene and is NOT astronaut
+            mManager.mBackgroundManager.load_cutscene(1, NGM.CurrentCharacterLoader);
+        else
+            mManager.mBackgroundManager.load_cutscene(0, NGM.CurrentCharacterLoader);
 	}
 	
 	//this is used by playq

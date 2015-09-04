@@ -335,7 +335,7 @@ public class NewInterfaceManager {
 		}
 	}
 
-	public void set_for_CUTSCENE(System.Action cutsceneCompleteCb, NUPD.ChangeSet aChanges)
+	public void set_for_CUTSCENE(System.Action cutsceneCompleteCb, NUPD.ChangeSet aChanges, bool aAstronautHack)
 	{
 
 		//first we remove all characters from cutscene text that are locked
@@ -406,7 +406,12 @@ public class NewInterfaceManager {
 						text = "You lived your life " + noCapsDescription + " " + performancePhrase[(int)Mathf.Clamp(mBBLastPerformanceGraph.Score*4,0,3)] + ".";
 					else
 						text = "You lived your life as a " + noCapsDescription + " " + performancePhrase[(int)Mathf.Clamp(mBBLastPerformanceGraph.Score*4,0,3)] + ".";*/
-					introPo = add_timed_text_bubble(aChanges.PerformanceDescription,gPerformanceText);
+
+                    //TODO this should be different for age 85 if astronaut
+                    if (aAstronautHack)
+                        introPo = add_timed_text_bubble("You graduate from Space Camp???",gPerformanceText);
+                    else
+                        introPo = add_timed_text_bubble(aChanges.PerformanceDescription, gPerformanceText);
 				}
 				return true;
 			},
