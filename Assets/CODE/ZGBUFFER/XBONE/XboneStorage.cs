@@ -14,6 +14,16 @@ public class XboneStorage
     public bool IsStorageFail { get; private set; } 
     public bool IsWriting{get; private set;}
 
+
+    public void CloseStorage()
+    {
+        if (IsWriting)
+            ManagerManager.Log("WARNING: trying to close storage while write is still in progress");
+        IsWriting = false;
+        mStorage = null;
+        StorageCreated = false;
+    }
+
     public void InitializeUserStorage()
     {
         var dummy = (new GameObject("genDummy")).AddComponent<DummyBehaviour>();
@@ -45,6 +55,7 @@ public class XboneStorage
 	}
 	public void read_data(string aName, System.Action<byte[]> aResponse)
 	{
+
 		if (StorageCreated) 
 		{
 			mStorage.GetAsync(new string[]{aName},

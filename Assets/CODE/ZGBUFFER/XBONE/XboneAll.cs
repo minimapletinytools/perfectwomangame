@@ -187,9 +187,11 @@ public class XboneAll {
             ManagerManager.Log("OnAppCurrentUserChanged " + id + " " + GetUserName(id));
             if (ActiveUser.Id != id)
             {
-                ManagerManager.Manager.GameEventDistributor("PAUSE", null);
+                MicrosoftZig.Inst.mStorage.CloseStorage();
+                //ManagerManager.Manager.GameEventDistributor("PAUSE", null);
                 ActiveUser = null;
                 IsActiveUserInitialized = false;
+                ManagerManager.Manager.restart_game();
             }
         }
         else UsersManager.RequestSignIn(Users.AccountPickerOptions.AllowGuests);

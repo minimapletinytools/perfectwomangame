@@ -962,6 +962,9 @@ public class ModeNormalPlay
 	//pass in CurrentPerformanceStat.CutsceneChangeSet;
 	public void load_CUTSCENE(NUPD.ChangeSet changes)
 	{
+
+        //TODO ADD SPECIAL SURVIVE CUTSCENE FOR ASTRONAUT
+
 		int changeIndex = -1;
 		
         if(changes == null)
