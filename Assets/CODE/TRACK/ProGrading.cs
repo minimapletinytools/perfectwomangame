@@ -76,13 +76,13 @@ public class ProGrading {
             while(diff < -180) diff += 360;
             //grading grace
             if(useGrace)
-                diff = Mathf.Min(diff - GameConstants.gradingGraceDegrees, 0);
+                diff = Mathf.Min(Mathf.Max(0,Mathf.Abs(diff) - GameConstants.gradingGraceDegrees), 0);
             gradesum += Mathf.Pow(diff,powwow) * bPose.weight;
             weightsum += bPose.weight;
             output += e.joint + " target: " + target + " actual: " + actual + " diff: " + diff + "\n";
         }
         output += " grade: " + Mathf.Pow(gradesum,1f/powwow) / weightsum;
-        return Mathf.Sqrt(gradesum) / weightsum;
+        return Mathf.Pow(gradesum, 1f / powwow) / weightsum;
     }
     public static Pose snap_pose(ManagerManager manager)
     {
