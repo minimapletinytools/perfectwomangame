@@ -235,13 +235,13 @@ public class SunsetManager
 	public void add_character(CharacterIndex aChar, bool aGood, bool aShowScore = true)
 	{
 		Vector3 gDiffLabelOffset = new Vector3(-100,-350,0);
-		if(aChar != CharacterIndex.sFetus && aChar != CharacterIndex.sOneHundred) //TODO enable astronaut
-		{
+		if(aChar != CharacterIndex.sFetus)
+	{
             string imgname = "SUNSET_"+aChar.StringIdentifier;
             if(aChar != CharacterIndex.sGrave)
                 imgname += "-" + (aGood?"a":"b");
 			var addMe = construct_flat_image(imgname,3+mCharacters.Count*2);
-			//Debug.Log ("adding character " + aChar.StringIdentifier);
+            //Debug.Log("adding character " + aChar.StringIdentifier + " " + aGood + " " + imgname);
 
 			//special positioning for grave
 			if(aChar == CharacterIndex.sGrave)
@@ -254,7 +254,7 @@ public class SunsetManager
 
                 //weird...
                 FlatElementImage posImg;
-                if(gravePosition.LevelIndex <= 7)
+                if(gravePosition.LevelIndex <= 8)
 				    posImg = construct_flat_image("SUNSET_"+gravePosition.StringIdentifier+"-a",0);
                 else
                     posImg = construct_flat_image("SUNSET_"+gravePosition.StringIdentifier,0);

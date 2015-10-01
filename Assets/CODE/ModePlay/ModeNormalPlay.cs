@@ -322,6 +322,8 @@ public class ModeNormalPlay
 				TED.add_event(
 					mInterfaceManager.skippable_text_bubble_event("You lived to be very old. Enjoy what's left of your life.", 4),
 				1);
+                CurrentPerformanceStat.update_score(0, 1); //give astronaut perfect score
+                CurrentPerformanceStat.update_score(1, 1);	
 				break;
 			default:
 				set_time_for_PLAY(GameConstants.playDefaultPlayTime);
