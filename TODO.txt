@@ -20,7 +20,7 @@ You build your own Perfect Woman story by choosing and performing a diverse cast
 	-
 
 
-::PRE-CERT TODO
+::PRE-CERT TOD
 -add manifest to submission
 -enable character unlocking
 -disable all controller cheater keys
@@ -42,20 +42,13 @@ DONE-upload game help again
 DONE-add TED astronaut clear out events..
 
 ::TODO2:: 
-DONE?-replace all non standard characters with [] in display name
-DONE?-make game progress the number of charactes you unlocked again
--fix font position on character unlocking
--change ESRB rating to AO in the manifest and add it to the submission
-	-better yet, include it as a manifest override in Unity so you don't need to do this everytime
--make sure game title is Perfect Woman not PerfectWoman
--menu key -> do you want to change users? This will restart your game -> account picker
+-new grade pose may still have some rrors???
+-maybe set everything to unlocked, disable the characters unlocked achievement, and set game progress to 1 if you beat the game once
 -images
 	-make screenshots
 	-achievements still using placeholder images???
 	-pinned image is placeholder image
 	-(are these things set in XDP??)
--check that changing users restarts the game with the right save data
-	-indeed this seems to be the case???
 -grading changes
 	-consider multiplying waste angle by 2 for XB1 becaues it's not as sensitive as the regular kienct
 	DONE-consider punishing more for large errors (^2.5 istead of ^2)
@@ -71,6 +64,19 @@ DONE?-make game progress the number of charactes you unlocked again
 -email lea about getting PW into museum
 -reply to mattia
 
+
+DONE-upgrade again
+DONE-put in astornaut icon :O
+DONE?-replace all non standard characters with [] in display name
+DONE?-make game progress the number of charactes you unlocked again
+DONE?-make sure game title is Perfect Woman not PerfectWoman
+DONE??-check that changing users restarts the game with the right save data
+	-indeed this seems to be the case???
+DONE-still says "you died as an eueuhoanetuoe 85" 
+DONE-finish writing your email to wally ....
+IGNORE-menu key -> do you want to change users? This will restart your game -> account picker
+DONE-change ESRB rating to AO in the manifest and add it to the submission
+	-better yet, include it as a manifest override in Unity so you don't need to do this everytime
 DONE-make a post on unity forums asking about crash... (http://forum.unity3d.com/threads/mysterious-locally-stored-asset-bundle-related-crash-only-during-cert.350709/)
 	-follow up with microsoft again and see if you can get more info. Ask if it might be a streaming install issue
 	-We've recently submitted our game "Perfect Woman" to cert. They reported game crashes that I have never seen nor am I able to replicate myself. These crashes occur on their end consistently during regular gameplay. 

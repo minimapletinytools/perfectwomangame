@@ -19,6 +19,7 @@
 -$10 Fantastic Fest
 -$25 JSON.net
 -$5 60 second shooter prime
+-$37 kinect
 
 ::WEBSITE INFO::
 -login at perfectwomangame.com/wp-admin
