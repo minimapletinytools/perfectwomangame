@@ -130,6 +130,10 @@ public class ProjectionManager : FakeMonoBehaviour {
 			if(!B.GoodPosition)
 				r = mImportant[ZgJointId.RightShoulder].smoothing.current;
 
+        //double the waist angle on XB1 only because waist is not as sensitive on kinect2.0
+        if (B.Id == ZgJointId.Neck && GameConstants.XB1)
+            r = -90 + (r+90)*2;
+
         return r;
 	}
 

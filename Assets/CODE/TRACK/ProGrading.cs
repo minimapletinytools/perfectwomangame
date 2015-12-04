@@ -74,9 +74,10 @@ public class ProGrading {
             float diff = target - actual;
             while (diff > 180) diff -= 360;
             while(diff < -180) diff += 360;
+            diff = Mathf.Abs(diff);
             //grading grace
-            if(useGrace)
-                diff = Mathf.Min(Mathf.Max(0,Mathf.Abs(diff) - GameConstants.gradingGraceDegrees), 0);
+            if (useGrace)
+                diff = Mathf.Max(0, diff - GameConstants.gradingGraceDegrees);
             gradesum += Mathf.Pow(diff,powwow) * bPose.weight;
             weightsum += bPose.weight;
             output += e.joint + " target: " + target + " actual: " + actual + " diff: " + diff + "\n";
