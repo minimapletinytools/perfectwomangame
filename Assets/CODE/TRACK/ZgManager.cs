@@ -157,16 +157,18 @@ public class ZgManager : FakeMonoBehaviour {
 
 		
 		//TODO test if its in current "crumpled" pose, needed for OpenNI
-		//instead we chec	k neck and one arm)
-		if(Joints.ContainsKey(ZgJointId.LeftShoulder) && 
-		   Joints.ContainsKey(ZgJointId.LeftElbow) && 
-		   Joints.ContainsKey(ZgJointId.Neck) && 
-		   Joints.ContainsKey(ZgJointId.Head))
-			if(get_relative_rotation(Joints[ZgJointId.LeftShoulder],Joints[ZgJointId.LeftElbow]).flat_rotation() == 0 &&
-			   get_relative_rotation(Joints[ZgJointId.Neck],Joints[ZgJointId.Head]).flat_rotation() == 0)
-		{
-			return false;
-		}
+		//instead we check neck and one arm)
+        if (Joints.ContainsKey(ZgJointId.LeftShoulder) &&
+           Joints.ContainsKey(ZgJointId.LeftElbow) &&
+           Joints.ContainsKey(ZgJointId.Neck) &&
+           Joints.ContainsKey(ZgJointId.Head))
+        {
+            if (get_relative_rotation(Joints[ZgJointId.LeftShoulder], Joints[ZgJointId.LeftElbow]).flat_rotation() == 0 &&
+               get_relative_rotation(Joints[ZgJointId.Neck], Joints[ZgJointId.Head]).flat_rotation() == 0)
+            {
+                return false;
+            }
+        }
 
 		return true;
 	}

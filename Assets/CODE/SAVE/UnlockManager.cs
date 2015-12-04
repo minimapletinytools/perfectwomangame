@@ -111,7 +111,8 @@ public class UnlockManager
                 }
             }
 		}
-        mManager.mZigManager.ZgInterface.write_data(serialize(),"unlock");
+        if (!GameConstants.UNLOCK_ALL) //only save if we don't have everything unlocked by default
+            mManager.mZigManager.ZgInterface.write_data(serialize(),"unlock");
 	}
 
     public List<CharacterIndex> get_unlocked_characters()

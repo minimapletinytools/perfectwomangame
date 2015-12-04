@@ -42,19 +42,19 @@ DONE-upload game help again
 DONE-add TED astronaut clear out events..
 
 ::TODO2:: 
--new grade pose may still have some rrors???
--maybe set everything to unlocked, disable the characters unlocked achievement, and set game progress to 1 if you beat the game once
+-APPLY http://www.media.mit.edu/about/faculty-search
+-new grade pose may still have some e rrors???
 -images
 	-make screenshots
 	-achievements still using placeholder images???
 	-pinned image is placeholder image
 	-(are these things set in XDP??)
 -grading changes
-	-consider multiplying waste angle by 2 for XB1 becaues it's not as sensitive as the regular kienct
-	DONE-consider punishing more for large errors (^2.5 istead of ^2)
 	-punish players for not doing anything (for exptreme difficulty)
 		-on each grade step, use grade pose to see how much player pose has changed since last step
 		-compare this against how much target pose has changed
+	DONE-consider multiplying waste angle by 2 for XB1 becaues it's not as sensitive as the regular kienct
+	DONE-consider punishing more for large errors (^2.5 istead of ^2)
 -fix unlock badges
 	-unlock text on PC font size is wrong (at least when runnig in corner of editor)
 	-could also just disable unlocking lol... but then game progress is futzed
@@ -63,6 +63,9 @@ DONE-add TED astronaut clear out events..
 	-make CharacterLoader load accross several frames
 -email lea about getting PW into museum
 -reply to mattia
+DONE-maybe set everything to unlocked, 
+	-disable the characters unlocked achievement, 
+	DONE-set game progress to 1 if you beat the game once (or it could be based on how many characters you have played) (currently based on number characters unlocked so it will be 1 if all chars are unlocked)
 
 
 DONE-upgrade again

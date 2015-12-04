@@ -101,6 +101,7 @@ public class XboneEvents{
     {
         int lockedChars = mManager.mMetaManager.UnlockManager.mUnlocked.unlockedCharacters.to_array().Where(e => e == 2).Count();
         float progress = 1 - Mathf.Max(0, 7 - lockedChars) / 7f;
+        //float progress = 1; no unlockables version
         ManagerManager.Log("EVENT: gameprogress " + progress + " " + mManager.mMetaManager.UnlockManager.get_unlocked_characters().Count);
         Events.SendGameProgress(
                 mAll.LastActiveUser.UID,
