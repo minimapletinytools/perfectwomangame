@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 public class ChoiceHelper
 {
-	public const float SELECTION_THRESHOLD = 8;
+	public const float SELECTION_THRESHOLD = 6;
     public const float CHOOSING_PERCENTAGE_GROWTH_RATE = 1/6f;
     public const float CHOOSING_PERCENTAGE_DECLINE_RATE = 0.7f;
 	
