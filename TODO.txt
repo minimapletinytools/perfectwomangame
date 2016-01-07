@@ -20,7 +20,10 @@ You build your own Perfect Woman story by choosing and performing a diverse cast
 	-
 
 
-::PRE-CERT TOD
+::PRE-CERT TODo
+-publish service config
+-redo gamer score for achievements
+-add AO rating to trailer and xbox menomic thingh at the end https://developer.xboxlive.com/en-us/platform/development/documentation/xdp/Pages/game_trailers_12_10_15.aspx
 -add manifest to submission
 -enable character unlocking
 -disable all controller cheater keys
@@ -42,8 +45,14 @@ DONE-upload game help again
 DONE-add TED astronaut clear out events..
 
 ::TODO2:: 
--APPLY http://www.media.mit.edu/about/faculty-search
--new grade pose may still have some e rrors???
+-schedule PW playtest
+-consider removing all unlock stuff (ad remove holistic wisdom achievement)
+DONE-superhero art can't have game title in it.
+-need box art, branded key art, and poster art
+-reupload screenshots to xdp
+-still need to figure out whyt here is placeholder image in achievement
+DONE-grading needs to be stricter for choosing
+DONE-new grade pose may still have some e rrors???
 -images
 	-make screenshots
 	-achievements still using placeholder images???
