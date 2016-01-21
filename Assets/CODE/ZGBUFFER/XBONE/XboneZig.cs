@@ -122,6 +122,9 @@ public class MicrosoftZig : ZgInterface
     {
         if(ManagerManager.Manager.mZigManager.is_reader_connected() == 2)
         {
+            //TODO temporarily disabled to slove wrong format bug
+            return null;
+
             //TODO write the shader and test
             ManagerManager.Log("taking color image");
 

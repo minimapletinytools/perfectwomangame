@@ -101,9 +101,11 @@ public class XboneKinect{
         {
             Debug.Log("Kinect Sensor is not open");
         }
-        CreateKinectImageTexture(ref mDepthTexture, SensorManager.depthFrameReader, TextureFormat.R16, "Depth");
-        CreateKinectImageTexture(ref mColorTexture, SensorManager.colorFrameReader, TextureFormat.YUY2, "Color");
-        CreateKinectImageTexture(ref mLabelTexture, SensorManager.bodyIndexFrameReader, TextureFormat.Alpha8, "Label");
+
+        //TODO temporarily disabled to solf wrong format bug
+        //CreateKinectImageTexture(ref mDepthTexture, SensorManager.depthFrameReader, TextureFormat.R16, "Depth");
+        //CreateKinectImageTexture(ref mColorTexture, SensorManager.colorFrameReader, TextureFormat.YUY2, "Color");
+        //CreateKinectImageTexture(ref mLabelTexture, SensorManager.bodyIndexFrameReader, TextureFormat.Alpha8, "Label");
 	}
 	
 	public void Update()
@@ -175,6 +177,7 @@ public class XboneKinect{
 			}
 		}
 
+        //TODO temporarily disabled to solf wrong format bug
         //DEPTH/IMAGE/USE
         FrameDescription depthFrameDesc;
         bool depthFrameDescSuccess = SensorManager.depthFrameReader.GetFrameDescription(out depthFrameDesc);
@@ -182,7 +185,7 @@ public class XboneKinect{
         {
             //mDepthTexture = new Texture2D(depthFrameDesc.Width, depthFrameDesc.Height, TextureFormat.R16, false);
             //byte[] depthRawData = new byte[depthFrameDesc.BytesPerPixel * depthFrameDesc.LengthInPixels];
-            depthFrameDescSuccess = SensorManager.depthFrameReader.AcquireLatestFrame(mDepthTexture.GetNativeTexturePtr());
+            //depthFrameDescSuccess = SensorManager.depthFrameReader.AcquireLatestFrame(mDepthTexture.GetNativeTexturePtr());
         }
 
         FrameDescription colorFrameDesc;
@@ -190,7 +193,7 @@ public class XboneKinect{
         if(colorFrameDescSuccess)
         {
             //byte[] colorRawData = new byte[colorFrameDesc.BytesPerPixel * colorFrameDesc.LengthInPixels];
-            colorFrameDescSuccess = SensorManager.colorFrameReader.AcquireLatestFrame(mColorTexture.GetNativeTexturePtr());
+            //colorFrameDescSuccess = SensorManager.colorFrameReader.AcquireLatestFrame(mColorTexture.GetNativeTexturePtr());
         }
 
         FrameDescription labelFrameDesc;
@@ -198,7 +201,7 @@ public class XboneKinect{
         if(labelFrameDescSuccess)
         {
             //byte[] labelRawData = new byte[labelFrameDesc.BytesPerPixel * labelFrameDesc.LengthInPixels];
-            labelFrameDescSuccess = SensorManager.bodyIndexFrameReader.AcquireLatestFrame(mLabelTexture.GetNativeTexturePtr());
+            //labelFrameDescSuccess = SensorManager.bodyIndexFrameReader.AcquireLatestFrame(mLabelTexture.GetNativeTexturePtr());
         }
         //ManagerManager.Manager.mZigManager.DepthView.up
 	}
