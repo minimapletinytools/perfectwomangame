@@ -44,6 +44,9 @@ DONE-upload game help again
 -manually clear out TED and add bubbles fade/destroy events
 DONE-add TED astronaut clear out events..
 
+::test
+-tutorial stops showing after first playthrough
+
 ::TODO2:: 
 -schedule PW playtest
 -consider removing all unlock stuff (ad remove holistic wisdom achievement)

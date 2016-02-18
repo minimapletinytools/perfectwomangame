@@ -300,17 +300,27 @@ public class ModeNormalPlay
 				transition_to_PLAY();
 				float gTextDisplayDur = 4;
 				NGM.CurrentTargetPose = null;
-				TED.add_event(
-					mInterfaceManager.skippable_text_bubble_event("Try and make your first movements.", gTextDisplayDur),
-				3).then_one_shot(
-					delegate(){
-						NGM.CurrentTargetPose = mManager.mReferences.mCheapPose.to_pose();
-						mManager.mTransparentBodyManager.set_target_pose(NGM.CurrentTargetPose);
-						mManager.mTransparentBodyManager.transition_character_in(mManager.mCharacterBundleManager.get_character_stat(NGM.CurrentCharacterIndex).CharacterInfo.CharacterOutlineColor);
-					},
-				0).then(
-					mInterfaceManager.skippable_text_bubble_event("Match the pose behind you.", gTextDisplayDur),
-				1.5f);
+
+                System.Action transPose = delegate()
+                {
+                    NGM.CurrentTargetPose = mManager.mReferences.mCheapPose.to_pose();
+                    mManager.mTransparentBodyManager.set_target_pose(NGM.CurrentTargetPose);
+                    mManager.mTransparentBodyManager.transition_character_in(mManager.mCharacterBundleManager.get_character_stat(NGM.CurrentCharacterIndex).CharacterInfo.CharacterOutlineColor);
+                };
+
+                if (mManager.mMetaManager.UnlockManager.mUnlocked.numberGamesPlayed == 0 || GameConstants.TUTORIAL_ONCE != true){
+                    TED.add_event(
+                        mInterfaceManager.skippable_text_bubble_event("Try and make your first movements.", gTextDisplayDur),
+                    3).then_one_shot(
+                        transPose,
+                    0).then(
+                        mInterfaceManager.skippable_text_bubble_event("Match the pose behind you.", gTextDisplayDur),
+                    1.5f);
+                }
+                else{
+                    TED.add_one_shot_event(transPose,2);
+                }
+
 				break;
 			case "110":
 				set_time_for_PLAY(GameConstants.playAstronautPlayTime); //astronaut scene is shorter
