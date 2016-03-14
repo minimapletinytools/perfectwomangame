@@ -22,10 +22,9 @@ You build your own Perfect Woman story by choosing and performing a diverse cast
 
 ::PRE-CERT TODo
 -publish service config
--redo gamer score for achievements
 -add AO rating to trailer and xbox menomic thingh at the end https://developer.xboxlive.com/en-us/platform/development/documentation/xdp/Pages/game_trailers_12_10_15.aspx
 -add manifest to submission
--enable character unlocking
+IGNORE-enable character unlocking
 -disable all controller cheater keys
 -disable all debug messages
 -remove PC/MAC bundles
@@ -34,15 +33,6 @@ You build your own Perfect Woman story by choosing and performing a diverse cast
 	-test achievements
 	-maybe go through the cert program tests
 
-::final cert stuff
--need feature promotional square artifacts
--game ratings
-DONE-upload game help again
-
-::restart plan
--add resume/restart menu
--manually clear out TED and add bubbles fade/destroy events
-DONE-add TED astronaut clear out events..
 
 ::test
 -tutorial stops showing after first playthrough
@@ -50,17 +40,7 @@ DONE-add TED astronaut clear out events..
 ::TODO2:: 
 -schedule PW playtest
 -consider removing all unlock stuff (ad remove holistic wisdom achievement)
-DONE-superhero art can't have game title in it.
--need box art, branded key art, and poster art
--reupload screenshots to xdp
--still need to figure out whyt here is placeholder image in achievement
-DONE-grading needs to be stricter for choosing
-DONE-new grade pose may still have some e rrors???
--images
-	-make screenshots
-	-achievements still using placeholder images???
-	-pinned image is placeholder image
-	-(are these things set in XDP??)
+-still need to figure out why there is placeholder image in achievement
 -grading changes
 	-punish players for not doing anything (for exptreme difficulty)
 		-on each grade step, use grade pose to see how much player pose has changed since last step
@@ -70,16 +50,33 @@ DONE-new grade pose may still have some e rrors???
 -fix unlock badges
 	-unlock text on PC font size is wrong (at least when runnig in corner of editor)
 	-could also just disable unlocking lol... but then game progress is futzed
+-fix restart 
+	--add resume/restart menu
+	-manually clear out TED and add bubbles fade/destroy events
+	DONE-add TED astronaut clear out events..
 -figure out what that brief freeze after starting a character is
 	-call ModeNormalPlay initialize during title screen
 	-make CharacterLoader load accross several frames
 -email lea about getting PW into museum
 -reply to mattia
+
+DONE-redo gamer score for achievements
+DONE-need feature promotional square artifacts
+DONE-game ratings
+DONE-upload game help again
+IGNORE-reupload screenshots to xdp
+DONE-superhero art can't have game title in it.
+DONE-need box art, branded key art, and poster art
+DONE-grading needs to be stricter for choosing
+DONE-new grade pose may still have some e rrors???
+DONE-images
+	-make screenshots
+	-achievements still using placeholder images???
+	-pinned image is placeholder image
+	-(are these things set in XDP??)
 DONE-maybe set everything to unlocked, 
 	-disable the characters unlocked achievement, 
 	DONE-set game progress to 1 if you beat the game once (or it could be based on how many characters you have played) (currently based on number characters unlocked so it will be 1 if all chars are unlocked)
-
-
 DONE-upgrade again
 DONE-put in astornaut icon :O
 DONE?-replace all non standard characters with [] in display name
