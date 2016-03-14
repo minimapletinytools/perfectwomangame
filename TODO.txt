@@ -38,6 +38,9 @@ IGNORE-enable character unlocking
 -tutorial stops showing after first playthrough
 
 ::TODO2:: 
+-for tutorial only playing once, you need to make sure to still randomly set difficulties of age 5 
+-move the you play as font so it doesn't cover the Perfect Woman logo.
+-add more asteroids??
 -schedule PW playtest
 -consider removing all unlock stuff (ad remove holistic wisdom achievement)
 -still need to figure out why there is placeholder image in achievement
