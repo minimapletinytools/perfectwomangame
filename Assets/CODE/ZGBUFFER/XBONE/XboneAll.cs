@@ -7,6 +7,7 @@ using ConsoleUtils;
 using TextSystems;
 using UnityAOT;
 using UnityPlugin;
+using System.IO;
 #endif
 
 
@@ -32,7 +33,13 @@ public class XboneAll {
         UsersManager.Create();
         AchievementsManager.Create();
         StatisticsManager.Create();
-        EventManager.Create(@"G:\Data\StreamingAssets\Events-PRFW.0-4A0A3432.man");
+
+        string words = "";
+        using (StreamReader reader = new StreamReader(@"G:\Data\StreamingAssets\Events-PRFW.0-4A0A3432.man"))
+        {
+            words = reader.ReadToEnd();
+        }
+        EventManager.CreateFromText(words);
         Storage.StorageManager.Create();
 
         //setup callbacks
