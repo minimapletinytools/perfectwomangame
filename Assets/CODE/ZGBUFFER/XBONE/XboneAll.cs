@@ -62,12 +62,15 @@ public class XboneAll {
             SanityCheckApplicationSetup();
 
             //if(!IsSomeoneSignedIn)
-            UsersManager.RequestSignIn(AccountPickerOptions.None);
+
 
             //RTAManager.CreateAsync(UsersManager.Users[0].Id, OnRTACreated);
         }
 
-        if (!IsActiveUserInitialized && ManagerManager.Manager.mCharacterBundleManager.is_initial_loaded() && IsSomeoneSignedIn)
+        if (UsersManager.GetAppCurrentUser() == null)
+        {
+            UsersManager.RequestSignIn(AccountPickerOptions.None);
+        } else if (!IsActiveUserInitialized && ManagerManager.Manager.mCharacterBundleManager.is_initial_loaded() && IsSomeoneSignedIn)
         {
             //users
             ActiveUser = UsersManager.GetAppCurrentUser();
