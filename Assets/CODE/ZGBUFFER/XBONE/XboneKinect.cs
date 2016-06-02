@@ -125,8 +125,11 @@ public class XboneKinect{
 
 		if (trackedIds.Count > 0)
 		{
-			if (!trackedIds.Contains(mTrackingId))
-				mTrackingId = trackedIds [0];
+            if (!trackedIds.Contains(mTrackingId))
+            {
+                mTrackingId = trackedIds [0];
+                ManagerManager.Log("tracking " + mTrackingId);
+            }
 			IsTracking = true;
 		} else
 		{

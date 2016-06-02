@@ -31,9 +31,22 @@ You build your own Perfect Woman story by choosing and performing a diverse cast
 	-add AO rating to trailer and xbox menomic thingh at the end 
 	DONE-https://developer.xboxlive.com/en-us/platform/development/documentation/xdp/Pages/game_trailers_12_10_15.aspx
 -user account stuff
+	DONE-read up on  "Users, Controllers and Pairing: Identity on Xbox One"
+	-http://forum.unity3d.com/threads/engagement-tips-for-cert.397684/#post-2600859
+	-follow this http://forum.unity3d.com/threads/changing-user-to-reflect-the-first-controller-used.383750/#post-2494621
+	-output kinect tracking info to debug
+	-output login info to debug
 	-remove saves, so don't try and read save anymore 
 	-make sure login coroutines are done right
 	-double check achievements are working right
+	-currently stuck in infinite login loop
+
+-ok new sign in plan
+	-scan for first engaged controller and set to active user
+	-if -1 prompt for user sign in
+	-on user sign in complete, set to current user
+		-if cancelled, prompt for sign in again
+	-on user sign out, launch user prompt again
 
 ::PRE-CERT TODo
 -love hsinyu everyday

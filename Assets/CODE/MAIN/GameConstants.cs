@@ -10,7 +10,7 @@ public static class GameConstants
     public static bool XB1 = true;
     public static int IDLE_RESTART_TIME = 9999999;
     public static bool KB_CONTROL = true;
-    public static bool SHOW_DEBUG = false;
+    public static bool SHOW_DEBUG = true;
     public static bool UNLOCK_ALL = true;
     public static bool TUTORIAL_ONCE = true;
 #else

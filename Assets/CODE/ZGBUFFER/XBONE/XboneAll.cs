@@ -51,8 +51,17 @@ public class XboneAll {
         UsersManager.OnSignOutStarted += OnUserSignOutStarted;
         UsersManager.OnDisplayInfoChanged += OnUserDisplayInfoChange;
         UsersManager.OnAppCurrentUserChanged += OnAppCurrentUserChanged;
+
+        UsersManager.OnSignInComplete += OnSignInComplete;
     }
 
+    void OnSignInComplete(int aStatus, int aUserId)
+    {
+        siDialog = false;
+        //set current user to aUserId
+    }
+     
+    bool siDialog = false; //if the sign in dialog is up or not
     bool firstTime = true;
     public void Update()
     {
@@ -67,9 +76,12 @@ public class XboneAll {
             //RTAManager.CreateAsync(UsersManager.Users[0].Id, OnRTACreated);
         }
 
-        if (UsersManager.GetAppCurrentUser() == null)
+        if (UsersManager.GetAppCurrentUser() == null && !siDialog)
         {
+            //TODO This is getting called repeatedly and not disabling. please fix
             UsersManager.RequestSignIn(AccountPickerOptions.None);
+            siDialog = true;
+
         } else if (!IsActiveUserInitialized && ManagerManager.Manager.mCharacterBundleManager.is_initial_loaded() && IsSomeoneSignedIn)
         {
             //users
@@ -107,6 +119,11 @@ public class XboneAll {
             ManagerManager.Manager.mDebugString = "NO USERS";
         else
             ManagerManager.Manager.mDebugString = "Current user: " + UsersManager.GetAppCurrentUser().Id + " " + UsersManager.GetAppCurrentUser().GameDisplayName;
+    }
+
+    public IEnumerator WaitForFirstInputCoroutine()
+    {
+        //TODO this is annoying...
     }
 
     void game_event_listener(string name, object[] args)
