@@ -127,7 +127,7 @@ public class AstronautPlay
 
 
         //generate asteroids
-        if (Random.Range(0f, 1f) < Time.deltaTime / 3f) //about every 3 seconds
+        if (Random.Range(0f, 1f) < Time.deltaTime / 2f) //about every 2 seconds
         {
             float rad = Random.Range(0,Mathf.PI*2);
             float rad2 = Random.Range(0,Mathf.PI*2);

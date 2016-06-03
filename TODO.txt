@@ -26,11 +26,17 @@ You build your own Perfect Woman story by choosing and performing a diverse cast
 	-finalize gamer score
 	-document exact decisions..
 	-publish it!
--trailer
-	-upload it to XDP
-	-add AO rating to trailer and xbox menomic thingh at the end 
-	DONE-https://developer.xboxlive.com/en-us/platform/development/documentation/xdp/Pages/game_trailers_12_10_15.aspx
--user account stuff
+-certification submission form todo
+	-update achievement_guide_8_11_2015.txt
+	-I removed save data from the form, but add it back in if you want to reenable it...
+	-submission validator logs pls
+-XDP
+	DONE-trailer
+		DONE-upload it to XDP
+		DONE-add AO rating to trailer and xbox menomic thingh at the end 
+		DONE-https://developer.xboxlive.com/en-us/platform/development/documentation/xdp/Pages/game_trailers_12_10_15.aspx
+	-poster art (get from lea and upload)
+-user ac count stuff
 	DONE-read up on  "Users, Controllers and Pairing: Identity on Xbox One"
 	-http://forum.unity3d.com/threads/engagement-tips-for-cert.397684/#post-2600859
 	-follow this http://forum.unity3d.com/threads/changing-user-to-reflect-the-first-controller-used.383750/#post-2494621
@@ -66,9 +72,10 @@ IGNORE-enable character unlocking
 -tutorial stops showing after first playthrough
 
 ::TODO2:: 
--for tutorial only playing once, you need to make sure to still randomly set difficulties of age 5 
--move the you play as font so it doesn't cover the Perfect Woman logo.
--add more asteroids??
+DONE-move the you play as font so it doesn't cover the Perfect Woman logo.
+IGNORE-for tutorial only playing once, you need to make sure to still randomly set difficulties of age 5 
+	-AFAIK, tutorial once just skips the introductory text on fetus. I thought I did more than this but that does not seem to be the case
+DONE-add more asteroids??
 -schedule PW playtest
 -consider removing all unlock stuff (ad remove holistic wisdom achievement)
 -still need to figure out why there is placeholder image in achievement

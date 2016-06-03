@@ -408,7 +408,7 @@ public class TransitionCameraManager : FakeMonoBehaviour
         NewMenuReferenceBehaviour refs = mManager.mNewRef;
         var title = construct_flat_image("START_PLAYER", 100);
         var text = new FlatElementText(refs.genericFont, 50, aName, 101);
-        title.HardPosition = mFlatCamera.get_point(.73f, .85f);
+        title.HardPosition = mFlatCamera.get_point(.73f, -.85f);
         text.HardPosition = title.HardPosition - new Vector3(0,44,0);
         title.HardColor = GameConstants.UiWhiteTransparent;
         text.HardColor = GameConstants.UiBlueTransparent;
