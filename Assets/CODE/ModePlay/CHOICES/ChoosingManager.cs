@@ -201,7 +201,7 @@ public class ChoosingManager
 		{
 			//mBBQuestionTextPrefix.Text = "Choose your perfect life";
 			mBBQuestionText.set_text(
-				new string[]{("Choose your perfect life at age " + mManager.mGameManager.CurrentCharacterIndex.get_future_neighbor(0).Age) + "!"},
+                new string[]{(GameStrings.GetString("CM1",mManager.mGameManager.CurrentCharacterIndex.get_future_neighbor(0).Age.ToString()))},
 			new Color[]{GameConstants.UiRed});
 		}
 		else{
@@ -210,18 +210,24 @@ public class ChoosingManager
 
 			var nChar = mManager.mGameManager.CurrentCharacterIndex.get_future_neighbor(aIndex);
 			var nCharDiff = mManager.mCharacterBundleManager.get_character_helper().Characters[nChar];
-			var diffPhrases = new string[]{" easy", " normal", " hard", " extreme"};
+            var diffPhrases = new string[]
+            {
+                GameStrings.GetString("CM1diffphrase1"),
+                GameStrings.GetString("CM1diffphrase2"),
+                GameStrings.GetString("CM1diffphrase3"),
+                GameStrings.GetString("CM1diffphrase4")
+            };
 			//var perfectPhrases = new string[]{" horrible", " passable", " perfect", " PERFECT"};
 			//var perfectColors = new Color[]{GameConstants.uiYellow, GameConstants.uio
 			//var diffColors = new Color[]{new Color(0,0.8f,0,1), new Color(0.8f,0.8f,0,1), new Color(0.9f,0.4f,0,1), new Color(0.8f,0,0,1)};
 			//mBBQuestionTextPrefix.Text = "That is a";
 			mBBQuestionText.set_text(
 				new string[]{
-				("That is a "),
+                GameStrings.GetString("CM2"),
 				//perfectPhrases[nCharDiff.Perfect], 
 				//Mathf.Abs((3-nCharDiff.Difficulty) - nCharDiff.Perfect) > 1 ? " but" : " and",
 				diffPhrases[nCharDiff.Difficulty],
-				" choice."},
+                GameStrings.GetString("CM3")},
 			new Color[]{
 				//GameConstants.UiPink,
 				//diffColors[nCharDiff.Difficulty]/2f,

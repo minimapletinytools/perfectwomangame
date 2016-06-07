@@ -121,7 +121,7 @@ public class TransitionCameraManager : FakeMonoBehaviour
         //mDepthImage.HardPosition = mFlatCamera.get_point(1, -1) + new Vector3(-10 - mDepthImage.BoundingBox.width / 4, 10 + mDepthImage.BoundingBox.height / 4, 0) * mFlatCamera.screen_pixel_to_camera_pixel_ratio();
         mDepthImage.HardPosition = mFlatCamera.get_point(1.5f, -1) + new Vector3(-10 - mDepthImage.BoundingBox.width / 4, 10 + mDepthImage.BoundingBox.height / 4, 0) * mFlatCamera.screen_pixel_to_camera_pixel_ratio();
         mDepthImage.HardShader = mManager.mReferences.mXB1DepthImageShader;
-		mDepthWarningText = new FlatElementText(mManager.mNewRef.genericFont,40,"Make sure you are\nin frame and no body\nparts are covered",100);
+        mDepthWarningText = new FlatElementText(mManager.mNewRef.genericFont,40,GameStrings.GetString("TCMkinect1"),100);
 		mDepthWarningText.HardColor = new Color(1,1,1,0);	
 		mDepthWarningText.Alignment = TextAlignment.Left;
 		mDepthWarningText.Anchor = TextAnchor.MiddleLeft;
@@ -346,9 +346,9 @@ public class TransitionCameraManager : FakeMonoBehaviour
 					return true;
 				}	
 				if(dState == 1)
-					mMessageText.Text = "Kinect not found";
+                    mMessageText.Text = GameStrings.GetString("TCMkinect2");
 				else if(dState == 2)
-					mMessageText.Text = "Center yourself in the screen";
+                    mMessageText.Text = GameStrings.GetString("TCMkinect3");
 				else
 					mMessageText.Text = "";
 				return false;

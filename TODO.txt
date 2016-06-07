@@ -22,8 +22,10 @@ You build your own Perfect Woman story by choosing and performing a diverse cast
 
 ::NEW FINAL TODO::
 -go through and check service config
-	-remove useless achievements
-	-finalize gamer score
+	-make sure it imported to cert staging properly
+	DONE-remove useless achievements
+		-holistic wisdom
+	DONE-finalize gamer score
 	-document exact decisions..
 	-publish it!
 -certification submission form todo
@@ -72,10 +74,7 @@ IGNORE-enable character unlocking
 -tutorial stops showing after first playthrough
 
 ::TODO2:: 
-DONE-move the you play as font so it doesn't cover the Perfect Woman logo.
-IGNORE-for tutorial only playing once, you need to make sure to still randomly set difficulties of age 5 
-	-AFAIK, tutorial once just skips the introductory text on fetus. I thought I did more than this but that does not seem to be the case
-DONE-add more asteroids??
+-credits in GameConstants should refer to GameStrings.cs
 -schedule PW playtest
 -consider removing all unlock stuff (ad remove holistic wisdom achievement)
 -still need to figure out why there is placeholder image in achievement
@@ -98,6 +97,10 @@ DONE-add more asteroids??
 -email lea about getting PW into museum
 -reply to mattia
 
+DONE-move the you play as font so it doesn't cover the Perfect Woman logo.
+IGNORE-for tutorial only playing once, you need to make sure to still randomly set difficulties of age 5 
+	-AFAIK, tutorial once just skips the introductory text on fetus. I thought I did more than this but that does not seem to be the case
+DONE-add more asteroids??
 DONE-redo gamer score for achievements
 DONE-need feature promotional square artifacts
 DONE-game ratings
