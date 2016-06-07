@@ -59,20 +59,26 @@ public class XboneAll {
 
     void OnSignInComplete(int aStatus, int aUserId)
     {
-
-
         siDialog = false;
 
-        if(aUserId == -1)
-            UsersManager.RequestSignIn(AccountPickerOptions.None);
-
         activeUserId = aUserId;
-        lastActiveUserId = activeUserId;
+        if (aUserId != -1)
+            lastActiveUserId = activeUserId;
 
-        ManagerManager.Log("OnSignInComplete " + aUserId);
+        ManagerManager.Log("OnSignInComplete " + aUserId + " aStatus");
     }
      
     bool siDialog = false; //if the sign in dialog is up or not
+    void RequestSignin()
+    {
+        if (siDialog == false)
+        {
+            if(UsersManager.IsSomeoneSignedIn) //apparently requestsignin is called automatically if no one is signed in so we only do this if people are signed in and the user is allowed to pick who they want to play as
+                UsersManager.RequestSignIn(AccountPickerOptions.None);
+            siDialog = true;
+        }
+    }
+
     bool firstTime = true;
     public void Update()
     {
@@ -82,14 +88,12 @@ public class XboneAll {
             SanityCheckApplicationSetup();
 
             //easiest way to set active user (rather than scanning for first input)
-            UsersManager.RequestSignIn(AccountPickerOptions.None);
-            siDialog = true;
+            RequestSignin();
         }
 
-        if (ActiveUser == null && siDialog == false)
+        if (ActiveUser == null)
         {
-            UsersManager.RequestSignIn(AccountPickerOptions.None);
-            siDialog = true;
+            RequestSignin();
         }
 
         if(!IsActiveUserInitialized && ManagerManager.Manager.mCharacterBundleManager.is_initial_loaded() && IsSomeoneSignedIn)
@@ -241,8 +245,10 @@ public class XboneAll {
                 IsActiveUserInitialized = false;
                 ManagerManager.Manager.restart_game();
             }
+        } else
+        {
+            RequestSignin();
         }
-        else UsersManager.RequestSignIn(Users.AccountPickerOptions.AllowGuests);
     }
     
     void OnUserSignOutStarted(int id, System.IntPtr deferred)
