@@ -376,7 +376,7 @@ public class TransitionCameraManager : FakeMonoBehaviour
         return 
             mManager.mCharacterBundleManager.is_initial_loaded() &&
             mManager.mZigManager.ZgInterface.can_start() &&
-            mManager.mMetaManager.SaveDataRead &&
+            (GameConstants.UNLOCK_ALL || mManager.mMetaManager.SaveDataRead) && //we don't care about save data if we are in unlock all mode
             ((aTime > 5 && mManager.mZigManager.has_user()) ||
             KeyMan.GetKey("HardSkip") || KeyMan.GetKey("SoftSkip") ||
             GameConstants.FORCE_START);

@@ -22,11 +22,11 @@ You build your own Perfect Woman story by choosing and performing a diverse cast
 
 ::NEW FINAL TODO::
 -go through and check service config
-	-make sure it imported to cert staging properly
+	DONE-make sure it imported to cert staging properly
 	DONE-remove useless achievements
 		-holistic wisdom
 	DONE-finalize gamer score
-	-document exact decisions..
+	IGNORE-document exact decisions..
 	-publish it!
 -certification submission form todo
 	-update achievement_guide_8_11_2015.txt
@@ -48,6 +48,10 @@ You build your own Perfect Woman story by choosing and performing a diverse cast
 	-make sure login coroutines are done right
 	-double check achievements are working right
 	-currently stuck in infinite login loop
+DONE-all characters unlocked
+-there is still a problem with infinite login request when you start the game with no user signed in
+DONE??-game starts inconsistently, check exactly what game start condition is again...
+
 
 -ok new sign in plan
 	-scan for first engaged controller and set to active user
