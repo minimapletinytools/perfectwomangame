@@ -22,6 +22,11 @@ public class MetaManager : FakeMonoBehaviour {
 
     public void StartSaveThread()
     {
+        if (GameConstants.UNLOCK_ALL) //no nead to read anything if we are in unlock all mode
+        {
+            return;
+        }
+
         if (!IsReadingSaveData)
         {
             var dummy = (new GameObject("genDummy")).AddComponent<DummyBehaviour>();
