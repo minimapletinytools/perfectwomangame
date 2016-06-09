@@ -13,6 +13,9 @@
 	-password: caps + usual + 1
 	-used: 000, 001
 
+	-email: PRFW-100friends000@xboxtest.com - PRFW-100friends100@xboxtest.com
+	-password: caps + usual + 1
+
 ::PERFECT WOMAN MONEYS::
 -$30 skype money
 -$25 FOST

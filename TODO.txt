@@ -21,6 +21,9 @@ You build your own Perfect Woman story by choosing and performing a diverse cast
 
 
 ::NEW FINAL TODO::
+-move cert forms and stuff into repository
+	-maybe make a new one for cert materials ya
+DONE-check if you can still write a debug.log file in master build (post on unity forums http://forum.unity3d.com/threads/obtaining-debug-log-file-from-certification.410183
 -go through and check service config
 	DONE-make sure it imported to cert staging properly
 	DONE-remove useless achievements
@@ -49,8 +52,12 @@ You build your own Perfect Woman story by choosing and performing a diverse cast
 	-double check achievements are working right
 	-currently stuck in infinite login loop
 DONE-all characters unlocked
--there is still a problem with infinite login request when you start the game with no user signed in
+DONE-there is still a problem with infinite login request when you start the game with no user signed in
 DONE??-game starts inconsistently, check exactly what game start condition is again...
+DONE-update staging sandbox service configuration
+-go through each XDP catgeroy.	
+	-you'll definitely need to upload supplementary files
+-don't forget to remove all the PC/MAC crap for final build
 
 
 -ok new sign in plan
