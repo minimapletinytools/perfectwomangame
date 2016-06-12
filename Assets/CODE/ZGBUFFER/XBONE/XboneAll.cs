@@ -16,9 +16,10 @@ using System.IO;
 public class XboneAll {
     #if UNITY_XBOXONE 
 
+    int lastAppCurrentUserId = -1;
     int activeUserId = -1;
     int lastActiveUserId = -1;
-    public User ActiveUser { get { return UsersManager.FindUserById(activeUserId); } private set { activeUserId = (value == null) ? -1 :  value.Id; } }
+    public User ActiveUser { get { return (activeUserId == -1) ? null : UsersManager.FindUserById(activeUserId); } private set { activeUserId = (value == null) ? -1 :  value.Id; } }
     public User LastActiveUser { get { return UsersManager.FindUserById(lastActiveUserId); } }
     public bool IsSomeoneSignedIn{ get { return UsersManager.IsSomeoneSignedIn; } }
     public bool IsActiveUserInitialized { get; private set; }
@@ -59,20 +60,36 @@ public class XboneAll {
 
     void OnSignInComplete(int aStatus, int aUserId)
     {
-        siDialog = false;
-
+        
         activeUserId = aUserId;
+
+        if (activeUserId != -1 && activeUserId != lastActiveUserId) //if it wasn't a cancel and we're on a different user
+        {
+            MicrosoftZig.Inst.mStorage.CloseStorage();
+            IsActiveUserInitialized = false;
+            ManagerManager.Manager.restart_game();
+        } else //if it was a cancel
+        {
+            //we don't pause the game when lauching account picker so there is no need to resume
+            //ManagerManager.Manager.GameEventDistributor("RESUME", null);
+        }
+
         if (aUserId != -1)
             lastActiveUserId = activeUserId;
 
-        ManagerManager.Log("OnSignInComplete " + aUserId + " aStatus");
+        lastAppCurrentUserId = UsersManager.GetAppCurrentUser().Id;
+
+        ManagerManager.Log("OnSignInComplete " + aUserId + " " + aStatus);
+
+        siDialog = false;
     }
      
     bool siDialog = false; //if the sign in dialog is up or not
     void RequestSignin()
     {
-        if (siDialog == false)
+        if (siDialog == false) 
         {
+            ManagerManager.Log("actual yrequest sign in");
             if(UsersManager.IsSomeoneSignedIn) //apparently requestsignin is called automatically if no one is signed in so we only do this if people are signed in and the user is allowed to pick who they want to play as
                 UsersManager.RequestSignIn(AccountPickerOptions.None);
             siDialog = true;
@@ -88,12 +105,21 @@ public class XboneAll {
             SanityCheckApplicationSetup();
 
             //easiest way to set active user (rather than scanning for first input)
+            ManagerManager.Log("first time sign in");
             RequestSignin();
-        }
-
-        if (ActiveUser == null)
+        } else
         {
-            RequestSignin();
+            //after initial user prompt, these if statements will catch the following things:
+                
+            if(activeUserId == -1)
+                RequestSignin();
+            if (UsersManager.Users.Count == 0) //no users
+                RequestSignin();
+            if (KeyMan.GetKeyDown("DepthToggle")) //menu key is tied to depth toggle
+                RequestSignin();
+            if (lastAppCurrentUserId != UsersManager.GetAppCurrentUser().Id && UsersManager.GetAppCurrentUser().Id != activeUserId)
+                RequestSignin();
+            
         }
 
         if(!IsActiveUserInitialized && ManagerManager.Manager.mCharacterBundleManager.is_initial_loaded() && IsSomeoneSignedIn)
@@ -119,6 +145,8 @@ public class XboneAll {
             IsActiveUserInitialized = true;
         }
 
+
+        //debug stuff
         if (KeyMan.GetKeyDown("LeftThumbstick"))
         {
             //ManagerManager.Log("getSingle");
@@ -129,6 +157,10 @@ public class XboneAll {
             ManagerManager.Manager.mDebugString = "NO USERS";
         else
             ManagerManager.Manager.mDebugString = "Current user: " + UsersManager.GetAppCurrentUser().Id + " " + UsersManager.GetAppCurrentUser().GameDisplayName;
+
+        //this is for special case where the sign in dialog is canceled but the callback isn't called
+        if (!MicrosoftZig.Inst.mPLM.Constrained && MicrosoftZig.Inst.mPLM.NotConstrainedTimer > 2)
+            siDialog = false;
     }
 
     //use this function for the version where you scan for first input to determine who is the engaged user
@@ -219,6 +251,9 @@ public class XboneAll {
 
     void OnAppCurrentUserChanged()
     {
+        ManagerManager.Log("OnAppCurrentUserChanged " + UsersManager.GetAppCurrentUser().Id);
+        if (UsersManager.GetAppCurrentUser().Id != activeUserId)
+            RequestSignin();
     }
 
     void OnUsersChanged(int id,bool wasAdded)
@@ -231,24 +266,18 @@ public class XboneAll {
         ManagerManager.Log("OnUserSignIn " + id + " " + GetUserName(id));
     }
 
-    void OnUserSignOut(int id)
+    void OnUserSignOut(int id) //not guaranteed to be called...
     {
         ManagerManager.Log("OnUserSignOut " + id + " " + GetUserName(id));
        
+        /*
         if (ActiveUser != null)
         {
-            if (ActiveUser.Id != id)
+            if (ActiveUser.Id == id)
             {
-                MicrosoftZig.Inst.mStorage.CloseStorage();
-                //ManagerManager.Manager.GameEventDistributor("PAUSE", null);
                 ActiveUser = null;
-                IsActiveUserInitialized = false;
-                ManagerManager.Manager.restart_game();
             }
-        } else
-        {
-            RequestSignin();
-        }
+        }*/
     }
     
     void OnUserSignOutStarted(int id, System.IntPtr deferred)

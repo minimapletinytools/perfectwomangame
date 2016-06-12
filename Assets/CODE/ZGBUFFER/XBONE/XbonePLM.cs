@@ -9,7 +9,9 @@ using Users;
 public class XbonePLM
 {
     ManagerManager mManager;
-    
+
+    public bool Constrained { get; private set; }
+    public float NotConstrainedTimer{ get; private set; }
     public XbonePLM(ManagerManager aManager)
     {
         mManager = aManager;
@@ -28,6 +30,12 @@ public class XbonePLM
 		XboxOnePLM.OnActivationEvent += Activation;
 	}
 
+    public void Update()
+    {
+        if(!Constrained)
+            NotConstrainedTimer += Time.deltaTime;
+    }
+
 	void Suspending()
 	{
 		//TODO save
@@ -40,10 +48,13 @@ public class XbonePLM
 		//TODO (also make sure the boolean is correct..
         ManagerManager.Log("RESOURCES CHANGED " + aConstrained);
 
+        Constrained = aConstrained;
+
         if (aConstrained)
-            ManagerManager.Manager.GameEventDistributor("PAUSE",null);
-        else if(aConstrained == false && !MicrosoftZig.Inst.mAll.IsSomeoneSignedIn)
-            UsersManager.RequestSignIn(Users.AccountPickerOptions.AllowGuests);
+        {
+            ManagerManager.Manager.GameEventDistributor("PAUSE", null);
+            NotConstrainedTimer = 0;
+        }
         else
             ManagerManager.Manager.GameEventDistributor("RESUME", null);
 
@@ -54,8 +65,6 @@ public class XbonePLM
 	{
 		//TODO check if user has changed
         ManagerManager.Log("RESUMING");
-        if(!MicrosoftZig.Inst.mAll.IsSomeoneSignedIn)
-            UsersManager.RequestSignIn(Users.AccountPickerOptions.AllowGuests);
     }
 
 	void Activation(ActivatedEventArgs args)

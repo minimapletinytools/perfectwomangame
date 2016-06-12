@@ -10,7 +10,7 @@ public class MicrosoftZig : ZgInterface
 
     public XboneAll mAll;
 	public XboneKinect mKinect;
-	XbonePLM mPLM;
+	public XbonePLM mPLM;
 	public XboneStorage mStorage;
 	public XboneEvents mEvents; 
     XboneUnityLogPlugin mLog;
@@ -50,6 +50,7 @@ public class MicrosoftZig : ZgInterface
     int initCounter = 0;
 	public void update()
 	{
+        mPLM.Update();
         mAll.Update();
 		mKinect.Update ();
         mEvents.Update();
@@ -103,11 +104,13 @@ public class MicrosoftZig : ZgInterface
         if (initCounter == 3)
             mZig.mManager.GameEventDistributor("OTHER_PLATFORM_INITIALIZE", null);
         initCounter++;
+
+        ManagerManager.Manager.mDebugString2 = mKinect.IsTracking.ToString();
 	}
 	
 	public bool has_user()
 	{
-		return mKinect.IsTracking && mAll.IsSomeoneSignedIn;
+        return mKinect.IsTracking && mAll.ActiveUser != null;
 	}
 
 	//TODO should check for users
@@ -169,7 +172,8 @@ public class MicrosoftZig : ZgInterface
 
     public void write_data(byte[] aData, string aName)
     {
-        mStorage.write_data (aData, aName);
+        if(!GameConstants.UNLOCK_ALL) //no need to save if we have all content unlocked
+            mStorage.write_data (aData, aName);
     }
     public void read_data(string aName, System.Action<byte[]> aResponse)
     {

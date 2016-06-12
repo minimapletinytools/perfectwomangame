@@ -17,7 +17,7 @@
     <Resource Language="en-us" />
   </Resources>
   <Applications>
-    <Application Id="App" Executable="XboxOnePlayer.exe" EntryPoint="XboxOnePlayer.app">
+    <Application Id="App" Executable="PerfectWoman.exe" EntryPoint="PerfectWoman.app">
       <VisualElements DisplayName="PerfectWoman" Logo="Logo.png" SmallLogo="SmallLogo.png" Description="PerfectWoman" ForegroundText="light" BackgroundColor="#464646">
         <SplashScreen Image="SplashScreen.png" />
         <DefaultTile WideLogo="WideLogo.png" />

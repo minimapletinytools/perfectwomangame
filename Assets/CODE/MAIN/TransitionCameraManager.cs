@@ -360,15 +360,16 @@ public class TransitionCameraManager : FakeMonoBehaviour
     bool can_start(float aTime)
     {
 
-        /*
+
         mManager.mDebugString = (GameConstants.ALLOW_NO_KINECT + " " + mManager.mZigManager.is_reader_connected() + " " +
                                  mManager.mCharacterBundleManager.is_initial_loaded() + " " +
                                  mManager.mZigManager.ZgInterface.can_start() + " " +
-                                 mManager.mMetaManager.SaveDataRead + " " +
-                                 (aTime > 5 && mManager.mZigManager.has_user()) + " " +
+                                 (GameConstants.UNLOCK_ALL || mManager.mMetaManager.SaveDataRead) + " " +
+                                 aTime + " " +
+                                 (mManager.mZigManager.has_user()) + " " +
                                  (KeyMan.GetKey("HardSkip") || KeyMan.GetKey("SoftSkip"))  + " " +
                                  GameConstants.FORCE_START);
-        */
+        
 
         if (!GameConstants.ALLOW_NO_KINECT && mManager.mZigManager.is_reader_connected() == 0)
             return false;
@@ -377,7 +378,7 @@ public class TransitionCameraManager : FakeMonoBehaviour
             mManager.mCharacterBundleManager.is_initial_loaded() &&
             mManager.mZigManager.ZgInterface.can_start() &&
             (GameConstants.UNLOCK_ALL || mManager.mMetaManager.SaveDataRead) && //we don't care about save data if we are in unlock all mode
-            ((aTime > 5 && mManager.mZigManager.has_user()) ||
+            ((aTime > 3.5f && mManager.mZigManager.has_user()) ||
             KeyMan.GetKey("HardSkip") || KeyMan.GetKey("SoftSkip") ||
             GameConstants.FORCE_START);
     }
