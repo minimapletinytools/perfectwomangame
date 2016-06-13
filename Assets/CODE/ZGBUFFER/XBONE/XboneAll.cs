@@ -115,14 +115,14 @@ public class XboneAll {
                 RequestSignin();
             if (UsersManager.Users.Count == 0) //no users
                 RequestSignin();
-            if (KeyMan.GetKeyDown("DepthToggle")) //menu key is tied to depth toggle
+            if (KeyMan.GetKeyDown("DepthToggle",true)) //menu key is tied to depth toggle
                 RequestSignin();
             if (lastAppCurrentUserId != UsersManager.GetAppCurrentUser().Id && UsersManager.GetAppCurrentUser().Id != activeUserId)
                 RequestSignin();
             
         }
 
-        if(!IsActiveUserInitialized && ManagerManager.Manager.mCharacterBundleManager.is_initial_loaded() && IsSomeoneSignedIn)
+        if(!IsActiveUserInitialized && ManagerManager.Manager.mCharacterBundleManager.is_initial_loaded() && ActiveUser != null)
         {
             //title screen
             ManagerManager.Log("User Initialized " + ActiveUser.GameDisplayName);
@@ -153,10 +153,12 @@ public class XboneAll {
             //StatisticsManager.GetSingleUserStatisticsAsyncMultipleStats(UsersManager.Users[0].Id, UsersManager.Users[0].UID, ConsoleUtilsManager.PrimaryServiceConfigId(), stats,null);
         }
 
+        /*
         if (UsersManager.Users.Count == 0)
             ManagerManager.Manager.mDebugString = "NO USERS";
         else
             ManagerManager.Manager.mDebugString = "Current user: " + UsersManager.GetAppCurrentUser().Id + " " + UsersManager.GetAppCurrentUser().GameDisplayName;
+            */
 
         //this is for special case where the sign in dialog is canceled but the callback isn't called
         if (!MicrosoftZig.Inst.mPLM.Constrained && MicrosoftZig.Inst.mPLM.NotConstrainedTimer > 2)

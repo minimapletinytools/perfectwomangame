@@ -105,7 +105,7 @@ public class MicrosoftZig : ZgInterface
             mZig.mManager.GameEventDistributor("OTHER_PLATFORM_INITIALIZE", null);
         initCounter++;
 
-        ManagerManager.Manager.mDebugString2 = mKinect.IsTracking.ToString();
+        //ManagerManager.Manager.mDebugString2 = mKinect.IsTracking.ToString();
 	}
 	
 	public bool has_user()
