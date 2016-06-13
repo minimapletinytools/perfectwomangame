@@ -21,30 +21,29 @@ You build your own Perfect Woman story by choosing and performing a diverse cast
 
 
 ::NEW FINAL TODO::
--pressing home button should launch account picker. Cancelling it will resume the game.
+DONE-pressing home button should launch account picker. Cancelling it will resume the game.
 	-test it
 		-make sure to do xb1 button during the menu and see if that breaks anything
 -prebuild guide:
-	-remove PC/mac stuff
-	-set encryption to retail
-	-turn off debug vars 
-	-check validation logs
-	-disable controller cheater keys
-	-no sandbox id
-	-packgae encryptinon to retail signing
-	-switch to release dlls
--go through and check service config
+	DONE-remove PC/mac stuff
+	DONE-turn off debug vars 
+	DONE-check validation logs
+	DONE-disable controller cheater keys
+	DONE-no sandbox id
+	DONE-packgae encryptinon to retail signing
+	DONE-switch to release dlls
+DONE-go through and check service config
 	DONE-make sure it imported to cert staging properly
 	DONE-remove useless achievements
 		-holistic wisdom
 	DONE-finalize gamer score
 	IGNORE-document exact decisions..
-	-publish it!
--certification submission form todo
+	DONE-publish it!
+DONE-certification submission form todo
 	DONE-update achievement_guide_8_11_2015.txt
 	IGNORE-I removed save data from the form, but add it back in if you want to reenable it...
 	-submission validator logs pls
--regenerate appmanifest.xml and set ESRB rating to AO
+DONE-regenerate appmanifest.xml and set ESRB rating to AO
 
 ::PRE-CERT TODo
 -love hsinyu everyday
