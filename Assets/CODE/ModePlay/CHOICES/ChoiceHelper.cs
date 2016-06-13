@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 public class ChoiceHelper
 {
-	public const float SELECTION_THRESHOLD = 6;
+	public const float SELECTION_THRESHOLD = 8f;
     public const float CHOOSING_PERCENTAGE_GROWTH_RATE = 1/6f;
     public const float CHOOSING_PERCENTAGE_DECLINE_RATE = 0.7f;
 	
@@ -50,9 +50,10 @@ public class ChoiceHelper
 		if(mChoicePoses == null || mChoicePoses.Length == 0)
 			throw new UnityException("problem with choice poses");
 		
+        string output = "";
 		int minIndex = 0;
         float minGrade = 99999;
-        for (int i = 0; i < mChoicePoses.Length; i++) //TODO need sto be 4 eventually....
+        for (int i = 0; i < mChoicePoses.Length; i++)
         {
             if (mChoicePoses[i] != null)
             {
@@ -64,8 +65,12 @@ public class ChoiceHelper
                     minGrade = grade;
                     minIndex = i;
                 }
+
+                output += grade.ToString("##.###") + " ";
             }
         }
+
+        //ManagerManager.Manager.mDebugString = minGrade.ToString("##.###") + "       " + output;
 		
         //Debug.Log(output);
         if (minGrade > SELECTION_THRESHOLD)
@@ -103,15 +108,20 @@ public class ChoiceHelper
 		//else if(Input.GetKey(KeyCode.Alpha4))
 		//	NextContendingChoice = 3;
 		
+
 		if(NextContendingChoice != -1 && LastContendingChoice != NextContendingChoice)
 		{
 			ManagerManager.Manager.mMusicManager.play_sound_effect("choiceBlip");
 		}
+            
 		
+
 		aInterface.set_choice(NextContendingChoice);
+
 		
         for (int i = 0; i < mChoicePoses.Length; i++)
         {
+
             if (NextContendingChoice == i)
             {
                 ChoosingPercentages[i] = Mathf.Clamp01(ChoosingPercentages[i] + growthRate * Time.deltaTime);
@@ -121,15 +131,19 @@ public class ChoiceHelper
                 ChoosingPercentages[i] = Mathf.Clamp01(ChoosingPercentages[i] - CHOOSING_PERCENTAGE_DECLINE_RATE * Time.deltaTime);
             }
 			aInterface.set_choice_percentages(i,ChoosingPercentages[i]);
+           
             if (ChoosingPercentages[i] == 1)
             {
+           
 				for(int j = 0; j < ChoosingPercentages.Length; j++)
 					ChoosingPercentages[j] = 0;
 				LastContendingChoice = -1;
 				ManagerManager.Manager.mMusicManager.play_sound_effect("choiceMade");
 				return NextContendingChoice;
             }
+           
         }
+
 		LastContendingChoice = NextContendingChoice;
         
 		return -1;

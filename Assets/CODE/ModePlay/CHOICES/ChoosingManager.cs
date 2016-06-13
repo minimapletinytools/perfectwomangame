@@ -212,10 +212,10 @@ public class ChoosingManager
 			var nCharDiff = mManager.mCharacterBundleManager.get_character_helper().Characters[nChar];
             var diffPhrases = new string[]
             {
-                GameStrings.GetString("CM1diffphrase1"),
-                GameStrings.GetString("CM1diffphrase2"),
-                GameStrings.GetString("CM1diffphrase3"),
-                GameStrings.GetString("CM1diffphrase4")
+                GameStrings.GetString("CMdiffphrase1"),
+                GameStrings.GetString("CMdiffphrase2"),
+                GameStrings.GetString("CMdiffphrase3"),
+                GameStrings.GetString("CMdiffphrase4")
             };
 			//var perfectPhrases = new string[]{" horrible", " passable", " perfect", " PERFECT"};
 			//var perfectColors = new Color[]{GameConstants.uiYellow, GameConstants.uio
