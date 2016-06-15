@@ -820,7 +820,11 @@ public class SunsetManager
                     int counter = 0;
                     foreach (string e in GameConstants.credits)
                     {
-                        var text = new FlatElementText(mManager.mNewRef.genericFont, 70, e, 25);
+                        string val = e;
+                        if(System.Text.RegularExpressions.Regex.IsMatch(e, @"^\d+$"))
+                            val = GameStrings.GetString("GCcredits"+e);
+                            
+                        var text = new FlatElementText(mManager.mNewRef.genericFont, 70, val, 25);
                         float textWidth = text.BoundingBox.width;
                         text.HardColor = new Color(1, 1, 1, 1);
                         text.HardPosition = new Vector3(lastXPosition - textWidth / 2f, barYPosition.y, 0);

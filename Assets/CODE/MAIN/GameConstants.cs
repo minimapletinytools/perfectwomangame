@@ -95,14 +95,14 @@ public static class GameConstants
 	//grave stuff
 	//public static string[] credits = {"Perfect Woman","created by", "Lea Sch\u00F6enfelder", "Peter Lu"};
     public static string[] credits = { 
-		"A game by:","Peter Lu","Lea Sch\u00F6enfelder"," ",
+        "1","Peter Lu","Lea Sch\u00F6enfelder"," ",
 
-		"With assistance from:","Steven Amrhein","Annika Bauer","Benedikt Haas","Marius Winter"," ",
+		"2","Steven Amrhein","Annika Bauer","Benedikt Haas","Marius Winter"," ",
 
-		"Sound + Music: ","Lukas Nowok", "Luigi Maria Rapisarda", "Jonas Schwall", "Steffen Thumm", 
+		"3","Lukas Nowok", "Luigi Maria Rapisarda", "Jonas Schwall", "Steffen Thumm", 
 		"Dirk Handreke", "Frank Simper", "Ingo Feuker", "David Hill", "Christian Barth", "Leo Frick", " ",
 
-		"Special thanks:","Teut Weidemann", "Marc Lutz", "Aliah Darke",  
+		"4","Teut Weidemann", "Marc Lutz", "Aliah Darke",  
 		"Inga Von Staden", "Andreas Hykade", "Alex Rickett","Steven Amrhein",
 		"David Elliott","Sabrina Winter", "Eddo Stern", "J\u00F6rg Ihle", "Tyler Stefanich", "Nikita Arefkia"
 	};
