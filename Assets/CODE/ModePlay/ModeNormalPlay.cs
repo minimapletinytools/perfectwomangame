@@ -894,7 +894,7 @@ public class ModeNormalPlay
 			TED.add_event(
 				NGM.CurrentCharacterIndex == CharacterIndex.sFetus ?
                 mSunsetManager.low_skippable_text_bubble_event(GameStrings.GetString("MNPtrans1"),gAgeDisplayDur) :
-                mSunsetManager.low_skippable_text_bubble_event(GameStrings.GetString("MNPtrans2",NGM.CurrentCharacterIndex.get_future_neighbor(0).Age,gAgeDisplayDur)
+                mSunsetManager.low_skippable_text_bubble_event(GameStrings.GetString("MNPtrans2",NGM.CurrentCharacterIndex.get_future_neighbor(0).Age.ToString()),gAgeDisplayDur)
 			,2.5f).then_one_shot(
 				delegate(){
                     slide_image(mFlatCamera, null, mChoosingImage);
