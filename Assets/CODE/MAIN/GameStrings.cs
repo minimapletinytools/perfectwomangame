@@ -51,6 +51,12 @@ public static class GameStrings {
         {"NIM2","But everyone must pass."},
         {"NIM3","You die at the age of <token1>."},
 
+        {"SM1","You rest here beneath the earth..."},
+        {"SM2","Unfortunately you died "},
+        {"SM3","You died "},
+        {"SM4","as an "},
+        {"SM5","as a "},
+
 
 
 

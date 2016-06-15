@@ -550,7 +550,7 @@ public class SunsetManager
 			}
 		,0);
 		chain = chain.then(
-				low_skippable_text_bubble_event("You rest here beneath the earth...",gIntroText),3);
+            low_skippable_text_bubble_event(GameStrings.GetString("SM1"),gIntroText),3);
 
 		/*.then( //wait a little bit to let the fading finish
 		    	low_skippable_text_bubble_event("HERE IS YOUR LIFE STORY",gIntroText)
@@ -701,15 +701,15 @@ public class SunsetManager
 
 		string deathSentence = "";
 		if(aStats[aStats.Count-1].DeathTime != -1)
-			deathSentence += "Unfortunately you died ";
+            deathSentence += GameStrings.GetString("SM2");
 		else
-			deathSentence += "You died ";
+            deathSentence += GameStrings.GetString("SM3");
 		if (!aStats [aStats.Count - 1].Character.IsDescriptionAdjective)
            {
             if("aeiouAEIOU".IndexOf(aStats[aStats.Count-1].Character.Description[0]) >= 0)
-                deathSentence += "as an ";
+                deathSentence += GameStrings.GetString("SM4");
             else
-                deathSentence += "as a ";
+                deathSentence += GameStrings.GetString("SM5");
         }
 		deathSentence += aStats[aStats.Count-1].Character.Description;
 
