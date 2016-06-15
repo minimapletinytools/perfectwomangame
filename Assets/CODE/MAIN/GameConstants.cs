@@ -21,6 +21,7 @@ public static class GameConstants
     public static bool SHOW_DEBUG = false;
     public static bool UNLOCK_ALL = true;
     public static bool TUTORIAL_ONCE = false;
+    public static bool SHOW_LOGOS = true;
 #endif
 
 

@@ -21,6 +21,7 @@ You build your own Perfect Woman story by choosing and performing a diverse cast
 
 
 ::NEW FINAL TODO::
+DONE-remove school logos from credits :(
 -followup: 
 	-https://forums.xboxlive.com/questions/54599/invalid-rating-specified-esrbao.html
 	-http://forum.unity3d.com/threads/obtaining-debug-log-file-from-certification.410183/#post-2675525

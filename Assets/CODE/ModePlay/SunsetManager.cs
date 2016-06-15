@@ -835,18 +835,21 @@ public class SunsetManager
                         counter++;
                     }
 
-                    lastXPosition += -200;
-                    string[] imageNames = new string[] { "LOGO_FA", "LOGO_AI", "LOGO_GL" };
-                    for (int i = 0; i < imageNames.Length; i++)
+                    if(GameConstants.SHOW_LOGOS)
                     {
-                        var imgData = mManager.mCharacterBundleManager.get_image(imageNames[i]);
-                        var img = new FlatElementImage(imgData.Image, imgData.Data.Size, 25);
-                        float imgWidth = img.BoundingBox.width;
-                        img.HardPosition = new Vector3(lastXPosition - imgWidth / 2, barYPosition.y, 0);
-                        lastXPosition += -img.BoundingBox.width / 2f - 500;
-                        logos[i] = img;
-                        mElement.Add(img);
-                        graveCleanup.Add(img);
+                        lastXPosition += -200;
+                        string[] imageNames = new string[] { "LOGO_FA", "LOGO_AI", "LOGO_GL" };
+                        for (int i = 0; i < imageNames.Length; i++)
+                        {
+                            var imgData = mManager.mCharacterBundleManager.get_image(imageNames[i]);
+                            var img = new FlatElementImage(imgData.Image, imgData.Data.Size, 25);
+                            float imgWidth = img.BoundingBox.width;
+                            img.HardPosition = new Vector3(lastXPosition - imgWidth / 2, barYPosition.y, 0);
+                            lastXPosition += -img.BoundingBox.width / 2f - 500;
+                            logos[i] = img;
+                            mElement.Add(img);
+                            graveCleanup.Add(img);
+                        }
                     }
 
                 }
