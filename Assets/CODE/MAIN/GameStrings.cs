@@ -57,12 +57,12 @@ public static class GameStrings {
         {"SM4","as an "},
         {"SM5","as a "},
 
-
-
-
-
-
-
-
+        {"UR1","Your career can start early!"},
+        {"UR2","Education can start early!"},
+        {"UR3","Maybe you should play some video games..."},
+        {"UR4","A simple job. A simple life."},
+        {"UR5","Thar she blows."},
+        {"UR6","Perhaps you should try your sex appeal."},
+        {"UR7","Oooga Booga! Oooga Booga!"},
     };
 }

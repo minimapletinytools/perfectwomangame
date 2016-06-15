@@ -52,7 +52,7 @@ public static class UnlockRequirements
             { new FakeCharIndex(1,3), delegate(List<PerformanceStats> aStats, List<List<PerformanceStats> > aHistory)
                 {
                     return new UnlockData(){
-                        Sentence = "Your career can start early!",
+                        Sentence = GameStrings.GetString("UR1"),
                     };
                 }
             },{ new FakeCharIndex(2,3), delegate(List<PerformanceStats> aStats, List<List<PerformanceStats> > aHistory)
@@ -60,7 +60,7 @@ public static class UnlockRequirements
                     if(aHistory.Count > 1)
                     {
                         return new UnlockData(){
-                            Sentence = "Education can start early!",
+                            Sentence = GameStrings.GetString("UR2"),
                         };
                     }
                     return null;
@@ -70,7 +70,7 @@ public static class UnlockRequirements
                     if(aHistory.Count > 2)
                     {
                         return new UnlockData(){
-                            Sentence = "Maybe you should play some video games...",
+                            Sentence = GameStrings.GetString("UR3"),
                         };
                     }
                     return null;
@@ -80,7 +80,7 @@ public static class UnlockRequirements
                     if(aHistory.Count > 3)
                     {
                         return new UnlockData(){
-                            Sentence = "A simple job. A simple life.",
+                            Sentence = GameStrings.GetString("UR4"),
                         };
                     }
                     return null;
@@ -90,7 +90,7 @@ public static class UnlockRequirements
                     if(aHistory.Count > 4)
                     {
                         return new UnlockData(){
-                            Sentence = "Thar she blows.",
+                            Sentence = GameStrings.GetString("UR5"),
                         };
                     }
                     return null;
@@ -100,7 +100,7 @@ public static class UnlockRequirements
                     if(aHistory.Count > 5)
                     {
                         return new UnlockData(){
-                            Sentence = "Perhaps you should try your sex appeal.",
+                            Sentence = GameStrings.GetString("UR6"),
                         };
                     }
                     return null;
@@ -110,7 +110,7 @@ public static class UnlockRequirements
                     if(aHistory.Count > 6)
                     {
                         return new UnlockData(){
-                            Sentence = "Oooga Booga! Oooga Booga!",
+                            Sentence = GameStrings.GetString("UR7"),
                         };
                     }
                     return null;
