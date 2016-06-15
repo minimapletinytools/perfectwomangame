@@ -39,6 +39,9 @@
 	-username: pub
 	-password: 4321
 
+	-username: chippermonky
+	-password: usual
+
 
 ::ACHIEVEMENT GUIDE::
 
