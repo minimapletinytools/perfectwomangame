@@ -31,6 +31,32 @@ public static class GameStrings {
         {"CMdiffphrase3","hard"},
         {"CMdiffphrase4","extreme"},
 
+        {"MNPfetus1","Try and make your first movements."},
+        {"MNPfetus2","Match the pose behind you."},
+        {"MNPfetus3","You lived to be very old. Enjoy what's left of your life."},
+
+        {"MNPdeath1","BAD PERFORMANCE!"},
+        {"MNPdeath2","HORRIBLE PERFORMANCE!"},
+        {"MNPdeath3","You die an early death."},
+        {"MNPdeath4","But that's okay, you are already old."},
+        {"MNPdeath5","Next time you perform that bad you will die."},
+
+        {"MNPastro","You turn 110"},
+
+        {"MNPtrans1","Make your first life decision."},
+        {"MNPtrans2","You turn <token1>."},
+
+        {"MNPdiff1","That's an easy choice. You should be able to manage that!"},
+        {"MNPdiff2","You made a normal choice. Show how good you are!"},
+        {"MNPdiff3","That's a hard one. Show your skills!"},
+        {"MNPdiff4","You made an extreme choice? Let's see if you survive!"},
+
+
+
+
+
+
+
 
     };
 }

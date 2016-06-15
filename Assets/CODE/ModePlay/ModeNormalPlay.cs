@@ -310,11 +310,11 @@ public class ModeNormalPlay
 
                 if (mManager.mMetaManager.UnlockManager.mUnlocked.numberGamesPlayed == 0 || GameConstants.TUTORIAL_ONCE != true){
                     TED.add_event(
-                        mInterfaceManager.skippable_text_bubble_event("Try and make your first movements.", gTextDisplayDur),
+                        mInterfaceManager.skippable_text_bubble_event(GameStrings.GetString("MNPfetus1"), gTextDisplayDur),
                     3).then_one_shot(
                         transPose,
                     0).then(
-                        mInterfaceManager.skippable_text_bubble_event("Match the pose behind you.", gTextDisplayDur),
+                        mInterfaceManager.skippable_text_bubble_event(GameStrings.GetString("MNPfetus2"), gTextDisplayDur),
                     1.5f);
                 }
                 else{
@@ -330,7 +330,7 @@ public class ModeNormalPlay
                 mInterfaceManager.hide_interface();
 				transition_to_PLAY();
 				TED.add_event(
-					mInterfaceManager.skippable_text_bubble_event("You lived to be very old. Enjoy what's left of your life.", 4),
+                    mInterfaceManager.skippable_text_bubble_event(GameStrings.GetString("MNPfetus3"), 4),
 				1);
                 CurrentPerformanceStat.update_score(0, 1); //give astronaut perfect score
                 CurrentPerformanceStat.update_score(1, 1);	
@@ -771,15 +771,15 @@ public class ModeNormalPlay
 		
 		//BAD PERFORMANCE
 		chain = chain.then(
-			mInterfaceManager.skippable_text_bubble_event(firstDeath ? "BAD PERFORMANCE!" : "HORRIBLE PERFORMANCE!", gTextDisplayDur)
+            mInterfaceManager.skippable_text_bubble_event(firstDeath ? GameStrings.GetString("MNPdeath1") : GameStrings.GetString("MNPdeath2"), gTextDisplayDur)
 		,2);
 
 		if(!firstDeath && NGM.CurrentLevel == 7)
 		{
 			chain = chain.then(
-				mInterfaceManager.skippable_text_bubble_event("You die an early death.", gTextDisplayDur)
+                mInterfaceManager.skippable_text_bubble_event(GameStrings.GetString("MNPdeath3"), gTextDisplayDur)
 			,0).then(
-				mInterfaceManager.skippable_text_bubble_event("But that's okay, you are already old.", gTextDisplayDur)
+                    mInterfaceManager.skippable_text_bubble_event(GameStrings.GetString("MNPdeath4"), gTextDisplayDur)
 			,0);
 		}
 	
@@ -787,7 +787,7 @@ public class ModeNormalPlay
 		//NEXT TIME YOU PERFORM THAT BAD YOU MIGHT DIE
 		if(firstDeath) //if we haven't died previously
 		{
-			chain = chain.then(mInterfaceManager.skippable_text_bubble_event("Next time you perform that bad you will die.", gTextDisplayDur),0);
+            chain = chain.then(mInterfaceManager.skippable_text_bubble_event(GameStrings.GetString("MNPdeath5"), gTextDisplayDur),0);
 
 
 			chain = chain.then_one_shot(
@@ -862,7 +862,7 @@ public class ModeNormalPlay
             return true;
         }
         ,4).then(
-            mSunsetManager.low_skippable_text_bubble_event("You turn 110",4)
+                mSunsetManager.low_skippable_text_bubble_event(GameStrings.GetString("MNPastro"),4)
         ,4).then_one_shot(
             delegate(){
                 transition_to_TRANSITION_play(CharacterIndex.sOneHundred);
@@ -893,8 +893,8 @@ public class ModeNormalPlay
 			,5);
 			TED.add_event(
 				NGM.CurrentCharacterIndex == CharacterIndex.sFetus ?
-				mSunsetManager.low_skippable_text_bubble_event("Make your first life decision.",gAgeDisplayDur) :
-				mSunsetManager.low_skippable_text_bubble_event("You turn " + NGM.CurrentCharacterIndex.get_future_neighbor(0).Age + ".",gAgeDisplayDur)
+                mSunsetManager.low_skippable_text_bubble_event(GameStrings.GetString("MNPtrans1"),gAgeDisplayDur) :
+                mSunsetManager.low_skippable_text_bubble_event(GameStrings.GetString("MNPtrans2",NGM.CurrentCharacterIndex.get_future_neighbor(0).Age,gAgeDisplayDur)
 			,2.5f).then_one_shot(
 				delegate(){
                     slide_image(mFlatCamera, null, mChoosingImage);
@@ -938,10 +938,10 @@ public class ModeNormalPlay
 		GS = NormalPlayGameState.TRANSITION;
 
         //TODO maybe play a sound "Too Easy" "Ok" "Hard" "That's Impossible!!"
-		var diffPhrases = new string[]{	"That's an easy choice. You should be able to manage that!", 
-										"You made a normal choice. Show how good you are!", 
-										"That's a hard one. Show your skills!", 
-										"You made an extreme choice? Let's see if you survive!"
+        var diffPhrases = new string[]{	GameStrings.GetString("MNPdiff1"), 
+            GameStrings.GetString("MNPdiff2"), 
+            GameStrings.GetString("MNPdiff3"), 
+            GameStrings.GetString("MNPdiff4")
 		};
 
 		TED.add_event(
