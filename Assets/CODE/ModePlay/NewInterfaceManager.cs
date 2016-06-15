@@ -409,7 +409,7 @@ public class NewInterfaceManager {
 
                     //TODO this should be different for age 85 if astronaut
                     if (aAstronautHack)
-                        introPo = add_timed_text_bubble("You graduate from Space Camp???",gPerformanceText);
+                        introPo = add_timed_text_bubble(GameStrings.GetString("NIM1"),gPerformanceText);
                     else
                         introPo = add_timed_text_bubble(aChanges.PerformanceDescription, gPerformanceText);
 				}
@@ -522,7 +522,7 @@ public class NewInterfaceManager {
 			chain = TED.add_one_shot_event(
 				delegate()
 				{
-                    add_timed_text_bubble("But everyone must pass.",gTextTime);
+                add_timed_text_bubble(GameStrings.GetString("NIM2"),gTextTime);
 				},
 	        0).then_one_shot( //dummy 
 				delegate(){},gTextTime);
@@ -532,7 +532,7 @@ public class NewInterfaceManager {
 			chain = TED.add_one_shot_event(
 				delegate()
 				{
-					add_timed_text_bubble("You die at the age of " + aChar.Age + ".",gTextTime);
+                add_timed_text_bubble(GameStrings.GetString("NIM3",aChar.Age.ToString()),gTextTime);
 				},
 	        1).then_one_shot(
 				delegate()
