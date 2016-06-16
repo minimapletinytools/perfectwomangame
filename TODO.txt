@@ -21,6 +21,8 @@ You build your own Perfect Woman story by choosing and performing a diverse cast
 
 
 ::NEW FINAL TODO::
+-appears to be a crash bug when hard skipping credits???
+-appears to be a crash bug in grave when skipping to astronaut without all characters in between filled in (I thought it was suppose to auto fill the characters when you do this so I think that's the part that's broken)
 DONE-remove school logos from credits :(
 -followup: 
 	-https://forums.xboxlive.com/questions/54599/invalid-rating-specified-esrbao.html

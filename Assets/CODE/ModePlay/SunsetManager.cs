@@ -792,7 +792,7 @@ public class SunsetManager
 		
 		//variables for credits animation..
 		float lastTime = 0;
-		FlatElementImage[] logos = new FlatElementImage[3];
+        FlatElementImage[] logos = null;
 		//PopupTextObject gameOver = null;
 		List<FlatElementText> creditsText = new List<FlatElementText>();
 		float scrollSpeed = 820;
@@ -837,6 +837,7 @@ public class SunsetManager
 
                     if(GameConstants.SHOW_LOGOS)
                     {
+                        logos = new FlatElementImage[3];
                         lastXPosition += -200;
                         string[] imageNames = new string[] { "LOGO_FA", "LOGO_AI", "LOGO_GL" };
                         for (int i = 0; i < imageNames.Length; i++)
@@ -881,9 +882,11 @@ public class SunsetManager
                         e.SoftPosition = e.SoftPosition + scroll;
                     }
 
-                    foreach (FlatElementImage e in logos)
-                    {
-                        e.SoftPosition = e.SoftPosition + scroll;
+                    if(logos != null){
+                        foreach (FlatElementImage e in logos)
+                        {
+                            e.SoftPosition = e.SoftPosition + scroll;
+                        }
                     }
 
                     lastTime = aTime;
