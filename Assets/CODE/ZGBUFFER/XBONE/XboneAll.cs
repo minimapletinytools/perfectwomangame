@@ -60,6 +60,11 @@ public class XboneAll {
 
     void OnSignInComplete(int aStatus, int aUserId)
     {
+
+        lastAppCurrentUserId = UsersManager.GetAppCurrentUser().Id;
+
+        if (aUserId == -1) //cancel case
+            return;
         
         activeUserId = aUserId;
 
@@ -77,7 +82,6 @@ public class XboneAll {
         if (aUserId != -1)
             lastActiveUserId = activeUserId;
 
-        lastAppCurrentUserId = UsersManager.GetAppCurrentUser().Id;
 
         ManagerManager.Log("OnSignInComplete " + aUserId + " " + aStatus);
 
