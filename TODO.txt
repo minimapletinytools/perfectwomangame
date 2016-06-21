@@ -21,6 +21,7 @@ You build your own Perfect Woman story by choosing and performing a diverse cast
 
 
 ::NEW FINAL TODO::
+-still does multiple login
 -appears to be a crash bug when hard skipping credits???
 -appears to be a crash bug in grave when skipping to astronaut without all characters in between filled in (I thought it was suppose to auto fill the characters when you do this so I think that's the part that's broken)
 DONE-remove school logos from credits :(
@@ -66,10 +67,10 @@ IGNORE-enable character unlocking
 -tutorial stops showing after first playthrough
 
 ::TODO2:: 
--credits in GameConstants should refer to GameStrings.cs
+DONE-credits in GameConstants should refer to GameStrings.cs
 -schedule PW playtest
--consider removing all unlock stuff (ad remove holistic wisdom achievement)
--still need to figure out why there is placeholder image in achievement
+DONE-consider removing all unlock stuff (ad remove holistic wisdom achievement)
+DONE-still need to figure out why there is placeholder image in achievement
 -grading changes
 	-punish players for not doing anything (for exptreme difficulty)
 		-on each grade step, use grade pose to see how much player pose has changed since last step
