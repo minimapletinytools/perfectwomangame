@@ -39,7 +39,7 @@
         </mx:Extension>
       </Extensions>
       <mx:Ratings Category="game">
-        <mx:Rating>ESRB:AO</mx:Rating>
+        <mx:Rating>ESRB:M</mx:Rating>
       </mx:Ratings>
     </Application>
   </Applications>
