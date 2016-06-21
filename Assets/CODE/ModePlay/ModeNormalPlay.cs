@@ -582,7 +582,7 @@ public class ModeNormalPlay
 		if (NGM.CurrentPoseAnimation != null && NGM.CurrentCharacterIndex.LevelIndex != 0)
 		{
 			float perc = 3f/GameConstants.playDefaultPlayTime;
-			if(PercentTimeCompletion > 0.25f && CurrentPerformanceStat.last_score(perc)/(perc) < 0.2f)
+            if(PercentTimeCompletion > GameConstants.warningMinTime && CurrentPerformanceStat.last_score(perc)/(perc) < 0.2f)
 				mInterfaceManager.enable_warning_text(true);
 			else 
 				mInterfaceManager.enable_warning_text(false);
@@ -621,13 +621,19 @@ public class ModeNormalPlay
 		//if (NGM.CurrentPoseAnimation != null && mManager.mZigManager.has_user() && NGM.CurrentCharacterIndex.LevelIndex != 0)
 		if (NGM.CurrentPoseAnimation != null && mManager.mZigManager.is_reader_connected() == 2 && NGM.CurrentCharacterIndex.LevelIndex != 0)
 		{
-			if(PercentTimeCompletion > 0.35f)
+            if(PercentTimeCompletion > GameConstants.deathMinTime)
 			{
 				float perc = GameConstants.deathRequiredTime/GameConstants.playDefaultPlayTime;
 				if(CurrentPerformanceStat.last_score(perc)/perc < GameConstants.deathPerformanceThreshold)
 					die |= true;
+
+
 			}
 		}
+
+        float perc2 = GameConstants.deathRequiredTime/GameConstants.playDefaultPlayTime;
+        ManagerManager.Manager.mDebugString = CurrentPerformanceStat.last_score(perc2).ToString("#.##") + " " + (CurrentPerformanceStat.last_score(perc2) / perc2).ToString("#.##") + " " + (PercentTimeCompletion).ToString("#.##");
+
 		if(die && NGM.CurrentCharacterIndex != CharacterIndex.sOneHundred) //can't die as astronaut, even if we want to
 		{
 			if(NGM.CurrentCharacterIndex != CharacterIndex.sFetus) //this only happens if we try and force die on fetus

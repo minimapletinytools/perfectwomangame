@@ -10,7 +10,7 @@ public static class GameConstants
     public static bool XB1 = true;
     public static int IDLE_RESTART_TIME = 9999999;
     public static bool KB_CONTROL = true;
-    public static bool SHOW_DEBUG = false;
+    public static bool SHOW_DEBUG = true;
     public static bool UNLOCK_ALL = true;
     public static bool TUTORIAL_ONCE = true; //NOTE TUTORIAL_ONCE as true will not work if UNLOCK_ALL is true because that will disable saves
     public static bool SHOW_LOGOS = false;
@@ -86,6 +86,8 @@ public static class GameConstants
 	public static float playFetusPassThreshold = 0.6f;
 	public static float deathPerformanceThreshold = 0.1f;
 	public static float deathRequiredTime = 8f;
+    public static float deathMinTime = .35f;
+    public static float warningMinTime = .20f;
 	public static float[] difficultyToChangeTime = new float[]{4,2,1.4f,.7f};
 
     public static bool showReward = false;//true; //this might have broken sometime along the way...

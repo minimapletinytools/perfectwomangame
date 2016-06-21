@@ -360,7 +360,7 @@ public class TransitionCameraManager : FakeMonoBehaviour
     bool can_start(float aTime)
     {
 
-
+        /*
         mManager.mDebugString = (GameConstants.ALLOW_NO_KINECT + " " + mManager.mZigManager.is_reader_connected() + " " +
                                  mManager.mCharacterBundleManager.is_initial_loaded() + " " +
                                  mManager.mZigManager.ZgInterface.can_start() + " " +
@@ -369,7 +369,7 @@ public class TransitionCameraManager : FakeMonoBehaviour
                                  (mManager.mZigManager.has_user()) + " " +
                                  (KeyMan.GetKey("HardSkip") || KeyMan.GetKey("SoftSkip"))  + " " +
                                  GameConstants.FORCE_START);
-        
+        */
 
         if (!GameConstants.ALLOW_NO_KINECT && mManager.mZigManager.is_reader_connected() == 0)
             return false;
