@@ -84,7 +84,7 @@ public static class GameConstants
 	public static float playDefaultPlayTime = 35f;
     public static float playAstronautPlayTime = 25f;//15f;
 	public static float playFetusPassThreshold = 0.6f;
-	public static float deathPerformanceThreshold = 0.1f;
+	public static float deathPerformanceThreshold = 0.15f;
 	public static float deathRequiredTime = 8f;
     public static float deathMinTime = .35f;
     public static float warningMinTime = .20f;

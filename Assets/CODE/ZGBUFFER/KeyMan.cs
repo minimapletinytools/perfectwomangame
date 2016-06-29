@@ -27,7 +27,7 @@ public static class KeyMan
         {"lvl3",null},
         {"lvl4",null},
         {"lvl5",null},
-        {"lvl6",null},
+        {"lvl6",XboxOneKeyCode.GamepadButtonRightShoulder},
         {"lvl7",XboxOneKeyCode.Gamepad1ButtonB},
         {"lvl8",XboxOneKeyCode.Gamepad1ButtonY}, //bad key, pick a different one
 
