@@ -111,8 +111,12 @@ public class TransitionCameraManager : FakeMonoBehaviour
         initialize_depth_warning();
 
 		mManager.mAssetLoader.new_load_asset_bundle("START",delegate(AssetBundle aBundle){start_screen_loaded_callback(aBundle,"START");});
+
+        //this isn't working anyhow
+        //mManager.StartCoroutine(test_you_are_playing_as());
 	}
 	
+   
 
 	public void initialize_depth_warning()
 	{
@@ -403,12 +407,15 @@ public class TransitionCameraManager : FakeMonoBehaviour
 		return true;
 	}
 
-    public void you_are_playing_as(string aName)
+    public void you_are_playing_as(string aName,float displayTime = 5)
     {
         aName = System.Text.RegularExpressions.Regex.Replace(aName, @"[^\u0020-\u007E]", "[]");
+        if (aName.Length > 70)
+            aName = aName.Substring(0, 70) + "...";
         NewMenuReferenceBehaviour refs = mManager.mNewRef;
         var title = construct_flat_image("START_PLAYER", 100);
-        var text = new FlatElementText(refs.genericFont, 50, aName, 101);
+        int fontSize = aName.Length > 22 ? 21 : 50; Mathf.Clamp(65-aName.Length,22,50);
+        var text = new FlatElementText(refs.genericFont, fontSize, aName, 101);
         title.HardPosition = mFlatCamera.get_point(.73f, -.80f);
         text.HardPosition = title.HardPosition - new Vector3(0,44,0);
         title.HardColor = GameConstants.UiWhiteTransparent;
@@ -422,7 +429,7 @@ public class TransitionCameraManager : FakeMonoBehaviour
             {
                 title.SoftColor = text.SoftColor = GameConstants.UiWhiteTransparent;
             },
-        5).then_one_shot(
+        displayTime).then_one_shot(
             delegate()
             {
                 title.destroy();
@@ -430,9 +437,20 @@ public class TransitionCameraManager : FakeMonoBehaviour
                 mElement.Remove(title);
                 mElement.Remove(text);
             },
-        5);
+        displayTime);
     }
 
+    //this isn't working
+    System.Collections.IEnumerator test_you_are_playing_as()
+    {
+        string playas = "";
+        for (int i = 0; i < 100; i++)
+        {
+            playas+= "a";
+            you_are_playing_as(playas, 1);
+            yield return new WaitForSeconds(.5f);
+        }
+    }
 
     void game_event_listener(string name, object[] args)
     {
