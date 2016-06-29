@@ -83,5 +83,7 @@ public class XbonePLM
 	public void Start()
 	{
 	}
+    public void Update(){
+    }
 }
 #endif

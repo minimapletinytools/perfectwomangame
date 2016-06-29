@@ -346,6 +346,7 @@ public class XboneAll {
     }
 
     #else
+    public Object ActiveUser { get {return null;}}
     public bool IsSomeoneSignedIn{ get { return false; } }
     public void Start () {
     }
