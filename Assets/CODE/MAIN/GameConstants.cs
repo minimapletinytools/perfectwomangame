@@ -92,7 +92,7 @@ public static class GameConstants
 
     public static bool showReward = false;//true; //this might have broken sometime along the way...
 
-    public static bool showAstronaut = true;
+    public static bool showAstronaut = false;
 
     public static bool allPerfectOnSkip = true; //for character skipping, sets performances of all characters to perfect (as oppose to random score)
 	

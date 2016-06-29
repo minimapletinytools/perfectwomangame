@@ -674,8 +674,13 @@ public class ModeNormalPlay
 		
 	}
 
-    bool space_camp_final_exam_internal()
+    bool space_camp_final_exam()
     {
+        if (CurrentPerformanceStat.Character.LevelIndex != 7)
+            return false;
+        if (GameConstants.showAstronaut)
+            return true;
+
         ManagerManager.Log("testing " + mPerformanceStats.Count() + " chars");
         foreach (var e in mPerformanceStats)
         {
@@ -685,7 +690,7 @@ public class ModeNormalPlay
         return mPerformanceStats.Where(e=>e.Character != CharacterIndex.sFetus).Where(e=>e.Score < GameConstants.astronautCutoff).Count() == 0;
     }
 
-    bool space_camp_final_exam()
+    bool space_camp_final_exam_easy()
     {
         return GameConstants.showAstronaut
             && CurrentPerformanceStat.Character.LevelIndex == 7;
