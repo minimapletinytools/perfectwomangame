@@ -21,6 +21,9 @@ You build your own Perfect Woman story by choosing and performing a diverse cast
 
 
 ::NEW FINAL TODO::
+DONE-extend astronaut to 30 seconds and make itfloat alitte
+-can try and query SensorManager.IsOpen() repeatedly to see if sensor is ever unplugged.
+-you graduated from space camp infinite loop (may only happen when skipping chaarcters)
 -still does multiple login
 -appears to be a crash bug when hard skipping credits???
 -appears to be a crash bug in grave when skipping to astronaut without all characters in between filled in (I thought it was suppose to auto fill the characters when you do this so I think that's the part that's broken)

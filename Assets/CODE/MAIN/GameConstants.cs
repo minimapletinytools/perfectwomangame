@@ -10,7 +10,7 @@ public static class GameConstants
     public static bool XB1 = true;
     public static int IDLE_RESTART_TIME = 9999999;
     public static bool KB_CONTROL = true;
-    public static bool SHOW_DEBUG = true;
+    public static bool SHOW_DEBUG = false;
     public static bool UNLOCK_ALL = true;
     public static bool TUTORIAL_ONCE = true; //NOTE TUTORIAL_ONCE as true will not work if UNLOCK_ALL is true because that will disable saves
     public static bool SHOW_LOGOS = false;
@@ -82,7 +82,7 @@ public static class GameConstants
 	public static float playFeverCutoff = 0.7f;
 	public static float playFeverRequiredTime = 5f;
 	public static float playDefaultPlayTime = 35f;
-    public static float playAstronautPlayTime = 25f;//15f;
+    public static float playAstronautPlayTime = 35f;//15f;
 	public static float playFetusPassThreshold = 0.6f;
 	public static float deathPerformanceThreshold = 0.15f;
 	public static float deathRequiredTime = 8f;
@@ -107,7 +107,7 @@ public static class GameConstants
 		"Dirk Handreke", "Frank Simper", "Ingo Feuker", "David Hill", "Christian Barth", "Leo Frick", " ",
 
 		"4","Teut Weidemann", "Marc Lutz", "Aliah Darke",  
-		"Inga Von Staden", "Andreas Hykade", "Alex Rickett","Steven Amrhein",
+		"Inga Von Staden", "Andreas Hykade", "Alex Rickett","Steven Amrhein", "Gerard Delmas",
 		"David Elliott","Sabrina Winter", "Eddo Stern", "J\u00F6rg Ihle", "Tyler Stefanich", "Nikita Arefkia"
 	};
 
