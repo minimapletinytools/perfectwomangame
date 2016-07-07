@@ -123,6 +123,17 @@ public class PerformanceStats
 		mScore.Add(new TimeScorePair(aTime,aScore));
 		//PerformanceGraph.update_graph(aTime,aScore);
 	}
+
+    public void adjust_score(float aTime, float aScore, float aBacktrackTime)
+    {
+        for (int i = mScore.Count - 1; i >= 0; i--)
+        {
+            if (mScore [i].Key < aTime - aBacktrackTime)
+                break;
+            mScore [i] = new TimeScorePair(mScore [i].Key, Mathf.Max(mScore [i].Value, aScore));
+        }
+    }
+
 	
 	//this returns the score in the last <timeBack> 
 	//use this for death

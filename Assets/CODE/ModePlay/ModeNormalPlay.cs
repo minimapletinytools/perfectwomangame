@@ -510,9 +510,9 @@ public class ModeNormalPlay
             }
             mLastGrade = grade;
 
+            bool switchEffect = false;
             if (PercentTimeCompletion > 0.01f)
             {
-                bool switchEffect = false;
                 mParticles.create_particles(mGrading, true);
                 if(GameConstants.NEW_POSE_SWITCHING)
                 {
@@ -524,6 +524,7 @@ public class ModeNormalPlay
                     if (NGM.CurrentPoseAnimation.does_pose_change_precoginitive(Time.time, Time.deltaTime, 0.07f))
                     {
                         switchEffect = true;
+                        //TODO give 1 second of bonus score for being close right when pose switches
                     }
 
                 }
@@ -540,10 +541,12 @@ public class ModeNormalPlay
             }
 			
 
-
-			
             if (TimeRemaining > 0) //insurance, something funny could happen if music runs slightly longer than it should.
                 CurrentPerformanceStat.update_score(PercentTimeCompletion, grade);			
+
+            //TODO needs to be tested
+            if (switchEffect)
+                CurrentPerformanceStat.adjust_score(PercentTimeCompletion, grade, NGM.CurrentPoseAnimation.ChangeTime / 4f);
 			
             //mManager.mCameraManager.set_camera_effects(grade);
             //update score
