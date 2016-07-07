@@ -1,3 +1,7 @@
+::7/6 playtest notes::
+-you should really give bonus points for mateching the pose right before it switches. I think this is how the particle effecszt are done too.
+
+
 ::QTE2 DESIGN::
 
 
@@ -21,6 +25,7 @@ You build your own Perfect Woman story by choosing and performing a diverse cast
 
 
 ::NEW FINAL TODO::
+-http://kotaku.com/meet-the-developers-who-are-still-making-a-kinect-game-1783223647
 DONE-extend astronaut to 30 seconds and make itfloat alitte
 -can try and query SensorManager.IsOpen() repeatedly to see if sensor is ever unplugged.
 -you graduated from space camp infinite loop (may only happen when skipping chaarcters)
@@ -56,15 +61,11 @@ DONE-certification submission form todo
 DONE-regenerate appmanifest.xml and set ESRB rating to AO
 
 ::PRE-CERT TODo
--love hsinyu everyday
--publish service config
--add manifest to submission
-IGNORE-enable character unlocking
--test the game a few times through!
-	-test user login/logout scenarios
-	-test achievements
-	-maybe go through the cert program tests
-
+-update version by one
+-add manifest
+-include validator file
+-update submission form with binary version and file names (release version, XVC and EKB file name fields)
+-update feedback form to say how issues were addressed
 
 ::test
 -tutorial stops showing after first playthrough
