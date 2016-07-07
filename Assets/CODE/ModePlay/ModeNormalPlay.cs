@@ -545,8 +545,8 @@ public class ModeNormalPlay
                 CurrentPerformanceStat.update_score(PercentTimeCompletion, grade);			
 
             //TODO needs to be tested
-            if (switchEffect)
-                CurrentPerformanceStat.adjust_score(PercentTimeCompletion, grade, NGM.CurrentPoseAnimation.ChangeTime / 4f);
+            //if (switchEffect)
+                //CurrentPerformanceStat.adjust_score(PercentTimeCompletion, grade, NGM.CurrentPoseAnimation.ChangeTime / 4f);
 			
             //mManager.mCameraManager.set_camera_effects(grade);
             //update score
