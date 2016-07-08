@@ -174,6 +174,8 @@ public class SunsetManager
 			}
 		,0).then_one_shot( 
 			delegate(){ 
+                mScoreLabels.Remove(scoreBg);
+                mScoreTexts.Remove(scoreText);
 				mElement.Remove(scoreBg);
 				mElement.Remove(scoreText);
 				scoreBg.destroy();
@@ -931,6 +933,23 @@ public class SunsetManager
 
         clear_TED_and_fade_out_bubbles();
 
+        //remove grave scores
+        //note, this MUST be called after clear_TED_and_fade_out_bubbles or it's a double cleanup 
+        foreach (var e in mScoreLabels)
+        {
+            e.destroy();
+            mElement.Remove(e);
+        }
+        foreach (var e in mScoreTexts)
+        {
+            e.destroy();
+            mElement.Remove(e);
+        }
+        mScoreLabels.Clear();
+        mScoreTexts.Clear();
+
+
+
         /*
         //clear out grave events
         if (mGraveChain != null)
@@ -944,6 +963,8 @@ public class SunsetManager
             mGraveCompleteChain = null;
         }
         mGraveCompleteCb = null;*/
+
+      
 
         //cleanup credits
         foreach (var e in graveCleanup)
