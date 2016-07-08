@@ -213,8 +213,7 @@ public class ModeNormalPlay
         mInterfaceManager.reset();
         mAstronaut.finish_astro();
 
-        //hope this is ok :O
-        TED.clear_events();
+        clear_TED_and_fade_out_bubbles();
 
         //clear out characters
         while (mPerformanceStats.Count > 0)

@@ -419,7 +419,7 @@ public class SunsetManager
 
 
 
-
+    List<FlatElementBase> mShineCleanup = new List<FlatElementBase>();
 	public void create_shine_over_character(CharacterIndex aIndex,bool positive, float duration)
 	{
 		int index = aIndex.LevelIndex - 1;
@@ -433,12 +433,14 @@ public class SunsetManager
 		shine.ColorInterpolationMaxLimit = Mathf.Infinity;
 		shine.ColorInterpolationMinLimit = 1f;
 		mElement.Add(shine);
+        mShineCleanup.Add(shine);
 		TED.add_one_shot_event(
 			delegate() {
 				shine.SoftColor = GameConstants.UiWhiteTransparent;
 			},
 		duration).then_one_shot(
 			delegate() {
+                mShineCleanup.Remove(shine);
 				mElement.Remove(shine);
 				shine.destroy();
 			},
@@ -948,21 +950,30 @@ public class SunsetManager
         mScoreLabels.Clear();
         mScoreTexts.Clear();
 
+       
+        //remove shines
+        //note, this MUST be called after clear_TED_and_fade_out_bubbles or it's a double cleanup 
+        foreach (var e in mShineCleanup)
+        {
+            e.destroy();
+            mElement.Remove(e);
+        }
+        mShineCleanup.Clear();
 
 
-        /*
         //clear out grave events
+        //make sure to call clear_TED_and_fade_out_bubbles() first
         if (mGraveChain != null)
         {
-            TED.remove_event(mGraveChain);
+            //TED.remove_event(mGraveChain); //should alreday be rmeoved
             mGraveChain = null;
         }
         if (mGraveCompleteChain != null)
         {
-            TED.remove_event(mGraveCompleteChain);
+            //TED.remove_event(mGraveCompleteChain); //should already be removed
             mGraveCompleteChain = null;
         }
-        mGraveCompleteCb = null;*/
+        mGraveCompleteCb = null;
 
       
 
