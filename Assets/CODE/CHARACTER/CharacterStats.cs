@@ -130,7 +130,7 @@ public class PerformanceStats
         {
             if (mScore [i].Key < aTime - aBacktrackTime)
                 break;
-            mScore [i] = new TimeScorePair(mScore [i].Key, Mathf.Max(mScore [i].Value, aScore));
+            mScore [i] = new TimeScorePair(mScore [i].Key, Mathf.Min(mScore [i].Value+aScore, 1));
         }
     }
 

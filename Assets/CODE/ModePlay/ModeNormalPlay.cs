@@ -527,16 +527,6 @@ public class ModeNormalPlay
                     }
 
                 }
-
-                if(switchEffect)
-                {
-                    mGiftManager.capture_player();
-                    mParticles.create_particles(mGrading);
-                    if (grade > GameConstants.playSuperCutoff && IsFever)
-                        mManager.mMusicManager.play_sound_effect("pose5", 0.6f);
-                    else
-                        mManager.mMusicManager.play_sound_effect("pose" + Mathf.Clamp((int)(5 * grade), 0, 4), 0.8f);
-                }
             }
 			
 
@@ -544,8 +534,20 @@ public class ModeNormalPlay
                 CurrentPerformanceStat.update_score(PercentTimeCompletion, grade);			
 
             //TODO needs to be tested
-            //if (switchEffect)
-                //CurrentPerformanceStat.adjust_score(PercentTimeCompletion, grade, NGM.CurrentPoseAnimation.ChangeTime / 4f);
+            //improve score for good switches
+            if (switchEffect)
+                CurrentPerformanceStat.adjust_score(PercentTimeCompletion, grade*0.08f, NGM.CurrentPoseAnimation.ChangeTime);
+
+            //trigger effects after adjusting score
+            if(switchEffect)
+            {
+                mGiftManager.capture_player();
+                mParticles.create_particles(mGrading);
+                if (grade > GameConstants.playSuperCutoff && IsFever)
+                    mManager.mMusicManager.play_sound_effect("pose5", 0.6f);
+                else
+                    mManager.mMusicManager.play_sound_effect("pose" + Mathf.Clamp((int)(5 * grade), 0, 4), 0.8f);
+            }
 			
             //mManager.mCameraManager.set_camera_effects(grade);
             //update score
