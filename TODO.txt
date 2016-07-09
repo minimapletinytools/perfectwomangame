@@ -18,28 +18,39 @@ You build your own Perfect Woman story by choosing and performing a diverse cast
 
 -Short Description
 	-Perfect Woman is your Perfect Woman Life Simulator. This is a game about celebrating diversity and choice rather than condemning conformity. Be your OWN Perfect Woman!
--Publisher Name
+-Publisher Name 
 	-
 -Developer Studio
 	-
 
 
+::PRE-CERT TODo
+-set build vars to release
+-move PC/MAC bundles before making a build!!
+-update version by one
+-add manifest
+-include validator file
+-update submission form with binary version and file names (release version, XVC and EKB file name fields)
+-update feedback form to say how issues were addressed
+
+
+
 ::NEW FINAL TODO::
+-appears to be a crash bug in grave when skipping to astronaut without all characters in between filled in (I thought it was suppose to auto fill the characters when you do this so I think that's the part that's broken)
 -http://kotaku.com/meet-the-developers-who-are-still-making-a-kinect-game-1783223647
-DONE-extend astronaut to 30 seconds and make itfloat alitte
 -can try and query SensorManager.IsOpen() repeatedly to see if sensor is ever unplugged.
 -you graduated from space camp infinite loop (may only happen when skipping chaarcters)
 -still does multiple login
--appears to be a crash bug when hard skipping credits???
--appears to be a crash bug in grave when skipping to astronaut without all characters in between filled in (I thought it was suppose to auto fill the characters when you do this so I think that's the part that's broken)
-DONE-remove school logos from credits :(
 -followup: 
 	-https://forums.xboxlive.com/questions/54599/invalid-rating-specified-esrbao.html
 	-http://forum.unity3d.com/threads/obtaining-debug-log-file-from-certification.410183/#post-2675525
+DONE-appears to be a crash bug when hard skipping credits???
+DONE-remove school logos from credits :(
+DONE-extend astronaut to 30 seconds and make itfloat alitte
 DONE-pressing home button should launch account picker. Cancelling it will resume the game.
 	-test it
 		-make sure to do xb1 button during the menu and see if that breaks anything
--prebuild guide:
+DONE-prebuild guide:
 	DONE-remove PC/mac stuff
 	DONE-turn off debug vars 
 	DONE-check validation logs
@@ -59,16 +70,6 @@ DONE-certification submission form todo
 	IGNORE-I removed save data from the form, but add it back in if you want to reenable it...
 	-submission validator logs pls
 DONE-regenerate appmanifest.xml and set ESRB rating to AO
-
-::PRE-CERT TODo
--update version by one
--add manifest
--include validator file
--update submission form with binary version and file names (release version, XVC and EKB file name fields)
--update feedback form to say how issues were addressed
-
-::test
--tutorial stops showing after first playthrough
 
 ::TODO2:: 
 DONE-credits in GameConstants should refer to GameStrings.cs
@@ -92,7 +93,7 @@ DONE-still need to figure out why there is placeholder image in achievement
 	-call ModeNormalPlay initialize during title screen
 	-make CharacterLoader load accross several frames
 -email lea about getting PW into museum
--reply to mattia
+DONE-reply to mattia
 
 
 DONe/IGNORe-user ac count stuff
