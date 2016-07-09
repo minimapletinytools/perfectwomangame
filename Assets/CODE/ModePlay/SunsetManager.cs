@@ -981,7 +981,11 @@ public class SunsetManager
         foreach (var e in graveCleanup)
         {
             var elt = e;
-            TED.add_one_shot_event(
+            elt.destroy();
+            mElement.Remove(elt);
+
+            //fade out version, but this is no good when rapidly resetting. Not that that's something that happens outside of debug mode
+            /*TED.add_one_shot_event(
                 delegate()
                 {
                     elt.SoftColor = new Color(0.5f, 0.5f, 0.5f, 0);
@@ -992,7 +996,7 @@ public class SunsetManager
                     elt.destroy();
                     mElement.Remove(elt);
                 }
-            , 2);
+            , 2);*/
         }
         graveCleanup.Clear();
     }
