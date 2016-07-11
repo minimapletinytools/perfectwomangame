@@ -407,35 +407,46 @@ public class TransitionCameraManager : FakeMonoBehaviour
 		return true;
 	}
 
+    FlatElementText mPlayingText = null;
     public void you_are_playing_as(string aName,float displayTime = 5)
     {
+        ManagerManager.Log("you are " + aName);
+        if (aName == "") //hard fix for bug. XboneAll will call this function a bunch of times with empty string for some reason
+            return;
+        
+        if (mPlayingText != null && !mPlayingText.Destroyed)
+        {
+            mPlayingText.HardColor = GameConstants.UiWhiteTransparent;
+        }
+
         aName = System.Text.RegularExpressions.Regex.Replace(aName, @"[^\u0020-\u007E]", "[]");
         if (aName.Length > 70)
             aName = aName.Substring(0, 70) + "...";
         NewMenuReferenceBehaviour refs = mManager.mNewRef;
         var title = construct_flat_image("START_PLAYER", 100);
         int fontSize = aName.Length > 22 ? 21 : 50; Mathf.Clamp(65-aName.Length,22,50);
-        var text = new FlatElementText(refs.genericFont, fontSize, aName, 101);
+        mPlayingText = new FlatElementText(refs.genericFont, fontSize, aName, 101);
         title.HardPosition = mFlatCamera.get_point(.73f, -.80f);
-        text.HardPosition = title.HardPosition - new Vector3(0,44,0);
+        mPlayingText.HardPosition = title.HardPosition - new Vector3(0,44,0);
         title.HardColor = GameConstants.UiWhiteTransparent;
-        text.HardColor = GameConstants.UiBlueTransparent;
+        mPlayingText.HardColor = GameConstants.UiBlueTransparent;
         title.SoftColor = GameConstants.UiWhite;
-        text.SoftColor = GameConstants.UiBlue;
+        mPlayingText.SoftColor = GameConstants.UiBlue;
         mElement.Add(title);
-        mElement.Add(text);
+        mElement.Add(mPlayingText);
+        var iamreallystupid = mPlayingText;
         TED.add_one_shot_event(
             delegate()
             {
-                title.SoftColor = text.SoftColor = GameConstants.UiWhiteTransparent;
+                title.SoftColor = iamreallystupid.SoftColor = GameConstants.UiWhiteTransparent;
             },
         displayTime).then_one_shot(
             delegate()
             {
                 title.destroy();
-                text.destroy();
+                iamreallystupid.destroy();
                 mElement.Remove(title);
-                mElement.Remove(text);
+                mElement.Remove(iamreallystupid);
             },
         displayTime);
     }

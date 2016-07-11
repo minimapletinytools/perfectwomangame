@@ -180,7 +180,8 @@ public class XboneAll {
     {
         if (name == "START GAME")
         {
-            ManagerManager.Manager.mTransitionCameraManager.you_are_playing_as(ActiveUser.GameDisplayName);
+            //DELETE, this breaks things
+            //ManagerManager.Manager.mTransitionCameraManager.you_are_playing_as(ActiveUser.GameDisplayName);
         }
     }
 

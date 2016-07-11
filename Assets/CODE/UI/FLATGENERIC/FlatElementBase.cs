@@ -177,6 +177,8 @@ public class FlatElementBase {
 		}
     }
 	
+    public virtual bool Destroyed {get{return PrimaryGameObject == null;}}
+
     public virtual void destroy()
     {
 		//obviously, don't call this if you want to handle destruction yourself
