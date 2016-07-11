@@ -88,6 +88,7 @@ public static class GameConstants
 	public static float deathRequiredTime = 8f;
     public static float deathMinTime = .35f;
     public static float warningMinTime = .20f;
+    public static float switchBonusScoreMultiplier = .08f;
 	public static float[] difficultyToChangeTime = new float[]{4,2,1.4f,.7f};
 
     public static bool showReward = false;//true; //this might have broken sometime along the way...

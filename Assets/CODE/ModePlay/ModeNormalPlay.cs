@@ -536,7 +536,7 @@ public class ModeNormalPlay
             //TODO needs to be tested
             //improve score for good switches
             if (switchEffect)
-                CurrentPerformanceStat.adjust_score(PercentTimeCompletion, grade*0.08f, NGM.CurrentPoseAnimation.ChangeTime);
+                CurrentPerformanceStat.adjust_score(PercentTimeCompletion, grade*GameConstants.switchBonusScoreMultiplier, NGM.CurrentPoseAnimation.ChangeTime);
 
             //trigger effects after adjusting score
             if(switchEffect)
