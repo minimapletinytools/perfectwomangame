@@ -100,13 +100,15 @@ public class XboneEvents{
     void send_game_progress()
     {
         int lockedChars = mManager.mMetaManager.UnlockManager.mUnlocked.unlockedCharacters.to_array().Where(e => e == 2).Count();
+        //ManagerManager.Log("Sending progress " + lockedChars);
         float progress = 1 - Mathf.Max(0, 7 - lockedChars) / 7f;
-        //float progress = 1; no unlockables version
+        if(GameConstants.UNLOCK_ALL)
+            progress = 1; 
         ManagerManager.Log("EVENT: gameprogress " + progress + " " + mManager.mMetaManager.UnlockManager.get_unlocked_characters().Count);
         Events.SendGameProgress(
                 mAll.LastActiveUser.UID,
                 ref mSessionId,
-                progress,
+                progress*100, //apparently it's between 0 and 100
                 mManager.mMetaManager.UnlockManager.get_unlocked_characters().Count);
     }
     void handle_ad_hoc_events(List<PerformanceStats> aStats)
