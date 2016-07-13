@@ -25,10 +25,11 @@ You build your own Perfect Woman story by choosing and performing a diverse cast
 
 
 ::PRE-CERT TODo
+-switch plugins and dlls to release
 -set build vars to release
 -move PC/MAC bundles before making a build!!
 -update version by one
--add manifest
+-add manifest to cert submission docs
 -include validator file
 -update submission form with binary version and file names (release version, XVC and EKB file name fields)
 -update feedback form to say how issues were addressed
@@ -36,6 +37,7 @@ You build your own Perfect Woman story by choosing and performing a diverse cast
 
 
 ::NEW FINAL TODO::
+-bundles have suddenly become 20x larger for some reason :(
 -appears to be a crash bug in grave when skipping to astronaut without all characters in between filled in (I thought it was suppose to auto fill the characters when you do this so I think that's the part that's broken)
 -http://kotaku.com/meet-the-developers-who-are-still-making-a-kinect-game-1783223647
 -can try and query SensorManager.IsOpen() repeatedly to see if sensor is ever unplugged.

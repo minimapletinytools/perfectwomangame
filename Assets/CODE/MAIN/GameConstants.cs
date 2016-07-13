@@ -9,7 +9,7 @@ public static class GameConstants
     public static bool ALLOW_NO_KINECT = true;
     public static bool XB1 = true;
     public static int IDLE_RESTART_TIME = 9999999;
-    public static bool KB_CONTROL = true;
+    public static bool KB_CONTROL = false;
     public static bool SHOW_DEBUG = false;
     public static bool UNLOCK_ALL = true;
     public static bool TUTORIAL_ONCE = true; //NOTE TUTORIAL_ONCE as true will not work if UNLOCK_ALL is true because that will disable saves
