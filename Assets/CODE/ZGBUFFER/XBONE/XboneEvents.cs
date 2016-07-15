@@ -53,6 +53,8 @@ public class XboneEvents{
                 ManagerManager.Log("TRANSCEND EVENT");
                 Events.SendTranscend(mAll.LastActiveUser.UID, ref mSessionId);
             }
+
+            mAll.SetRichUserPresence((CharacterIndex)args [0]);
         }
         if (name == "DEATH")
         {

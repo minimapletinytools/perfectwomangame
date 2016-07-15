@@ -140,7 +140,7 @@ public class XboneAll {
             ManagerManager.Manager.GameEventDistributor("START", null);
 
             //rich user presence
-            SetRichUserPresence();
+            SetRichUserPresence(CharacterIndex.sGrave); //this is the "null" character index
             
             //storage
             MicrosoftZig.Inst.mStorage.InitializeUserStorage();
@@ -186,11 +186,20 @@ public class XboneAll {
     }
 
     //Rich User Presence stuff
-    void SetRichUserPresence()
+    public void SetRichUserPresence(CharacterIndex aChar)
     {
-        PresenceData data = PresenceService.CreatePresenceData(ConsoleUtilsManager.PrimaryServiceConfigId(), "default", null);
+        PresenceData data;
+        if (aChar.LevelIndex == 9)
+            data = PresenceService.CreatePresenceData(ConsoleUtilsManager.PrimaryServiceConfigId(), "default", null);
+        else
+        {
+            ManagerManager.Log("setting RUP for " + aChar.LevelIndex + "_" + aChar.Choice);
+            data = PresenceService.CreatePresenceData(ConsoleUtilsManager.PrimaryServiceConfigId(), aChar.LevelIndex + "_" + aChar.Choice, null);
+        }
         PresenceService.SetPresenceAsync(ActiveUser.Id, true, data, OnPresenceDataSet);
     }
+        
+
     void OnPresenceSet(bool setOk, int resultCode)
     {
         ManagerManager.Log("Presence: [" + (setOk ? "Ok" : "Failed") + "] resultCode: [" + resultCode + "]");
