@@ -32,11 +32,13 @@ You build your own Perfect Woman story by choosing and performing a diverse cast
 -add manifest to cert submission docs
 -include validator file
 -update submission form with binary version and file names (release version, XVC and EKB file name fields)
+-update submission form with validator file and response notes filename
 -update feedback form to say how issues were addressed
 
 
 
 ::NEW FINAL TODO::
+-http://kotaku.com/lets-play-fru-a-new-kinect-game-thats-actually-good-1783744688
 -bundles have suddenly become 20x larger for some reason :(
 -appears to be a crash bug in grave when skipping to astronaut without all characters in between filled in (I thought it was suppose to auto fill the characters when you do this so I think that's the part that's broken)
 -http://kotaku.com/meet-the-developers-who-are-still-making-a-kinect-game-1783223647

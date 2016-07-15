@@ -636,7 +636,7 @@ public class ModeNormalPlay
 		}
 
         float perc2 = GameConstants.deathRequiredTime/GameConstants.playDefaultPlayTime;
-        ManagerManager.Manager.mDebugString = CurrentPerformanceStat.last_score(perc2).ToString("#.##") + " " + (CurrentPerformanceStat.last_score(perc2) / perc2).ToString("#.##") + " " + (PercentTimeCompletion).ToString("#.##");
+        //ManagerManager.Manager.mDebugString = CurrentPerformanceStat.last_score(perc2).ToString("#.##") + " " + (CurrentPerformanceStat.last_score(perc2) / perc2).ToString("#.##") + " " + (PercentTimeCompletion).ToString("#.##");
 
 		if(die && NGM.CurrentCharacterIndex != CharacterIndex.sOneHundred) //can't die as astronaut, even if we want to
 		{

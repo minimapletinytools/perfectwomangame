@@ -29,7 +29,7 @@ public class XboneEvents{
     {
         if (mAll.LastActiveUser == null)
         {
-            ManagerManager.Log("LastActiveUser is null, can't send event " + name);
+            ManagerManager.Log("XboneEvents.cs: LastActiveUser is null, can't send event " + name);
             return;
         }
 
