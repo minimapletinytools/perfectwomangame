@@ -691,7 +691,7 @@ public class ModeNormalPlay
             ManagerManager.Log(e.Character.StringIdentifier + " " + e.Score);
         }
         ManagerManager.Log("spacecamp final exam " + mPerformanceStats.Where(e => e.Character != CharacterIndex.sFetus).Where(e => e.Score < GameConstants.astronautCutoff).Count());
-        return mPerformanceStats.Where(e=>e.Character != CharacterIndex.sFetus).Where(e=>e.Score < GameConstants.astronautCutoff).Count() == 0;
+        return mPerformanceStats.Where(e=>e.Character != CharacterIndex.sFetus).Where(e=>e.Score < GameConstants.astronautCutoff).Count() <= GameConstants.astronautFailCountCutoff;
     }
 
     bool space_camp_final_exam_easy()

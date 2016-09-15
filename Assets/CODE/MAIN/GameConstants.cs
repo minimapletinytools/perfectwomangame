@@ -76,10 +76,11 @@ public static class GameConstants
 	public static float maxGradeNorm = 13f; //18 is good for final version, 16 for festival
 	public static float minGradeNorm = 3f;	//use 1.5f for final 
     public static float gradingGraceDegrees = 1f;
+    public static float astronautFailCountCutoff = 2; //how many characters we are allowed to miss before we dont get astronaut anymore
     public static float astronautCutoff = .6f; //makes sense if this is the  same as badPerformanceThreshold
     public static float badPerformanceThreshold = 0.6f; //.4 for easy version
 	public static float playSuperCutoff = 0.9f;
-	public static float playFeverCutoff = 0.7f;
+	public static float playFeverCutoff = 0.7f; 
 	public static float playFeverRequiredTime = 5f;
 	public static float playDefaultPlayTime = 35f;
     public static float playAstronautPlayTime = 35f;//15f;
@@ -102,13 +103,13 @@ public static class GameConstants
     public static string[] credits = { 
         "1","Peter Lu","Lea Sch\u00F6enfelder"," ",
 
-		"2","Steven Amrhein","Annika Bauer","Benedikt Haas","Marius Winter"," ",
+        "2","Steven Amrhein","Annika Bauer","Gerard Delmas","Benedikt Haas","Marius Winter"," ",
 
 		"3","Lukas Nowok", "Luigi Maria Rapisarda", "Jonas Schwall", "Steffen Thumm", 
 		"Dirk Handreke", "Frank Simper", "Ingo Feuker", "David Hill", "Christian Barth", "Leo Frick", " ",
 
 		"4","Teut Weidemann", "Marc Lutz", "Aliah Darke",  
-		"Inga Von Staden", "Andreas Hykade", "Alex Rickett","Steven Amrhein", "Gerard Delmas",
+		"Inga Von Staden", "Andreas Hykade", "Alex Rickett","Steven Amrhein",
 		"David Elliott","Sabrina Winter", "Eddo Stern", "J\u00F6rg Ihle", "Tyler Stefanich", "Nikita Arefkia"
 	};
 

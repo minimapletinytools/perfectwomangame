@@ -38,6 +38,11 @@ You build your own Perfect Woman story by choosing and performing a diverse cast
 
 
 ::NEW FINAL TODO::
+-still does multiple login
+-test achivements agains
+DONE-add grace to astronaut so u can do poorly on 1 or 2 characters, or maybe make the conditions something diff. all together
+
+
 -http://kotaku.com/lets-play-fru-a-new-kinect-game-thats-actually-good-1783744688
 -bundles have suddenly become 20x larger for some reason :(
 -appears to be a crash bug in grave when skipping to astronaut without all characters in between filled in (I thought it was suppose to auto fill the characters when you do this so I think that's the part that's broken)
