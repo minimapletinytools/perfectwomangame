@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
 using System.Linq;
+using System.IO;
 
 public class ManagerManager : MonoBehaviour{
 
@@ -54,6 +55,15 @@ public class ManagerManager : MonoBehaviour{
     public System.Action<string,object[]> GameEventDistributor { get; set; }
 
 	void Awake () {
+		#if !UNITY_XBOXONE
+		string words = "";
+		using (StreamReader reader = new StreamReader("language.txt"))
+		{
+			words = reader.ReadLine();
+			GameConstants.language = System.Convert.ToInt32(words);
+		}
+		#endif
+
 		Random.seed = System.Environment.TickCount;
 		Application.targetFrameRate = (int)GameConstants.TARGET_FRAMERATE;
         GameEventDistributor += delegate(string arg1, object[] arg2) { Log("ManagerManager.cs: GAME EVENT: " + arg1); };

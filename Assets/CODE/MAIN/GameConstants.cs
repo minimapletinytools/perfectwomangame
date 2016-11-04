@@ -4,6 +4,8 @@ using System.Linq;
 
 public static class GameConstants
 {
+	public static int language = 0; //0 - english, 1 - french, this is not actually constant but set when the game is loaded hack :s
+
     //XB1 specific stuff
 #if UNITY_XBOXONE && !UNITY_EDITOR
     public static bool ALLOW_NO_KINECT = true;

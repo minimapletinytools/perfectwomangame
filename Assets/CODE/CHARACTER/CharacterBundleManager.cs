@@ -11,7 +11,8 @@ public class CharacterBundleManager : FakeMonoBehaviour {
 	public override void Start()
 	{
 		//Debug.Log ("starting CBM");
-		mManager.mAssetLoader.new_load_poses("BULKPOSES",this);
+		string posebundle = GameConstants.language == 0 ? "BULKPOSES" : "BULKPOSES_FR";
+		mManager.mAssetLoader.new_load_poses(posebundle,this);
 		mManager.mAssetLoader.new_load_interface_images("IMAGES",this);
 		//load_mini_characters();
 	}
