@@ -5,6 +5,8 @@ using UnityEditor;
 using UnityEngine;
 using System.IO;
 using System.Linq;
+
+#if UNITY_XBOXONE 
 using UnityEtx;
 
 namespace UnityEditor
@@ -61,3 +63,4 @@ namespace UnityEditor
 	}
 
 }
+#endif
