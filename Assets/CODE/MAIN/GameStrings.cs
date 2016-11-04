@@ -56,6 +56,9 @@ public static class GameStrings {
         {"NIM2","But everyone must pass."},
         {"NIM3","You die at the age of <token1>."},
 
+		{"NIMIMG1","TEXTBOX-FETUS"},
+		{"NIMIMG2","TEXTBOX-110"},
+
         {"SM1","You rest here beneath the earth..."},
         {"SM2","Unfortunately you died "},
         {"SM3","You died "},
@@ -69,6 +72,8 @@ public static class GameStrings {
         {"UR5","Thar she blows."},
         {"UR6","Perhaps you should try your sex appeal."},
         {"UR7","Oooga Booga! Oooga Booga!"},
+
+
     };
 
 	static Dictionary<string,string> french = new Dictionary<string,string>()
@@ -111,6 +116,9 @@ public static class GameStrings {
 		{"NIM1","Vous êtes diplomée du Space Camp???"},
 		{"NIM2","Mais tout le monde doit mourir"},
 		{"NIM3","Vous mourez à l'âge de <token1> ans."},
+
+		{"NIMIMG1","TEXTBOX-FETUS_FR"},
+		{"NIMIMG2","TEXTBOX-110_FR"},
 
 		{"SM1","Vous reposez ici sous terre..."},
 		{"SM2","Malheureusement vous mourez"},

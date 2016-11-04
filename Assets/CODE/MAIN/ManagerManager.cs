@@ -57,7 +57,7 @@ public class ManagerManager : MonoBehaviour{
 	void Awake () {
 		#if !UNITY_XBOXONE
 		string words = "";
-		using (StreamReader reader = new StreamReader("language.txt"))
+		using (StreamReader reader = new StreamReader(Application.dataPath + "/StreamingAssets/language.txt"))
 		{
 			words = reader.ReadLine();
 			GameConstants.language = System.Convert.ToInt32(words);

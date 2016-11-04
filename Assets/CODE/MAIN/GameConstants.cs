@@ -79,8 +79,8 @@ public static class GameConstants
 	public static float minGradeNorm = 3f;	//use 1.5f for final 
     public static float gradingGraceDegrees = 1f;
     public static float astronautFailCountCutoff = 2; //how many characters we are allowed to miss before we dont get astronaut anymore
-    public static float astronautCutoff = .6f; //makes sense if this is the  same as badPerformanceThreshold
-    public static float badPerformanceThreshold = 0.6f; //.4 for easy version
+    public static float astronautCutoff = .4f; //makes sense if this is the  same as badPerformanceThreshold
+    public static float badPerformanceThreshold = 0.4f; //.4 for easy version, .6 for hard
 	public static float playSuperCutoff = 0.9f;
 	public static float playFeverCutoff = 0.7f; 
 	public static float playFeverRequiredTime = 5f;

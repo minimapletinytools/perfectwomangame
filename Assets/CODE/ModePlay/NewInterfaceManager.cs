@@ -269,8 +269,8 @@ public class NewInterfaceManager {
         hide_interface(true);
 
 		var nameFrame = 
-			aChar.Character == CharacterIndex.sFetus ? mManager.mCharacterBundleManager.get_image("TEXTBOX-FETUS") : 
-				aChar.Character == CharacterIndex.sOneHundred ? mManager.mCharacterBundleManager.get_image("TEXTBOX-110") :
+			aChar.Character == CharacterIndex.sFetus ? mManager.mCharacterBundleManager.get_image(GameStrings.GetString("NIMIMG1")) : 
+			aChar.Character == CharacterIndex.sOneHundred ? mManager.mCharacterBundleManager.get_image(GameStrings.GetString("NIMIMG2")) :
 					mManager.mCharacterBundleManager.get_image("TEXTBOX");
 		var scoreFrame = 
 			aChar.Character == CharacterIndex.sFetus ? mManager.mCharacterBundleManager.get_image("SCORE-FETUS") : 

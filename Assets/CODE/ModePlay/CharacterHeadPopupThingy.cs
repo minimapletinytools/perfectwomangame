@@ -137,10 +137,11 @@ public class CharacterHeadPopupThingy
 					box.HardColor = isGreen ? GameConstants.UiYellow : GameConstants.UiRed; 
 					mBackgrounds[i] = box;
 
+					var text = ManagerManager.Manager.mGameManager.CharacterHelper.Characters[aChars[i]].CharacterInfo.ShortName.ToUpper();
 					mNames[i] = new FlatElementText(
 						ManagerManager.Manager.mNewRef.genericFont,
-						57,
-						ManagerManager.Manager.mGameManager.CharacterHelper.Characters[aChars[i]].CharacterInfo.ShortName.ToUpper(),
+						text.Length > 10 ? 42 : 57,
+						text,
 						11);
 					mNames[i].HardPosition = mCharacters[i].HardPosition + nameOffset;
 					mNames[i].SoftPosition = mCharacters[i].SoftPosition + nameOffset;
