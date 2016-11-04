@@ -56,7 +56,7 @@ public class ManagerManager : MonoBehaviour{
 	void Awake () {
 		Random.seed = System.Environment.TickCount;
 		Application.targetFrameRate = (int)GameConstants.TARGET_FRAMERATE;
-        GameEventDistributor += delegate(string arg1, object[] arg2) { Log("GAME EVENT: " + arg1); };
+        GameEventDistributor += delegate(string arg1, object[] arg2) { Log("ManagerManager.cs: GAME EVENT: " + arg1); };
 
 		Cursor.visible = false;
 		gameObject.AddComponent<AudioListener>();
@@ -98,7 +98,7 @@ public class ManagerManager : MonoBehaviour{
             mStartDelegates();
         }
 
-        ManagerManager.Log("START GAME");
+        ManagerManager.Log("ManagerManager.cs: AWAKE() COMPLETE");
 	}
 	
 

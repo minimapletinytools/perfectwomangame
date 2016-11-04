@@ -95,7 +95,7 @@ public class XboneKinect{
             bool bif = SensorManager.bodyIndexFrameReader.Open();
             bool cf = SensorManager.colorFrameReader.Open();
             bool df = SensorManager.depthFrameReader.Open();
-            ManagerManager.Log("Kinect initialization status: " + bf + bif + cf + df);
+            ManagerManager.Log("XboneKinect.cs: Kinect initialization status: " + bf + " " + bif + " " + cf + " " + df);
 
         } else
         {

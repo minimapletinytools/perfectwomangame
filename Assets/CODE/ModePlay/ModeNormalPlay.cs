@@ -636,7 +636,7 @@ public class ModeNormalPlay
 		}
 
         float perc2 = GameConstants.deathRequiredTime/GameConstants.playDefaultPlayTime;
-        ManagerManager.Manager.mDebugString = CurrentPerformanceStat.last_score(perc2).ToString("#.##") + " " + (CurrentPerformanceStat.last_score(perc2) / perc2).ToString("#.##") + " " + (PercentTimeCompletion).ToString("#.##");
+        //ManagerManager.Manager.mDebugString = CurrentPerformanceStat.last_score(perc2).ToString("#.##") + " " + (CurrentPerformanceStat.last_score(perc2) / perc2).ToString("#.##") + " " + (PercentTimeCompletion).ToString("#.##");
 
 		if(die && NGM.CurrentCharacterIndex != CharacterIndex.sOneHundred) //can't die as astronaut, even if we want to
 		{
@@ -691,7 +691,7 @@ public class ModeNormalPlay
             ManagerManager.Log(e.Character.StringIdentifier + " " + e.Score);
         }
         ManagerManager.Log("spacecamp final exam " + mPerformanceStats.Where(e => e.Character != CharacterIndex.sFetus).Where(e => e.Score < GameConstants.astronautCutoff).Count());
-        return mPerformanceStats.Where(e=>e.Character != CharacterIndex.sFetus).Where(e=>e.Score < GameConstants.astronautCutoff).Count() == 0;
+        return mPerformanceStats.Where(e=>e.Character != CharacterIndex.sFetus).Where(e=>e.Score < GameConstants.astronautCutoff).Count() <= GameConstants.astronautFailCountCutoff;
     }
 
     bool space_camp_final_exam_easy()

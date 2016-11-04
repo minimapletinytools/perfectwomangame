@@ -44,4 +44,8 @@ DEBUGDLLS
 RELEASEDLLS
 Assets/DLLS/XboxOne
 Assets/Plugins/XboxOne
+Assets/DLLS/XboxOne.met
+Assets/Plugins/XboxOne.meta
 xbdeploy*
+
+

@@ -16,7 +16,7 @@ using System.IO;
 public class XboneAll {
     #if UNITY_XBOXONE 
 
-    int lastAppCurrentUserId = -1;
+    //delete me int lastAppCurrentUserId = -1;
     int activeUserId = -1;
     int lastActiveUserId = -1;
     public User ActiveUser { get { return (activeUserId == -1) ? null : UsersManager.FindUserById(activeUserId); } private set { activeUserId = (value == null) ? -1 :  value.Id; } }
@@ -61,7 +61,7 @@ public class XboneAll {
     void OnSignInComplete(int aStatus, int aUserId)
     {
 
-        lastAppCurrentUserId = UsersManager.GetAppCurrentUser().Id;
+        //delete me lastAppCurrentUserId = UsersManager.GetAppCurrentUser().Id;
 
         if (aUserId == -1) //cancel case
             return;
@@ -91,18 +91,27 @@ public class XboneAll {
     bool siDialog = false; //if the sign in dialog is up or not
     void RequestSignin()
     {
-        if (siDialog == false) 
+        if (!MicrosoftZig.Inst.mPLM.Constrained) //only do this if not constrained
         {
-            ManagerManager.Log("actual yrequest sign in");
-            if(UsersManager.IsSomeoneSignedIn) //apparently requestsignin is called automatically if no one is signed in so we only do this if people are signed in and the user is allowed to pick who they want to play as
+            if (siDialog == false)
+            {
+                ManagerManager.Log("actually request sign in");
+                //ignore my comment, apparently it is totally wrong
+                //if (UsersManager.IsSomeoneSignedIn) //apparently requestsignin is called automatically if no one is signed in so we only do this if people are signed in and the user is allowed to pick who they want to play as
                 UsersManager.RequestSignIn(AccountPickerOptions.None);
-            siDialog = true;
+                siDialog = true;
+            }
         }
     }
 
     bool firstTime = true;
     public void Update()
     {
+
+        User appCurrentUser = UsersManager.GetAppCurrentUser();
+        ManagerManager.Manager.mDebugString = "firsttime: " + firstTime + " activeuserid: " + activeUserId + " user count: " + UsersManager.Users.Count + " toggle: " + KeyMan.GetKeyDown("DepthToggle",true) 
+            + " gettappcurrentuser: " + (appCurrentUser == null ? "null" : UsersManager.GetAppCurrentUser().Id.ToString());
+        
         if (firstTime)
         {
             firstTime = false;
@@ -119,10 +128,11 @@ public class XboneAll {
                 RequestSignin();
             if (UsersManager.Users.Count == 0) //no users
                 RequestSignin();
-            if (KeyMan.GetKeyDown("DepthToggle",true)) //menu key is tied to depth toggle
+            if (KeyMan.GetKeyDown("DepthToggle",true)) //menu key is tied to depth toggle for XB1
                 RequestSignin();
-            if (lastAppCurrentUserId != UsersManager.GetAppCurrentUser().Id && UsersManager.GetAppCurrentUser().Id != activeUserId)
-                RequestSignin();
+            //I really have no idea what getappcurrentuser does, just don't use it..
+            //if (appCurrentUser == null || (lastAppCurrentUserId != UsersManager.GetAppCurrentUser().Id && UsersManager.GetAppCurrentUser().Id != activeUserId))
+                //RequestSignin();
             
         }
 
@@ -140,7 +150,7 @@ public class XboneAll {
             ManagerManager.Manager.GameEventDistributor("START", null);
 
             //rich user presence
-            SetRichUserPresence();
+            SetRichUserPresence(CharacterIndex.sGrave); //this is the "null" character index
             
             //storage
             MicrosoftZig.Inst.mStorage.InitializeUserStorage();
@@ -186,11 +196,20 @@ public class XboneAll {
     }
 
     //Rich User Presence stuff
-    void SetRichUserPresence()
+    public void SetRichUserPresence(CharacterIndex aChar)
     {
-        PresenceData data = PresenceService.CreatePresenceData(ConsoleUtilsManager.PrimaryServiceConfigId(), "default", null);
+        PresenceData data;
+        if (aChar.LevelIndex == 9)
+            data = PresenceService.CreatePresenceData(ConsoleUtilsManager.PrimaryServiceConfigId(), "default", null);
+        else
+        {
+            ManagerManager.Log("setting RUP for " + aChar.LevelIndex + "_" + aChar.Choice);
+            data = PresenceService.CreatePresenceData(ConsoleUtilsManager.PrimaryServiceConfigId(), aChar.LevelIndex + "_" + aChar.Choice, null);
+        }
         PresenceService.SetPresenceAsync(ActiveUser.Id, true, data, OnPresenceDataSet);
     }
+        
+
     void OnPresenceSet(bool setOk, int resultCode)
     {
         ManagerManager.Log("Presence: [" + (setOk ? "Ok" : "Failed") + "] resultCode: [" + resultCode + "]");

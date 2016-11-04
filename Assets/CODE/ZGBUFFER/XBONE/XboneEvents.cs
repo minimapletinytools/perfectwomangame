@@ -29,7 +29,7 @@ public class XboneEvents{
     {
         if (mAll.LastActiveUser == null)
         {
-            ManagerManager.Log("LastActiveUser is null, can't send event " + name);
+            ManagerManager.Log("XboneEvents.cs: LastActiveUser is null, can't send event " + name);
             return;
         }
 
@@ -53,6 +53,8 @@ public class XboneEvents{
                 ManagerManager.Log("TRANSCEND EVENT");
                 Events.SendTranscend(mAll.LastActiveUser.UID, ref mSessionId);
             }
+
+            mAll.SetRichUserPresence((CharacterIndex)args [0]);
         }
         if (name == "DEATH")
         {
@@ -129,9 +131,9 @@ public class XboneEvents{
         foreach(var e in options)
         {
             bool pass = true;
-            foreach(var f in e.Value)
+            foreach (var f in aStats)
             {
-                if(aStats.Where(g=>g.Character == f).Count() == 0) //if we are missing a character
+                if (!e.Value.Contains(f.Character))
                 {
                     pass = false;
                     break;
